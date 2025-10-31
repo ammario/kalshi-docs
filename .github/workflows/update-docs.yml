@@ -1,4 +1,4 @@
-name: Update Kalshi Documentation
+name: Nightly Update
 
 on:
   # Run every night at 2 AM UTC
