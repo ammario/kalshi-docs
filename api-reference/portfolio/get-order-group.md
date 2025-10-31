@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/get-order-group
+lastmod: 2025-10-29T14:29:20.775Z
+---
 # Get Order Group
 
 >  Retrieves details for a single order group including all order IDs and auto-cancel status.

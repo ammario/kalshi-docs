@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/events/get-event-candlesticks
+lastmod: 2025-10-29T14:29:20.650Z
+---
 # Get Event Candlesticks
 
 >  End-point for returning aggregated data across all markets corresponding to an event.

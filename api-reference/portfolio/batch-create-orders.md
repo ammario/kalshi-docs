@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/batch-create-orders
+lastmod: 2025-10-29T14:29:20.809Z
+---
 # Batch Create Orders
 
 >  Endpoint for submitting a batch of orders. Each order in the batch is counted against the total rate limit for order operations. Consequently, the size of the batch is capped by the current per-second rate-limit configuration applicable to the user. At the moment of writing, the limit is 20 orders per batch. Available to members with advanced access only.

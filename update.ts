@@ -110,15 +110,36 @@ async function downloadMarkdown(url: string): Promise<string | null> {
 }
 
 /**
- * Save markdown content to file
+ * Add YAML frontmatter to markdown content
  */
-async function saveMarkdown(relativePath: string, content: string): Promise<void> {
+function addFrontmatter(content: string, url: string, lastmod?: string): string {
+  const frontmatter = [
+    '---',
+    `url: ${url}`,
+  ];
+  
+  if (lastmod) {
+    frontmatter.push(`lastmod: ${lastmod}`);
+  }
+  
+  frontmatter.push('---', '');
+  
+  return frontmatter.join('\n') + content;
+}
+
+/**
+ * Save markdown content to file with frontmatter
+ */
+async function saveMarkdown(relativePath: string, content: string, url: string, lastmod?: string): Promise<void> {
   const filepath = join(OUTPUT_DIR, relativePath);
   
   // Ensure directory exists
   await mkdir(dirname(filepath), { recursive: true });
   
-  await writeFile(filepath, content, 'utf-8');
+  // Add frontmatter to content
+  const contentWithFrontmatter = addFrontmatter(content, url, lastmod);
+  
+  await writeFile(filepath, contentWithFrontmatter, 'utf-8');
   console.log(`  ✓ Saved to ${relativePath}`);
 }
 
@@ -199,7 +220,7 @@ async function main() {
     const content = await downloadMarkdown(loc);
     
     if (content) {
-      await saveMarkdown(relativePath, content);
+      await saveMarkdown(relativePath, content, loc, lastmod);
       successCount++;
     } else {
       failCount++;

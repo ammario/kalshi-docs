@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/api-keys/delete-api-key
+lastmod: 2025-10-29T14:29:20.607Z
+---
 # Delete API Key
 
 >  Endpoint for deleting an existing API key.  This endpoint permanently deletes an API key. Once deleted, the key can no longer be used for authentication. This action cannot be undone.

@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/create-order
+lastmod: 2025-10-29T14:29:20.802Z
+---
 # Create Order
 
 >  Endpoint for submitting orders in a market.

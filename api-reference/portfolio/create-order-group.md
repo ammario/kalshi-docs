@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/create-order-group
+lastmod: 2025-10-29T14:29:20.768Z
+---
 # Create Order Group
 
 >  Creates a new order group with a contracts limit. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.

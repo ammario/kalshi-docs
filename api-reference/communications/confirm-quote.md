@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/communications/confirm-quote
+lastmod: 2025-10-29T14:29:20.942Z
+---
 # Confirm Quote
 
 >  Endpoint for confirming a quote. This will start a timer for order execution

@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/delete-order-group
+lastmod: 2025-10-29T14:29:20.781Z
+---
 # Delete Order Group
 
 >  Deletes an order group and cancels all orders within it. This permanently removes the group.

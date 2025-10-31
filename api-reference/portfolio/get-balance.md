@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/get-balance
+lastmod: 2025-10-29T14:29:20.560Z
+---
 # Get Balance
 
 >  Endpoint for getting the balance and portfolio value of a member. Both values are returned in cents.

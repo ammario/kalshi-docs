@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/amend-order
+lastmod: 2025-10-29T14:29:20.845Z
+---
 # Amend Order
 
 >  Endpoint for amending the max number of fillable contracts and/or price in an existing order. Max fillable contracts is `remaining_count` + `fill_count`.

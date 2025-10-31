@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/communications/delete-quote
+lastmod: 2025-10-29T14:29:20.928Z
+---
 # Delete Quote
 
 >  Endpoint for deleting a quote, which means it can no longer be accepted.

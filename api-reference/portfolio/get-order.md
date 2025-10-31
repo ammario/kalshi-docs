@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/get-order
+lastmod: 2025-10-29T14:29:20.831Z
+---
 # Get Order
 
 >  Endpoint for getting a single order.

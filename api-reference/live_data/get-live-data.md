@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/live_data/get-live-data
+lastmod: 2025-10-29T14:29:20.684Z
+---
 # Get Live Data
 
 > Get live data for a specific milestone

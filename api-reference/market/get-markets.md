@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/market/get-markets
+lastmod: 2025-10-29T14:29:20.998Z
+---
 # Get Markets
 
 > Filter by market status. Comma-separated list. Possible values: 'unopened', 'open', 'closed', 'settled'. Leave empty to return markets with any status.

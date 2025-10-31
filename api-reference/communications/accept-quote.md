@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/communications/accept-quote
+lastmod: 2025-10-29T14:29:20.934Z
+---
 # Accept Quote
 
 >  Endpoint for accepting a quote. This will require the quoter to confirm

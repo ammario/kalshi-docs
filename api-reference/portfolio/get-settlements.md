@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
+lastmod: 2025-10-29T14:29:20.574Z
+---
 # Get Settlements
 
 >  Endpoint for getting the member's settlements historical track.

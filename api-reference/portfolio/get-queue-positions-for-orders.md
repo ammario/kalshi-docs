@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/get-queue-positions-for-orders
+lastmod: 2025-10-29T14:29:20.824Z
+---
 # Get Queue Positions for Orders
 
 >  Endpoint for getting queue positions for all resting orders. Queue position represents the number of contracts that need to be matched before an order receives a partial or full match, determined using price-time priority.

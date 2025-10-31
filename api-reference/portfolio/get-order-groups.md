@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/get-order-groups
+lastmod: 2025-10-29T14:29:20.761Z
+---
 # Get Order Groups
 
 >  Retrieves all order groups for the authenticated user.

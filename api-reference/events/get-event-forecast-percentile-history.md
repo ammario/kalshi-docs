@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/events/get-event-forecast-percentile-history
+lastmod: 2025-10-29T14:29:20.678Z
+---
 # Get Event Forecast Percentile History
 
 > Endpoint for getting the historical raw and formatted forecast numbers for an event at specific percentiles.

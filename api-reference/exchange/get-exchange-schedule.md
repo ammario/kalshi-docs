@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/exchange/get-exchange-schedule
+lastmod: 2025-10-29T14:29:20.546Z
+---
 # Get Exchange Schedule
 
 >  Endpoint for getting the exchange schedule.

@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/exchange/get-series-fee-changes
+lastmod: 2025-10-29T14:29:20.539Z
+---
 # Get Series Fee Changes
 
 ## OpenAPI

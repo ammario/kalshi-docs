@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/communications/create-rfq
+lastmod: 2025-10-29T14:29:20.887Z
+---
 # Create RFQ
 
 >  Endpoint for creating a new RFQ. You can have a maximum of 100 open RFQs at a time.

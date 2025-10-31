@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/exchange/get-user-data-timestamp
+lastmod: 2025-10-29T14:29:20.553Z
+---
 # Get User Data Timestamp
 
 >  There is typically a short delay before exchange events are reflected in the API endpoints. Whenever possible, combine API responses to PUT/POST/DELETE requests with websocket data to obtain the most accurate view of the exchange state. This endpoint provides an approximate indication of when the data from the following endpoints was last validated: GetBalance, GetOrder(s), GetFills, GetPositions

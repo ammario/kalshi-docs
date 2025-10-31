@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/communications/get-quote
+lastmod: 2025-10-29T14:29:20.921Z
+---
 # Get Quote
 
 >  Endpoint for getting a particular quote

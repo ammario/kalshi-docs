@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/collection/lookup-tickers-for-market-in-multivariate-event-collection
+lastmod: 2025-10-29T14:29:20.978Z
+---
 # Lookup Tickers For Market In Multivariate Event Collection
 
 >  Endpoint for looking up an individual market in a multivariate event collection. If CreateMarketInMultivariateEventCollection has never been hit with that variable combination before, this will return a 404.

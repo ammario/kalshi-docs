@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/get-positions
+lastmod: 2025-10-29T14:29:20.567Z
+---
 # Get Positions
 
 > Restricts the positions to those with any of following fields with non-zero values, as a comma separated list. The following values are accepted: position, total_traded, resting_order_count

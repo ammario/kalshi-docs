@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/collection/get-multivariate-event-collection-lookup-history
+lastmod: 2025-10-29T14:29:20.971Z
+---
 # Get Multivariate Event Collection Lookup History
 
 >  Endpoint for retrieving which markets in an event collection were recently looked up.

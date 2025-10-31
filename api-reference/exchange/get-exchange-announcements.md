@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/exchange/get-exchange-announcements
+lastmod: 2025-10-29T14:29:20.532Z
+---
 # Get Exchange Announcements
 
 >  Endpoint for getting all exchange-wide announcements.

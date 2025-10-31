@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/communications/create-quote
+lastmod: 2025-10-29T14:29:20.914Z
+---
 # Create Quote
 
 >  Endpoint for creating a quote in response to an RFQ

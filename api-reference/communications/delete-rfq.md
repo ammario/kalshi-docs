@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/communications/delete-rfq
+lastmod: 2025-10-29T14:29:20.900Z
+---
 # Delete RFQ
 
 >  Endpoint for deleting an RFQ by ID

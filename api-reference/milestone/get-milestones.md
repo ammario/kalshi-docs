@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/milestone/get-milestones
+lastmod: 2025-10-29T14:29:20.754Z
+---
 # Get Milestones
 
 > Minimum start date to filter milestones. Format: RFC3339 timestamp

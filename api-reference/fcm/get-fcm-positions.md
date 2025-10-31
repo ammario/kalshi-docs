@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
+lastmod: 2025-10-29T14:29:20.719Z
+---
 # Get FCM Positions
 
 > Endpoint for FCM members to get market positions filtered by subtrader ID.

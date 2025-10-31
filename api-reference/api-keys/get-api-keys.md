@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/api-keys/get-api-keys
+lastmod: 2025-10-29T14:29:20.587Z
+---
 # Get API Keys
 
 >  Endpoint for retrieving all API keys associated with the authenticated user.  API keys allow programmatic access to the platform without requiring username/password authentication. Each key has a unique identifier and name.

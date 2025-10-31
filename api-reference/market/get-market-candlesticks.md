@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/market/get-market-candlesticks
+lastmod: 2025-10-29T14:29:20.629Z
+---
 # Get Market Candlesticks
 
 > Time period length of each candlestick in minutes. Valid values: 1 (1 minute), 60 (1 hour), 1440 (1 day).

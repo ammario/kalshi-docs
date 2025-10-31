@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/collection/get-multivariate-event-collection
+lastmod: 2025-10-29T14:29:20.950Z
+---
 # Get Multivariate Event Collection
 
 >  Endpoint for getting data about a multivariate event collection by its ticker.

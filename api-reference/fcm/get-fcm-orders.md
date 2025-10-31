@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/fcm/get-fcm-orders
+lastmod: 2025-10-29T14:29:20.711Z
+---
 # Get FCM Orders
 
 > Endpoint for FCM members to get orders filtered by subtrader ID.

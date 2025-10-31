@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/get-fills
+lastmod: 2025-10-29T14:29:20.643Z
+---
 # Get Fills
 
 >  Endpoint for getting all fills for the member. A fill is when a trade you have is matched.

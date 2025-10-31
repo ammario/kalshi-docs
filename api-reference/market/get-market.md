@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/market/get-market
+lastmod: 2025-10-29T14:29:21.005Z
+---
 # Get Market
 
 >  Endpoint for getting data about a specific market by its ticker. A market represents a specific binary outcome within an event that users can trade on (e.g., "Will candidate X win?"). Markets have yes/no positions, current prices, volume, and settlement rules.

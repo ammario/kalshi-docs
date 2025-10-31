@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/get-orders
+lastmod: 2025-10-29T14:29:20.795Z
+---
 # Get Orders
 
 > Restricts the response to orders that have a certain status: resting, canceled, or executed.

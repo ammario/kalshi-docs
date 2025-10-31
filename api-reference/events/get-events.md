@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/events/get-events
+lastmod: 2025-10-29T14:29:20.657Z
+---
 # Get Events
 
 > Filter by event status. Possible values: 'open', 'closed', 'settled'. Leave empty to return events with any status.

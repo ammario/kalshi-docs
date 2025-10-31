@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/communications/get-rfq
+lastmod: 2025-10-29T14:29:20.893Z
+---
 # Get RFQ
 
 >  Endpoint for getting a single RFQ by id

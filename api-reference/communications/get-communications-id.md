@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/communications/get-communications-id
+lastmod: 2025-10-29T14:29:20.866Z
+---
 # Get Communications ID
 
 >  Endpoint for getting the communications ID of the logged-in user.

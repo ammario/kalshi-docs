@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/collection/create-market-in-multivariate-event-collection
+lastmod: 2025-10-29T14:29:20.957Z
+---
 # Create Market In Multivariate Event Collection
 
 >  Endpoint for looking up an individual market in a multivariate event collection. This endpoint must be hit at least once before trading or looking up a market.
