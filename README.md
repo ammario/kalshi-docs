@@ -16,7 +16,7 @@ git submodule add https://github.com/ammario/kalshi-docs.git docs/kalshi
 git submodule update --init --recursive
 ```
 
-**Particularly useful for AI agents and tools** that need offline access to Kalshi API documentation with structured metadata (frontmatter includes URLs and last-modified timestamps).
+This is particularly useful for AI agents.
 
 ## Documentation Structure
 
