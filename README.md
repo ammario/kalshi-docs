@@ -4,6 +4,17 @@ An automated repository that downloads and archives all Kalshi documentation fro
 
 Updated nightly via GitHub Actions.
 
+## Usage
+
+Add as a git submodule to your project for easy access to Kalshi documentation:
+
+```bash
+git submodule add https://github.com/ammario/kalshi-docs.git docs/kalshi
+git submodule update --init --recursive
+```
+
+**Particularly useful for AI agents and tools** that need offline access to Kalshi API documentation with structured metadata (frontmatter includes URLs and last-modified timestamps).
+
 ## Documentation Structure
 
 The script organizes documentation by section:
