@@ -38,25 +38,25 @@ No installation needed! Deno includes all required APIs.
 ### Run with Bun (recommended)
 
 ```bash
-bun run download
+bun run update
 # or
-bun run dl-kalshi-docs.ts
+bun run update.ts
 ```
 
 ### Run with Node.js (via tsx)
 
 ```bash
-npm run download:node
+npm run update:node
 # or
-npx tsx dl-kalshi-docs.ts
+npx tsx update.ts
 ```
 
 ### Run with Deno
 
 ```bash
-npm run download:deno
+npm run update:deno
 # or
-deno run --allow-net --allow-write dl-kalshi-docs.ts
+deno run --allow-net --allow-write update.ts
 ```
 
 ## Automated Updates

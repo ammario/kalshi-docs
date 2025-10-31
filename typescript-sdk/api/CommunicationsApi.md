@@ -1,0 +1,632 @@
+# Communications
+
+> TypeScript SDK methods for Communications operations
+
+All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
+
+| Method                                          | HTTP request                                      | Description           |
+| ----------------------------------------------- | ------------------------------------------------- | --------------------- |
+| [**acceptQuote**](#acceptquote)                 | **PUT** /communications/quotes/{quote_id}/accept  | Accept Quote          |
+| [**confirmQuote**](#confirmquote)               | **PUT** /communications/quotes/{quote_id}/confirm | Confirm Quote         |
+| [**createQuote**](#createquote)                 | **POST** /communications/quotes                   | Create Quote          |
+| [**createRFQ**](#createrfq)                     | **POST** /communications/rfqs                     | Create RFQ            |
+| [**deleteQuote**](#deletequote)                 | **DELETE** /communications/quotes/{quote_id}      | Delete Quote          |
+| [**deleteRFQ**](#deleterfq)                     | **DELETE** /communications/rfqs/{rfq_id}          | Delete RFQ            |
+| [**getCommunicationsID**](#getcommunicationsid) | **GET** /communications/id                        | Get Communications ID |
+| [**getQuote**](#getquote)                       | **GET** /communications/quotes/{quote_id}         | Get Quote             |
+| [**getQuotes**](#getquotes)                     | **GET** /communications/quotes                    | Get Quotes            |
+| [**getRFQ**](#getrfq)                           | **GET** /communications/rfqs/{rfq_id}             | Get RFQ               |
+| [**getRFQs**](#getrfqs)                         | **GET** /communications/rfqs                      | Get RFQs              |
+
+# **acceptQuote**
+
+> acceptQuote(acceptQuoteRequest)
+
+Accept a quote. This will require the quoter to confirm
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration,
+    AcceptQuoteRequest
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+let quoteId: string; //Quote ID (default to undefined)
+let acceptQuoteRequest: AcceptQuoteRequest; //
+
+const { status, data } = await apiInstance.acceptQuote(
+    quoteId,
+    acceptQuoteRequest
+);
+```
+
+### Parameters
+
+| Name                   | Type                   | Description | Notes                 |
+| ---------------------- | ---------------------- | ----------- | --------------------- |
+| **acceptQuoteRequest** | **AcceptQuoteRequest** |             |                       |
+| **quoteId**            | \[**string**]          | Quote ID    | defaults to undefined |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: application/json
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **204**     | Quote accepted successfully            | -                |
+| **400**     | Bad request - invalid input            | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **404**     | Resource not found                     | -                |
+| **500**     | Internal server error                  | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **confirmQuote**
+
+> confirmQuote()
+
+Confirm a quote. This will start a timer for order execution
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+let quoteId: string; //Quote ID (default to undefined)
+
+const { status, data } = await apiInstance.confirmQuote(
+    quoteId
+);
+```
+
+### Parameters
+
+| Name        | Type          | Description | Notes                 |
+| ----------- | ------------- | ----------- | --------------------- |
+| **quoteId** | \[**string**] | Quote ID    | defaults to undefined |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **204**     | Quote confirmed successfully           | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **404**     | Resource not found                     | -                |
+| **500**     | Internal server error                  | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **createQuote**
+
+> CreateQuoteResponse createQuote(createQuoteRequest)
+
+Create a quote in response to an RFQ
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration,
+    CreateQuoteRequest
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+let createQuoteRequest: CreateQuoteRequest; //
+
+const { status, data } = await apiInstance.createQuote(
+    createQuoteRequest
+);
+```
+
+### Parameters
+
+| Name                   | Type                   | Description | Notes |
+| ---------------------- | ---------------------- | ----------- | ----- |
+| **createQuoteRequest** | **CreateQuoteRequest** |             |       |
+
+### Return type
+
+**CreateQuoteResponse**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: application/json
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **201**     | Quote created successfully             | -                |
+| **400**     | Bad request - invalid input            | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **500**     | Internal server error                  | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **createRFQ**
+
+> CreateRFQResponse createRFQ(createRFQRequest)
+
+Create a new RFQ
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration,
+    CreateRFQRequest
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+let createRFQRequest: CreateRFQRequest; //
+
+const { status, data } = await apiInstance.createRFQ(
+    createRFQRequest
+);
+```
+
+### Parameters
+
+| Name                 | Type                 | Description | Notes |
+| -------------------- | -------------------- | ----------- | ----- |
+| **createRFQRequest** | **CreateRFQRequest** |             |       |
+
+### Return type
+
+**CreateRFQResponse**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: application/json
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **201**     | RFQ created successfully               | -                |
+| **400**     | Bad request - invalid input            | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **500**     | Internal server error                  | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **deleteQuote**
+
+> deleteQuote()
+
+Delete a quote, which means it can no longer be accepted
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+let quoteId: string; //Quote ID (default to undefined)
+
+const { status, data } = await apiInstance.deleteQuote(
+    quoteId
+);
+```
+
+### Parameters
+
+| Name        | Type          | Description | Notes                 |
+| ----------- | ------------- | ----------- | --------------------- |
+| **quoteId** | \[**string**] | Quote ID    | defaults to undefined |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **204**     | Quote deleted successfully             | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **404**     | Resource not found                     | -                |
+| **500**     | Internal server error                  | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **deleteRFQ**
+
+> deleteRFQ()
+
+Delete an RFQ by ID
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+let rfqId: string; //RFQ ID (default to undefined)
+
+const { status, data } = await apiInstance.deleteRFQ(
+    rfqId
+);
+```
+
+### Parameters
+
+| Name      | Type          | Description | Notes                 |
+| --------- | ------------- | ----------- | --------------------- |
+| **rfqId** | \[**string**] | RFQ ID      | defaults to undefined |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **204**     | RFQ deleted successfully               | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **404**     | Resource not found                     | -                |
+| **500**     | Internal server error                  | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **getCommunicationsID**
+
+> GetCommunicationsIDResponse getCommunicationsID()
+
+Get the communications ID of the logged-in user
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+const { status, data } = await apiInstance.getCommunicationsID();
+```
+
+### Parameters
+
+This endpoint does not have any parameters.
+
+### Return type
+
+**GetCommunicationsIDResponse**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                              | Response headers |
+| ----------- | ---------------------------------------- | ---------------- |
+| **200**     | Communications ID retrieved successfully | -                |
+| **401**     | Unauthorized - authentication required   | -                |
+| **500**     | Internal server error                    | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **getQuote**
+
+> GetQuoteResponse getQuote()
+
+Get a particular quote by ID
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+let quoteId: string; //Quote ID (default to undefined)
+
+const { status, data } = await apiInstance.getQuote(
+    quoteId
+);
+```
+
+### Parameters
+
+| Name        | Type          | Description | Notes                 |
+| ----------- | ------------- | ----------- | --------------------- |
+| **quoteId** | \[**string**] | Quote ID    | defaults to undefined |
+
+### Return type
+
+**GetQuoteResponse**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **200**     | Quote retrieved successfully           | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **404**     | Resource not found                     | -                |
+| **500**     | Internal server error                  | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **getQuotes**
+
+> GetQuotesResponse getQuotes()
+
+Retrieve all quotes
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+const { status, data } = await apiInstance.getQuotes();
+```
+
+### Parameters
+
+This endpoint does not have any parameters.
+
+### Return type
+
+**GetQuotesResponse**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **200**     | Quotes retrieved successfully          | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **500**     | Internal server error                  | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **getRFQ**
+
+> GetRFQResponse getRFQ()
+
+Get a single RFQ by ID
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+let rfqId: string; //RFQ ID (default to undefined)
+
+const { status, data } = await apiInstance.getRFQ(
+    rfqId
+);
+```
+
+### Parameters
+
+| Name      | Type          | Description | Notes                 |
+| --------- | ------------- | ----------- | --------------------- |
+| **rfqId** | \[**string**] | RFQ ID      | defaults to undefined |
+
+### Return type
+
+**GetRFQResponse**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **200**     | RFQ retrieved successfully             | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **404**     | Resource not found                     | -                |
+| **500**     | Internal server error                  | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **getRFQs**
+
+> GetRFQsResponse getRFQs()
+
+Retrieve all RFQs
+
+### Example
+
+```typescript  theme={null}
+import {
+    CommunicationsApi,
+    Configuration
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new CommunicationsApi(configuration);
+
+const { status, data } = await apiInstance.getRFQs();
+```
+
+### Parameters
+
+This endpoint does not have any parameters.
+
+### Return type
+
+**GetRFQsResponse**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **200**     | RFQs retrieved successfully            | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **500**     | Internal server error                  | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)

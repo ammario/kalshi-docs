@@ -4,11 +4,11 @@
  * Download Kalshi documentation from their sitemap.
  * 
  * Usage:
- *   bun run dl-kalshi-docs.ts
+ *   bun run update.ts
  *   # or with Node.js:
- *   npx tsx dl-kalshi-docs.ts
+ *   npx tsx update.ts
  *   # or with Deno:
- *   deno run --allow-net --allow-write dl-kalshi-docs.ts
+ *   deno run --allow-net --allow-write update.ts
  */
 
 import { writeFile, mkdir } from 'node:fs/promises';

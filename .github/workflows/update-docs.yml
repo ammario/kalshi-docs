@@ -30,7 +30,7 @@ jobs:
         run: bun install
       
       - name: Download documentation
-        run: bun run download
+        run: bun run update
       
       - name: Check for changes
         id: git-check

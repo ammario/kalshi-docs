@@ -4,9 +4,9 @@
   "description": "Download and manage Kalshi API documentation",
   "type": "module",
   "scripts": {
-    "download": "bun run dl-kalshi-docs.ts",
-    "download:node": "tsx dl-kalshi-docs.ts",
-    "download:deno": "deno run --allow-net --allow-write dl-kalshi-docs.ts"
+    "update": "bun run update.ts",
+    "update:node": "tsx update.ts",
+    "update:deno": "deno run --allow-net --allow-write update.ts"
   },
   "keywords": [
     "kalshi",
