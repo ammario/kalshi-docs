@@ -1,6 +1,6 @@
 # Kalshi Documentation Archive
 
-[![Update Docs](https://github.com/ammario/kalshi-docs/actions/workflows/update-docs.yml/badge.svg)](https://github.com/ammario/kalshi-docs/actions/workflows/update-docs.yml)
+[![Nightly Update](https://github.com/ammario/kalshi-docs/actions/workflows/update-docs.yml/badge.svg)](https://github.com/ammario/kalshi-docs/actions/workflows/update-docs.yml)
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 
 An automated repository that downloads and archives all Kalshi documentation from their sitemap as markdown.
