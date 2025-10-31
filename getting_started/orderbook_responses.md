@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/getting_started/orderbook_responses
+lastmod: 2025-10-07T23:32:02.808Z
+---
 # Orderbook Responses
 
 > Understanding Kalshi orderbook structure and binary prediction market mechanics

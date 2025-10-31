@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/typescript-sdk/api/PortfolioApi
+lastmod: 2025-10-07T23:32:04.330Z
+---
 # Portfolio
 
 > TypeScript SDK methods for Portfolio operations

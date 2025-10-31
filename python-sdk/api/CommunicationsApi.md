@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/python-sdk/api/CommunicationsApi
+lastmod: 2025-10-07T23:32:03.932Z
+---
 # Communications
 
 > Python SDK methods for Communications operations

@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/fix/error-handling
+lastmod: 2025-10-07T23:32:02.118Z
+---
 # Error Handling
 
 > Understanding and handling errors in the FIX protocol

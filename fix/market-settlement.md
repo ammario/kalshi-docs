@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/fix/market-settlement
+lastmod: 2025-10-07T23:32:02.115Z
+---
 # Market Settlement
 
 > Settlement reports for market outcomes and position resolution

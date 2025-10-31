@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/websockets/market-ticker
+lastmod: 2025-10-30T21:07:41.953Z
+---
 # Market Ticker
 
 > Market price, volume, and open interest updates.

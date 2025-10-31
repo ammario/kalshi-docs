@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/python-sdk/api/ExchangeApi
+lastmod: 2025-10-07T23:32:03.929Z
+---
 # Exchange
 
 > Python SDK methods for Exchange operations

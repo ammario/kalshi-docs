@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/fix/order-entry
+lastmod: 2025-10-15T01:44:19.115Z
+---
 # Order Entry Messages
 
 > Submit, modify, and cancel orders through FIX messages

@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/typescript-sdk/api/MultivariateCollectionsApi
+lastmod: 2025-10-07T23:32:04.320Z
+---
 # MultivariateCollections
 
 > TypeScript SDK methods for MultivariateCollections operations

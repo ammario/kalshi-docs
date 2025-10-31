@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/getting_started/rate_limits
+lastmod: 2025-08-18T22:27:17.869Z
+---
 # Rate Limits and Tiers
 
 > Understanding API rate limits and access tiers

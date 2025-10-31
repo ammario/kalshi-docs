@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/getting_started/terms
+lastmod: 2025-08-07T20:11:48.682Z
+---
 # Kalshi Glossary
 
 > Core terminology used in the Kalshi exchange

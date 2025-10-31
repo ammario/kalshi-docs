@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/python-sdk/api/MarketsApi
+lastmod: 2025-10-07T23:32:03.931Z
+---
 # Markets
 
 > Python SDK methods for Markets operations

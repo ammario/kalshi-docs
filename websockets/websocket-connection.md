@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/websockets/websocket-connection
+lastmod: 2025-10-30T21:07:41.911Z
+---
 # WebSocket Connection
 
 > Main WebSocket connection endpoint. All communication happens through this single connection.

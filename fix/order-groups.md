@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/fix/order-groups
+lastmod: 2025-10-07T23:32:02.120Z
+---
 # Order Group Messages
 
 > Manage order groups for automatic position management

@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/fix/rfq-messages
+lastmod: 2025-10-07T23:32:02.119Z
+---
 # RFQ Messages
 
 > Request for Quote functionality for market makers

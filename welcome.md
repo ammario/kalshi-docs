@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/welcome
+lastmod: 2025-10-20T16:29:27.088Z
+---
 # Introduction
 
 > Welcome to the Kalshi API documentation

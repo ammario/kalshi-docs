@@ -15,7 +15,7 @@
     "downloader"
   ],
   "author": "",
-  "license": "MIT",
+  "license": "CC0-1.0",
   "devDependencies": {
     "@types/node": "^20.10.0",
     "tsx": "^4.7.0",

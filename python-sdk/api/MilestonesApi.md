@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/python-sdk/api/MilestonesApi
+lastmod: 2025-10-07T23:32:03.930Z
+---
 # Milestones
 
 > Python SDK methods for Milestones operations

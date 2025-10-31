@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/structured-targets/get-structured-targets
+lastmod: 2025-10-29T14:29:20.727Z
+---
 # Get Structured Targets
 
 > Page size (min: 1, max: 2000)

@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/typescript-sdk/api/CommunicationsApi
+lastmod: 2025-10-07T23:32:04.291Z
+---
 # Communications
 
 > TypeScript SDK methods for Communications operations

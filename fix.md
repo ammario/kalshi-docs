@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/fix
+lastmod: 2025-10-04T21:26:55.664Z
+---
 # FIX API Overview
 
 > Financial Information eXchange (FIX) protocol implementation for Kalshi

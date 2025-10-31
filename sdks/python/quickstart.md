@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/sdks/python/quickstart
+lastmod: 2025-10-07T23:32:04.286Z
+---
 # Python SDK Quick Start
 
 > Get started with the Kalshi Python SDK

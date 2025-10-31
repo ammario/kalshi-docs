@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/websockets/orderbook-updates
+lastmod: 2025-10-30T21:07:41.943Z
+---
 # Orderbook Updates
 
 > Real-time orderbook price level changes. Provides incremental updates to maintain a live orderbook.

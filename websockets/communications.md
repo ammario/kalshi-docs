@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/websockets/communications
+lastmod: 2025-10-30T21:07:42.053Z
+---
 # Communications
 
 > Real-time Request for Quote (RFQ) and quote notifications. Requires authentication.

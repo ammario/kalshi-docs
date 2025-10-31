@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/search/get-tags-for-series-categories
+lastmod: 2025-10-29T14:29:20.616Z
+---
 # Get Tags for Series Categories
 
 > Retrieve tags organized by series categories.

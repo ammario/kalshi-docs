@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/python-sdk/api/EventsApi
+lastmod: 2025-10-07T23:32:03.928Z
+---
 # Events
 
 > Python SDK methods for Events operations

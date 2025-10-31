@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/getting_started/making_your_first_request
+lastmod: 2025-08-07T20:11:48.631Z
+---
 # Making Your First Request
 
 > Start trading with Kalshi API in under 5 minutes

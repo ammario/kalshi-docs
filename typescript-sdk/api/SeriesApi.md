@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/typescript-sdk/api/SeriesApi
+lastmod: 2025-10-07T23:32:04.321Z
+---
 # Series
 
 > TypeScript SDK methods for Series operations

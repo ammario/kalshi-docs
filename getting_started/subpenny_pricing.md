@@ -1,3 +1,6 @@
+---
+url: https://docs.kalshi.com/getting_started/subpenny_pricing
+---
 # Subpenny Pricing
 
 > Understanding Kalshi subpenny pricing.

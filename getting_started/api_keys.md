@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/getting_started/api_keys
+lastmod: 2025-10-12T19:52:48.029Z
+---
 # API Keys
 
 > API Key usage

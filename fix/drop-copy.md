@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/fix/drop-copy
+lastmod: 2025-10-07T23:32:02.117Z
+---
 # Drop Copy Session
 
 > Recover missed execution reports and query historical order events

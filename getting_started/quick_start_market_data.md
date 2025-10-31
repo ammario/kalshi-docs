@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/getting_started/quick_start_market_data
+lastmod: 2025-10-07T23:32:02.809Z
+---
 # Quick Start: Market Data
 
 > Learn how to access real-time market data without authentication

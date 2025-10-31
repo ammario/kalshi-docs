@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/structured-targets/get-structured-target
+lastmod: 2025-10-29T14:29:20.734Z
+---
 # Get Structured Target
 
 >  Endpoint for getting data about a specific structured target by its ID.

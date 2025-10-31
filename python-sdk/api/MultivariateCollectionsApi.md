@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/python-sdk/api/MultivariateCollectionsApi
+lastmod: 2025-10-07T23:32:03.955Z
+---
 # MultivariateCollections
 
 > Python SDK methods for MultivariateCollections operations

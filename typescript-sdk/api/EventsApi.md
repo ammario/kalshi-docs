@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/typescript-sdk/api/EventsApi
+lastmod: 2025-10-07T23:32:04.313Z
+---
 # Events
 
 > TypeScript SDK methods for Events operations

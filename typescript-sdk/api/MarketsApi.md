@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/typescript-sdk/api/MarketsApi
+lastmod: 2025-10-07T23:32:04.318Z
+---
 # Markets
 
 > TypeScript SDK methods for Markets operations

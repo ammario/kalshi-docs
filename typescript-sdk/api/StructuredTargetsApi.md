@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/typescript-sdk/api/StructuredTargetsApi
+lastmod: 2025-10-07T23:32:04.324Z
+---
 # StructuredTargets
 
 > TypeScript SDK methods for StructuredTargets operations

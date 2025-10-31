@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/typescript-sdk/api/ApiKeysApi
+lastmod: 2025-10-07T23:32:04.292Z
+---
 # ApiKeys
 
 > TypeScript SDK methods for ApiKeys operations

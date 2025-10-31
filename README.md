@@ -125,4 +125,8 @@ All documentation is committed to the repository, allowing you to:
 
 ## License
 
-MIT
+[![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](https://creativecommons.org/publicdomain/zero/1.0/)
+
+To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work. This work is published from: United States.
+
+This applies to the automation tooling and the downloaded documentation. Note that Kalshi's original documentation may be subject to their own terms.

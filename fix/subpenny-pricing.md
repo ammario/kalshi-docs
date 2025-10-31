@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/fix/subpenny-pricing
+lastmod: 2025-10-07T23:32:02.802Z
+---
 # Subpenny Pricing
 
 > Dollar-based pricing format for subpenny precision

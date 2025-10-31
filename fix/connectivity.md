@@ -1,3 +1,6 @@
+---
+url: https://docs.kalshi.com/fix/connectivity
+---
 # Connectivity
 
 > Connection setup and endpoints for Kalshi FIX API

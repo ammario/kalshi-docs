@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/websockets/public-trades
+lastmod: 2025-10-30T21:07:41.970Z
+---
 # Public Trades
 
 > Public trade notifications when trades occur.

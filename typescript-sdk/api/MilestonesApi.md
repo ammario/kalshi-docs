@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/typescript-sdk/api/MilestonesApi
+lastmod: 2025-10-07T23:32:04.317Z
+---
 # Milestones
 
 > TypeScript SDK methods for Milestones operations

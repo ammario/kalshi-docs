@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/getting_started/quick_start_authenticated_requests
+lastmod: 2025-10-12T19:52:48.030Z
+---
 # Quick Start: Authenticated Requests
 
 > Three simple steps to make your first authenticated API request to Kalshi

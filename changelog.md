@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/changelog
+lastmod: 2025-10-24T16:26:56.509Z
+---
 # API Changelog
 
 > Stay updated with API changes and version history

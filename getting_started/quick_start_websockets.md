@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/getting_started/quick_start_websockets
+lastmod: 2025-10-09T02:33:12.609Z
+---
 # Quick Start: WebSockets
 
 > Learn how to establish and maintain a WebSocket connection to stream real-time market data

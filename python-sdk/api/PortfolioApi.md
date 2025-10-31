@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/python-sdk/api/PortfolioApi
+lastmod: 2025-10-07T23:32:03.962Z
+---
 # Portfolio
 
 > Python SDK methods for Portfolio operations

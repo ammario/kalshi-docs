@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/fix/session-management
+lastmod: 2025-10-30T21:48:27.844Z
+---
 # Session Management
 
 > Managing FIX sessions including logon, logout, and message sequencing

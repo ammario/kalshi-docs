@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/getting_started/pagination
+lastmod: 2025-10-07T23:32:02.813Z
+---
 # Understanding Pagination
 
 > Learn how to navigate through large datasets using cursor-based pagination

@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/api-reference/portfolio/reset-order-group
+lastmod: 2025-10-29T14:29:20.788Z
+---
 # Reset Order Group
 
 >  Resets the order group's matched contracts counter to zero, allowing new orders to be placed again after the limit was hit.

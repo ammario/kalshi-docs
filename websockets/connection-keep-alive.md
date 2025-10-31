@@ -1,3 +1,7 @@
+---
+url: https://docs.kalshi.com/websockets/connection-keep-alive
+lastmod: 2025-10-30T21:07:41.929Z
+---
 # Connection Keep-Alive
 
 > WebSocket control frames for connection management.
