@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-quote
-lastmod: 2025-10-29T14:29:20.928Z
+lastmod: 2025-10-31T21:41:14.484Z
 ---
 # Delete Quote
 

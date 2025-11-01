@@ -1,5 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
+lastmod: 2025-11-01T02:16:13.309Z
 ---
 # Connectivity
 
@@ -21,7 +22,7 @@ Before logging onto a FIX session, clients must establish a secure connection to
     | Order Entry (with retransmission)    | 8230 | KalshiRT     |
     | Drop Copy                            | 8229 | KalshiDC     |
     | Post Trade                           | 8231 | KalshiPT     |
-    | RFQ (with retransmission)            | 8232 | KalshiRFQ    |
+    | RFQ                                  | 8232 | KalshiRFQ    |
   </Tab>
 
   <Tab title="Demo">
@@ -33,7 +34,7 @@ Before logging onto a FIX session, clients must establish a secure connection to
     | Order Entry (with retransmission)    | 8230 | KalshiRT     |
     | Drop Copy                            | 8229 | KalshiDC     |
     | Post Trade                           | 8231 | KalshiPT     |
-    | RFQ (with retransmission)            | 8232 | KalshiRFQ    |
+    | RFQ                                  | 8232 | KalshiRFQ    |
   </Tab>
 </Tabs>
 

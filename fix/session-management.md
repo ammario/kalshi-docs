@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/session-management
-lastmod: 2025-10-30T21:48:27.844Z
+lastmod: 2025-11-01T02:16:13.313Z
 ---
 # Session Management
 
@@ -130,7 +130,7 @@ For unexpected sequence numbers:
 ## ResendRequest (35=2)
 
 <Note>
-  Only available on Order Entry with Retransmission (KalshiRT) and RFQ (KalshiRFQ) sessions.
+  Only available on Order Entry with Retransmission (KalshiRT) sessions.
 </Note>
 
 ### Limitations

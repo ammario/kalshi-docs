@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2025-10-07T23:32:02.119Z
+lastmod: 2025-11-01T02:16:13.312Z
 ---
 # RFQ Messages
 
@@ -216,5 +216,4 @@ Exchange notifies that a quote request was cancelled.
 
 * RFQ session requires separate connection
 * Uses KalshiRFQ endpoint
-* Supports message retransmission
 * Independent of order entry session

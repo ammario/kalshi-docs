@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/collection/get-multivariate-event-collections
-lastmod: 2025-10-29T14:29:20.964Z
+lastmod: 2025-10-31T21:41:14.520Z
 ---
 # Get Multivariate Event Collections
 

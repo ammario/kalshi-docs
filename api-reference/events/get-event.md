@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2025-10-29T14:29:20.664Z
+lastmod: 2025-10-31T21:41:14.227Z
 ---
 # Get Event
 
@@ -142,6 +142,7 @@ paths:
                         end: <string>
                         step: <string>
                 available_on_brokers: true
+                product_metadata: {}
               markets:
                 - ticker: <string>
                   event_ticker: <string>
@@ -253,6 +254,7 @@ components:
         - mutually_exclusive
         - category
         - available_on_brokers
+        - product_metadata
       properties:
         event_ticker:
           type: string
@@ -307,6 +309,11 @@ components:
         available_on_brokers:
           type: boolean
           description: Whether this event is available to trade on brokers.
+        product_metadata:
+          type: object
+          nullable: true
+          x-omitempty: true
+          description: Additional metadata for the event.
     MveSelectedLeg:
       type: object
       properties:
