@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2025-10-31T21:41:14.559Z
+lastmod: 2025-11-02T23:37:19.477Z
 ---
 # Get Markets
 
@@ -105,7 +105,7 @@ paths:
                   expiration_time: '2023-11-07T05:31:56Z'
                   latest_expiration_time: '2023-11-07T05:31:56Z'
                   settlement_timer_seconds: 123
-                  status: initialized
+                  status: unopened
                   response_price_units: cents
                   yes_bid: 123
                   yes_bid_dollars: <string>
@@ -308,11 +308,15 @@ components:
         status:
           type: string
           enum:
-            - initialized
-            - active
+            - unopened
+            - open
             - closed
             - settled
-            - determined
+          description: >-
+            Current status of the market. 'unopened' means the market has not
+            started trading yet, 'open' means it is currently tradeable,
+            'closed' means trading has ended, and 'settled' means the final
+            result has been determined and positions settled.
         response_price_units:
           type: string
           enum:
