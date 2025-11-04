@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfq
-lastmod: 2025-11-02T23:37:19.367Z
+lastmod: 2025-11-03T03:42:07.025Z
 ---
 # Get RFQ
 

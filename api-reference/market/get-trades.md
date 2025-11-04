@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-trades
-lastmod: 2025-11-02T23:37:19.114Z
+lastmod: 2025-11-03T03:42:06.745Z
 ---
 # Get Trades
 

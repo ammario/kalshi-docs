@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/create-api-key
-lastmod: 2025-11-02T23:37:19.070Z
+lastmod: 2025-11-03T03:42:06.700Z
 ---
 # Create API Key
 

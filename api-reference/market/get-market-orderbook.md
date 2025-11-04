@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market-orderbook
-lastmod: 2025-11-02T23:37:19.215Z
+lastmod: 2025-11-03T03:42:06.861Z
 ---
 # Get Market Orderbook
 

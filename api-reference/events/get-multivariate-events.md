@@ -1,16 +1,16 @@
 ---
-url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2025-11-03T03:42:06.786Z
+url: https://docs.kalshi.com/api-reference/events/get-multivariate-events
+lastmod: 2025-11-03T03:42:06.779Z
 ---
-# Get Event
+# Get Multivariate Events
 
->  Endpoint for getting data about an event by its ticker.  An event represents a real-world occurrence that can be traded on, such as an election, sports game, or economic indicator release. Events contain one or more markets where users can place trades on different outcomes.
+> Retrieve multivariate (combo) events. These are dynamically created events from multivariate event collections. Supports filtering by series and collection ticker.
 
 ## OpenAPI
 
-````yaml openapi.yaml get /events/{event_ticker}
+````yaml openapi.yaml get /events/multivariate
 paths:
-  path: /events/{event_ticker}
+  path: /events/multivariate
   method: get
   servers:
     - url: https://api.elections.kalshi.com/trade-api/v2
@@ -18,21 +18,49 @@ paths:
   request:
     security: []
     parameters:
-      path:
-        event_ticker:
+      path: {}
+      query:
+        limit:
+          schema:
+            - type: integer
+              required: false
+              description: >-
+                Number of results per page. Defaults to 100. Maximum value is
+                200.
+              maximum: 200
+              minimum: 1
+              default: 100
+        cursor:
           schema:
             - type: string
-              required: true
-              description: Event ticker
-      query:
+              required: false
+              description: >-
+                Pagination cursor. Use the cursor value returned from the
+                previous response to get the next page of results.
+        series_ticker:
+          schema:
+            - type: string
+              required: false
+              description: >-
+                Filter events by series ticker. Returns only multivariate events
+                belonging to the specified series. Cannot be used together with
+                collection_ticker.
+        collection_ticker:
+          schema:
+            - type: string
+              required: false
+              description: >-
+                Filter events by collection ticker. Returns only multivariate
+                events belonging to the specified collection. Cannot be used
+                together with series_ticker.
         with_nested_markets:
           schema:
             - type: boolean
               required: false
               description: >-
-                If true, markets are included within the event object. If false
-                (default), markets are returned as a separate top-level field in
-                the response.
+                Parameter to specify if nested markets should be included in the
+                response. When true, each event will include a 'markets' field
+                containing a list of Market objects associated with that event.
               default: false
       header: {}
       cookie: {}
@@ -43,181 +71,113 @@ paths:
         schemaArray:
           - type: object
             properties:
-              event:
-                allOf:
-                  - $ref: '#/components/schemas/EventData'
-                    description: Data for the event.
-              markets:
+              events:
                 allOf:
                   - type: array
-                    description: >-
-                      Data for the markets in this event. This field is
-                      deprecated in favour of the "markets" field inside the
-                      event. Which will be filled with the same value if you use
-                      the query parameter "with_nested_markets=true".
+                    description: Array of multivariate events matching the query criteria.
                     items:
-                      $ref: '#/components/schemas/Market'
-            refIdentifier: '#/components/schemas/GetEventResponse'
+                      $ref: '#/components/schemas/EventData'
+              cursor:
+                allOf:
+                  - type: string
+                    description: >-
+                      Pagination cursor for the next page. Empty if there are no
+                      more results.
+            refIdentifier: '#/components/schemas/GetMultivariateEventsResponse'
             requiredProperties:
-              - event
-              - markets
+              - events
+              - cursor
         examples:
           example:
             value:
-              event:
-                event_ticker: <string>
-                series_ticker: <string>
-                sub_title: <string>
-                title: <string>
-                collateral_return_type: <string>
-                mutually_exclusive: true
-                category: <string>
-                strike_date: '2023-11-07T05:31:56Z'
-                strike_period: <string>
-                markets:
-                  - ticker: <string>
-                    event_ticker: <string>
-                    market_type: binary
-                    title: <string>
-                    subtitle: <string>
-                    yes_sub_title: <string>
-                    no_sub_title: <string>
-                    open_time: '2023-11-07T05:31:56Z'
-                    close_time: '2023-11-07T05:31:56Z'
-                    expected_expiration_time: '2023-11-07T05:31:56Z'
-                    expiration_time: '2023-11-07T05:31:56Z'
-                    latest_expiration_time: '2023-11-07T05:31:56Z'
-                    settlement_timer_seconds: 123
-                    status: unopened
-                    response_price_units: cents
-                    yes_bid: 123
-                    yes_bid_dollars: <string>
-                    yes_ask: 123
-                    yes_ask_dollars: <string>
-                    no_bid: 123
-                    no_bid_dollars: <string>
-                    no_ask: 123
-                    no_ask_dollars: <string>
-                    last_price: 123
-                    last_price_dollars: <string>
-                    volume: 123
-                    volume_24h: 123
-                    result: 'yes'
-                    can_close_early: true
-                    open_interest: 123
-                    notional_value: 123
-                    notional_value_dollars: <string>
-                    previous_yes_bid: 123
-                    previous_yes_bid_dollars: <string>
-                    previous_yes_ask: 123
-                    previous_yes_ask_dollars: <string>
-                    previous_price: 123
-                    previous_price_dollars: <string>
-                    liquidity: 123
-                    liquidity_dollars: <string>
-                    settlement_value: 123
-                    settlement_value_dollars: <string>
-                    expiration_value: <string>
-                    category: <string>
-                    risk_limit_cents: 123
-                    fee_waiver_expiration_time: '2023-11-07T05:31:56Z'
-                    early_close_condition: <string>
-                    tick_size: 123
-                    strike_type: greater
-                    floor_strike: 123
-                    cap_strike: 123
-                    functional_strike: <string>
-                    custom_strike: {}
-                    rules_primary: <string>
-                    rules_secondary: <string>
-                    mve_collection_ticker: <string>
-                    mve_selected_legs:
-                      - event_ticker: <string>
-                        market_ticker: <string>
-                        side: <string>
-                    primary_participant_key: <string>
-                    price_level_structure: <string>
-                    price_ranges:
-                      - start: <string>
-                        end: <string>
-                        step: <string>
-                available_on_brokers: true
-                product_metadata: {}
-              markets:
-                - ticker: <string>
-                  event_ticker: <string>
-                  market_type: binary
+              events:
+                - event_ticker: <string>
+                  series_ticker: <string>
+                  sub_title: <string>
                   title: <string>
-                  subtitle: <string>
-                  yes_sub_title: <string>
-                  no_sub_title: <string>
-                  open_time: '2023-11-07T05:31:56Z'
-                  close_time: '2023-11-07T05:31:56Z'
-                  expected_expiration_time: '2023-11-07T05:31:56Z'
-                  expiration_time: '2023-11-07T05:31:56Z'
-                  latest_expiration_time: '2023-11-07T05:31:56Z'
-                  settlement_timer_seconds: 123
-                  status: unopened
-                  response_price_units: cents
-                  yes_bid: 123
-                  yes_bid_dollars: <string>
-                  yes_ask: 123
-                  yes_ask_dollars: <string>
-                  no_bid: 123
-                  no_bid_dollars: <string>
-                  no_ask: 123
-                  no_ask_dollars: <string>
-                  last_price: 123
-                  last_price_dollars: <string>
-                  volume: 123
-                  volume_24h: 123
-                  result: 'yes'
-                  can_close_early: true
-                  open_interest: 123
-                  notional_value: 123
-                  notional_value_dollars: <string>
-                  previous_yes_bid: 123
-                  previous_yes_bid_dollars: <string>
-                  previous_yes_ask: 123
-                  previous_yes_ask_dollars: <string>
-                  previous_price: 123
-                  previous_price_dollars: <string>
-                  liquidity: 123
-                  liquidity_dollars: <string>
-                  settlement_value: 123
-                  settlement_value_dollars: <string>
-                  expiration_value: <string>
+                  collateral_return_type: <string>
+                  mutually_exclusive: true
                   category: <string>
-                  risk_limit_cents: 123
-                  fee_waiver_expiration_time: '2023-11-07T05:31:56Z'
-                  early_close_condition: <string>
-                  tick_size: 123
-                  strike_type: greater
-                  floor_strike: 123
-                  cap_strike: 123
-                  functional_strike: <string>
-                  custom_strike: {}
-                  rules_primary: <string>
-                  rules_secondary: <string>
-                  mve_collection_ticker: <string>
-                  mve_selected_legs:
-                    - event_ticker: <string>
-                      market_ticker: <string>
-                      side: <string>
-                  primary_participant_key: <string>
-                  price_level_structure: <string>
-                  price_ranges:
-                    - start: <string>
-                      end: <string>
-                      step: <string>
-        description: Event retrieved successfully
+                  strike_date: '2023-11-07T05:31:56Z'
+                  strike_period: <string>
+                  markets:
+                    - ticker: <string>
+                      event_ticker: <string>
+                      market_type: binary
+                      title: <string>
+                      subtitle: <string>
+                      yes_sub_title: <string>
+                      no_sub_title: <string>
+                      open_time: '2023-11-07T05:31:56Z'
+                      close_time: '2023-11-07T05:31:56Z'
+                      expected_expiration_time: '2023-11-07T05:31:56Z'
+                      expiration_time: '2023-11-07T05:31:56Z'
+                      latest_expiration_time: '2023-11-07T05:31:56Z'
+                      settlement_timer_seconds: 123
+                      status: unopened
+                      response_price_units: cents
+                      yes_bid: 123
+                      yes_bid_dollars: <string>
+                      yes_ask: 123
+                      yes_ask_dollars: <string>
+                      no_bid: 123
+                      no_bid_dollars: <string>
+                      no_ask: 123
+                      no_ask_dollars: <string>
+                      last_price: 123
+                      last_price_dollars: <string>
+                      volume: 123
+                      volume_24h: 123
+                      result: 'yes'
+                      can_close_early: true
+                      open_interest: 123
+                      notional_value: 123
+                      notional_value_dollars: <string>
+                      previous_yes_bid: 123
+                      previous_yes_bid_dollars: <string>
+                      previous_yes_ask: 123
+                      previous_yes_ask_dollars: <string>
+                      previous_price: 123
+                      previous_price_dollars: <string>
+                      liquidity: 123
+                      liquidity_dollars: <string>
+                      settlement_value: 123
+                      settlement_value_dollars: <string>
+                      expiration_value: <string>
+                      category: <string>
+                      risk_limit_cents: 123
+                      fee_waiver_expiration_time: '2023-11-07T05:31:56Z'
+                      early_close_condition: <string>
+                      tick_size: 123
+                      strike_type: greater
+                      floor_strike: 123
+                      cap_strike: 123
+                      functional_strike: <string>
+                      custom_strike: {}
+                      rules_primary: <string>
+                      rules_secondary: <string>
+                      mve_collection_ticker: <string>
+                      mve_selected_legs:
+                        - event_ticker: <string>
+                          market_ticker: <string>
+                          side: <string>
+                      primary_participant_key: <string>
+                      price_level_structure: <string>
+                      price_ranges:
+                        - start: <string>
+                          end: <string>
+                          step: <string>
+                  available_on_brokers: true
+                  product_metadata: {}
+              cursor: <string>
+        description: Multivariate events retrieved successfully
     '400':
       _mintlify/placeholder:
         schemaArray:
           - type: any
-            description: Bad request
+            description: Bad request - invalid parameters
         examples: {}
-        description: Bad request
+        description: Bad request - invalid parameters
     '401':
       _mintlify/placeholder:
         schemaArray:
@@ -225,13 +185,6 @@ paths:
             description: Unauthorized
         examples: {}
         description: Unauthorized
-    '404':
-      _mintlify/placeholder:
-        schemaArray:
-          - type: any
-            description: Event not found
-        examples: {}
-        description: Event not found
     '500':
       _mintlify/placeholder:
         schemaArray:

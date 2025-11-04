@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2025-11-02T23:37:19.477Z
+lastmod: 2025-11-03T03:42:07.138Z
 ---
 # Get Markets
 
@@ -67,6 +67,15 @@ paths:
               description: >-
                 Filter by specific market tickers. Comma-separated list of
                 market tickers to retrieve.
+        mve_filter:
+          schema:
+            - type: enum<string>
+              enum:
+                - only
+                - exclude
+              description: >-
+                Filter by multivariate events (combos). 'only' returns only
+                multivariate events, 'exclude' excludes multivariate events.
       header: {}
       cookie: {}
     body: {}

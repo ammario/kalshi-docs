@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/create-order
-lastmod: 2025-11-02T23:37:19.280Z
+lastmod: 2025-11-03T03:42:06.929Z
 ---
 # Create Order
 

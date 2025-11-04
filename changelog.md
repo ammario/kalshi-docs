@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-10-24T16:26:56.509Z
+lastmod: 2025-11-03T03:42:16.871Z
 ---
 # API Changelog
 
@@ -13,6 +13,58 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Oct 31, 2025"
+  tags={["Breaking Change", "Upcoming"]}
+  rss={{
+title: "Market status values now consistent between filters and responses",
+description: "Market status responses now use the same vocabulary as filter parameters: unopened, open, closed, settled instead of internal statuses like initialized, active, determined."
+}}
+>
+  Standardized market status values across the API to eliminate confusion between filter parameters and response values. The `status` field in market responses now returns user-facing values that match the filter vocabulary.
+
+  **Breaking Change:**
+  Market responses will return different status values:
+
+  * `"initialized"` → `"unopened"` (market hasn't started trading yet)
+  * `"active"` → `"open"` (market is currently tradeable)
+  * `"determined"` → `"closed"` (market has a result but isn't settled yet)
+  * `"settled"` remains `"settled"` (final result applied, positions settled)
+
+  **Affected Endpoints:**
+
+  * `GET /markets` - returns markets with new status values
+  * `GET /markets/{ticker}` - returns market with new status value
+  * `GET /events` (with `with_nested_markets=true`) - returns events with nested markets using new status values
+  * `GET /events/{event_ticker}` - returns event with markets using new status values
+  * Any endpoint returning Market objects
+</Update>
+
+<Update
+  label="Nov 6, 2025"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Multivariate Events API and Enhanced Market Filtering",
+description: "New endpoint for multivariate events and enhanced market filtering capabilities"
+}}
+>
+  Added comprehensive support for multivariate events (combos) with new API endpoints and enhanced filtering:
+
+  **New Endpoint and deprecation of multivariate events in GetEvents endpoint**
+
+  * `GET /events/multivariate` - Retrieve multivariate events with filtering by series and collection ticker.
+  * `GET /events` will EXCLUDE multivariate events upon the next release (November 13th). Please use the new endpoint!
+
+  **Enhanced Market Filtering:**
+
+  * `GET /markets` now supports `mve_filter` parameter:
+    * `"only"` - Returns only multivariate events
+    * `"exclude"` - Excludes multivariate events
+    * No parameter - Returns all events (default behavior)
+
+  Expected release: `November 6th, 2025`
+</Update>
 
 <Update
   label="Oct 24, 2025"
