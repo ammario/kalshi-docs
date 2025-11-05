@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2025-11-03T03:42:07.018Z
+lastmod: 2025-11-04T20:59:58.522Z
 ---
 # Create RFQ
 
@@ -49,15 +49,25 @@ paths:
                 allOf:
                   - type: integer
                     description: The number of contracts for the RFQ
+                    x-go-type-skip-optional-pointer: true
               target_cost_centi_cents:
                 allOf:
                   - type: integer
                     format: int64
                     description: The target cost for the RFQ in centi-cents
+                    x-go-type-skip-optional-pointer: true
               rest_remainder:
                 allOf:
                   - type: boolean
                     description: Whether to rest the remainder of the RFQ after execution
+              replace_existing:
+                allOf:
+                  - type: boolean
+                    description: >-
+                      Whether to delete existing RFQs as part of this RFQ's
+                      creation
+                    default: false
+                    x-go-type-skip-optional-pointer: true
             required: true
             refIdentifier: '#/components/schemas/CreateRFQRequest'
             requiredProperties:
@@ -70,6 +80,7 @@ paths:
               contracts: 123
               target_cost_centi_cents: 123
               rest_remainder: true
+              replace_existing: false
   response:
     '201':
       application/json:
