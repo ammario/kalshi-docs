@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2025-11-04T20:59:57.993Z
+lastmod: 2025-11-05T23:26:05.635Z
 ---
 # Get Positions
 
@@ -131,6 +131,7 @@ paths:
                 - event_ticker: <string>
                   total_cost: 123
                   total_cost_dollars: <string>
+                  total_cost_shares: 123
                   event_exposure: 123
                   event_exposure_dollars: <string>
                   realized_pnl: 123
@@ -285,6 +286,12 @@ components:
         total_cost_dollars:
           type: string
           description: Total spent on this event in dollars
+        total_cost_shares:
+          type: integer
+          format: int64
+          description: >-
+            Total number of shares traded on this event (including both YES and
+            NO contracts)
         event_exposure:
           type: integer
           description: Cost of the aggregate event position in cents

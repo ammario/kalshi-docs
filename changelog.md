@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-04T16:33:30.866Z
+lastmod: 2025-11-05T23:26:14.087Z
 ---
 # API Changelog
 
@@ -13,6 +13,42 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Nov 6, 2025"
+  tags={["Upcoming"]}
+  rss={{
+title: "Portfolio positions now include total_cost_shares",
+description: "Added total_cost_shares field to portfolio/positions endpoint showing total shares traded per event."
+}}
+>
+  The `GET /portfolio/positions` endpoint now includes `total_cost_shares`, which tracks the total number of shares traded on an event (including both YES and NO contracts).
+</Update>
+
+<Update
+  label="Nov 6, 2025"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Multivariate Events API and Enhanced Market Filtering",
+description: "New endpoint for multivariate events and enhanced market filtering capabilities"
+}}
+>
+  Added comprehensive support for multivariate events (combos) with new API endpoints and enhanced filtering:
+
+  **New Endpoint and deprecation of multivariate events in GetEvents endpoint**
+
+  * `GET /events/multivariate` - Retrieve multivariate events with filtering by series and collection ticker.
+  * `GET /events` will EXCLUDE multivariate events upon the next release (November 13th). Please use the new endpoint!
+
+  **Enhanced Market Filtering:**
+
+  * `GET /markets` now supports `mve_filter` parameter:
+    * `"only"` - Returns only multivariate events
+    * `"exclude"` - Excludes multivariate events
+    * No parameter - Returns all events (default behavior)
+
+  Expected release: `November 6th, 2025`
+</Update>
 
 <Update
   label="Oct 24, 2025"
@@ -32,7 +68,7 @@ description: "Post-only orders that cross the market in batch requests now retur
 
 <Update
   label="Oct 20, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Get Orders endpoint supports multiple event tickers",
 description: "The event_ticker parameter now accepts comma-separated values to filter orders across multiple events."
@@ -54,7 +90,7 @@ description: "The event_ticker parameter now accepts comma-separated values to f
 
 <Update
   label="Oct 19, 2025"
-  tags={["Bug Fix", "Upcoming"]}
+  tags={["Bug Fix", "Released"]}
   rss={{
 title: "Added missing fields to Quote responses",
 description: "Restored rfq_target_cost_centi_cents, rfq_creator_order_id, and creator_order_id fields to Quote API responses"
@@ -65,7 +101,7 @@ description: "Restored rfq_target_cost_centi_cents, rfq_creator_order_id, and cr
 
 <Update
   label="Oct 16, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "'with_milestones' flag on Events API",
 description: "Adds an optional flag to request milestone data along with events."
@@ -78,7 +114,7 @@ description: "Adds an optional flag to request milestone data along with events.
 
 <Update
   label="Oct 14, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Create Order Response Updated",
 description: "Create Order now returns the full Order model"
@@ -89,7 +125,7 @@ description: "Create Order now returns the full Order model"
 
 <Update
   label="Oct 13, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Incentive Programs API includes series_ticker",
 description: "Incentive Programs API responses now include series_ticker field"
@@ -102,7 +138,7 @@ description: "Incentive Programs API responses now include series_ticker field"
 
 <Update
   label="Oct 10, 2025"
-  tags={["Breaking Change", "Upcoming"]}
+  tags={["Breaking Change", "Released"]}
   rss={{
 title: "Price level structure moved from event to market level",
 description: "Price level structure moved from event to market level"
@@ -124,7 +160,7 @@ description: "Price level structure moved from event to market level"
 
 <Update
   label="Oct 13, 2025"
-  tags={["Bug Fix", "Breaking Change", "Upcoming"]}
+  tags={["Bug Fix", "Breaking Change", "Released"]}
   rss={{
 title: "Fixed series tag filtering to support tags with spaces",
 description: "Series tags parameter now only uses comma separation, allowing tags with spaces like 'Rotten Tomatoes' to work correctly"
@@ -163,7 +199,7 @@ description: "Series tags parameter now only uses comma separation, allowing tag
 
 <Update
   label="Oct 8, 2025"
-  tags={["Bug Fix", "Upcoming"]}
+  tags={["Bug Fix", "Released"]}
   rss={{
 title: "Fixed trailing slash redirects on collection endpoints",
 description: "Fixed inconsistent 301 redirects on collection endpoints - requests without trailing slashes now return 200 directly"
@@ -185,7 +221,7 @@ description: "Fixed inconsistent 301 redirects on collection endpoints - request
 
 <Update
   label="Oct 9, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Missing subpenny fields in Orders and Trades",
 description: "Missing subpenny fields in Orders and Trades"
@@ -201,7 +237,7 @@ description: "Missing subpenny fields in Orders and Trades"
 
 <Update
   label="Oct 9, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Subpenny support in WS for RFQs and Quotes",
 description: "Subpenny support in WS for RFQs and Quotes"
@@ -216,7 +252,7 @@ description: "Subpenny support in WS for RFQs and Quotes"
 
 <Update
   label="Oct 7, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Enhanced Portfolio Balance Endpoint",
 description: "Added portfolio_value field to GET /portfolio/balance endpoint"
@@ -227,7 +263,7 @@ description: "Added portfolio_value field to GET /portfolio/balance endpoint"
 
 <Update
   label="Oct 1, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Series Fee Changes API returns user-facing fee type names",
 description: "Series Fee Changes API and notifications now return user-facing fee type names"
@@ -240,7 +276,7 @@ description: "Series Fee Changes API and notifications now return user-facing fe
 
 <Update
   label="Sep 25, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Websocket subscribe idempotent",
 description: "Websocket subscribe idempotent"
@@ -257,7 +293,7 @@ description: "Websocket subscribe idempotent"
 
 <Update
   label="Sep 25, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "FoK orders that self-cross treated as IoC",
 description: "FoK orders that self-cross treated as IoC."
@@ -276,7 +312,7 @@ description: "FoK orders that self-cross treated as IoC."
 
 <Update
   label="Sep 22, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Adding purchased_side to REST and ws fills",
 description: "User seeking a simple way to determine the direction of their fill should reference purchased_side. Both BUY YES or SELL NO result in purchased_side = YES. The addition of this field is the first step in standardizing the fills websocket and REST endpoints, which have different conventions for the interpretation 'side' and 'user_action'"
@@ -289,7 +325,7 @@ description: "User seeking a simple way to determine the direction of their fill
 
 <Update
   label="Sep 21, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Scheduled Series Fees API Endpoint",
 description: "New endpoint for getting all of a series' scheduled fees"
@@ -302,7 +338,7 @@ description: "New endpoint for getting all of a series' scheduled fees"
 
 <Update
   label="Sep 25, 2025"
-  tags={["Upcoming", "Breaking Change"]}
+  tags={["Breaking Change", "Released"]}
   rss={{
 title: "Deprecating order type `market`",
 description: "Deprecating order type `market`"
@@ -321,7 +357,7 @@ description: "Deprecating order type `market`"
 
 <Update
   label="Sep 18, 2025"
-  tags={["Breaking change", "Upcoming"]}
+  tags={["Breaking change", "Released"]}
   rss={{
 title: "Websocket API Session Limit",
 description: "Websocket API Session Limit"
@@ -332,7 +368,7 @@ description: "Websocket API Session Limit"
 
 <Update
   label="Sep 18, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Communications WS channel",
 description: "Streamed RFQs and quotes"
@@ -343,7 +379,7 @@ description: "Streamed RFQs and quotes"
 
 <Update
   label="Sep 15, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Additional RFQ and market metadata",
 description: "MVE related meatadata"
@@ -354,7 +390,7 @@ description: "MVE related meatadata"
 
 <Update
   label="Sep 15, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Event Candlesticks API Endpoint",
 description: "New endpoint for getting event candlesticks"
@@ -380,7 +416,7 @@ description: "Official TypeScript SDK now available via NPM"
 
 <Update
   label="Sep 11, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Forecast Percentiles History API Endpoint",
 description: "New endpoint for getting forecast percentiles history"
@@ -393,7 +429,7 @@ description: "New endpoint for getting forecast percentiles history"
 
 <Update
   label="Sep 10, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Incentive Programs API Endpoint",
 description: "New endpoint for retrieving incentive program information"
@@ -406,7 +442,7 @@ description: "New endpoint for retrieving incentive program information"
 
 <Update
   label="Sep 9, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Subpenny pricing added to websocket",
 description: "Subpenny pricing added to websocket"
@@ -420,7 +456,7 @@ description: "Subpenny pricing added to websocket"
 
 <Update
   label="Sep 9, 2025"
-  tags={["Upcoming"]}
+  tags={["Released"]}
   rss={{
 title: "Events endpoints now return broker availability",
 description: "Events endpoints now return broker availabilit"
@@ -443,7 +479,7 @@ description: "Python SDK"
 
 <Update
   label="Aug 31, 2025"
-  tags={["Breaking Change", "Upcoming"]}
+  tags={["Breaking Change", "Released"]}
   rss={{
 title: "Exposing read-only subpenny pricing",
 description: "Exposing read-only subpenny pricing in the API."

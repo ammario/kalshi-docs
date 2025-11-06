@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2025-11-04T20:59:58.522Z
+lastmod: 2025-11-05T23:26:05.933Z
 ---
 # Create RFQ
 
@@ -68,6 +68,11 @@ paths:
                       creation
                     default: false
                     x-go-type-skip-optional-pointer: true
+              subtrader_id:
+                allOf:
+                  - type: string
+                    description: The subtrader to create the RFQ for (FCM members only)
+                    x-go-type-skip-optional-pointer: true
             required: true
             refIdentifier: '#/components/schemas/CreateRFQRequest'
             requiredProperties:
@@ -81,6 +86,7 @@ paths:
               target_cost_centi_cents: 123
               rest_remainder: true
               replace_existing: false
+              subtrader_id: <string>
   response:
     '201':
       application/json:

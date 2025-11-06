@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2025-11-04T20:59:57.966Z
+lastmod: 2025-11-05T23:26:05.628Z
 ---
 # Get Balance
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-exchange-status
-lastmod: 2025-11-04T20:59:57.843Z
+lastmod: 2025-11-05T23:26:05.594Z
 ---
 # Get Exchange Status
 
