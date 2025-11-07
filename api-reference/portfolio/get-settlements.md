@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2025-11-05T23:26:05.642Z
+lastmod: 2025-11-06T21:21:13.199Z
 ---
 # Get Settlements
 
@@ -100,6 +100,7 @@ paths:
                   no_total_cost: 123
                   revenue: 123
                   settled_time: '2023-11-07T05:31:56Z'
+                  fee_cost: '0.3400'
                   value: 123
               cursor: <string>
         description: Settlements retrieved successfully
@@ -204,6 +205,7 @@ components:
         - no_total_cost
         - revenue
         - settled_time
+        - fee_cost
       properties:
         ticker:
           type: string
@@ -243,6 +245,10 @@ components:
           type: string
           format: date-time
           description: Timestamp when the market was settled and payouts were processed.
+        fee_cost:
+          type: string
+          example: '0.3400'
+          description: Total fees paid in fixed point dollars.
         value:
           type: integer
           nullable: true

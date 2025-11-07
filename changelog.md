@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-05T23:26:14.087Z
+lastmod: 2025-11-06T21:21:22.826Z
 ---
 # API Changelog
 
@@ -13,6 +13,31 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Nov 13, 2025"
+  tags={["Upcoming"]}
+  rss={{
+title: "Settlements API returns fee cost",
+description: "Settlements API returns fee cost"
+}}
+>
+  `GET /portfolio/settlements` now returns the sum of trade fees paid by the user on a settled market position.
+</Update>
+
+<Update
+  label="Nov 6, 2025"
+  tags={["Bug Fix", "Upcoming"]}
+  rss={{
+title: "GetEvents limit parameter now defaults to 200 and respects the parameter.",
+description: "Fixed GetEvents limit parameter."
+}}
+>
+  Fixed two issues with the `GET /events` endpoint's `limit` parameter:
+
+  * **Default increased**: The default limit is now 200 (previously 100) to return more results per page
+  * **Parameter**: Requests with `with_nested_markets=true` now properly respect `limit=200` instead of being capped at 100
+</Update>
 
 <Update
   label="Nov 6, 2025"

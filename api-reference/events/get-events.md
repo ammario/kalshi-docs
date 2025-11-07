@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2025-11-05T23:26:05.722Z
+lastmod: 2025-11-06T21:21:13.292Z
 ---
 # Get Events
 
@@ -26,10 +26,10 @@ paths:
               required: false
               description: >-
                 Parameter to specify the number of results per page. Defaults to
-                100. Maximum value is 200.
+                200. Maximum value is 200.
               maximum: 200
               minimum: 1
-              default: 100
+              default: 200
         cursor:
           schema:
             - type: string

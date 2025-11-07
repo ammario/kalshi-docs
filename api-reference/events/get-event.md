@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2025-11-05T23:26:05.737Z
+lastmod: 2025-11-06T21:21:13.308Z
 ---
 # Get Event
 

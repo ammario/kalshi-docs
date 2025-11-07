@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/create-order
-lastmod: 2025-11-05T23:26:05.862Z
+lastmod: 2025-11-06T21:21:13.460Z
 ---
 # Create Order
 
@@ -108,9 +108,9 @@ paths:
                 allOf:
                   - type: string
                     enum:
-                      - FOK
-                      - GTC
-                      - IOC
+                      - fill_or_kill
+                      - good_till_canceled
+                      - immediate_or_cancel
               buy_max_cost:
                 allOf:
                   - type: integer
@@ -168,7 +168,7 @@ paths:
               yes_price_dollars: '0.5000'
               no_price_dollars: '0.5000'
               expiration_ts: 123
-              time_in_force: FOK
+              time_in_force: fill_or_kill
               buy_max_cost: 123
               post_only: true
               reduce_only: true
