@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/search/get-filters-for-sports
-lastmod: 2025-11-06T21:21:13.254Z
+lastmod: 2025-11-07T20:56:39.231Z
 ---
 # Get Filters for Sports
 

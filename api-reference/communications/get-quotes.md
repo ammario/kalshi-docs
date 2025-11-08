@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2025-11-06T21:21:13.571Z
+lastmod: 2025-11-07T20:56:39.599Z
 ---
 # Get Quotes
 
@@ -56,7 +56,9 @@ paths:
         event_ticker:
           schema:
             - type: string
-              description: Filter quotes by event ticker
+              description: >-
+                Event ticker of desired positions. Multiple event tickers can be
+                provided as a comma-separated list (maximum 10).
         status:
           schema:
             - type: string

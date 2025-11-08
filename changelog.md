@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-06T21:21:22.826Z
+lastmod: 2025-11-07T06:31:35.223Z
 ---
 # API Changelog
 
@@ -13,6 +13,20 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Nov 7, 2025"
+  tags={["Breaking Change", "Upcoming"]}
+  rss={{
+title: "Resting market positions filter removed",
+description: "Resting market positions filter removed"
+}}
+>
+  **Breaking Change:** `GET /portfolio/positions` will no longer return `resting_order_count`.
+  Additionally, the `resting_order_count` filter will no longer be supported.
+
+  Expected release: `November 13, 2025`
+</Update>
 
 <Update
   label="Nov 13, 2025"

@@ -1,10 +1,10 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2025-11-06T21:21:13.191Z
+lastmod: 2025-11-07T20:56:39.168Z
 ---
 # Get Positions
 
-> Restricts the positions to those with any of following fields with non-zero values, as a comma separated list. The following values are accepted: position, total_traded, resting_order_count
+> Restricts the positions to those with any of following fields with non-zero values, as a comma separated list. The following values are accepted: position, total_traded
 
 ## OpenAPI
 
@@ -56,8 +56,7 @@ paths:
               description: >-
                 Restricts the positions to those with any of following fields
                 with non-zero values, as a comma separated list. The following
-                values are accepted - position, total_traded,
-                resting_order_count
+                values are accepted - position, total_traded
         settlement_status:
           schema:
             - type: enum<string>
@@ -236,6 +235,7 @@ components:
         ticker:
           type: string
           description: Unique identifier for the market
+          x-go-type-skip-optional-pointer: true
         total_traded:
           type: integer
           description: Total spent on this market in cents
@@ -263,7 +263,7 @@ components:
         resting_orders_count:
           type: integer
           format: int32
-          description: Aggregate size of resting orders in contract units
+          description: '[DEPRECATED] Aggregate size of resting orders in contract units'
         fees_paid:
           type: integer
           description: Fees paid on fill orders, in cents
@@ -280,6 +280,7 @@ components:
         event_ticker:
           type: string
           description: Unique identifier for events
+          x-go-type-skip-optional-pointer: true
         total_cost:
           type: integer
           description: Total spent on this event in cents
@@ -306,7 +307,7 @@ components:
           description: Locked in profit and loss, in dollars
         resting_order_count:
           type: integer
-          description: Aggregate size of resting orders in contract units
+          description: '[DEPRECATED] Aggregate size of resting orders in contract units'
         fees_paid:
           type: integer
           description: Fees paid on fill orders, in cents

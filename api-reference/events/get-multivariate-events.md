@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-multivariate-events
-lastmod: 2025-11-06T21:21:13.299Z
+lastmod: 2025-11-07T20:56:39.277Z
 ---
 # Get Multivariate Events
 
@@ -40,11 +40,7 @@ paths:
         series_ticker:
           schema:
             - type: string
-              required: false
-              description: >-
-                Filter events by series ticker. Returns only multivariate events
-                belonging to the specified series. Cannot be used together with
-                collection_ticker.
+              description: Filter by series ticker
         collection_ticker:
           schema:
             - type: string

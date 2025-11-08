@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
-lastmod: 2025-11-06T21:21:13.362Z
+lastmod: 2025-11-07T20:56:39.338Z
 ---
 # Get FCM Positions
 
@@ -180,6 +180,7 @@ components:
         ticker:
           type: string
           description: Unique identifier for the market
+          x-go-type-skip-optional-pointer: true
         total_traded:
           type: integer
           description: Total spent on this market in cents
@@ -207,7 +208,7 @@ components:
         resting_orders_count:
           type: integer
           format: int32
-          description: Aggregate size of resting orders in contract units
+          description: '[DEPRECATED] Aggregate size of resting orders in contract units'
         fees_paid:
           type: integer
           description: Fees paid on fill orders, in cents
@@ -224,6 +225,7 @@ components:
         event_ticker:
           type: string
           description: Unique identifier for events
+          x-go-type-skip-optional-pointer: true
         total_cost:
           type: integer
           description: Total spent on this event in cents
@@ -250,7 +252,7 @@ components:
           description: Locked in profit and loss, in dollars
         resting_order_count:
           type: integer
-          description: Aggregate size of resting orders in contract units
+          description: '[DEPRECATED] Aggregate size of resting orders in contract units'
         fees_paid:
           type: integer
           description: Fees paid on fill orders, in cents

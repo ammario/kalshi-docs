@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2025-11-06T21:21:13.292Z
+lastmod: 2025-11-07T20:56:39.269Z
 ---
 # Get Events
 
@@ -69,10 +69,7 @@ paths:
         series_ticker:
           schema:
             - type: string
-              required: false
-              description: >-
-                Filter events by series ticker. Returns only events belonging to
-                the specified series.
+              description: Filter by series ticker
         min_close_ts:
           schema:
             - type: integer
