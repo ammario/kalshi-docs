@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/accept-quote
-lastmod: 2025-11-07T20:56:39.631Z
+lastmod: 2025-11-08T05:38:40.303Z
 ---
 # Accept Quote
 

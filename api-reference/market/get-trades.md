@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-trades
-lastmod: 2025-11-07T20:56:39.246Z
+lastmod: 2025-11-08T05:38:39.978Z
 ---
 # Get Trades
 
@@ -66,6 +66,9 @@ paths:
                 allOf:
                   - type: string
             refIdentifier: '#/components/schemas/GetTradesResponse'
+            requiredProperties:
+              - trades
+              - cursor
         examples:
           example:
             value:
@@ -102,6 +105,16 @@ components:
   schemas:
     Trade:
       type: object
+      required:
+        - trade_id
+        - ticker
+        - price
+        - count
+        - yes_price
+        - no_price
+        - yes_price_dollars
+        - no_price_dollars
+        - taker_side
       properties:
         trade_id:
           type: string

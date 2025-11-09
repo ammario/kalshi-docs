@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/decrease-order
-lastmod: 2025-11-07T20:56:39.544Z
+lastmod: 2025-11-08T05:38:40.215Z
 ---
 # Decrease Order
 

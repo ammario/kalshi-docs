@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2025-11-07T20:56:39.254Z
+lastmod: 2025-11-08T05:38:39.985Z
 ---
 # Get Fills
 
@@ -84,6 +84,9 @@ paths:
                 allOf:
                   - type: string
             refIdentifier: '#/components/schemas/GetFillsResponse'
+            requiredProperties:
+              - fills
+              - cursor
         examples:
           example:
             value:
@@ -134,6 +137,21 @@ components:
   schemas:
     Fill:
       type: object
+      required:
+        - fill_id
+        - trade_id
+        - order_id
+        - ticker
+        - market_ticker
+        - side
+        - action
+        - count
+        - price
+        - yes_price
+        - no_price
+        - yes_price_fixed
+        - no_price_fixed
+        - is_taker
       properties:
         fill_id:
           type: string
