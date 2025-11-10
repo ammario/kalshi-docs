@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-orders
-lastmod: 2025-11-08T05:38:40.063Z
+lastmod: 2025-11-09T19:45:59.318Z
 ---
 # Get FCM Orders
 
@@ -36,17 +36,23 @@ paths:
     parameters:
       path: {}
       query:
-        ticker:
+        cursor:
           schema:
             - type: string
-              description: Restricts the response to orders in a single market
+              description: >-
+                Pagination cursor. Use the cursor value returned from the
+                previous response to get the next page of results. Leave empty
+                for the first page.
         event_ticker:
           schema:
             - type: string
               description: >-
-                Restricts the response to orders in a single event. Multiple
-                event tickers can be provided as a comma-separated list (maximum
-                10).
+                Event ticker of desired positions. Multiple event tickers can be
+                provided as a comma-separated list (maximum 10).
+        ticker:
+          schema:
+            - type: string
+              description: Filter by market ticker
         min_ts:
           schema:
             - type: integer
@@ -75,12 +81,6 @@ paths:
                 100
               maximum: 1000
               minimum: 1
-        cursor:
-          schema:
-            - type: string
-              description: >-
-                The Cursor represents a pointer to the next page of records in
-                the pagination
         subtrader_id:
           schema:
             - type: string
@@ -141,7 +141,7 @@ paths:
                   created_time: '2023-11-07T05:31:56Z'
                   last_update_time: '2023-11-07T05:31:56Z'
                   self_trade_prevention_type: taker_at_cross
-                  order_group_id: 3c90c3cc-0d44-4b50-8888-8dd25736052a
+                  order_group_id: <string>
                   cancel_order_on_pause: true
               cursor: <string>
         description: Orders retrieved successfully
@@ -235,9 +235,9 @@ components:
             - executed
             - pending
         yes_price:
-          type: number
+          type: integer
         no_price:
-          type: number
+          type: integer
         yes_price_dollars:
           type: string
           description: The yes price for this order in fixed-point dollars
@@ -311,7 +311,6 @@ components:
           description: The self-trade prevention type for this order
         order_group_id:
           type: string
-          format: uuid
           nullable: true
           description: The order group this order is part of
         cancel_order_on_pause:

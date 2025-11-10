@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-07T06:31:35.223Z
+lastmod: 2025-11-09T19:09:12.729Z
 ---
 # API Changelog
 
@@ -22,8 +22,8 @@ title: "Resting market positions filter removed",
 description: "Resting market positions filter removed"
 }}
 >
-  **Breaking Change:** `GET /portfolio/positions` will no longer return `resting_order_count`.
-  Additionally, the `resting_order_count` filter will no longer be supported.
+  * `GET /portfolio/positions` will no longer return `resting_orders_count` in both the `event_positions` and `market_positions` field.
+  * The `resting_order_count` filter on `GET /portfolio/positions` will no longer be supported. Requests specifying this filter will return a 400 error.
 
   Expected release: `November 13, 2025`
 </Update>

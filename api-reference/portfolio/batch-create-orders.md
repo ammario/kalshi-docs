@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/batch-create-orders
-lastmod: 2025-11-08T05:38:40.170Z
+lastmod: 2025-11-09T19:45:59.417Z
 ---
 # Batch Create Orders
 
@@ -123,7 +123,7 @@ paths:
                     created_time: '2023-11-07T05:31:56Z'
                     last_update_time: '2023-11-07T05:31:56Z'
                     self_trade_prevention_type: taker_at_cross
-                    order_group_id: 3c90c3cc-0d44-4b50-8888-8dd25736052a
+                    order_group_id: <string>
                     cancel_order_on_pause: true
                   error:
                     code: <string>
@@ -312,9 +312,9 @@ components:
             - executed
             - pending
         yes_price:
-          type: number
+          type: integer
         no_price:
-          type: number
+          type: integer
         yes_price_dollars:
           type: string
           description: The yes price for this order in fixed-point dollars
@@ -388,7 +388,6 @@ components:
           description: The self-trade prevention type for this order
         order_group_id:
           type: string
-          format: uuid
           nullable: true
           description: The order group this order is part of
         cancel_order_on_pause:
@@ -410,6 +409,7 @@ components:
             validate: required,min=1
         client_order_id:
           type: string
+          x-go-type-skip-optional-pointer: true
         side:
           type: string
           enum:
@@ -438,13 +438,15 @@ components:
           x-oapi-codegen-extra-tags:
             validate: omitempty,oneof=limit market
         yes_price:
-          type: number
+          type: integer
           minimum: 1
           maximum: 99
+          x-go-type-skip-optional-pointer: true
         no_price:
-          type: number
+          type: integer
           minimum: 1
           maximum: 99
+          x-go-type-skip-optional-pointer: true
         yes_price_dollars:
           type: string
           description: Submitting price of the Yes side in fixed-point dollars
@@ -462,6 +464,11 @@ components:
             - fill_or_kill
             - good_till_canceled
             - immediate_or_cancel
+          x-oapi-codegen-extra-tags:
+            validate: >-
+              omitempty,oneof=fill_or_kill good_till_canceled
+              immediate_or_cancel
+          x-go-type-skip-optional-pointer: true
         buy_max_cost:
           type: integer
           description: >-
@@ -480,9 +487,13 @@ components:
             - taker_at_cross
             - maker
           description: The self-trade prevention type for this order
+          x-oapi-codegen-extra-tags:
+            validate: omitempty,oneof=taker_at_cross maker
+          x-go-type-skip-optional-pointer: true
         order_group_id:
           type: string
           description: The order group this order is part of
+          x-go-type-skip-optional-pointer: true
         cancel_order_on_pause:
           type: boolean
           description: >-

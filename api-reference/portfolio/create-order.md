@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/create-order
-lastmod: 2025-11-08T05:38:40.162Z
+lastmod: 2025-11-09T19:45:59.410Z
 ---
 # Create Order
 
@@ -49,6 +49,7 @@ paths:
               client_order_id:
                 allOf:
                   - type: string
+                    x-go-type-skip-optional-pointer: true
               side:
                 allOf:
                   - type: string
@@ -82,14 +83,16 @@ paths:
                       validate: omitempty,oneof=limit market
               yes_price:
                 allOf:
-                  - type: number
+                  - type: integer
                     minimum: 1
                     maximum: 99
+                    x-go-type-skip-optional-pointer: true
               no_price:
                 allOf:
-                  - type: number
+                  - type: integer
                     minimum: 1
                     maximum: 99
+                    x-go-type-skip-optional-pointer: true
               yes_price_dollars:
                 allOf:
                   - type: string
@@ -111,6 +114,11 @@ paths:
                       - fill_or_kill
                       - good_till_canceled
                       - immediate_or_cancel
+                    x-oapi-codegen-extra-tags:
+                      validate: >-
+                        omitempty,oneof=fill_or_kill good_till_canceled
+                        immediate_or_cancel
+                    x-go-type-skip-optional-pointer: true
               buy_max_cost:
                 allOf:
                   - type: integer
@@ -136,10 +144,14 @@ paths:
                       - taker_at_cross
                       - maker
                     description: The self-trade prevention type for this order
+                    x-oapi-codegen-extra-tags:
+                      validate: omitempty,oneof=taker_at_cross maker
+                    x-go-type-skip-optional-pointer: true
               order_group_id:
                 allOf:
                   - type: string
                     description: The order group this order is part of
+                    x-go-type-skip-optional-pointer: true
               cancel_order_on_pause:
                 allOf:
                   - type: boolean
@@ -220,7 +232,7 @@ paths:
                 created_time: '2023-11-07T05:31:56Z'
                 last_update_time: '2023-11-07T05:31:56Z'
                 self_trade_prevention_type: taker_at_cross
-                order_group_id: 3c90c3cc-0d44-4b50-8888-8dd25736052a
+                order_group_id: <string>
                 cancel_order_on_pause: true
         description: Order created successfully
     '400':
@@ -423,9 +435,9 @@ components:
             - executed
             - pending
         yes_price:
-          type: number
+          type: integer
         no_price:
-          type: number
+          type: integer
         yes_price_dollars:
           type: string
           description: The yes price for this order in fixed-point dollars
@@ -499,7 +511,6 @@ components:
           description: The self-trade prevention type for this order
         order_group_id:
           type: string
-          format: uuid
           nullable: true
           description: The order group this order is part of
         cancel_order_on_pause:

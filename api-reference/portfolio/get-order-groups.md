@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-order-groups
-lastmod: 2025-11-08T05:38:40.117Z
+lastmod: 2025-11-09T19:45:59.368Z
 ---
 # Get Order Groups
 
@@ -33,27 +33,7 @@ paths:
           cookie: {}
     parameters:
       path: {}
-      query:
-        status:
-          schema:
-            - type: string
-              description: Filter by status. Possible values depend on the endpoint.
-        limit:
-          schema:
-            - type: integer
-              description: >-
-                Number of results per page. Defaults to 100. Maximum value is
-                200.
-              maximum: 200
-              minimum: 1
-              default: 100
-        cursor:
-          schema:
-            - type: string
-              description: >-
-                Pagination cursor. Use the cursor value returned from the
-                previous response to get the next page of results. Leave empty
-                for the first page.
+      query: {}
       header: {}
       cookie: {}
     body: {}

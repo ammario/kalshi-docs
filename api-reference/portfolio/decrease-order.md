@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/decrease-order
-lastmod: 2025-11-08T05:38:40.215Z
+lastmod: 2025-11-09T19:45:59.460Z
 ---
 # Decrease Order
 
@@ -105,7 +105,7 @@ paths:
                 created_time: '2023-11-07T05:31:56Z'
                 last_update_time: '2023-11-07T05:31:56Z'
                 self_trade_prevention_type: taker_at_cross
-                order_group_id: 3c90c3cc-0d44-4b50-8888-8dd25736052a
+                order_group_id: <string>
                 cancel_order_on_pause: true
         description: Order decreased successfully
     '400':
@@ -282,9 +282,9 @@ components:
             - executed
             - pending
         yes_price:
-          type: number
+          type: integer
         no_price:
-          type: number
+          type: integer
         yes_price_dollars:
           type: string
           description: The yes price for this order in fixed-point dollars
@@ -358,7 +358,6 @@ components:
           description: The self-trade prevention type for this order
         order_group_id:
           type: string
-          format: uuid
           nullable: true
           description: The order group this order is part of
         cancel_order_on_pause:

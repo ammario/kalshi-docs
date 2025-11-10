@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2025-11-08T05:38:40.271Z
+lastmod: 2025-11-09T19:45:59.512Z
 ---
 # Get Quotes
 
@@ -38,8 +38,19 @@ paths:
           schema:
             - type: string
               description: >-
-                The cursor represents a pointer to the next page of records in
-                the pagination
+                Pagination cursor. Use the cursor value returned from the
+                previous response to get the next page of results. Leave empty
+                for the first page.
+        event_ticker:
+          schema:
+            - type: string
+              description: >-
+                Event ticker of desired positions. Multiple event tickers can be
+                provided as a comma-separated list (maximum 10).
+        market_ticker:
+          schema:
+            - type: string
+              description: Filter by market ticker
         limit:
           schema:
             - type: integer
@@ -49,16 +60,6 @@ paths:
               maximum: 500
               minimum: 1
               default: 500
-        market_ticker:
-          schema:
-            - type: string
-              description: Filter quotes by market ticker
-        event_ticker:
-          schema:
-            - type: string
-              description: >-
-                Event ticker of desired positions. Multiple event tickers can be
-                provided as a comma-separated list (maximum 10).
         status:
           schema:
             - type: string
