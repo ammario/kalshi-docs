@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2025-11-01T02:16:13.309Z
+lastmod: 2025-11-10T03:16:22.873Z
 ---
 # Connectivity
 
@@ -63,7 +63,9 @@ Before logging onto a FIX session, clients must establish a secure connection to
 
 ### SSL/TLS Requirements
 
-If your FIX implementation does not support establishing a native TCP SSL connection, you must set up a local proxy such as stunnel to establish a secure connection to our FIX gateway.
+**You must use TLS/SSL (not plain TCP) to connect to the FIX gateway.** Plain TCP connections will fail because the gateway requires a TLS handshake.
+
+If your FIX implementation does not support native TLS connections, set up a local proxy such as stunnel to establish a secure connection.
 
 <Note>
   Kalshi will provide the certificate for pinning on the initiator side when providing your API key.
@@ -133,13 +135,16 @@ The drop copy session endpoint provides an alternative way for clients to query 
 
 <AccordionGroup>
   <Accordion title="SSL/TLS Connection Failed">
+    * **Verify you are using TLS, not plain TCP** - this is the most common issue
+    * Check your FIX library settings to ensure TLS/SSL mode is enabled
     * Verify certificate configuration
-    * Check if stunnel or similar proxy is needed
+    * Check if stunnel or similar proxy is needed if your library doesn't support native TLS
   </Accordion>
 
   <Accordion title="Logon Rejected">
     * Verify SenderCompID matches your FIX API key
     * Check TargetCompID matches the port number
     * Ensure ResetSeqNumFlag is set correctly for non-retransmission endpoints
+    * Verify signature generation uses the exact SendingTime from field 52
   </Accordion>
 </AccordionGroup>

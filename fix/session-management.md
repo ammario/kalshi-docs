@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/session-management
-lastmod: 2025-11-01T02:16:13.313Z
+lastmod: 2025-11-10T03:16:22.875Z
 ---
 # Session Management
 
@@ -73,6 +73,15 @@ The RawData field must contain a PSS RSA signature of the pre-hash string:
 PreHashString = SendingTime + SOH + MsgType + SOH + MsgSeqNum + SOH + SenderCompID + SOH + TargetCompID
 ```
 
+<Warning>
+  **Critical: SendingTime in Signature**
+
+  The SendingTime in the PreHashString must match **exactly** the value in field 52 of your logon message.
+
+  * **Using a FIX library:** Most libraries auto-add SendingTime. Use that exact value (don't manually add a timestamp) when generating the signature.
+  * **Building the message yourself:** Include SendingTime in your message and use that same value in the PreHashString. Format: `YYYYMMDD-HH:MM:SS.mmm`
+</Warning>
+
 <CodeGroup>
   ```python Python theme={null}
   from base64 import b64encode
@@ -84,6 +93,9 @@ PreHashString = SendingTime + SOH + MsgType + SOH + MsgSeqNum + SOH + SenderComp
   private_key = RSA.import_key(open('kalshi-fix.key').read().encode('utf-8'))
 
   # Build message string
+  # IMPORTANT: Use the EXACT SendingTime that will appear in field 52
+  # If constructing the message yourself: generate SendingTime and use it here
+  # If using a library: use the SendingTime value that your library will set
   sending_time = "20230809-05:28:18.035"
   msg_type = "A"
   msg_seq_num = "1"
