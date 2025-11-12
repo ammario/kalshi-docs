@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-09T19:09:12.729Z
+lastmod: 2025-11-11T22:30:18.378Z
 ---
 # API Changelog
 
@@ -13,6 +13,44 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Nov 11, 2025"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Restrictions to GetMarkets Filters",
+description: "Restrictions to GetMarkets Filters"
+}}
+>
+  Breaking changes planned to `GET /markets` endpoint for performance reasons:
+
+  * Only one `status` filter may be supplied at a time.
+  * Timestamp filters will be mutually exclusive from other timestamp filters and certain status filters.
+
+  | Compatible Timestamp Filters       | Additional Status Filters   |
+  | ---------------------------------- | --------------------------- |
+  | min\_created\_ts, max\_created\_ts | `unopened`, `open`, *empty* |
+  | min\_close\_ts, max\_close\_ts     | `closed`, *empty*           |
+  | min\_settled\_ts, max\_settled\_ts | `settled`, *empty*          |
+
+  Expected release: `November 20, 2025`
+</Update>
+
+<Update
+  label="Nov 11, 2025"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "New timestamp filters for Markets API",
+description: "New timestamp filters for Markets API"
+}}
+>
+  Added new timestamp filters for the `GET /markets` endpoint:
+
+  * `min_created_ts`
+  * `max_created_ts`
+  * `min_settled_ts`
+  * `max_settled_ts`
+</Update>
 
 <Update
   label="Nov 7, 2025"

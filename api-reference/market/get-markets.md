@@ -1,10 +1,19 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2025-11-09T19:45:59.607Z
+lastmod: 2025-11-11T22:30:08.538Z
 ---
 # Get Markets
 
-> Filter by market status. Comma-separated list. Possible values: 'unopened', 'open', 'closed', 'settled'. Leave empty to return markets with any status.
+> Filter by market status. Possible values: `unopened`, `open`, `closed`, `settled`. Leave empty to return markets with any status.
+ - Only one `status` filter may be supplied at a time. 
+ - Timestamp filters will be mutually exclusive from other timestamp filters and certain status filters.
+
+ | Compatible Timestamp Filters | Additional Status Filters|
+ |------------------------------|--------------------------|
+ | min_created_ts, max_created_ts | `unopened`, `open`, *empty* |
+ | min_close_ts, max_close_ts | `closed`, *empty* |
+ | min_settled_ts, max_settled_ts | `settled`, *empty* |
+
 
 ## OpenAPI
 
@@ -46,6 +55,14 @@ paths:
           schema:
             - type: string
               description: Filter by series ticker
+        min_created_ts:
+          schema:
+            - type: integer
+              description: Filter items that created after this Unix timestamp
+        max_created_ts:
+          schema:
+            - type: integer
+              description: Filter items that created before this Unix timestamp
         max_close_ts:
           schema:
             - type: integer
@@ -54,6 +71,14 @@ paths:
           schema:
             - type: integer
               description: Filter items that close after this Unix timestamp
+        min_settled_ts:
+          schema:
+            - type: integer
+              description: Filter items that settled after this Unix timestamp
+        max_settled_ts:
+          schema:
+            - type: integer
+              description: Filter items that settled before this Unix timestamp
         status:
           schema:
             - type: string
