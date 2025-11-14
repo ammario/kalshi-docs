@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-multivariate-events
-lastmod: 2025-11-11T22:30:08.169Z
+lastmod: 2025-11-14T01:04:15.576Z
 ---
 # Get Multivariate Events
 

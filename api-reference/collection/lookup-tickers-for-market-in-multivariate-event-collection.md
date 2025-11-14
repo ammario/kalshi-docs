@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/collection/lookup-tickers-for-market-in-multivariate-event-collection
-lastmod: 2025-11-11T22:30:08.507Z
+lastmod: 2025-11-14T01:04:15.849Z
 ---
 # Lookup Tickers For Market In Multivariate Event Collection
 

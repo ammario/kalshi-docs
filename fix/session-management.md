@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/session-management
-lastmod: 2025-11-10T03:16:22.875Z
+lastmod: 2025-11-14T02:02:56.817Z
 ---
 # Session Management
 
@@ -52,6 +52,7 @@ The initiator must send a Logon message to establish a session. The acceptor wil
 | ---- | ---------------- | ------------------------------ | ------------------------ |
 | 98   | EncryptMethod    | Method of encryption           | None\<0>                 |
 | 96   | RawData          | Client logon message signature | Base64 encoded signature |
+| 108  | HeartbeatInt     | Heartbeat interval (seconds)   | N > 3                    |
 | 1137 | DefaultApplVerID | Default application version    | FIX50SP2\<9>             |
 
 ### Optional Fields
@@ -64,6 +65,7 @@ The initiator must send a Logon message to establish a session. The acceptor wil
 | 20127 | ReceiveSettlementReports | Receive settlement reports (KalshiRT only)                                               | N       |
 | 20200 | MessageRetentionPeriod   | How long session messages will be store for retransmission (KalshiRT and KalshiRFQ only) | 3       |
 | 21003 | SkipPendingExecReports   | Skip PENDING\_\{NEW\|REPLACE\|CANCEL} execution reports                                  | N       |
+| 21007 | EnableIocCancelReport    | Partially filled IOC orders produce a cancel report                                      | N       |
 
 ### Signature Generation
 
@@ -208,14 +210,13 @@ Graceful session termination:
 
 All messages must include standard FIX headers:
 
-| Tag  | Name        | Description             | Requirements                      |
-| ---- | ----------- | ----------------------- | --------------------------------- |
-| 8    | BeginString | Protocol version        | FIXT.1.1 (must be first)          |
-| 9    | BodyLength  | Message length in bytes | Must be second                    |
-| 34   | MsgSeqNum   | Message sequence number | Unique, incrementing              |
-| 35   | MsgType     | Message type            | Must be third                     |
-| 52   | SendingTime | UTC timestamp           | Within 120 seconds of server time |
-| 1137 | ApplVerID   | Application version     | Only FIX50SP2\<9> is accepted     |
+| Tag | Name        | Description             | Requirements                      |
+| --- | ----------- | ----------------------- | --------------------------------- |
+| 8   | BeginString | Protocol version        | FIXT.1.1 (must be first)          |
+| 9   | BodyLength  | Message length in bytes | Must be second                    |
+| 34  | MsgSeqNum   | Message sequence number | Unique, incrementing              |
+| 35  | MsgType     | Message type            | Must be third                     |
+| 52  | SendingTime | UTC timestamp           | Within 120 seconds of server time |
 
 ### Message Trailers
 

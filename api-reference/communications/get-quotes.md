@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2025-11-11T22:30:08.431Z
+lastmod: 2025-11-14T01:04:15.785Z
 ---
 # Get Quotes
 
@@ -72,6 +72,10 @@ paths:
           schema:
             - type: string
               description: Filter quotes by RFQ creator user ID
+        rfq_creator_subtrader_id:
+          schema:
+            - type: string
+              description: Filter quotes by RFQ creator subtrader ID (FCM members only)
         rfq_id:
           schema:
             - type: string

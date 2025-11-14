@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/reset-order-group
-lastmod: 2025-11-11T22:30:08.309Z
+lastmod: 2025-11-14T01:04:15.686Z
 ---
 # Reset Order Group
 

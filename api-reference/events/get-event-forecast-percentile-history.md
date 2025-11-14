@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-forecast-percentile-history
-lastmod: 2025-11-11T22:30:08.192Z
+lastmod: 2025-11-14T01:04:15.593Z
 ---
 # Get Event Forecast Percentile History
 
