@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-11T22:30:18.378Z
+lastmod: 2025-11-14T19:42:49.063Z
 ---
 # API Changelog
 
@@ -13,6 +13,19 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Nov 14, 2025"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "New timestamp filters for Markets API",
+description: "New timestamp filters for Markets API"
+}}
+>
+  Added `created_time` to `GET /markets` && `GET /market` responses.
+
+  Release date: `November 20, 2025`
+</Update>
 
 <Update
   label="Nov 11, 2025"
@@ -38,7 +51,7 @@ description: "Restrictions to GetMarkets Filters"
 
 <Update
   label="Nov 11, 2025"
-  tags={["New Feature", "Upcoming"]}
+  tags={["New Feature", "Released"]}
   rss={{
 title: "New timestamp filters for Markets API",
 description: "New timestamp filters for Markets API"

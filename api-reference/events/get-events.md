@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2025-11-14T01:04:15.570Z
+lastmod: 2025-11-14T19:42:41.409Z
 ---
 # Get Events
 
@@ -129,6 +129,7 @@ paths:
                       subtitle: <string>
                       yes_sub_title: <string>
                       no_sub_title: <string>
+                      created_time: '2023-11-07T05:31:56Z'
                       open_time: '2023-11-07T05:31:56Z'
                       close_time: '2023-11-07T05:31:56Z'
                       expected_expiration_time: '2023-11-07T05:31:56Z'
@@ -136,7 +137,7 @@ paths:
                       latest_expiration_time: '2023-11-07T05:31:56Z'
                       settlement_timer_seconds: 123
                       status: initialized
-                      response_price_units: cents
+                      response_price_units: usd_cent
                       yes_bid: 123
                       yes_bid_dollars: <string>
                       yes_ask: 123
@@ -350,13 +351,13 @@ components:
             strike_date).
         markets:
           type: array
-          nullable: true
           x-omitempty: true
           description: >-
             Array of markets associated with this event. Only populated when
             'with_nested_markets=true' is specified in the request.
           items:
             $ref: '#/components/schemas/Market'
+          x-go-type-skip-optional-pointer: true
         available_on_brokers:
           type: boolean
           description: Whether this event is available to trade on brokers.
@@ -365,6 +366,7 @@ components:
           nullable: true
           x-omitempty: true
           description: Additional metadata for the event.
+          x-go-type-skip-optional-pointer: true
     MveSelectedLeg:
       type: object
       properties:
@@ -379,6 +381,10 @@ components:
           description: The side of the selected market
     PriceRange:
       type: object
+      required:
+        - start
+        - end
+        - step
       properties:
         start:
           type: string
@@ -399,6 +405,7 @@ components:
         - subtitle
         - yes_sub_title
         - no_sub_title
+        - created_time
         - open_time
         - close_time
         - expiration_time
@@ -462,6 +469,9 @@ components:
         no_sub_title:
           type: string
           description: Shortened title for the no side of this market
+        created_time:
+          type: string
+          format: date-time
         open_time:
           type: string
           format: date-time
@@ -496,7 +506,7 @@ components:
         response_price_units:
           type: string
           enum:
-            - cents
+            - usd_cent
           description: The units used to express all price related fields
         yes_bid:
           type: number
@@ -533,7 +543,6 @@ components:
             - 'yes'
             - 'no'
             - ''
-          nullable: true
         can_close_early:
           type: boolean
         open_interest:
@@ -615,6 +624,7 @@ components:
           nullable: true
           x-omitempty: true
           description: The condition under which the market can close early
+          x-go-type-skip-optional-pointer: true
         tick_size:
           type: integer
           description: The minimum price movement in the market

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-order
-lastmod: 2025-11-14T01:04:15.723Z
+lastmod: 2025-11-14T19:42:41.573Z
 ---
 # Get Order
 

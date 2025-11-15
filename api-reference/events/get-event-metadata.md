@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-metadata
-lastmod: 2025-11-14T01:04:15.588Z
+lastmod: 2025-11-14T19:42:41.430Z
 ---
 # Get Event Metadata
 
@@ -108,8 +108,10 @@ components:
         name:
           type: string
           description: Name of the settlement source
+          x-go-type-skip-optional-pointer: true
         url:
           type: string
           description: URL to the settlement source
+          x-go-type-skip-optional-pointer: true
 
 ````

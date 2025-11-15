@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-user-data-timestamp
-lastmod: 2025-11-14T01:04:15.476Z
+lastmod: 2025-11-14T19:42:41.311Z
 ---
 # Get User Data Timestamp
 
