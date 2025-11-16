@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfq
-lastmod: 2025-11-14T19:42:41.625Z
+lastmod: 2025-11-15T22:33:04.190Z
 ---
 # Get RFQ
 
@@ -207,10 +207,11 @@ components:
           description: Ticker of the MVE collection this market belongs to
         mve_selected_legs:
           type: array
-          nullable: true
+          x-omitempty: true
           items:
             $ref: '#/components/schemas/MveSelectedLeg'
           description: Selected legs for the MVE collection
+          x-go-type-skip-optional-pointer: true
         rest_remainder:
           type: boolean
           description: Whether to rest the remainder of the RFQ after execution
@@ -234,11 +235,14 @@ components:
         event_ticker:
           type: string
           description: Unique identifier for the selected event
+          x-go-type-skip-optional-pointer: true
         market_ticker:
           type: string
           description: Unique identifier for the selected market
+          x-go-type-skip-optional-pointer: true
         side:
           type: string
           description: The side of the selected market
+          x-go-type-skip-optional-pointer: true
 
 ````

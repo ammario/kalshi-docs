@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-series-fee-changes
-lastmod: 2025-11-14T19:42:41.297Z
+lastmod: 2025-11-15T22:33:03.789Z
 ---
 # Get Series Fee Changes
 

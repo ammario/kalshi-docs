@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-metadata
-lastmod: 2025-11-14T19:42:41.430Z
+lastmod: 2025-11-15T22:33:03.947Z
 ---
 # Get Event Metadata
 
@@ -50,12 +50,14 @@ paths:
                     nullable: true
                     x-omitempty: true
                     description: Event competition.
+                    x-go-type-skip-optional-pointer: true
               competition_scope:
                 allOf:
                   - type: string
                     nullable: true
                     x-omitempty: true
                     description: Event scope, based on the competition.
+                    x-go-type-skip-optional-pointer: true
             refIdentifier: '#/components/schemas/GetEventMetadataResponse'
             requiredProperties:
               - image_url

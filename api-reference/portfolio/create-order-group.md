@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/create-order-group
-lastmod: 2025-11-14T19:42:41.514Z
+lastmod: 2025-11-15T22:33:04.059Z
 ---
 # Create Order Group
 
@@ -68,6 +68,8 @@ paths:
                   - type: string
                     description: The unique identifier for the created order group
             refIdentifier: '#/components/schemas/CreateOrderGroupResponse'
+            requiredProperties:
+              - order_group_id
         examples:
           example:
             value:

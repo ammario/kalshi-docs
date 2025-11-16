@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2025-11-14T19:42:41.409Z
+lastmod: 2025-11-15T22:33:03.925Z
 ---
 # Get Events
 
@@ -373,12 +373,15 @@ components:
         event_ticker:
           type: string
           description: Unique identifier for the selected event
+          x-go-type-skip-optional-pointer: true
         market_ticker:
           type: string
           description: Unique identifier for the selected market
+          x-go-type-skip-optional-pointer: true
         side:
           type: string
           description: The side of the selected market
+          x-go-type-skip-optional-pointer: true
     PriceRange:
       type: object
       required:
@@ -639,9 +642,9 @@ components:
             - functional
             - custom
             - structured
-          nullable: true
           x-omitempty: true
           description: Strike type defines how the market strike is defined and evaluated
+          x-go-type-skip-optional-pointer: true
         floor_strike:
           type: number
           format: double
@@ -672,15 +675,15 @@ components:
           description: A plain language description of secondary market terms
         mve_collection_ticker:
           type: string
-          nullable: true
           x-omitempty: true
           description: The ticker of the multivariate event collection
+          x-go-type-skip-optional-pointer: true
         mve_selected_legs:
           type: array
-          nullable: true
           x-omitempty: true
           items:
             $ref: '#/components/schemas/MveSelectedLeg'
+          x-go-type-skip-optional-pointer: true
         primary_participant_key:
           type: string
           nullable: true

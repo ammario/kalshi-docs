@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix
-lastmod: 2025-10-04T21:26:55.664Z
+lastmod: 2025-11-15T23:21:05.023Z
 ---
 # FIX API Overview
 
@@ -18,6 +18,12 @@ lastmod: 2025-10-04T21:26:55.664Z
 FIX (Financial Information eXchange) is a standard protocol that can be used to enter orders, submit cancel requests, and receive fills. Kalshi's implementation follows the standards as closely as possible, with any divergences highlighted in this documentation.
 
 Please contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to inquire about FIX access.
+
+## FIX Dictionary Download
+
+Need a machine-readable view of the Kalshi-specific FIX tags and messages? Download the XML dictionary and import it into your FIX tooling of choice:
+
+* [Kalshi FIX Dictionary v0.1 (XML)](/fix/kalshi-fix-dictionary.xml)
 
 ## Key Features
 

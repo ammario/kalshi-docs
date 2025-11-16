@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/welcome
-lastmod: 2025-10-20T16:29:27.088Z
+lastmod: 2025-11-15T22:33:13.815Z
 ---
 # Introduction
 
@@ -23,7 +23,7 @@ lastmod: 2025-10-20T16:29:27.088Z
      margin: '0',
     }}
     >
-      Welcome to Kalshi's Guide
+      Welcome to Kalshi's API Documentation
     </h1>
 
     <p
@@ -35,7 +35,7 @@ lastmod: 2025-10-20T16:29:27.088Z
      opacity: '0.6',
     }}
     >
-      This exhange's trader and developer documentation outlines exchange functionality, market details and API architecture
+      This documentation covers the Kalshi Exchange API for real-time market data and trade execution
     </p>
 
     <p

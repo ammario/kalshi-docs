@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/amend-order
-lastmod: 2025-11-14T19:42:41.586Z
+lastmod: 2025-11-15T22:33:04.142Z
 ---
 # Amend Order
 

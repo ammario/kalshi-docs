@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-order-group
-lastmod: 2025-11-14T19:42:41.521Z
+lastmod: 2025-11-15T22:33:04.067Z
 ---
 # Get Order Group
 
@@ -58,7 +58,11 @@ paths:
                     items:
                       type: string
                     description: List of order IDs that belong to this order group
+                    x-go-type-skip-optional-pointer: true
             refIdentifier: '#/components/schemas/GetOrderGroupResponse'
+            requiredProperties:
+              - is_auto_cancel_enabled
+              - orders
         examples:
           example:
             value:

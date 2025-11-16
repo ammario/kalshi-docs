@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-order-groups
-lastmod: 2025-11-14T19:42:41.508Z
+lastmod: 2025-11-15T22:33:04.051Z
 ---
 # Get Order Groups
 
@@ -48,9 +48,7 @@ paths:
                   - type: array
                     items:
                       $ref: '#/components/schemas/OrderGroup'
-              cursor:
-                allOf:
-                  - type: string
+                    x-go-type-skip-optional-pointer: true
             refIdentifier: '#/components/schemas/GetOrderGroupsResponse'
         examples:
           example:
@@ -58,7 +56,6 @@ paths:
               order_groups:
                 - id: <string>
                   is_auto_cancel_enabled: true
-              cursor: <string>
         description: Order groups retrieved successfully
     '400':
       application/json:
@@ -154,12 +151,15 @@ components:
       type: object
       required:
         - id
+        - is_auto_cancel_enabled
       properties:
         id:
           type: string
           description: Unique identifier for the order group
+          x-go-type-skip-optional-pointer: true
         is_auto_cancel_enabled:
           type: boolean
           description: Whether auto-cancel is enabled for this order group
+          x-go-type-skip-optional-pointer: true
 
 ````
