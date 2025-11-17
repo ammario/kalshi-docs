@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2025-11-15T22:33:03.821Z
+lastmod: 2025-11-16T23:50:39.842Z
 ---
 # Get Positions
 
@@ -231,6 +231,18 @@ components:
   schemas:
     MarketPosition:
       type: object
+      required:
+        - ticker
+        - total_traded
+        - total_traded_dollars
+        - position
+        - market_exposure
+        - market_exposure_dollars
+        - realized_pnl
+        - realized_pnl_dollars
+        - resting_orders_count
+        - fees_paid
+        - fees_paid_dollars
       properties:
         ticker:
           type: string

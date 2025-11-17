@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfq
-lastmod: 2025-11-15T22:33:04.190Z
+lastmod: 2025-11-16T23:50:40.049Z
 ---
 # Get RFQ
 
@@ -172,6 +172,7 @@ components:
       required:
         - id
         - creator_id
+        - contracts
         - market_ticker
         - status
         - created_ts
@@ -205,6 +206,7 @@ components:
         mve_collection_ticker:
           type: string
           description: Ticker of the MVE collection this market belongs to
+          x-go-type-skip-optional-pointer: true
         mve_selected_legs:
           type: array
           x-omitempty: true
@@ -218,9 +220,11 @@ components:
         cancellation_reason:
           type: string
           description: Reason for RFQ cancellation if cancelled
+          x-go-type-skip-optional-pointer: true
         creator_user_id:
           type: string
           description: User ID of the RFQ creator (private field)
+          x-go-type-skip-optional-pointer: true
         cancelled_ts:
           type: string
           format: date-time

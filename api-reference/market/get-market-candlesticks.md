@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market-candlesticks
-lastmod: 2025-11-15T22:33:03.894Z
+lastmod: 2025-11-16T23:50:39.907Z
 ---
 # Get Market Candlesticks
 

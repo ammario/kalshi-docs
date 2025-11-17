@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-exchange-announcements
-lastmod: 2025-11-15T22:33:03.781Z
+lastmod: 2025-11-16T23:50:39.677Z
 ---
 # Get Exchange Announcements
 

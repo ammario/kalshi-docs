@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quote
-lastmod: 2025-11-15T22:33:04.225Z
+lastmod: 2025-11-16T23:50:40.074Z
 ---
 # Get Quote
 
@@ -79,7 +79,6 @@ paths:
                 cancellation_reason: <string>
                 creator_user_id: <string>
                 rfq_creator_user_id: <string>
-                expired_ts: '2023-11-07T05:31:56Z'
                 rfq_target_cost_centi_cents: 123
                 rfq_creator_order_id: <string>
                 creator_order_id: <string>
@@ -201,6 +200,7 @@ components:
         rfq_creator_id:
           type: string
           description: Public communications ID of the RFQ creator
+          x-go-type-skip-optional-pointer: true
         market_ticker:
           type: string
           description: The ticker of the market this quote is for
@@ -258,16 +258,15 @@ components:
         cancellation_reason:
           type: string
           description: Reason for quote cancellation if cancelled
+          x-go-type-skip-optional-pointer: true
         creator_user_id:
           type: string
           description: User ID of the quote creator (private field)
+          x-go-type-skip-optional-pointer: true
         rfq_creator_user_id:
           type: string
           description: User ID of the RFQ creator (private field)
-        expired_ts:
-          type: string
-          format: date-time
-          description: Timestamp when the quote expired
+          x-go-type-skip-optional-pointer: true
         rfq_target_cost_centi_cents:
           type: integer
           format: int64
@@ -275,8 +274,10 @@ components:
         rfq_creator_order_id:
           type: string
           description: Order ID for the RFQ creator (private field)
+          x-go-type-skip-optional-pointer: true
         creator_order_id:
           type: string
           description: Order ID for the quote creator (private field)
+          x-go-type-skip-optional-pointer: true
 
 ````
