@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/ExchangeApi
-lastmod: 2025-10-07T23:32:04.315Z
+lastmod: 2025-11-17T18:05:13.016Z
 ---
 # Exchange
 
@@ -13,13 +13,14 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 | [**getExchangeAnnouncements**](#getexchangeannouncements) | **GET** /exchange/announcements         | Get Exchange Announcements |
 | [**getExchangeSchedule**](#getexchangeschedule)           | **GET** /exchange/schedule              | Get Exchange Schedule      |
 | [**getExchangeStatus**](#getexchangestatus)               | **GET** /exchange/status                | Get Exchange Status        |
+| [**getSeriesFeeChanges**](#getseriesfeechanges)           | **GET** /series/fee\_changes            | Get Series Fee Changes     |
 | [**getUserDataTimestamp**](#getuserdatatimestamp)         | **GET** /exchange/user\_data\_timestamp | Get User Data Timestamp    |
 
 # **getExchangeAnnouncements**
 
 > GetExchangeAnnouncementsResponse getExchangeAnnouncements()
 
-Get all exchange-wide announcements
+Endpoint for getting all exchange-wide announcements.
 
 ### Example
 
@@ -57,10 +58,10 @@ No authorization required
 
 ### HTTP response details
 
-| Status code | Description                          | Response headers |
-| ----------- | ------------------------------------ | ---------------- |
-| **200**     | Announcements retrieved successfully | -                |
-| **500**     | Internal server error                | -                |
+| Status code | Description                                   | Response headers |
+| ----------- | --------------------------------------------- | ---------------- |
+| **200**     | Exchange announcements retrieved successfully | -                |
+| **500**     | Internal server error                         | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
 
@@ -68,7 +69,7 @@ No authorization required
 
 > GetExchangeScheduleResponse getExchangeSchedule()
 
-Get the exchange schedule
+Endpoint for getting the exchange schedule.
 
 ### Example
 
@@ -106,10 +107,10 @@ No authorization required
 
 ### HTTP response details
 
-| Status code | Description                     | Response headers |
-| ----------- | ------------------------------- | ---------------- |
-| **200**     | Schedule retrieved successfully | -                |
-| **500**     | Internal server error           | -                |
+| Status code | Description                              | Response headers |
+| ----------- | ---------------------------------------- | ---------------- |
+| **200**     | Exchange schedule retrieved successfully | -                |
+| **500**     | Internal server error                    | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
 
@@ -117,7 +118,7 @@ No authorization required
 
 > ExchangeStatus getExchangeStatus()
 
-Get the exchange status
+Endpoint for getting the exchange status.
 
 ### Example
 
@@ -155,10 +156,69 @@ No authorization required
 
 ### HTTP response details
 
-| Status code | Description                   | Response headers |
-| ----------- | ----------------------------- | ---------------- |
-| **200**     | Status retrieved successfully | -                |
-| **500**     | Internal server error         | -                |
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **200**     | Exchange status retrieved successfully | -                |
+| **500**     | Internal server error                  | -                |
+| **503**     | Service unavailable                    | -                |
+| **504**     | Gateway timeout                        | -                |
+
+[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+# **getSeriesFeeChanges**
+
+> GetSeriesFeeChangesResponse getSeriesFeeChanges()
+
+### Example
+
+```typescript  theme={null}
+import {
+    ExchangeApi,
+    Configuration
+} from 'kalshi-typescript';
+
+const configuration = new Configuration({
+    apiKey: 'your-api-key-id',
+    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
+});
+const apiInstance = new ExchangeApi(configuration);
+
+let seriesTicker: string; // (optional) (default to undefined)
+let showHistorical: boolean; // (optional) (default to false)
+
+const { status, data } = await apiInstance.getSeriesFeeChanges(
+    seriesTicker,
+    showHistorical
+);
+```
+
+### Parameters
+
+| Name               | Type           | Description | Notes                            |
+| ------------------ | -------------- | ----------- | -------------------------------- |
+| **seriesTicker**   | \[**string**]  |             | (optional) defaults to undefined |
+| **showHistorical** | \[**boolean**] |             | (optional) defaults to false     |
+
+### Return type
+
+**GetSeriesFeeChangesResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                               | Response headers |
+| ----------- | ----------------------------------------- | ---------------- |
+| **200**     | Series fee changes retrieved successfully | -                |
+| **400**     | Bad request - invalid input               | -                |
+| **500**     | Internal server error                     | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
 
@@ -195,7 +255,7 @@ This endpoint does not have any parameters.
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+No authorization required
 
 ### HTTP request headers
 
@@ -204,10 +264,9 @@ This endpoint does not have any parameters.
 
 ### HTTP response details
 
-| Status code | Description                            | Response headers |
-| ----------- | -------------------------------------- | ---------------- |
-| **200**     | Timestamp retrieved successfully       | -                |
-| **401**     | Unauthorized - authentication required | -                |
-| **500**     | Internal server error                  | -                |
+| Status code | Description                                | Response headers |
+| ----------- | ------------------------------------------ | ---------------- |
+| **200**     | User data timestamp retrieved successfully | -                |
+| **500**     | Internal server error                      | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/ApiKeysApi
-lastmod: 2025-10-07T23:32:04.292Z
+lastmod: 2025-11-17T18:05:12.429Z
 ---
 # ApiKeys
 
@@ -19,7 +19,7 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 
 > CreateApiKeyResponse createApiKey(createApiKeyRequest)
 
-Create a new API key with a user-provided public key.  This endpoint allows users with Premier or Market Maker API usage levels to create API keys by providing their own RSA public key. The platform will use this public key to verify signatures on API requests.
+Endpoint for creating a new API key with a user-provided public key.  This endpoint allows users with Premier or Market Maker API usage levels to create API keys by providing their own RSA public key. The platform will use this public key to verify signatures on API requests.
 
 ### Example
 
@@ -55,7 +55,7 @@ const { status, data } = await apiInstance.createApiKey(
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -64,13 +64,13 @@ const { status, data } = await apiInstance.createApiKey(
 
 ### HTTP response details
 
-| Status code | Description                            | Response headers |
-| ----------- | -------------------------------------- | ---------------- |
-| **201**     | API key created successfully           | -                |
-| **400**     | Bad request - invalid input            | -                |
-| **401**     | Unauthorized - authentication required | -                |
-| **403**     | Forbidden - insufficient permissions   | -                |
-| **500**     | Internal server error                  | -                |
+| Status code | Description                              | Response headers |
+| ----------- | ---------------------------------------- | ---------------- |
+| **201**     | API key created successfully             | -                |
+| **400**     | Bad request - invalid input              | -                |
+| **401**     | Unauthorized                             | -                |
+| **403**     | Forbidden - insufficient API usage level | -                |
+| **500**     | Internal server error                    | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
 
@@ -78,7 +78,7 @@ const { status, data } = await apiInstance.createApiKey(
 
 > deleteApiKey()
 
-Delete an existing API key.  This endpoint permanently deletes an API key. Once deleted, the key can no longer be used for authentication. This action cannot be undone.
+Endpoint for deleting an existing API key.  This endpoint permanently deletes an API key. Once deleted, the key can no longer be used for authentication. This action cannot be undone.
 
 ### Example
 
@@ -113,22 +113,22 @@ void (empty response body)
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
 * **Content-Type**: Not defined
-* **Accept**: application/json
+* **Accept**: Not defined
 
 ### HTTP response details
 
-| Status code | Description                            | Response headers |
-| ----------- | -------------------------------------- | ---------------- |
-| **204**     | API key successfully deleted           | -                |
-| **400**     | Bad request - invalid input            | -                |
-| **401**     | Unauthorized - authentication required | -                |
-| **404**     | Resource not found                     | -                |
-| **500**     | Internal server error                  | -                |
+| Status code | Description                      | Response headers |
+| ----------- | -------------------------------- | ---------------- |
+| **204**     | API key successfully deleted     | -                |
+| **400**     | Bad request - invalid API key ID | -                |
+| **401**     | Unauthorized                     | -                |
+| **404**     | API key not found                | -                |
+| **500**     | Internal server error            | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
 
@@ -136,7 +136,7 @@ void (empty response body)
 
 > GenerateApiKeyResponse generateApiKey(generateApiKeyRequest)
 
-Generate a new API key with an automatically created key pair.  This endpoint generates both a public and private RSA key pair. The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.
+Endpoint for generating a new API key with an automatically created key pair.  This endpoint generates both a public and private RSA key pair. The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.
 
 ### Example
 
@@ -172,7 +172,7 @@ const { status, data } = await apiInstance.generateApiKey(
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -181,12 +181,12 @@ const { status, data } = await apiInstance.generateApiKey(
 
 ### HTTP response details
 
-| Status code | Description                            | Response headers |
-| ----------- | -------------------------------------- | ---------------- |
-| **201**     | API key generated successfully         | -                |
-| **400**     | Bad request - invalid input            | -                |
-| **401**     | Unauthorized - authentication required | -                |
-| **500**     | Internal server error                  | -                |
+| Status code | Description                    | Response headers |
+| ----------- | ------------------------------ | ---------------- |
+| **201**     | API key generated successfully | -                |
+| **400**     | Bad request - invalid input    | -                |
+| **401**     | Unauthorized                   | -                |
+| **500**     | Internal server error          | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
 
@@ -194,7 +194,7 @@ const { status, data } = await apiInstance.generateApiKey(
 
 > GetApiKeysResponse getApiKeys()
 
-Retrieve all API keys associated with the authenticated user.  API keys allow programmatic access to the platform without requiring username/password authentication. Each key has a unique identifier and name.
+Endpoint for retrieving all API keys associated with the authenticated user.  API keys allow programmatic access to the platform without requiring username/password authentication. Each key has a unique identifier and name.
 
 ### Example
 
@@ -223,7 +223,7 @@ This endpoint does not have any parameters.
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -235,7 +235,7 @@ This endpoint does not have any parameters.
 | Status code | Description                             | Response headers |
 | ----------- | --------------------------------------- | ---------------- |
 | **200**     | List of API keys retrieved successfully | -                |
-| **401**     | Unauthorized - authentication required  | -                |
+| **401**     | Unauthorized                            | -                |
 | **500**     | Internal server error                   | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)

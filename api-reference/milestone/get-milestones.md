@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/milestone/get-milestones
-lastmod: 2025-11-16T23:50:40.022Z
+lastmod: 2025-11-17T18:04:50.661Z
 ---
 # Get Milestones
 
@@ -20,6 +20,13 @@ paths:
     parameters:
       path: {}
       query:
+        limit:
+          schema:
+            - type: integer
+              required: true
+              description: Number of milestones to return per page
+              maximum: 500
+              minimum: 1
         minimum_start_date:
           schema:
             - type: string
@@ -53,13 +60,6 @@ paths:
             - type: string
               required: false
               description: Filter by related event ticker
-        limit:
-          schema:
-            - type: integer
-              required: true
-              description: Number of milestones to return per page
-              maximum: 500
-              minimum: 1
         cursor:
           schema:
             - type: string

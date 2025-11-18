@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/ApiKeysApi
-lastmod: 2025-10-07T23:32:03.926Z
+lastmod: 2025-11-17T18:05:02.648Z
 ---
 # ApiKeys
 
@@ -21,9 +21,7 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 
 Create API Key
 
-Create a new API key with a user-provided public key.
-
-This endpoint allows users with Premier or Market Maker API usage levels to create API keys by providing their own RSA public key. The platform will use this public key to verify signatures on API requests.
+Endpoint for creating a new API key with a user-provided public key.  This endpoint allows users with Premier or Market Maker API usage levels to create API keys by providing their own RSA public key. The platform will use this public key to verify signatures on API requests.
 
 ### Example
 
@@ -51,7 +49,7 @@ configuration.private_key_pem = private_key
 # Initialize the Kalshi client
 client = kalshi_python.KalshiClient(configuration)
 
-create_api_key_request = kalshi_python.CreateApiKeyRequest() # CreateApiKeyRequest |
+create_api_key_request = kalshi_python.CreateApiKeyRequest() # CreateApiKeyRequest | 
 
 try:
     # Create API Key
@@ -74,13 +72,13 @@ except Exception as e:
 
 ### HTTP response details
 
-| Status code | Description                            |
-| ----------- | -------------------------------------- |
-| **201**     | API key created successfully           |
-| **400**     | Bad request - invalid input            |
-| **401**     | Unauthorized - authentication required |
-| **403**     | Forbidden - insufficient permissions   |
-| **500**     | Internal server error                  |
+| Status code | Description                              |
+| ----------- | ---------------------------------------- |
+| **201**     | API key created successfully             |
+| **400**     | Bad request - invalid input              |
+| **401**     | Unauthorized                             |
+| **403**     | Forbidden - insufficient API usage level |
+| **500**     | Internal server error                    |
 
 [\[Back to top\]](#) [\[Back to API list\]](https://docs.kalshi.com/python-sdk/api) [\[Back to Model list\]](https://docs.kalshi.com/python-sdk/models) [\[Back to README\]](https://docs.kalshi.com/python-sdk)
 
@@ -90,9 +88,7 @@ except Exception as e:
 
 Delete API Key
 
-Delete an existing API key.
-
-This endpoint permanently deletes an API key. Once deleted, the key can no longer be used for authentication. This action cannot be undone.
+Endpoint for deleting an existing API key.  This endpoint permanently deletes an API key. Once deleted, the key can no longer be used for authentication. This action cannot be undone.
 
 ### Example
 
@@ -139,13 +135,13 @@ void (empty response body)
 
 ### HTTP response details
 
-| Status code | Description                            |
-| ----------- | -------------------------------------- |
-| **204**     | API key successfully deleted           |
-| **400**     | Bad request - invalid input            |
-| **401**     | Unauthorized - authentication required |
-| **404**     | Resource not found                     |
-| **500**     | Internal server error                  |
+| Status code | Description                      |
+| ----------- | -------------------------------- |
+| **204**     | API key successfully deleted     |
+| **400**     | Bad request - invalid API key ID |
+| **401**     | Unauthorized                     |
+| **404**     | API key not found                |
+| **500**     | Internal server error            |
 
 [\[Back to top\]](#) [\[Back to API list\]](https://docs.kalshi.com/python-sdk/api) [\[Back to Model list\]](https://docs.kalshi.com/python-sdk/models) [\[Back to README\]](https://docs.kalshi.com/python-sdk)
 
@@ -155,9 +151,7 @@ void (empty response body)
 
 Generate API Key
 
-Generate a new API key with an automatically created key pair.
-
-This endpoint generates both a public and private RSA key pair. The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.
+Endpoint for generating a new API key with an automatically created key pair.  This endpoint generates both a public and private RSA key pair. The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.
 
 ### Example
 
@@ -185,7 +179,7 @@ configuration.private_key_pem = private_key
 # Initialize the Kalshi client
 client = kalshi_python.KalshiClient(configuration)
 
-generate_api_key_request = kalshi_python.GenerateApiKeyRequest() # GenerateApiKeyRequest |
+generate_api_key_request = kalshi_python.GenerateApiKeyRequest() # GenerateApiKeyRequest | 
 
 try:
     # Generate API Key
@@ -208,12 +202,12 @@ except Exception as e:
 
 ### HTTP response details
 
-| Status code | Description                            |
-| ----------- | -------------------------------------- |
-| **201**     | API key generated successfully         |
-| **400**     | Bad request - invalid input            |
-| **401**     | Unauthorized - authentication required |
-| **500**     | Internal server error                  |
+| Status code | Description                    |
+| ----------- | ------------------------------ |
+| **201**     | API key generated successfully |
+| **400**     | Bad request - invalid input    |
+| **401**     | Unauthorized                   |
+| **500**     | Internal server error          |
 
 [\[Back to top\]](#) [\[Back to API list\]](https://docs.kalshi.com/python-sdk/api) [\[Back to Model list\]](https://docs.kalshi.com/python-sdk/models) [\[Back to README\]](https://docs.kalshi.com/python-sdk)
 
@@ -223,9 +217,7 @@ except Exception as e:
 
 Get API Keys
 
-Retrieve all API keys associated with the authenticated user.
-
-API keys allow programmatic access to the platform without requiring username/password authentication. Each key has a unique identifier and name.
+Endpoint for retrieving all API keys associated with the authenticated user.  API keys allow programmatic access to the platform without requiring username/password authentication. Each key has a unique identifier and name.
 
 ### Example
 
@@ -274,7 +266,7 @@ This endpoint does not need any parameter.
 | Status code | Description                             |
 | ----------- | --------------------------------------- |
 | **200**     | List of API keys retrieved successfully |
-| **401**     | Unauthorized - authentication required  |
+| **401**     | Unauthorized                            |
 | **500**     | Internal server error                   |
 
 [\[Back to top\]](#) [\[Back to API list\]](https://docs.kalshi.com/python-sdk/api) [\[Back to Model list\]](https://docs.kalshi.com/python-sdk/models) [\[Back to README\]](https://docs.kalshi.com/python-sdk)

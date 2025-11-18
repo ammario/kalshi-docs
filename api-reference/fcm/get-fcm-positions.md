@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
-lastmod: 2025-11-16T23:50:39.990Z
+lastmod: 2025-11-17T18:04:50.621Z
 ---
 # Get FCM Positions
 
@@ -36,6 +36,13 @@ paths:
     parameters:
       path: {}
       query:
+        subtrader_id:
+          schema:
+            - type: string
+              required: true
+              description: >-
+                Restricts the response to positions for a specific subtrader
+                (FCM members only)
         ticker:
           schema:
             - type: string
@@ -74,13 +81,6 @@ paths:
               description: >-
                 The Cursor represents a pointer to the next page of records in
                 the pagination
-        subtrader_id:
-          schema:
-            - type: string
-              required: true
-              description: >-
-                Restricts the response to positions for a specific subtrader
-                (FCM members only)
       header: {}
       cookie: {}
     body: {}

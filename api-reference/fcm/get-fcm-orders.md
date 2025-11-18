@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-orders
-lastmod: 2025-11-16T23:50:39.984Z
+lastmod: 2025-11-17T18:04:50.612Z
 ---
 # Get FCM Orders
 
@@ -36,6 +36,13 @@ paths:
     parameters:
       path: {}
       query:
+        subtrader_id:
+          schema:
+            - type: string
+              required: true
+              description: >-
+                Restricts the response to orders for a specific subtrader (FCM
+                members only)
         cursor:
           schema:
             - type: string
@@ -81,13 +88,6 @@ paths:
                 100
               maximum: 1000
               minimum: 1
-        subtrader_id:
-          schema:
-            - type: string
-              required: true
-              description: >-
-                Restricts the response to orders for a specific subtrader (FCM
-                members only)
       header: {}
       cookie: {}
     body: {}

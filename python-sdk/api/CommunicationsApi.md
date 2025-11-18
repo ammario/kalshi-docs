@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/CommunicationsApi
-lastmod: 2025-10-07T23:32:03.932Z
+lastmod: 2025-11-17T18:05:02.652Z
 ---
 # Communications
 
@@ -28,7 +28,7 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 
 Accept Quote
 
-Accept a quote. This will require the quoter to confirm
+Endpoint for accepting a quote. This will require the quoter to confirm
 
 ### Example
 
@@ -57,7 +57,7 @@ client = kalshi_python.KalshiClient(configuration)
 
 quote_id = 'quote_id_example' # str | Quote ID
 
-accept_quote_request = kalshi_python.AcceptQuoteRequest() # AcceptQuoteRequest |
+accept_quote_request = kalshi_python.AcceptQuoteRequest() # AcceptQuoteRequest | 
 
 try:
     # Accept Quote
@@ -95,7 +95,7 @@ void (empty response body)
 
 Confirm Quote
 
-Confirm a quote. This will start a timer for order execution
+Endpoint for confirming a quote. This will start a timer for order execution
 
 ### Example
 
@@ -157,7 +157,7 @@ void (empty response body)
 
 Create Quote
 
-Create a quote in response to an RFQ
+Endpoint for creating a quote in response to an RFQ
 
 ### Example
 
@@ -185,7 +185,7 @@ configuration.private_key_pem = private_key
 # Initialize the Kalshi client
 client = kalshi_python.KalshiClient(configuration)
 
-create_quote_request = kalshi_python.CreateQuoteRequest() # CreateQuoteRequest |
+create_quote_request = kalshi_python.CreateQuoteRequest() # CreateQuoteRequest | 
 
 try:
     # Create Quote
@@ -223,7 +223,7 @@ except Exception as e:
 
 Create RFQ
 
-Create a new RFQ
+Endpoint for creating a new RFQ. You can have a maximum of 100 open RFQs at a time.
 
 ### Example
 
@@ -251,7 +251,7 @@ configuration.private_key_pem = private_key
 # Initialize the Kalshi client
 client = kalshi_python.KalshiClient(configuration)
 
-create_rfq_request = kalshi_python.CreateRFQRequest() # CreateRFQRequest |
+create_rfq_request = kalshi_python.CreateRFQRequest() # CreateRFQRequest | 
 
 try:
     # Create RFQ
@@ -274,12 +274,13 @@ except Exception as e:
 
 ### HTTP response details
 
-| Status code | Description                            |
-| ----------- | -------------------------------------- |
-| **201**     | RFQ created successfully               |
-| **400**     | Bad request - invalid input            |
-| **401**     | Unauthorized - authentication required |
-| **500**     | Internal server error                  |
+| Status code | Description                                              |
+| ----------- | -------------------------------------------------------- |
+| **201**     | RFQ created successfully                                 |
+| **400**     | Bad request - invalid input                              |
+| **401**     | Unauthorized - authentication required                   |
+| **409**     | Conflict - resource already exists or cannot be modified |
+| **500**     | Internal server error                                    |
 
 [\[Back to top\]](#) [\[Back to API list\]](https://docs.kalshi.com/python-sdk/api) [\[Back to Model list\]](https://docs.kalshi.com/python-sdk/models) [\[Back to README\]](https://docs.kalshi.com/python-sdk)
 
@@ -289,7 +290,7 @@ except Exception as e:
 
 Delete Quote
 
-Delete a quote, which means it can no longer be accepted
+Endpoint for deleting a quote, which means it can no longer be accepted.
 
 ### Example
 
@@ -351,7 +352,7 @@ void (empty response body)
 
 Delete RFQ
 
-Delete an RFQ by ID
+Endpoint for deleting an RFQ by ID
 
 ### Example
 
@@ -413,7 +414,7 @@ void (empty response body)
 
 Get Communications ID
 
-Get the communications ID of the logged-in user
+Endpoint for getting the communications ID of the logged-in user.
 
 ### Example
 
@@ -473,7 +474,7 @@ This endpoint does not need any parameter.
 
 Get Quote
 
-Get a particular quote by ID
+Endpoint for getting a particular quote
 
 ### Example
 
@@ -534,11 +535,11 @@ except Exception as e:
 
 # **get\_quotes**
 
-> GetQuotesResponse get\_quotes()
+> GetQuotesResponse get\_quotes(cursor=cursor, event\_ticker=event\_ticker, market\_ticker=market\_ticker, limit=limit, status=status, quote\_creator\_user\_id=quote\_creator\_user\_id, rfq\_creator\_user\_id=rfq\_creator\_user\_id, rfq\_creator\_subtrader\_id=rfq\_creator\_subtrader\_id, rfq\_id=rfq\_id)
 
 Get Quotes
 
-Retrieve all quotes
+Endpoint for getting quotes
 
 ### Example
 
@@ -565,9 +566,27 @@ configuration.private_key_pem = private_key
 # Initialize the Kalshi client
 client = kalshi_python.KalshiClient(configuration)
 
+cursor = 'cursor_example' # str | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. (optional)
+
+event_ticker = 'event_ticker_example' # str | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10). (optional)
+
+market_ticker = 'market_ticker_example' # str | Filter by market ticker (optional)
+
+limit = 500 # int | Parameter to specify the number of results per page. Defaults to 500. (optional) (default to 500)
+
+status = 'status_example' # str | Filter quotes by status (optional)
+
+quote_creator_user_id = 'quote_creator_user_id_example' # str | Filter quotes by quote creator user ID (optional)
+
+rfq_creator_user_id = 'rfq_creator_user_id_example' # str | Filter quotes by RFQ creator user ID (optional)
+
+rfq_creator_subtrader_id = 'rfq_creator_subtrader_id_example' # str | Filter quotes by RFQ creator subtrader ID (FCM members only) (optional)
+
+rfq_id = 'rfq_id_example' # str | Filter quotes by RFQ ID (optional)
+
 try:
     # Get Quotes
-    api_response = client.get_quotes()
+    api_response = client.get_quotes(cursor=cursor, event_ticker=event_ticker, market_ticker=market_ticker, limit=limit, status=status, quote_creator_user_id=quote_creator_user_id, rfq_creator_user_id=rfq_creator_user_id, rfq_creator_subtrader_id=rfq_creator_subtrader_id, rfq_id=rfq_id)
     print("The response of CommunicationsApi->get_quotes:\n")
     pprint(api_response)
 except Exception as e:
@@ -576,7 +595,17 @@ except Exception as e:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name                            | Type    | Description                                                                                                                                  | Notes                         |
+| ------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| **cursor**                      | **str** | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | \[optional]                   |
+| **event\_ticker**               | **str** | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10).                            | \[optional]                   |
+| **market\_ticker**              | **str** | Filter by market ticker                                                                                                                      | \[optional]                   |
+| **limit**                       | **int** | Parameter to specify the number of results per page. Defaults to 500.                                                                        | \[optional] \[default to 500] |
+| **status**                      | **str** | Filter quotes by status                                                                                                                      | \[optional]                   |
+| **quote\_creator\_user\_id**    | **str** | Filter quotes by quote creator user ID                                                                                                       | \[optional]                   |
+| **rfq\_creator\_user\_id**      | **str** | Filter quotes by RFQ creator user ID                                                                                                         | \[optional]                   |
+| **rfq\_creator\_subtrader\_id** | **str** | Filter quotes by RFQ creator subtrader ID (FCM members only)                                                                                 | \[optional]                   |
+| **rfq\_id**                     | **str** | Filter quotes by RFQ ID                                                                                                                      | \[optional]                   |
 
 ### Return type
 
@@ -598,7 +627,7 @@ This endpoint does not need any parameter.
 
 Get RFQ
 
-Get a single RFQ by ID
+Endpoint for getting a single RFQ by id
 
 ### Example
 
@@ -659,11 +688,11 @@ except Exception as e:
 
 # **get\_rfqs**
 
-> GetRFQsResponse get\_rfqs()
+> GetRFQsResponse get\_rfqs(cursor=cursor, event\_ticker=event\_ticker, market\_ticker=market\_ticker, limit=limit, status=status, creator\_user\_id=creator\_user\_id)
 
 Get RFQs
 
-Retrieve all RFQs
+Endpoint for getting RFQs
 
 ### Example
 
@@ -690,9 +719,21 @@ configuration.private_key_pem = private_key
 # Initialize the Kalshi client
 client = kalshi_python.KalshiClient(configuration)
 
+cursor = 'cursor_example' # str | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. (optional)
+
+event_ticker = 'event_ticker_example' # str | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10). (optional)
+
+market_ticker = 'market_ticker_example' # str | Filter by market ticker (optional)
+
+limit = 100 # int | Parameter to specify the number of results per page. Defaults to 100. (optional) (default to 100)
+
+status = 'status_example' # str | Filter RFQs by status (optional)
+
+creator_user_id = 'creator_user_id_example' # str | Filter RFQs by creator user ID (optional)
+
 try:
     # Get RFQs
-    api_response = client.get_rfqs()
+    api_response = client.get_rfqs(cursor=cursor, event_ticker=event_ticker, market_ticker=market_ticker, limit=limit, status=status, creator_user_id=creator_user_id)
     print("The response of CommunicationsApi->get_rfqs:\n")
     pprint(api_response)
 except Exception as e:
@@ -701,7 +742,14 @@ except Exception as e:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name                  | Type    | Description                                                                                                                                  | Notes                         |
+| --------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| **cursor**            | **str** | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | \[optional]                   |
+| **event\_ticker**     | **str** | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10).                            | \[optional]                   |
+| **market\_ticker**    | **str** | Filter by market ticker                                                                                                                      | \[optional]                   |
+| **limit**             | **int** | Parameter to specify the number of results per page. Defaults to 100.                                                                        | \[optional] \[default to 100] |
+| **status**            | **str** | Filter RFQs by status                                                                                                                        | \[optional]                   |
+| **creator\_user\_id** | **str** | Filter RFQs by creator user ID                                                                                                               | \[optional]                   |
 
 ### Return type
 

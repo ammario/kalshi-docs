@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-14T19:42:49.063Z
+lastmod: 2025-11-17T15:13:58.687Z
 ---
 # API Changelog
 
@@ -13,6 +13,19 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Nov 14, 2025"
+  tags={["Upcoming"]}
+  rss={{
+title: "General availability for Batch Create Orders API",
+description: "General availability for Batch Create Orders API"
+}}
+>
+  `POST /portfolio/orders/batched` will now be generally available. Advanced API access is no longer a prerequisite.
+
+  Release date: `November 20, 2025`
+</Update>
 
 <Update
   label="Nov 14, 2025"

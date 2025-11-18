@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/CommunicationsApi
-lastmod: 2025-10-07T23:32:04.291Z
+lastmod: 2025-11-17T18:05:13.019Z
 ---
 # Communications
 
@@ -26,7 +26,7 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 
 > acceptQuote(acceptQuoteRequest)
 
-Accept a quote. This will require the quoter to confirm
+Endpoint for accepting a quote. This will require the quoter to confirm
 
 ### Example
 
@@ -65,7 +65,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -88,7 +88,7 @@ void (empty response body)
 
 > confirmQuote()
 
-Confirm a quote. This will start a timer for order execution
+Endpoint for confirming a quote. This will start a timer for order execution
 
 ### Example
 
@@ -123,7 +123,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -145,7 +145,7 @@ void (empty response body)
 
 > CreateQuoteResponse createQuote(createQuoteRequest)
 
-Create a quote in response to an RFQ
+Endpoint for creating a quote in response to an RFQ
 
 ### Example
 
@@ -181,7 +181,7 @@ const { status, data } = await apiInstance.createQuote(
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -203,7 +203,7 @@ const { status, data } = await apiInstance.createQuote(
 
 > CreateRFQResponse createRFQ(createRFQRequest)
 
-Create a new RFQ
+Endpoint for creating a new RFQ. You can have a maximum of 100 open RFQs at a time.
 
 ### Example
 
@@ -239,7 +239,7 @@ const { status, data } = await apiInstance.createRFQ(
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -248,12 +248,13 @@ const { status, data } = await apiInstance.createRFQ(
 
 ### HTTP response details
 
-| Status code | Description                            | Response headers |
-| ----------- | -------------------------------------- | ---------------- |
-| **201**     | RFQ created successfully               | -                |
-| **400**     | Bad request - invalid input            | -                |
-| **401**     | Unauthorized - authentication required | -                |
-| **500**     | Internal server error                  | -                |
+| Status code | Description                                              | Response headers |
+| ----------- | -------------------------------------------------------- | ---------------- |
+| **201**     | RFQ created successfully                                 | -                |
+| **400**     | Bad request - invalid input                              | -                |
+| **401**     | Unauthorized - authentication required                   | -                |
+| **409**     | Conflict - resource already exists or cannot be modified | -                |
+| **500**     | Internal server error                                    | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
 
@@ -261,7 +262,7 @@ const { status, data } = await apiInstance.createRFQ(
 
 > deleteQuote()
 
-Delete a quote, which means it can no longer be accepted
+Endpoint for deleting a quote, which means it can no longer be accepted.
 
 ### Example
 
@@ -296,7 +297,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -318,7 +319,7 @@ void (empty response body)
 
 > deleteRFQ()
 
-Delete an RFQ by ID
+Endpoint for deleting an RFQ by ID
 
 ### Example
 
@@ -353,7 +354,7 @@ void (empty response body)
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -375,7 +376,7 @@ void (empty response body)
 
 > GetCommunicationsIDResponse getCommunicationsID()
 
-Get the communications ID of the logged-in user
+Endpoint for getting the communications ID of the logged-in user.
 
 ### Example
 
@@ -404,7 +405,7 @@ This endpoint does not have any parameters.
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -425,7 +426,7 @@ This endpoint does not have any parameters.
 
 > GetQuoteResponse getQuote()
 
-Get a particular quote by ID
+Endpoint for getting a particular quote
 
 ### Example
 
@@ -460,7 +461,7 @@ const { status, data } = await apiInstance.getQuote(
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -482,7 +483,7 @@ const { status, data } = await apiInstance.getQuote(
 
 > GetQuotesResponse getQuotes()
 
-Retrieve all quotes
+Endpoint for getting quotes
 
 ### Example
 
@@ -498,12 +499,42 @@ const configuration = new Configuration({
 });
 const apiInstance = new CommunicationsApi(configuration);
 
-const { status, data } = await apiInstance.getQuotes();
+let cursor: string; //Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. (optional) (default to undefined)
+let eventTicker: string; //Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10). (optional) (default to undefined)
+let marketTicker: string; //Filter by market ticker (optional) (default to undefined)
+let limit: number; //Parameter to specify the number of results per page. Defaults to 500. (optional) (default to 500)
+let status: string; //Filter quotes by status (optional) (default to undefined)
+let quoteCreatorUserId: string; //Filter quotes by quote creator user ID (optional) (default to undefined)
+let rfqCreatorUserId: string; //Filter quotes by RFQ creator user ID (optional) (default to undefined)
+let rfqCreatorSubtraderId: string; //Filter quotes by RFQ creator subtrader ID (FCM members only) (optional) (default to undefined)
+let rfqId: string; //Filter quotes by RFQ ID (optional) (default to undefined)
+
+const { status, data } = await apiInstance.getQuotes(
+    cursor,
+    eventTicker,
+    marketTicker,
+    limit,
+    status,
+    quoteCreatorUserId,
+    rfqCreatorUserId,
+    rfqCreatorSubtraderId,
+    rfqId
+);
 ```
 
 ### Parameters
 
-This endpoint does not have any parameters.
+| Name                      | Type          | Description                                                                                                                                  | Notes                            |
+| ------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| **cursor**                | \[**string**] | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
+| **eventTicker**           | \[**string**] | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10).                            | (optional) defaults to undefined |
+| **marketTicker**          | \[**string**] | Filter by market ticker                                                                                                                      | (optional) defaults to undefined |
+| **limit**                 | \[**number**] | Parameter to specify the number of results per page. Defaults to 500.                                                                        | (optional) defaults to 500       |
+| **status**                | \[**string**] | Filter quotes by status                                                                                                                      | (optional) defaults to undefined |
+| **quoteCreatorUserId**    | \[**string**] | Filter quotes by quote creator user ID                                                                                                       | (optional) defaults to undefined |
+| **rfqCreatorUserId**      | \[**string**] | Filter quotes by RFQ creator user ID                                                                                                         | (optional) defaults to undefined |
+| **rfqCreatorSubtraderId** | \[**string**] | Filter quotes by RFQ creator subtrader ID (FCM members only)                                                                                 | (optional) defaults to undefined |
+| **rfqId**                 | \[**string**] | Filter quotes by RFQ ID                                                                                                                      | (optional) defaults to undefined |
 
 ### Return type
 
@@ -511,7 +542,7 @@ This endpoint does not have any parameters.
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -532,7 +563,7 @@ This endpoint does not have any parameters.
 
 > GetRFQResponse getRFQ()
 
-Get a single RFQ by ID
+Endpoint for getting a single RFQ by id
 
 ### Example
 
@@ -567,7 +598,7 @@ const { status, data } = await apiInstance.getRFQ(
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 
@@ -589,7 +620,7 @@ const { status, data } = await apiInstance.getRFQ(
 
 > GetRFQsResponse getRFQs()
 
-Retrieve all RFQs
+Endpoint for getting RFQs
 
 ### Example
 
@@ -605,12 +636,33 @@ const configuration = new Configuration({
 });
 const apiInstance = new CommunicationsApi(configuration);
 
-const { status, data } = await apiInstance.getRFQs();
+let cursor: string; //Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. (optional) (default to undefined)
+let eventTicker: string; //Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10). (optional) (default to undefined)
+let marketTicker: string; //Filter by market ticker (optional) (default to undefined)
+let limit: number; //Parameter to specify the number of results per page. Defaults to 100. (optional) (default to 100)
+let status: string; //Filter RFQs by status (optional) (default to undefined)
+let creatorUserId: string; //Filter RFQs by creator user ID (optional) (default to undefined)
+
+const { status, data } = await apiInstance.getRFQs(
+    cursor,
+    eventTicker,
+    marketTicker,
+    limit,
+    status,
+    creatorUserId
+);
 ```
 
 ### Parameters
 
-This endpoint does not have any parameters.
+| Name              | Type          | Description                                                                                                                                  | Notes                            |
+| ----------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| **cursor**        | \[**string**] | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
+| **eventTicker**   | \[**string**] | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10).                            | (optional) defaults to undefined |
+| **marketTicker**  | \[**string**] | Filter by market ticker                                                                                                                      | (optional) defaults to undefined |
+| **limit**         | \[**number**] | Parameter to specify the number of results per page. Defaults to 100.                                                                        | (optional) defaults to 100       |
+| **status**        | \[**string**] | Filter RFQs by status                                                                                                                        | (optional) defaults to undefined |
+| **creatorUserId** | \[**string**] | Filter RFQs by creator user ID                                                                                                               | (optional) defaults to undefined |
 
 ### Return type
 
@@ -618,7 +670,7 @@ This endpoint does not have any parameters.
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
 
 ### HTTP request headers
 

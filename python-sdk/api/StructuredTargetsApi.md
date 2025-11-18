@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/StructuredTargetsApi
-lastmod: 2025-10-07T23:32:03.952Z
+lastmod: 2025-11-17T18:05:07.104Z
 ---
 # StructuredTargets
 
@@ -19,7 +19,7 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 
 Get Structured Target
 
-Get a single structured target by ID
+Endpoint for getting data about a specific structured target by its ID.
 
 ### Example
 
@@ -35,13 +35,6 @@ configuration = kalshi_python.Configuration(
     host = "https://api.elections.kalshi.com/trade-api/v2"
 )
 
-# Read private key from file
-with open('path/to/private_key.pem', 'r') as f:
-    private_key = f.read()
-
-# Configure API key authentication
-configuration.api_key_id = "your-api-key-id"
-configuration.private_key_pem = private_key
 
 # Initialize the Kalshi client
 client = kalshi_python.KalshiClient(configuration)
@@ -72,19 +65,19 @@ except Exception as e:
 | Status code | Description                              |
 | ----------- | ---------------------------------------- |
 | **200**     | Structured target retrieved successfully |
-| **401**     | Unauthorized - authentication required   |
-| **404**     | Resource not found                       |
+| **401**     | Unauthorized                             |
+| **404**     | Not found                                |
 | **500**     | Internal server error                    |
 
 [\[Back to top\]](#) [\[Back to API list\]](https://docs.kalshi.com/python-sdk/api) [\[Back to Model list\]](https://docs.kalshi.com/python-sdk/models) [\[Back to README\]](https://docs.kalshi.com/python-sdk)
 
 # **get\_structured\_targets**
 
-> GetStructuredTargetsResponse get\_structured\_targets(status=status, page\_size=page\_size)
+> GetStructuredTargetsResponse get\_structured\_targets(type=type, competition=competition, page\_size=page\_size, cursor=cursor)
 
 Get Structured Targets
 
-Get all structured targets
+Page size (min: 1, max: 2000)
 
 ### Example
 
@@ -100,24 +93,21 @@ configuration = kalshi_python.Configuration(
     host = "https://api.elections.kalshi.com/trade-api/v2"
 )
 
-# Read private key from file
-with open('path/to/private_key.pem', 'r') as f:
-    private_key = f.read()
-
-# Configure API key authentication
-configuration.api_key_id = "your-api-key-id"
-configuration.private_key_pem = private_key
 
 # Initialize the Kalshi client
 client = kalshi_python.KalshiClient(configuration)
 
-status = 'status_example' # str | Filter by structured target status (optional)
+type = 'type_example' # str | Filter by structured target type (optional)
 
-page_size = 100 # int | Number of items per page (minimum 100, default 100) (optional) (default to 100)
+competition = 'competition_example' # str | Filter by competition (optional)
+
+page_size = 100 # int | Number of items per page (min 1, max 2000, default 100) (optional) (default to 100)
+
+cursor = 'cursor_example' # str | Pagination cursor (optional)
 
 try:
     # Get Structured Targets
-    api_response = client.get_structured_targets(status=status, page_size=page_size)
+    api_response = client.get_structured_targets(type=type, competition=competition, page_size=page_size, cursor=cursor)
     print("The response of StructuredTargetsApi->get_structured_targets:\n")
     pprint(api_response)
 except Exception as e:
@@ -126,10 +116,12 @@ except Exception as e:
 
 ### Parameters
 
-| Name           | Type    | Description                                         | Notes                         |
-| -------------- | ------- | --------------------------------------------------- | ----------------------------- |
-| **status**     | **str** | Filter by structured target status                  | \[optional]                   |
-| **page\_size** | **int** | Number of items per page (minimum 100, default 100) | \[optional] \[default to 100] |
+| Name            | Type    | Description                                             | Notes                         |
+| --------------- | ------- | ------------------------------------------------------- | ----------------------------- |
+| **type**        | **str** | Filter by structured target type                        | \[optional]                   |
+| **competition** | **str** | Filter by competition                                   | \[optional]                   |
+| **page\_size**  | **int** | Number of items per page (min 1, max 2000, default 100) | \[optional] \[default to 100] |
+| **cursor**      | **str** | Pagination cursor                                       | \[optional]                   |
 
 ### Return type
 
@@ -140,7 +132,7 @@ except Exception as e:
 | Status code | Description                               |
 | ----------- | ----------------------------------------- |
 | **200**     | Structured targets retrieved successfully |
-| **401**     | Unauthorized - authentication required    |
+| **401**     | Unauthorized                              |
 | **500**     | Internal server error                     |
 
 [\[Back to top\]](#) [\[Back to API list\]](https://docs.kalshi.com/python-sdk/api) [\[Back to Model list\]](https://docs.kalshi.com/python-sdk/models) [\[Back to README\]](https://docs.kalshi.com/python-sdk)
