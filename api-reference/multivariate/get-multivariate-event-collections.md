@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collections
-lastmod: 2025-11-17T18:04:50.770Z
+lastmod: 2025-11-19T00:52:48.850Z
 ---
 # Get Multivariate Event Collections
 
@@ -78,6 +78,7 @@ paths:
                       the cursor query parameter for this end-point to get the
                       next page containing limit records. An empty value of this
                       field indicates there is no next page.
+                    x-go-type-skip-optional-pointer: true
             refIdentifier: '#/components/schemas/GetMultivariateEventCollectionsResponse'
             requiredProperties:
               - multivariate_contracts

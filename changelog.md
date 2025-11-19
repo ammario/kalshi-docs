@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-17T15:13:58.687Z
+lastmod: 2025-11-19T00:52:59.927Z
 ---
 # API Changelog
 
@@ -13,6 +13,27 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Nov 18, 2025"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Multi-event candlesticks endpoint",
+description: "New endpoint for fetching candlestick data across multiple events in a single request"
+}}
+>
+  A new endpoint `GET /trade-api/v2/events/candlesticks` has been added to fetch candlestick data for multiple events in a single request. This endpoint:
+
+  * Accepts a comma-separated list of event tickers (no limit on the number of events)
+  * Returns candlestick data for all markets across the specified events
+  * Is optimized with batch queries for improved performance
+  * Limits responses to 5000 candlesticks total across all events and markets
+  * Returns `adjusted_end_ts` when the limit is applied to indicate the adjusted time range
+
+  The previous endpoint `GET /series/{series_ticker}/events/{ticker}/candlesticks` is now deprecated but remains functional for backward compatibility.
+
+  Expected release: `November 20, 2025`
+</Update>
 
 <Update
   label="Nov 14, 2025"

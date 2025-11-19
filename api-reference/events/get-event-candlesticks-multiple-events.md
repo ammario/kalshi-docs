@@ -1,16 +1,16 @@
 ---
-url: https://docs.kalshi.com/api-reference/events/get-event-candlesticks
-lastmod: 2025-11-19T00:52:48.604Z
+url: https://docs.kalshi.com/api-reference/events/get-event-candlesticks-multiple-events
+lastmod: 2025-11-19T00:52:48.614Z
 ---
-# Get Event Candlesticks
+# Get Event Candlesticks (Multiple Events)
 
->  End-point for returning aggregated data across all markets corresponding to an event.
+> End-point for returning aggregated data across all markets corresponding to multiple events. Limited to 5000 candlesticks total across all events and markets.
 
 ## OpenAPI
 
-````yaml openapi.yaml get /series/{series_ticker}/events/{ticker}/candlesticks
+````yaml openapi.yaml get /events/candlesticks
 paths:
-  path: /series/{series_ticker}/events/{ticker}/candlesticks
+  path: /events/candlesticks
   method: get
   servers:
     - url: https://api.elections.kalshi.com/trade-api/v2
@@ -18,18 +18,13 @@ paths:
   request:
     security: []
     parameters:
-      path:
-        ticker:
-          schema:
-            - type: string
-              required: true
-              description: The event ticker
-        series_ticker:
-          schema:
-            - type: string
-              required: true
-              description: The series ticker
+      path: {}
       query:
+        event_tickers:
+          schema:
+            - type: string
+              required: true
+              description: Comma-separated list of event tickers
         start_ts:
           schema:
             - type: integer
@@ -60,79 +55,93 @@ paths:
         schemaArray:
           - type: object
             properties:
-              market_tickers:
-                allOf:
-                  - type: array
-                    description: Array of market tickers in the event.
-                    items:
-                      type: string
-              market_candlesticks:
+              events:
                 allOf:
                   - type: array
                     description: >-
-                      Array of market candlestick arrays, one for each market in
-                      the event.
+                      Array of event candlestick responses, one for each event
+                      ticker.
                     items:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/MarketCandlestick'
-              adjusted_end_ts:
-                allOf:
-                  - type: integer
-                    format: int64
-                    description: >-
-                      Adjusted end timestamp if the requested candlesticks would
-                      be larger than maxAggregateCandidates.
-            refIdentifier: '#/components/schemas/GetEventCandlesticksResponse'
+                      type: object
+                      required:
+                        - event_ticker
+                        - market_tickers
+                        - market_candlesticks
+                        - adjusted_end_ts
+                      properties:
+                        event_ticker:
+                          type: string
+                          description: The event ticker
+                        market_tickers:
+                          type: array
+                          description: Array of market tickers in the event.
+                          items:
+                            type: string
+                        market_candlesticks:
+                          type: array
+                          description: >-
+                            Array of market candlestick arrays, one for each
+                            market in the event.
+                          items:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/MarketCandlestick'
+                        adjusted_end_ts:
+                          type: integer
+                          format: int64
+                          description: >-
+                            Adjusted end timestamp if the requested candlesticks
+                            would be larger than maxAggregateCandidates.
+            refIdentifier: '#/components/schemas/GetEventsCandlesticksResponse'
             requiredProperties:
-              - market_tickers
-              - market_candlesticks
-              - adjusted_end_ts
+              - events
         examples:
           example:
             value:
-              market_tickers:
-                - <string>
-              market_candlesticks:
-                - - end_period_ts: 123
-                    yes_bid:
-                      open: 123
-                      open_dollars: <string>
-                      low: 123
-                      low_dollars: <string>
-                      high: 123
-                      high_dollars: <string>
-                      close: 123
-                      close_dollars: <string>
-                    yes_ask:
-                      open: 123
-                      open_dollars: <string>
-                      low: 123
-                      low_dollars: <string>
-                      high: 123
-                      high_dollars: <string>
-                      close: 123
-                      close_dollars: <string>
-                    price:
-                      open: 123
-                      open_dollars: <string>
-                      low: 123
-                      low_dollars: <string>
-                      high: 123
-                      high_dollars: <string>
-                      close: 123
-                      close_dollars: <string>
-                      mean: 123
-                      mean_dollars: <string>
-                      previous: 123
-                      previous_dollars: <string>
-                      min: 123
-                      min_dollars: <string>
-                      max: 123
-                      max_dollars: <string>
-                    volume: 123
-                    open_interest: 123
-              adjusted_end_ts: 123
+              events:
+                - event_ticker: <string>
+                  market_tickers:
+                    - <string>
+                  market_candlesticks:
+                    - - end_period_ts: 123
+                        yes_bid:
+                          open: 123
+                          open_dollars: <string>
+                          low: 123
+                          low_dollars: <string>
+                          high: 123
+                          high_dollars: <string>
+                          close: 123
+                          close_dollars: <string>
+                        yes_ask:
+                          open: 123
+                          open_dollars: <string>
+                          low: 123
+                          low_dollars: <string>
+                          high: 123
+                          high_dollars: <string>
+                          close: 123
+                          close_dollars: <string>
+                        price:
+                          open: 123
+                          open_dollars: <string>
+                          low: 123
+                          low_dollars: <string>
+                          high: 123
+                          high_dollars: <string>
+                          close: 123
+                          close_dollars: <string>
+                          mean: 123
+                          mean_dollars: <string>
+                          previous: 123
+                          previous_dollars: <string>
+                          min: 123
+                          min_dollars: <string>
+                          max: 123
+                          max_dollars: <string>
+                        volume: 123
+                        open_interest: 123
+                  adjusted_end_ts: 123
         description: Event candlesticks retrieved successfully
     '400':
       _mintlify/placeholder:
@@ -155,7 +164,7 @@ paths:
             description: Internal server error
         examples: {}
         description: Internal server error
-  deprecated: true
+  deprecated: false
   type: path
 components:
   schemas:
