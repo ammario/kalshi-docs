@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix
-lastmod: 2025-11-15T23:21:05.023Z
+lastmod: 2025-11-19T16:28:12.106Z
 ---
 # FIX API Overview
 
@@ -23,7 +23,7 @@ Please contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to in
 
 Need a machine-readable view of the Kalshi-specific FIX tags and messages? Download the XML dictionary and import it into your FIX tooling of choice:
 
-* [Kalshi FIX Dictionary v0.1 (XML)](/fix/kalshi-fix-dictionary.xml)
+* [Kalshi FIX Dictionary v0.1 (XML)](https://kalshi-public-docs.s3.us-east-1.amazonaws.com/fix/kalshi-fix-dictionary.xml)
 
 ## Key Features
 
