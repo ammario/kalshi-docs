@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/delete-order-group
-lastmod: 2025-11-19T00:52:48.386Z
+lastmod: 2025-11-20T17:55:00.952Z
 ---
 # Delete Order Group
 

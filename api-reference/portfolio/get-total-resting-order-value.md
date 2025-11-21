@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-total-resting-order-value
-lastmod: 2025-11-19T00:52:48.515Z
+lastmod: 2025-11-20T17:55:01.065Z
 ---
 # Get Total Resting Order Value
 

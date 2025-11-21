@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-metadata
-lastmod: 2025-11-19T00:52:48.647Z
+lastmod: 2025-11-20T17:55:01.177Z
 ---
 # Get Event Metadata
 
@@ -38,6 +38,18 @@ paths:
                 allOf:
                   - type: string
                     description: A path to an image that represents this event.
+              featured_image_url:
+                allOf:
+                  - type: string
+                    description: >-
+                      A path to an image that represents the image of the
+                      featured market.
+              market_details:
+                allOf:
+                  - type: array
+                    description: Metadata for the markets in this event.
+                    items:
+                      $ref: '#/components/schemas/MarketMetadata'
               settlement_sources:
                 allOf:
                   - type: array
@@ -62,10 +74,16 @@ paths:
             requiredProperties:
               - image_url
               - settlement_sources
+              - market_details
         examples:
           example:
             value:
               image_url: <string>
+              featured_image_url: <string>
+              market_details:
+                - market_ticker: <string>
+                  image_url: <string>
+                  color_code: <string>
               settlement_sources:
                 - name: <string>
                   url: <string>
@@ -104,6 +122,22 @@ paths:
   type: path
 components:
   schemas:
+    MarketMetadata:
+      type: object
+      required:
+        - market_ticker
+        - image_url
+        - color_code
+      properties:
+        market_ticker:
+          type: string
+          description: The ticker of the market.
+        image_url:
+          type: string
+          description: A path to an image that represents this market.
+        color_code:
+          type: string
+          description: The color code for the market.
     SettlementSource:
       type: object
       properties:

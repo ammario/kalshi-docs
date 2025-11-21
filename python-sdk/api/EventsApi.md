@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/EventsApi
-lastmod: 2025-11-17T18:05:02.651Z
+lastmod: 2025-11-20T17:55:12.065Z
 ---
 # Events
 
@@ -8,14 +8,15 @@ lastmod: 2025-11-17T18:05:02.651Z
 
 All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
 
-| Method                                                                                    | HTTP request                                                                  | Description                           |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------- |
-| [**get\_event**](#get-event)                                                              | **GET** /events/{event_ticker}                                                | Get Event                             |
-| [**get\_event\_forecast\_percentiles\_history**](#get-event-forecast-percentiles-history) | **GET** /series/{series_ticker}/events/{ticker}/forecast\_percentile\_history | Get Event Forecast Percentile History |
-| [**get\_event\_metadata**](#get-event-metadata)                                           | **GET** /events/{event_ticker}/metadata                                       | Get Event Metadata                    |
-| [**get\_events**](#get-events)                                                            | **GET** /events                                                               | Get Events                            |
-| [**get\_market\_candlesticks\_by\_event**](#get-market-candlesticks-by-event)             | **GET** /series/{series_ticker}/events/{ticker}/candlesticks                  | Get Event Candlesticks                |
-| [**get\_multivariate\_events**](#get-multivariate-events)                                 | **GET** /events/multivariate                                                  | Get Multivariate Events               |
+| Method                                                                                    | HTTP request                                                                  | Description                              |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------- |
+| [**get\_event**](#get-event)                                                              | **GET** /events/{event_ticker}                                                | Get Event                                |
+| [**get\_event\_forecast\_percentiles\_history**](#get-event-forecast-percentiles-history) | **GET** /series/{series_ticker}/events/{ticker}/forecast\_percentile\_history | Get Event Forecast Percentile History    |
+| [**get\_event\_metadata**](#get-event-metadata)                                           | **GET** /events/{event_ticker}/metadata                                       | Get Event Metadata                       |
+| [**get\_events**](#get-events)                                                            | **GET** /events                                                               | Get Events                               |
+| [**get\_events\_candlesticks**](#get-events-candlesticks)                                 | **GET** /events/candlesticks                                                  | Get Event Candlesticks (Multiple Events) |
+| [**get\_market\_candlesticks\_by\_event**](#get-market-candlesticks-by-event)             | **GET** /series/{series_ticker}/events/{ticker}/candlesticks                  | Get Event Candlesticks                   |
+| [**get\_multivariate\_events**](#get-multivariate-events)                                 | **GET** /events/multivariate                                                  | Get Multivariate Events                  |
 
 # **get\_event**
 
@@ -291,6 +292,73 @@ except Exception as e:
 | **400**     | Bad request                   |
 | **401**     | Unauthorized                  |
 | **500**     | Internal server error         |
+
+[\[Back to top\]](#) [\[Back to API list\]](https://docs.kalshi.com/python-sdk/api) [\[Back to Model list\]](https://docs.kalshi.com/python-sdk/models) [\[Back to README\]](https://docs.kalshi.com/python-sdk)
+
+# **get\_events\_candlesticks**
+
+> GetEventsCandlesticksResponse get\_events\_candlesticks(event\_tickers, start\_ts, end\_ts, period\_interval)
+
+Get Event Candlesticks (Multiple Events)
+
+End-point for returning aggregated data across all markets corresponding to multiple events. Limited to 5000 candlesticks total across all events and markets.
+
+### Example
+
+```python  theme={null}
+import kalshi_python
+from kalshi_python.models.get_events_candlesticks_response import GetEventsCandlesticksResponse
+from kalshi_python.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# See configuration.py for a list of all supported configuration parameters.
+configuration = kalshi_python.Configuration(
+    host = "https://api.elections.kalshi.com/trade-api/v2"
+)
+
+
+# Initialize the Kalshi client
+client = kalshi_python.KalshiClient(configuration)
+
+event_tickers = 'event_tickers_example' # str | Comma-separated list of event tickers
+
+start_ts = 56 # int | Start timestamp for the range
+
+end_ts = 56 # int | End timestamp for the range
+
+period_interval = 56 # int | Specifies the length of each candlestick period, in minutes. Must be one minute, one hour, or one day.
+
+try:
+    # Get Event Candlesticks (Multiple Events)
+    api_response = client.get_events_candlesticks(event_tickers, start_ts, end_ts, period_interval)
+    print("The response of EventsApi->get_events_candlesticks:\n")
+    pprint(api_response)
+except Exception as e:
+    print("Exception when calling EventsApi->get_events_candlesticks: %s\n" % e)
+```
+
+### Parameters
+
+| Name                 | Type    | Description                                                                                            | Notes |
+| -------------------- | ------- | ------------------------------------------------------------------------------------------------------ | ----- |
+| **event\_tickers**   | **str** | Comma-separated list of event tickers                                                                  |       |
+| **start\_ts**        | **int** | Start timestamp for the range                                                                          |       |
+| **end\_ts**          | **int** | End timestamp for the range                                                                            |       |
+| **period\_interval** | **int** | Specifies the length of each candlestick period, in minutes. Must be one minute, one hour, or one day. |       |
+
+### Return type
+
+[**GetEventsCandlesticksResponse**](https://docs.kalshi.com/python-sdk/models/GetEventsCandlesticksResponse)
+
+### HTTP response details
+
+| Status code | Description                               |
+| ----------- | ----------------------------------------- |
+| **200**     | Event candlesticks retrieved successfully |
+| **400**     | Bad request                               |
+| **401**     | Unauthorized                              |
+| **500**     | Internal server error                     |
 
 [\[Back to top\]](#) [\[Back to API list\]](https://docs.kalshi.com/python-sdk/api) [\[Back to Model list\]](https://docs.kalshi.com/python-sdk/models) [\[Back to README\]](https://docs.kalshi.com/python-sdk)
 

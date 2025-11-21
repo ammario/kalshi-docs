@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-candlesticks-multiple-events
-lastmod: 2025-11-19T00:52:48.614Z
+lastmod: 2025-11-20T17:55:01.149Z
 ---
 # Get Event Candlesticks (Multiple Events)
 
