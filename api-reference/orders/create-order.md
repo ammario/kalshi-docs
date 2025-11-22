@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order
-lastmod: 2025-11-20T17:55:00.975Z
+lastmod: 2025-11-21T15:27:55.991Z
 ---
 # Create Order
 
@@ -78,7 +78,6 @@ paths:
                     enum:
                       - limit
                       - market
-                    default: limit
                     x-oapi-codegen-extra-tags:
                       validate: omitempty,oneof=limit market
               yes_price:
@@ -139,11 +138,8 @@ paths:
                       0.
               self_trade_prevention_type:
                 allOf:
-                  - type: string
-                    enum:
-                      - taker_at_cross
-                      - maker
-                    description: The self-trade prevention type for this order
+                  - allOf:
+                      - $ref: '#/components/schemas/SelfTradePreventionType'
                     x-oapi-codegen-extra-tags:
                       validate: omitempty,oneof=taker_at_cross maker
                     x-go-type-skip-optional-pointer: true
@@ -377,6 +373,19 @@ paths:
   type: path
 components:
   schemas:
+    SelfTradePreventionType:
+      type: string
+      enum:
+        - taker_at_cross
+        - maker
+      description: The self-trade prevention type for orders
+    OrderStatus:
+      type: string
+      enum:
+        - resting
+        - canceled
+        - executed
+      description: The status of an order
     Order:
       type: object
       required:
@@ -428,12 +437,7 @@ components:
             - limit
             - market
         status:
-          type: string
-          enum:
-            - resting
-            - canceled
-            - executed
-            - pending
+          $ref: '#/components/schemas/OrderStatus'
         yes_price:
           type: integer
         no_price:
@@ -502,13 +506,9 @@ components:
           x-omitempty: true
           description: The last update to an order (modify, cancel, fill)
         self_trade_prevention_type:
-          type: string
-          enum:
-            - taker_at_cross
-            - maker
+          $ref: '#/components/schemas/SelfTradePreventionType'
           nullable: true
           x-omitempty: false
-          description: The self-trade prevention type for this order
         order_group_id:
           type: string
           nullable: true

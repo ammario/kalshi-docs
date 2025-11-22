@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order
-lastmod: 2025-11-20T17:55:01.013Z
+lastmod: 2025-11-21T15:27:56.026Z
 ---
 # Cancel Order
 
@@ -184,6 +184,19 @@ paths:
   type: path
 components:
   schemas:
+    SelfTradePreventionType:
+      type: string
+      enum:
+        - taker_at_cross
+        - maker
+      description: The self-trade prevention type for orders
+    OrderStatus:
+      type: string
+      enum:
+        - resting
+        - canceled
+        - executed
+      description: The status of an order
     Order:
       type: object
       required:
@@ -235,12 +248,7 @@ components:
             - limit
             - market
         status:
-          type: string
-          enum:
-            - resting
-            - canceled
-            - executed
-            - pending
+          $ref: '#/components/schemas/OrderStatus'
         yes_price:
           type: integer
         no_price:
@@ -309,13 +317,9 @@ components:
           x-omitempty: true
           description: The last update to an order (modify, cancel, fill)
         self_trade_prevention_type:
-          type: string
-          enum:
-            - taker_at_cross
-            - maker
+          $ref: '#/components/schemas/SelfTradePreventionType'
           nullable: true
           x-omitempty: false
-          description: The self-trade prevention type for this order
         order_group_id:
           type: string
           nullable: true

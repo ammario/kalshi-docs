@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-19T00:52:59.927Z
+lastmod: 2025-11-21T21:56:16.383Z
 ---
 # API Changelog
 
@@ -13,6 +13,40 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Nov 21, 2025"
+  tags={["Breaking Change", "Upcoming"]}
+  rss={{
+title: "Order expiration and IoC behavior changes",
+description: "Orders with past expiration timestamps will be rejected instead of coerced to IoC. IoC flag can no longer be combined with expiration_ts."
+}}
+>
+  **Breaking changes to order expiration and immediate-or-cancel (IoC) handling:**
+
+  1. **Past expiration timestamps now rejected**: Orders with `expiration_ts` in the past will be rejected with error "Expiration timestamp must be in the future" instead of being automatically converted to IoC orders.
+
+  2. **IoC + expiration\_ts combination rejected**: Orders cannot specify both `time_in_force: "immediate_or_cancel"` and `expiration_ts`. This will be rejected at the API level with error "Cannot specify both immediate\_or\_cancel and expiration\_ts".
+
+  3. **IoC orders no longer support expiration**: The IoC order type is now independent and does not accept an expiration timestamp.
+
+  **Migration guide**: If you were previously using past `expiration_ts` values to indicate IoC behavior, you must now explicitly set `time_in_force: "immediate_or_cancel"` instead.
+
+  Expected release: `TBD`
+</Update>
+
+<Update
+  label="Nov 20, 2025"
+  tags={["Upcoming"]}
+  rss={{
+title: "Removing pending from status enum",
+description: "'Pending' is being removed from the status enum on orders"
+}}
+>
+  'Pending' is being removed from the status enum on orders
+
+  Expected release: `November 27, 2025`
+</Update>
 
 <Update
   label="Nov 18, 2025"
