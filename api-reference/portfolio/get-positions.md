@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2025-11-21T15:27:56.059Z
+lastmod: 2025-11-23T23:11:34.927Z
 ---
 # Get Positions
 
@@ -135,7 +135,6 @@ paths:
                   event_exposure_dollars: <string>
                   realized_pnl: 123
                   realized_pnl_dollars: <string>
-                  resting_order_count: 123
                   fees_paid: 123
                   fees_paid_dollars: <string>
         description: Positions retrieved successfully
@@ -288,11 +287,22 @@ components:
           description: Last time the position is updated
     EventPosition:
       type: object
+      required:
+        - event_ticker
+        - total_cost
+        - total_cost_dollars
+        - total_cost_shares
+        - event_exposure
+        - event_exposure_dollars
+        - realized_pnl
+        - realized_pnl_dollars
+        - resting_orders_count
+        - fees_paid
+        - fees_paid_dollars
       properties:
         event_ticker:
           type: string
           description: Unique identifier for events
-          x-go-type-skip-optional-pointer: true
         total_cost:
           type: integer
           description: Total spent on this event in cents
@@ -317,9 +327,6 @@ components:
         realized_pnl_dollars:
           type: string
           description: Locked in profit and loss, in dollars
-        resting_order_count:
-          type: integer
-          description: '[DEPRECATED] Aggregate size of resting orders in contract units'
         fees_paid:
           type: integer
           description: Fees paid on fill orders, in cents

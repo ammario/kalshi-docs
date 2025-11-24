@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/ExchangeApi
-lastmod: 2025-11-17T18:05:13.016Z
+lastmod: 2025-11-23T22:54:23.877Z
 ---
 # Exchange
 
@@ -21,23 +21,6 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 > GetExchangeAnnouncementsResponse getExchangeAnnouncements()
 
 Endpoint for getting all exchange-wide announcements.
-
-### Example
-
-```typescript  theme={null}
-import {
-    ExchangeApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new ExchangeApi(configuration);
-
-const { status, data } = await apiInstance.getExchangeAnnouncements();
-```
 
 ### Parameters
 
@@ -63,30 +46,11 @@ No authorization required
 | **200**     | Exchange announcements retrieved successfully | -                |
 | **500**     | Internal server error                         | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **getExchangeSchedule**
 
 > GetExchangeScheduleResponse getExchangeSchedule()
 
 Endpoint for getting the exchange schedule.
-
-### Example
-
-```typescript  theme={null}
-import {
-    ExchangeApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new ExchangeApi(configuration);
-
-const { status, data } = await apiInstance.getExchangeSchedule();
-```
 
 ### Parameters
 
@@ -112,30 +76,11 @@ No authorization required
 | **200**     | Exchange schedule retrieved successfully | -                |
 | **500**     | Internal server error                    | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **getExchangeStatus**
 
 > ExchangeStatus getExchangeStatus()
 
 Endpoint for getting the exchange status.
-
-### Example
-
-```typescript  theme={null}
-import {
-    ExchangeApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new ExchangeApi(configuration);
-
-const { status, data } = await apiInstance.getExchangeStatus();
-```
 
 ### Parameters
 
@@ -163,34 +108,9 @@ No authorization required
 | **503**     | Service unavailable                    | -                |
 | **504**     | Gateway timeout                        | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **getSeriesFeeChanges**
 
 > GetSeriesFeeChangesResponse getSeriesFeeChanges()
-
-### Example
-
-```typescript  theme={null}
-import {
-    ExchangeApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new ExchangeApi(configuration);
-
-let seriesTicker: string; // (optional) (default to undefined)
-let showHistorical: boolean; // (optional) (default to false)
-
-const { status, data } = await apiInstance.getSeriesFeeChanges(
-    seriesTicker,
-    showHistorical
-);
-```
 
 ### Parameters
 
@@ -220,30 +140,11 @@ No authorization required
 | **400**     | Bad request - invalid input               | -                |
 | **500**     | Internal server error                     | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **getUserDataTimestamp**
 
 > GetUserDataTimestampResponse getUserDataTimestamp()
 
 There is typically a short delay before exchange events are reflected in the API endpoints. Whenever possible, combine API responses to PUT/POST/DELETE requests with websocket data to obtain the most accurate view of the exchange state. This endpoint provides an approximate indication of when the data from the following endpoints was last validated: GetBalance, GetOrder(s), GetFills, GetPositions
-
-### Example
-
-```typescript  theme={null}
-import {
-    ExchangeApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new ExchangeApi(configuration);
-
-const { status, data } = await apiInstance.getUserDataTimestamp();
-```
 
 ### Parameters
 
@@ -268,5 +169,3 @@ No authorization required
 | ----------- | ------------------------------------------ | ---------------- |
 | **200**     | User data timestamp retrieved successfully | -                |
 | **500**     | Internal server error                      | -                |
-
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)

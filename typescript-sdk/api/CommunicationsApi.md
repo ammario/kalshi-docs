@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/CommunicationsApi
-lastmod: 2025-11-17T18:05:13.019Z
+lastmod: 2025-11-23T22:54:23.878Z
 ---
 # Communications
 
@@ -27,30 +27,6 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 > acceptQuote(acceptQuoteRequest)
 
 Endpoint for accepting a quote. This will require the quoter to confirm
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration,
-    AcceptQuoteRequest
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-let quoteId: string; //Quote ID (default to undefined)
-let acceptQuoteRequest: AcceptQuoteRequest; //
-
-const { status, data } = await apiInstance.acceptQuote(
-    quoteId,
-    acceptQuoteRequest
-);
-```
 
 ### Parameters
 
@@ -82,34 +58,11 @@ void (empty response body)
 | **404**     | Resource not found                     | -                |
 | **500**     | Internal server error                  | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **confirmQuote**
 
 > confirmQuote()
 
 Endpoint for confirming a quote. This will start a timer for order execution
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-let quoteId: string; //Quote ID (default to undefined)
-
-const { status, data } = await apiInstance.confirmQuote(
-    quoteId
-);
-```
 
 ### Parameters
 
@@ -139,35 +92,11 @@ void (empty response body)
 | **404**     | Resource not found                     | -                |
 | **500**     | Internal server error                  | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **createQuote**
 
 > CreateQuoteResponse createQuote(createQuoteRequest)
 
 Endpoint for creating a quote in response to an RFQ
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration,
-    CreateQuoteRequest
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-let createQuoteRequest: CreateQuoteRequest; //
-
-const { status, data } = await apiInstance.createQuote(
-    createQuoteRequest
-);
-```
 
 ### Parameters
 
@@ -197,35 +126,11 @@ const { status, data } = await apiInstance.createQuote(
 | **401**     | Unauthorized - authentication required | -                |
 | **500**     | Internal server error                  | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **createRFQ**
 
 > CreateRFQResponse createRFQ(createRFQRequest)
 
 Endpoint for creating a new RFQ. You can have a maximum of 100 open RFQs at a time.
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration,
-    CreateRFQRequest
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-let createRFQRequest: CreateRFQRequest; //
-
-const { status, data } = await apiInstance.createRFQ(
-    createRFQRequest
-);
-```
 
 ### Parameters
 
@@ -256,34 +161,11 @@ const { status, data } = await apiInstance.createRFQ(
 | **409**     | Conflict - resource already exists or cannot be modified | -                |
 | **500**     | Internal server error                                    | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **deleteQuote**
 
 > deleteQuote()
 
 Endpoint for deleting a quote, which means it can no longer be accepted.
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-let quoteId: string; //Quote ID (default to undefined)
-
-const { status, data } = await apiInstance.deleteQuote(
-    quoteId
-);
-```
 
 ### Parameters
 
@@ -313,34 +195,11 @@ void (empty response body)
 | **404**     | Resource not found                     | -                |
 | **500**     | Internal server error                  | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **deleteRFQ**
 
 > deleteRFQ()
 
 Endpoint for deleting an RFQ by ID
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-let rfqId: string; //RFQ ID (default to undefined)
-
-const { status, data } = await apiInstance.deleteRFQ(
-    rfqId
-);
-```
 
 ### Parameters
 
@@ -370,30 +229,11 @@ void (empty response body)
 | **404**     | Resource not found                     | -                |
 | **500**     | Internal server error                  | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **getCommunicationsID**
 
 > GetCommunicationsIDResponse getCommunicationsID()
 
 Endpoint for getting the communications ID of the logged-in user.
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-const { status, data } = await apiInstance.getCommunicationsID();
-```
 
 ### Parameters
 
@@ -420,34 +260,11 @@ This endpoint does not have any parameters.
 | **401**     | Unauthorized - authentication required   | -                |
 | **500**     | Internal server error                    | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **getQuote**
 
 > GetQuoteResponse getQuote()
 
 Endpoint for getting a particular quote
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-let quoteId: string; //Quote ID (default to undefined)
-
-const { status, data } = await apiInstance.getQuote(
-    quoteId
-);
-```
 
 ### Parameters
 
@@ -477,50 +294,11 @@ const { status, data } = await apiInstance.getQuote(
 | **404**     | Resource not found                     | -                |
 | **500**     | Internal server error                  | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **getQuotes**
 
 > GetQuotesResponse getQuotes()
 
 Endpoint for getting quotes
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-let cursor: string; //Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. (optional) (default to undefined)
-let eventTicker: string; //Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10). (optional) (default to undefined)
-let marketTicker: string; //Filter by market ticker (optional) (default to undefined)
-let limit: number; //Parameter to specify the number of results per page. Defaults to 500. (optional) (default to 500)
-let status: string; //Filter quotes by status (optional) (default to undefined)
-let quoteCreatorUserId: string; //Filter quotes by quote creator user ID (optional) (default to undefined)
-let rfqCreatorUserId: string; //Filter quotes by RFQ creator user ID (optional) (default to undefined)
-let rfqCreatorSubtraderId: string; //Filter quotes by RFQ creator subtrader ID (FCM members only) (optional) (default to undefined)
-let rfqId: string; //Filter quotes by RFQ ID (optional) (default to undefined)
-
-const { status, data } = await apiInstance.getQuotes(
-    cursor,
-    eventTicker,
-    marketTicker,
-    limit,
-    status,
-    quoteCreatorUserId,
-    rfqCreatorUserId,
-    rfqCreatorSubtraderId,
-    rfqId
-);
-```
 
 ### Parameters
 
@@ -557,34 +335,11 @@ const { status, data } = await apiInstance.getQuotes(
 | **401**     | Unauthorized - authentication required | -                |
 | **500**     | Internal server error                  | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **getRFQ**
 
 > GetRFQResponse getRFQ()
 
 Endpoint for getting a single RFQ by id
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-let rfqId: string; //RFQ ID (default to undefined)
-
-const { status, data } = await apiInstance.getRFQ(
-    rfqId
-);
-```
 
 ### Parameters
 
@@ -614,44 +369,11 @@ const { status, data } = await apiInstance.getRFQ(
 | **404**     | Resource not found                     | -                |
 | **500**     | Internal server error                  | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **getRFQs**
 
 > GetRFQsResponse getRFQs()
 
 Endpoint for getting RFQs
-
-### Example
-
-```typescript  theme={null}
-import {
-    CommunicationsApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new CommunicationsApi(configuration);
-
-let cursor: string; //Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. (optional) (default to undefined)
-let eventTicker: string; //Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10). (optional) (default to undefined)
-let marketTicker: string; //Filter by market ticker (optional) (default to undefined)
-let limit: number; //Parameter to specify the number of results per page. Defaults to 100. (optional) (default to 100)
-let status: string; //Filter RFQs by status (optional) (default to undefined)
-let creatorUserId: string; //Filter RFQs by creator user ID (optional) (default to undefined)
-
-const { status, data } = await apiInstance.getRFQs(
-    cursor,
-    eventTicker,
-    marketTicker,
-    limit,
-    status,
-    creatorUserId
-);
-```
 
 ### Parameters
 
@@ -684,5 +406,3 @@ const { status, data } = await apiInstance.getRFQs(
 | **200**     | RFQs retrieved successfully            | -                |
 | **401**     | Unauthorized - authentication required | -                |
 | **500**     | Internal server error                  | -                |
-
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)

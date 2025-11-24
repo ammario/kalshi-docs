@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/ApiKeysApi
-lastmod: 2025-11-17T18:05:12.429Z
+lastmod: 2025-11-23T22:54:23.875Z
 ---
 # ApiKeys
 
@@ -20,28 +20,6 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 > CreateApiKeyResponse createApiKey(createApiKeyRequest)
 
 Endpoint for creating a new API key with a user-provided public key.  This endpoint allows users with Premier or Market Maker API usage levels to create API keys by providing their own RSA public key. The platform will use this public key to verify signatures on API requests.
-
-### Example
-
-```typescript  theme={null}
-import {
-    ApiKeysApi,
-    Configuration,
-    CreateApiKeyRequest
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new ApiKeysApi(configuration);
-
-let createApiKeyRequest: CreateApiKeyRequest; //
-
-const { status, data } = await apiInstance.createApiKey(
-    createApiKeyRequest
-);
-```
 
 ### Parameters
 
@@ -72,34 +50,11 @@ const { status, data } = await apiInstance.createApiKey(
 | **403**     | Forbidden - insufficient API usage level | -                |
 | **500**     | Internal server error                    | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **deleteApiKey**
 
 > deleteApiKey()
 
 Endpoint for deleting an existing API key.  This endpoint permanently deletes an API key. Once deleted, the key can no longer be used for authentication. This action cannot be undone.
-
-### Example
-
-```typescript  theme={null}
-import {
-    ApiKeysApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new ApiKeysApi(configuration);
-
-let apiKey: string; //API key ID to delete (default to undefined)
-
-const { status, data } = await apiInstance.deleteApiKey(
-    apiKey
-);
-```
 
 ### Parameters
 
@@ -130,35 +85,11 @@ void (empty response body)
 | **404**     | API key not found                | -                |
 | **500**     | Internal server error            | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **generateApiKey**
 
 > GenerateApiKeyResponse generateApiKey(generateApiKeyRequest)
 
 Endpoint for generating a new API key with an automatically created key pair.  This endpoint generates both a public and private RSA key pair. The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.
-
-### Example
-
-```typescript  theme={null}
-import {
-    ApiKeysApi,
-    Configuration,
-    GenerateApiKeyRequest
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new ApiKeysApi(configuration);
-
-let generateApiKeyRequest: GenerateApiKeyRequest; //
-
-const { status, data } = await apiInstance.generateApiKey(
-    generateApiKeyRequest
-);
-```
 
 ### Parameters
 
@@ -188,30 +119,11 @@ const { status, data } = await apiInstance.generateApiKey(
 | **401**     | Unauthorized                   | -                |
 | **500**     | Internal server error          | -                |
 
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
 # **getApiKeys**
 
 > GetApiKeysResponse getApiKeys()
 
 Endpoint for retrieving all API keys associated with the authenticated user.  API keys allow programmatic access to the platform without requiring username/password authentication. Each key has a unique identifier and name.
-
-### Example
-
-```typescript  theme={null}
-import {
-    ApiKeysApi,
-    Configuration
-} from 'kalshi-typescript';
-
-const configuration = new Configuration({
-    apiKey: 'your-api-key-id',
-    privateKeyPath: '/path/to/private-key.pem'  // or privateKeyPem: 'PEM string'
-});
-const apiInstance = new ApiKeysApi(configuration);
-
-const { status, data } = await apiInstance.getApiKeys();
-```
 
 ### Parameters
 
@@ -237,5 +149,3 @@ This endpoint does not have any parameters.
 | **200**     | List of API keys retrieved successfully | -                |
 | **401**     | Unauthorized                            | -                |
 | **500**     | Internal server error                   | -                |
-
-[\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)

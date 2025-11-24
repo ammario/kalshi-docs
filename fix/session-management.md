@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/session-management
-lastmod: 2025-11-14T02:02:56.817Z
+lastmod: 2025-11-23T22:54:23.442Z
 ---
 # Session Management
 
@@ -57,15 +57,16 @@ The initiator must send a Logon message to establish a session. The acceptor wil
 
 ### Optional Fields
 
-| Tag   | Name                     | Description                                                                              | Default |
-| ----- | ------------------------ | ---------------------------------------------------------------------------------------- | ------- |
-| 108   | HeartbeatInt             | Heartbeat \<0> interval (seconds)                                                        | 30      |
-| 8013  | CancelOrdersOnDisconnect | Cancel orders on any disconnection (including graceful logout)                           | N       |
-| 20126 | ListenerSession          | Listen-only session (KalshiNR/RT only, requires SkipPendingExecReports=Y)                | N       |
-| 20127 | ReceiveSettlementReports | Receive settlement reports (KalshiRT only)                                               | N       |
-| 20200 | MessageRetentionPeriod   | How long session messages will be store for retransmission (KalshiRT and KalshiRFQ only) | 3       |
-| 21003 | SkipPendingExecReports   | Skip PENDING\_\{NEW\|REPLACE\|CANCEL} execution reports                                  | N       |
-| 21007 | EnableIocCancelReport    | Partially filled IOC orders produce a cancel report                                      | N       |
+| Tag   | Name                     | Description                                                                                          | Default |
+| ----- | ------------------------ | ---------------------------------------------------------------------------------------------------- | ------- |
+| 108   | HeartbeatInt             | Heartbeat \<0> interval (seconds)                                                                    | 30      |
+| 8013  | CancelOrdersOnDisconnect | Cancel orders on any disconnection (including graceful logout)                                       | N       |
+| 20126 | ListenerSession          | Listen-only session (KalshiNR/RT only, requires SkipPendingExecReports=Y)                            | N       |
+| 20127 | ReceiveSettlementReports | Receive settlement reports (KalshiRT only)                                                           | N       |
+| 20200 | MessageRetentionPeriod   | How long session messages will be store for retransmission (KalshiRT and KalshiRFQ only), max of 72. | 24      |
+| 21003 | SkipPendingExecReports   | Skip PENDING\_\{NEW\|REPLACE\|CANCEL} execution reports                                              | N       |
+| 21007 | EnableIocCancelReport    | Partially filled IOC orders produce a cancel report                                                  | N       |
+| 21008 | PreserveOriginalOrderQty | OrderQty tag 38 always reflects original order quantity across all states                            | N       |
 
 ### Signature Generation
 
@@ -149,7 +150,7 @@ For unexpected sequence numbers:
 
 ### Limitations
 
-* Lookback window limited to 3 hours (or up to 24 hours if MessageRetentionPeriod was set on Logon request)
+* Lookback window limited to 24 hours (or up to 72 hours if MessageRetentionPeriod was set on Logon request)
 * If you provide a BeginSeqNo that is beyond the lookback window, you will receive a Reject message
 
 | Tag | Name       | Description             |
