@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-21T21:56:16.383Z
+lastmod: 2025-11-25T00:26:33.367Z
 ---
 # API Changelog
 
@@ -13,6 +13,39 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Nov 23, 2025"
+  tags={["Upcoming"]}
+  rss={{
+title: "Get Markets Filter Updates",
+description: "Get Markets Filter Updates"
+}}
+>
+  Updates to filtering in `GET /markets`
+
+  * Inactive markets during tradable hours will returned in the `open` selector.
+  * Inactive markets during tradable hours no longer appear in the `closed` selector.
+  * Restricting to a single status filter allowed per request (previously announced).
+
+  Release date: `November 27, 2025`
+</Update>
+
+<Update
+  label="Nov 21, 2025"
+  tags={["Upcoming"]}
+  rss={{
+title: "Subpenny bids added to Get Quote API",
+description: "Subpenny bids added to Get Quote API"
+}}
+>
+  Subpenny fields `yes_bid_dollars` and `no_bid_dollars` available on the Get Quote API. Affected endpoints:
+
+  * `GET /communications/quotes`
+  * `GET /communications/quotes/{quote_id}`
+
+  Expected release: `November 27, 2025`
+</Update>
 
 <Update
   label="Nov 21, 2025"
@@ -97,24 +130,20 @@ description: "New timestamp filters for Markets API"
 
 <Update
   label="Nov 11, 2025"
-  tags={["New Feature", "Upcoming"]}
+  tags={["Breaking Change", "Released"]}
   rss={{
 title: "Restrictions to GetMarkets Filters",
 description: "Restrictions to GetMarkets Filters"
 }}
 >
   Breaking changes planned to `GET /markets` endpoint for performance reasons:
-
-  * Only one `status` filter may be supplied at a time.
-  * Timestamp filters will be mutually exclusive from other timestamp filters and certain status filters.
+  Timestamp filters will be mutually exclusive from other timestamp filters and certain status filters.
 
   | Compatible Timestamp Filters       | Additional Status Filters   |
   | ---------------------------------- | --------------------------- |
   | min\_created\_ts, max\_created\_ts | `unopened`, `open`, *empty* |
   | min\_close\_ts, max\_close\_ts     | `closed`, *empty*           |
   | min\_settled\_ts, max\_settled\_ts | `settled`, *empty*          |
-
-  Expected release: `November 20, 2025`
 </Update>
 
 <Update

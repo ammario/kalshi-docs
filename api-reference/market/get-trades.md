@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-trades
-lastmod: 2025-11-23T23:11:35.007Z
+lastmod: 2025-11-25T00:26:23.587Z
 ---
 # Get Trades
 
@@ -79,8 +79,8 @@ paths:
                   count: 123
                   yes_price: 123
                   no_price: 123
-                  yes_price_dollars: <string>
-                  no_price_dollars: <string>
+                  yes_price_dollars: '0.5600'
+                  no_price_dollars: '0.5600'
                   taker_side: 'yes'
                   created_time: '2023-11-07T05:31:56Z'
               cursor: <string>
@@ -103,6 +103,12 @@ paths:
   type: path
 components:
   schemas:
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
     Trade:
       type: object
       required:
@@ -135,10 +141,10 @@ components:
           type: integer
           description: No price for this trade in cents
         yes_price_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Yes price for this trade in dollars
         no_price_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: No price for this trade in dollars
         taker_side:
           type: string

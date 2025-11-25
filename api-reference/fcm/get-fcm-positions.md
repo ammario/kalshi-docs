@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
-lastmod: 2025-11-23T23:11:35.096Z
+lastmod: 2025-11-25T00:26:23.680Z
 ---
 # Get FCM Positions
 
@@ -119,27 +119,27 @@ paths:
               market_positions:
                 - ticker: <string>
                   total_traded: 123
-                  total_traded_dollars: <string>
+                  total_traded_dollars: '0.5600'
                   position: 123
                   market_exposure: 123
-                  market_exposure_dollars: <string>
+                  market_exposure_dollars: '0.5600'
                   realized_pnl: 123
-                  realized_pnl_dollars: <string>
+                  realized_pnl_dollars: '0.5600'
                   resting_orders_count: 123
                   fees_paid: 123
-                  fees_paid_dollars: <string>
+                  fees_paid_dollars: '0.5600'
                   last_updated_ts: '2023-11-07T05:31:56Z'
               event_positions:
                 - event_ticker: <string>
                   total_cost: 123
-                  total_cost_dollars: <string>
+                  total_cost_dollars: '0.5600'
                   total_cost_shares: 123
                   event_exposure: 123
-                  event_exposure_dollars: <string>
+                  event_exposure_dollars: '0.5600'
                   realized_pnl: 123
-                  realized_pnl_dollars: <string>
+                  realized_pnl_dollars: '0.5600'
                   fees_paid: 123
-                  fees_paid_dollars: <string>
+                  fees_paid_dollars: '0.5600'
         description: Positions retrieved successfully
     '400':
       _mintlify/placeholder:
@@ -173,6 +173,12 @@ paths:
   type: path
 components:
   schemas:
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
     MarketPosition:
       type: object
       required:
@@ -196,7 +202,7 @@ components:
           type: integer
           description: Total spent on this market in cents
         total_traded_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Total spent on this market in dollars
         position:
           type: integer
@@ -208,13 +214,13 @@ components:
           type: integer
           description: Cost of the aggregate market position in cents
         market_exposure_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Cost of the aggregate market position in dollars
         realized_pnl:
           type: integer
           description: Locked in profit and loss, in cents
         realized_pnl_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Locked in profit and loss, in dollars
         resting_orders_count:
           type: integer
@@ -224,7 +230,7 @@ components:
           type: integer
           description: Fees paid on fill orders, in cents
         fees_paid_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Fees paid on fill orders, in dollars
         last_updated_ts:
           type: string
@@ -252,7 +258,7 @@ components:
           type: integer
           description: Total spent on this event in cents
         total_cost_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Total spent on this event in dollars
         total_cost_shares:
           type: integer
@@ -264,19 +270,19 @@ components:
           type: integer
           description: Cost of the aggregate event position in cents
         event_exposure_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Cost of the aggregate event position in dollars
         realized_pnl:
           type: integer
           description: Locked in profit and loss, in cents
         realized_pnl_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Locked in profit and loss, in dollars
         fees_paid:
           type: integer
           description: Fees paid on fill orders, in cents
         fees_paid_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Fees paid on fill orders, in dollars
 
 ````

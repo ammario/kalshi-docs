@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2025-11-23T23:11:35.177Z
+lastmod: 2025-11-25T00:26:23.761Z
 ---
 # Get Quotes
 
@@ -115,6 +115,8 @@ paths:
                   contracts: 123
                   yes_bid: 123
                   no_bid: 123
+                  yes_bid_dollars: '0.5600'
+                  no_bid_dollars: '0.5600'
                   created_ts: '2023-11-07T05:31:56Z'
                   updated_ts: '2023-11-07T05:31:56Z'
                   status: open
@@ -196,6 +198,12 @@ paths:
   type: path
 components:
   schemas:
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
     Quote:
       type: object
       required:
@@ -207,6 +215,8 @@ components:
         - contracts
         - yes_bid
         - no_bid
+        - yes_bid_dollars
+        - no_bid_dollars
         - created_ts
         - updated_ts
         - status
@@ -236,6 +246,12 @@ components:
         no_bid:
           type: integer
           description: Bid price for NO contracts, in cents
+        yes_bid_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Bid price for YES contracts, in dollars
+        no_bid_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Bid price for NO contracts, in dollars
         created_ts:
           type: string
           format: date-time

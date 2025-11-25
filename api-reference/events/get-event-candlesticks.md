@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-candlesticks
-lastmod: 2025-11-23T23:11:35.015Z
+lastmod: 2025-11-25T00:26:23.595Z
 ---
 # Get Event Candlesticks
 
@@ -97,39 +97,39 @@ paths:
                 - - end_period_ts: 123
                     yes_bid:
                       open: 123
-                      open_dollars: <string>
+                      open_dollars: '0.5600'
                       low: 123
-                      low_dollars: <string>
+                      low_dollars: '0.5600'
                       high: 123
-                      high_dollars: <string>
+                      high_dollars: '0.5600'
                       close: 123
-                      close_dollars: <string>
+                      close_dollars: '0.5600'
                     yes_ask:
                       open: 123
-                      open_dollars: <string>
+                      open_dollars: '0.5600'
                       low: 123
-                      low_dollars: <string>
+                      low_dollars: '0.5600'
                       high: 123
-                      high_dollars: <string>
+                      high_dollars: '0.5600'
                       close: 123
-                      close_dollars: <string>
+                      close_dollars: '0.5600'
                     price:
                       open: 123
-                      open_dollars: <string>
+                      open_dollars: '0.5600'
                       low: 123
-                      low_dollars: <string>
+                      low_dollars: '0.5600'
                       high: 123
-                      high_dollars: <string>
+                      high_dollars: '0.5600'
                       close: 123
-                      close_dollars: <string>
+                      close_dollars: '0.5600'
                       mean: 123
-                      mean_dollars: <string>
+                      mean_dollars: '0.5600'
                       previous: 123
-                      previous_dollars: <string>
+                      previous_dollars: '0.5600'
                       min: 123
-                      min_dollars: <string>
+                      min_dollars: '0.5600'
                       max: 123
-                      max_dollars: <string>
+                      max_dollars: '0.5600'
                     volume: 123
                     open_interest: 123
               adjusted_end_ts: 123
@@ -159,6 +159,12 @@ paths:
   type: path
 components:
   schemas:
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
     MarketCandlestick:
       type: object
       required:
@@ -218,7 +224,7 @@ components:
             Offer price on the market at the start of the candlestick period (in
             cents).
         open_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Offer price on the market at the start of the candlestick period (in
             dollars).
@@ -228,7 +234,7 @@ components:
             Lowest offer price on the market during the candlestick period (in
             cents).
         low_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Lowest offer price on the market during the candlestick period (in
             dollars).
@@ -238,7 +244,7 @@ components:
             Highest offer price on the market during the candlestick period (in
             cents).
         high_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Highest offer price on the market during the candlestick period (in
             dollars).
@@ -248,7 +254,7 @@ components:
             Offer price on the market at the end of the candlestick period (in
             cents).
         close_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Offer price on the market at the end of the candlestick period (in
             dollars).
@@ -263,7 +269,7 @@ components:
             period (in cents). May be null if there was no trade during the
             period.
         open_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
             First traded YES contract price on the market during the candlestick
@@ -277,7 +283,7 @@ components:
             candlestick period (in cents). May be null if there was no trade
             during the period.
         low_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
             Lowest traded YES contract price on the market during the
@@ -291,7 +297,7 @@ components:
             candlestick period (in cents). May be null if there was no trade
             during the period.
         high_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
             Highest traded YES contract price on the market during the
@@ -305,7 +311,7 @@ components:
             period (in cents). May be null if there was no trade during the
             period.
         close_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
             Last traded YES contract price on the market during the candlestick
@@ -319,7 +325,7 @@ components:
             period (in cents). May be null if there was no trade during the
             period.
         mean_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
             Mean traded YES contract price on the market during the candlestick
@@ -333,7 +339,7 @@ components:
             period (in cents). May be null if there were no trades before the
             period.
         previous_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
             Last traded YES contract price on the market before the candlestick
@@ -346,7 +352,7 @@ components:
             Minimum close price of any market during the candlestick period (in
             cents).
         min_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
             Minimum close price of any market during the candlestick period (in
@@ -358,7 +364,7 @@ components:
             Maximum close price of any market during the candlestick period (in
             cents).
         max_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
             Maximum close price of any market during the candlestick period (in

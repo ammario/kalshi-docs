@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2025-11-23T23:11:35.045Z
+lastmod: 2025-11-25T00:26:23.626Z
 ---
 # Get Event
 
@@ -92,32 +92,32 @@ paths:
                     status: initialized
                     response_price_units: usd_cent
                     yes_bid: 123
-                    yes_bid_dollars: <string>
+                    yes_bid_dollars: '0.5600'
                     yes_ask: 123
-                    yes_ask_dollars: <string>
+                    yes_ask_dollars: '0.5600'
                     no_bid: 123
-                    no_bid_dollars: <string>
+                    no_bid_dollars: '0.5600'
                     no_ask: 123
-                    no_ask_dollars: <string>
+                    no_ask_dollars: '0.5600'
                     last_price: 123
-                    last_price_dollars: <string>
+                    last_price_dollars: '0.5600'
                     volume: 123
                     volume_24h: 123
                     result: 'yes'
                     can_close_early: true
                     open_interest: 123
                     notional_value: 123
-                    notional_value_dollars: <string>
+                    notional_value_dollars: '0.5600'
                     previous_yes_bid: 123
-                    previous_yes_bid_dollars: <string>
+                    previous_yes_bid_dollars: '0.5600'
                     previous_yes_ask: 123
-                    previous_yes_ask_dollars: <string>
+                    previous_yes_ask_dollars: '0.5600'
                     previous_price: 123
-                    previous_price_dollars: <string>
+                    previous_price_dollars: '0.5600'
                     liquidity: 123
-                    liquidity_dollars: <string>
+                    liquidity_dollars: '0.5600'
                     settlement_value: 123
-                    settlement_value_dollars: <string>
+                    settlement_value_dollars: '0.5600'
                     expiration_value: <string>
                     category: <string>
                     risk_limit_cents: 123
@@ -162,32 +162,32 @@ paths:
                   status: initialized
                   response_price_units: usd_cent
                   yes_bid: 123
-                  yes_bid_dollars: <string>
+                  yes_bid_dollars: '0.5600'
                   yes_ask: 123
-                  yes_ask_dollars: <string>
+                  yes_ask_dollars: '0.5600'
                   no_bid: 123
-                  no_bid_dollars: <string>
+                  no_bid_dollars: '0.5600'
                   no_ask: 123
-                  no_ask_dollars: <string>
+                  no_ask_dollars: '0.5600'
                   last_price: 123
-                  last_price_dollars: <string>
+                  last_price_dollars: '0.5600'
                   volume: 123
                   volume_24h: 123
                   result: 'yes'
                   can_close_early: true
                   open_interest: 123
                   notional_value: 123
-                  notional_value_dollars: <string>
+                  notional_value_dollars: '0.5600'
                   previous_yes_bid: 123
-                  previous_yes_bid_dollars: <string>
+                  previous_yes_bid_dollars: '0.5600'
                   previous_yes_ask: 123
-                  previous_yes_ask_dollars: <string>
+                  previous_yes_ask_dollars: '0.5600'
                   previous_price: 123
-                  previous_price_dollars: <string>
+                  previous_price_dollars: '0.5600'
                   liquidity: 123
-                  liquidity_dollars: <string>
+                  liquidity_dollars: '0.5600'
                   settlement_value: 123
-                  settlement_value_dollars: <string>
+                  settlement_value_dollars: '0.5600'
                   expiration_value: <string>
                   category: <string>
                   risk_limit_cents: 123
@@ -245,6 +245,12 @@ paths:
   type: path
 components:
   schemas:
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
     EventData:
       type: object
       required:
@@ -464,27 +470,27 @@ components:
         yes_bid:
           type: number
         yes_bid_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the highest YES buy offer on this market in dollars
         yes_ask:
           type: number
         yes_ask_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the lowest YES sell offer on this market in dollars
         no_bid:
           type: number
         no_bid_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the highest NO buy offer on this market in dollars
         no_ask:
           type: number
         no_ask_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the lowest NO sell offer on this market in dollars
         last_price:
           type: number
         last_price_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the last traded YES contract on this market in dollars
         volume:
           type: integer
@@ -505,7 +511,7 @@ components:
           type: integer
           description: The total value of a single contract at settlement in cents
         notional_value_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: The total value of a single contract at settlement in dollars
         previous_yes_bid:
           type: integer
@@ -513,7 +519,7 @@ components:
             Price for the highest YES buy offer on this market a day ago in
             cents
         previous_yes_bid_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Price for the highest YES buy offer on this market a day ago in
             dollars
@@ -523,7 +529,7 @@ components:
             Price for the lowest YES sell offer on this market a day ago in
             cents
         previous_yes_ask_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Price for the lowest YES sell offer on this market a day ago in
             dollars
@@ -533,7 +539,7 @@ components:
             Price for the last traded YES contract on this market a day ago in
             cents
         previous_price_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Price for the last traded YES contract on this market a day ago in
             dollars
@@ -541,7 +547,7 @@ components:
           type: integer
           description: Value for current offers in this market in cents
         liquidity_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: Value for current offers in this market in dollars
         settlement_value:
           type: integer
@@ -551,7 +557,7 @@ components:
             The settlement value of the YES/LONG side of the contract in cents.
             Only filled after determination
         settlement_value_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           x-omitempty: true
           description: >-

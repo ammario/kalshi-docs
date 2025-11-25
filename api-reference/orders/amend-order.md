@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order
-lastmod: 2025-11-23T23:11:34.899Z
+lastmod: 2025-11-25T00:26:23.473Z
 ---
 # Amend Order
 
@@ -86,14 +86,14 @@ paths:
                     description: Updated no price for the order in cents
               yes_price_dollars:
                 allOf:
-                  - type: string
+                  - $ref: '#/components/schemas/FixedPointDollars'
                     description: >-
                       Updated yes price for the order in fixed-point dollars.
                       Exactly one of yes_price, no_price, yes_price_dollars, and
                       no_price_dollars must be passed.
               no_price_dollars:
                 allOf:
-                  - type: string
+                  - $ref: '#/components/schemas/FixedPointDollars'
                     description: >-
                       Updated no price for the order in fixed-point dollars.
                       Exactly one of yes_price, no_price, yes_price_dollars, and
@@ -121,8 +121,8 @@ paths:
               updated_client_order_id: <string>
               yes_price: 50
               no_price: 50
-              yes_price_dollars: <string>
-              no_price_dollars: <string>
+              yes_price_dollars: '0.5600'
+              no_price_dollars: '0.5600'
               count: 2
   response:
     '200':
@@ -156,8 +156,8 @@ paths:
                 status: resting
                 yes_price: 123
                 no_price: 123
-                yes_price_dollars: '0.5000'
-                no_price_dollars: '0.5000'
+                yes_price_dollars: '0.5600'
+                no_price_dollars: '0.5600'
                 fill_count: 123
                 remaining_count: 123
                 initial_count: 123
@@ -165,11 +165,11 @@ paths:
                 maker_fees: 123
                 taker_fill_cost: 123
                 maker_fill_cost: 123
-                taker_fill_cost_dollars: <string>
-                maker_fill_cost_dollars: <string>
+                taker_fill_cost_dollars: '0.5600'
+                maker_fill_cost_dollars: '0.5600'
                 queue_position: 123
-                taker_fees_dollars: <string>
-                maker_fees_dollars: <string>
+                taker_fees_dollars: '0.5600'
+                maker_fees_dollars: '0.5600'
                 expiration_time: '2023-11-07T05:31:56Z'
                 created_time: '2023-11-07T05:31:56Z'
                 last_update_time: '2023-11-07T05:31:56Z'
@@ -187,8 +187,8 @@ paths:
                 status: resting
                 yes_price: 123
                 no_price: 123
-                yes_price_dollars: '0.5000'
-                no_price_dollars: '0.5000'
+                yes_price_dollars: '0.5600'
+                no_price_dollars: '0.5600'
                 fill_count: 123
                 remaining_count: 123
                 initial_count: 123
@@ -196,11 +196,11 @@ paths:
                 maker_fees: 123
                 taker_fill_cost: 123
                 maker_fill_cost: 123
-                taker_fill_cost_dollars: <string>
-                maker_fill_cost_dollars: <string>
+                taker_fill_cost_dollars: '0.5600'
+                maker_fill_cost_dollars: '0.5600'
                 queue_position: 123
-                taker_fees_dollars: <string>
-                maker_fees_dollars: <string>
+                taker_fees_dollars: '0.5600'
+                maker_fees_dollars: '0.5600'
                 expiration_time: '2023-11-07T05:31:56Z'
                 created_time: '2023-11-07T05:31:56Z'
                 last_update_time: '2023-11-07T05:31:56Z'
@@ -324,6 +324,12 @@ paths:
   type: path
 components:
   schemas:
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
     SelfTradePreventionType:
       type: string
       enum:
@@ -394,13 +400,11 @@ components:
         no_price:
           type: integer
         yes_price_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: The yes price for this order in fixed-point dollars
-          example: '0.5000'
         no_price_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: The no price for this order in fixed-point dollars
-          example: '0.5000'
         fill_count:
           type: integer
           description: The number of contracts that have been filled
@@ -422,10 +426,10 @@ components:
           type: integer
           description: The cost of filled maker orders in cents
         taker_fill_cost_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: The cost of filled taker orders in dollars
         maker_fill_cost_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           description: The cost of filled maker orders in dollars
         queue_position:
           type: integer
@@ -434,11 +438,11 @@ components:
             Please use the GET /portfolio/orders/{order_id}/queue_position
             endpoint instead
         taker_fees_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: Fees paid on filled taker contracts, in dollars
         maker_fees_dollars:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: Fees paid on filled maker contracts, in dollars
         expiration_time:
