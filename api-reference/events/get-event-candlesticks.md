@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-candlesticks
-lastmod: 2025-11-25T00:26:23.595Z
+lastmod: 2025-11-25T20:57:32.648Z
 ---
 # Get Event Candlesticks
 

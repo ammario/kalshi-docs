@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series
-lastmod: 2025-11-25T00:26:23.845Z
+lastmod: 2025-11-25T20:57:32.937Z
 ---
 # Get Series
 

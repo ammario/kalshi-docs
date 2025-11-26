@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/search/get-tags-for-series-categories
-lastmod: 2025-11-25T00:26:23.566Z
+lastmod: 2025-11-25T20:57:32.613Z
 ---
 # Get Tags for Series Categories
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market-orderbook
-lastmod: 2025-11-25T00:26:23.702Z
+lastmod: 2025-11-25T20:57:32.770Z
 ---
 # Get Market Orderbook
 
@@ -73,9 +73,11 @@ paths:
                 'no':
                   - - 123
                 yes_dollars:
-                  - - <any>
+                  - &ref_0
+                    - '0.1500'
+                    - 100
                 no_dollars:
-                  - - <any>
+                  - *ref_0
         description: Orderbook retrieved successfully
     '401':
       application/json:
@@ -84,22 +86,22 @@ paths:
             properties:
               code:
                 allOf:
-                  - &ref_0
+                  - &ref_1
                     type: string
                     description: Error code
               message:
                 allOf:
-                  - &ref_1
+                  - &ref_2
                     type: string
                     description: Human-readable error message
               details:
                 allOf:
-                  - &ref_2
+                  - &ref_3
                     type: string
                     description: Additional details about the error, if available
               service:
                 allOf:
-                  - &ref_3
+                  - &ref_4
                     type: string
                     description: The name of the service that generated the error
             refIdentifier: '#/components/schemas/ErrorResponse'
@@ -118,16 +120,16 @@ paths:
             properties:
               code:
                 allOf:
-                  - *ref_0
+                  - *ref_1
               message:
                 allOf:
-                  - *ref_1
+                  - *ref_2
               details:
                 allOf:
-                  - *ref_2
+                  - *ref_3
               service:
                 allOf:
-                  - *ref_3
+                  - *ref_4
             refIdentifier: '#/components/schemas/ErrorResponse'
         examples:
           example:
@@ -144,16 +146,16 @@ paths:
             properties:
               code:
                 allOf:
-                  - *ref_0
+                  - *ref_1
               message:
                 allOf:
-                  - *ref_1
+                  - *ref_2
               details:
                 allOf:
-                  - *ref_2
+                  - *ref_3
               service:
                 allOf:
-                  - *ref_3
+                  - *ref_4
             refIdentifier: '#/components/schemas/ErrorResponse'
         examples:
           example:
@@ -180,6 +182,9 @@ components:
       type: array
       minItems: 2
       maxItems: 2
+      example:
+        - '0.1500'
+        - 100
       description: >-
         Price level in dollars represented as [dollars_string, count] where
         dollars_string is like "0.1500" and count is the number of contracts
