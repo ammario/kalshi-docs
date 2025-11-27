@@ -28,3 +28,8 @@ Additionally, all prices and money fields will continue to be available in the l
 
 However, in the near future we will be introducing sub-penny pricing on orders. As such, we will eventually the legacy integer cents format.
 Therefore, please update systems to parse the new fixed-point dollars fields and prepare for subpenny precision.
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

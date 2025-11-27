@@ -159,3 +159,8 @@ Endpoint for getting the member's settlements historical track.
 | **400**     | Bad request - invalid input            |
 | **401**     | Unauthorized - authentication required |
 | **500**     | Internal server error                  |
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

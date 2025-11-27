@@ -242,3 +242,8 @@ Response to mass cancel request.
 <Note>
   Individual ExecutionReports will follow for each canceled order.
 </Note>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

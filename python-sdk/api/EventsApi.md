@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/EventsApi
-lastmod: 2025-11-23T22:54:23.463Z
+lastmod: 2025-11-26T03:49:07.597Z
 ---
 # Events
 
@@ -8,15 +8,14 @@ lastmod: 2025-11-23T22:54:23.463Z
 
 All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
 
-| Method                                                                                    | HTTP request                                                                  | Description                              |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------- |
-| [**get\_event**](#get-event)                                                              | **GET** /events/{event_ticker}                                                | Get Event                                |
-| [**get\_event\_forecast\_percentiles\_history**](#get-event-forecast-percentiles-history) | **GET** /series/{series_ticker}/events/{ticker}/forecast\_percentile\_history | Get Event Forecast Percentile History    |
-| [**get\_event\_metadata**](#get-event-metadata)                                           | **GET** /events/{event_ticker}/metadata                                       | Get Event Metadata                       |
-| [**get\_events**](#get-events)                                                            | **GET** /events                                                               | Get Events                               |
-| [**get\_events\_candlesticks**](#get-events-candlesticks)                                 | **GET** /events/candlesticks                                                  | Get Event Candlesticks (Multiple Events) |
-| [**get\_market\_candlesticks\_by\_event**](#get-market-candlesticks-by-event)             | **GET** /series/{series_ticker}/events/{ticker}/candlesticks                  | Get Event Candlesticks                   |
-| [**get\_multivariate\_events**](#get-multivariate-events)                                 | **GET** /events/multivariate                                                  | Get Multivariate Events                  |
+| Method                                                                                    | HTTP request                                                                  | Description                           |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------- |
+| [**get\_event**](#get-event)                                                              | **GET** /events/{event_ticker}                                                | Get Event                             |
+| [**get\_event\_forecast\_percentiles\_history**](#get-event-forecast-percentiles-history) | **GET** /series/{series_ticker}/events/{ticker}/forecast\_percentile\_history | Get Event Forecast Percentile History |
+| [**get\_event\_metadata**](#get-event-metadata)                                           | **GET** /events/{event_ticker}/metadata                                       | Get Event Metadata                    |
+| [**get\_events**](#get-events)                                                            | **GET** /events                                                               | Get Events                            |
+| [**get\_market\_candlesticks\_by\_event**](#get-market-candlesticks-by-event)             | **GET** /series/{series_ticker}/events/{ticker}/candlesticks                  | Get Event Candlesticks                |
+| [**get\_multivariate\_events**](#get-multivariate-events)                                 | **GET** /events/multivariate                                                  | Get Multivariate Events               |
 
 # **get\_event**
 
@@ -140,36 +139,6 @@ Filter by event status. Possible values: 'open', 'closed', 'settled'. Leave empt
 | **401**     | Unauthorized                  |
 | **500**     | Internal server error         |
 
-# **get\_events\_candlesticks**
-
-> GetEventsCandlesticksResponse get\_events\_candlesticks(event\_tickers, start\_ts, end\_ts, period\_interval)
-
-Get Event Candlesticks (Multiple Events)
-
-End-point for returning aggregated data across all markets corresponding to multiple events. Limited to 5000 candlesticks total across all events and markets.
-
-### Parameters
-
-| Name                 | Type    | Description                                                                                            | Notes |
-| -------------------- | ------- | ------------------------------------------------------------------------------------------------------ | ----- |
-| **event\_tickers**   | **str** | Comma-separated list of event tickers                                                                  |       |
-| **start\_ts**        | **int** | Start timestamp for the range                                                                          |       |
-| **end\_ts**          | **int** | End timestamp for the range                                                                            |       |
-| **period\_interval** | **int** | Specifies the length of each candlestick period, in minutes. Must be one minute, one hour, or one day. |       |
-
-### Return type
-
-[**GetEventsCandlesticksResponse**](https://docs.kalshi.com/python-sdk/models/GetEventsCandlesticksResponse)
-
-### HTTP response details
-
-| Status code | Description                               |
-| ----------- | ----------------------------------------- |
-| **200**     | Event candlesticks retrieved successfully |
-| **400**     | Bad request                               |
-| **401**     | Unauthorized                              |
-| **500**     | Internal server error                     |
-
 # **get\_market\_candlesticks\_by\_event**
 
 > GetEventCandlesticksResponse get\_market\_candlesticks\_by\_event(ticker, series\_ticker, start\_ts, end\_ts, period\_interval)
@@ -231,3 +200,8 @@ Retrieve multivariate (combo) events. These are dynamically created events from 
 | **400**     | Bad request - invalid parameters           |
 | **401**     | Unauthorized                               |
 | **500**     | Internal server error                      |
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

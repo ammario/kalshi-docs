@@ -212,3 +212,8 @@ except Exception as e:
 | **500**     | Internal server error                  |
 
 [\[Back to top\]](#) [\[Back to API list\]](https://docs.kalshi.com/python-sdk/api) [\[Back to Model list\]](https://docs.kalshi.com/python-sdk/models) [\[Back to README\]](https://docs.kalshi.com/python-sdk)
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

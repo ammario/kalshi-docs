@@ -63,3 +63,8 @@ Affected Tags:
   ^^ avgPx        ^^ lastPx                        ^^ price
   ```
 </CodeGroup>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

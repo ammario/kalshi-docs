@@ -168,3 +168,8 @@ For more information, check out:
 * [API Reference Documentation](https://docs.kalshi.com/api-reference)
 * [Python Starter Code](https://github.com/Kalshi/kalshi-starter-code-python)
 * [Kalshi Discord Community](https://discord.gg/kalshi)
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

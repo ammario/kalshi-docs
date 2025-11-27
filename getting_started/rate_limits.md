@@ -72,3 +72,8 @@ Only the following APIs fall under the write limit, for the batch APIs, each ite
 <Info>
   We reserve the right to downgrade your API rate limit tier from Prime and Premier when you have shown lack of activity in the previous period.
 </Info>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

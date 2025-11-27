@@ -41,3 +41,8 @@ print(f"Balance: ${balance.balance / 100:.2f}")
 ## Source Code
 
 * PyPI: [https://pypi.org/project/kalshi-python/](https://pypi.org/project/kalshi-python/)
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

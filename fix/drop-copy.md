@@ -150,3 +150,8 @@ Sent when a resend request cannot be fulfilled.
 <Warning>
   All resent messages will have new FIX sequence numbers in the drop copy session, different from their original sequence numbers in the order entry session.
 </Warning>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

@@ -217,3 +217,8 @@ Exchange notifies that a quote request was cancelled.
 * RFQ session requires separate connection
 * Uses KalshiRFQ endpoint
 * Independent of order entry session
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

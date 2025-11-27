@@ -68,3 +68,8 @@ Page size (min: 1, max: 2000)
 | **200**     | Structured targets retrieved successfully |
 | **401**     | Unauthorized                              |
 | **500**     | Internal server error                     |
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

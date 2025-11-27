@@ -169,3 +169,8 @@ No authorization required
 | ----------- | ------------------------------------------ | ---------------- |
 | **200**     | User data timestamp retrieved successfully | -                |
 | **500**     | Internal server error                      | -                |
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

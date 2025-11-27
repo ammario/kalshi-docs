@@ -95,3 +95,8 @@ Response to order group management requests.
 <Note>
   Errors are returned as BusinessMessageReject (35=j) messages, not in the OrderGroupResponse.
 </Note>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

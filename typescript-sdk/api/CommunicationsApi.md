@@ -406,3 +406,8 @@ Endpoint for getting RFQs
 | **200**     | RFQs retrieved successfully            | -                |
 | **401**     | Unauthorized - authentication required | -                |
 | **500**     | Internal server error                  | -                |
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

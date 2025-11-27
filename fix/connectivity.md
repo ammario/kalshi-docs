@@ -148,3 +148,8 @@ The drop copy session endpoint provides an alternative way for clients to query 
     * Verify signature generation uses the exact SendingTime from field 52
   </Accordion>
 </AccordionGroup>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

@@ -55,3 +55,8 @@ const config = new Configuration({
 ## Source Code
 
 * NPM: [kalshi-typescript](https://www.npmjs.com/package/kalshi-typescript)
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

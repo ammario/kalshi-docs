@@ -173,3 +173,8 @@ Now you can make authenticated requests! Try these endpoints:
 * `/trade-api/v2/markets` - Browse available markets
 
 For more details, see the [Complete Order Lifecycle](./complete_order_lifecycle) guide or explore the [API Reference](/api-reference).
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

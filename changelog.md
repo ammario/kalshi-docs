@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-25T00:26:33.367Z
+lastmod: 2025-11-26T03:49:07.276Z
 ---
 # API Changelog
 
@@ -43,6 +43,19 @@ description: "Subpenny bids added to Get Quote API"
 
   * `GET /communications/quotes`
   * `GET /communications/quotes/{quote_id}`
+</Update>
+
+<Update
+  label="Nov 27, 2025"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Batch Market Candlesticks endpoint",
+description: "New endpoint for retrieving candlestick data for multiple markets in a single request"
+}}
+>
+  Adds new endpoint `GET /markets/candlesticks`
+
+  Retrieve candlestick data for multiple markets in a single API call. Supports up to 10,000 candlesticks total across all requested markets.
 
   Expected release: `November 27, 2025`
 </Update>
@@ -79,27 +92,6 @@ description: "'Pending' is being removed from the status enum on orders"
   'Pending' is being removed from the status enum on orders
 
   Expected release: `November 27, 2025`
-</Update>
-
-<Update
-  label="Nov 18, 2025"
-  tags={["New Feature", "Upcoming"]}
-  rss={{
-title: "Multi-event candlesticks endpoint",
-description: "New endpoint for fetching candlestick data across multiple events in a single request"
-}}
->
-  A new endpoint `GET /trade-api/v2/events/candlesticks` has been added to fetch candlestick data for multiple events in a single request. This endpoint:
-
-  * Accepts a comma-separated list of event tickers (no limit on the number of events)
-  * Returns candlestick data for all markets across the specified events
-  * Is optimized with batch queries for improved performance
-  * Limits responses to 5000 candlesticks total across all events and markets
-  * Returns `adjusted_end_ts` when the limit is applied to indicate the adjusted time range
-
-  The previous endpoint `GET /series/{series_ticker}/events/{ticker}/candlesticks` is now deprecated but remains functional for backward compatibility.
-
-  Expected release: `November 20, 2025`
 </Update>
 
 <Update
@@ -871,3 +863,8 @@ description: "The GetApiVersion endpoint has been removed. API versioning will n
 >
   The GetApiVersion endpoint has been removed. API versioning will not be available for the time being.
 </Update>
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

@@ -149,3 +149,8 @@ This endpoint does not have any parameters.
 | **200**     | List of API keys retrieved successfully | -                |
 | **401**     | Unauthorized                            | -                |
 | **500**     | Internal server error                   | -                |
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt

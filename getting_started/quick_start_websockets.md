@@ -408,3 +408,8 @@ To run this example:
 * Review the [WebSocket API Reference](/websockets) for detailed message specifications
 * Explore [Market Data Quick Start](/getting_started/quick_start_market_data) for REST API integration
 * Check out our [Demo Environment](/getting_started/demo_env) for testing
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt
