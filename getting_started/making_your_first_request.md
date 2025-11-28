@@ -17,4 +17,4 @@ The following resources might help you on your journey to exploring Kalshi's mar
 
 ---
 
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

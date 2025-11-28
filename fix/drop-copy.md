@@ -154,4 +154,4 @@ Sent when a resend request cannot be fulfilled.
 
 ---
 
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: /llms.txt
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt
