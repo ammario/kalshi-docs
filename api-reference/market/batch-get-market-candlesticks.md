@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/batch-get-market-candlesticks
-lastmod: 2025-11-26T03:48:54.401Z
+lastmod: 2025-11-30T02:04:39.423Z
 ---
 # Batch Get Market Candlesticks
 
@@ -87,7 +87,7 @@ paths:
           example:
             value:
               markets:
-                - market_id: <string>
+                - market_ticker: <string>
                   candlesticks:
                     - end_period_ts: 123
                       yes_bid:
@@ -162,12 +162,12 @@ components:
     MarketCandlesticksResponse:
       type: object
       required:
-        - market_id
+        - market_ticker
         - candlesticks
       properties:
-        market_id:
+        market_ticker:
           type: string
-          description: Unique identifier for the market.
+          description: Market ticker string (e.g., 'INXD-24JAN01').
         candlesticks:
           type: array
           description: >-
