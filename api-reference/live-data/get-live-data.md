@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-live-data
-lastmod: 2025-11-30T02:04:39.198Z
+lastmod: 2025-11-30T17:58:56.628Z
 ---
 # Get Live Data
 
@@ -51,6 +51,7 @@ paths:
               live_data:
                 type: <string>
                 details: {}
+                milestone_id: <string>
         description: Live data retrieved successfully
     '404':
       _mintlify/placeholder:
@@ -75,6 +76,7 @@ components:
       required:
         - type
         - details
+        - milestone_id
       properties:
         type:
           type: string
@@ -83,6 +85,9 @@ components:
           type: object
           additionalProperties: true
           description: Live data details as a flexible object
+        milestone_id:
+          type: string
+          description: Milestone ID
 
 ````
 

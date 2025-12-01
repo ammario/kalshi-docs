@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection
-lastmod: 2025-11-30T02:04:39.365Z
+lastmod: 2025-11-30T17:58:56.801Z
 ---
 # Create Market In Multivariate Event Collection
 

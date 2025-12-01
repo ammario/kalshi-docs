@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-26T03:49:07.276Z
+lastmod: 2025-11-30T17:59:08.833Z
 ---
 # API Changelog
 
@@ -13,6 +13,19 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Nov 29, 2025"
+  tags={["Upcoming"]}
+  rss={{
+title: "Live Data Response Includes Milestone ID",
+description: "Live Data Response Includes Milestone ID"
+}}
+>
+  `GET /live_data/{type}/milestone/{milestone_id}` and `GET /live_data/batch` now returns `milestone_id` in the response.
+
+  Release date: `December 4, 2025`
+</Update>
 
 <Update
   label="Nov 23, 2025"

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-multiple-live-data
-lastmod: 2025-11-30T02:04:39.206Z
+lastmod: 2025-11-30T17:58:56.636Z
 ---
 # Get Multiple Live Data
 
@@ -54,6 +54,7 @@ paths:
               live_datas:
                 - type: <string>
                   details: {}
+                  milestone_id: <string>
         description: Live data retrieved successfully
     '500':
       _mintlify/placeholder:
@@ -71,6 +72,7 @@ components:
       required:
         - type
         - details
+        - milestone_id
       properties:
         type:
           type: string
@@ -79,6 +81,9 @@ components:
           type: object
           additionalProperties: true
           description: Live data details as a flexible object
+        milestone_id:
+          type: string
+          description: Milestone ID
 
 ````
 
