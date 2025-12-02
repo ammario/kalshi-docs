@@ -1,10 +1,10 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders
-lastmod: 2025-11-30T17:58:56.428Z
+lastmod: 2025-12-01T22:52:17.523Z
 ---
 # Batch Cancel Orders
 
->  Endpoint for cancelling up to 20 orders at once. Available to members with advanced access only.
+>  Endpoint for cancelling up to 20 orders at once.
 
 ## OpenAPI
 

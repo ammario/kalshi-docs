@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-11-30T17:59:08.833Z
+lastmod: 2025-12-01T20:54:57.238Z
 ---
 # API Changelog
 
@@ -13,6 +13,19 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Dec 1, 2025"
+  tags={["Upcoming"]}
+  rss={{
+title: "General availability for Batch Cancel Orders API",
+description: "General availability for Batch Cancel Orders API"
+}}
+>
+  `DELETE /portfolio/orders/batched` is now generally available. Advanced API access is no longer required. (The Nov 14th update only applied to `POST`.)
+
+  Release date: `December 4, 2025`
+</Update>
 
 <Update
   label="Nov 29, 2025"

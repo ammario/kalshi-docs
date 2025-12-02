@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/CommunicationsApi
-lastmod: 2025-11-23T22:54:23.878Z
+lastmod: 2025-12-01T20:54:57.543Z
 ---
 # Communications
 
@@ -68,6 +68,7 @@ Endpoint for confirming a quote. This will start a timer for order execution
 
 | Name        | Type          | Description | Notes                 |
 | ----------- | ------------- | ----------- | --------------------- |
+| **body**    | **object**    |             |                       |
 | **quoteId** | \[**string**] | Quote ID    | defaults to undefined |
 
 ### Return type
@@ -80,7 +81,7 @@ void (empty response body)
 
 ### HTTP request headers
 
-* **Content-Type**: Not defined
+* **Content-Type**: application/json
 * **Accept**: application/json
 
 ### HTTP response details

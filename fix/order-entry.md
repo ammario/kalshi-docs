@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2025-10-15T01:44:19.115Z
+lastmod: 2025-12-01T03:59:48.182Z
 ---
 # Order Entry Messages
 
@@ -33,6 +33,7 @@ Used to submit a new order to the Exchange.
 | 526   | SecondaryClOrdID        | UUID         | N        | Order group identifier. Please refer to the Order Groups tab for more information.                                                                                                                                                                                                                                                                                                         |
 | 2964  | SelfTradePreventionType | Char         | N        | Self-trade prevention mode. If unset, defaults to Taker At Cross. <br /><br />Supported values:<br />1 = Taker At Cross<br />2 = Maker                                                                                                                                                                                                                                                     |
 | 21006 | CancelOrderOnPause      | Boolean      | N        | If this flag is set to true, the order will be canceled if the order is open and trading on the exchange is paused for any reason.                                                                                                                                                                                                                                                         |
+| 21009 | MaxExecutionCost        | Decimal      | N        | Optional value representing max execution cost for an order in dollars. Order is canceled if unable to fill OrdQty for the given cost.                                                                                                                                                                                                                                                     |
 
 <CodeGroup>
   ```fix Example New Order theme={null}

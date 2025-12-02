@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-orders
-lastmod: 2025-11-30T17:58:56.405Z
+lastmod: 2025-12-01T22:52:17.434Z
 ---
 # Get Orders
 

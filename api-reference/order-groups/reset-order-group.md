@@ -1,17 +1,17 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2025-12-01T22:52:18.130Z
+url: https://docs.kalshi.com/api-reference/order-groups/reset-order-group
+lastmod: 2025-12-01T22:52:17.744Z
 ---
-# Create Quote
+# Reset Order Group
 
->  Endpoint for creating a quote in response to an RFQ
+>  Resets the order group's matched contracts counter to zero, allowing new orders to be placed again after the limit was hit.
 
 ## OpenAPI
 
-````yaml openapi.yaml post /communications/quotes
+````yaml openapi.yaml put /portfolio/order_groups/{order_group_id}/reset
 paths:
-  path: /communications/quotes
-  method: post
+  path: /portfolio/order_groups/{order_group_id}/reset
+  method: put
   servers:
     - url: https://api.elections.kalshi.com/trade-api/v2
       description: Production server
@@ -32,7 +32,12 @@ paths:
               description: Request timestamp in milliseconds
           cookie: {}
     parameters:
-      path: {}
+      path:
+        order_group_id:
+          schema:
+            - type: string
+              required: true
+              description: Order group ID
       query: {}
       header: {}
       cookie: {}
@@ -40,56 +45,26 @@ paths:
       application/json:
         schemaArray:
           - type: object
-            properties:
-              rfq_id:
-                allOf:
-                  - type: string
-                    description: The ID of the RFQ to quote on
-              yes_bid:
-                allOf:
-                  - type: string
-                    description: The bid price for YES contracts, in dollars
-              no_bid:
-                allOf:
-                  - type: string
-                    description: The bid price for NO contracts, in dollars
-              rest_remainder:
-                allOf:
-                  - type: boolean
-                    description: Whether to rest the remainder of the quote after execution
-            required: true
-            refIdentifier: '#/components/schemas/CreateQuoteRequest'
-            requiredProperties:
-              - rfq_id
-              - yes_bid
-              - no_bid
-              - rest_remainder
+            properties: {}
+            required: false
+            description: An empty response body
+            refIdentifier: '#/components/schemas/EmptyResponse'
         examples:
           example:
-            value:
-              rfq_id: <string>
-              yes_bid: <string>
-              no_bid: <string>
-              rest_remainder: true
+            value: {}
   response:
-    '201':
+    '200':
       application/json:
         schemaArray:
           - type: object
-            properties:
-              id:
-                allOf:
-                  - type: string
-                    description: The ID of the newly created quote
-            refIdentifier: '#/components/schemas/CreateQuoteResponse'
-            requiredProperties:
-              - id
+            properties: {}
+            description: An empty response body
+            refIdentifier: '#/components/schemas/EmptyResponse'
         examples:
           example:
-            value:
-              id: <string>
-        description: Quote created successfully
-    '400':
+            value: {}
+        description: Order group reset successfully
+    '401':
       application/json:
         schemaArray:
           - type: object
@@ -122,8 +97,8 @@ paths:
               message: <string>
               details: <string>
               service: <string>
-        description: Bad request - invalid input
-    '401':
+        description: Unauthorized - authentication required
+    '404':
       application/json:
         schemaArray:
           - type: object
@@ -148,7 +123,7 @@ paths:
               message: <string>
               details: <string>
               service: <string>
-        description: Unauthorized - authentication required
+        description: Resource not found
     '500':
       application/json:
         schemaArray:

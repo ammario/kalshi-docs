@@ -1,17 +1,17 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2025-12-01T22:52:18.130Z
+url: https://docs.kalshi.com/api-reference/order-groups/get-order-group
+lastmod: 2025-12-01T22:52:17.690Z
 ---
-# Create Quote
+# Get Order Group
 
->  Endpoint for creating a quote in response to an RFQ
+>  Retrieves details for a single order group including all order IDs and auto-cancel status.
 
 ## OpenAPI
 
-````yaml openapi.yaml post /communications/quotes
+````yaml openapi.yaml get /portfolio/order_groups/{order_group_id}
 paths:
-  path: /communications/quotes
-  method: post
+  path: /portfolio/order_groups/{order_group_id}
+  method: get
   servers:
     - url: https://api.elections.kalshi.com/trade-api/v2
       description: Production server
@@ -32,64 +32,45 @@ paths:
               description: Request timestamp in milliseconds
           cookie: {}
     parameters:
-      path: {}
+      path:
+        order_group_id:
+          schema:
+            - type: string
+              required: true
+              description: Order group ID
       query: {}
       header: {}
       cookie: {}
-    body:
+    body: {}
+  response:
+    '200':
       application/json:
         schemaArray:
           - type: object
             properties:
-              rfq_id:
-                allOf:
-                  - type: string
-                    description: The ID of the RFQ to quote on
-              yes_bid:
-                allOf:
-                  - type: string
-                    description: The bid price for YES contracts, in dollars
-              no_bid:
-                allOf:
-                  - type: string
-                    description: The bid price for NO contracts, in dollars
-              rest_remainder:
+              is_auto_cancel_enabled:
                 allOf:
                   - type: boolean
-                    description: Whether to rest the remainder of the quote after execution
-            required: true
-            refIdentifier: '#/components/schemas/CreateQuoteRequest'
-            requiredProperties:
-              - rfq_id
-              - yes_bid
-              - no_bid
-              - rest_remainder
-        examples:
-          example:
-            value:
-              rfq_id: <string>
-              yes_bid: <string>
-              no_bid: <string>
-              rest_remainder: true
-  response:
-    '201':
-      application/json:
-        schemaArray:
-          - type: object
-            properties:
-              id:
+                    description: Whether auto-cancel is enabled for this order group
+              orders:
                 allOf:
-                  - type: string
-                    description: The ID of the newly created quote
-            refIdentifier: '#/components/schemas/CreateQuoteResponse'
+                  - type: array
+                    items:
+                      type: string
+                    description: List of order IDs that belong to this order group
+                    x-go-type-skip-optional-pointer: true
+            refIdentifier: '#/components/schemas/GetOrderGroupResponse'
             requiredProperties:
-              - id
+              - is_auto_cancel_enabled
+              - orders
         examples:
           example:
             value:
-              id: <string>
-        description: Quote created successfully
-    '400':
+              is_auto_cancel_enabled: true
+              orders:
+                - <string>
+        description: Order group retrieved successfully
+    '401':
       application/json:
         schemaArray:
           - type: object
@@ -122,8 +103,8 @@ paths:
               message: <string>
               details: <string>
               service: <string>
-        description: Bad request - invalid input
-    '401':
+        description: Unauthorized - authentication required
+    '404':
       application/json:
         schemaArray:
           - type: object
@@ -148,7 +129,7 @@ paths:
               message: <string>
               details: <string>
               service: <string>
-        description: Unauthorized - authentication required
+        description: Resource not found
     '500':
       application/json:
         schemaArray:

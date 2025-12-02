@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/CommunicationsApi
-lastmod: 2025-11-23T22:54:23.461Z
+lastmod: 2025-12-01T20:54:57.274Z
 ---
 # Communications
 
@@ -53,7 +53,7 @@ void (empty response body)
 
 # **confirm\_quote**
 
-> confirm\_quote(quote\_id)
+> confirm\_quote(quote\_id, body=body)
 
 Confirm Quote
 
@@ -61,9 +61,10 @@ Endpoint for confirming a quote. This will start a timer for order execution
 
 ### Parameters
 
-| Name          | Type    | Description | Notes |
-| ------------- | ------- | ----------- | ----- |
-| **quote\_id** | **str** | Quote ID    |       |
+| Name          | Type       | Description | Notes       |
+| ------------- | ---------- | ----------- | ----------- |
+| **quote\_id** | **str**    | Quote ID    |             |
+| **body**      | **object** |             | \[optional] |
 
 ### Return type
 

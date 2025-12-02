@@ -1,17 +1,17 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2025-12-01T22:52:18.130Z
+url: https://docs.kalshi.com/api-reference/order-groups/get-order-groups
+lastmod: 2025-12-01T22:52:17.647Z
 ---
-# Create Quote
+# Get Order Groups
 
->  Endpoint for creating a quote in response to an RFQ
+>  Retrieves all order groups for the authenticated user.
 
 ## OpenAPI
 
-````yaml openapi.yaml post /communications/quotes
+````yaml openapi.yaml get /portfolio/order_groups
 paths:
-  path: /communications/quotes
-  method: post
+  path: /portfolio/order_groups
+  method: get
   servers:
     - url: https://api.elections.kalshi.com/trade-api/v2
       description: Production server
@@ -36,59 +36,27 @@ paths:
       query: {}
       header: {}
       cookie: {}
-    body:
-      application/json:
-        schemaArray:
-          - type: object
-            properties:
-              rfq_id:
-                allOf:
-                  - type: string
-                    description: The ID of the RFQ to quote on
-              yes_bid:
-                allOf:
-                  - type: string
-                    description: The bid price for YES contracts, in dollars
-              no_bid:
-                allOf:
-                  - type: string
-                    description: The bid price for NO contracts, in dollars
-              rest_remainder:
-                allOf:
-                  - type: boolean
-                    description: Whether to rest the remainder of the quote after execution
-            required: true
-            refIdentifier: '#/components/schemas/CreateQuoteRequest'
-            requiredProperties:
-              - rfq_id
-              - yes_bid
-              - no_bid
-              - rest_remainder
-        examples:
-          example:
-            value:
-              rfq_id: <string>
-              yes_bid: <string>
-              no_bid: <string>
-              rest_remainder: true
+    body: {}
   response:
-    '201':
+    '200':
       application/json:
         schemaArray:
           - type: object
             properties:
-              id:
+              order_groups:
                 allOf:
-                  - type: string
-                    description: The ID of the newly created quote
-            refIdentifier: '#/components/schemas/CreateQuoteResponse'
-            requiredProperties:
-              - id
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/OrderGroup'
+                    x-go-type-skip-optional-pointer: true
+            refIdentifier: '#/components/schemas/GetOrderGroupsResponse'
         examples:
           example:
             value:
-              id: <string>
-        description: Quote created successfully
+              order_groups:
+                - id: <string>
+                  is_auto_cancel_enabled: true
+        description: Order groups retrieved successfully
     '400':
       application/json:
         schemaArray:
@@ -178,7 +146,21 @@ paths:
   deprecated: false
   type: path
 components:
-  schemas: {}
+  schemas:
+    OrderGroup:
+      type: object
+      required:
+        - id
+        - is_auto_cancel_enabled
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the order group
+          x-go-type-skip-optional-pointer: true
+        is_auto_cancel_enabled:
+          type: boolean
+          description: Whether auto-cancel is enabled for this order group
+          x-go-type-skip-optional-pointer: true
 
 ````
 

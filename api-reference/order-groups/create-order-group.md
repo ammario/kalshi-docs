@@ -1,16 +1,16 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2025-12-01T22:52:18.130Z
+url: https://docs.kalshi.com/api-reference/order-groups/create-order-group
+lastmod: 2025-12-01T22:52:17.663Z
 ---
-# Create Quote
+# Create Order Group
 
->  Endpoint for creating a quote in response to an RFQ
+>  Creates a new order group with a contracts limit. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.
 
 ## OpenAPI
 
-````yaml openapi.yaml post /communications/quotes
+````yaml openapi.yaml post /portfolio/order_groups/create
 paths:
-  path: /communications/quotes
+  path: /portfolio/order_groups/create
   method: post
   servers:
     - url: https://api.elections.kalshi.com/trade-api/v2
@@ -41,54 +41,40 @@ paths:
         schemaArray:
           - type: object
             properties:
-              rfq_id:
+              contracts_limit:
                 allOf:
-                  - type: string
-                    description: The ID of the RFQ to quote on
-              yes_bid:
-                allOf:
-                  - type: string
-                    description: The bid price for YES contracts, in dollars
-              no_bid:
-                allOf:
-                  - type: string
-                    description: The bid price for NO contracts, in dollars
-              rest_remainder:
-                allOf:
-                  - type: boolean
-                    description: Whether to rest the remainder of the quote after execution
+                  - type: integer
+                    format: int64
+                    minimum: 1
+                    description: >-
+                      Specifies the maximum number of contracts that can be
+                      matched within this group.
             required: true
-            refIdentifier: '#/components/schemas/CreateQuoteRequest'
+            refIdentifier: '#/components/schemas/CreateOrderGroupRequest'
             requiredProperties:
-              - rfq_id
-              - yes_bid
-              - no_bid
-              - rest_remainder
+              - contracts_limit
         examples:
           example:
             value:
-              rfq_id: <string>
-              yes_bid: <string>
-              no_bid: <string>
-              rest_remainder: true
+              contracts_limit: 2
   response:
     '201':
       application/json:
         schemaArray:
           - type: object
             properties:
-              id:
+              order_group_id:
                 allOf:
                   - type: string
-                    description: The ID of the newly created quote
-            refIdentifier: '#/components/schemas/CreateQuoteResponse'
+                    description: The unique identifier for the created order group
+            refIdentifier: '#/components/schemas/CreateOrderGroupResponse'
             requiredProperties:
-              - id
+              - order_group_id
         examples:
           example:
             value:
-              id: <string>
-        description: Quote created successfully
+              order_group_id: <string>
+        description: Order group created successfully
     '400':
       application/json:
         schemaArray:

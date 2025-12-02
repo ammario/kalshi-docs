@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/confirm-quote
-lastmod: 2025-11-30T17:58:56.784Z
+lastmod: 2025-12-01T22:52:18.164Z
 ---
 # Confirm Quote
 
@@ -41,7 +41,17 @@ paths:
       query: {}
       header: {}
       cookie: {}
-    body: {}
+    body:
+      application/json:
+        schemaArray:
+          - type: object
+            properties: {}
+            required: false
+            description: An empty response body
+            refIdentifier: '#/components/schemas/EmptyResponse'
+        examples:
+          example:
+            value: {}
   response:
     '204':
       _mintlify/placeholder:
