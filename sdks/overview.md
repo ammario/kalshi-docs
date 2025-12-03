@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/sdks/overview
-lastmod: 2025-10-07T23:32:04.294Z
+lastmod: 2025-12-02T22:35:14.403Z
 ---
 # Kalshi SDKs
 
@@ -20,6 +20,12 @@ Kalshi provides official SDKs to make integration easier. Each SDK provides full
   </Card>
 </CardGroup>
 
+## Versioning and Updates
+
+SDK versions are aligned with the [OpenAPI specification](https://docs.kalshi.com/openapi.yaml). New SDK releases are generally published on Tuesdays or Wednesdays each week, in advance of any corresponding API changes going live. However, release timing may vary and is not guaranteed. We recommend checking the SDK package repositories and the [API Changelog](/changelog) for the latest updates.
+
+These SDKs are intended to help developers get started quickly with the Kalshi API. For production applications, we recommend generating your own client libraries from the [OpenAPI specification](https://docs.kalshi.com/openapi.yaml) or implementing direct API integration to ensure full control over your implementation.
+
 ## Features
 
 All SDKs provide:
@@ -34,14 +40,22 @@ All SDKs provide:
 ## Installation
 
 <CodeGroup>
-  ```bash Python theme={null}
-  pip install kalshi-python
+  ```bash Python (sync) theme={null}
+  pip install kalshi_python_sync
+  ```
+
+  ```bash Python (async) theme={null}
+  pip install kalshi_python_async
   ```
 
   ```bash TypeScript theme={null}
   npm install kalshi-typescript
   ```
 </CodeGroup>
+
+<Note>
+  The old `kalshi-python` package is deprecated. Please migrate to `kalshi-python-sync` or `kalshi-python-async`.
+</Note>
 
 ## Authentication
 

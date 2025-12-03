@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2025-11-01T02:16:13.312Z
+lastmod: 2025-12-03T00:26:00.184Z
 ---
 # RFQ Messages
 
@@ -141,11 +141,11 @@ Market maker confirms willingness to execute after quote acceptance.
 
 Exchange response to quote confirmation.
 
-| Tag | Name               | Type    | Required | Description                               |
-| --- | ------------------ | ------- | -------- | ----------------------------------------- |
-| 117 | QuoteId            | String  | Y        | Quote identifier                          |
-| 297 | QuoteConfirmStatus | Integer | Y        | ACCEPTED(0) or REJECTED(1)                |
-| 58  | RejectReason       | String  | C        | Present if QuoteConfirmStatus is REJECTED |
+| Tag   | Name               | Type    | Required | Description                               |
+| ----- | ------------------ | ------- | -------- | ----------------------------------------- |
+| 117   | QuoteId            | String  | Y        | Quote identifier                          |
+| 21010 | QuoteConfirmStatus | Integer | Y        | ACCEPTED(0) or REJECTED(1)                |
+| 58    | RejectReason       | String  | C        | Present if QuoteConfirmStatus is REJECTED |
 
 ## QuoteRequestReject (35=AG)
 

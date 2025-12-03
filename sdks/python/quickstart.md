@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/sdks/python/quickstart
-lastmod: 2025-10-07T23:32:04.286Z
+lastmod: 2025-12-02T22:35:14.402Z
 ---
 # Python SDK Quick Start
 
@@ -9,13 +9,23 @@ lastmod: 2025-10-07T23:32:04.286Z
 ## Installation
 
 ```bash  theme={null}
-pip install kalshi-python
+pip install kalshi_python_sync
 ```
+
+Or for async support:
+
+```bash  theme={null}
+pip install kalshi_python_async
+```
+
+<Note>
+  The old `kalshi-python` package is deprecated. Please use `kalshi_python_sync` or `kalshi_python_async` instead.
+</Note>
 
 ## Quick Start
 
 ```python  theme={null}
-from kalshi_python import Configuration, KalshiClient
+from kalshi_python_sync import Configuration, KalshiClient
 
 # Configure the client
 config = Configuration(
@@ -40,7 +50,8 @@ print(f"Balance: ${balance.balance / 100:.2f}")
 
 ## Source Code
 
-* PyPI: [https://pypi.org/project/kalshi-python/](https://pypi.org/project/kalshi-python/)
+* PyPI (sync): [https://pypi.org/project/kalshi\_python\_sync/](https://pypi.org/project/kalshi_python_sync/)
+* PyPI (async): [https://pypi.org/project/kalshi\_python\_async/](https://pypi.org/project/kalshi_python_async/)
 
 
 ---
