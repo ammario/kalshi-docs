@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-12-01T20:54:57.238Z
+lastmod: 2025-12-04T02:14:39.481Z
 ---
 # API Changelog
 
@@ -13,6 +13,30 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Dec 2, 2025"
+  tags={["Breaking Change", "Upcoming"]}
+  rss={{
+title: "GET /events no longer returns multivariate events",
+description: "GET /events now excludes all multivariate events. Use GET /events/multivariate for MVE events.",
+}}
+>
+  Breaking Change: GET /events excludes multivariate events
+
+  Release date: December 4, 2025
+</Update>
+
+<Update
+  label="Dec 1, 2025"
+  tags={["Upcoming"]}
+  rss={{
+title: "SDK Updates and kalshi_python renamed to kalshi_python_sync",
+description: "New SDK versions will be released by Thursday. SDK versions will track openapi spec versions. Kalshi will be publishing sync and async python clients as well as updating the existing typescript client."
+}}
+>
+  Release date: `December 4, 2025`
+</Update>
 
 <Update
   label="Dec 1, 2025"
