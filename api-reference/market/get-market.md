@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market
-lastmod: 2025-12-04T02:14:27.980Z
+lastmod: 2025-12-09T18:09:29.325Z
 ---
 # Get Market
 
