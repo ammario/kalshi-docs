@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-candlesticks
-lastmod: 2025-12-11T01:07:15.373Z
+lastmod: 2025-12-11T18:38:29.095Z
 ---
 # Get Event Candlesticks
 
@@ -12,7 +12,7 @@ lastmod: 2025-12-11T01:07:15.373Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.1.0
+  version: 3.2.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
