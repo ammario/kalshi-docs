@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/delete-api-key
-lastmod: 2025-12-11T18:38:29.063Z
+lastmod: 2025-12-12T19:14:06.491Z
 ---
 # Delete API Key
 

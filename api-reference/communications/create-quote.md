@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2025-12-11T18:38:29.243Z
+lastmod: 2025-12-12T19:14:06.714Z
 ---
 # Create Quote
 
@@ -96,9 +96,11 @@ components:
           type: string
           description: The ID of the RFQ to quote on
         yes_bid:
+          $ref: '#/components/schemas/FixedPointDollars'
           type: string
           description: The bid price for YES contracts, in dollars
         no_bid:
+          $ref: '#/components/schemas/FixedPointDollars'
           type: string
           description: The bid price for NO contracts, in dollars
         rest_remainder:
@@ -112,6 +114,12 @@ components:
         id:
           type: string
           description: The ID of the newly created quote
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
     ErrorResponse:
       type: object
       properties:

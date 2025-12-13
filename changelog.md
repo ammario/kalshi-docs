@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-12-11T01:07:26.829Z
+lastmod: 2025-12-12T20:17:28.127Z
 ---
 # API Changelog
 
@@ -15,7 +15,7 @@ This changelog is a work in progress. As always, we welcome any feedback in our 
 ## Recent Updates
 
 <Update
-  label="Dec 11, 2025"
+  label="Dec 18, 2025"
   tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Read-Only API Keys",
@@ -24,7 +24,7 @@ description: "API keys now support scopes for read-only or full access permissio
 >
   API keys now support a `scopes` field. Valid scopes are `read` and `write`. Keys default to full access if not specified. All existing API keys will have both scopes.
 
-  Release date: `December 11, 2025`
+  Release date: `December 18, 2025`
 </Update>
 
 <Update

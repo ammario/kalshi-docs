@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
-lastmod: 2025-12-11T18:38:29.159Z
+lastmod: 2025-12-12T19:14:06.615Z
 ---
 # Get FCM Positions
 

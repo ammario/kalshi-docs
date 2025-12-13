@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2025-12-11T18:38:29.216Z
+lastmod: 2025-12-12T19:14:06.680Z
 ---
 # Create RFQ
 
