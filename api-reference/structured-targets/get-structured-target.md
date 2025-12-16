@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/structured-targets/get-structured-target
-lastmod: 2025-12-12T19:14:06.631Z
+lastmod: 2025-12-15T19:46:36.322Z
 ---
 # Get Structured Target
 

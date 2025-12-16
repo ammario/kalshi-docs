@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2025-12-12T19:14:06.440Z
+lastmod: 2025-12-15T19:46:36.084Z
 ---
 # Get Settlements
 
@@ -153,6 +153,7 @@ components:
       type: object
       required:
         - ticker
+        - event_ticker
         - market_result
         - yes_count
         - yes_total_cost
@@ -165,6 +166,9 @@ components:
         ticker:
           type: string
           description: The ticker symbol of the market that was settled.
+        event_ticker:
+          type: string
+          description: The event ticker symbol of the market that was settled.
         market_result:
           type: string
           enum:

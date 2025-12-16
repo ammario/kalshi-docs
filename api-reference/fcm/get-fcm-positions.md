@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
-lastmod: 2025-12-12T19:14:06.615Z
+lastmod: 2025-12-15T19:46:36.303Z
 ---
 # Get FCM Positions
 
@@ -152,7 +152,6 @@ components:
             parameter for this end-point to get the next page containing limit
             records. An empty value of this field indicates there is no next
             page.
-          x-go-type-skip-optional-pointer: true
         market_positions:
           type: array
           items:

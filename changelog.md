@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-12-12T20:17:28.127Z
+lastmod: 2025-12-15T19:46:48.635Z
 ---
 # API Changelog
 
@@ -13,6 +13,18 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Dec 11, 2025"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Event ticker available in Settlements API",
+description: "Event ticker available in Settlements API"
+}}
+>
+  `GET /portfolio/settlements` will return each settled position's Event Ticker.
+  Release Date: `December 18, 2025`
+</Update>
 
 <Update
   label="Dec 18, 2025"
