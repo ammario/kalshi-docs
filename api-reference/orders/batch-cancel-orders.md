@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders
-lastmod: 2025-12-15T19:46:35.553Z
+lastmod: 2025-12-17T02:38:38.108Z
 ---
 # Batch Cancel Orders
 

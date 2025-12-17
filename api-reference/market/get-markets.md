@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2025-12-15T19:46:36.504Z
+lastmod: 2025-12-17T02:38:38.554Z
 ---
 # Get Markets
 
@@ -190,11 +190,15 @@ components:
     MarketStatusQuery:
       name: status
       in: query
-      description: >-
-        Filter by market status. Possible values are 'unopened', 'open',
-        'closed', 'settled'. Leave empty to return markets with any status.
+      description: Filter by market status. Leave empty to return markets with any status.
       schema:
         type: string
+        enum:
+          - unopened
+          - open
+          - paused
+          - closed
+          - settled
     TickersQuery:
       name: tickers
       in: query

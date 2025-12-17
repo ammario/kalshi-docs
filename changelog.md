@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-12-15T19:46:48.635Z
+lastmod: 2025-12-17T02:38:52.310Z
 ---
 # API Changelog
 
@@ -13,6 +13,17 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Dec 13, 2025"
+  tags={["Upcoming"]}
+  rss={{
+title: "Paused filter added to Get Markets",
+description: "Paused filter added to Get Markets",
+}}
+>
+  In `GET /markets`, markets that have been paused by an administrator will be available under new the `paused` status filter.
+</Update>
 
 <Update
   label="Dec 11, 2025"
@@ -60,7 +71,7 @@ title: "GET /events no longer returns multivariate events",
 description: "GET /events now excludes all multivariate events. Use GET /events/multivariate for MVE events.",
 }}
 >
-  Breaking Change: GET /events excludes multivariate events
+  Breaking Change: `GET /events` excludes multivariate events
 
   Release date: December 4, 2025
 </Update>

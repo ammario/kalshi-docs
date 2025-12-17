@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-create-orders
-lastmod: 2025-12-15T19:46:35.546Z
+lastmod: 2025-12-17T02:38:38.101Z
 ---
 # Batch Create Orders
 

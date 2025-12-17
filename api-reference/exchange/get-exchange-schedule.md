@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-exchange-schedule
-lastmod: 2025-12-15T19:46:35.496Z
+lastmod: 2025-12-17T02:38:38.057Z
 ---
 # Get Exchange Schedule
 
