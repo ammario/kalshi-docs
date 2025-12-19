@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-order-queue-position
-lastmod: 2025-12-17T02:38:38.137Z
+lastmod: 2025-12-18T22:47:50.117Z
 ---
 # Get Order Queue Position
 
 >  Endpoint for getting an order's queue position in the order book. This represents the amount of orders that need to be matched before this order receives a partial or full match. Queue position is determined using a price-time priority.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.137Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/create-order-group
-lastmod: 2025-12-17T02:38:38.151Z
+lastmod: 2025-12-18T22:47:50.130Z
 ---
 # Create Order Group
 
 >  Creates a new order group with a contracts limit. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.151Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

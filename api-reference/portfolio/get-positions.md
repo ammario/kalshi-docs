@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2025-12-17T02:38:38.196Z
+lastmod: 2025-12-18T22:47:50.165Z
 ---
 # Get Positions
 
 > Restricts the positions to those with any of following fields with non-zero values, as a comma separated list. The following values are accepted: position, total_traded
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.196Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

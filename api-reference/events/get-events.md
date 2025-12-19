@@ -1,11 +1,13 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2025-12-17T02:38:38.294Z
+lastmod: 2025-12-18T22:47:50.254Z
 ---
 # Get Events
 
 > Get all events. This endpoint excludes multivariate events.
 To retrieve multivariate events, use the GET /events/multivariate endpoint.
+
+
 
 
 ## OpenAPI
@@ -14,7 +16,7 @@ To retrieve multivariate events, use the GET /events/multivariate endpoint.
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -409,10 +411,14 @@ components:
           type: string
           enum:
             - initialized
+            - inactive
             - active
             - closed
-            - settled
             - determined
+            - disputed
+            - amended
+            - finalized
+          description: The current status of the market in its lifecycle.
         response_price_units:
           type: string
           enum:

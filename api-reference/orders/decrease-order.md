@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/decrease-order
-lastmod: 2025-12-17T02:38:38.123Z
+lastmod: 2025-12-18T22:47:50.101Z
 ---
 # Decrease Order
 
 >  Endpoint for decreasing the number of contracts in an existing order. This is the only kind of edit available on order quantity. Cancelling an order is equivalent to decreasing an order amount to zero.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.123Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

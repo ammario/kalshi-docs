@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2025-12-17T02:38:38.309Z
+lastmod: 2025-12-18T22:47:50.267Z
 ---
 # Get Event
 
 >  Endpoint for getting data about an event by its ticker.  An event represents a real-world occurrence that can be traded on, such as an election, sports game, or economic indicator release. Events contain one or more markets where users can place trades on different outcomes.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.309Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -288,10 +290,14 @@ components:
           type: string
           enum:
             - initialized
+            - inactive
             - active
             - closed
-            - settled
             - determined
+            - disputed
+            - amended
+            - finalized
+          description: The current status of the market in its lifecycle.
         response_price_units:
           type: string
           enum:

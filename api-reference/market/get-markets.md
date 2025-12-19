@@ -1,11 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2025-12-17T02:38:38.554Z
+lastmod: 2025-12-18T22:47:50.531Z
 ---
 # Get Markets
 
 > Filter by market status. Possible values: `unopened`, `open`, `closed`, `settled`. Leave empty to return markets with any status.
- - Only one `status` filter may be supplied at a time. 
+ - Only one `status` filter may be supplied at a time.
  - Timestamp filters will be mutually exclusive from other timestamp filters and certain status filters.
 
  | Compatible Timestamp Filters | Additional Status Filters|
@@ -15,13 +15,15 @@ lastmod: 2025-12-17T02:38:38.554Z
  | min_settled_ts, max_settled_ts | `settled`, *empty* |
 
 
+
+
 ## OpenAPI
 
 ````yaml openapi.yaml get /markets
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -69,7 +71,7 @@ paths:
       description: >
         Filter by market status. Possible values: `unopened`, `open`, `closed`,
         `settled`. Leave empty to return markets with any status.
-         - Only one `status` filter may be supplied at a time. 
+         - Only one `status` filter may be supplied at a time.
          - Timestamp filters will be mutually exclusive from other timestamp filters and certain status filters.
 
          | Compatible Timestamp Filters | Additional Status Filters|
@@ -335,10 +337,14 @@ components:
           type: string
           enum:
             - initialized
+            - inactive
             - active
             - closed
-            - settled
             - determined
+            - disputed
+            - amended
+            - finalized
+          description: The current status of the market in its lifecycle.
         response_price_units:
           type: string
           enum:

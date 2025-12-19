@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2025-08-18T22:27:17.869Z
+lastmod: 2025-12-18T22:48:03.967Z
 ---
 # Rate Limits and Tiers
 
@@ -72,6 +72,8 @@ Only the following APIs fall under the write limit, for the batch APIs, each ite
 <Info>
   We reserve the right to downgrade your API rate limit tier from Prime and Premier when you have shown lack of activity in the previous period.
 </Info>
+
+At any time, any Member that uses FIX or is at the highest possible API tier is eligible for an upgrade to its rate limit upon demonstration that such a tier is necessary for its bona fide market activity.
 
 
 ---

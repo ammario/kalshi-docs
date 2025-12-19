@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market
-lastmod: 2025-12-17T02:38:38.561Z
+lastmod: 2025-12-18T22:47:50.538Z
 ---
 # Get Market
 
 >  Endpoint for getting data about a specific market by its ticker. A market represents a specific binary outcome within an event that users can trade on (e.g., "Will candidate X win?"). Markets have yes/no positions, current prices, volume, and settlement rules.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.561Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -195,10 +197,14 @@ components:
           type: string
           enum:
             - initialized
+            - inactive
             - active
             - closed
-            - settled
             - determined
+            - disputed
+            - amended
+            - finalized
+          description: The current status of the market in its lifecycle.
         response_price_units:
           type: string
           enum:

@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/confirm-quote
-lastmod: 2025-12-17T02:38:38.488Z
+lastmod: 2025-12-18T22:47:50.457Z
 ---
 # Confirm Quote
 
 >  Endpoint for confirming a quote. This will start a timer for order execution
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.488Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

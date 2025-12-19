@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-12-17T02:38:52.310Z
+lastmod: 2025-12-18T22:48:01.626Z
 ---
 # API Changelog
 
@@ -13,6 +13,17 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Dec 16, 2025"
+  tags={["Documentation", "Released"]}
+  rss={{
+title: "Market Status Values",
+description: "Documented all possible market status values in response"
+}}
+>
+  The `Market` response object now documents all possible `status` values: `initialized`, `inactive`, `active`, `closed`, `determined`, `disputed`, `amended`, `finalized`.
+</Update>
 
 <Update
   label="Dec 13, 2025"

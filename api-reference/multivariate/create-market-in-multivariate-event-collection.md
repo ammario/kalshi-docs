@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection
-lastmod: 2025-12-17T02:38:38.505Z
+lastmod: 2025-12-18T22:47:50.480Z
 ---
 # Create Market In Multivariate Event Collection
 
->  Endpoint for looking up an individual market in a multivariate event collection. This endpoint must be hit at least once before trading or looking up a market.
+>  Endpoint for creating an individual market in a multivariate event collection. This endpoint must be hit at least once before trading or looking up a market.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.505Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -57,7 +59,7 @@ paths:
       tags:
         - multivariate
       summary: Create Market In Multivariate Event Collection
-      description: ' Endpoint for looking up an individual market in a multivariate event collection. This endpoint must be hit at least once before trading or looking up a market.'
+      description: ' Endpoint for creating an individual market in a multivariate event collection. This endpoint must be hit at least once before trading or looking up a market.'
       operationId: CreateMarketInMultivariateEventCollection
       parameters:
         - name: collection_ticker

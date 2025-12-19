@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-forecast-percentile-history
-lastmod: 2025-12-17T02:38:38.323Z
+lastmod: 2025-12-18T22:47:50.280Z
 ---
 # Get Event Forecast Percentile History
 
 > Endpoint for getting the historical raw and formatted forecast numbers for an event at specific percentiles.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.323Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

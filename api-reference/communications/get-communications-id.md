@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-communications-id
-lastmod: 2025-12-17T02:38:38.411Z
+lastmod: 2025-12-18T22:47:50.367Z
 ---
 # Get Communications ID
 
 >  Endpoint for getting the communications ID of the logged-in user.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.411Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

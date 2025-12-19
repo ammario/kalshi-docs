@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/search/get-filters-for-sports
-lastmod: 2025-12-17T02:38:38.264Z
+lastmod: 2025-12-18T22:47:50.227Z
 ---
 # Get Filters for Sports
 
@@ -9,13 +9,15 @@ lastmod: 2025-12-17T02:38:38.264Z
 This endpoint returns filtering options available for each sport, including scopes and competitions. It also provides an ordered list of sports for display purposes.
 
 
+
+
 ## OpenAPI
 
 ````yaml openapi.yaml get /search/filters_by_sport
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

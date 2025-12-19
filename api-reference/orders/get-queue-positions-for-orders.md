@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-queue-positions-for-orders
-lastmod: 2025-12-17T02:38:38.130Z
+lastmod: 2025-12-18T22:47:50.108Z
 ---
 # Get Queue Positions for Orders
 
 >  Endpoint for getting queue positions for all resting orders. Queue position represents the number of contracts that need to be matched before an order receives a partial or full match, determined using price-time priority.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.130Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

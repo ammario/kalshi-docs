@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order
-lastmod: 2025-12-17T02:38:38.079Z
+lastmod: 2025-12-18T22:47:50.059Z
 ---
 # Create Order
 
 >  Endpoint for submitting orders in a market. Each user is limited to 200 000 open orders at a time.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.079Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

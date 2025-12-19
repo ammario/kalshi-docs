@@ -1,11 +1,13 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
-lastmod: 2025-12-17T02:38:38.362Z
+lastmod: 2025-12-18T22:47:50.318Z
 ---
 # Get FCM Positions
 
 > Endpoint for FCM members to get market positions filtered by subtrader ID.
 This endpoint requires FCM member access level and allows filtering positions by subtrader ID.
+
+
 
 
 ## OpenAPI
@@ -14,7 +16,7 @@ This endpoint requires FCM member access level and allows filtering positions by
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

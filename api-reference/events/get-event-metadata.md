@@ -1,10 +1,12 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-metadata
-lastmod: 2025-12-17T02:38:38.316Z
+lastmod: 2025-12-18T22:47:50.273Z
 ---
 # Get Event Metadata
 
 >  Endpoint for getting metadata about an event by its ticker.  Returns only the metadata information for an event.
+
+
 
 ## OpenAPI
 
@@ -12,7 +14,7 @@ lastmod: 2025-12-17T02:38:38.316Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.2.0
+  version: 3.3.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
