@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/confirm-quote
-lastmod: 2025-12-18T22:47:50.457Z
+lastmod: 2025-12-19T22:17:25.461Z
 ---
 # Confirm Quote
 

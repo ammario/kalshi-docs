@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-multivariate-events
-lastmod: 2025-12-18T22:47:50.260Z
+lastmod: 2025-12-19T22:17:25.257Z
 ---
 # Get Multivariate Events
 
@@ -426,6 +426,14 @@ components:
           description: >-
             The settlement value of the YES/LONG side of the contract in
             dollars. Only filled after determination
+        settlement_ts:
+          type: string
+          format: date-time
+          nullable: true
+          x-omitempty: true
+          description: >-
+            Timestamp when the market was settled. Only filled for settled
+            markets
         expiration_value:
           type: string
           description: The value that was considered for the settlement

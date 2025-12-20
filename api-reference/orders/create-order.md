@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order
-lastmod: 2025-12-18T22:47:50.059Z
+lastmod: 2025-12-19T22:17:24.981Z
 ---
 # Create Order
 

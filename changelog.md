@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-12-18T22:48:01.626Z
+lastmod: 2025-12-19T22:17:37.005Z
 ---
 # API Changelog
 
@@ -13,6 +13,19 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Dec 19, 2025"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Settlement timestamp added to Markets API",
+description: "Settlement timestamp added to Markets API"
+}}
+>
+  Added `settlement_ts` field to `GET /markets` and `GET /markets/{ticker}` responses.
+
+  Release date: `December 25, 2025`
+</Update>
 
 <Update
   label="Dec 16, 2025"
