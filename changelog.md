@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-12-19T22:17:37.005Z
+lastmod: 2025-12-22T18:48:21.901Z
 ---
 # API Changelog
 
@@ -13,6 +13,19 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Dec 22, 2025"
+  tags={["Bug Fix", "Released"]}
+  rss={{
+title: "Lowercase query parameters support for search",
+description: "Search endpoints now support lowercase query parameters"
+}}
+>
+  Search endpoints now accept lowercase query parameters for improved flexibility and consistency.
+
+  Release date: `December 22, 2025`
+</Update>
 
 <Update
   label="Dec 19, 2025"
