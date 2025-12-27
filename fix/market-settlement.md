@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-settlement
-lastmod: 2025-10-07T23:32:02.115Z
+lastmod: 2025-12-26T20:25:27.226Z
 ---
 # Market Settlement
 
@@ -120,6 +120,11 @@ Large settlement batches may span multiple messages:
 | ----- | ----------------------------------------- |
 | 20106 | Total number of reports in batch          |
 | 893   | LastFragment=N for more pages, Y for last |
+
+<Warning>
+  **Important:** The `MarketSettlementReportID` (tag 20105) will be different across paginated responses.
+  Each page of results generates a new unique settlement ID. Use the `Symbol` (tag 55) ticker to identify fragments belonging to the same paginated settlement.
+</Warning>
 
 ## Settlement Timing
 

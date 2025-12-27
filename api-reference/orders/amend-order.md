@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order
-lastmod: 2025-12-19T22:17:25.039Z
+lastmod: 2025-12-26T21:50:10.793Z
 ---
 # Amend Order
 
