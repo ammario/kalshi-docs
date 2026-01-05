@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-ticker
-lastmod: 2026-01-02T17:08:25.469Z
+lastmod: 2026-01-04T04:03:10.316Z
 ---
 # Market Ticker
 

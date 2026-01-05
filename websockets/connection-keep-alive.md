@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/connection-keep-alive
-lastmod: 2026-01-02T17:08:25.450Z
+lastmod: 2026-01-04T04:03:10.281Z
 ---
 # Connection Keep-Alive
 

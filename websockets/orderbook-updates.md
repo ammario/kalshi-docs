@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/orderbook-updates
-lastmod: 2026-01-02T17:08:25.459Z
+lastmod: 2026-01-04T04:03:10.301Z
 ---
 # Orderbook Updates
 

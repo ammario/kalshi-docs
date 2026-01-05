@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/communications
-lastmod: 2026-01-02T17:08:25.537Z
+lastmod: 2026-01-04T04:03:10.445Z
 ---
 # Communications
 
@@ -10,9 +10,9 @@ lastmod: 2026-01-02T17:08:25.537Z
 - Authentication required
 - Market specification ignored
 - RFQ events (RFQCreated, RFQDeleted) always sent
-- Quote events (QuoteCreated, QuoteAccepted) are only sent if you created the quote OR you created the RFQ
+- Quote events (QuoteCreated, QuoteAccepted, QuoteExecuted) are only sent if you created the quote OR you created the RFQ
 
-**Use case:** Tracking RFQs you create and quotes on your RFQs, or quotes you create on others' RFQs
+**Use case:** Tracking RFQs you create and quotes on your RFQs, or quotes you create on others' RFQs. Use QuoteExecuted to correlate fill messages with quotes via client_order_id.
 
 
 

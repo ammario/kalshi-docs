@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/session-management
-lastmod: 2025-12-03T00:26:00.185Z
+lastmod: 2026-01-04T22:21:45.144Z
 ---
 # Session Management
 
@@ -59,6 +59,7 @@ The initiator must send a Logon message to establish a session. The acceptor wil
 
 | Tag   | Name                     | Description                                                                                          | Default |
 | ----- | ------------------------ | ---------------------------------------------------------------------------------------------------- | ------- |
+| 141   | ResetSeqNumFlag          | Reset sequence numbers on logon. **Must be Y for KalshiNR, KalshiDC, KalshiPT.**                     | N       |
 | 108   | HeartbeatInt             | Heartbeat \<0> interval (seconds)                                                                    | 30      |
 | 8013  | CancelOrdersOnDisconnect | Cancel orders on any disconnection (including graceful logout)                                       | N       |
 | 20126 | ListenerSession          | Listen-only session (KalshiNR/RT only, requires SkipPendingExecReports=Y)                            | N       |
