@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-metadata
-lastmod: 2025-12-30T22:19:43.945Z
+lastmod: 2026-01-05T21:22:19.514Z
 ---
 # Get Event Metadata
 

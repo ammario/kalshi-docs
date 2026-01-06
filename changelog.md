@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2025-12-22T18:48:21.901Z
+lastmod: 2026-01-05T21:22:31.110Z
 ---
 # API Changelog
 
@@ -13,6 +13,49 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 6, 2026"
+  tags={["Breaking Change", "Upcoming"]}
+  rss={{
+title: "Cent-denominated price fields removed from Market responses",
+description: "Cent-denominated price fields removed from Market responses"
+}}
+>
+  Cent-denominated price fields will be removed from Market responses.
+
+  Affected endpoints:
+
+  * `GET /markets`
+  * `GET /markets/{ticker}`
+  * `GET /events`
+  * `GET /events/{ticker}`
+
+  Fields to be removed:
+
+  * `response_price_units`, `notional_value`, `yes_bid`, `yes_ask`, `no_bid`, `no_ask`, `last_price`, `previous_yes_bid`, `previous_yes_ask`, `previous_price`, `liquidity` → Use `*_dollars` equivalents (e.g., `yes_bid_dollars`)
+  * `tick_size` → Use `price_level_structure` and `price_ranges`
+
+  Release date: `January 15, 2026`
+</Update>
+
+<Update
+  label="Jan 5, 2026"
+  tags={["Breaking Change", "Upcoming"]}
+  rss={{
+title: "Deprecated Market fields removed: category and risk_limit_cents",
+description: "Deprecated fields category and risk_limit_cents removed from Market responses"
+}}
+>
+  The deprecated fields `category` and `risk_limit_cents` will be removed from Market responses.
+
+  **Affected endpoints:**
+
+  * `GET /markets`
+  * `GET /markets/{ticker}`
+
+  Release date: `January 8, 2026`
+</Update>
 
 <Update
   label="Dec 22, 2025"

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/get-order-groups
-lastmod: 2025-12-30T22:19:43.803Z
+lastmod: 2026-01-05T21:22:19.349Z
 ---
 # Get Order Groups
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection
-lastmod: 2025-12-30T22:19:44.109Z
+lastmod: 2026-01-05T21:22:19.703Z
 ---
 # Create Market In Multivariate Event Collection
 
@@ -188,8 +188,6 @@ components:
         - result
         - can_close_early
         - expiration_value
-        - category
-        - risk_limit_cents
         - rules_primary
         - rules_secondary
         - tick_size
@@ -260,29 +258,40 @@ components:
           type: string
           enum:
             - usd_cent
-          description: The units used to express all price related fields
+          deprecated: true
+          description: 'DEPRECATED: Use price_level_structure and price_ranges instead.'
         yes_bid:
           type: number
+          deprecated: true
+          description: 'DEPRECATED: Use yes_bid_dollars instead.'
         yes_bid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the highest YES buy offer on this market in dollars
         yes_ask:
           type: number
+          deprecated: true
+          description: 'DEPRECATED: Use yes_ask_dollars instead.'
         yes_ask_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the lowest YES sell offer on this market in dollars
         no_bid:
           type: number
+          deprecated: true
+          description: 'DEPRECATED: Use no_bid_dollars instead.'
         no_bid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the highest NO buy offer on this market in dollars
         no_ask:
           type: number
+          deprecated: true
+          description: 'DEPRECATED: Use no_ask_dollars instead.'
         no_ask_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the lowest NO sell offer on this market in dollars
         last_price:
           type: number
+          deprecated: true
+          description: 'DEPRECATED: Use last_price_dollars instead.'
         last_price_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the last traded YES contract on this market in dollars
@@ -303,15 +312,15 @@ components:
           description: Number of contracts bought on this market disconsidering netting
         notional_value:
           type: integer
-          description: The total value of a single contract at settlement in cents
+          deprecated: true
+          description: 'DEPRECATED: Use notional_value_dollars instead.'
         notional_value_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: The total value of a single contract at settlement in dollars
         previous_yes_bid:
           type: integer
-          description: >-
-            Price for the highest YES buy offer on this market a day ago in
-            cents
+          deprecated: true
+          description: 'DEPRECATED: Use previous_yes_bid_dollars instead.'
         previous_yes_bid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
@@ -319,9 +328,8 @@ components:
             dollars
         previous_yes_ask:
           type: integer
-          description: >-
-            Price for the lowest YES sell offer on this market a day ago in
-            cents
+          deprecated: true
+          description: 'DEPRECATED: Use previous_yes_ask_dollars instead.'
         previous_yes_ask_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
@@ -329,9 +337,8 @@ components:
             dollars
         previous_price:
           type: integer
-          description: >-
-            Price for the last traded YES contract on this market a day ago in
-            cents
+          deprecated: true
+          description: 'DEPRECATED: Use previous_price_dollars instead.'
         previous_price_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
@@ -339,7 +346,8 @@ components:
             dollars
         liquidity:
           type: integer
-          description: Value for current offers in this market in cents
+          deprecated: true
+          description: 'DEPRECATED: Use liquidity_dollars instead.'
         liquidity_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Value for current offers in this market in dollars
@@ -368,12 +376,6 @@ components:
         expiration_value:
           type: string
           description: The value that was considered for the settlement
-        category:
-          type: string
-          deprecated: true
-        risk_limit_cents:
-          type: integer
-          deprecated: true
         fee_waiver_expiration_time:
           type: string
           format: date-time
@@ -388,7 +390,8 @@ components:
           x-go-type-skip-optional-pointer: true
         tick_size:
           type: integer
-          description: The minimum price movement in the market
+          deprecated: true
+          description: 'DEPRECATED: Use price_level_structure and price_ranges instead.'
         strike_type:
           type: string
           enum:
