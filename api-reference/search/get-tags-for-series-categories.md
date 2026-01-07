@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/search/get-tags-for-series-categories
-lastmod: 2026-01-05T21:22:19.453Z
+lastmod: 2026-01-07T01:47:06.689Z
 ---
 # Get Tags for Series Categories
 
@@ -17,7 +17,7 @@ This endpoint returns a mapping of series categories to their associated tags, w
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.3.0
+  version: 3.4.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-multivariate-events
-lastmod: 2026-01-05T21:22:19.499Z
+lastmod: 2026-01-07T01:47:06.744Z
 ---
 # Get Multivariate Events
 
@@ -14,7 +14,7 @@ lastmod: 2026-01-05T21:22:19.499Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.3.0
+  version: 3.4.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

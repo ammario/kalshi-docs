@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders
-lastmod: 2026-01-05T21:22:19.310Z
+lastmod: 2026-01-07T01:47:06.510Z
 ---
 # Batch Cancel Orders
 
@@ -14,7 +14,7 @@ lastmod: 2026-01-05T21:22:19.310Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.3.0
+  version: 3.4.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
