@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series
-lastmod: 2026-01-07T01:47:07.023Z
+lastmod: 2026-01-08T18:44:54.344Z
 ---
 # Get Series
 
@@ -68,6 +68,16 @@ paths:
           schema:
             type: string
           description: The ticker of the series to retrieve
+        - name: include_volume
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          x-go-type-skip-optional-pointer: true
+          description: >-
+            If true, includes the total volume traded across all events in this
+            series.
       responses:
         '200':
           description: Series retrieved successfully
@@ -178,6 +188,9 @@ components:
           description: >-
             AdditionalProhibitions is a list of additional trading prohibitions
             for this series.
+        volume:
+          type: integer
+          description: Total contracts traded across all events in this series.
     ErrorResponse:
       type: object
       properties:

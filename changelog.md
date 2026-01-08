@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-05T21:22:31.110Z
+lastmod: 2026-01-08T18:45:06.712Z
 ---
 # API Changelog
 
@@ -13,6 +13,26 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 6, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Series volume field added to Series API",
+description: "Optional volume field added to Series responses"
+}}
+>
+  Added optional `volume` field to Series responses showing total contracts traded across all events in the series.
+
+  **Affected endpoints:**
+
+  * `GET /series` - Added `include_volume` query parameter (default: `false`)
+  * `GET /series/{series_ticker}` - Added `include_volume` query parameter (default: `false`)
+
+  When `include_volume=true`, the response includes the `volume` field with the total contracts traded.
+
+  Release date: `January 15, 2026`
+</Update>
 
 <Update
   label="Jan 6, 2026"
