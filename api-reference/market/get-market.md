@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market
-lastmod: 2026-01-08T18:44:54.368Z
+lastmod: 2026-01-09T02:22:56.691Z
 ---
 # Get Market
 
@@ -408,6 +408,13 @@ components:
           description: Valid price ranges for orders on this market
           items:
             $ref: '#/components/schemas/PriceRange'
+        is_provisional:
+          type: boolean
+          x-omitempty: true
+          description: >-
+            If true, the market may be removed after determination if there is
+            no activity on it
+          x-go-type-skip-optional-pointer: true
     FixedPointDollars:
       type: string
       description: >-

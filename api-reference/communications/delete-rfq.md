@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-rfq
-lastmod: 2026-01-08T18:44:54.248Z
+lastmod: 2026-01-09T02:22:56.542Z
 ---
 # Delete RFQ
 

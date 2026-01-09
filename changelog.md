@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-08T18:45:06.712Z
+lastmod: 2026-01-09T02:23:09.565Z
 ---
 # API Changelog
 
@@ -13,6 +13,25 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 9, 2025"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "New market response field Is Provisional",
+description: "New market response field Is Provisional"
+}}
+>
+  On `GET /markets`, responses may bear `is_provisional: true`, indicating that the market will be removed
+  from the API if it has no activity by settlement time.
+
+  Notes:
+
+  * Historical and existing markets are unaffected, this change only applies going forward.
+  * A market will never transition into the provisional state if it was not created as provisional.
+
+  Expected release date: `January 9, 2025`.
+</Update>
 
 <Update
   label="Jan 6, 2026"

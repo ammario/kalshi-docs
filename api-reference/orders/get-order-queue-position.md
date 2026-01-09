@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-order-queue-position
-lastmod: 2026-01-08T18:44:53.943Z
+lastmod: 2026-01-09T02:22:56.154Z
 ---
 # Get Order Queue Position
 

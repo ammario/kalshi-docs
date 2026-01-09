@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection
-lastmod: 2026-01-08T18:44:54.312Z
+lastmod: 2026-01-09T02:22:56.621Z
 ---
 # Create Market In Multivariate Event Collection
 
@@ -459,6 +459,13 @@ components:
           description: Valid price ranges for orders on this market
           items:
             $ref: '#/components/schemas/PriceRange'
+        is_provisional:
+          type: boolean
+          x-omitempty: true
+          description: >-
+            If true, the market may be removed after determination if there is
+            no activity on it
+          x-go-type-skip-optional-pointer: true
     ErrorResponse:
       type: object
       properties:

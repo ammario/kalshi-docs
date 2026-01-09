@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/reset-order-group
-lastmod: 2026-01-08T18:44:53.982Z
+lastmod: 2026-01-09T02:22:56.203Z
 ---
 # Reset Order Group
 

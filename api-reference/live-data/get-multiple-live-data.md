@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-multiple-live-data
-lastmod: 2026-01-08T18:44:54.147Z
+lastmod: 2026-01-09T02:22:56.412Z
 ---
 # Get Multiple Live Data
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/create-order-group
-lastmod: 2026-01-08T18:44:53.958Z
+lastmod: 2026-01-09T02:22:56.173Z
 ---
 # Create Order Group
 

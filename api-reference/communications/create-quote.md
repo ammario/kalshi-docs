@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2026-01-08T18:44:54.263Z
+lastmod: 2026-01-09T02:22:56.561Z
 ---
 # Create Quote
 
