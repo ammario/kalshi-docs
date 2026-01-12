@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-orders
-lastmod: 2026-01-09T02:22:56.062Z
+lastmod: 2026-01-11T23:27:50.586Z
 ---
 # Get Orders
 
@@ -71,6 +71,7 @@ paths:
         - $ref: '#/components/parameters/StatusQuery'
         - $ref: '#/components/parameters/LimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
           description: Orders retrieved successfully
@@ -148,6 +149,12 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: Filter by subaccount number
+      schema:
+        type: integer
   schemas:
     GetOrdersResponse:
       type: object

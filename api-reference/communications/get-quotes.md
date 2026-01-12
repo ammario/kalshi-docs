@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2026-01-09T02:22:56.552Z
+lastmod: 2026-01-11T23:27:50.970Z
 ---
 # Get Quotes
 

@@ -1,16 +1,16 @@
 ---
-url: https://docs.kalshi.com/api-reference/orders/get-order-queue-position
-lastmod: 2026-01-11T23:27:50.648Z
+url: https://docs.kalshi.com/api-reference/portfolio/create-subaccount
+lastmod: 2026-01-11T23:27:50.701Z
 ---
-# Get Order Queue Position
+# Create Subaccount
 
->  Endpoint for getting an order's queue position in the order book. This represents the amount of orders that need to be matched before this order receives a partial or full match. Queue position is determined using a price-time priority.
+> Creates a new subaccount for the authenticated user. Subaccounts are numbered sequentially starting from 1. Maximum 32 subaccounts per user.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml get /portfolio/orders/{order_id}/queue_position
+````yaml openapi.yaml post /portfolio/subaccounts
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -54,26 +54,26 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/orders/{order_id}/queue_position:
-    get:
+  /portfolio/subaccounts:
+    post:
       tags:
-        - orders
-      summary: Get Order Queue Position
-      description: ' Endpoint for getting an order''s queue position in the order book. This represents the amount of orders that need to be matched before this order receives a partial or full match. Queue position is determined using a price-time priority.'
-      operationId: GetOrderQueuePosition
-      parameters:
-        - $ref: '#/components/parameters/OrderIdPath'
+        - portfolio
+      summary: Create Subaccount
+      description: >-
+        Creates a new subaccount for the authenticated user. Subaccounts are
+        numbered sequentially starting from 1. Maximum 32 subaccounts per user.
+      operationId: CreateSubaccount
       responses:
-        '200':
-          description: Queue position retrieved successfully
+        '201':
+          description: Subaccount created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetOrderQueuePositionResponse'
+                $ref: '#/components/schemas/CreateSubaccountResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -81,24 +81,15 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderIdPath:
-      name: order_id
-      in: path
-      required: true
-      description: Order ID
-      schema:
-        type: string
   schemas:
-    GetOrderQueuePositionResponse:
+    CreateSubaccountResponse:
       type: object
       required:
-        - queue_position
+        - subaccount_number
       properties:
-        queue_position:
+        subaccount_number:
           type: integer
-          format: int32
-          description: The position of the order in the queue
+          description: The sequential number assigned to this subaccount (1-32).
     ErrorResponse:
       type: object
       properties:
@@ -115,14 +106,14 @@ components:
           type: string
           description: The name of the service that generated the error
   responses:
-    UnauthorizedError:
-      description: Unauthorized - authentication required
+    BadRequestError:
+      description: Bad request - invalid input
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
+    UnauthorizedError:
+      description: Unauthorized - authentication required
       content:
         application/json:
           schema:

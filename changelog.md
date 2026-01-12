@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-09T02:23:09.565Z
+lastmod: 2026-01-11T23:28:02.494Z
 ---
 # API Changelog
 
@@ -13,6 +13,24 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 9, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Subaccount API endpoints",
+description: "New endpoints for managing subaccounts and transferring funds between them"
+}}
+>
+  New endpoints for managing subaccounts within a user's portfolio.
+
+  **New endpoints:**
+
+  * `POST /portfolio/subaccounts` - Create a new subaccount
+  * `GET /portfolio/subaccounts/balances` - Get balances for all subaccounts
+  * `GET /portfolio/subaccounts/{subaccount_number}/balance` - Get balance for a specific subaccount
+  * `POST /portfolio/subaccounts/transfer` - Transfer funds between subaccounts
+</Update>
 
 <Update
   label="Jan 9, 2025"

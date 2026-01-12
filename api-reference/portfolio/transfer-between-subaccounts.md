@@ -1,16 +1,16 @@
 ---
-url: https://docs.kalshi.com/api-reference/orders/get-order-queue-position
-lastmod: 2026-01-11T23:27:50.648Z
+url: https://docs.kalshi.com/api-reference/portfolio/transfer-between-subaccounts
+lastmod: 2026-01-11T23:27:50.712Z
 ---
-# Get Order Queue Position
+# Transfer Between Subaccounts
 
->  Endpoint for getting an order's queue position in the order book. This represents the amount of orders that need to be matched before this order receives a partial or full match. Queue position is determined using a price-time priority.
+> Transfers funds between the authenticated user's subaccounts. Use 0 for the primary account, or 1-32 for numbered subaccounts.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml get /portfolio/orders/{order_id}/queue_position
+````yaml openapi.yaml post /portfolio/subaccounts/transfer
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -54,26 +54,32 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/orders/{order_id}/queue_position:
-    get:
+  /portfolio/subaccounts/transfer:
+    post:
       tags:
-        - orders
-      summary: Get Order Queue Position
-      description: ' Endpoint for getting an order''s queue position in the order book. This represents the amount of orders that need to be matched before this order receives a partial or full match. Queue position is determined using a price-time priority.'
-      operationId: GetOrderQueuePosition
-      parameters:
-        - $ref: '#/components/parameters/OrderIdPath'
+        - portfolio
+      summary: Transfer Between Subaccounts
+      description: >-
+        Transfers funds between the authenticated user's subaccounts. Use 0 for
+        the primary account, or 1-32 for numbered subaccounts.
+      operationId: ApplySubaccountTransfer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplySubaccountTransferRequest'
       responses:
         '200':
-          description: Queue position retrieved successfully
+          description: Transfer completed successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetOrderQueuePositionResponse'
+                $ref: '#/components/schemas/ApplySubaccountTransferResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -81,24 +87,31 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderIdPath:
-      name: order_id
-      in: path
-      required: true
-      description: Order ID
-      schema:
-        type: string
   schemas:
-    GetOrderQueuePositionResponse:
+    ApplySubaccountTransferRequest:
       type: object
       required:
-        - queue_position
+        - from_subaccount
+        - to_subaccount
+        - amount_cents
       properties:
-        queue_position:
+        from_subaccount:
           type: integer
-          format: int32
-          description: The position of the order in the queue
+          description: >-
+            Source subaccount number (0 for primary, 1-32 for numbered
+            subaccounts).
+        to_subaccount:
+          type: integer
+          description: >-
+            Destination subaccount number (0 for primary, 1-32 for numbered
+            subaccounts).
+        amount_cents:
+          type: integer
+          format: int64
+          description: Amount to transfer in cents.
+    ApplySubaccountTransferResponse:
+      type: object
+      description: Empty response indicating successful transfer.
     ErrorResponse:
       type: object
       properties:
@@ -115,14 +128,14 @@ components:
           type: string
           description: The name of the service that generated the error
   responses:
-    UnauthorizedError:
-      description: Unauthorized - authentication required
+    BadRequestError:
+      description: Bad request - invalid input
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
+    UnauthorizedError:
+      description: Unauthorized - authentication required
       content:
         application/json:
           schema:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-orders
-lastmod: 2026-01-09T02:22:56.434Z
+lastmod: 2026-01-11T23:27:50.883Z
 ---
 # Get FCM Orders
 

@@ -1,16 +1,16 @@
 ---
-url: https://docs.kalshi.com/api-reference/orders/get-order-queue-position
-lastmod: 2026-01-11T23:27:50.648Z
+url: https://docs.kalshi.com/api-reference/portfolio/get-subaccount-transfers
+lastmod: 2026-01-11T23:27:50.731Z
 ---
-# Get Order Queue Position
+# Get Subaccount Transfers
 
->  Endpoint for getting an order's queue position in the order book. This represents the amount of orders that need to be matched before this order receives a partial or full match. Queue position is determined using a price-time priority.
+> Gets a paginated list of all transfers between subaccounts for the authenticated user.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml get /portfolio/orders/{order_id}/queue_position
+````yaml openapi.yaml get /portfolio/subaccounts/transfers
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -54,26 +54,27 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/orders/{order_id}/queue_position:
+  /portfolio/subaccounts/transfers:
     get:
       tags:
-        - orders
-      summary: Get Order Queue Position
-      description: ' Endpoint for getting an order''s queue position in the order book. This represents the amount of orders that need to be matched before this order receives a partial or full match. Queue position is determined using a price-time priority.'
-      operationId: GetOrderQueuePosition
+        - portfolio
+      summary: Get Subaccount Transfers
+      description: >-
+        Gets a paginated list of all transfers between subaccounts for the
+        authenticated user.
+      operationId: GetSubaccountTransfers
       parameters:
-        - $ref: '#/components/parameters/OrderIdPath'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/CursorQuery'
       responses:
         '200':
-          description: Queue position retrieved successfully
+          description: Transfers retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetOrderQueuePositionResponse'
+                $ref: '#/components/schemas/GetSubaccountTransfersResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -82,23 +83,67 @@ paths:
           kalshiAccessTimestamp: []
 components:
   parameters:
-    OrderIdPath:
-      name: order_id
-      in: path
-      required: true
-      description: Order ID
+    LimitQuery:
+      name: limit
+      in: query
+      description: Number of results per page. Defaults to 100. Maximum value is 200.
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+        maximum: 200
+        default: 100
+        x-oapi-codegen-extra-tags:
+          validate: omitempty,min=1,max=200
+    CursorQuery:
+      name: cursor
+      in: query
+      description: >-
+        Pagination cursor. Use the cursor value returned from the previous
+        response to get the next page of results. Leave empty for the first
+        page.
       schema:
         type: string
+        x-go-type-skip-optional-pointer: true
   schemas:
-    GetOrderQueuePositionResponse:
+    GetSubaccountTransfersResponse:
       type: object
       required:
-        - queue_position
+        - transfers
       properties:
-        queue_position:
+        transfers:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubaccountTransfer'
+        cursor:
+          type: string
+          description: Cursor for the next page of results.
+    SubaccountTransfer:
+      type: object
+      required:
+        - transfer_id
+        - from_subaccount
+        - to_subaccount
+        - amount
+        - created_ts
+      properties:
+        transfer_id:
+          type: string
+          description: Unique identifier for this transfer.
+        from_subaccount:
           type: integer
-          format: int32
-          description: The position of the order in the queue
+          description: Source subaccount number (0 for primary, 1-32 for subaccounts).
+        to_subaccount:
+          type: integer
+          description: Destination subaccount number (0 for primary, 1-32 for subaccounts).
+        amount:
+          type: integer
+          format: int64
+          description: Transfer amount in cents.
+        created_ts:
+          type: integer
+          format: int64
+          description: Unix timestamp when the transfer was created.
     ErrorResponse:
       type: object
       properties:
@@ -117,12 +162,6 @@ components:
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
       content:
         application/json:
           schema:

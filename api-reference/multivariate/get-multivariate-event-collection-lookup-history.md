@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collection-lookup-history
-lastmod: 2026-01-09T02:22:56.640Z
+lastmod: 2026-01-11T23:27:51.035Z
 ---
 # Get Multivariate Event Collection Lookup History
 

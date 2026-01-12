@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2026-01-09T02:22:56.222Z
+lastmod: 2026-01-11T23:27:50.738Z
 ---
 # Get Positions
 
@@ -70,6 +70,7 @@ paths:
         - $ref: '#/components/parameters/CountFilterQuery'
         - $ref: '#/components/parameters/TickerQuery'
         - $ref: '#/components/parameters/EventTickerQuery'
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
           description: Positions retrieved successfully
@@ -133,6 +134,12 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: Filter by subaccount number
+      schema:
+        type: integer
   schemas:
     GetPositionsResponse:
       type: object

@@ -1,16 +1,16 @@
 ---
-url: https://docs.kalshi.com/api-reference/orders/get-order-queue-position
-lastmod: 2026-01-11T23:27:50.648Z
+url: https://docs.kalshi.com/api-reference/portfolio/get-all-subaccount-balances
+lastmod: 2026-01-11T23:27:50.722Z
 ---
-# Get Order Queue Position
+# Get All Subaccount Balances
 
->  Endpoint for getting an order's queue position in the order book. This represents the amount of orders that need to be matched before this order receives a partial or full match. Queue position is determined using a price-time priority.
+> Gets balances for all subaccounts including the primary account.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml get /portfolio/orders/{order_id}/queue_position
+````yaml openapi.yaml get /portfolio/subaccounts/balances
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -54,26 +54,22 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/orders/{order_id}/queue_position:
+  /portfolio/subaccounts/balances:
     get:
       tags:
-        - orders
-      summary: Get Order Queue Position
-      description: ' Endpoint for getting an order''s queue position in the order book. This represents the amount of orders that need to be matched before this order receives a partial or full match. Queue position is determined using a price-time priority.'
-      operationId: GetOrderQueuePosition
-      parameters:
-        - $ref: '#/components/parameters/OrderIdPath'
+        - portfolio
+      summary: Get All Subaccount Balances
+      description: Gets balances for all subaccounts including the primary account.
+      operationId: GetSubaccountBalances
       responses:
         '200':
-          description: Queue position retrieved successfully
+          description: Balances retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetOrderQueuePositionResponse'
+                $ref: '#/components/schemas/GetSubaccountBalancesResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -81,24 +77,34 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderIdPath:
-      name: order_id
-      in: path
-      required: true
-      description: Order ID
-      schema:
-        type: string
   schemas:
-    GetOrderQueuePositionResponse:
+    GetSubaccountBalancesResponse:
       type: object
       required:
-        - queue_position
+        - subaccount_balances
       properties:
-        queue_position:
+        subaccount_balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubaccountBalance'
+    SubaccountBalance:
+      type: object
+      required:
+        - subaccount_number
+        - balance
+        - updated_ts
+      properties:
+        subaccount_number:
           type: integer
-          format: int32
-          description: The position of the order in the queue
+          description: Subaccount number (0 for primary, 1-32 for subaccounts).
+        balance:
+          type: integer
+          format: int64
+          description: Balance in centicents.
+        updated_ts:
+          type: integer
+          format: int64
+          description: Unix timestamp of last balance update.
     ErrorResponse:
       type: object
       properties:
@@ -117,12 +123,6 @@ components:
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
       content:
         application/json:
           schema:

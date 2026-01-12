@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-01-09T02:22:56.251Z
+lastmod: 2026-01-11T23:27:50.759Z
 ---
 # Get Fills
 
@@ -68,6 +68,7 @@ paths:
         - $ref: '#/components/parameters/MaxTsQuery'
         - $ref: '#/components/parameters/LimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
           description: Fills retrieved successfully
@@ -137,6 +138,12 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: Filter by subaccount number
+      schema:
+        type: integer
   schemas:
     GetFillsResponse:
       type: object
