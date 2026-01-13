@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/public-trades
-lastmod: 2026-01-05T22:05:34.182Z
+lastmod: 2026-01-12T19:23:49.034Z
 ---
 # Public Trades
 

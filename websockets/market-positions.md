@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-positions
-lastmod: 2026-01-05T22:05:34.205Z
+lastmod: 2026-01-12T19:23:49.047Z
 ---
 # Market Positions
 

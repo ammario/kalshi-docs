@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/user-fills
-lastmod: 2026-01-05T22:05:34.189Z
+lastmod: 2026-01-12T19:23:49.040Z
 ---
 # User Fills
 

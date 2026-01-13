@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/multivariate-lookups
-lastmod: 2026-01-05T22:05:34.225Z
+lastmod: 2026-01-12T19:23:49.059Z
 ---
 # Multivariate Lookups
 

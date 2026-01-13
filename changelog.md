@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-11T23:28:02.494Z
+lastmod: 2026-01-12T23:31:52.991Z
 ---
 # API Changelog
 
@@ -13,6 +13,46 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 12, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Communications WebSocket channel sharding support",
+description: "New shard_factor and shard_key parameters for the communications channel"
+}}
+>
+  Added sharding support to the `communications` WebSocket channel for high-throughput RFQ/quote consumers.
+
+  **New subscription parameters:**
+
+  * `shard_factor` (int): Number of shards to divide messages across (e.g., 4)
+  * `shard_key` (int): Which shard this connection receives (0 to shard\_factor-1)
+
+  Messages are sharded by `market_ticker` using consistent hashing. Clients can run multiple connections with different `shard_key` values to distribute load while ensuring complete coverage.
+
+  **Validation:**
+
+  * `shard_factor` must be > 0 when provided
+  * `shard_key` must be >= 0 and \< `shard_factor`
+  * `shard_key` requires `shard_factor` to be set
+
+  **Example subscription:**
+
+  ```json  theme={null}
+  {
+    "id": 1,
+    "cmd": "subscribe",
+    "params": {
+      "channels": ["communications"],
+      "shard_factor": 4,
+      "shard_key": 0
+    }
+  }
+  ```
+
+  **No breaking changes:** When these parameters are omitted, all messages are received as before. Existing integrations are unaffected.
+</Update>
 
 <Update
   label="Jan 9, 2026"
