@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-12T23:31:52.991Z
+lastmod: 2026-01-14T01:04:59.296Z
 ---
 # API Changelog
 
@@ -13,6 +13,33 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 13, 2025"
+  tags={["Breaking", "Upcoming"]}
+  rss={{
+title: "Anonymize RFQ creator IDs when open",
+description: "By default RFQ creator IDs will be anonymized while the RFQ is open"
+}}
+>
+  RFQ creator IDs will be exposed only after the RFQ is closed/executes. Accordingly the RFQ creator ID is removed
+  entirely from related websocket messages that are created before this point (RFQCreated, QuoteCreated).
+
+  Release date: `Jan 15, 2025`
+</Update>
+
+<Update
+  label="Jan 13, 2025"
+  tags={["Feature", "Upcoming"]}
+  rss={{
+title: "Yes settlement values in MVE legs",
+description: "MVE legs now report settlement value, when known"
+}}
+>
+  Settlement value on component legs are now reported when pulling MVEs.
+
+  Release date: `January 13, 2025`
+</Update>
 
 <Update
   label="Jan 12, 2026"

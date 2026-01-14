@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2026-01-11T23:27:50.827Z
+lastmod: 2026-01-14T01:04:44.919Z
 ---
 # Get Events
 
@@ -16,7 +16,7 @@ To retrieve multivariate events, use the GET /events/multivariate endpoint.
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.4.0
+  version: 3.5.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -650,6 +650,13 @@ components:
           type: string
           description: The side of the selected market
           x-go-type-skip-optional-pointer: true
+        yes_settlement_value_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          nullable: true
+          x-omitempty: true
+          description: >-
+            The settlement value of the YES/LONG side of the contract in
+            dollars. Only filled after determination
     PriceRange:
       type: object
       required:

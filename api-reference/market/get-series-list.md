@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series-list
-lastmod: 2026-01-11T23:27:51.058Z
+lastmod: 2026-01-14T01:04:45.166Z
 ---
 # Get Series List
 
@@ -14,7 +14,7 @@ lastmod: 2026-01-11T23:27:51.058Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.4.0
+  version: 3.5.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

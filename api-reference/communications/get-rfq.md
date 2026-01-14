@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfq
-lastmod: 2026-01-11T23:27:50.956Z
+lastmod: 2026-01-14T01:04:45.056Z
 ---
 # Get RFQ
 
@@ -14,7 +14,7 @@ lastmod: 2026-01-11T23:27:50.956Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.4.0
+  version: 3.5.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -113,7 +113,9 @@ components:
           description: Unique identifier for the RFQ
         creator_id:
           type: string
-          description: Public communications ID of the RFQ creator
+          description: >-
+            Public communications ID of the RFQ creator. Exposed post-execution
+            to the creator.
         market_ticker:
           type: string
           description: The ticker of the market this RFQ is for
@@ -194,6 +196,19 @@ components:
           type: string
           description: The side of the selected market
           x-go-type-skip-optional-pointer: true
+        yes_settlement_value_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          nullable: true
+          x-omitempty: true
+          description: >-
+            The settlement value of the YES/LONG side of the contract in
+            dollars. Only filled after determination
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required
