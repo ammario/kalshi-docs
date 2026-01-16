@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-live-data
-lastmod: 2026-01-14T01:04:44.959Z
+lastmod: 2026-01-15T23:38:47.010Z
 ---
 # Get Live Data
 

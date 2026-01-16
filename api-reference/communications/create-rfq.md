@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-01-14T01:04:45.049Z
+lastmod: 2026-01-15T23:38:47.256Z
 ---
 # Create RFQ
 
@@ -99,8 +99,18 @@ components:
           description: The ticker of the market for which to create an RFQ
         contracts:
           type: integer
-          description: The number of contracts for the RFQ
+          description: >-
+            The number of contracts for the RFQ. Whole contracts only. Contracts
+            may be provided via contracts or contracts_fp; if both provided they
+            must match.
           x-go-type-skip-optional-pointer: true
+        contracts_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          nullable: true
+          description: >-
+            String representation of the number of contracts for the RFQ (whole
+            contracts only). Contracts may be provided via contracts or
+            contracts_fp; if both provided they must match.
         target_cost_centi_cents:
           type: integer
           format: int64
@@ -126,6 +136,17 @@ components:
         id:
           type: string
           description: The ID of the newly created RFQ
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     ErrorResponse:
       type: object
       properties:

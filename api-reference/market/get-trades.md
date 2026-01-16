@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-trades
-lastmod: 2026-01-14T01:04:44.903Z
+lastmod: 2026-01-15T23:38:46.894Z
 ---
 # Get Trades
 
@@ -143,6 +143,7 @@ components:
         - ticker
         - price
         - count
+        - count_fp
         - yes_price
         - no_price
         - yes_price_dollars
@@ -161,6 +162,11 @@ components:
         count:
           type: integer
           description: Number of contracts bought or sold in this trade
+        count_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the number of contracts bought or sold in
+            this trade
         yes_price:
           type: integer
           description: Yes price for this trade in cents
@@ -186,6 +192,17 @@ components:
           type: string
           format: date-time
           description: Timestamp when this trade was executed
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     FixedPointDollars:
       type: string
       description: >-

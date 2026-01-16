@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/decrease-order
-lastmod: 2026-01-14T01:04:44.717Z
+lastmod: 2026-01-15T23:38:46.148Z
 ---
 # Decrease Order
 
@@ -104,9 +104,37 @@ components:
         reduce_by:
           type: integer
           minimum: 1
+          description: >-
+            Number of contracts to reduce by (whole contracts only). Reduce-by
+            may be provided via reduce_by or reduce_by_fp; if both provided they
+            must match. Exactly one of reduce_by(/reduce_by_fp) or
+            reduce_to(/reduce_to_fp) must be provided.
+        reduce_by_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          nullable: true
+          description: >-
+            String representation of the number of contracts to reduce by (whole
+            contracts only). Reduce-by may be provided via reduce_by or
+            reduce_by_fp; if both provided they must match. Exactly one of
+            reduce_by(/reduce_by_fp) or reduce_to(/reduce_to_fp) must be
+            provided.
         reduce_to:
           type: integer
           minimum: 0
+          description: >-
+            Number of contracts to reduce to (whole contracts only). Reduce-to
+            may be provided via reduce_to or reduce_to_fp; if both provided they
+            must match. Exactly one of reduce_by(/reduce_by_fp) or
+            reduce_to(/reduce_to_fp) must be provided.
+        reduce_to_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          nullable: true
+          description: >-
+            String representation of the number of contracts to reduce to (whole
+            contracts only). Reduce-to may be provided via reduce_to or
+            reduce_to_fp; if both provided they must match. Exactly one of
+            reduce_by(/reduce_by_fp) or reduce_to(/reduce_to_fp) must be
+            provided.
     DecreaseOrderResponse:
       type: object
       required:
@@ -114,6 +142,17 @@ components:
       properties:
         order:
           $ref: '#/components/schemas/Order'
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     Order:
       type: object
       required:
@@ -130,8 +169,11 @@ components:
         - yes_price_dollars
         - no_price_dollars
         - fill_count
+        - fill_count_fp
         - remaining_count
+        - remaining_count_fp
         - initial_count
+        - initial_count_fp
         - taker_fees
         - maker_fees
         - taker_fill_cost
@@ -179,11 +221,24 @@ components:
         fill_count:
           type: integer
           description: The number of contracts that have been filled
+        fill_count_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the number of contracts that have been
+            filled
         remaining_count:
           type: integer
+        remaining_count_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: String representation of the remaining contracts for this order
         initial_count:
           type: integer
           description: The initial size of the order (contract units)
+        initial_count_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the initial size of the order (contract
+            units)
         taker_fees:
           type: integer
           description: Fees paid on filled taker contracts, in cents

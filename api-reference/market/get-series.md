@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series
-lastmod: 2026-01-14T01:04:45.158Z
+lastmod: 2026-01-15T23:38:47.796Z
 ---
 # Get Series
 
@@ -191,6 +191,11 @@ components:
         volume:
           type: integer
           description: Total contracts traded across all events in this series.
+        volume_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the total number of contracts traded across
+            all events in this series.
     ErrorResponse:
       type: object
       properties:
@@ -217,6 +222,17 @@ components:
           type: string
           description: URL to the settlement source
           x-go-type-skip-optional-pointer: true
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
   responses:
     BadRequestError:
       description: Bad request - invalid input

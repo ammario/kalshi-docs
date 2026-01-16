@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market-candlesticks
-lastmod: 2026-01-14T01:04:44.894Z
+lastmod: 2026-01-15T23:38:46.878Z
 ---
 # Get Market Candlesticks
 
@@ -145,7 +145,9 @@ components:
         - yes_ask
         - price
         - volume
+        - volume_fp
         - open_interest
+        - open_interest_fp
       properties:
         end_period_ts:
           type: integer
@@ -172,12 +174,22 @@ components:
           description: >-
             Number of contracts bought on the market during the candlestick
             period.
+        volume_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the number of contracts bought on the
+            market during the candlestick period.
         open_interest:
           type: integer
           format: int64
           description: >-
             Number of contracts bought on the market by end of the candlestick
             period (end_period_ts).
+        open_interest_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the number of contracts bought on the
+            market by end of the candlestick period (end_period_ts).
     BidAskDistribution:
       type: object
       required:
@@ -341,6 +353,17 @@ components:
           description: >-
             Maximum close price of any market during the candlestick period (in
             dollars).
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     FixedPointDollars:
       type: string
       description: >-

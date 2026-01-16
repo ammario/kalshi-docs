@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfq
-lastmod: 2026-01-14T01:04:45.056Z
+lastmod: 2026-01-15T23:38:47.282Z
 ---
 # Get RFQ
 
@@ -104,6 +104,7 @@ components:
         - id
         - creator_id
         - contracts
+        - contracts_fp
         - market_ticker
         - status
         - created_ts
@@ -122,6 +123,11 @@ components:
         contracts:
           type: integer
           description: Number of contracts requested in the RFQ
+        contracts_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the number of contracts requested in the
+            RFQ
         target_cost_centi_cents:
           type: integer
           format: int64
@@ -181,6 +187,17 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     MveSelectedLeg:
       type: object
       properties:

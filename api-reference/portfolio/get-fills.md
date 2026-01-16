@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-01-14T01:04:44.840Z
+lastmod: 2026-01-15T23:38:46.762Z
 ---
 # Get Fills
 
@@ -168,6 +168,7 @@ components:
         - side
         - action
         - count
+        - count_fp
         - price
         - yes_price
         - no_price
@@ -208,6 +209,11 @@ components:
         count:
           type: integer
           description: Number of contracts bought or sold in this fill
+        count_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the number of contracts bought or sold in
+            this fill
         price:
           type: number
           description: Fill price (deprecated - use yes_price or no_price)
@@ -236,6 +242,17 @@ components:
           type: integer
           format: int64
           description: Unix timestamp when this fill was executed (legacy field name)
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

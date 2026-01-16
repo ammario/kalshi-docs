@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/create-order-group
-lastmod: 2026-01-14T01:04:44.747Z
+lastmod: 2026-01-15T23:38:46.251Z
 ---
 # Create Order Group
 
@@ -88,8 +88,6 @@ components:
   schemas:
     CreateOrderGroupRequest:
       type: object
-      required:
-        - contracts_limit
       properties:
         contracts_limit:
           type: integer
@@ -97,7 +95,19 @@ components:
           minimum: 1
           description: >-
             Specifies the maximum number of contracts that can be matched within
-            this group.
+            this group. Whole contracts only. Provide contracts_limit or
+            contracts_limit_fp; if both provided they must match.
+          x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: omitempty,gte=1
+        contracts_limit_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          nullable: true
+          description: >-
+            String representation of the maximum number of contracts that can be
+            matched within this group (whole contracts only). Provide
+            contracts_limit or contracts_limit_fp; if both provided they must
+            match.
     CreateOrderGroupResponse:
       type: object
       required:
@@ -106,6 +116,17 @@ components:
         order_group_id:
           type: string
           description: The unique identifier for the created order group
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     ErrorResponse:
       type: object
       properties:

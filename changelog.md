@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-14T01:04:59.296Z
+lastmod: 2026-01-15T23:39:02.281Z
 ---
 # API Changelog
 
@@ -13,6 +13,32 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 15, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Fixed-point contract count fields added to REST API",
+description: "New _fp string fields for precise contract quantity representation"
+}}
+>
+  Added `*_fp` string fields for contract counts across REST API requests and responses.
+
+  **Example order response:**
+
+  ```json  theme={null}
+  {
+    "count": 10,
+    "count_fp": "10.00",
+    "fill_count": 5,
+    "fill_count_fp": "5.00"
+  }
+  ```
+
+  See [Fixed-Point Contracts](/getting_started/fixed_point_contracts) for migration details.
+
+  Release date: `Jan 22, 2026`
+</Update>
 
 <Update
   label="Jan 13, 2025"

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/get-api-keys
-lastmod: 2026-01-14T01:04:44.849Z
+lastmod: 2026-01-15T23:38:46.781Z
 ---
 # Get API Keys
 

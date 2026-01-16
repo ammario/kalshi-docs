@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2026-01-14T01:04:45.071Z
+lastmod: 2026-01-15T23:38:47.327Z
 ---
 # Get Quotes
 
@@ -173,6 +173,7 @@ components:
         - rfq_creator_id
         - market_ticker
         - contracts
+        - contracts_fp
         - yes_bid
         - no_bid
         - yes_bid_dollars
@@ -200,6 +201,9 @@ components:
         contracts:
           type: integer
           description: Number of contracts in the quote
+        contracts_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: String representation of the number of contracts in the quote
         yes_bid:
           type: integer
           description: Bid price for YES contracts, in cents
@@ -293,6 +297,17 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     FixedPointDollars:
       type: string
       description: >-

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2026-01-14T01:04:44.919Z
+lastmod: 2026-01-15T23:38:46.928Z
 ---
 # Get Events
 
@@ -344,10 +344,13 @@ components:
         - previous_price
         - previous_price_dollars
         - volume
+        - volume_fp
         - volume_24h
+        - volume_24h_fp
         - liquidity
         - liquidity_dollars
         - open_interest
+        - open_interest_fp
         - result
         - can_close_early
         - expiration_value
@@ -460,8 +463,14 @@ components:
           description: Price for the last traded YES contract on this market in dollars
         volume:
           type: integer
+        volume_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: String representation of the market volume in contracts
         volume_24h:
           type: integer
+        volume_24h_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: String representation of the 24h market volume in contracts
         result:
           type: string
           enum:
@@ -473,6 +482,11 @@ components:
         open_interest:
           type: integer
           description: Number of contracts bought on this market disconsidering netting
+        open_interest_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the number of contracts bought on this
+            market disconsidering netting
         notional_value:
           type: integer
           deprecated: true
@@ -635,6 +649,17 @@ components:
         US dollar amount as a fixed-point decimal string with exactly 4 decimal
         places
       example: '0.5600'
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     MveSelectedLeg:
       type: object
       properties:

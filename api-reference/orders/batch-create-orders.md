@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-create-orders
-lastmod: 2026-01-14T01:04:44.689Z
+lastmod: 2026-01-15T23:38:46.088Z
 ---
 # Batch Create Orders
 
@@ -114,7 +114,6 @@ components:
         - ticker
         - side
         - action
-        - count
       properties:
         ticker:
           type: string
@@ -140,8 +139,19 @@ components:
         count:
           type: integer
           minimum: 1
+          description: >-
+            Order quantity in contracts (whole contracts only). Provide count or
+            count_fp; if both provided they must match.
+          x-go-type-skip-optional-pointer: true
           x-oapi-codegen-extra-tags:
-            validate: required,gte=1
+            validate: omitempty,gte=1
+        count_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          nullable: true
+          description: >-
+            String representation of the order quantity in contracts (whole
+            contracts only). Provide count or count_fp; if both provided they
+            must match.
         type:
           type: string
           enum:
@@ -235,6 +245,17 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     FixedPointDollars:
       type: string
       description: >-
@@ -263,8 +284,11 @@ components:
         - yes_price_dollars
         - no_price_dollars
         - fill_count
+        - fill_count_fp
         - remaining_count
+        - remaining_count_fp
         - initial_count
+        - initial_count_fp
         - taker_fees
         - maker_fees
         - taker_fill_cost
@@ -312,11 +336,24 @@ components:
         fill_count:
           type: integer
           description: The number of contracts that have been filled
+        fill_count_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the number of contracts that have been
+            filled
         remaining_count:
           type: integer
+        remaining_count_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: String representation of the remaining contracts for this order
         initial_count:
           type: integer
           description: The initial size of the order (contract units)
+        initial_count_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the initial size of the order (contract
+            units)
         taker_fees:
           type: integer
           description: Fees paid on filled taker contracts, in cents

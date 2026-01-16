@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2026-01-14T01:04:44.817Z
+lastmod: 2026-01-15T23:38:46.709Z
 ---
 # Get Positions
 
@@ -172,6 +172,7 @@ components:
         - total_traded
         - total_traded_dollars
         - position
+        - position_fp
         - market_exposure
         - market_exposure_dollars
         - realized_pnl
@@ -196,6 +197,11 @@ components:
           description: >-
             Number of contracts bought in this market. Negative means NO
             contracts and positive means YES contracts
+        position_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the number of contracts bought in this
+            market. Negative means NO contracts and positive means YES contracts
         market_exposure:
           type: integer
           description: Cost of the aggregate market position in cents
@@ -229,6 +235,7 @@ components:
         - total_cost
         - total_cost_dollars
         - total_cost_shares
+        - total_cost_shares_fp
         - event_exposure
         - event_exposure_dollars
         - realized_pnl
@@ -252,6 +259,11 @@ components:
           description: >-
             Total number of shares traded on this event (including both YES and
             NO contracts)
+        total_cost_shares_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the total number of shares traded on this
+            event (including both YES and NO contracts)
         event_exposure:
           type: integer
           description: Cost of the aggregate event position in cents
@@ -291,6 +303,17 @@ components:
         US dollar amount as a fixed-point decimal string with exactly 4 decimal
         places
       example: '0.5600'
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
   responses:
     BadRequestError:
       description: Bad request - invalid input
