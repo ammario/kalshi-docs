@@ -19,6 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const SITEMAP_URL = 'https://docs.kalshi.com/sitemap.xml';
+const ASYNCAPI_URL = 'https://docs.kalshi.com/asyncapi.yaml';
 const OUTPUT_DIR = __dirname; // Save docs to repo root
 
 interface SitemapUrl {
@@ -229,10 +230,30 @@ async function main() {
     console.log(); // Empty line for readability
   }
   
+  // Step 6: Download AsyncAPI spec
+  console.log('📥 Downloading AsyncAPI specification...\n');
+  let asyncApiSuccess = false;
+  try {
+    console.log(`📄 Fetching: ${ASYNCAPI_URL}`);
+    const asyncApiResponse = await fetch(ASYNCAPI_URL);
+    
+    if (asyncApiResponse.ok) {
+      const asyncApiContent = await asyncApiResponse.text();
+      const asyncApiPath = join(OUTPUT_DIR, 'asyncapi.yaml');
+      await writeFile(asyncApiPath, asyncApiContent, 'utf-8');
+      console.log(`  ✓ Saved AsyncAPI spec (${asyncApiContent.length} bytes) to asyncapi.yaml\n`);
+      asyncApiSuccess = true;
+    } else {
+      console.error(`  ❌ Failed to download AsyncAPI spec: ${asyncApiResponse.status} ${asyncApiResponse.statusText}\n`);
+    }
+  } catch (error) {
+    console.error(`  ❌ Error downloading AsyncAPI spec:`, error, '\n');
+  }
+
   // Summary
   console.log('📊 Summary:');
-  console.log(`  ✓ Successfully downloaded: ${successCount}`);
-  console.log(`  ❌ Failed: ${failCount}`);
+  console.log(`  ✓ Successfully downloaded: ${successCount} docs${asyncApiSuccess ? ' + AsyncAPI spec' : ''}`);
+  console.log(`  ❌ Failed: ${failCount}${!asyncApiSuccess ? ' (+ AsyncAPI spec)' : ''}`);
   console.log(`  📁 Output directory: ${OUTPUT_DIR}`);
   console.log('\n✨ Done!');
 }
