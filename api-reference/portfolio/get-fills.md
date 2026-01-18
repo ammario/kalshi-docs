@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-01-15T23:38:46.762Z
+lastmod: 2026-01-16T17:20:18.750Z
 ---
 # Get Fills
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-subaccount-transfers
-lastmod: 2026-01-15T23:38:46.459Z
+lastmod: 2026-01-16T17:20:18.717Z
 ---
 # Get Subaccount Transfers
 

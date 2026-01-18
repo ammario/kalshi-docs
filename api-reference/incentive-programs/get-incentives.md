@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/incentive-programs/get-incentives
-lastmod: 2026-01-15T23:38:47.052Z
+lastmod: 2026-01-16T17:20:18.886Z
 ---
 # Get Incentives
 

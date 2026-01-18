@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order
-lastmod: 2026-01-15T23:38:46.063Z
+lastmod: 2026-01-16T17:20:18.594Z
 ---
 # Cancel Order
 

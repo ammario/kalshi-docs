@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-create-orders
-lastmod: 2026-01-15T23:38:46.088Z
+lastmod: 2026-01-16T17:20:18.602Z
 ---
 # Batch Create Orders
 
@@ -216,6 +216,14 @@ components:
           description: >-
             If this flag is set to true, the order will be canceled if the order
             is open and trading on the exchange is paused for any reason.
+        subaccount:
+          type: integer
+          minimum: 0
+          default: 0
+          description: >-
+            The subaccount number to use for this order. 0 is the primary
+            subaccount.
+          x-go-type-skip-optional-pointer: true
     BatchCreateOrdersIndividualResponse:
       type: object
       properties:

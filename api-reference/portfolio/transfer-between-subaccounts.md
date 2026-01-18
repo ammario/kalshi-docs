@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/transfer-between-subaccounts
-lastmod: 2026-01-15T23:38:46.403Z
+lastmod: 2026-01-16T17:20:18.701Z
 ---
 # Transfer Between Subaccounts
 
@@ -91,10 +91,17 @@ components:
     ApplySubaccountTransferRequest:
       type: object
       required:
+        - client_transfer_id
         - from_subaccount
         - to_subaccount
         - amount_cents
       properties:
+        client_transfer_id:
+          type: string
+          format: uuid
+          description: Unique client-provided transfer ID for idempotency.
+          x-oapi-codegen-extra-tags:
+            validate: required
         from_subaccount:
           type: integer
           description: >-

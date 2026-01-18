@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market-candlesticks
-lastmod: 2026-01-15T23:38:46.878Z
+lastmod: 2026-01-16T17:20:18.806Z
 ---
 # Get Market Candlesticks
 
@@ -108,6 +108,23 @@ paths:
               - 1440
           x-oapi-codegen-extra-tags:
             validate: required,oneof=1 60 1440
+        - name: include_latest_before_start
+          in: query
+          required: false
+          description: >
+            If true, prepends the latest candlestick available before the
+            start_ts. This synthetic candlestick is created by:
+
+            1. Finding the most recent real candlestick before start_ts
+
+            2. Projecting it forward to the first period boundary (calculated as
+            the next period interval after start_ts)
+
+            3. Setting all OHLC prices to null, and `previous_price` to the
+            close price from the real candlestick
+          schema:
+            type: boolean
+            default: false
       responses:
         '200':
           description: Candlesticks retrieved successfully

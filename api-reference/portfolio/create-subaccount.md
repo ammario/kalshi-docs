@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/create-subaccount
-lastmod: 2026-01-15T23:38:46.370Z
+lastmod: 2026-01-16T17:20:18.694Z
 ---
 # Create Subaccount
 

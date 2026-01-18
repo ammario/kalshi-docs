@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-15T23:39:02.281Z
+lastmod: 2026-01-16T17:20:31.491Z
 ---
 # API Changelog
 
@@ -13,6 +13,28 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 16, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Candlesticks include_latest_before_start parameter",
+description: "New parameter for single market candlestick endpoint to include synthetic initial data point"
+}}
+>
+  Added `include_latest_before_start` parameter to the single market candlesticks endpoint for price continuity.
+
+  When set to `true`, prepends a synthetic candlestick that:
+
+  * Uses the close price from the most recent candlestick before `start_ts`
+  * Sets `previous_price` to enable continuous price charting
+
+  **Affected endpoint:**
+
+  * `GET /series/{series_ticker}/markets/{ticker}/candlesticks`
+
+  Release date: `January 22, 2026`
+</Update>
 
 <Update
   label="Jan 15, 2026"
@@ -121,8 +143,10 @@ description: "New endpoints for managing subaccounts and transferring funds betw
 
   * `POST /portfolio/subaccounts` - Create a new subaccount
   * `GET /portfolio/subaccounts/balances` - Get balances for all subaccounts
-  * `GET /portfolio/subaccounts/{subaccount_number}/balance` - Get balance for a specific subaccount
   * `POST /portfolio/subaccounts/transfer` - Transfer funds between subaccounts
+  * `GET /portfolio/subaccounts/transfers` - Get paginated history of subaccount transfers
+
+  **Note:** Transfers require a unique `client_transfer_id` for idempotency.
 </Update>
 
 <Update
