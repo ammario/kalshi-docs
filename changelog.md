@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-16T17:20:31.491Z
+lastmod: 2026-01-19T16:24:56.255Z
 ---
 # API Changelog
 
@@ -13,6 +13,20 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 16, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "RFQ maker client order ID format update",
+description: "RFQ maker client order ID format update"
+}}
+>
+  Maker RFQ client order IDs now use the format `quote:<hash>:<quote_id>`, where `hash` is an
+  8-character hash segment and the maker's quote ID is added as a suffix.
+
+  Release date: `January 22, 2026`
+</Update>
 
 <Update
   label="Jan 16, 2026"
