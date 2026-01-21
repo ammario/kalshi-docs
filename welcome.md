@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/welcome
-lastmod: 2025-11-15T22:33:13.815Z
+lastmod: 2026-01-20T23:33:31.218Z
 ---
 # Introduction
 
@@ -62,7 +62,7 @@ lastmod: 2025-11-15T22:33:13.815Z
   paddingRight: '1.25rem'
 }}
 >
-  <CardGroup cols={3}>
+  <CardGroup cols={4}>
     <Card title="Making Your First Request" icon="rocket" href="/getting_started/making_your_first_request">
       Make your first API call and start trading on Kalshi.
     </Card>
@@ -76,7 +76,7 @@ lastmod: 2025-11-15T22:33:13.815Z
     </Card>
   </CardGroup>
 
-  <CardGroup cols={3}>
+  <CardGroup cols={4}>
     <Card title="Rate Limits" icon="gauge" href="/getting_started/rate_limits">
       Understand API rate limits and best practices.
     </Card>
@@ -90,7 +90,7 @@ lastmod: 2025-11-15T22:33:13.815Z
     </Card>
   </CardGroup>
 
-  <CardGroup cols={3}>
+  <CardGroup cols={4}>
     <Card title="Kalshi Glossary" icon="book-open" href="/getting_started/terms">
       Learn key terms and concepts used in the Kalshi exchange.
     </Card>
@@ -108,9 +108,13 @@ lastmod: 2025-11-15T22:33:13.815Z
 
   <h2 className="text-white dark:text-white" style={{ fontFamily: 'Inter', fontWeight: '600', fontSize: '1.25rem', marginBottom: '1rem', textAlign: 'left' }}>Learn more about Kalshi</h2>
 
-  <CardGroup cols={3}>
+  <CardGroup cols={4}>
     <Card title="OpenAPI Specification" icon="file-code" href="https://docs.kalshi.com/openapi.yaml">
       Download the OpenAPI specification for API integration.
+    </Card>
+
+    <Card title="AsyncAPI Specification" icon="file-code" href="https://docs.kalshi.com/asyncapi.yaml">
+      Download the AsyncAPI specification for WebSocket integration.
     </Card>
 
     <Card title="Trading Console" icon="square-terminal" href="https://kalshi.com">
