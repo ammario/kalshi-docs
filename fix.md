@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix
-lastmod: 2025-12-03T00:26:00.183Z
+lastmod: 2026-01-22T00:35:02.120Z
 ---
 # FIX API Overview
 

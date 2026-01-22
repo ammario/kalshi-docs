@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/communications
-lastmod: 2026-01-12T19:23:49.066Z
+lastmod: 2026-01-22T00:35:03.490Z
 ---
 # Communications
 

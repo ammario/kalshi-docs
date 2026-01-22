@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/error-handling
-lastmod: 2025-10-07T23:32:02.118Z
+lastmod: 2026-01-22T00:35:02.068Z
 ---
 # Error Handling
 

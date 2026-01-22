@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/orderbook_responses
-lastmod: 2025-10-07T23:32:02.808Z
+lastmod: 2026-01-22T00:35:02.161Z
 ---
 # Orderbook Responses
 

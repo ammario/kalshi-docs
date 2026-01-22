@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2026-01-16T17:20:18.829Z
+lastmod: 2026-01-22T00:35:01.601Z
 ---
 # Get Events
 
@@ -16,7 +16,7 @@ To retrieve multivariate events, use the GET /events/multivariate endpoint.
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.5.0
+  version: 3.6.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -318,6 +318,7 @@ components:
         - yes_sub_title
         - no_sub_title
         - created_time
+        - updated_time
         - open_time
         - close_time
         - expiration_time
@@ -385,6 +386,10 @@ components:
         created_time:
           type: string
           format: date-time
+        updated_time:
+          type: string
+          format: date-time
+          description: Time of the last market stats update
         open_time:
           type: string
           format: date-time
@@ -476,6 +481,7 @@ components:
           enum:
             - 'yes'
             - 'no'
+            - scalar
             - ''
         can_close_early:
           type: boolean

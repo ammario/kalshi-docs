@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/CommunicationsApi
-lastmod: 2025-12-01T20:54:57.274Z
+lastmod: 2026-01-22T00:35:02.210Z
 ---
 # Communications
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/session-management
-lastmod: 2026-01-04T22:21:45.144Z
+lastmod: 2026-01-22T00:35:02.101Z
 ---
 # Session Management
 

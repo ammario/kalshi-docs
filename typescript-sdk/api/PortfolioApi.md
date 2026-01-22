@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/PortfolioApi
-lastmod: 2026-01-11T23:28:04.278Z
+lastmod: 2026-01-22T00:35:02.815Z
 ---
 # Portfolio
 

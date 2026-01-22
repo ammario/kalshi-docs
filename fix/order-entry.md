@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2025-12-01T03:59:48.182Z
+lastmod: 2026-01-22T00:35:02.109Z
 ---
 # Order Entry Messages
 

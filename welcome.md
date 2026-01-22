@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/welcome
-lastmod: 2026-01-20T23:33:31.218Z
+lastmod: 2026-01-22T00:35:03.527Z
 ---
 # Introduction
 

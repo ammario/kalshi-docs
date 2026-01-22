@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/MarketsApi
-lastmod: 2025-10-07T23:32:03.931Z
+lastmod: 2026-01-22T00:35:02.206Z
 ---
 # Markets
 

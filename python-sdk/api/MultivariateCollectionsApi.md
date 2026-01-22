@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/MultivariateCollectionsApi
-lastmod: 2025-10-07T23:32:03.955Z
+lastmod: 2026-01-22T00:35:02.259Z
 ---
 # MultivariateCollections
 

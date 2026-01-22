@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/sdks/typescript/quickstart
-lastmod: 2025-10-07T23:32:04.290Z
+lastmod: 2026-01-22T00:35:02.786Z
 ---
 # TypeScript SDK Quick Start
 

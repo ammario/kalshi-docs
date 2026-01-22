@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/batch-get-market-candlesticks
-lastmod: 2026-01-16T17:20:19.140Z
+lastmod: 2026-01-22T00:35:01.705Z
 ---
 # Batch Get Market Candlesticks
 
@@ -20,7 +20,7 @@ lastmod: 2026-01-16T17:20:19.140Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.5.0
+  version: 3.6.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

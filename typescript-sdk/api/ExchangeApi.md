@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/ExchangeApi
-lastmod: 2025-11-23T22:54:23.877Z
+lastmod: 2026-01-22T00:35:02.792Z
 ---
 # Exchange
 

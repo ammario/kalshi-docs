@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-19T16:24:56.255Z
+lastmod: 2026-01-22T00:35:02.070Z
 ---
 # API Changelog
 
@@ -13,6 +13,108 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 22, 2026"
+  tags={["Documentation", "Released"]}
+  rss={{
+title: "WebSocket AsyncAPI fixed-point counts",
+description: "Documented *_fp fields for WebSocket payloads in AsyncAPI"
+}}
+>
+  Added `*_fp` fixed-point contract count fields in the WebSocket AsyncAPI spec and examples
+  (orderbook, ticker, trades, fills, positions, communications). See the [AsyncAPI spec](/asyncapi.yaml).
+
+  Release date: `January 22, 2026`
+</Update>
+
+<Update
+  label="Jan 21, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "GetMarkets Min Updated Ts Filter",
+description: "GetMarkets Min Updated Ts Filter"
+}}
+>
+  Added `updated_time` to Market responses and `min_updated_ts` filter to `GET /markets`, which filters for only markets updated later than the provided unix ts.
+
+  Affected endpoints:
+
+  * `GET /markets/{ticker}`
+  * `GET /markets`.
+</Update>
+
+<Update
+  label="Jan 20, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Get markets may return scalar result",
+description: "Get markets may return scalar result"
+}}
+>
+  Currently, a market settled to a scalar result will return `""` in the `market_result` field.
+  Starting in the next release, this value will read `"scalar"` instead.
+
+  Affected endpoints:
+
+  * `GET /markets/{ticker}`
+  * `GET /markets`
+
+  Release date: `January 28, 2026`
+</Update>
+
+<Update
+  label="Jan 21, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Manual order group trigger endpoint",
+description: "New endpoint to trigger order groups"
+}}
+>
+  Added manual trigger support for order groups.
+
+  **New endpoint:**
+
+  * `PUT /portfolio/order_groups/{order_group_id}/trigger`
+
+  Release date: `January 22, 2026`
+</Update>
+
+<Update
+  label="Jan 20, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Get markets may return scalar result",
+description: "Get markets may return scalar result"
+}}
+>
+  Currently, a market settled to a scalar result will return `""` in the `market_result` field.
+  Starting in the next release, this value will read `"scalar"` instead.
+
+  Affected endpoints:
+
+  * `GET /market`
+  * `GET /markets`
+
+  Release date: `January 28, 2026`
+</Update>
+
+<Update
+  label="Jan 20, 2026"
+  tags={["Breaking", "Upcoming"]}
+  rss={{
+title: "Subaccount transfer amount field renamed",
+description: "SubaccountTransfer response field 'amount' renamed to 'amount_cents' for clarity"
+}}
+>
+  The `amount` field in `SubaccountTransfer` responses has been renamed to `amount_cents` to clearly indicate units, consistent with other API endpoints.
+
+  **Affected endpoint:**
+
+  * `GET /portfolio/subaccounts/transfers`
+
+  Release date: `TBD`
+</Update>
 
 <Update
   label="Jan 16, 2026"

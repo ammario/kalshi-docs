@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_create_order
-lastmod: 2025-10-07T23:32:02.811Z
+lastmod: 2026-01-22T00:35:02.155Z
 ---
 # Quick Start: Create your first order
 

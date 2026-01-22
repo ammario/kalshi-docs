@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2025-11-10T03:16:22.873Z
+lastmod: 2026-01-22T00:35:02.064Z
 ---
 # Connectivity
 

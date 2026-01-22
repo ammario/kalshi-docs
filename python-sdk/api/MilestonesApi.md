@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/MilestonesApi
-lastmod: 2025-10-07T23:32:03.930Z
+lastmod: 2026-01-22T00:35:02.263Z
 ---
 # Milestones
 

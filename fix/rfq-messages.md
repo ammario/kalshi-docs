@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2025-12-03T00:26:00.184Z
+lastmod: 2026-01-22T00:35:02.108Z
 ---
 # RFQ Messages
 

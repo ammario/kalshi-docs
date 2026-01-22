@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/demo_env
-lastmod: 2025-08-07T20:11:48.621Z
+lastmod: 2026-01-22T00:35:02.106Z
 ---
 # Test In The Demo Environment
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/StructuredTargetsApi
-lastmod: 2025-11-23T22:54:23.913Z
+lastmod: 2026-01-22T00:35:02.813Z
 ---
 # StructuredTargets
 

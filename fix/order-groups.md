@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-groups
-lastmod: 2025-10-07T23:32:02.120Z
+lastmod: 2026-01-22T00:35:02.107Z
 ---
 # Order Group Messages
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/ExchangeApi
-lastmod: 2025-11-23T22:54:23.460Z
+lastmod: 2026-01-22T00:35:02.207Z
 ---
 # Exchange
 

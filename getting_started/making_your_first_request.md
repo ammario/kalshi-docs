@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/making_your_first_request
-lastmod: 2025-08-07T20:11:48.631Z
+lastmod: 2026-01-22T00:35:02.162Z
 ---
 # Making Your First Request
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-all-subaccount-balances
-lastmod: 2026-01-16T17:20:18.709Z
+lastmod: 2026-01-22T00:35:02.014Z
 ---
 # Get All Subaccount Balances
 
@@ -14,7 +14,7 @@ lastmod: 2026-01-16T17:20:18.709Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.5.0
+  version: 3.6.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-subaccount-transfers
-lastmod: 2026-01-16T17:20:18.717Z
+lastmod: 2026-01-22T00:35:02.011Z
 ---
 # Get Subaccount Transfers
 
@@ -14,7 +14,7 @@ lastmod: 2026-01-16T17:20:18.717Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.5.0
+  version: 3.6.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -124,7 +124,7 @@ components:
         - transfer_id
         - from_subaccount
         - to_subaccount
-        - amount
+        - amount_cents
         - created_ts
       properties:
         transfer_id:
@@ -136,7 +136,7 @@ components:
         to_subaccount:
           type: integer
           description: Destination subaccount number (0 for primary, 1-32 for subaccounts).
-        amount:
+        amount_cents:
           type: integer
           format: int64
           description: Transfer amount in cents.

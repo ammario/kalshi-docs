@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/drop-copy
-lastmod: 2025-10-07T23:32:02.117Z
+lastmod: 2026-01-22T00:35:02.062Z
 ---
 # Drop Copy Session
 

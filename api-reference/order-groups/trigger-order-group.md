@@ -1,16 +1,16 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-total-resting-order-value
-lastmod: 2026-01-22T00:35:02.007Z
+url: https://docs.kalshi.com/api-reference/order-groups/trigger-order-group
+lastmod: 2026-01-22T00:35:01.958Z
 ---
-# Get Total Resting Order Value
+# Trigger Order Group
 
->  Endpoint for getting the total value, in cents, of resting orders. This endpoint is only intended for use by FCM members (rare). Note: If you're uncertain about this endpoint, it likely does not apply to you.
+>  Triggers the order group, canceling all orders in the group and preventing new orders until the group is reset.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml get /portfolio/summary/total_resting_order_value
+````yaml openapi.yaml put /portfolio/order_groups/{order_group_id}/trigger
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -54,23 +54,32 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/summary/total_resting_order_value:
-    get:
+  /portfolio/order_groups/{order_group_id}/trigger:
+    put:
       tags:
-        - portfolio
-      summary: Get Total Resting Order Value
-      description: ' Endpoint for getting the total value, in cents, of resting orders. This endpoint is only intended for use by FCM members (rare). Note: If you''re uncertain about this endpoint, it likely does not apply to you.'
-      operationId: GetPortfolioRestingOrderTotalValue
+        - order-groups
+      summary: Trigger Order Group
+      description: ' Triggers the order group, canceling all orders in the group and preventing new orders until the group is reset.'
+      operationId: TriggerOrderGroup
+      parameters:
+        - $ref: '#/components/parameters/OrderGroupIdPath'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyResponse'
       responses:
         '200':
-          description: Total resting order value retrieved successfully
+          description: Order group triggered successfully
           content:
             application/json:
               schema:
-                $ref: >-
-                  #/components/schemas/GetPortfolioRestingOrderTotalValueResponse
+                $ref: '#/components/schemas/EmptyResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -78,15 +87,18 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
+  parameters:
+    OrderGroupIdPath:
+      name: order_group_id
+      in: path
+      required: true
+      description: Order group ID
+      schema:
+        type: string
   schemas:
-    GetPortfolioRestingOrderTotalValueResponse:
+    EmptyResponse:
       type: object
-      required:
-        - total_resting_order_value
-      properties:
-        total_resting_order_value:
-          type: integer
-          description: Total value of resting orders in cents
+      description: An empty response body
     ErrorResponse:
       type: object
       properties:
@@ -105,6 +117,12 @@ components:
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/ApiKeysApi
-lastmod: 2025-11-23T22:54:23.875Z
+lastmod: 2026-01-22T00:35:02.790Z
 ---
 # ApiKeys
 

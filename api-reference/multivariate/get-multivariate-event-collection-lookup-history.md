@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collection-lookup-history
-lastmod: 2026-01-16T17:20:19.094Z
+lastmod: 2026-01-22T00:35:01.832Z
 ---
 # Get Multivariate Event Collection Lookup History
 
@@ -14,7 +14,7 @@ lastmod: 2026-01-16T17:20:19.094Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.5.0
+  version: 3.6.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

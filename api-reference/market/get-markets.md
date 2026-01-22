@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2026-01-16T17:20:19.124Z
+lastmod: 2026-01-22T00:35:01.703Z
 ---
 # Get Markets
 
@@ -8,11 +8,12 @@ lastmod: 2026-01-16T17:20:19.124Z
  - Only one `status` filter may be supplied at a time.
  - Timestamp filters will be mutually exclusive from other timestamp filters and certain status filters.
 
- | Compatible Timestamp Filters | Additional Status Filters|
- |------------------------------|--------------------------|
- | min_created_ts, max_created_ts | `unopened`, `open`, *empty* |
- | min_close_ts, max_close_ts | `closed`, *empty* |
- | min_settled_ts, max_settled_ts | `settled`, *empty* |
+ | Compatible Timestamp Filters | Additional Status Filters| Extra Notes |
+ |------------------------------|--------------------------|-------------|
+ | min_created_ts, max_created_ts | `unopened`, `open`, *empty* | |
+ | min_close_ts, max_close_ts | `closed`, *empty* | |
+ | min_settled_ts, max_settled_ts | `settled`, *empty* | |
+ | min_updated_ts | *empty* | Incompatible with all filters besides `mve_filter=exclude` |
 
 
 
@@ -23,7 +24,7 @@ lastmod: 2026-01-16T17:20:19.124Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.5.0
+  version: 3.6.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -74,11 +75,12 @@ paths:
          - Only one `status` filter may be supplied at a time.
          - Timestamp filters will be mutually exclusive from other timestamp filters and certain status filters.
 
-         | Compatible Timestamp Filters | Additional Status Filters|
-         |------------------------------|--------------------------|
-         | min_created_ts, max_created_ts | `unopened`, `open`, *empty* |
-         | min_close_ts, max_close_ts | `closed`, *empty* |
-         | min_settled_ts, max_settled_ts | `settled`, *empty* |
+         | Compatible Timestamp Filters | Additional Status Filters| Extra Notes |
+         |------------------------------|--------------------------|-------------|
+         | min_created_ts, max_created_ts | `unopened`, `open`, *empty* | |
+         | min_close_ts, max_close_ts | `closed`, *empty* | |
+         | min_settled_ts, max_settled_ts | `settled`, *empty* | |
+         | min_updated_ts | *empty* | Incompatible with all filters besides `mve_filter=exclude` |
       operationId: GetMarkets
       parameters:
         - $ref: '#/components/parameters/MarketLimitQuery'
@@ -87,6 +89,7 @@ paths:
         - $ref: '#/components/parameters/SeriesTickerQuery'
         - $ref: '#/components/parameters/MinCreatedTsQuery'
         - $ref: '#/components/parameters/MaxCreatedTsQuery'
+        - $ref: '#/components/parameters/MinUpdatedTsQuery'
         - $ref: '#/components/parameters/MaxCloseTsQuery'
         - $ref: '#/components/parameters/MinCloseTsQuery'
         - $ref: '#/components/parameters/MinSettledTsQuery'
@@ -158,6 +161,15 @@ components:
       name: max_created_ts
       in: query
       description: Filter items that created before this Unix timestamp
+      schema:
+        type: integer
+        format: int64
+    MinUpdatedTsQuery:
+      name: min_updated_ts
+      in: query
+      description: >-
+        Return markets updated later than this Unix timestamp. Incompatible with
+        any other filters.
       schema:
         type: integer
         format: int64
@@ -244,6 +256,7 @@ components:
         - yes_sub_title
         - no_sub_title
         - created_time
+        - updated_time
         - open_time
         - close_time
         - expiration_time
@@ -311,6 +324,10 @@ components:
         created_time:
           type: string
           format: date-time
+        updated_time:
+          type: string
+          format: date-time
+          description: Time of the last market stats update
         open_time:
           type: string
           format: date-time
@@ -402,6 +419,7 @@ components:
           enum:
             - 'yes'
             - 'no'
+            - scalar
             - ''
         can_close_early:
           type: boolean

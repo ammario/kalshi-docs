@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_authenticated_requests
-lastmod: 2025-10-12T19:52:48.030Z
+lastmod: 2026-01-22T00:35:02.152Z
 ---
 # Quick Start: Authenticated Requests
 

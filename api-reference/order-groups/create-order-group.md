@@ -1,10 +1,10 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/create-order-group
-lastmod: 2026-01-16T17:20:18.654Z
+lastmod: 2026-01-22T00:35:01.789Z
 ---
 # Create Order Group
 
->  Creates a new order group with a contracts limit. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.
+>  Creates a new order group with a contracts limit measured over a rolling 15-second window. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.
 
 
 
@@ -14,7 +14,7 @@ lastmod: 2026-01-16T17:20:18.654Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.5.0
+  version: 3.6.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -59,7 +59,7 @@ paths:
       tags:
         - order-groups
       summary: Create Order Group
-      description: ' Creates a new order group with a contracts limit. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.'
+      description: ' Creates a new order group with a contracts limit measured over a rolling 15-second window. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.'
       operationId: CreateOrderGroup
       requestBody:
         required: true
@@ -95,8 +95,9 @@ components:
           minimum: 1
           description: >-
             Specifies the maximum number of contracts that can be matched within
-            this group. Whole contracts only. Provide contracts_limit or
-            contracts_limit_fp; if both provided they must match.
+            this group over a rolling 15-second window. Whole contracts only.
+            Provide contracts_limit or contracts_limit_fp; if both provided they
+            must match.
           x-go-type-skip-optional-pointer: true
           x-oapi-codegen-extra-tags:
             validate: omitempty,gte=1
@@ -105,9 +106,9 @@ components:
           nullable: true
           description: >-
             String representation of the maximum number of contracts that can be
-            matched within this group (whole contracts only). Provide
-            contracts_limit or contracts_limit_fp; if both provided they must
-            match.
+            matched within this group over a rolling 15-second window (whole
+            contracts only). Provide contracts_limit or contracts_limit_fp; if
+            both provided they must match.
     CreateOrderGroupResponse:
       type: object
       required:

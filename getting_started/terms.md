@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/terms
-lastmod: 2025-08-07T20:11:48.682Z
+lastmod: 2026-01-22T00:35:02.154Z
 ---
 # Kalshi Glossary
 
