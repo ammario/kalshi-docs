@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/get-order-group
-lastmod: 2026-01-22T00:35:01.794Z
+lastmod: 2026-01-22T21:13:32.402Z
 ---
 # Get Order Group
 
@@ -99,12 +99,36 @@ components:
         is_auto_cancel_enabled:
           type: boolean
           description: Whether auto-cancel is enabled for this order group
+        contracts_limit:
+          type: integer
+          format: int64
+          description: >-
+            Current maximum contracts allowed over a rolling 15-second window
+            (whole contracts only).
+          x-go-type-skip-optional-pointer: true
+        contracts_limit_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            String representation of the current maximum contracts allowed over
+            a rolling 15-second window (whole contracts only).
+          x-go-type-skip-optional-pointer: true
         orders:
           type: array
           items:
             type: string
           description: List of order IDs that belong to this order group
           x-go-type-skip-optional-pointer: true
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     ErrorResponse:
       type: object
       properties:

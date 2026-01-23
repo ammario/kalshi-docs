@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/websocket-connection
-lastmod: 2026-01-22T00:35:03.528Z
+lastmod: 2026-01-22T21:13:33.452Z
 ---
 # WebSocket Connection
 

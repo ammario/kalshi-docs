@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/milestone/get-milestones
-lastmod: 2026-01-22T00:35:01.854Z
+lastmod: 2026-01-22T21:13:32.397Z
 ---
 # Get Milestones
 

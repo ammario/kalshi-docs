@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_market_data
-lastmod: 2026-01-22T00:35:02.151Z
+lastmod: 2026-01-22T21:13:32.488Z
 ---
 # Quick Start: Market Data
 
@@ -56,11 +56,11 @@ Let's start by fetching information about the KXHIGHNY series ([Highest temperat
 
 ## Step 2: Get Today's Events and Markets
 
-Now that we have the series information, let's get the markets for this series. We'll use the [Get Markets](/api-reference/market/get-markets) endpoint with the series ticker filter to find all active markets.
+Now that we have the series information, let's get the markets for this series. We'll use the [Get Markets](/api-reference/market/get-markets) endpoint with the series ticker filter to find all active markets. If there are no open markets today, remove `status=open` or use `status=all` to see the full series history.
 
 <CodeGroup>
   ```python Python theme={null}
-  # Get all markets for the KXHIGHNY series
+  # Get all open markets for the KXHIGHNY series
   markets_url = f"https://api.elections.kalshi.com/trade-api/v2/markets?series_ticker=KXHIGHNY&status=open"
   markets_response = requests.get(markets_url)
   markets_data = markets_response.json()
@@ -88,7 +88,7 @@ Now that we have the series information, let's get the markets for this series. 
   ```javascript JavaScript theme={null}
   // Get markets for the KXHIGHNY series
   async function getSeriesMarkets() {
-    // Get all markets for this series
+    // Get all open markets for this series
     const marketsResponse = await fetch('https://api.elections.kalshi.com/trade-api/v2/markets?series_ticker=KXHIGHNY&status=open');
     const marketsData = await marketsResponse.json();
 
@@ -122,12 +122,15 @@ Now that we have the series information, let's get the markets for this series. 
 
 ## Step 3: Get Orderbook Data
 
-Now let's fetch the orderbook for a specific market to see the current bids and asks using the [Get Market Orderbook](/api-reference/market/get-market-order-book) endpoint.
+Now let's fetch the orderbook for a specific market to see the current bids and asks using the [Get Market Orderbook](/api-reference/market/get-market-order-book) endpoint. This snippet assumes you still have the `markets_data` from the previous step. If `markets_data['markets']` is empty, pick a market from a different series or remove the `status=open` filter.
 
 <CodeGroup>
   ```python Python theme={null}
   # Get orderbook for a specific market
   # Replace with an actual market ticker from the markets list
+  if not markets_data['markets']:
+      raise ValueError("No open markets found. Try removing status=open or choose another series.")
+
   market_ticker = markets_data['markets'][0]['ticker']
   orderbook_url = f"https://api.elections.kalshi.com/trade-api/v2/markets/{market_ticker}/orderbook"
 

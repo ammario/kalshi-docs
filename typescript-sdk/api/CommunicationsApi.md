@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/CommunicationsApi
-lastmod: 2026-01-22T00:35:02.785Z
+lastmod: 2026-01-22T21:13:32.909Z
 ---
 # Communications
 

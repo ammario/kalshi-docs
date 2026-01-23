@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/subpenny-pricing
-lastmod: 2026-01-22T00:35:02.104Z
+lastmod: 2026-01-22T21:13:32.473Z
 ---
 # Subpenny Pricing
 

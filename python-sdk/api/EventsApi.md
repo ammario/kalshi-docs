@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/EventsApi
-lastmod: 2026-01-22T00:35:02.200Z
+lastmod: 2026-01-22T21:13:32.507Z
 ---
 # Events
 

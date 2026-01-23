@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-22T00:35:02.070Z
+lastmod: 2026-01-22T21:13:32.454Z
 ---
 # API Changelog
 
@@ -13,6 +13,77 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 21, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Amend order endpoint: client_order_id fields now optional",
+description: "client_order_id and updated_client_order_id are now optional in amend order requests"
+}}
+>
+  The `client_order_id` and `updated_client_order_id` fields in amend order requests are now optional.
+
+  **Behavior changes:**
+
+  * You can now amend orders without providing `client_order_id` fields by using only the `order_id` from the URL path
+  * If you provide an `updated_client_order_id`, the order can be found by the exchange and the `client_order_id` updated just on `order_id` alone
+
+  **Affected endpoint:**
+
+  * `POST /trade-api/v2/portfolio/orders/{order_id}/amend`
+
+  **Example:**
+
+  ```json  theme={null}
+  {
+    "ticker": "MARKET-TICKER",
+    "side": "yes",
+    "action": "buy",
+    "count_fp": "50.00",
+    "yes_price": 30
+  }
+  ```
+
+  This will amend the order identified by `order_id` without requiring `client_order_id` fields.
+
+  Release date: `January 28, 2026`
+</Update>
+
+<Update
+  label="Jan 29, 2026"
+  tags={["Released"]}
+  rss={{
+title: "Release Jan 29, 2026",
+description: "Release Jan 29, 2026"
+}}
+>
+  Release date: `January 29, 2026`
+</Update>
+
+<Update
+  label="Jan 29, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Order group limit update endpoint",
+description: "Update order group contracts limits"
+}}
+>
+  Added an endpoint to update the contracts limit for an order group (rolling 15-second window). If the updated limit would immediately trigger the group, all orders in the group are canceled and the group is triggered.
+
+  **New endpoint:**
+
+  * `PUT /portfolio/order_groups/{order_group_id}/limit`
+
+  **Response updates:**
+
+  * `GET /portfolio/order_groups`
+  * `GET /portfolio/order_groups/{order_group_id}`
+
+  Both now include `contracts_limit` and `contracts_limit_fp`.
+
+  Release date: `January 29, 2026`
+</Update>
 
 <Update
   label="Jan 22, 2026"
@@ -78,42 +149,6 @@ description: "New endpoint to trigger order groups"
   * `PUT /portfolio/order_groups/{order_group_id}/trigger`
 
   Release date: `January 22, 2026`
-</Update>
-
-<Update
-  label="Jan 20, 2026"
-  tags={["Change", "Upcoming"]}
-  rss={{
-title: "Get markets may return scalar result",
-description: "Get markets may return scalar result"
-}}
->
-  Currently, a market settled to a scalar result will return `""` in the `market_result` field.
-  Starting in the next release, this value will read `"scalar"` instead.
-
-  Affected endpoints:
-
-  * `GET /market`
-  * `GET /markets`
-
-  Release date: `January 28, 2026`
-</Update>
-
-<Update
-  label="Jan 20, 2026"
-  tags={["Breaking", "Upcoming"]}
-  rss={{
-title: "Subaccount transfer amount field renamed",
-description: "SubaccountTransfer response field 'amount' renamed to 'amount_cents' for clarity"
-}}
->
-  The `amount` field in `SubaccountTransfer` responses has been renamed to `amount_cents` to clearly indicate units, consistent with other API endpoints.
-
-  **Affected endpoint:**
-
-  * `GET /portfolio/subaccounts/transfers`
-
-  Release date: `TBD`
 </Update>
 
 <Update

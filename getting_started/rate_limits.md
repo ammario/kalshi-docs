@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-01-22T00:35:02.150Z
+lastmod: 2026-01-22T21:13:32.488Z
 ---
 # Rate Limits and Tiers
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2026-01-22T00:35:02.010Z
+lastmod: 2026-01-22T21:13:32.434Z
 ---
 # Get Positions
 

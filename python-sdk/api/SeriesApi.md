@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/SeriesApi
-lastmod: 2026-01-22T00:35:02.248Z
+lastmod: 2026-01-22T21:13:32.524Z
 ---
 # Series
 

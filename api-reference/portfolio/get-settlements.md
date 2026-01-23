@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-01-22T00:35:02.009Z
+lastmod: 2026-01-22T21:13:32.435Z
 ---
 # Get Settlements
 

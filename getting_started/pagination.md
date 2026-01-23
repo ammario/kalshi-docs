@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/pagination
-lastmod: 2026-01-22T00:35:02.157Z
+lastmod: 2026-01-22T21:13:32.485Z
 ---
 # Understanding Pagination
 

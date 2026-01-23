@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-groups
-lastmod: 2026-01-22T00:35:02.107Z
+lastmod: 2026-01-22T21:13:32.469Z
 ---
 # Order Group Messages
 
@@ -10,7 +10,7 @@ lastmod: 2026-01-22T00:35:02.107Z
 
 ## Overview
 
-Order groups provide automatic order cancellation when a contracts limit is reached. This feature helps manage risk by ensuring positions don't exceed predefined thresholds. Order groups are managed through custom FIX message types.
+Order groups provide automatic order cancellation when a contracts limit is reached. This feature helps manage risk by ensuring positions don't exceed predefined thresholds. Limits are evaluated over a rolling 15-second window. Order groups are managed through custom FIX message types.
 
 <Info>
   When an order group's contracts limit is hit, all orders in the group are automatically canceled and no new orders can be placed until the group is reset.
@@ -18,13 +18,13 @@ Order groups provide automatic order cancellation when a contracts limit is reac
 
 ## Order Group Request (35=UOG)
 
-Manage order groups with Create, Reset, Delete, and Trigger operations.
+Manage order groups with Create, Reset, Delete, Trigger, and Update operations.
 
 ### Required Fields
 
-| Tag   | Name             | Description          | Type/Values                                    |
-| ----- | ---------------- | -------------------- | ---------------------------------------------- |
-| 20131 | OrderGroupAction | Operation to perform | Create\<1>, Reset\<2>, Delete\<3>, Trigger\<4> |
+| Tag   | Name             | Description          | Type/Values                                                |
+| ----- | ---------------- | -------------------- | ---------------------------------------------------------- |
+| 20131 | OrderGroupAction | Operation to perform | Create\<1>, Reset\<2>, Delete\<3>, Trigger\<4>, Update\<5> |
 
 ### Fields by Action
 
@@ -60,6 +60,18 @@ Manage order groups with Create, Reset, Delete, and Trigger operations.
   The Trigger action immediately cancels all orders in the specified order group, regardless of whether the contracts limit has been reached. This is useful for manual risk management or emergency order cancellation.
 </Warning>
 
+#### Update (Action=5)
+
+| Tag   | Name                     | Description                                 | Required |
+| ----- | ------------------------ | ------------------------------------------- | -------- |
+| 20130 | OrderGroupID             | ID of group to update                       | Yes      |
+| 20132 | OrderGroupContractsLimit | New maximum contracts allowed (1-1,000,000) | Yes      |
+
+<Note>
+  If the updated limit would immediately trigger the group (based on the rolling 15-second window), the server cancels all
+  orders in the group and marks it as triggered. No new orders can be placed until the group is reset.
+</Note>
+
 ### Example Messages
 
 ```fix Create Order Group theme={null}
@@ -80,6 +92,11 @@ Manage order groups with Create, Reset, Delete, and Trigger operations.
 ```fix Trigger Order Group theme={null}
 8=FIXT.1.1|9=150|35=UOG|34=8|52=20230809-12:34:59.789|49=your-api-key|56=KalshiNR|
 20131=4|20130=770e8400-e29b-41d4-a716-446655440002|10=126|
+```
+
+```fix Update Order Group Limit theme={null}
+8=FIXT.1.1|9=150|35=UOG|34=9|52=20230809-12:35:00.789|49=your-api-key|56=KalshiNR|
+20131=5|20130=770e8400-e29b-41d4-a716-446655440002|20132=2500|10=127|
 ```
 
 ## Order Group Response (35=UOH)

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/trigger-order-group
-lastmod: 2026-01-22T00:35:01.958Z
+lastmod: 2026-01-22T21:13:32.416Z
 ---
 # Trigger Order Group
 

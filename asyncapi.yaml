@@ -209,7 +209,7 @@ channels:
       Market state changes and event creation notifications.
 
       **Requirements:**
-      - Market specification optional (omit to receive all events)
+      - Receives all market and event lifecycle notifications (`market_ticker` filters are not supported)
       - Event creation notifications
 
       **Use case:** Tracking market lifecycle including creation, de(activation), close date changes, determination, settlement

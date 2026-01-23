@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-communications-id
-lastmod: 2026-01-22T00:35:01.607Z
+lastmod: 2026-01-22T21:13:32.346Z
 ---
 # Get Communications ID
 

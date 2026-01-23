@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/MilestonesApi
-lastmod: 2026-01-22T00:35:02.827Z
+lastmod: 2026-01-22T21:13:32.947Z
 ---
 # Milestones
 

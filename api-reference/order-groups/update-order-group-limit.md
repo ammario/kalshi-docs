@@ -1,16 +1,16 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/transfer-between-subaccounts
-lastmod: 2026-01-22T21:13:32.450Z
+url: https://docs.kalshi.com/api-reference/order-groups/update-order-group-limit
+lastmod: 2026-01-22T21:13:32.420Z
 ---
-# Transfer Between Subaccounts
+# Update Order Group Limit
 
-> Transfers funds between the authenticated user's subaccounts. Use 0 for the primary account, or 1-32 for numbered subaccounts.
+>  Updates the order group contracts limit (rolling 15-second window). If the updated limit would immediately trigger the group, all orders in the group are canceled and the group is triggered.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml post /portfolio/subaccounts/transfer
+````yaml openapi.yaml put /portfolio/order_groups/{order_group_id}/limit
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -54,32 +54,34 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/subaccounts/transfer:
-    post:
+  /portfolio/order_groups/{order_group_id}/limit:
+    put:
       tags:
-        - portfolio
-      summary: Transfer Between Subaccounts
-      description: >-
-        Transfers funds between the authenticated user's subaccounts. Use 0 for
-        the primary account, or 1-32 for numbered subaccounts.
-      operationId: ApplySubaccountTransfer
+        - order-groups
+      summary: Update Order Group Limit
+      description: ' Updates the order group contracts limit (rolling 15-second window). If the updated limit would immediately trigger the group, all orders in the group are canceled and the group is triggered.'
+      operationId: UpdateOrderGroupLimit
+      parameters:
+        - $ref: '#/components/parameters/OrderGroupIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ApplySubaccountTransferRequest'
+              $ref: '#/components/schemas/UpdateOrderGroupLimitRequest'
       responses:
         '200':
-          description: Transfer completed successfully
+          description: Order group limit updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplySubaccountTransferResponse'
+                $ref: '#/components/schemas/EmptyResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -87,38 +89,52 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
+  parameters:
+    OrderGroupIdPath:
+      name: order_group_id
+      in: path
+      required: true
+      description: Order group ID
+      schema:
+        type: string
   schemas:
-    ApplySubaccountTransferRequest:
+    UpdateOrderGroupLimitRequest:
       type: object
-      required:
-        - client_transfer_id
-        - from_subaccount
-        - to_subaccount
-        - amount_cents
       properties:
-        client_transfer_id:
-          type: string
-          format: uuid
-          description: Unique client-provided transfer ID for idempotency.
-          x-oapi-codegen-extra-tags:
-            validate: required
-        from_subaccount:
-          type: integer
-          description: >-
-            Source subaccount number (0 for primary, 1-32 for numbered
-            subaccounts).
-        to_subaccount:
-          type: integer
-          description: >-
-            Destination subaccount number (0 for primary, 1-32 for numbered
-            subaccounts).
-        amount_cents:
+        contracts_limit:
           type: integer
           format: int64
-          description: Amount to transfer in cents.
-    ApplySubaccountTransferResponse:
+          minimum: 1
+          description: >-
+            New maximum number of contracts that can be matched within this
+            group over a rolling 15-second window. Whole contracts only. Provide
+            contracts_limit or contracts_limit_fp; if both provided they must
+            match.
+          x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: omitempty,gte=1
+        contracts_limit_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          nullable: true
+          description: >-
+            String representation of the new maximum number of contracts that
+            can be matched within this group over a rolling 15-second window
+            (whole contracts only). Provide contracts_limit or
+            contracts_limit_fp; if both provided they must match.
+    EmptyResponse:
       type: object
-      description: Empty response indicating successful transfer.
+      description: An empty response body
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     ErrorResponse:
       type: object
       properties:
@@ -143,6 +159,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:

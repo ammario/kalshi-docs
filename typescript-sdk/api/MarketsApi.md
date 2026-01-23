@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/MarketsApi
-lastmod: 2026-01-22T00:35:02.789Z
+lastmod: 2026-01-22T21:13:32.914Z
 ---
 # Markets
 

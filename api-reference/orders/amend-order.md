@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order
-lastmod: 2026-01-22T00:35:01.953Z
+lastmod: 2026-01-22T21:13:32.417Z
 ---
 # Amend Order
 
@@ -104,8 +104,6 @@ components:
         - ticker
         - side
         - action
-        - client_order_id
-        - updated_client_order_id
       properties:
         ticker:
           type: string
@@ -125,9 +123,11 @@ components:
         client_order_id:
           type: string
           description: The original client-specified order ID to be amended
+          x-go-type-skip-optional-pointer: true
         updated_client_order_id:
           type: string
           description: The new client-specified order ID after amendment
+          x-go-type-skip-optional-pointer: true
         yes_price:
           type: integer
           minimum: 1
