@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/getting_started/pagination
-lastmod: 2026-01-22T21:13:32.485Z
+lastmod: 2026-01-24T01:03:13.040Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Understanding Pagination
 
 > Learn how to navigate through large datasets using cursor-based pagination
@@ -158,8 +162,3 @@ To check for new items since your last fetch:
 ## Next Steps
 
 Now that you understand pagination, you can efficiently work with large datasets in the Kalshi API. For more details on specific endpoints, check the [API Reference](/api-reference).
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

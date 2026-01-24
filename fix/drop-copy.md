@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/fix/drop-copy
-lastmod: 2026-01-22T21:13:32.455Z
+lastmod: 2026-01-24T01:03:13.018Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Drop Copy Session
 
 > Recover missed execution reports and query historical order events
@@ -150,8 +154,3 @@ Sent when a resend request cannot be fulfilled.
 <Warning>
   All resent messages will have new FIX sequence numbers in the drop copy session, different from their original sequence numbers in the order entry session.
 </Warning>
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

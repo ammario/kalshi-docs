@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-22T21:13:32.454Z
+lastmod: 2026-01-24T01:03:12.948Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # API Changelog
 
 > Stay updated with API changes and version history
@@ -13,6 +17,42 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 22, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Get api tier limits endpoint",
+description: "New endpoint to retrieve the authorized user's api tier limits"
+}}
+>
+  New endpoint which provides authorized user their api tier and corresponding read and write limits.
+
+  **New endpoint:**
+
+  * `GET /account/limits`
+
+  Release date: `January 28, 2026`
+</Update>
+
+<Update
+  label="Jan 22, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Order group updates WebSocket channel",
+description: "New websocket channel for order group lifecycle updates"
+}}
+>
+  Added `order_group_updates` WebSocket channel to stream order group lifecycle updates
+  (created, triggered, reset, deleted, limit\_updated). Payloads include `contracts_limit_fp`
+  for created and limit\_updated events.
+
+  **New channel:**
+
+  * `order_group_updates`
+
+  Release date: `January 29, 2026`
+</Update>
 
 <Update
   label="Jan 21, 2026"
@@ -1367,8 +1407,3 @@ description: "The GetApiVersion endpoint has been removed. API versioning will n
 >
   The GetApiVersion endpoint has been removed. API versioning will not be available for the time being.
 </Update>
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

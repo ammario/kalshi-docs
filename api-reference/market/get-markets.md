@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2026-01-22T21:13:32.379Z
+lastmod: 2026-01-24T01:03:12.620Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Get Markets
 
 > Filter by market status. Possible values: `unopened`, `open`, `closed`, `settled`. Leave empty to return markets with any status.
@@ -644,7 +648,3 @@ components:
           description: Price step/tick size for this range in dollars
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

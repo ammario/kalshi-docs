@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2026-01-22T21:13:32.455Z
+lastmod: 2026-01-24T01:03:12.947Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Connectivity
 
 > Connection setup and endpoints for Kalshi FIX API
@@ -148,8 +152,3 @@ The drop copy session endpoint provides an alternative way for clients to query 
     * Verify signature generation uses the exact SendingTime from field 52
   </Accordion>
 </AccordionGroup>
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

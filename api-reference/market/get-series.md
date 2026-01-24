@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series
-lastmod: 2026-01-22T21:13:32.384Z
+lastmod: 2026-01-24T01:03:12.617Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Get Series
 
 >  Endpoint for getting data about a specific series by its ticker.  A series represents a template for recurring events that follow the same format and rules (e.g., "Monthly Jobs Report", "Weekly Initial Jobless Claims", "Daily Weather in NYC"). Series define the structure, settlement sources, and metadata that will be applied to each recurring event instance within that series.
@@ -248,7 +252,3 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

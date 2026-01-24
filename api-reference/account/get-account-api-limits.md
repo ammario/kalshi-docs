@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/api-keys/generate-api-key
-lastmod: 2026-01-24T01:03:12.438Z
+url: https://docs.kalshi.com/api-reference/account/get-account-api-limits
+lastmod: 2026-01-24T01:03:12.435Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Generate API Key
+# Get Account API Limits
 
->  Endpoint for generating a new API key with an automatically created key pair.  This endpoint generates both a public and private RSA key pair. The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.
+>  Endpoint to retrieve the API tier limits associated with the authenticated user.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml post /api_keys/generate
+````yaml openapi.yaml get /account/limits
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,28 +58,20 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /api_keys/generate:
-    post:
+  /account/limits:
+    get:
       tags:
-        - api-keys
-      summary: Generate API Key
-      description: ' Endpoint for generating a new API key with an automatically created key pair.  This endpoint generates both a public and private RSA key pair. The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.'
-      operationId: GenerateApiKey
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GenerateApiKeyRequest'
+        - account
+      summary: Get Account API Limits
+      description: ' Endpoint to retrieve the API tier limits associated with the authenticated user.'
+      operationId: GetAccountApiLimits
       responses:
-        '201':
-          description: API key generated successfully
+        '200':
+          description: Account API tier limits retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateApiKeyResponse'
-        '400':
-          description: Bad request - invalid input
+                $ref: '#/components/schemas/GetAccountApiLimitsResponse'
         '401':
           description: Unauthorized
         '500':
@@ -90,36 +82,22 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
-    GenerateApiKeyRequest:
+    GetAccountApiLimitsResponse:
       type: object
       required:
-        - name
+        - usage_tier
+        - read_limit
+        - write_limit
       properties:
-        name:
+        usage_tier:
           type: string
-          description: Name for the API key. This helps identify the key's purpose
-        scopes:
-          type: array
-          description: >-
-            List of scopes to grant to the API key. Valid values are 'read' and
-            'write'. If 'write' is included, 'read' must also be included.
-            Defaults to full access (['read', 'write']) if not provided.
-          items:
-            type: string
-    GenerateApiKeyResponse:
-      type: object
-      required:
-        - api_key_id
-        - private_key
-      properties:
-        api_key_id:
-          type: string
-          description: Unique identifier for the newly generated API key
-        private_key:
-          type: string
-          description: >-
-            RSA private key in PEM format. This must be stored securely and
-            cannot be retrieved again after this response
+          description: User's API usage tier
+        read_limit:
+          type: integer
+          description: Maximum read requests per second
+        write_limit:
+          type: integer
+          description: Maximum write requests per second
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

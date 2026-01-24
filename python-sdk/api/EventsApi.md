@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/EventsApi
-lastmod: 2026-01-22T21:13:32.507Z
+lastmod: 2026-01-24T01:03:13.064Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Events
 
 > Python SDK methods for Events operations
@@ -200,8 +204,3 @@ Retrieve multivariate (combo) events. These are dynamically created events from 
 | **400**     | Bad request - invalid parameters           |
 | **401**     | Unauthorized                               |
 | **500**     | Internal server error                      |
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

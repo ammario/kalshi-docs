@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/ApiKeysApi
-lastmod: 2026-01-22T21:13:32.506Z
+lastmod: 2026-01-24T01:03:13.075Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # ApiKeys
 
 > Python SDK methods for ApiKeys operations
@@ -121,8 +125,3 @@ This endpoint does not need any parameter.
 | **200**     | List of API keys retrieved successfully |
 | **401**     | Unauthorized                            |
 | **500**     | Internal server error                   |
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

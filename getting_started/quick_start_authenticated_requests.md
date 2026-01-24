@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_authenticated_requests
-lastmod: 2026-01-22T21:13:32.489Z
+lastmod: 2026-01-24T01:03:13.041Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Quick Start: Authenticated Requests
 
 > Three simple steps to make your first authenticated API request to Kalshi
@@ -173,8 +177,3 @@ Now you can make authenticated requests! Try these endpoints:
 * `/trade-api/v2/markets` - Browse available markets
 
 For more details, see the [Complete Order Lifecycle](./complete_order_lifecycle) guide or explore the [API Reference](/api-reference).
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

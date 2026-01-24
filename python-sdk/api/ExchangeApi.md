@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/ExchangeApi
-lastmod: 2026-01-22T21:13:32.503Z
+lastmod: 2026-01-24T01:03:13.069Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Exchange
 
 > Python SDK methods for Exchange operations
@@ -134,8 +138,3 @@ This endpoint does not need any parameter.
 | ----------- | ------------------------------------------ |
 | **200**     | User data timestamp retrieved successfully |
 | **500**     | Internal server error                      |
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

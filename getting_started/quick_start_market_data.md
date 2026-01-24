@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_market_data
-lastmod: 2026-01-22T21:13:32.488Z
+lastmod: 2026-01-24T01:03:13.048Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Quick Start: Market Data
 
 > Learn how to access real-time market data without authentication
@@ -185,8 +189,3 @@ Now that you understand how to access market data without authentication, you ca
 4. Set up a WebSocket connection for live updates (requires authentication)
 
 For authenticated endpoints that allow trading and portfolio management, check out our [API Keys guide](/getting_started/api_keys).
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

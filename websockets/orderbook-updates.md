@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/websockets/orderbook-updates
-lastmod: 2026-01-22T21:13:33.440Z
+lastmod: 2026-01-24T01:03:13.901Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Orderbook Updates
 
 > Real-time orderbook price level changes. Provides incremental updates to maintain a live orderbook.
@@ -15,8 +19,3 @@ lastmod: 2026-01-22T21:13:33.440Z
 **Use case:** Building and maintaining a real-time orderbook
 
 
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/incentive-programs/get-incentives
-lastmod: 2026-01-22T21:13:32.367Z
+lastmod: 2026-01-24T01:03:12.516Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Get Incentives
 
 >  List incentives with optional filters. Incentives are rewards programs for trading activity on specific markets.
@@ -219,7 +223,3 @@ components:
       example: '10.00'
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

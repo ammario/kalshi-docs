@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/SeriesApi
-lastmod: 2026-01-22T21:13:32.974Z
+lastmod: 2026-01-24T01:03:13.546Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Series
 
 > TypeScript SDK methods for Series operations
@@ -125,8 +129,3 @@ const { status, data } = await apiInstance.getSeriesByTicker(
 | **500**     | Internal server error                  | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

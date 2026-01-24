@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/ApiKeysApi
-lastmod: 2026-01-22T21:13:32.908Z
+lastmod: 2026-01-24T01:03:13.511Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # ApiKeys
 
 > TypeScript SDK methods for ApiKeys operations
@@ -149,8 +153,3 @@ This endpoint does not have any parameters.
 | **200**     | List of API keys retrieved successfully | -                |
 | **401**     | Unauthorized                            | -                |
 | **500**     | Internal server error                   | -                |
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

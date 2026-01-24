@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/sdks/python/quickstart
-lastmod: 2026-01-22T21:13:32.898Z
+lastmod: 2026-01-24T01:03:13.519Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Python SDK Quick Start
 
 > Get started with the Kalshi Python SDK
@@ -52,8 +56,3 @@ print(f"Balance: ${balance.balance / 100:.2f}")
 
 * PyPI (sync): [https://pypi.org/project/kalshi\_python\_sync/](https://pypi.org/project/kalshi_python_sync/)
 * PyPI (async): [https://pypi.org/project/kalshi\_python\_async/](https://pypi.org/project/kalshi_python_async/)
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

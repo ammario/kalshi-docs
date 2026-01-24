@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_websockets
-lastmod: 2026-01-22T21:13:32.486Z
+lastmod: 2026-01-24T01:03:13.043Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Quick Start: WebSockets
 
 > Learn how to establish and maintain a WebSocket connection to stream real-time market data
@@ -408,8 +412,3 @@ To run this example:
 * Review the [WebSocket API Reference](/websockets) for detailed message specifications
 * Explore [Market Data Quick Start](/getting_started/quick_start_market_data) for REST API integration
 * Check out our [Demo Environment](/getting_started/demo_env) for testing
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

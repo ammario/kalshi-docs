@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/fix/session-management
-lastmod: 2026-01-22T21:13:32.472Z
+lastmod: 2026-01-24T01:03:13.025Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Session Management
 
 > Managing FIX sessions including logon, logout, and message sequencing
@@ -246,8 +250,3 @@ All messages must include standard FIX headers:
    * Rotate API keys periodically
    * Monitor for unauthorized access
    * Use secure storage for private keys
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

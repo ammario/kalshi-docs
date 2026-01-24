@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market
-lastmod: 2026-01-22T21:13:32.379Z
+lastmod: 2026-01-24T01:03:12.616Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Get Market
 
 >  Endpoint for getting data about a specific market by its ticker. A market represents a specific binary outcome within an event that users can trade on (e.g., "Will candidate X win?"). Markets have yes/no positions, current prices, volume, and settlement rules.
@@ -492,7 +496,3 @@ components:
           description: Price step/tick size for this range in dollars
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

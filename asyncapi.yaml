@@ -258,6 +258,22 @@ channels:
       quoteExecuted:
         $ref: '#/components/messages/quoteExecuted'
 
+  order_group_updates:
+    address: order_group_updates
+    title: Order Group Updates
+    description: |
+      Real-time order group lifecycle and limit updates. Requires authentication.
+
+      **Requirements:**
+      - Authentication required
+      - Market specification ignored
+      - Updates sent when order groups are created, triggered, reset, deleted, or have limits updated
+
+      **Use case:** Tracking order group lifecycle and limits
+    messages:
+      orderGroupUpdates:
+        $ref: '#/components/messages/orderGroupUpdates'
+
 operations:
   sendPing:
     action: receive
@@ -582,6 +598,17 @@ operations:
       $ref: '#/channels/communications'
     messages:
       - $ref: '#/channels/communications/messages/quoteExecuted'
+    tags:
+      - name: private
+
+  receiveOrderGroupUpdates:
+    action: send
+    title: Order Group Updates
+    summary: Receive order group lifecycle and limit updates
+    channel:
+      $ref: '#/channels/order_group_updates'
+    messages:
+      - $ref: '#/channels/order_group_updates/messages/orderGroupUpdates'
     tags:
       - name: private
 
@@ -1159,6 +1186,25 @@ components:
               volume: 15
               volume_fp: "15.00"
 
+    orderGroupUpdates:
+      name: order_group_updates
+      title: Order Group Updates
+      summary: Order group lifecycle and limit updates for authenticated user
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/orderGroupUpdatesPayload'
+      examples:
+        - name: orderGroupLimitUpdated
+          summary: Order group limit updated
+          payload:
+            type: order_group_updates
+            sid: 21
+            seq: 7
+            msg:
+              event_type: "limit_updated"
+              order_group_id: "og_123"
+              contracts_limit_fp: "150.00"
+
     rfqCreated:
       name: rfq_created
       title: RFQ Created
@@ -1357,7 +1403,7 @@ components:
               description: List of channels to subscribe to
               items:
                 type: string
-                enum: ["orderbook_delta", "ticker", "trade", "fill", "market_positions", "market_lifecycle_v2", "multivariate", "communications"]
+                enum: ["orderbook_delta", "ticker", "trade", "fill", "market_positions", "market_lifecycle_v2", "multivariate", "communications", "order_group_updates"]
               minItems: 1
             market_ticker:
               description: 'Subscribe to a single market. Type: string. Example: "KXBTCD-25AUG0517-T114999.99" (mutually exclusive with market_tickers)'
@@ -2062,6 +2108,32 @@ components:
             volume_fp:
               type: string
               description: Fixed-point total volume traded (2 decimals)
+
+    orderGroupUpdatesPayload:
+      type: object
+      required: ["type", "sid", "seq", "msg"]
+      properties:
+        type:
+          type: string
+          const: "order_group_updates"
+        sid:
+          $ref: '#/components/schemas/subscriptionId'
+        seq:
+          $ref: '#/components/schemas/sequenceNumber'
+        msg:
+          type: object
+          required: ["event_type", "order_group_id"]
+          properties:
+            event_type:
+              type: string
+              description: Order group event type
+              enum: ["created", "triggered", "reset", "deleted", "limit_updated"]
+            order_group_id:
+              type: string
+              description: Order group identifier
+            contracts_limit_fp:
+              type: string
+              description: Updated contracts limit in fixed-point (2 decimals). Present for "created" and "limit_updated" events only.
 
     rfqCreatedPayload:
       type: object

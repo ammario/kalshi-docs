@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/fix/order-groups
-lastmod: 2026-01-22T21:13:32.469Z
+lastmod: 2026-01-24T01:03:13.024Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Order Group Messages
 
 > Manage order groups for automatic position management
@@ -112,8 +116,3 @@ Response to order group management requests.
 <Note>
   Errors are returned as BusinessMessageReject (35=j) messages, not in the OrderGroupResponse.
 </Note>
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

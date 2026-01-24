@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2026-01-22T21:13:32.328Z
+lastmod: 2026-01-24T01:03:12.438Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Create Quote
 
 >  Endpoint for creating a quote in response to an RFQ
@@ -108,6 +112,14 @@ components:
         rest_remainder:
           type: boolean
           description: Whether to rest the remainder of the quote after execution
+        subtrader_id:
+          type: string
+          description: Optional subaccount ID to place the quote under
+        subaccount:
+          type: integer
+          description: >-
+            Optional subaccount number to place the quote under (0 for primary,
+            1-32 for subaccounts)
     CreateQuoteResponse:
       type: object
       required:
@@ -174,7 +186,3 @@ components:
       description: Request timestamp in milliseconds
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

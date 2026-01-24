@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-01-22T21:13:32.469Z
+lastmod: 2026-01-24T01:03:13.016Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Order Entry Messages
 
 > Submit, modify, and cancel orders through FIX messages
@@ -243,8 +247,3 @@ Response to mass cancel request.
 <Note>
   Individual ExecutionReports will follow for each canceled order.
 </Note>
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

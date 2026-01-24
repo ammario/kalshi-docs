@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-communications-id
-lastmod: 2026-01-22T21:13:32.346Z
+lastmod: 2026-01-24T01:03:12.457Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Get Communications ID
 
 >  Endpoint for getting the communications ID of the logged-in user.
@@ -132,7 +136,3 @@ components:
       description: Request timestamp in milliseconds
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

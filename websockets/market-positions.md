@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/websockets/market-positions
-lastmod: 2026-01-22T21:13:33.438Z
+lastmod: 2026-01-24T01:03:13.889Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Market Positions
 
 > Real-time updates of your positions in markets. Requires authentication.
@@ -18,8 +22,3 @@ To convert to dollars, divide by 10,000.
 **Use case:** Portfolio tracking, position monitoring, P&L calculations
 
 
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

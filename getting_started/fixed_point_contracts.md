@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/getting_started/fixed_point_contracts
-lastmod: 2026-01-22T21:13:32.489Z
+lastmod: 2026-01-24T01:03:13.045Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Fixed-Point Contracts
 
 > Migrating to fixed-point contract quantity representation.
@@ -47,8 +51,3 @@ This rollout includes:
 ## Preparing for Fractional Trading
 
 Fractional trading will be enabled on a per-market basis. To prepare, consider multiplying the `_fp` value by 100 internally. For example, treating `"1.00"` as 100 units of 1c contracts allows continued use of integer arithmetic while supporting future fractional quantities.
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

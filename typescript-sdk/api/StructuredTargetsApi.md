@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/StructuredTargetsApi
-lastmod: 2026-01-22T21:13:32.975Z
+lastmod: 2026-01-24T01:03:13.562Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # StructuredTargets
 
 > TypeScript SDK methods for StructuredTargets operations
@@ -82,8 +86,3 @@ No authorization required
 | **200**     | Structured targets retrieved successfully | -                |
 | **401**     | Unauthorized                              | -                |
 | **500**     | Internal server error                     | -                |
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

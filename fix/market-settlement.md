@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/fix/market-settlement
-lastmod: 2026-01-22T21:13:32.468Z
+lastmod: 2026-01-24T01:03:13.023Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Market Settlement
 
 > Settlement reports for market outcomes and position resolution
@@ -234,8 +238,3 @@ Position mismatches may indicate:
 * Late trades near expiration
 
 Always maintain independent position tracking for verification.
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

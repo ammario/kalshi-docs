@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/getting_started/orderbook_responses
-lastmod: 2026-01-22T21:13:32.487Z
+lastmod: 2026-01-24T01:03:13.039Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Orderbook Responses
 
 > Understanding Kalshi orderbook structure and binary prediction market mechanics
@@ -242,8 +246,3 @@ def calculate_depth(orderbook_data, depth_cents=5):
 * Learn about [making authenticated requests](/getting_started/api_keys) to place orders
 * Explore [WebSocket connections](/websockets/orderbook-updates) for real-time orderbook updates
 * Read about [market mechanics](https://kalshi.com/learn) on the Kalshi website
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

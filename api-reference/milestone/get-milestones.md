@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/milestone/get-milestones
-lastmod: 2026-01-22T21:13:32.397Z
+lastmod: 2026-01-24T01:03:12.690Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Get Milestones
 
 > Minimum start date to filter milestones. Format: RFC3339 timestamp
@@ -207,7 +211,3 @@ components:
           description: Last time this structured target was updated.
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

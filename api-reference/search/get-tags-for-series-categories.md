@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/search/get-tags-for-series-categories
-lastmod: 2026-01-22T21:13:32.452Z
+lastmod: 2026-01-24T01:03:12.966Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Get Tags for Series Categories
 
 > Retrieve tags organized by series categories.
@@ -96,7 +100,3 @@ components:
               type: string
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

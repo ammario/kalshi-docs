@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/sdks/overview
-lastmod: 2026-01-22T21:13:32.899Z
+lastmod: 2026-01-24T01:03:13.512Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Kalshi SDKs
 
 > Official SDKs for integrating with the Kalshi API
@@ -65,8 +69,3 @@ All SDKs use the same authentication mechanism with API keys and RSA-PSS signing
 2. A private key file for signing requests
 
 See the quickstart guide for your chosen SDK for detailed setup instructions.
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

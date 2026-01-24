@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-01-22T21:13:32.488Z
+lastmod: 2026-01-24T01:03:13.044Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Rate Limits and Tiers
 
 > Understanding API rate limits and access tiers
@@ -74,8 +78,3 @@ Only the following APIs fall under the write limit, for the batch APIs, each ite
 </Info>
 
 At any time, any Member that uses FIX or is at the highest possible API tier is eligible for an upgrade to its rate limit upon demonstration that such a tier is necessary for its bona fide market activity.
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

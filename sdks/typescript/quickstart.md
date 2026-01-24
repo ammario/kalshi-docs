@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/sdks/typescript/quickstart
-lastmod: 2026-01-22T21:13:32.907Z
+lastmod: 2026-01-24T01:03:13.517Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # TypeScript SDK Quick Start
 
 > Get started with the Kalshi TypeScript SDK
@@ -55,8 +59,3 @@ const config = new Configuration({
 ## Source Code
 
 * NPM: [kalshi-typescript](https://www.npmjs.com/package/kalshi-typescript)
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

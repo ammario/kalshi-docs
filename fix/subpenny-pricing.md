@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/fix/subpenny-pricing
-lastmod: 2026-01-22T21:13:32.473Z
+lastmod: 2026-01-24T01:03:13.021Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Subpenny Pricing
 
 > Dollar-based pricing format for subpenny precision
@@ -63,8 +67,3 @@ Affected Tags:
   ^^ avgPx        ^^ lastPx                        ^^ price
   ```
 </CodeGroup>
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

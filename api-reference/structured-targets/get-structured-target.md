@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/structured-targets/get-structured-target
-lastmod: 2026-01-22T21:13:32.456Z
+lastmod: 2026-01-24T01:03:12.969Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Get Structured Target
 
 >  Endpoint for getting data about a specific structured target by its ID.
@@ -116,7 +120,3 @@ components:
           description: Timestamp when this structured target was last updated.
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

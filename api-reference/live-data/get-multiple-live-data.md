@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-multiple-live-data
-lastmod: 2026-01-22T21:13:32.383Z
+lastmod: 2026-01-24T01:03:12.600Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Get Multiple Live Data
 
 > Get live data for multiple milestones
@@ -112,7 +116,3 @@ components:
           description: Milestone ID
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

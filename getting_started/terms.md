@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/getting_started/terms
-lastmod: 2026-01-22T21:13:32.503Z
+lastmod: 2026-01-24T01:03:13.063Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Kalshi Glossary
 
 > Core terminology used in the Kalshi exchange
@@ -21,8 +25,3 @@ Here are some core terminologies used in Kalshi exchange:
 <Note>
   Please see the "Timeline and Payout" dropdown on a market's page to find the Market, Event, and Series tickers. Note that the market ticker will depend on which market you are looking at on that page. For example, Trump and Harris are each their own market.
 </Note>
-
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt

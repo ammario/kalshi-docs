@@ -1,7 +1,11 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/delete-order-group
-lastmod: 2026-01-22T21:13:32.400Z
+lastmod: 2026-01-24T01:03:12.709Z
 ---
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
 # Delete Order Group
 
 >  Deletes an order group and cancels all orders within it. This permanently removes the group.
@@ -145,7 +149,3 @@ components:
       description: Request timestamp in milliseconds
 
 ````
-
----
-
-> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://docs.kalshi.com/llms.txt
