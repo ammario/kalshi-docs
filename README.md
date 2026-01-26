@@ -9,14 +9,24 @@ Updated nightly via GitHub Actions.
 
 ## Usage
 
-Add as a git submodule to your project for easy access to Kalshi documentation:
+### Agent Skill (Recommended)
+
+Install as an [Agent Skill](https://agentskills.io/) for AI coding agents:
+
+```bash
+npx add-skill ammario/kalshi-docs
+```
+
+Supports [Mux](https://mux.coder.com/), Claude Code, Cursor, Codex, OpenCode, and [20+ other agents](https://github.com/vercel-labs/add-skill#available-agents).
+
+### Git Submodule
+
+Alternatively, add as a git submodule:
 
 ```bash
 git submodule add https://github.com/ammario/kalshi-docs.git docs/kalshi
 git submodule update --init --recursive
 ```
-
-This is particularly useful for AI agents.
 
 ## Documentation Structure
 
