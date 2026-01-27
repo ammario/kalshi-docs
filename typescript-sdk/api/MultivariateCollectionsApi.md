@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/MultivariateCollectionsApi
-lastmod: 2026-01-24T01:03:13.541Z
+lastmod: 2026-01-27T00:10:37.206Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

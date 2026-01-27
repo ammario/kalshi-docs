@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix
-lastmod: 2026-01-24T01:03:13.023Z
+lastmod: 2026-01-27T00:10:36.654Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2026-01-24T01:03:12.438Z
+lastmod: 2026-01-27T00:10:36.439Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -112,9 +112,6 @@ components:
         rest_remainder:
           type: boolean
           description: Whether to rest the remainder of the quote after execution
-        subtrader_id:
-          type: string
-          description: Optional subaccount ID to place the quote under
         subaccount:
           type: integer
           description: >-

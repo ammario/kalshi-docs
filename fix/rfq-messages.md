@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-01-24T01:03:13.019Z
+lastmod: 2026-01-27T00:10:36.659Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -69,13 +69,14 @@ This message is sent by Kalshi Exchange back to clients to inform of new quote r
 Used to submit a quote in response to a quote request. If a new Quote is created when an existing quote for the same market already exists for the user,
 the exchange will cancel the existing quote.
 
-| Tag | Name       | Type    | Required | Description                                             |
-| --- | ---------- | ------- | -------- | ------------------------------------------------------- |
-| 117 | QuoteId    | UUID    | Y        | Unique quote identifier                                 |
-| 131 | QuoteReqId | UUID    | Y        | Quote request for which the quote is in response to.    |
-| 55  | Symbol     | String  | Y        | Market ticker                                           |
-| 132 | BidPx      | Integer | Y        | Yes price in cents. Only integer part considered (1-99) |
-| 133 | OfferPx    | Integer | Y        | No price in cents. Only integer part considered (1-99)  |
+| Tag | Name         | Type    | Required | Description                                                                                    |
+| --- | ------------ | ------- | -------- | ---------------------------------------------------------------------------------------------- |
+| 117 | QuoteId      | UUID    | Y        | Unique quote identifier                                                                        |
+| 131 | QuoteReqId   | UUID    | Y        | Quote request for which the quote is in response to.                                           |
+| 55  | Symbol       | String  | Y        | Market ticker                                                                                  |
+| 132 | BidPx        | Integer | Y        | Yes price in cents. Only integer part considered (1-99)                                        |
+| 133 | OfferPx      | Integer | Y        | No price in cents. Only integer part considered (1-99)                                         |
+| 79  | AllocAccount | Integer | N        | Subaccount number (0-32). If provided, the quote will be created for the specified subaccount. |
 
 <Warning>
   Either BidPx or OfferPx can be zero, but not both. Zero indicates no quote for that side.
@@ -89,16 +90,17 @@ A QuoteStatusReport is sent by the exchange:
 2. When the requester accepts the quote. Status will be ACCEPTED. Quoter should reply with QuoteConfirm within 30 seconds
 3. In response to a QuoteCancel. Status will be CANCELLED
 
-| Tag | Name         | Type    | Required | Description                                                               |
-| --- | ------------ | ------- | -------- | ------------------------------------------------------------------------- |
-| 117 | QuoteId      | String  | Y        | Quote identifier (empty if rejected)                                      |
-| 131 | QuoteReqId   | String  | Y        | Request reference                                                         |
-| 297 | QuoteStatus  | Integer | Y        | Current status                                                            |
-| 38  | OrderQty     | Integer | C        | Number of contracts. Not present if REJECTED                              |
-| 132 | BidPx        | Integer | C        | Yes price in cents. Only integer part considered. Not present if REJECTED |
-| 133 | OfferPx      | Integer | C        | No price in cents. Only integer part considered. Not present if REJECTED  |
-| 54  | AcceptedSide | Char    | C        | Side accepted (1=Yes, 2=No). Only present if ACCEPTED                     |
-| 58  | Text         | String  | C        | Rejection reason. Only present if REJECTED                                |
+| Tag | Name         | Type    | Required | Description                                                                 |
+| --- | ------------ | ------- | -------- | --------------------------------------------------------------------------- |
+| 117 | QuoteId      | String  | Y        | Quote identifier (empty if rejected)                                        |
+| 131 | QuoteReqId   | String  | Y        | Request reference                                                           |
+| 79  | AllocAccount | Integer | C        | Subaccount number (0-32). Present if the quote was created for a subaccount |
+| 297 | QuoteStatus  | Integer | Y        | Current status                                                              |
+| 38  | OrderQty     | Integer | C        | Number of contracts. Not present if REJECTED                                |
+| 132 | BidPx        | Integer | C        | Yes price in cents. Only integer part considered. Not present if REJECTED   |
+| 133 | OfferPx      | Integer | C        | No price in cents. Only integer part considered. Not present if REJECTED    |
+| 54  | AcceptedSide | Char    | C        | Side accepted (1=Yes, 2=No). Only present if ACCEPTED                       |
+| 58  | Text         | String  | C        | Rejection reason. Only present if REJECTED                                  |
 
 ### Quote Status Values (297)
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-24T01:03:12.948Z
+lastmod: 2026-01-27T00:10:36.630Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,21 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 22, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Subaccount support for RFQ quotes",
+description: "CreateQuote endpoint now accepts a subaccount parameter"
+}}
+>
+  The `POST /communications/quotes` endpoint now accepts an optional `subaccount` parameter to create quotes on behalf of a subaccount.
+
+  **Affected endpoint:**
+
+  * `POST /communications/quotes`
+</Update>
 
 <Update
   label="Jan 22, 2026"

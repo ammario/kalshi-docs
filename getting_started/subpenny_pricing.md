@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/subpenny_pricing
-lastmod: 2026-01-24T01:03:13.062Z
+lastmod: 2026-01-27T00:10:36.702Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1005,6 +1005,8 @@ components:
               delta: -54
               delta_fp: "-54.00"
               side: "yes"
+              client_order_id: "my-order-123"
+              subaccount: 2
 
     ticker:
       name: ticker
@@ -1086,6 +1088,7 @@ components:
               ts: 1671899397
               post_position: 500
               post_position_fp: "500.00"
+              subaccount: 3
 
     marketLifecycleV2:
       name: market_lifecycle_v2
@@ -1185,6 +1188,7 @@ components:
               fees_paid: 10000
               volume: 15
               volume_fp: "15.00"
+              subaccount: 4
 
     orderGroupUpdates:
       name: order_group_updates
@@ -1738,6 +1742,11 @@ components:
               description: |
                 Optional - Present only when you caused this orderbook change.
                 Contains the client_order_id of your order that triggered this delta.
+            subaccount:
+              type: integer
+              description: |
+                Optional - Present only when you caused this orderbook change and are using subaccounts.
+                Contains the subaccount number of your order that triggered this delta.
 
     tickerPayload:
       type: object
@@ -1914,6 +1923,9 @@ components:
             purchased_side:
               $ref: '#/components/schemas/marketSide'
               description: Side of the purchased contracts. If user submitted a sell NO, this field will be yes
+            subaccount:
+              type: integer
+              description: Optional subaccount number for the fill
 
     marketLifecycleV2Payload:
       type: object
@@ -2108,6 +2120,9 @@ components:
             volume_fp:
               type: string
               description: Fixed-point total volume traded (2 decimals)
+            subaccount:
+              type: integer
+              description: Optional subaccount number for the position
 
     orderGroupUpdatesPayload:
       type: object
