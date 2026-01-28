@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-queue-positions-for-orders
-lastmod: 2026-01-27T00:10:36.605Z
+lastmod: 2026-01-27T23:10:38.080Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -76,6 +76,7 @@ paths:
           description: Event ticker to filter by
           schema:
             type: string
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
           description: Queue positions retrieved successfully
@@ -94,6 +95,13 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
+  parameters:
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: Filter by subaccount number
+      schema:
+        type: integer
   schemas:
     GetOrderQueuePositionsResponse:
       type: object

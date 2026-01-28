@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/session-management
-lastmod: 2026-01-27T00:10:36.660Z
+lastmod: 2026-01-27T23:10:50.004Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

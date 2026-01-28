@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-01-27T00:10:36.611Z
+lastmod: 2026-01-27T23:10:38.254Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -179,6 +179,7 @@ components:
         - yes_price_fixed
         - no_price_fixed
         - is_taker
+        - fee_cost
       properties:
         fill_id:
           type: string
@@ -242,6 +243,9 @@ components:
           type: string
           format: date-time
           description: Timestamp when this fill was executed
+        fee_cost:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Fee cost in centi-cents
         ts:
           type: integer
           format: int64
@@ -257,6 +261,12 @@ components:
         be deprecated; when both integer and fp fields are provided, they must
         match.
       example: '10.00'
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

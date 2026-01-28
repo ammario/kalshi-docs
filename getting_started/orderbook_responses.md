@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/orderbook_responses
-lastmod: 2026-01-27T00:10:36.683Z
+lastmod: 2026-01-27T23:10:50.007Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_market_data
-lastmod: 2026-01-27T00:10:36.684Z
+lastmod: 2026-01-27T23:10:50.505Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

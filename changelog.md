@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-27T00:10:36.630Z
+lastmod: 2026-01-27T23:10:49.953Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,62 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 27, 2026"
+  tags={["Breaking Change", "Upcoming"]}
+  rss={{
+title: "Subaccount Balance returns string dollars representation",
+description: "Subaccount Balance returns string dollars representation"
+}}
+>
+  The subaccount balance field will be represented as a fixed-point dollars string instead of
+  a centicent integer.
+
+  **Affected endpoint:**
+
+  * `GET /portfolio/subaccounts/balances`
+</Update>
+
+<Update
+  label="Jan 27, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Exchange Fee available on Fills API",
+description: "Exchange Fee available on Fills API"
+}}
+>
+  The exhange `fee_cost` will be made available on the Fills API starting `January 28, 2026`.
+
+  **Affected endpoint:**
+
+  * `GET /portfolio/fills`
+</Update>
+
+<Update
+  label="Jan 26, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "More specific error codes for order validation",
+description: "New error codes provide more detailed information about order rejection reasons"
+}}
+>
+  Added more specific error codes for order validation failures. These replace the generic `invalid_order` response in certain cases:
+
+  **New error codes:**
+
+  * `invalid_order_size` - Order quantity is invalid
+  * `available_balance_too_low` - Insufficient available balance for the order
+  * `order_id_and_client_order_id_mismatch` - OrderID does not match ClOrdID on amend/cancel
+  * `order_side_mismatch` - Order side mismatch on amend/cancel
+  * `order_ticker_mismatch` - Market ticker mismatch on amend/cancel
+
+  **Affected endpoints:**
+
+  * `POST /portfolio/orders`
+  * `POST /portfolio/orders/{order_id}/amend`
+  * `DELETE /portfolio/orders/{order_id}`
+</Update>
 
 <Update
   label="Jan 22, 2026"

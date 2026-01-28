@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/error-handling
-lastmod: 2026-01-27T00:10:36.655Z
+lastmod: 2026-01-27T23:10:49.943Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -80,25 +80,26 @@ Used for application-level business logic errors.
 
 In ExecutionReport (35=8) with ExecType=Rejected:
 
-| Code | Reason                           | Common Causes                |
-| ---- | -------------------------------- | ---------------------------- |
-| 1    | Unknown symbol                   | Invalid market ticker        |
-| 2    | Exchange closed                  | Outside trading hours        |
-| 3    | Order exceeds limit              | Position or order size limit |
-| 4    | Too late to enter                | Market expired/closed        |
-| 6    | Duplicate order                  | ClOrdID already used         |
-| 11   | Unsupported order characteristic | Invalid order parameters     |
-| 99   | Other                            | See Text field               |
+| Code | Reason                           | Common Causes                                                    |
+| ---- | -------------------------------- | ---------------------------------------------------------------- |
+| 1    | Unknown symbol                   | Invalid market ticker                                            |
+| 2    | Exchange closed                  | Outside trading hours                                            |
+| 3    | Order exceeds limit              | Position or order size limit, insufficient balance               |
+| 4    | Too late to enter                | Market expired/closed                                            |
+| 6    | Duplicate order                  | ClOrdID already used                                             |
+| 11   | Unsupported order characteristic | Invalid order parameters, order ID/side/ticker mismatch on amend |
+| 13   | Incorrect quantity               | Invalid order size                                               |
+| 99   | Other                            | See Text field                                                   |
 
 ### Cancel Reject Reasons (102)
 
 In OrderCancelReject (35=9):
 
-| Code | Reason             | Description          |
-| ---- | ------------------ | -------------------- |
-| 0    | Too late to cancel | Order already filled |
-| 1    | Unknown order      | Order ID not found   |
-| 99   | Other              | See Text field       |
+| Code | Reason             | Description                                       |
+| ---- | ------------------ | ------------------------------------------------- |
+| 0    | Too late to cancel | Order already filled                              |
+| 1    | Unknown order      | Order ID not found, order ID/side/ticker mismatch |
+| 99   | Other              | See Text field                                    |
 
 ## Common Error Scenarios
 

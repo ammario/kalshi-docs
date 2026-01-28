@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-all-subaccount-balances
-lastmod: 2026-01-27T00:10:36.608Z
+lastmod: 2026-01-27T23:10:38.205Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -102,9 +102,8 @@ components:
           type: integer
           description: Subaccount number (0 for primary, 1-32 for subaccounts).
         balance:
-          type: integer
-          format: int64
-          description: Balance in centicents.
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Balance in dollars.
         updated_ts:
           type: integer
           format: int64
@@ -124,6 +123,12 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required

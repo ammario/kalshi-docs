@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-01-27T00:10:36.598Z
+lastmod: 2026-01-27T23:10:38.235Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -223,7 +223,7 @@ components:
           format: date-time
           description: Timestamp when the market was settled and payouts were processed.
         fee_cost:
-          type: string
+          $ref: '#/components/schemas/FixedPointDollars'
           example: '0.3400'
           description: Total fees paid in fixed point dollars.
         value:
@@ -256,6 +256,12 @@ components:
         be deprecated; when both integer and fp fields are provided, they must
         match.
       example: '10.00'
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
   responses:
     BadRequestError:
       description: Bad request - invalid input

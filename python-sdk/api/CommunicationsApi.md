@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/CommunicationsApi
-lastmod: 2026-01-27T00:10:36.706Z
+lastmod: 2026-01-27T23:10:50.510Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

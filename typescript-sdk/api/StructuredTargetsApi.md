@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/StructuredTargetsApi
-lastmod: 2026-01-27T00:10:37.239Z
+lastmod: 2026-01-27T23:10:52.191Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

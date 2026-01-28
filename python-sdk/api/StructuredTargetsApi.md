@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/StructuredTargetsApi
-lastmod: 2026-01-27T00:10:36.767Z
+lastmod: 2026-01-27T23:10:50.581Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
