@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-queue-positions-for-orders
-lastmod: 2026-01-27T23:10:38.080Z
+lastmod: 2026-01-29T00:38:21.586Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -99,9 +99,10 @@ components:
     SubaccountQuery:
       name: subaccount
       in: query
-      description: Filter by subaccount number
+      description: Subaccount number (0 for primary, 1-32 for subaccounts)
       schema:
         type: integer
+        default: 0
   schemas:
     GetOrderQueuePositionsResponse:
       type: object

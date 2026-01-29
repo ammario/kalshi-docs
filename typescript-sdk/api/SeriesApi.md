@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/SeriesApi
-lastmod: 2026-01-27T23:10:52.192Z
+lastmod: 2026-01-29T00:38:37.820Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

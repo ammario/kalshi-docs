@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/reset-order-group
-lastmod: 2026-01-27T23:10:38.148Z
+lastmod: 2026-01-29T00:38:21.644Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -67,6 +67,7 @@ paths:
       operationId: ResetOrderGroup
       parameters:
         - $ref: '#/components/parameters/OrderGroupIdPath'
+        - $ref: '#/components/parameters/SubaccountQuery'
       requestBody:
         required: false
         content:
@@ -99,6 +100,13 @@ components:
       description: Order group ID
       schema:
         type: string
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: Subaccount number (0 for primary, 1-32 for subaccounts)
+      schema:
+        type: integer
+        default: 0
   schemas:
     EmptyResponse:
       type: object

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fixed_point_contracts
-lastmod: 2026-01-27T23:10:50.237Z
+lastmod: 2026-01-29T00:38:37.118Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

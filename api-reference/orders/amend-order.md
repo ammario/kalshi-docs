@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order
-lastmod: 2026-01-27T23:10:38.060Z
+lastmod: 2026-01-29T00:38:21.566Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -109,6 +109,14 @@ components:
         - side
         - action
       properties:
+        subaccount:
+          type: integer
+          minimum: 0
+          description: >-
+            Optional subaccount number to use for this amendment (0 for primary,
+            1-32 for subaccounts)
+          default: 0
+          x-go-type-skip-optional-pointer: true
         ticker:
           type: string
           description: Market ticker

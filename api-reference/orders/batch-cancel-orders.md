@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders
-lastmod: 2026-01-27T23:10:38.050Z
+lastmod: 2026-01-29T00:38:21.557Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -94,14 +94,20 @@ components:
   schemas:
     BatchCancelOrdersRequest:
       type: object
-      required:
-        - ids
       properties:
         ids:
           type: array
           items:
             type: string
           description: An array of order IDs to cancel
+          deprecated: true
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchCancelOrdersRequestOrder'
+          description: >-
+            An array of orders to cancel, each optionally specifying a
+            subaccount
     BatchCancelOrdersResponse:
       type: object
       required:
@@ -111,6 +117,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BatchCancelOrdersIndividualResponse'
+    BatchCancelOrdersRequestOrder:
+      type: object
+      required:
+        - order_id
+      properties:
+        order_id:
+          type: string
+          description: Order ID to cancel
+        subaccount:
+          type: integer
+          minimum: 0
+          default: 0
+          description: >-
+            Optional subaccount number to use for this cancellation (0 for
+            primary, 1-32 for subaccounts)
+          x-go-type-skip-optional-pointer: true
     BatchCancelOrdersIndividualResponse:
       type: object
       required:

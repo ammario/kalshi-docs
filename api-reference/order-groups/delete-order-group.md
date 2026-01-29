@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/delete-order-group
-lastmod: 2026-01-27T23:10:38.138Z
+lastmod: 2026-01-29T00:38:21.634Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -67,6 +67,7 @@ paths:
       operationId: DeleteOrderGroup
       parameters:
         - $ref: '#/components/parameters/OrderGroupIdPath'
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
           description: Order group deleted successfully
@@ -93,6 +94,13 @@ components:
       description: Order group ID
       schema:
         type: string
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: Subaccount number (0 for primary, 1-32 for subaccounts)
+      schema:
+        type: integer
+        default: 0
   schemas:
     EmptyResponse:
       type: object

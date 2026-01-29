@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/MarketsApi
-lastmod: 2026-01-27T23:10:51.940Z
+lastmod: 2026-01-29T00:38:37.770Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

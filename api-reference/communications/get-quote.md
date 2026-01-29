@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quote
-lastmod: 2026-01-27T23:10:38.563Z
+lastmod: 2026-01-29T00:38:22.071Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -211,7 +211,13 @@ components:
         rfq_target_cost_centi_cents:
           type: integer
           format: int64
-          description: Total value requested in the RFQ in centi-cents
+          description: >-
+            DEPRECATED: Total value requested in the RFQ in centi-cents. Use
+            rfq_target_cost_dollars instead.
+          deprecated: true
+        rfq_target_cost_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Total value requested in the RFQ in dollars
         rfq_creator_order_id:
           type: string
           description: Order ID for the RFQ creator (private field)

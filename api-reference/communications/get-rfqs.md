@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfqs
-lastmod: 2026-01-27T23:10:38.505Z
+lastmod: 2026-01-29T00:38:22.014Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -181,7 +181,13 @@ components:
         target_cost_centi_cents:
           type: integer
           format: int64
-          description: Total value of the RFQ in centi-cents
+          description: >-
+            DEPRECATED: Total value of the RFQ in centi-cents. Use
+            target_cost_dollars instead.
+          deprecated: true
+        target_cost_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Total value of the RFQ in dollars
         status:
           type: string
           description: Current status of the RFQ (open, closed)
@@ -248,6 +254,12 @@ components:
         be deprecated; when both integer and fp fields are provided, they must
         match.
       example: '10.00'
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
     MveSelectedLeg:
       type: object
       properties:
@@ -270,12 +282,6 @@ components:
           description: >-
             The settlement value of the YES/LONG side of the contract in
             dollars. Only filled after determination
-    FixedPointDollars:
-      type: string
-      description: >-
-        US dollar amount as a fixed-point decimal string with exactly 4 decimal
-        places
-      example: '0.5600'
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required

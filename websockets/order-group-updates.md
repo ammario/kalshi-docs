@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/order-group-updates
-lastmod: 2026-01-27T23:10:39.903Z
+lastmod: 2026-01-29T00:38:24.185Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-01-27T23:10:38.514Z
+lastmod: 2026-01-29T00:38:22.024Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -118,7 +118,14 @@ components:
         target_cost_centi_cents:
           type: integer
           format: int64
-          description: The target cost for the RFQ in centi-cents
+          description: >-
+            DEPRECATED: The target cost for the RFQ in centi-cents. Use
+            target_cost_dollars instead.
+          deprecated: true
+          x-go-type-skip-optional-pointer: true
+        target_cost_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: The target cost for the RFQ in dollars
           x-go-type-skip-optional-pointer: true
         rest_remainder:
           type: boolean
@@ -151,6 +158,12 @@ components:
         be deprecated; when both integer and fp fields are provided, they must
         match.
       example: '10.00'
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with exactly 4 decimal
+        places
+      example: '0.5600'
     ErrorResponse:
       type: object
       properties:

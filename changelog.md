@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-27T23:10:49.953Z
+lastmod: 2026-01-29T00:38:37.045Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,70 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 28, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Subaccount support for cancel, amend, decrease order, and order group operations",
+description: "Cancel, amend, and decrease order endpoints now accept an optional subaccount parameter. Order group operations also support subaccounts."
+}}
+>
+  The following endpoints now accept an optional `subaccount` parameter:
+
+  **Order operations:**
+
+  * `DELETE /portfolio/orders/{order_id}` - Cancel order
+  * `POST /portfolio/orders/{order_id}/amend` - Amend order
+  * `POST /portfolio/orders/{order_id}/decrease` - Decrease order
+
+  **Order group operations:**
+
+  * `POST /portfolio/order_groups` - Create order group
+  * `PUT /portfolio/order_groups/{order_group_id}/limit` - Update order group limit
+  * `PUT /portfolio/order_groups/{order_group_id}/trigger` - Trigger order group
+  * `DELETE /portfolio/order_groups/{order_group_id}` - Delete order group
+</Update>
+
+<Update
+  label="Jan 28, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Per-order subaccount support in batch cancels",
+description: "Batch cancel orders now accepts per-order subaccount values while remaining backwards compatible."
+}}
+>
+  Batch cancel now supports per-order subaccounts while remaining backwards compatible with the existing `ids` payload.
+
+  **Batch cancel:**
+
+  * `POST /portfolio/orders/batched/cancel`
+  * New request shape: `orders: [{ order_id, subaccount? }]` (subaccount defaults to `0`)
+  * Legacy `ids` array is still accepted and maps to subaccount `0`
+</Update>
+
+<Update
+  label="Jan 28, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Dollar-denominated target cost for RFQs",
+description: "RFQ and Quote endpoints now support target_cost_dollars as a fixed-point dollar string"
+}}
+>
+  Added `target_cost_dollars` (and `rfq_target_cost_dollars` on quotes) as a fixed-point dollar string
+  to RFQ and Quote responses. The `CreateRFQ` endpoint now accepts `target_cost_dollars` as an alternative
+  to `target_cost_centi_cents`.
+
+  The `target_cost_centi_cents` and `rfq_target_cost_centi_cents` fields are now deprecated.
+
+  **Affected endpoints:**
+
+  * `POST /communications/rfqs`
+  * `GET /communications/rfqs`
+  * `GET /communications/rfqs/{rfq_id}`
+  * `GET /communications/quotes`
+  * `GET /communications/quotes/{quote_id}`
+</Update>
 
 <Update
   label="Jan 27, 2026"
