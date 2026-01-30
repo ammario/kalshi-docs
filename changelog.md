@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-29T00:38:37.045Z
+lastmod: 2026-01-30T01:58:47.916Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,13 +10,70 @@ lastmod: 2026-01-29T00:38:37.045Z
 
 > Stay updated with API changes and version history
 
-You can subscribe to the RSS changelog at `/changelog.rss` if you'd like to stay ahead of breaking changes.
+You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to stay ahead of breaking changes.
 
 You can reference the pending API spec under the "version" dropdown menu at the top left. When the actual API is upgraded to this new version, you will see the version marked as "Stable" in the drop-down menu and become the new default on the landing page.
 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 29, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Orders return subaccount number",
+description: "Order responses now include subaccount_number for direct users."
+}}
+>
+  Order responses now include `subaccount_number` (0 for primary, 1-32 for subaccounts) for direct users.
+
+  **Affected endpoints:**
+
+  * `GET /portfolio/orders`
+  * `GET /portfolio/orders/{order_id}`
+</Update>
+
+<Update
+  label="Jan 29, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Subaccount filter for settlements",
+description: "Get settlements endpoint now accepts an optional subaccount parameter to filter settlements by subaccount."
+}}
+>
+  The settlements endpoint now accepts an optional `subaccount` query parameter to filter settlements by subaccount.
+
+  **Affected endpoint:**
+
+  * `GET /portfolio/settlements`
+</Update>
+
+<Update
+  label="Jan 29, 2026"
+  tags={["Upcoming", "Breaking Change"]}
+  rss={{
+title: "Deprecation of non fixed-point fields",
+description: "Fields that have a _fp equivalent will no longer be returned via API as of Febuary 19th",
+}}
+>
+  See [Fixed-Point Contracts](/getting_started/fixed_point_contracts) for updated migration details.
+</Update>
+
+<Update
+  label="Jan 29, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Fee cost added to fill WebSocket messages",
+description: "Fill websocket messages now include fee_cost as a fixed-point dollars string."
+}}
+>
+  Fill WebSocket messages now include `fee_cost` as a fixed-point dollars string.
+
+  **Affected channel:**
+
+  * `fill`
+</Update>
 
 <Update
   label="Jan 28, 2026"
@@ -269,7 +326,7 @@ description: "Documented *_fp fields for WebSocket payloads in AsyncAPI"
 }}
 >
   Added `*_fp` fixed-point contract count fields in the WebSocket AsyncAPI spec and examples
-  (orderbook, ticker, trades, fills, positions, communications). See the [AsyncAPI spec](/asyncapi.yaml).
+  (orderbook, ticker, trades, fills, positions, communications). See the [WebSocket reference](/websockets).
 
   Release date: `January 22, 2026`
 </Update>
@@ -1105,7 +1162,7 @@ description: "Subpenny support in WS for RFQs and Quotes"
   For more info reference:
 
   * [Subpenny Pricing](/getting_started/subpenny_pricing)
-  * [Websocket Documentation](/api-reference/websockets/communications)
+  * [Websocket Documentation](/websockets)
 </Update>
 
 <Update

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-orders
-lastmod: 2026-01-29T00:38:21.938Z
+lastmod: 2026-01-30T01:58:33.848Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -321,6 +321,13 @@ components:
           description: >-
             If this flag is set to true, the order will be canceled if the order
             is open and trading on the exchange is paused for any reason.
+        subaccount_number:
+          type: integer
+          nullable: true
+          x-omitempty: true
+          description: >-
+            Subaccount number (0 for primary, 1-32 for subaccounts). Present for
+            direct users.
     OrderStatus:
       type: string
       enum:

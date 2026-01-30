@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/PortfolioApi
-lastmod: 2026-01-29T00:38:37.794Z
+lastmod: 2026-01-30T00:09:34.552Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -247,6 +247,7 @@ Endpoint for getting the member's settlements historical track.
 | **eventTicker** | \[**string**] | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10).                            | (optional) defaults to undefined |
 | **minTs**       | \[**number**] | Filter items after this Unix timestamp                                                                                                       | (optional) defaults to undefined |
 | **maxTs**       | \[**number**] | Filter items before this Unix timestamp                                                                                                      | (optional) defaults to undefined |
+| **subaccount**  | \[**number**] | Subaccount number (0 for primary, 1-32 for subaccounts)                                                                                      | (optional) defaults to 0         |
 
 ### Return type
 

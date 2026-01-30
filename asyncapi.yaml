@@ -1870,7 +1870,7 @@ components:
           $ref: '#/components/schemas/subscriptionId'
         msg:
           type: object
-          required: ["trade_id", "order_id", "market_ticker", "is_taker", "side", "yes_price", "yes_price_dollars", "count", "action", "ts"]
+          required: ["trade_id", "order_id", "market_ticker", "is_taker", "side", "yes_price", "yes_price_dollars", "count", "fee_cost", "action", "ts"]
           properties:
             trade_id:
               type: string
@@ -1904,6 +1904,9 @@ components:
             count_fp:
               type: string
               description: Fixed-point contracts filled (2 decimals)
+            fee_cost:
+              type: string
+              description: Exchange fee paid for this fill in fixed-point dollars
             action:
               $ref: '#/components/schemas/orderAction'
               description: Action that initiated the fill. Either "buy" or "sell"

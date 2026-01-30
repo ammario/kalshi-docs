@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/making_your_first_request
-lastmod: 2026-01-29T00:38:37.121Z
+lastmod: 2026-01-29T22:57:35.450Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,6 +14,6 @@ To make your request we recommend testing a public endpoint like [GetMarkets](ht
 
 The following resources might help you on your journey to exploring Kalshi's markets:
 
-* [**Python starter code**](https://github.com/Kalshi/kalshi-starter-code-python/tree/main) bare-bones API interactions with authentication examples (also see [API Keys](https://docs.kalshi.com/getting_started/api_keys))
-* [**Python starter code 2**](https://kalshi-public-docs.s3.amazonaws.com/KalshiAPIStarterCodeWithApiKey.zip) this Python client is not maintained, but you may still find it useful as a reference for how to call certain endpoints
+* [**Quick Start: Market Data (No SDK)**](/getting_started/quick_start_market_data)
+* [**Quick Start: Authenticated Requests (No SDK)**](/getting_started/quick_start_authenticated_requests)
 * [**Discord**](https://discord.gg/kalshi) and check out #dev and #support

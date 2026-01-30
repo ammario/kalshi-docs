@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-01-29T00:38:21.733Z
+lastmod: 2026-01-30T01:58:33.502Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -72,6 +72,7 @@ paths:
         - $ref: '#/components/parameters/EventTickerQuery'
         - $ref: '#/components/parameters/MinTsQuery'
         - $ref: '#/components/parameters/MaxTsQuery'
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
           description: Settlements retrieved successfully
@@ -143,6 +144,13 @@ components:
       schema:
         type: integer
         format: int64
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: Subaccount number (0 for primary, 1-32 for subaccounts)
+      schema:
+        type: integer
+        default: 0
   schemas:
     GetSettlementsResponse:
       type: object

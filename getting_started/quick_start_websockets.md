@@ -1,12 +1,12 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_websockets
-lastmod: 2026-01-29T00:38:37.150Z
+lastmod: 2026-01-29T22:57:35.497Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Quick Start: WebSockets
+# Quick Start: WebSockets (No SDK)
 
 > Learn how to establish and maintain a WebSocket connection to stream real-time market data
 
@@ -17,7 +17,7 @@ Kalshi's WebSocket API provides real-time updates for:
 * Order book changes
 * Trade executions
 * Market status updates
-* Fill notifications (authenticated connections only)
+* Fill notifications
 
 ## Connection URL
 
@@ -35,7 +35,12 @@ wss://demo-api.kalshi.co/trade-api/ws/v2
 
 ## Authentication
 
-WebSocket connections require authentication using the same API key signing mechanism as REST endpoints.
+WebSocket connections support both authenticated and unauthenticated usage:
+
+* **Private channels (auth required):** `orderbook_delta`, `fill`, `market_positions`, `communications`, `order_group_updates`
+* **Public channels (no auth required):** `ticker`, `ticker_v2`, `trade`, `market_lifecycle_v2`, `multivariate`
+
+You can still authenticate for public channels; the headers are only required if you subscribe to private channels.
 
 <Note>
   For detailed information about API key generation and request signing, see our [API Keys documentation](/getting_started/api_keys).
@@ -60,7 +65,7 @@ The signature for WebSocket connections follows the same pattern as REST API req
    timestamp + "GET" + "/trade-api/ws/v2"
    ```
 
-2. **Generate the signature** using your private key (see [API Keys documentation](/getting_started/api_keys#signing-requests))
+2. **Generate the signature** using your private key (see [API Keys documentation](/getting_started/api_keys))
 
 3. **Include the headers** when opening the WebSocket connection
 
@@ -147,21 +152,21 @@ async def process_message(message):
 
     if msg_type == "ticker":
         # Handle ticker update
-        market = data["data"]["market_ticker"]
-        bid = data["data"]["bid"]
-        ask = data["data"]["ask"]
-        print(f"{market}: Bid ${bid}, Ask ${ask}")
+        market = data["msg"]["market_ticker"]
+        bid = data["msg"]["yes_bid"]
+        ask = data["msg"]["yes_ask"]
+        print(f"{market}: Yes Bid {bid}¢, Yes Ask {ask}¢")
 
     elif msg_type == "orderbook_snapshot":
         # Handle full orderbook state
-        print(f"Orderbook snapshot for {data['data']['market_ticker']}")
+        print(f"Orderbook snapshot for {data['msg']['market_ticker']}")
 
-    elif msg_type == "orderbook_update":
+    elif msg_type == "orderbook_delta":
         # Handle orderbook changes
-        print(f"Orderbook update for {data['data']['market_ticker']}")
+        print(f"Orderbook update for {data['msg']['market_ticker']}")
         # Note: client_order_id field is optional - present only when you caused this change
-        if 'client_order_id' in data['data']:
-            print(f"  Your order {data['data']['client_order_id']} caused this change")
+        if 'client_order_id' in data['msg']:
+            print(f"  Your order {data['msg']['client_order_id']} caused this change")
 
     elif msg_type == "error":
         error_code = data.get("msg", {}).get("code")
@@ -219,10 +224,10 @@ async def subscribe_to_markets(self, channels, market_tickers):
 
 # Example usage:
 # Subscribe to orderbook updates
-await subscribe_to_markets(["orderbook"], ["KXFUT24-LSV", "KXHARRIS24-LSV"])
+await subscribe_to_markets(["orderbook_delta"], ["KXFUT24-LSV", "KXHARRIS24-LSV"])
 
 # Subscribe to trade feed
-await subscribe_to_markets(["trades"], ["KXFUT24-LSV"])
+await subscribe_to_markets(["trade"], ["KXFUT24-LSV"])
 ```
 
 ## Connection Lifecycle
@@ -241,7 +246,7 @@ The server sends error messages in this format:
   "id": 123,
   "type": "error",
   "msg": {
-    "code": 6,
+    "code": 2,
     "msg": "Params required"
   }
 }
@@ -249,24 +254,30 @@ The server sends error messages in this format:
 
 ### WebSocket Error Codes
 
-| Code | Error                                | Description                             |
-| ---- | ------------------------------------ | --------------------------------------- |
-| 1    | Unable to process message            | General processing error                |
-| 2    | Params required                      | Missing params object in command        |
-| 3    | Channels required                    | Missing channels array in subscribe     |
-| 4    | Subscription IDs required            | Missing sids in unsubscribe             |
-| 5    | Unknown command                      | Invalid command name                    |
-| 7    | Unknown subscription ID              | Subscription ID not found               |
-| 8    | Unknown channel name                 | Invalid channel in subscribe            |
-| 9    | Authentication required              | Private channel without auth            |
-| 10   | Channel error                        | Channel-specific error                  |
-| 11   | Invalid parameter                    | Malformed parameter value               |
-| 12   | Exactly one subscription ID required | For update\_subscription                |
-| 13   | Unsupported action                   | Invalid action for update\_subscription |
-| 14   | Market ticker required               | Missing market specification            |
-| 15   | Action required                      | Missing action in update\_subscription  |
-| 16   | Market not found                     | Invalid market ticker                   |
-| 17   | Internal error                       | Server-side processing error            |
+| Code | Error                                            | Description                                                 |
+| ---- | ------------------------------------------------ | ----------------------------------------------------------- |
+| 1    | Unable to process message                        | General processing error                                    |
+| 2    | Params required                                  | Missing params object in command                            |
+| 3    | Channels required                                | Missing channels array in subscribe                         |
+| 4    | Subscription IDs required                        | Missing sids in unsubscribe                                 |
+| 5    | Unknown command                                  | Invalid command name                                        |
+| 6    | Already subscribed                               | Duplicate subscription attempt                              |
+| 7    | Unknown subscription ID                          | Subscription ID not found                                   |
+| 8    | Unknown channel name                             | Invalid channel in subscribe                                |
+| 9    | Authentication required                          | Private channel without auth                                |
+| 10   | Channel error                                    | Channel-specific error                                      |
+| 11   | Invalid parameter                                | Malformed parameter value                                   |
+| 12   | Exactly one subscription ID is required          | For update\_subscription                                    |
+| 13   | Unsupported action                               | Invalid action for update\_subscription                     |
+| 14   | Market Ticker required                           | Missing market specification (market\_ticker or market\_id) |
+| 15   | Action required                                  | Missing action in update\_subscription                      |
+| 16   | Market not found                                 | Invalid market\_ticker or market\_id                        |
+| 17   | Internal error                                   | Server-side processing error                                |
+| 18   | Command timeout                                  | Server timed out while processing command                   |
+| 19   | shard\_factor must be > 0                        | Invalid shard\_factor                                       |
+| 20   | shard\_factor is required when shard\_key is set | Missing shard\_factor when shard\_key is set                |
+| 21   | shard\_key must be >= 0 and \< shard\_factor     | Invalid shard\_key                                          |
+| 22   | shard\_factor must be \<= 100                    | shard\_factor too large                                     |
 
 ## Best Practices
 
@@ -380,8 +391,8 @@ async def orderbook_websocket():
 
             elif msg_type == "orderbook_delta":
                 # The client_order_id field is optional - only present when you caused the change
-                if 'client_order_id' in data.get('data', {}):
-                    print(f"Orderbook update (your order {data['data']['client_order_id']}): {data}")
+                if 'client_order_id' in data.get('msg', {}):
+                    print(f"Orderbook update (your order {data['msg']['client_order_id']}): {data}")
                 else:
                     print(f"Orderbook update: {data}")
 
