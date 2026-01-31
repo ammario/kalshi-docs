@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-order-queue-position
-lastmod: 2026-01-30T01:58:33.253Z
+lastmod: 2026-01-31T01:05:55.446Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -103,6 +103,20 @@ components:
           type: integer
           format: int32
           description: The position of the order in the queue
+        queue_position_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: The number of preceding shares before the order in the queue.
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
     ErrorResponse:
       type: object
       properties:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-positions
-lastmod: 2026-01-29T22:06:47.619Z
+lastmod: 2026-01-30T23:01:58.262Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -13,6 +13,7 @@ lastmod: 2026-01-29T22:06:47.619Z
 **Requirements:**
 - Authentication required
 - Market specification optional (omit to receive all positions)
+- Filters are by `market_ticker`/`market_tickers` only; `market_id`/`market_ids` are not supported
 - Updates sent when your position changes due to trades, settlements, etc.
 
 **Monetary Values:**

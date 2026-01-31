@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-30T01:58:47.916Z
+lastmod: 2026-01-31T01:06:06.127Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,23 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Jan 30, 2026"
+  tags={["Upcoming", "New Feature"]}
+  rss={{
+title: "Order queue position returns fixed point field",
+description: "Order queue position returns fixed point field",
+}}
+>
+  Order queue position returns `queue_position_fp` representing the quantity of shares preceeeding the given order.
+  Note: the new field is 0-indexed, e.g. the first order in the queue returns `0.00`.
+
+  Affected endpoints:
+
+  * `GET /portfolio/orders/queue_positions`
+  * `GET /portfolio/orders/{order_id}/queue_position`
+</Update>
 
 <Update
   label="Jan 29, 2026"
@@ -36,16 +53,20 @@ description: "Order responses now include subaccount_number for direct users."
 
 <Update
   label="Jan 29, 2026"
-  tags={["New Feature", "Upcoming"]}
+  tags={["Change", "Upcoming"]}
   rss={{
-title: "Subaccount filter for settlements",
-description: "Get settlements endpoint now accepts an optional subaccount parameter to filter settlements by subaccount."
+title: "Subaccount filter behavior change for orders, fills, and settlements",
+description: "When subaccount is omitted, these endpoints now return results across all subaccounts."
 }}
 >
-  The settlements endpoint now accepts an optional `subaccount` query parameter to filter settlements by subaccount.
+  The `subaccount` query parameter behavior has been updated for orders, fills, and settlements.
+  When `subaccount` is omitted, results are returned across all subaccounts for the authenticated direct member.
+  When `subaccount` is provided (including `0` for primary), results are filtered to that specific subaccount.
 
-  **Affected endpoint:**
+  **Affected endpoints:**
 
+  * `GET /portfolio/orders`
+  * `GET /portfolio/fills`
   * `GET /portfolio/settlements`
 </Update>
 

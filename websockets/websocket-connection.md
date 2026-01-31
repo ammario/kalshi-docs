@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/websocket-connection
-lastmod: 2026-01-29T22:06:47.534Z
+lastmod: 2026-01-30T23:01:58.018Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,8 @@ lastmod: 2026-01-29T22:06:47.534Z
 # WebSocket Connection
 
 > Main WebSocket connection endpoint. All communication happens through this single connection.
+Authentication is required to establish the connection; include API key headers during the WebSocket handshake.
+Some channels carry only public market data, but the connection itself still requires authentication.
 Use the subscribe command to subscribe to specific data channels. For more information, see the [Getting Started](https://docs.kalshi.com/getting_started/quick_start_websockets) guide.
 
 

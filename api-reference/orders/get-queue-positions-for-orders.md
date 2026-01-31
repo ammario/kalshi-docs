@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-queue-positions-for-orders
-lastmod: 2026-01-30T01:58:33.229Z
+lastmod: 2026-01-31T01:05:55.434Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -99,10 +99,11 @@ components:
     SubaccountQuery:
       name: subaccount
       in: query
-      description: Subaccount number (0 for primary, 1-32 for subaccounts)
+      description: >-
+        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
+        returns results across all subaccounts.
       schema:
         type: integer
-        default: 0
   schemas:
     GetOrderQueuePositionsResponse:
       type: object
@@ -131,6 +132,9 @@ components:
           type: integer
           format: int32
           description: The position of the order in the queue
+        queue_position_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: The number of preceding shares before the order in the queue.
     ErrorResponse:
       type: object
       properties:
@@ -146,6 +150,17 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
+        whole contract values are permitted, but the format supports future
+        fractional precision. Integer contract count fields are legacy and will
+        be deprecated; when both integer and fp fields are provided, they must
+        match.
+      example: '10.00'
   responses:
     BadRequestError:
       description: Bad request - invalid input

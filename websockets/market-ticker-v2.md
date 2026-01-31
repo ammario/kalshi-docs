@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/websockets/market-ticker
-lastmod: 2026-01-30T23:01:58.134Z
+url: https://docs.kalshi.com/websockets/market-ticker-v2
+lastmod: 2026-01-30T23:01:58.186Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Market Ticker
+# Market Ticker V2
 
-> Market price, volume, and open interest updates.
+> Incremental ticker updates with delta fields. Messages may contain a subset of fields
+depending on which summary triggered the update.
 
 **Requirements:**
 - Market specification optional (omit to receive all markets)
 - Supports `market_ticker`/`market_tickers` and `market_id`/`market_ids`
-- Updates sent whenever any ticker field changes
 
-**Use case:** Displaying current market prices and statistics
+**Use case:** Streaming lightweight ticker deltas and combining with your cached state
 
 

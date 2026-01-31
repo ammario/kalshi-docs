@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/trigger-order-group
-lastmod: 2026-01-30T01:58:33.368Z
+lastmod: 2026-01-31T01:05:55.517Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -103,10 +103,11 @@ components:
     SubaccountQuery:
       name: subaccount
       in: query
-      description: Subaccount number (0 for primary, 1-32 for subaccounts)
+      description: >-
+        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
+        returns results across all subaccounts.
       schema:
         type: integer
-        default: 0
   schemas:
     EmptyResponse:
       type: object

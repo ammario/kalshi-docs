@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-01-30T01:58:33.549Z
+lastmod: 2026-01-31T01:05:55.636Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -145,10 +145,11 @@ components:
     SubaccountQuery:
       name: subaccount
       in: query
-      description: Subaccount number (0 for primary, 1-32 for subaccounts)
+      description: >-
+        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
+        returns results across all subaccounts.
       schema:
         type: integer
-        default: 0
   schemas:
     GetFillsResponse:
       type: object
@@ -247,6 +248,13 @@ components:
         fee_cost:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Fee cost in centi-cents
+        subaccount_number:
+          type: integer
+          nullable: true
+          x-omitempty: true
+          description: >-
+            Subaccount number (0 for primary, 1-32 for subaccounts). Present for
+            direct users.
         ts:
           type: integer
           format: int64
