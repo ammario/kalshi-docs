@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-01-31T01:06:06.127Z
+lastmod: 2026-02-02T03:10:16.125Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -33,6 +33,28 @@ description: "Order queue position returns fixed point field",
 
   * `GET /portfolio/orders/queue_positions`
   * `GET /portfolio/orders/{order_id}/queue_position`
+</Update>
+
+<Update
+  label="Feb 12, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "L1 orderbook sizes added to ticker WebSocket channel",
+description: "The ticker WebSocket channel now includes top-of-book sizes and last trade size, providing a complete L1 orderbook view."
+}}
+>
+  The `ticker` and `margin_ticker` WebSocket channels now include top-of-book sizes and last trade size:
+
+  * `yes_bid_size_fp` / `bid_size_fp` — number of contracts at the best bid price
+  * `yes_ask_size_fp` / `ask_size_fp` — number of contracts at the best ask price
+  * `last_trade_size_fp` — number of contracts in the most recent trade
+
+  Size changes (even without price changes) now trigger ticker updates. All size fields are fixed-point strings supporting fractional contracts.
+
+  **Affected channels:**
+
+  * `ticker`
+  * `margin_ticker`
 </Update>
 
 <Update
