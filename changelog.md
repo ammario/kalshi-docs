@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-02T03:10:16.125Z
+lastmod: 2026-02-04T00:20:51.996Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,24 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Feb 3, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Order group read endpoints support optional subaccount parameter",
+description: "GetOrderGroup and GetOrderGroups now accept an optional subaccount query parameter to filter by subaccount."
+}}
+>
+  `GET /portfolio/order_groups` and `GET /portfolio/order_groups/{order_group_id}` now accept an optional `subaccount` query parameter.
+  When provided, results are filtered to that specific subaccount.
+  When omitted, results are returned across all subaccounts.
+
+  **Affected endpoints:**
+
+  * `GET /portfolio/order_groups`
+  * `GET /portfolio/order_groups/{order_group_id}`
+</Update>
 
 <Update
   label="Jan 30, 2026"

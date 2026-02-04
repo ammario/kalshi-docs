@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/get-order-groups
-lastmod: 2026-01-31T01:05:55.459Z
+lastmod: 2026-02-04T00:20:36.303Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -65,6 +65,8 @@ paths:
       summary: Get Order Groups
       description: ' Retrieves all order groups for the authenticated user.'
       operationId: GetOrderGroups
+      parameters:
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
           description: Order groups retrieved successfully
@@ -83,6 +85,15 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
+  parameters:
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: >-
+        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
+        returns results across all subaccounts.
+      schema:
+        type: integer
   schemas:
     GetOrderGroupsResponse:
       type: object
