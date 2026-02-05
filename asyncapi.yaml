@@ -303,6 +303,23 @@ channels:
       orderGroupUpdates:
         $ref: '#/components/messages/orderGroupUpdates'
 
+  user_orders:
+    address: user_orders
+    title: User Orders
+    description: |
+      Real-time order created and updated notifications. Requires authentication.
+
+      **Requirements:**
+      - Authentication required
+      - Market specification optional via `market_tickers` (omit to receive all orders)
+      - Supports `update_subscription` with `add_markets` / `delete_markets` actions
+      - Updates sent when your orders are created, filled, canceled, or otherwise updated
+
+      **Use case:** Tracking your resting orders, fills, and cancellations in real time
+    messages:
+      userOrder:
+        $ref: '#/components/messages/userOrder'
+
 operations:
   sendPing:
     action: receive
@@ -652,6 +669,17 @@ operations:
     tags:
       - name: private
 
+  receiveUserOrder:
+    action: send
+    title: User Order Update
+    summary: Receive notifications for your order creates and updates
+    channel:
+      $ref: '#/channels/user_orders'
+    messages:
+      - $ref: '#/channels/user_orders/messages/userOrder'
+    tags:
+      - name: private
+
 components:
   messages:
     # Control Frame Messages (Client -> Server)
@@ -713,6 +741,14 @@ components:
             cmd: subscribe
             params:
               channels: ["fill"]
+        - name: subscribeUserOrders
+          summary: Subscribe to user_orders channel for specific markets
+          payload:
+            id: 8
+            cmd: subscribe
+            params:
+              channels: ["user_orders"]
+              market_tickers: ["FED-23DEC-T3.00", "CORIVER-2024-T1030"]
         - name: subscribeAllChannelsOneMarket
           summary: Subscribe to all public channels for one market
           payload:
@@ -1287,6 +1323,38 @@ components:
               order_group_id: "og_123"
               contracts_limit_fp: "150.00"
 
+    userOrder:
+      name: user_order
+      title: User Order Update
+      summary: Real-time order updates for authenticated user
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/userOrderPayload'
+      examples:
+        - name: userOrderCreated
+          summary: User order created notification
+          payload:
+            type: user_order
+            sid: 22
+            msg:
+              order_id: "ee587a1c-8b87-4dcf-b721-9f6f790619fa"
+              user_id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+              ticker: "FED-23DEC-T3.00"
+              status: "resting"
+              side: "yes"
+              yes_price_dollars: "0.3500"
+              fill_count_fp: "0.00"
+              remaining_count_fp: "10.00"
+              initial_count_fp: "10.00"
+              taker_fill_cost_dollars: "0.0000"
+              maker_fill_cost_dollars: "0.0000"
+              client_order_id: "my-order-1"
+              order_group_id: "og_123"
+              self_trade_prevention_type: "taker_at_cross"
+              created_time: "2024-12-01T10:00:00Z"
+              expiration_time: "2024-12-01T11:00:00Z"
+              subaccount_number: 0
+
     rfqCreated:
       name: rfq_created
       title: RFQ Created
@@ -1488,7 +1556,7 @@ components:
               description: List of channels to subscribe to
               items:
                 type: string
-                enum: ["orderbook_delta", "ticker", "ticker_v2", "trade", "fill", "market_positions", "market_lifecycle_v2", "multivariate", "communications", "order_group_updates"]
+                enum: ["orderbook_delta", "ticker", "ticker_v2", "trade", "fill", "market_positions", "market_lifecycle_v2", "multivariate", "communications", "order_group_updates", "user_orders"]
               minItems: 1
             market_ticker:
               description: 'Subscribe to a single market. Type: string. Example: "KXBTCD-25AUG0517-T114999.99" (mutually exclusive with market_tickers)'
@@ -2358,6 +2426,87 @@ components:
             contracts_limit_fp:
               type: string
               description: Updated contracts limit in fixed-point (2 decimals). Present for "created" and "limit_updated" events only.
+
+    userOrderPayload:
+      type: object
+      required: ["type", "sid", "msg"]
+      properties:
+        type:
+          type: string
+          const: "user_order"
+        sid:
+          $ref: '#/components/schemas/subscriptionId'
+        msg:
+          type: object
+          required: ["order_id", "user_id", "ticker", "status", "side", "yes_price_dollars", "fill_count_fp", "remaining_count_fp", "initial_count_fp", "taker_fill_cost_dollars", "maker_fill_cost_dollars", "client_order_id", "created_time"]
+          properties:
+            order_id:
+              type: string
+              description: Unique order identifier
+              format: uuid
+            user_id:
+              type: string
+              description: User identifier
+              format: uuid
+            ticker:
+              $ref: '#/components/schemas/marketTicker'
+              description: Market ticker for the order
+            status:
+              type: string
+              description: Current order status
+              enum: ["resting", "canceled", "executed"]
+            side:
+              $ref: '#/components/schemas/marketSide'
+              description: Side of the order ("yes" or "no")
+            yes_price_dollars:
+              type: string
+              description: Yes price in fixed-point dollars (4 decimals)
+            fill_count_fp:
+              type: string
+              description: Number of contracts filled in fixed-point (2 decimals)
+            remaining_count_fp:
+              type: string
+              description: Number of contracts remaining in fixed-point (2 decimals)
+            initial_count_fp:
+              type: string
+              description: Initial number of contracts in fixed-point (2 decimals)
+            taker_fill_cost_dollars:
+              type: string
+              description: Taker fill cost in fixed-point dollars (4 decimals)
+            maker_fill_cost_dollars:
+              type: string
+              description: Maker fill cost in fixed-point dollars (4 decimals)
+            taker_fees_dollars:
+              type: string
+              description: Taker fees in fixed-point dollars (4 decimals). Omitted when zero.
+            maker_fees_dollars:
+              type: string
+              description: Maker fees in fixed-point dollars (4 decimals). Omitted when zero.
+            client_order_id:
+              type: string
+              description: Client-provided order identifier
+            order_group_id:
+              type: string
+              description: Order group identifier, if applicable
+            self_trade_prevention_type:
+              type: string
+              description: Self-trade prevention type
+              enum: ["taker_at_cross", "maker"]
+            created_time:
+              type: string
+              description: Order creation time in RFC 3339 format
+              format: date-time
+            last_update_time:
+              type: string
+              description: Last update time in RFC 3339 format
+              format: date-time
+            expiration_time:
+              type: string
+              description: Order expiration time in RFC 3339 format
+              format: date-time
+            subaccount_number:
+              type: integer
+              description: Subaccount number (0 for primary, 1-32 for subaccounts)
 
     rfqCreatedPayload:
       type: object

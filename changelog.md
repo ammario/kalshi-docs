@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-04T00:20:51.996Z
+lastmod: 2026-02-04T22:59:46.092Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,6 +20,23 @@ This changelog is a work in progress. As always, we welcome any feedback in our 
 
 <Update
   label="Feb 3, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "User orders WebSocket channel",
+description: "New websocket channel for real-time order created and updated notifications"
+}}
+>
+  Added `user_orders` WebSocket channel to stream real-time order updates (created, updated, canceled, executed)
+  for the authenticated user. Supports optional `market_tickers` filter and dynamic
+  `update_subscription` commands to add or remove markets.
+
+  **New channel:**
+
+  * `user_orders`
+</Update>
+
+<Update
+  label="Feb 3, 2026"
   tags={["Change", "Upcoming"]}
   rss={{
 title: "Order group read endpoints support optional subaccount parameter",
@@ -34,6 +51,23 @@ description: "GetOrderGroup and GetOrderGroups now accept an optional subaccount
 
   * `GET /portfolio/order_groups`
   * `GET /portfolio/order_groups/{order_group_id}`
+</Update>
+
+<Update
+  label="Feb 2, 2026"
+  tags={["Upcoming", "New Feature"]}
+  rss={{
+title: "Subaccount support for RFQs",
+description: "CreateRFQ and GetRFQs endpoints now support subaccounts"
+}}
+>
+  The `POST /communications/rfqs` endpoint now accepts an optional `subaccount` parameter to create RFQs on behalf of a subaccount.
+  The `GET /communications/rfqs` endpoint now accepts an optional `subaccount` query parameter to filter RFQs by subaccount.
+
+  **Affected endpoints:**
+
+  * `POST /communications/rfqs`
+  * `GET /communications/rfqs`
 </Update>
 
 <Update

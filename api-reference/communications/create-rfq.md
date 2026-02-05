@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-02-04T00:20:36.912Z
+lastmod: 2026-02-04T19:40:09.022Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -138,6 +138,12 @@ components:
         subtrader_id:
           type: string
           description: The subtrader to create the RFQ for (FCM members only)
+          x-go-type-skip-optional-pointer: true
+        subaccount:
+          type: integer
+          description: >-
+            The subaccount number to create the RFQ for (direct members only; 0
+            for primary, 1-32 for subaccounts)
           x-go-type-skip-optional-pointer: true
     CreateRFQResponse:
       type: object

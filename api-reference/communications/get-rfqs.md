@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfqs
-lastmod: 2026-02-04T00:20:36.892Z
+lastmod: 2026-02-04T19:40:08.996Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -69,6 +69,7 @@ paths:
         - $ref: '#/components/parameters/CursorQuery'
         - $ref: '#/components/parameters/EventTickerQuery'
         - $ref: '#/components/parameters/MarketTickerQuery'
+        - $ref: '#/components/parameters/SubaccountQuery'
         - name: limit
           in: query
           description: >-
@@ -133,6 +134,14 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: >-
+        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
+        returns results across all subaccounts.
+      schema:
+        type: integer
   schemas:
     GetRFQsResponse:
       type: object
