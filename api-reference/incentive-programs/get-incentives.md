@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/incentive-programs/get-incentives
-lastmod: 2026-02-04T19:40:08.308Z
+lastmod: 2026-02-05T22:07:30.221Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -158,6 +158,7 @@ components:
       type: object
       required:
         - id
+        - market_id
         - market_ticker
         - incentive_type
         - start_date
@@ -168,6 +169,11 @@ components:
         id:
           type: string
           description: Unique identifier for the incentive program
+        market_id:
+          type: string
+          description: >-
+            The unique identifier of the market associated with this incentive
+            program
         market_ticker:
           type: string
           description: >-

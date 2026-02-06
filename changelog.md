@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-04T22:59:46.092Z
+lastmod: 2026-02-05T22:07:42.374Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,21 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Feb 5, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "market_id added to Incentive Programs API",
+description: "Incentive Programs API responses now include market_id field"
+}}
+>
+  The `GET /incentive_programs` endpoint now returns a `market_id` field containing the market's unique identifier for each incentive program.
+
+  **Affected endpoint:**
+
+  * `GET /incentive_programs`
+</Update>
 
 <Update
   label="Feb 3, 2026"

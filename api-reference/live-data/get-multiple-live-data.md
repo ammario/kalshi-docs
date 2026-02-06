@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-multiple-live-data
-lastmod: 2026-02-04T19:40:08.277Z
+lastmod: 2026-02-05T22:07:30.205Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

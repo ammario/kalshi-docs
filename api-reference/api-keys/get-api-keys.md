@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/get-api-keys
-lastmod: 2026-02-04T19:40:07.818Z
+lastmod: 2026-02-05T22:07:29.999Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
