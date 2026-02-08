@@ -200,7 +200,8 @@ channels:
 
       **Requirements:**
       - Authentication required
-      - Market specification ignored (always sends all your fills)
+      - Market specification optional via `market_ticker`/`market_tickers` (omit to receive all your fills)
+      - Supports `update_subscription` with `add_markets` / `delete_markets`
       - Updates sent immediately when your orders are filled
 
       **Use case:** Tracking your trading activity
