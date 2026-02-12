@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/public-trades
-lastmod: 2026-02-07T03:38:43.767Z
+lastmod: 2026-02-12T00:46:53.904Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,6 +11,7 @@ lastmod: 2026-02-07T03:38:43.767Z
 > Public trade notifications when trades occur.
 
 **Requirements:**
+- Authentication required (authenticated WebSocket connection)
 - Market specification optional (omit to receive all trades)
 - Updates sent immediately after trade execution
 

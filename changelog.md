@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-05T22:07:42.374Z
+lastmod: 2026-02-12T00:47:04.491Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,36 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Feb 11, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Websocket QoL Improvements",
+description: "Websocket QoL Improvements"
+}}
+>
+  * `ticker` channel now provides high precision `time` field.
+  * `skip_ticker_ack` subscription-level flag supports skipping market tickers sent in the OK message following a channel update.
+</Update>
+
+<Update
+  label="Feb 11, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "fractional_trading_enabled added to market response payloads",
+description: "Market payloads now include fractional_trading_enabled consistently across endpoints."
+}}
+>
+  Market response payloads now include `fractional_trading_enabled` consistently across event and market data surfaces.
+
+  **Affected endpoints:**
+
+  * `GET /events`
+  * `GET /events/{event_ticker}`
+  * `GET /markets`
+  * `GET /markets/{ticker}`
+</Update>
 
 <Update
   label="Feb 5, 2026"

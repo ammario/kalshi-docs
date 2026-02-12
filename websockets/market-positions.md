@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-positions
-lastmod: 2026-02-07T03:38:43.796Z
+lastmod: 2026-02-12T00:46:53.926Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

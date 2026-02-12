@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/multivariate-lookups
-lastmod: 2026-02-07T03:38:43.822Z
+lastmod: 2026-02-12T00:46:53.947Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,6 +11,7 @@ lastmod: 2026-02-07T03:38:43.822Z
 > Multivariate collection lookup notifications.
 
 **Requirements:**
+- Authentication required (authenticated WebSocket connection)
 - No filtering parameters; subscription is global
 
 **Use case:** Tracking multivariate market relationships

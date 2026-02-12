@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-ticker
-lastmod: 2026-02-07T03:38:43.736Z
+lastmod: 2026-02-12T00:46:53.882Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,6 +11,7 @@ lastmod: 2026-02-07T03:38:43.736Z
 > Market price, volume, and open interest updates.
 
 **Requirements:**
+- Authentication required (authenticated WebSocket connection)
 - Market specification optional (omit to receive all markets)
 - Supports `market_ticker`/`market_tickers` and `market_id`/`market_ids`
 - Updates sent whenever any ticker field changes

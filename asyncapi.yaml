@@ -24,7 +24,7 @@ info:
     | 6 | Already subscribed | Duplicate subscription attempt |
     | 7 | Unknown subscription ID | Subscription ID not found |
     | 8 | Unknown channel name | Invalid channel in subscribe |
-    | 9 | Authentication required | Private channel without auth |
+    | 9 | Authentication required | Channel requires authenticated connection |
     | 10 | Channel error | Channel-specific error |
     | 11 | Invalid parameter | Malformed parameter value |
     | 12 | Exactly one subscription ID is required | For update_subscription |
@@ -152,6 +152,7 @@ channels:
       Market price, volume, and open interest updates.
 
       **Requirements:**
+      - Authentication required (authenticated WebSocket connection)
       - Market specification optional (omit to receive all markets)
       - Supports `market_ticker`/`market_tickers` and `market_id`/`market_ids`
       - Updates sent whenever any ticker field changes
@@ -169,6 +170,7 @@ channels:
       depending on which summary triggered the update.
 
       **Requirements:**
+      - Authentication required (authenticated WebSocket connection)
       - Market specification optional (omit to receive all markets)
       - Supports `market_ticker`/`market_tickers` and `market_id`/`market_ids`
 
@@ -184,6 +186,7 @@ channels:
       Public trade notifications when trades occur.
 
       **Requirements:**
+      - Authentication required (authenticated WebSocket connection)
       - Market specification optional (omit to receive all trades)
       - Updates sent immediately after trade execution
 
@@ -237,6 +240,7 @@ channels:
       Market state changes and event creation notifications.
 
       **Requirements:**
+      - Authentication required (authenticated WebSocket connection)
       - Receives all market and event lifecycle notifications (`market_ticker` filters are not supported)
       - Event creation notifications
 
@@ -254,6 +258,7 @@ channels:
       Multivariate collection lookup notifications.
 
       **Requirements:**
+      - Authentication required (authenticated WebSocket connection)
       - No filtering parameters; subscription is global
 
       **Use case:** Tracking multivariate market relationships
@@ -751,7 +756,7 @@ components:
               channels: ["user_orders"]
               market_tickers: ["FED-23DEC-T3.00", "CORIVER-2024-T1030"]
         - name: subscribeAllChannelsOneMarket
-          summary: Subscribe to all public channels for one market
+          summary: Subscribe to market-data channels for one market
           payload:
             id: 4
             cmd: subscribe
@@ -915,7 +920,8 @@ components:
             sid: 456
             seq: 222
             type: ok
-            market_tickers: ["MARKET-1", "MARKET-2", "MARKET-3"]
+            msg:
+              market_tickers: ["MARKET-1", "MARKET-2", "MARKET-3"]
 
     listSubscriptionsResponse:
       name: list_subscriptions
@@ -957,7 +963,7 @@ components:
         | 6 | Already subscribed | Duplicate subscription attempt |
         | 7 | Unknown subscription ID | Subscription ID not found |
         | 8 | Unknown channel name | Invalid channel in subscribe |
-        | 9 | Authentication required | Private channel without auth |
+        | 9 | Authentication required | Channel requires authenticated connection |
         | 10 | Channel error | Channel-specific error |
         | 11 | Invalid parameter | Malformed parameter value |
         | 12 | Exactly one subscription ID is required | For update_subscription |
@@ -1000,7 +1006,7 @@ components:
               code: 2
               msg: "Params required"
         - name: authenticationRequired
-          summary: Private channel without authentication
+          summary: Channel requires authenticated connection
           payload:
             id: 126
             type: error
@@ -1122,6 +1128,7 @@ components:
               dollar_volume: 16948
               dollar_open_interest: 10211
               ts: 1669149841
+              time: "2022-11-22T20:44:01Z"
 
     tickerV2:
       name: ticker_v2
@@ -1582,6 +1589,10 @@ components:
               type: boolean
               description: 'If true, receive an initial snapshot for requested market tickers on the ticker channel'
               default: false
+            skip_ticker_ack:
+              type: boolean
+              description: 'If true, OK responses omit the market_tickers/market_ids lists for this subscription'
+              default: false
             shard_factor:
               type: integer
               description: 'Number of shards for communications channel fanout (optional)'
@@ -1705,16 +1716,19 @@ components:
         type:
           type: string
           const: "ok"
-        market_tickers:
-          type: array
-          description: Full list of market tickers after update
-          items:
-            $ref: '#/components/schemas/marketTicker'
-        market_ids:
-          type: array
-          description: Full list of market IDs after update
-          items:
-            $ref: '#/components/schemas/marketId'
+        msg:
+          type: object
+          properties:
+            market_tickers:
+              type: array
+              description: Full list of market tickers after update
+              items:
+                $ref: '#/components/schemas/marketTicker'
+            market_ids:
+              type: array
+              description: Full list of market IDs after update
+              items:
+                $ref: '#/components/schemas/marketId'
 
     errorResponsePayload:
       type: object
@@ -1741,7 +1755,7 @@ components:
                 - 6: Already subscribed - Duplicate subscription attempt
                 - 7: Unknown subscription ID - Subscription ID not found
                 - 8: Unknown channel name - Invalid channel in subscribe
-                - 9: Authentication required - Private channel without auth
+                - 9: Authentication required - Channel requires authenticated connection
                 - 10: Channel error - Channel-specific error
                 - 11: Invalid parameter - Malformed parameter value
                 - 12: Exactly one subscription ID is required - For update_subscription
@@ -1958,7 +1972,7 @@ components:
           $ref: '#/components/schemas/subscriptionId'
         msg:
           type: object
-          required: ["market_ticker", "market_id", "price", "yes_bid", "yes_ask", "price_dollars", "yes_bid_dollars", "yes_ask_dollars", "volume", "volume_fp", "open_interest", "open_interest_fp", "dollar_volume", "dollar_open_interest", "ts"]
+          required: ["market_ticker", "market_id", "price", "yes_bid", "yes_ask", "price_dollars", "yes_bid_dollars", "yes_ask_dollars", "volume", "volume_fp", "open_interest", "open_interest_fp", "dollar_volume", "dollar_open_interest", "ts", "time"]
           properties:
             market_ticker:
               $ref: '#/components/schemas/marketTicker'
@@ -2014,6 +2028,10 @@ components:
               type: integer
               description: Unix timestamp for when the update happened (in seconds)
               format: int64
+            time:
+              type: string
+              description: Timestamp for when the update happened (RFC3339)
+              format: date-time
 
     tickerV2Payload:
       type: object
@@ -2828,7 +2846,7 @@ components:
           description: Invalid channel in subscribe
         "9":
           const: "Authentication required"
-          description: Private channel without auth
+          description: Channel requires authenticated connection
         "10":
           const: "Channel error"
           description: Channel-specific error
@@ -2908,7 +2926,7 @@ x-error-codes:
       description: Invalid channel in subscribe
     - code: 9
       name: Authentication required
-      description: Private channel without auth
+      description: Channel requires authenticated connection
     - code: 10
       name: Channel error
       description: Channel-specific error
