@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-12T00:47:04.491Z
+lastmod: 2026-02-12T23:21:50.433Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,52 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Feb 11, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "CreateOrder no longer offers market type",
+description: "CreateOrder no longer offers market as an order type."
+}}
+>
+  `POST /portfolio/orders` removed `type`; `type=market` is no longer offered.
+</Update>
+
+<Update
+  label="Feb 12, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "MVE events excluded from market_lifecycle_v2 WebSocket channel",
+description: "The market_lifecycle_v2 WebSocket channel no longer emits messages for multivariate event (KXMVE-prefixed) tickers."
+}}
+>
+  The `market_lifecycle_v2` WebSocket channel no longer emits lifecycle messages for multivariate event (MVE) markets and events.
+  All events and markets with `KXMVE` ticker prefix are now filtered from all lifecycle message types on this channel.
+
+  **Affected channel:**
+
+  * `market_lifecycle_v2`
+</Update>
+
+<Update
+  label="Feb 12, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "ticker_v2 WebSocket channel removed",
+description: "The undocumented ticker_v2 WebSocket channel has been removed from the API."
+}}
+>
+  The `ticker_v2` WebSocket channel has been removed. This was an undocumented experimental channel
+  intended as a v2 iteration of the ticker channel but was rolled back due to user feedback.
+
+  Users should continue using the standard `ticker` channel for real-time market updates, which includes
+  top-of-book prices, sizes, and last trade information.
+
+  **Removed channel:**
+
+  * `ticker_v2`
+</Update>
 
 <Update
   label="Feb 11, 2026"

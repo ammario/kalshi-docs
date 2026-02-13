@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-create-orders
-lastmod: 2026-02-11T23:56:05.840Z
+lastmod: 2026-02-12T20:57:11.312Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -156,13 +156,6 @@ components:
             String representation of the order quantity in contracts (whole
             contracts only). Provide count or count_fp; if both provided they
             must match.
-        type:
-          type: string
-          enum:
-            - limit
-            - market
-          x-oapi-codegen-extra-tags:
-            validate: omitempty,oneof=limit market
         yes_price:
           type: integer
           minimum: 1

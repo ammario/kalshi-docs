@@ -162,23 +162,6 @@ channels:
       ticker:
         $ref: '#/components/messages/ticker'
 
-  ticker_v2:
-    address: ticker_v2
-    title: Market Ticker V2
-    description: |
-      Incremental ticker updates with delta fields. Messages may contain a subset of fields
-      depending on which summary triggered the update.
-
-      **Requirements:**
-      - Authentication required (authenticated WebSocket connection)
-      - Market specification optional (omit to receive all markets)
-      - Supports `market_ticker`/`market_tickers` and `market_id`/`market_ids`
-
-      **Use case:** Streaming lightweight ticker deltas and combining with your cached state
-    messages:
-      tickerV2:
-        $ref: '#/components/messages/tickerV2'
-
   trade:
     address: trade
     title: Public Trades
@@ -530,18 +513,6 @@ operations:
       - $ref: '#/channels/ticker/messages/ticker'
     tags:
       - name: market-data
-
-  receiveTickerV2:
-    action: send
-    title: Ticker V2 Update
-    summary: Receive incremental ticker updates with delta fields
-    channel:
-      $ref: '#/channels/ticker_v2'
-    messages:
-      - $ref: '#/channels/ticker_v2/messages/tickerV2'
-    tags:
-      - name: market-data
-
 
   receiveTrade:
     action: send
@@ -1130,32 +1101,6 @@ components:
               ts: 1669149841
               time: "2022-11-22T20:44:01Z"
 
-    tickerV2:
-      name: ticker_v2
-      title: Ticker V2 Update
-      summary: Incremental ticker updates with delta fields
-      contentType: application/json
-      payload:
-        $ref: '#/components/schemas/tickerV2Payload'
-      examples:
-        - name: tickerV2Update
-          summary: Ticker v2 update from trade summary
-          payload:
-            type: ticker_v2
-            sid: 11
-            msg:
-              market_ticker: "FED-23DEC-T3.00"
-              market_id: "9b0f6b43-5b68-4f9f-9f02-9a2d1b8ac1a1"
-              price: 48
-              price_dollars: "0.480"
-              volume_delta: 100
-              volume_delta_fp: "100.00"
-              open_interest_delta: 10
-              open_interest_delta_fp: "10.00"
-              dollar_volume_delta: 50
-              dollar_open_interest_delta: 5
-              ts: 1669149841
-
     trade:
       name: trade
       title: Trade Update
@@ -1564,7 +1509,7 @@ components:
               description: List of channels to subscribe to
               items:
                 type: string
-                enum: ["orderbook_delta", "ticker", "ticker_v2", "trade", "fill", "market_positions", "market_lifecycle_v2", "multivariate", "communications", "order_group_updates", "user_orders"]
+                enum: ["orderbook_delta", "ticker", "trade", "fill", "market_positions", "market_lifecycle_v2", "multivariate", "communications", "order_group_updates", "user_orders"]
               minItems: 1
             market_ticker:
               description: 'Subscribe to a single market. Type: string. Example: "KXBTCD-25AUG0517-T114999.99" (mutually exclusive with market_tickers)'
@@ -1578,10 +1523,10 @@ components:
             market_id:
               type: string
               format: uuid
-              description: 'Subscribe to a single market by UUID (ticker/ticker_v2 only; mutually exclusive with market_ids and market_ticker(s))'
+              description: 'Subscribe to a single market by UUID (ticker only; mutually exclusive with market_ids and market_ticker(s))'
             market_ids:
               type: array
-              description: 'Subscribe to multiple markets by UUID (ticker/ticker_v2 only; mutually exclusive with market_id and market_ticker(s))'
+              description: 'Subscribe to multiple markets by UUID (ticker only; mutually exclusive with market_id and market_ticker(s))'
               items:
                 $ref: '#/components/schemas/marketId'
               minItems: 1
@@ -1656,10 +1601,10 @@ components:
             market_id:
               type: string
               format: uuid
-              description: 'Add/remove a single market by UUID (ticker/ticker_v2 only)'
+              description: 'Add/remove a single market by UUID (ticker only)'
             market_ids:
               type: array
-              description: 'Add/remove multiple markets by UUID (ticker/ticker_v2 only)'
+              description: 'Add/remove multiple markets by UUID (ticker only)'
               items:
                 $ref: '#/components/schemas/marketId'
             send_initial_snapshot:
@@ -2032,70 +1977,6 @@ components:
               type: string
               description: Timestamp for when the update happened (RFC3339)
               format: date-time
-
-    tickerV2Payload:
-      type: object
-      required: ["type", "sid", "msg"]
-      properties:
-        type:
-          type: string
-          const: "ticker_v2"
-        sid:
-          $ref: '#/components/schemas/subscriptionId'
-        msg:
-          type: object
-          required: ["market_ticker", "market_id", "ts"]
-          properties:
-            market_ticker:
-              $ref: '#/components/schemas/marketTicker'
-            market_id:
-              $ref: '#/components/schemas/marketId'
-            yes_bid:
-              type: integer
-              description: Best bid price for yes side (optional)
-              minimum: 1
-              maximum: 99
-            yes_ask:
-              type: integer
-              description: Best ask price for yes side (optional)
-              minimum: 1
-              maximum: 99
-            price:
-              type: integer
-              description: Last traded price in cents (optional)
-              minimum: 1
-              maximum: 99
-            yes_bid_dollars:
-              type: string
-              description: Best bid price for yes side in dollars (optional)
-            yes_ask_dollars:
-              type: string
-              description: Best ask price for yes side in dollars (optional)
-            price_dollars:
-              type: string
-              description: Last traded price in dollars (optional)
-            volume_delta:
-              type: integer
-              description: Change in total volume since last update (optional)
-            volume_delta_fp:
-              type: string
-              description: Fixed-point volume delta (2 decimals) (optional)
-            open_interest_delta:
-              type: integer
-              description: Change in open interest since last update (optional)
-            open_interest_delta_fp:
-              type: string
-              description: Fixed-point open interest delta (2 decimals) (optional)
-            dollar_volume_delta:
-              type: integer
-              description: Change in dollar volume since last update (optional)
-            dollar_open_interest_delta:
-              type: integer
-              description: Change in dollar open interest since last update (optional)
-            ts:
-              type: integer
-              description: Unix timestamp for when the update happened (in seconds)
-              format: int64
 
     tradePayload:
       type: object
