@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection
-lastmod: 2026-02-12T20:57:12.107Z
+lastmod: 2026-02-15T22:56:22.950Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -231,7 +231,7 @@ components:
         updated_time:
           type: string
           format: date-time
-          description: Time of the last market stats update
+          description: Time of the last non-trading metadata update.
         open_time:
           type: string
           format: date-time

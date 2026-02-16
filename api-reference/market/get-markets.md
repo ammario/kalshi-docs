@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2026-02-12T20:57:12.186Z
+lastmod: 2026-02-15T22:56:23.037Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -172,8 +172,8 @@ components:
       name: min_updated_ts
       in: query
       description: >-
-        Return markets updated later than this Unix timestamp. Incompatible with
-        any other filters.
+        Return markets with metadata updated later than this Unix timestamp.
+        Tracks non-trading changes only. Incompatible with any other filters.
       schema:
         type: integer
         format: int64
@@ -332,7 +332,7 @@ components:
         updated_time:
           type: string
           format: date-time
-          description: Time of the last market stats update
+          description: Time of the last non-trading metadata update.
         open_time:
           type: string
           format: date-time

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2026-02-12T20:57:11.767Z
+lastmod: 2026-02-15T22:56:22.585Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -273,7 +273,7 @@ components:
         updated_time:
           type: string
           format: date-time
-          description: Time of the last market stats update
+          description: Time of the last non-trading metadata update.
         open_time:
           type: string
           format: date-time
