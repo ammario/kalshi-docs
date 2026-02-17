@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/events/get-multivariate-events
-lastmod: 2026-02-17T01:07:45.367Z
+url: https://docs.kalshi.com/api-reference/historical/get-historical-market
+lastmod: 2026-02-17T01:07:44.706Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Multivariate Events
+# Get Historical Market
 
-> Retrieve multivariate (combo) events. These are dynamically created events from multivariate event collections. Supports filtering by series and collection ticker.
+>  Endpoint for getting data about a specific market by its ticker from the historical database.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml get /events/multivariate
+````yaml openapi.yaml get /historical/markets/{ticker}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,165 +58,43 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /events/multivariate:
+  /historical/markets/{ticker}:
     get:
       tags:
-        - events
-      summary: Get Multivariate Events
-      description: >-
-        Retrieve multivariate (combo) events. These are dynamically created
-        events from multivariate event collections. Supports filtering by series
-        and collection ticker.
-      operationId: GetMultivariateEvents
+        - historical
+      summary: Get Historical Market
+      description: ' Endpoint for getting data about a specific market by its ticker from the historical database.'
+      operationId: GetHistoricalMarket
       parameters:
-        - name: limit
-          in: query
-          required: false
-          description: Number of results per page. Defaults to 100. Maximum value is 200.
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 200
-            default: 100
-        - name: cursor
-          in: query
-          required: false
-          description: >-
-            Pagination cursor. Use the cursor value returned from the previous
-            response to get the next page of results.
-          schema:
-            type: string
-        - $ref: '#/components/parameters/SeriesTickerQuery'
-        - name: collection_ticker
-          in: query
-          required: false
-          description: >-
-            Filter events by collection ticker. Returns only multivariate events
-            belonging to the specified collection. Cannot be used together with
-            series_ticker.
-          schema:
-            type: string
-        - name: with_nested_markets
-          in: query
-          required: false
-          description: >-
-            Parameter to specify if nested markets should be included in the
-            response. When true, each event will include a 'markets' field
-            containing a list of Market objects associated with that event.
-          schema:
-            type: boolean
-            default: false
+        - $ref: '#/components/parameters/TickerPath'
       responses:
         '200':
-          description: Multivariate events retrieved successfully
+          description: Historical market retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetMultivariateEventsResponse'
-        '400':
-          description: Bad request - invalid parameters
-        '401':
-          description: Unauthorized
+                $ref: '#/components/schemas/GetMarketResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
-          description: Internal server error
+          $ref: '#/components/responses/InternalServerError'
 components:
   parameters:
-    SeriesTickerQuery:
-      name: series_ticker
-      in: query
-      description: Filter by series ticker
+    TickerPath:
+      name: ticker
+      in: path
+      required: true
+      description: Market ticker
       schema:
         type: string
-        x-go-type-skip-optional-pointer: true
   schemas:
-    GetMultivariateEventsResponse:
+    GetMarketResponse:
       type: object
       required:
-        - events
-        - cursor
+        - market
       properties:
-        events:
-          type: array
-          description: Array of multivariate events matching the query criteria.
-          items:
-            $ref: '#/components/schemas/EventData'
-        cursor:
-          type: string
-          description: >-
-            Pagination cursor for the next page. Empty if there are no more
-            results.
-    EventData:
-      type: object
-      required:
-        - event_ticker
-        - series_ticker
-        - sub_title
-        - title
-        - collateral_return_type
-        - mutually_exclusive
-        - category
-        - available_on_brokers
-        - product_metadata
-      properties:
-        event_ticker:
-          type: string
-          description: Unique identifier for this event.
-        series_ticker:
-          type: string
-          description: Unique identifier for the series this event belongs to.
-        sub_title:
-          type: string
-          description: Shortened descriptive title for the event.
-        title:
-          type: string
-          description: Full title of the event.
-        collateral_return_type:
-          type: string
-          description: >-
-            Specifies how collateral is returned when markets settle (e.g.,
-            'binary' for standard yes/no markets).
-        mutually_exclusive:
-          type: boolean
-          description: >-
-            If true, only one market in this event can resolve to 'yes'. If
-            false, multiple markets can resolve to 'yes'.
-        category:
-          type: string
-          description: Event category (deprecated, use series-level category instead).
-        strike_date:
-          type: string
-          format: date-time
-          nullable: true
-          x-omitempty: true
-          description: >-
-            The specific date this event is based on. Only filled when the event
-            uses a date strike (mutually exclusive with strike_period).
-        strike_period:
-          type: string
-          nullable: true
-          x-omitempty: true
-          description: >-
-            The time period this event covers (e.g., 'week', 'month'). Only
-            filled when the event uses a period strike (mutually exclusive with
-            strike_date).
-        markets:
-          type: array
-          x-omitempty: true
-          description: >-
-            Array of markets associated with this event. Only populated when
-            'with_nested_markets=true' is specified in the request.
-          items:
-            $ref: '#/components/schemas/Market'
-          x-go-type-skip-optional-pointer: true
-        available_on_brokers:
-          type: boolean
-          description: Whether this event is available to trade on brokers.
-        product_metadata:
-          type: object
-          nullable: true
-          x-omitempty: true
-          description: Additional metadata for the event.
-          x-go-type-skip-optional-pointer: true
+        market:
+          $ref: '#/components/schemas/Market'
     Market:
       type: object
       required:
@@ -562,6 +440,21 @@ components:
             If true, the market may be removed after determination if there is
             no activity on it
           x-go-type-skip-optional-pointer: true
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional details about the error, if available
+        service:
+          type: string
+          description: The name of the service that generated the error
     FixedPointDollars:
       type: string
       description: >-
@@ -619,5 +512,18 @@ components:
         step:
           type: string
           description: Price step/tick size for this range in dollars
+  responses:
+    NotFoundError:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
 
 ````

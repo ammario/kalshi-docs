@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-02-17T01:07:45.188Z
+url: https://docs.kalshi.com/api-reference/historical/get-historical-fills
+lastmod: 2026-02-17T01:07:44.642Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Fills
+# Get Historical Fills
 
->  Endpoint for getting all fills for the member. A fill is when a trade you have is matched.
+>  Endpoint for getting all historical fills for the member. A fill is when a trade you have is matched.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml get /portfolio/fills
+````yaml openapi.yaml get /historical/fills
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,21 +58,18 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/fills:
+  /historical/fills:
     get:
       tags:
-        - portfolio
-      summary: Get Fills
-      description: ' Endpoint for getting all fills for the member. A fill is when a trade you have is matched.'
-      operationId: GetFills
+        - historical
+      summary: Get Historical Fills
+      description: ' Endpoint for getting all historical fills for the member. A fill is when a trade you have is matched.'
+      operationId: GetFillsHistorical
       parameters:
         - $ref: '#/components/parameters/TickerQuery'
-        - $ref: '#/components/parameters/OrderIdQuery'
-        - $ref: '#/components/parameters/MinTsQuery'
         - $ref: '#/components/parameters/MaxTsQuery'
         - $ref: '#/components/parameters/LimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
-        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
           description: Fills retrieved successfully
@@ -99,20 +96,6 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
-    OrderIdQuery:
-      name: order_id
-      in: query
-      description: Filter by order ID
-      schema:
-        type: string
-        x-go-type-skip-optional-pointer: true
-    MinTsQuery:
-      name: min_ts
-      in: query
-      description: Filter items after this Unix timestamp
-      schema:
-        type: integer
-        format: int64
     MaxTsQuery:
       name: max_ts
       in: query
@@ -142,14 +125,6 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
-    SubaccountQuery:
-      name: subaccount
-      in: query
-      description: >-
-        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
-        returns results across all subaccounts.
-      schema:
-        type: integer
   schemas:
     GetFillsResponse:
       type: object

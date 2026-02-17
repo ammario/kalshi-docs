@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-12T23:21:50.433Z
+lastmod: 2026-02-16T22:02:44.185Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,54 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Feb 16, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Deprecation of non fixed-point fields pushed back",
+description: "Fields that have a `_fp` equivalent will continue to be returned via API until at least February 26, 2026.",
+}}
+>
+  The deprecation timeline for non fixed-point count fields has been pushed back.
+  Fields that have a `_fp` equivalent will continue to be returned via API until at least `February 26, 2026`.
+
+  See [Fixed-Point Contracts](/getting_started/fixed_point_contracts) for updated migration details.
+</Update>
+
+<Update
+  label="Feb 19, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Historical data endpoints and cutoff timestamps",
+description: "New endpoints for retrieving historical exchange data and cutoff timestamps defining the live/historical boundary"
+}}
+>
+  Kalshi now partitions exchange data into **live** and **historical** tiers. Historical data must be accessed via the new historical API endpoints. The `GET /historical/cutoff` endpoint returns the cutoff timestamps that define this boundary.
+
+  **Cutoff timestamps and what they mean:**
+
+  * `market_settled_ts` — partitioned by **market settlement time**. Markets and their candlesticks that settled before this timestamp are only available via `GET /historical/markets` and `GET /historical/markets/{ticker}/candlesticks`.
+  * `trades_created_ts` — partitioned by **trade fill time**. Fills that occurred before this timestamp are only available via `GET /historical/fills`.
+  * `orders_updated_ts` — partitioned by **order cancellation or execution time**. Orders canceled or fully executed before this timestamp are only available via `GET /historical/orders`. **Resting (active) orders are unaffected** and always appear in `GET /portfolio/orders`.
+
+  **New endpoints:**
+
+  * `GET /historical/cutoff` — returns the market, trade, and order cutoff timestamps
+  * `GET /historical/markets` — settled markets older than the cutoff
+  * `GET /historical/markets/{ticker}` — single historical market by ticker
+  * `GET /historical/markets/{ticker}/candlesticks` — candlestick data for historical markets
+  * `GET /historical/fills` — trade fills older than the cutoff
+  * `GET /historical/orders` — canceled/executed orders older than the cutoff
+
+  **Impacted live endpoints:**
+
+  * `GET /markets`, `GET /markets/{ticker}` — settled markets older than `market_settled_ts` will not appear
+  * `GET /events` with `with_nested_markets=true` — nested markets older than `market_settled_ts` will not be included
+  * `GET /series/{series_ticker}/markets/{ticker}/candlesticks`, `GET /markets/candlesticks` — candlestick data is tied to the market; historical markets' candlesticks must be fetched from `GET /historical/markets/{ticker}/candlesticks`
+  * `GET /markets/trades`, `GET /portfolio/fills` — fills older than `trades_created_ts` will not appear
+  * `GET /portfolio/orders` — completed/canceled orders older than `orders_updated_ts` will not appear (resting orders are unaffected)
+</Update>
 
 <Update
   label="Feb 11, 2026"
@@ -240,7 +288,7 @@ description: "When subaccount is omitted, these endpoints now return results acr
   tags={["Upcoming", "Breaking Change"]}
   rss={{
 title: "Deprecation of non fixed-point fields",
-description: "Fields that have a _fp equivalent will no longer be returned via API as of Febuary 19th",
+description: "Fields that have a `_fp` equivalent will no longer be returned via API in a future release.",
 }}
 >
   See [Fixed-Point Contracts](/getting_started/fixed_point_contracts) for updated migration details.

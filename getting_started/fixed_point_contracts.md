@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fixed_point_contracts
-lastmod: 2026-01-29T21:43:22.657Z
+lastmod: 2026-02-16T22:02:44.170Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-01-29T21:43:22.657Z
 
 > Migrating to fixed-point contract quantity representation.
 
-Last Updated: January 29, 2026
+Last Updated: February 16, 2026
 
 ## Overview
 
@@ -35,8 +35,8 @@ Fixed-point count fields:
 ## Rollout stages
 
 1. REST and websocket return and accept `_fp` fields \[Completed Thursday January 29th]
-2. REST and websocket no longer return integer format count fields. \*\* Users must migrate to only reading from the equivalent `fp` representation. \*\* \[Febuary 19th, 2026]
-3. Fractional order sizes will be enabled on a market-by-market basis \[ETA: Febuary 26, 2026]
+2. REST and websocket no longer return integer format count fields. **Users must migrate to only reading from the equivalent `fp` representation.** \[No earlier than February 26, 2026]
+3. Fractional order sizes will be enabled on a market-by-market basis \[ETA: February 26, 2026]
 4. REST endpoints will no longer accept integer fields for contract counts \[TBD]
 
 Please follow along the [changelog](/changelog) for further updates.

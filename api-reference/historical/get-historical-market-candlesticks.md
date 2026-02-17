@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/market/get-market-candlesticks
-lastmod: 2026-02-17T01:07:45.296Z
+url: https://docs.kalshi.com/api-reference/historical/get-historical-market-candlesticks
+lastmod: 2026-02-17T01:07:44.622Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Market Candlesticks
+# Get Historical Market Candlesticks
 
-> Time period length of each candlestick in minutes. Valid values: 1 (1 minute), 60 (1 hour), 1440 (1 day).
+>  Endpoint for fetching historical candlestick data for markets that have been archived from the live data set. Time period length of each candlestick in minutes. Valid values: 1 (1 minute), 60 (1 hour), 1440 (1 day).
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml get /series/{series_ticker}/markets/{ticker}/candlesticks
+````yaml openapi.yaml get /historical/markets/{ticker}/candlesticks
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,22 +58,14 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /series/{series_ticker}/markets/{ticker}/candlesticks:
+  /historical/markets/{ticker}/candlesticks:
     get:
       tags:
-        - market
-      summary: Get Market Candlesticks
-      description: >-
-        Time period length of each candlestick in minutes. Valid values: 1 (1
-        minute), 60 (1 hour), 1440 (1 day).
-      operationId: GetMarketCandlesticks
+        - historical
+      summary: Get Historical Market Candlesticks
+      description: ' Endpoint for fetching historical candlestick data for markets that have been archived from the live data set. Time period length of each candlestick in minutes. Valid values: 1 (1 minute), 60 (1 hour), 1440 (1 day).'
+      operationId: GetMarketCandlesticksHistorical
       parameters:
-        - name: series_ticker
-          in: path
-          required: true
-          description: Series ticker - the series that contains the target market
-          schema:
-            type: string
         - name: ticker
           in: path
           required: true
@@ -112,30 +104,13 @@ paths:
               - 1440
           x-oapi-codegen-extra-tags:
             validate: required,oneof=1 60 1440
-        - name: include_latest_before_start
-          in: query
-          required: false
-          description: >
-            If true, prepends the latest candlestick available before the
-            start_ts. This synthetic candlestick is created by:
-
-            1. Finding the most recent real candlestick before start_ts
-
-            2. Projecting it forward to the first period boundary (calculated as
-            the next period interval after start_ts)
-
-            3. Setting all OHLC prices to null, and `previous_price` to the
-            close price from the real candlestick
-          schema:
-            type: boolean
-            default: false
       responses:
         '200':
           description: Candlesticks retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetMarketCandlesticksResponse'
+                $ref: '#/components/schemas/GetMarketCandlesticksHistoricalResponse'
         '400':
           description: Bad request
         '404':
@@ -144,7 +119,7 @@ paths:
           description: Internal server error
 components:
   schemas:
-    GetMarketCandlesticksResponse:
+    GetMarketCandlesticksHistoricalResponse:
       type: object
       required:
         - ticker
@@ -157,8 +132,8 @@ components:
           type: array
           description: Array of candlestick data points for the specified time range.
           items:
-            $ref: '#/components/schemas/MarketCandlestick'
-    MarketCandlestick:
+            $ref: '#/components/schemas/MarketCandlestickHistorical'
+    MarketCandlestickHistorical:
       type: object
       required:
         - end_period_ts
@@ -166,214 +141,117 @@ components:
         - yes_ask
         - price
         - volume
-        - volume_fp
         - open_interest
-        - open_interest_fp
       properties:
         end_period_ts:
           type: integer
           format: int64
           description: Unix timestamp for the inclusive end of the candlestick period.
         yes_bid:
-          $ref: '#/components/schemas/BidAskDistribution'
+          $ref: '#/components/schemas/BidAskDistributionHistorical'
           description: >-
             Open, high, low, close (OHLC) data for YES buy offers on the market
             during the candlestick period.
         yes_ask:
-          $ref: '#/components/schemas/BidAskDistribution'
+          $ref: '#/components/schemas/BidAskDistributionHistorical'
           description: >-
             Open, high, low, close (OHLC) data for YES sell offers on the market
             during the candlestick period.
         price:
-          $ref: '#/components/schemas/PriceDistribution'
+          $ref: '#/components/schemas/PriceDistributionHistorical'
           description: >-
             Open, high, low, close (OHLC) and more data for trade YES contract
             prices on the market during the candlestick period.
         volume:
-          type: integer
-          format: int64
-          description: >-
-            Number of contracts bought on the market during the candlestick
-            period.
-        volume_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
             String representation of the number of contracts bought on the
             market during the candlestick period.
         open_interest:
-          type: integer
-          format: int64
-          description: >-
-            Number of contracts bought on the market by end of the candlestick
-            period (end_period_ts).
-        open_interest_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
             String representation of the number of contracts bought on the
             market by end of the candlestick period (end_period_ts).
-    BidAskDistribution:
+    BidAskDistributionHistorical:
       type: object
       required:
         - open
-        - open_dollars
         - low
-        - low_dollars
         - high
-        - high_dollars
         - close
-        - close_dollars
       properties:
         open:
-          type: integer
-          description: >-
-            Offer price on the market at the start of the candlestick period (in
-            cents).
-        open_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Offer price on the market at the start of the candlestick period (in
             dollars).
         low:
-          type: integer
-          description: >-
-            Lowest offer price on the market during the candlestick period (in
-            cents).
-        low_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Lowest offer price on the market during the candlestick period (in
             dollars).
         high:
-          type: integer
-          description: >-
-            Highest offer price on the market during the candlestick period (in
-            cents).
-        high_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Highest offer price on the market during the candlestick period (in
             dollars).
         close:
-          type: integer
-          description: >-
-            Offer price on the market at the end of the candlestick period (in
-            cents).
-        close_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Offer price on the market at the end of the candlestick period (in
             dollars).
-    PriceDistribution:
+    PriceDistributionHistorical:
       type: object
+      required:
+        - open
+        - low
+        - high
+        - close
+        - mean
+        - previous
       properties:
         open:
-          type: integer
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
-            First traded YES contract price on the market during the candlestick
-            period (in cents). May be null if there was no trade during the
-            period.
-        open_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
-          description: >-
-            First traded YES contract price on the market during the candlestick
-            period (in dollars). May be null if there was no trade during the
-            period.
+            Price of the first trade during the candlestick period (in dollars).
+            Null if no trades occurred.
         low:
-          type: integer
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
-            Lowest traded YES contract price on the market during the
-            candlestick period (in cents). May be null if there was no trade
-            during the period.
-        low_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
-          description: >-
-            Lowest traded YES contract price on the market during the
-            candlestick period (in dollars). May be null if there was no trade
-            during the period.
+            Lowest trade price during the candlestick period (in dollars). Null
+            if no trades occurred.
         high:
-          type: integer
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
-            Highest traded YES contract price on the market during the
-            candlestick period (in cents). May be null if there was no trade
-            during the period.
-        high_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
-          description: >-
-            Highest traded YES contract price on the market during the
-            candlestick period (in dollars). May be null if there was no trade
-            during the period.
+            Highest trade price during the candlestick period (in dollars). Null
+            if no trades occurred.
         close:
-          type: integer
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
-            Last traded YES contract price on the market during the candlestick
-            period (in cents). May be null if there was no trade during the
-            period.
-        close_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
-          description: >-
-            Last traded YES contract price on the market during the candlestick
-            period (in dollars). May be null if there was no trade during the
-            period.
+            Price of the last trade during the candlestick period (in dollars).
+            Null if no trades occurred.
         mean:
-          type: integer
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
-            Mean traded YES contract price on the market during the candlestick
-            period (in cents). May be null if there was no trade during the
-            period.
-        mean_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
-          description: >-
-            Mean traded YES contract price on the market during the candlestick
-            period (in dollars). May be null if there was no trade during the
-            period.
+            Volume-weighted average price during the candlestick period (in
+            dollars). Null if no trades occurred.
         previous:
-          type: integer
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
           description: >-
-            Last traded YES contract price on the market before the candlestick
-            period (in cents). May be null if there were no trades before the
-            period.
-        previous_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
-          description: >-
-            Last traded YES contract price on the market before the candlestick
-            period (in dollars). May be null if there were no trades before the
-            period.
-        min:
-          type: integer
-          nullable: true
-          description: >-
-            Minimum close price of any market during the candlestick period (in
-            cents).
-        min_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
-          description: >-
-            Minimum close price of any market during the candlestick period (in
-            dollars).
-        max:
-          type: integer
-          nullable: true
-          description: >-
-            Maximum close price of any market during the candlestick period (in
-            cents).
-        max_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
-          description: >-
-            Maximum close price of any market during the candlestick period (in
-            dollars).
+            Close price from the previous candlestick period (in dollars). Null
+            if this is the first candlestick or no prior trade exists.
     FixedPointCount:
       type: string
       description: >-
