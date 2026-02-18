@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-market
-lastmod: 2026-02-17T01:07:44.706Z
+lastmod: 2026-02-17T22:50:39.151Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-02-17T01:07:44.706Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.7.0
+  version: 3.8.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -321,10 +321,13 @@ components:
         liquidity:
           type: integer
           deprecated: true
-          description: 'DEPRECATED: Use liquidity_dollars instead.'
+          description: 'DEPRECATED: This field is deprecated and will always return 0.'
         liquidity_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Value for current offers in this market in dollars
+          deprecated: true
+          description: >-
+            DEPRECATED: This field is deprecated and will always return
+            "0.0000".
         settlement_value:
           type: integer
           nullable: true

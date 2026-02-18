@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-16T22:02:44.185Z
+lastmod: 2026-02-17T03:40:34.344Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,25 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Feb 13, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Market liquidity fields deprecated",
+description: "Market liquidity fields deprecated"
+}}
+>
+  The `liquidity` and `liquidity_dollars` fields on Market responses are deprecated and will return 0.
+
+  Affected endpoints:
+
+  * `GET /markets`
+  * `GET /markets/{ticker}`
+  * `GET /events`
+  * `GET /events/{ticker}`
+  * `GET /events/multivariate`
+</Update>
 
 <Update
   label="Feb 16, 2026"
