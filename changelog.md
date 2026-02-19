@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-17T03:40:34.344Z
+lastmod: 2026-02-19T01:25:51.105Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,20 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Feb 17, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Subaccount filtering on GET /portfolio/balance",
+description: "The GET /portfolio/balance endpoint now supports an optional subaccount query parameter to retrieve balance and portfolio value for a specific subaccount."
+}}
+>
+  `GET /portfolio/balance` now accepts an optional `subaccount` query parameter, consistent with other portfolio endpoints (orders, fills, positions, settlements).
+
+  * **Omitted or `subaccount=0`**: returns balance and portfolio value for the primary account (default)
+  * **`subaccount=N`**: returns balance and portfolio value for that specific subaccount
+</Update>
 
 <Update
   label="Feb 13, 2026"

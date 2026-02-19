@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/PortfolioApi
-lastmod: 2026-01-30T22:16:33.045Z
+lastmod: 2026-02-19T01:25:52.039Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -98,7 +98,9 @@ Endpoint for getting the balance and portfolio value of a member. Both values ar
 
 ### Parameters
 
-This endpoint does not have any parameters.
+| Name           | Type          | Description                                                                                                  | Notes                            |
+| -------------- | ------------- | ------------------------------------------------------------------------------------------------------------ | -------------------------------- |
+| **subaccount** | \[**number**] | Subaccount number (0 for primary, 1-32 for subaccounts). If omitted, returns results across all subaccounts. | (optional) defaults to undefined |
 
 ### Return type
 
