@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/connection-keep-alive
-lastmod: 2026-02-12T23:21:38.517Z
+lastmod: 2026-02-19T08:36:34.211Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

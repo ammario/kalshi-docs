@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/delete-order-group
-lastmod: 2026-02-19T01:25:36.108Z
+lastmod: 2026-02-19T23:17:07.111Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

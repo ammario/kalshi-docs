@@ -2140,6 +2140,9 @@ components:
               type: integer
               description: Optional - This key will ONLY exist when the market is determined. Unix timestamp for when the market is determined (in seconds)
               format: int64
+            settlement_value:
+              type: string
+              description: Optional - This key will ONLY exist when the market is determined. Settlement value of the market in fixed-point dollars (e.g. "0.5000")
             settled_ts:
               type: integer
               description: Optional - This key will ONLY exist when the market is settled. Unix timestamp for when the market is settled (in seconds)

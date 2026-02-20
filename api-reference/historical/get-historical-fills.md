@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-fills
-lastmod: 2026-02-19T01:25:35.804Z
+lastmod: 2026-02-19T23:17:06.806Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

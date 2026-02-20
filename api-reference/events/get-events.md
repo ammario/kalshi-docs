@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2026-02-19T01:25:36.433Z
+lastmod: 2026-02-19T23:17:07.432Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,7 @@ lastmod: 2026-02-19T01:25:36.433Z
 
 > Get all events. This endpoint excludes multivariate events.
 To retrieve multivariate events, use the GET /events/multivariate endpoint.
+All events are accessible through this endpoint, even if their associated markets are older than the historical cutoff.
 
 
 
@@ -70,6 +71,9 @@ paths:
 
         To retrieve multivariate events, use the GET /events/multivariate
         endpoint.
+
+        All events are accessible through this endpoint, even if their
+        associated markets are older than the historical cutoff.
       operationId: GetEvents
       parameters:
         - name: limit
@@ -99,6 +103,8 @@ paths:
             Parameter to specify if nested markets should be included in the
             response. When true, each event will include a 'markets' field
             containing a list of Market objects associated with that event.
+            Historical markets settled before the historical cutoff will not be
+            included.
           schema:
             type: boolean
             default: false

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/accept-quote
-lastmod: 2026-02-19T01:25:36.751Z
+lastmod: 2026-02-19T23:17:07.763Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

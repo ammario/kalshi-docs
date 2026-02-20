@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-19T01:25:51.105Z
+lastmod: 2026-02-19T08:36:47.276Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,19 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Feb 19, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "settlement_value added to market_lifecycle_v2 determined events",
+description: "The market_lifecycle_v2 WebSocket channel now includes settlement_value on market determined events"
+}}
+>
+  The `market_lifecycle_v2` WebSocket channel now includes a `settlement_value` field (fixed-point dollar string) on `market_determined` events, indicating the settlement price of the market.
+
+  Expected release date: `February 26, 2026`
+</Update>
 
 <Update
   label="Feb 17, 2026"

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2026-02-19T01:25:36.458Z
+lastmod: 2026-02-19T23:17:07.463Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,10 @@ lastmod: 2026-02-19T01:25:36.458Z
 
 # Get Event
 
->  Endpoint for getting data about an event by its ticker.  An event represents a real-world occurrence that can be traded on, such as an election, sports game, or economic indicator release. Events contain one or more markets where users can place trades on different outcomes.
+> Endpoint for getting data about an event by its ticker. An event represents a real-world occurrence that can be traded on, such as an election, sports game, or economic indicator release.
+Events contain one or more markets where users can place trades on different outcomes.
+All events are accessible through this endpoint, even if their associated markets are older than the historical cutoff.
+
 
 
 
@@ -63,7 +66,16 @@ paths:
       tags:
         - events
       summary: Get Event
-      description: ' Endpoint for getting data about an event by its ticker.  An event represents a real-world occurrence that can be traded on, such as an election, sports game, or economic indicator release. Events contain one or more markets where users can place trades on different outcomes.'
+      description: >
+        Endpoint for getting data about an event by its ticker. An event
+        represents a real-world occurrence that can be traded on, such as an
+        election, sports game, or economic indicator release.
+
+        Events contain one or more markets where users can place trades on
+        different outcomes.
+
+        All events are accessible through this endpoint, even if their
+        associated markets are older than the historical cutoff.
       operationId: GetEvent
       parameters:
         - name: event_ticker
@@ -78,7 +90,8 @@ paths:
           description: >-
             If true, markets are included within the event object. If false
             (default), markets are returned as a separate top-level field in the
-            response.
+            response. Historical markets settled before the historical cutoff
+            will not be included.
           schema:
             type: boolean
             default: false
