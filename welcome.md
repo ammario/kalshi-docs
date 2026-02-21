@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/welcome
-lastmod: 2026-01-29T00:38:38.380Z
+lastmod: 2026-02-20T19:17:14.721Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -71,8 +71,8 @@ lastmod: 2026-01-29T00:38:38.380Z
       Make your first API call and start trading on Kalshi.
     </Card>
 
-    <Card title="API Keys" icon="key" href="/getting_started/api_keys">
-      Learn how to generate and manage your API credentials.
+    <Card title="OpenAPI Specification" icon="file-code" href="https://docs.kalshi.com/openapi.yaml">
+      Download the OpenAPI specification for API integration.
     </Card>
 
     <Card title="Demo Environment" icon="atom" href="/getting_started/demo_env">
@@ -113,8 +113,8 @@ lastmod: 2026-01-29T00:38:38.380Z
   <h2 className="text-white dark:text-white" style={{ fontFamily: 'Inter', fontWeight: '600', fontSize: '1.25rem', marginBottom: '1rem', textAlign: 'left' }}>Learn more about Kalshi</h2>
 
   <CardGroup cols={4}>
-    <Card title="OpenAPI Specification" icon="file-code" href="https://docs.kalshi.com/openapi.yaml">
-      Download the OpenAPI specification for API integration.
+    <Card title="API Keys" icon="key" href="/getting_started/api_keys">
+      Learn how to generate and manage your API credentials.
     </Card>
 
     <Card title="AsyncAPI Specification" icon="file-code" href="https://docs.kalshi.com/asyncapi.yaml">
