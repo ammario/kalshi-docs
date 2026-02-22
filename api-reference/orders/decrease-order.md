@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/decrease-order
-lastmod: 2026-02-19T23:17:07.033Z
+lastmod: 2026-02-21T18:47:38.472Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -315,9 +315,7 @@ components:
           type: integer
           nullable: true
           x-omitempty: true
-          description: >-
-            Subaccount number (0 for primary, 1-32 for subaccounts). Present for
-            direct users.
+          description: Subaccount number (0 for primary, 1-32 for subaccounts).
     ErrorResponse:
       type: object
       properties:
