@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-19T08:36:47.276Z
+lastmod: 2026-02-22T22:55:39.122Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,27 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Feb 21, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Legacy field deprecation on March 5 and fractional trading in demo",
+description: "Legacy integer count and price fields will be deprecated on March 5, 2026. Fractional share trading is available for testing in demo.",
+}}
+>
+  Fractional share trading is now available for testing in the demo environment on the following markets:
+
+  * `KXUCL-26-ARS`
+  * `KXUCL-26-AJA`
+
+  Legacy fields will be deprecated on `March 5, 2026`:
+
+  * Integer count fields with an `_fp` equivalent will no longer be returned. See [Fixed-Point Contracts](/getting_started/fixed_point_contracts) for migration details.
+  * Integer cents price fields (e.g., `yes_bid`, `no_ask`, `last_price`) will no longer be returned. Their `_dollars` equivalents are already available. See [Subpenny Pricing](/getting_started/subpenny_pricing) for details.
+
+  More information will be forthcoming on how fee rounding works with fractional contracts.
+</Update>
 
 <Update
   label="Feb 19, 2026"

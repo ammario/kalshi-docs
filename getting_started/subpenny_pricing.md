@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/subpenny_pricing
-lastmod: 2026-01-29T00:38:37.154Z
+lastmod: 2026-02-22T22:55:39.118Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -28,8 +28,8 @@ Subpenny pricing will allow for more accurate pricing and the tail end of market
 
 ## Status
 
-Currently the minimum tick size on all markets is still 1 cent.
-Additionally, all prices and money fields will continue to be available in the legacy integer cents format.
+Last Updated: February 21, 2026
 
-However, in the near future we will be introducing sub-penny pricing on orders. As such, we will eventually the legacy integer cents format.
-Therefore, please update systems to parse the new fixed-point dollars fields and prepare for subpenny precision.
+Legacy integer cents price fields (e.g., `yes_bid`, `no_ask`, `last_price`) will be deprecated on **March 5, 2026**. Their `_dollars` equivalents (e.g., `yes_bid_dollars`, `no_ask_dollars`, `last_price_dollars`) are already available — please migrate to them.
+
+Currently the minimum tick size on all markets is still 1 cent. Sub-penny pricing on orders will be introduced on a per-market basis in the future. Please update systems to parse the new fixed-point dollars fields and prepare for subpenny precision.
