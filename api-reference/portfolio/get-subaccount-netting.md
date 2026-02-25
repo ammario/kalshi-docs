@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/order-groups/trigger-order-group
-lastmod: 2026-02-25T02:00:18.824Z
+url: https://docs.kalshi.com/api-reference/portfolio/get-subaccount-netting
+lastmod: 2026-02-25T02:00:18.932Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Trigger Order Group
+# Get Subaccount Netting
 
->  Triggers the order group, canceling all orders in the group and preventing new orders until the group is reset.
+> Gets the netting enabled settings for all subaccounts.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml put /portfolio/order_groups/{order_group_id}/trigger
+````yaml openapi.yaml get /portfolio/subaccounts/netting
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,33 +58,22 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/order_groups/{order_group_id}/trigger:
-    put:
+  /portfolio/subaccounts/netting:
+    get:
       tags:
-        - order-groups
-      summary: Trigger Order Group
-      description: ' Triggers the order group, canceling all orders in the group and preventing new orders until the group is reset.'
-      operationId: TriggerOrderGroup
-      parameters:
-        - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQuery'
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmptyResponse'
+        - portfolio
+      summary: Get Subaccount Netting
+      description: Gets the netting enabled settings for all subaccounts.
+      operationId: GetSubaccountNetting
       responses:
         '200':
-          description: Order group triggered successfully
+          description: Netting settings retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
+                $ref: '#/components/schemas/GetSubaccountNettingResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -92,26 +81,28 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderGroupIdPath:
-      name: order_group_id
-      in: path
-      required: true
-      description: Order group ID
-      schema:
-        type: string
-    SubaccountQuery:
-      name: subaccount
-      in: query
-      description: >-
-        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
-        returns results across all subaccounts.
-      schema:
-        type: integer
   schemas:
-    EmptyResponse:
+    GetSubaccountNettingResponse:
       type: object
-      description: An empty response body
+      required:
+        - netting_configs
+      properties:
+        netting_configs:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubaccountNettingConfig'
+    SubaccountNettingConfig:
+      type: object
+      required:
+        - subaccount_number
+        - enabled
+      properties:
+        subaccount_number:
+          type: integer
+          description: Subaccount number (0 for primary, 1-32 for subaccounts).
+        enabled:
+          type: boolean
+          description: Whether netting is enabled for this subaccount.
     ErrorResponse:
       type: object
       properties:
@@ -130,12 +121,6 @@ components:
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
       content:
         application/json:
           schema:

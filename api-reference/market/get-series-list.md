@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series-list
-lastmod: 2026-02-21T18:47:39.243Z
+lastmod: 2026-02-25T02:00:19.685Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -95,6 +95,15 @@ paths:
           description: >-
             If true, includes the total volume traded across all events in each
             series.
+        - name: min_updated_ts
+          in: query
+          required: false
+          description: >-
+            Filter series with metadata updated after this Unix timestamp (in
+            seconds). Use this to efficiently poll for changes.
+          schema:
+            type: integer
+            format: int64
       responses:
         '200':
           description: Series list retrieved successfully
@@ -215,6 +224,10 @@ components:
           description: >-
             String representation of the total number of contracts traded across
             all events in this series.
+        last_updated_ts:
+          type: string
+          format: date-time
+          description: Timestamp of when this series' metadata was last updated.
     ErrorResponse:
       type: object
       properties:

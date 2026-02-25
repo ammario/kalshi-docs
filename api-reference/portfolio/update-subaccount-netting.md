@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/order-groups/trigger-order-group
-lastmod: 2026-02-25T02:00:18.824Z
+url: https://docs.kalshi.com/api-reference/portfolio/update-subaccount-netting
+lastmod: 2026-02-25T02:00:18.948Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Trigger Order Group
+# Update Subaccount Netting
 
->  Triggers the order group, canceling all orders in the group and preventing new orders until the group is reset.
+> Updates the netting enabled setting for a specific subaccount. Use 0 for the primary account, or 1-32 for numbered subaccounts.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml put /portfolio/order_groups/{order_group_id}/trigger
+````yaml openapi.yaml put /portfolio/subaccounts/netting
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,33 +58,28 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/order_groups/{order_group_id}/trigger:
+  /portfolio/subaccounts/netting:
     put:
       tags:
-        - order-groups
-      summary: Trigger Order Group
-      description: ' Triggers the order group, canceling all orders in the group and preventing new orders until the group is reset.'
-      operationId: TriggerOrderGroup
-      parameters:
-        - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQuery'
+        - portfolio
+      summary: Update Subaccount Netting
+      description: >-
+        Updates the netting enabled setting for a specific subaccount. Use 0 for
+        the primary account, or 1-32 for numbered subaccounts.
+      operationId: UpdateSubaccountNetting
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EmptyResponse'
+              $ref: '#/components/schemas/UpdateSubaccountNettingRequest'
       responses:
         '200':
-          description: Order group triggered successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
+          description: Netting setting updated successfully
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -92,26 +87,19 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderGroupIdPath:
-      name: order_group_id
-      in: path
-      required: true
-      description: Order group ID
-      schema:
-        type: string
-    SubaccountQuery:
-      name: subaccount
-      in: query
-      description: >-
-        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
-        returns results across all subaccounts.
-      schema:
-        type: integer
   schemas:
-    EmptyResponse:
+    UpdateSubaccountNettingRequest:
       type: object
-      description: An empty response body
+      required:
+        - subaccount_number
+        - enabled
+      properties:
+        subaccount_number:
+          type: integer
+          description: Subaccount number (0 for primary, 1-32 for subaccounts).
+        enabled:
+          type: boolean
+          description: Whether netting is enabled for this subaccount.
     ErrorResponse:
       type: object
       properties:
@@ -128,14 +116,14 @@ components:
           type: string
           description: The name of the service that generated the error
   responses:
-    UnauthorizedError:
-      description: Unauthorized - authentication required
+    BadRequestError:
+      description: Bad request - invalid input
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
+    UnauthorizedError:
+      description: Unauthorized - authentication required
       content:
         application/json:
           schema:

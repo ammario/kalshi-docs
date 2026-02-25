@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/milestone/get-milestones
-lastmod: 2026-02-21T18:47:39.017Z
+lastmod: 2026-02-25T02:00:19.413Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -119,6 +119,15 @@ paths:
           required: false
           schema:
             type: string
+        - name: min_updated_ts
+          in: query
+          required: false
+          description: >-
+            Filter milestones with metadata updated after this Unix timestamp
+            (in seconds). Use this to efficiently poll for changes.
+          schema:
+            type: integer
+            format: int64
       responses:
         '200':
           description: Milestones retrieved successfully

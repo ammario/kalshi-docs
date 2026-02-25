@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-02-22T22:55:39.122Z
+lastmod: 2026-02-25T02:00:34.367Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,41 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Feb 24, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Top-of-book sizes available on Market responses",
+description: "Top-of-book sizes available on Market responses"
+}}
+>
+  Market responses now include:
+
+  * `yes_bid_size_fp`: total contract size of orders to buy yes at the best bid price
+  * `yes_ask_size_fp`: total contract size of orders to sell yes at the best ask price
+
+  Affected endpoints:
+
+  * `GET /markets`
+  * `GET /markets/{ticker}`
+</Update>
+
+<Update
+  label="Feb 23, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Per-subaccount netting settings",
+description: "New endpoints to get and update netting settings per subaccount.",
+}}
+>
+  New endpoints for managing netting settings on individual subaccounts:
+
+  * **`GET /portfolio/subaccounts/netting`**: returns the netting enabled status for all subaccounts
+  * **`PUT /portfolio/subaccounts/netting`**: updates the netting enabled status for a specific subaccount (pass `subaccount_number` and `enabled` in the request body)
+
+  Use `subaccount_number=0` for the primary account or `1`–`32` for numbered subaccounts. New subaccounts inherit the primary account's netting setting at creation time.
+</Update>
 
 <Update
   label="Feb 21, 2026"
