@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/trigger-order-group
-lastmod: 2026-02-25T02:00:18.824Z
+lastmod: 2026-02-27T20:13:07.002Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -67,7 +67,7 @@ paths:
       operationId: TriggerOrderGroup
       parameters:
         - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQuery'
+        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
       requestBody:
         required: false
         content:
@@ -100,12 +100,10 @@ components:
       description: Order group ID
       schema:
         type: string
-    SubaccountQuery:
+    SubaccountQueryDefaultPrimary:
       name: subaccount
       in: query
-      description: >-
-        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
-        returns results across all subaccounts.
+      description: Subaccount number (0 for primary, 1-32 for subaccounts). Defaults to 0.
       schema:
         type: integer
   schemas:

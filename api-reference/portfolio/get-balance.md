@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2026-02-25T02:00:18.855Z
+lastmod: 2026-02-27T20:13:07.062Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -66,7 +66,7 @@ paths:
       description: ' Endpoint for getting the balance and portfolio value of a member. Both values are returned in cents.'
       operationId: GetBalance
       parameters:
-        - $ref: '#/components/parameters/SubaccountQuery'
+        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
       responses:
         '200':
           description: Balance retrieved successfully
@@ -84,12 +84,10 @@ paths:
           kalshiAccessTimestamp: []
 components:
   parameters:
-    SubaccountQuery:
+    SubaccountQueryDefaultPrimary:
       name: subaccount
       in: query
-      description: >-
-        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
-        returns results across all subaccounts.
+      description: Subaccount number (0 for primary, 1-32 for subaccounts). Defaults to 0.
       schema:
         type: integer
   schemas:

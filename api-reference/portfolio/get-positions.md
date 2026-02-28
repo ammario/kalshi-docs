@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2026-02-25T02:00:18.964Z
+lastmod: 2026-02-27T20:13:07.443Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -74,7 +74,7 @@ paths:
         - $ref: '#/components/parameters/CountFilterQuery'
         - $ref: '#/components/parameters/TickerQuery'
         - $ref: '#/components/parameters/EventTickerQuery'
-        - $ref: '#/components/parameters/SubaccountQuery'
+        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
       responses:
         '200':
           description: Positions retrieved successfully
@@ -138,12 +138,10 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
-    SubaccountQuery:
+    SubaccountQueryDefaultPrimary:
       name: subaccount
       in: query
-      description: >-
-        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
-        returns results across all subaccounts.
+      description: Subaccount number (0 for primary, 1-32 for subaccounts). Defaults to 0.
       schema:
         type: integer
   schemas:
