@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/milestone/get-milestones
-lastmod: 2026-02-27T20:13:08.339Z
+lastmod: 2026-03-01T19:44:46.241Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -203,6 +203,11 @@ components:
           type: string
           nullable: true
           description: Source id of milestone if available.
+        source_ids:
+          type: object
+          additionalProperties:
+            type: string
+          description: Source ids of milestone if available.
         details:
           type: object
           additionalProperties: true

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/structured-targets/get-structured-target
-lastmod: 2026-02-27T20:13:08.264Z
+lastmod: 2026-03-01T19:44:46.204Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -114,6 +114,11 @@ components:
           description: >-
             External source identifier for the structured target, if available
             (e.g., third-party data provider ID).
+        source_ids:
+          type: object
+          additionalProperties:
+            type: string
+          description: Source ids of structured target if available.
         last_updated_ts:
           type: string
           format: date-time
