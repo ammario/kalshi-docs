@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection
-lastmod: 2026-03-01T19:44:46.418Z
+lastmod: 2026-03-02T23:31:23.326Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-03-01T19:44:46.418Z
 
 # Create Market In Multivariate Event Collection
 
->  Endpoint for creating an individual market in a multivariate event collection. This endpoint must be hit at least once before trading or looking up a market.
+> Endpoint for creating an individual market in a multivariate event collection. This endpoint must be hit at least once before trading or looking up a market. Users are limited to 5000 creations per week.
 
 
 
@@ -63,7 +63,10 @@ paths:
       tags:
         - multivariate
       summary: Create Market In Multivariate Event Collection
-      description: ' Endpoint for creating an individual market in a multivariate event collection. This endpoint must be hit at least once before trading or looking up a market.'
+      description: >-
+        Endpoint for creating an individual market in a multivariate event
+        collection. This endpoint must be hit at least once before trading or
+        looking up a market. Users are limited to 5000 creations per week.
       operationId: CreateMarketInMultivariateEventCollection
       parameters:
         - name: collection_ticker
@@ -91,6 +94,8 @@ paths:
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -589,6 +594,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimitError:
+      description: Rate limit exceeded
       content:
         application/json:
           schema:

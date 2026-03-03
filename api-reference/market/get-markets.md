@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2026-03-01T19:44:46.495Z
+lastmod: 2026-03-02T23:31:23.411Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,6 +18,8 @@ lastmod: 2026-03-01T19:44:46.495Z
  | min_close_ts, max_close_ts | `closed`, *empty* | |
  | min_settled_ts, max_settled_ts | `settled`, *empty* | |
  | min_updated_ts | *empty* | Incompatible with all filters besides `mve_filter=exclude` |
+
+ Markets that settled before the historical cutoff are only available via `GET /historical/markets`. See [Historical Data](https://kalshi.com/docs/getting_started/historical_data) for details.
 
 
 
@@ -85,11 +87,13 @@ paths:
          | min_close_ts, max_close_ts | `closed`, *empty* | |
          | min_settled_ts, max_settled_ts | `settled`, *empty* | |
          | min_updated_ts | *empty* | Incompatible with all filters besides `mve_filter=exclude` |
+
+         Markets that settled before the historical cutoff are only available via `GET /historical/markets`. See [Historical Data](https://kalshi.com/docs/getting_started/historical_data) for details.
       operationId: GetMarkets
       parameters:
         - $ref: '#/components/parameters/MarketLimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
-        - $ref: '#/components/parameters/EventTickerQuery'
+        - $ref: '#/components/parameters/SingleEventTickerQuery'
         - $ref: '#/components/parameters/SeriesTickerQuery'
         - $ref: '#/components/parameters/MinCreatedTsQuery'
         - $ref: '#/components/parameters/MaxCreatedTsQuery'
@@ -138,12 +142,10 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
-    EventTickerQuery:
+    SingleEventTickerQuery:
       name: event_ticker
       in: query
-      description: >-
-        Event ticker of desired positions. Multiple event tickers can be
-        provided as a comma-separated list (maximum 10).
+      description: Event ticker to filter by. Only a single event ticker is supported.
       schema:
         type: string
         x-go-type-skip-optional-pointer: true

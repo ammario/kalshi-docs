@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-settlement
-lastmod: 2026-01-29T00:38:37.044Z
+lastmod: 2026-03-03T00:39:48.157Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -29,15 +29,15 @@ Provides settlement details for a specific market.
 
 ### Message Structure
 
-| Tag   | Name                          | Description                                    | Required |
-| ----- | ----------------------------- | ---------------------------------------------- | -------- |
-| 20105 | MarketSettlementReportID      | Unique settlement identifier                   | Yes      |
-| 55    | Symbol                        | Market ticker (e.g., NHIGH-23JAN02-66)         | Yes      |
-| 715   | ClearingBusinessDate          | Date settlement cleared (YYYYMMDD)             | Yes      |
-| 20106 | TotNumMarketSettlementReports | Total number of settlement reports in sequence | No       |
-| 20107 | MarketResult                  | Result of the market when determined           | Yes      |
-| 893   | LastFragment                  | Last page indicator (Y/N)                      | No       |
-| 730   | SettlementPrice               | Settlement price of market                     | Yes      |
+| Tag   | Name                          | Description                                                          | Required |
+| ----- | ----------------------------- | -------------------------------------------------------------------- | -------- |
+| 20105 | MarketSettlementReportID      | Unique settlement identifier                                         | Yes      |
+| 55    | Symbol                        | Market ticker (e.g., NHIGH-23JAN02-66)                               | Yes      |
+| 715   | ClearingBusinessDate          | Date settlement cleared (YYYYMMDD)                                   | Yes      |
+| 20106 | TotNumMarketSettlementReports | Total number of settlement reports in sequence                       | No       |
+| 20107 | MarketResult                  | Result of the market when determined                                 | Yes      |
+| 893   | LastFragment                  | Last page indicator (Y/N)                                            | No       |
+| 730   | SettlementPrice               | Settlement price of market in cents (2 decimal places, e.g. `30.60`) | Yes      |
 
 ### Repeating Groups
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/CommunicationsApi
-lastmod: 2026-02-04T19:40:30.609Z
+lastmod: 2026-03-02T23:31:39.689Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -310,7 +310,7 @@ Endpoint for getting quotes
 | Name                      | Type          | Description                                                                                                                                  | Notes                            |
 | ------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | **cursor**                | \[**string**] | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
-| **eventTicker**           | \[**string**] | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10).                            | (optional) defaults to undefined |
+| **eventTicker**           | \[**string**] | Event ticker to filter by. Only a single event ticker is supported.                                                                          | (optional) defaults to undefined |
 | **marketTicker**          | \[**string**] | Filter by market ticker                                                                                                                      | (optional) defaults to undefined |
 | **limit**                 | \[**number**] | Parameter to specify the number of results per page. Defaults to 500.                                                                        | (optional) defaults to 500       |
 | **status**                | \[**string**] | Filter quotes by status                                                                                                                      | (optional) defaults to undefined |
@@ -385,9 +385,9 @@ Endpoint for getting RFQs
 | Name              | Type          | Description                                                                                                                                  | Notes                            |
 | ----------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | **cursor**        | \[**string**] | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
-| **eventTicker**   | \[**string**] | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10).                            | (optional) defaults to undefined |
+| **eventTicker**   | \[**string**] | Event ticker to filter by. Only a single event ticker is supported.                                                                          | (optional) defaults to undefined |
 | **marketTicker**  | \[**string**] | Filter by market ticker                                                                                                                      | (optional) defaults to undefined |
-| **subaccount**    | \[**number**] | Subaccount number (0 for primary, 1-32 for subaccounts). If omitted, returns results across all subaccounts.                                 | (optional) defaults to undefined |
+| **subaccount**    | \[**number**] | Subaccount number (0 for primary, 1-32 for subaccounts). If omitted, defaults to all subaccounts.                                            | (optional) defaults to undefined |
 | **limit**         | \[**number**] | Parameter to specify the number of results per page. Defaults to 100.                                                                        | (optional) defaults to 100       |
 | **status**        | \[**string**] | Filter RFQs by status                                                                                                                        | (optional) defaults to undefined |
 | **creatorUserId** | \[**string**] | Filter RFQs by creator user ID                                                                                                               | (optional) defaults to undefined |

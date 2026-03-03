@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_authenticated_requests
-lastmod: 2026-02-26T18:07:23.426Z
+lastmod: 2026-03-02T13:51:39.574Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -112,6 +112,7 @@ Here's the minimal code to get your balance:
 import requests
 import datetime
 import base64
+from urllib.parse import urlparse
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import padding
@@ -119,10 +120,9 @@ from cryptography.hazmat.primitives.asymmetric import padding
 # Configuration
 API_KEY_ID = 'your-api-key-id-here'
 PRIVATE_KEY_PATH = 'path/to/your/kalshi-key.key'
-BASE_URL = 'https://demo-api.kalshi.co'  # or 'https://api.elections.kalshi.com' for production
+BASE_URL = 'https://demo-api.kalshi.co/trade-api/v2'  # or 'https://api.elections.kalshi.com/trade-api/v2' for production
 
 def load_private_key(key_path):
-    """Load the private key from file."""
     with open(key_path, "rb") as f:
         return serialization.load_pem_private_key(f.read(), password=None, backend=default_backend())
 
@@ -141,7 +141,9 @@ def create_signature(private_key, timestamp, method, path):
 def get(private_key, api_key_id, path, base_url=BASE_URL):
     """Make an authenticated GET request to the Kalshi API."""
     timestamp = str(int(datetime.datetime.now().timestamp() * 1000))
-    signature = create_signature(private_key, timestamp, "GET", path)
+    # Signing requires the full URL path from root (e.g. /trade-api/v2/portfolio/balance)
+    sign_path = urlparse(base_url + path).path
+    signature = create_signature(private_key, timestamp, "GET", sign_path)
 
     headers = {
         'KALSHI-ACCESS-KEY': api_key_id,
@@ -155,25 +157,25 @@ def get(private_key, api_key_id, path, base_url=BASE_URL):
 private_key = load_private_key(PRIVATE_KEY_PATH)
 
 # Get balance
-response = get(private_key, API_KEY_ID, "/trade-api/v2/portfolio/balance")
+response = get(private_key, API_KEY_ID, "/portfolio/balance")
 print(f"Your balance: ${response.json()['balance'] / 100:.2f}")
 ```
 
 ## Common Issues
 
-| Problem                           | Solution                                                         |
-| --------------------------------- | ---------------------------------------------------------------- |
-| 401 Unauthorized                  | Check your API Key ID and private key file path                  |
-| Signature error                   | Ensure timestamp is in milliseconds (not seconds)                |
-| Path not found                    | Path must start with `/trade-api/v2/`                            |
-| Signature error with query params | Strip query parameters before signing (use `path.split('?')[0]`) |
+| Problem                           | Solution                                                                                                                      |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| 401 Unauthorized                  | Check your API Key ID and private key file path                                                                               |
+| Signature error                   | Ensure timestamp is in milliseconds (not seconds)                                                                             |
+| Path not found                    | Path includes `/trade-api/v2`, pass only the endpoint path (e.g. `/portfolio/balance`, not `/trade-api/v2/portfolio/balance`) |
+| Signature error with query params | Strip query parameters before signing (use `path.split('?')[0]`)                                                              |
 
 ## Next Steps
 
-Now you can make authenticated requests! Try these endpoints:
+Now you can make authenticated requests! Try these endpoints (relative to `BASE_URL`):
 
-* `/trade-api/v2/portfolio/positions` - Get your positions
-* `/trade-api/v2/portfolio/orders` - View your orders
-* `/trade-api/v2/markets` - Browse available markets
+* `/portfolio/positions` - Get your positions
+* `/portfolio/orders` - View your orders
+* `/markets` - Browse available markets
 
 For more details, see the [Complete Order Lifecycle](/getting_started/quick_start_create_order) guide or explore the [API Reference](/api-reference).

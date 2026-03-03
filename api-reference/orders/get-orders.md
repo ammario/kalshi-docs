@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-orders
-lastmod: 2026-03-01T19:44:45.583Z
+lastmod: 2026-03-02T23:31:21.920Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,8 @@ lastmod: 2026-03-01T19:44:45.583Z
 # Get Orders
 
 > Restricts the response to orders that have a certain status: resting, canceled, or executed.
+Orders that have been canceled or fully executed before the historical cutoff are only available via `GET /historical/orders`. Resting orders will always be available through this endpoint. See [Historical Data](https://kalshi.com/docs/getting_started/historical_data) for details.
+
 
 
 
@@ -63,13 +65,19 @@ paths:
       tags:
         - orders
       summary: Get Orders
-      description: >-
+      description: >
         Restricts the response to orders that have a certain status: resting,
         canceled, or executed.
+
+        Orders that have been canceled or fully executed before the historical
+        cutoff are only available via `GET /historical/orders`. Resting orders
+        will always be available through this endpoint. See [Historical
+        Data](https://kalshi.com/docs/getting_started/historical_data) for
+        details.
       operationId: GetOrders
       parameters:
         - $ref: '#/components/parameters/TickerQuery'
-        - $ref: '#/components/parameters/EventTickerQuery'
+        - $ref: '#/components/parameters/MultipleEventTickerQuery'
         - $ref: '#/components/parameters/MinTsQuery'
         - $ref: '#/components/parameters/MaxTsQuery'
         - $ref: '#/components/parameters/StatusQuery'
@@ -102,12 +110,10 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
-    EventTickerQuery:
+    MultipleEventTickerQuery:
       name: event_ticker
       in: query
-      description: >-
-        Event ticker of desired positions. Multiple event tickers can be
-        provided as a comma-separated list (maximum 10).
+      description: Event tickers to filter by, as a comma-separated list (maximum 10).
       schema:
         type: string
         x-go-type-skip-optional-pointer: true

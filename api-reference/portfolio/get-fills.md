@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-03-01T19:44:45.927Z
+lastmod: 2026-03-02T23:31:22.670Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,9 @@ lastmod: 2026-03-01T19:44:45.927Z
 
 # Get Fills
 
->  Endpoint for getting all fills for the member. A fill is when a trade you have is matched.
+> Endpoint for getting all fills for the member. A fill is when a trade you have is matched.
+Fills that occurred before the historical cutoff are only available via `GET /historical/fills`. See [Historical Data](https://kalshi.com/docs/getting_started/historical_data) for details.
+
 
 
 
@@ -63,7 +65,14 @@ paths:
       tags:
         - portfolio
       summary: Get Fills
-      description: ' Endpoint for getting all fills for the member. A fill is when a trade you have is matched.'
+      description: >
+        Endpoint for getting all fills for the member. A fill is when a trade
+        you have is matched.
+
+        Fills that occurred before the historical cutoff are only available via
+        `GET /historical/fills`. See [Historical
+        Data](https://kalshi.com/docs/getting_started/historical_data) for
+        details.
       operationId: GetFills
       parameters:
         - $ref: '#/components/parameters/TickerQuery'
