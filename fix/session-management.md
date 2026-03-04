@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/session-management
-lastmod: 2026-01-29T00:38:37.116Z
+lastmod: 2026-03-03T20:25:48.582Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -61,17 +61,18 @@ The initiator must send a Logon message to establish a session. The acceptor wil
 
 ### Optional Fields
 
-| Tag   | Name                     | Description                                                                                          | Default |
-| ----- | ------------------------ | ---------------------------------------------------------------------------------------------------- | ------- |
-| 141   | ResetSeqNumFlag          | Reset sequence numbers on logon. **Must be Y for KalshiNR, KalshiDC, KalshiPT.**                     | N       |
-| 108   | HeartbeatInt             | Heartbeat \<0> interval (seconds)                                                                    | 30      |
-| 8013  | CancelOrdersOnDisconnect | Cancel orders on any disconnection (including graceful logout)                                       | N       |
-| 20126 | ListenerSession          | Listen-only session (KalshiNR/RT only, requires SkipPendingExecReports=Y)                            | N       |
-| 20127 | ReceiveSettlementReports | Receive settlement reports (KalshiRT only)                                                           | N       |
-| 20200 | MessageRetentionPeriod   | How long session messages will be store for retransmission (KalshiRT and KalshiRFQ only), max of 72. | 24      |
-| 21011 | SkipPendingExecReports   | Skip PENDING\_\{NEW\|REPLACE\|CANCEL} execution reports                                              | N       |
-| 21007 | EnableIocCancelReport    | Partially filled IOC orders produce a cancel report                                                  | N       |
-| 21008 | PreserveOriginalOrderQty | OrderQty tag 38 always reflects original order quantity across all states                            | N       |
+| Tag   | Name                     | Description                                                                                                                 | Default |
+| ----- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------- | ------- |
+| 141   | ResetSeqNumFlag          | Reset sequence numbers on logon. **Must be Y for KalshiNR, KalshiDC, KalshiPT.**                                            | N       |
+| 108   | HeartbeatInt             | Heartbeat \<0> interval (seconds)                                                                                           | 30      |
+| 8013  | CancelOrdersOnDisconnect | Cancel orders on any disconnection (including graceful logout)                                                              | N       |
+| 20126 | ListenerSession          | Listen-only session (KalshiNR/RT only, requires SkipPendingExecReports=Y)                                                   | N       |
+| 20127 | ReceiveSettlementReports | Receive settlement reports (KalshiRT only)                                                                                  | N       |
+| 20200 | MessageRetentionPeriod   | How long session messages will be store for retransmission (KalshiRT and KalshiRFQ only), max of 72.                        | 24      |
+| 21011 | SkipPendingExecReports   | Skip PENDING\_\{NEW\|REPLACE\|CANCEL} execution reports                                                                     | N       |
+| 21012 | UseExpiredOrdStatus      | Emit Expired\<C> (150/39) for expiry-style system cancellations (CloseCancel and OrderExpiryCancel) instead of Canceled\<4> | N       |
+| 21007 | EnableIocCancelReport    | Partially filled IOC orders produce a cancel report                                                                         | N       |
+| 21008 | PreserveOriginalOrderQty | OrderQty tag 38 always reflects original order quantity across all states                                                   | N       |
 
 ### Signature Generation
 

@@ -21,3 +21,612 @@ lastmod: 2026-02-19T08:36:34.225Z
 **Use case:** Building and maintaining a real-time orderbook
 
 
+
+
+## AsyncAPI
+
+````yaml asyncapi.yaml orderbook_delta
+id: orderbook_delta
+title: Orderbook Updates
+description: >
+  Real-time orderbook price level changes. Provides incremental updates to
+  maintain a live orderbook.
+
+
+  **Requirements:**
+
+  - Authentication required
+
+  - Market specification required:
+    - Use `market_ticker` (string) for a single market
+    - Use `market_tickers` (array of strings) for multiple markets
+    - `market_id`/`market_ids` are not supported for this channel
+  - Sends `orderbook_snapshot` first, then incremental `orderbook_delta` updates
+
+
+  **Use case:** Building and maintaining a real-time orderbook
+servers:
+  - id: production
+    protocol: wss
+    host: api.elections.kalshi.com
+    bindings: []
+    variables: []
+address: orderbook_delta
+parameters: []
+bindings: []
+operations:
+  - &ref_5
+    id: receiveOrderbookSnapshot
+    title: Orderbook Snapshot
+    description: Receive complete orderbook state
+    type: send
+    messages:
+      - &ref_7
+        id: orderbookSnapshot
+        contentType: application/json
+        payload:
+          - name: Orderbook Snapshot
+            description: Complete view of the order book's aggregated price levels
+            type: object
+            properties:
+              - name: type
+                type: string
+                description: orderbook_snapshot
+                required: true
+              - name: sid
+                type: integer
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
+                required: true
+              - name: msg
+                type: object
+                required: true
+                properties:
+                  - name: market_ticker
+                    type: string
+                    description: Unique market identifier
+                    required: false
+                  - name: market_id
+                    type: string
+                    description: Unique market UUID
+                    required: false
+                  - name: 'yes'
+                    type: array
+                    description: >
+                      Optional - This key will not exist if there are no Yes
+                      offers in the orderbook.
+
+                      In case it exists there will be many price levels, so for
+                      compactness, every element in the list is
+
+                      an array with two integers, not an object.
+
+                      Format: [price_in_cents, number_of_resting_contracts]
+                    required: false
+                  - name: yes_dollars
+                    type: array
+                    description: >
+                      Optional - This key will not exist if there are no Yes
+                      offers in the orderbook.
+
+                      Same as "yes" but with price in dollars.
+
+                      Format: [price_in_dollars, number_of_resting_contracts]
+                    required: false
+                  - name: yes_dollars_fp
+                    type: array
+                    description: >
+                      Optional - This key will not exist if there are no Yes
+                      offers in the orderbook.
+
+                      Same as "yes_dollars" but with contract counts in
+                      fixed-point (2 decimals).
+
+                      Format: [price_in_dollars, contract_count_fp]
+                    required: false
+                  - name: 'no'
+                    type: array
+                    description: >
+                      Optional - Same format as "yes" but for the NO side of the
+                      orderbook.
+
+                      This key will not exist if there are no No offers in the
+                      orderbook.
+
+                      Format: [price_in_cents, number_of_resting_contracts]
+                    required: false
+                  - name: no_dollars
+                    type: array
+                    description: >
+                      Optional - Same format as "yes_dollars" but for the NO
+                      side of the orderbook.
+
+                      This key will not exist if there are no No offers in the
+                      orderbook.
+
+                      Format: [price_in_dollars, number_of_resting_contracts]
+                    required: false
+                  - name: no_dollars_fp
+                    type: array
+                    description: >
+                      Optional - Same format as "yes_dollars_fp" but for the NO
+                      side of the orderbook.
+
+                      This key will not exist if there are no No offers in the
+                      orderbook.
+
+                      Format: [price_in_dollars, contract_count_fp]
+                    required: false
+        headers: []
+        jsonPayloadSchema:
+          type: object
+          required:
+            - type
+            - sid
+            - seq
+            - msg
+          properties:
+            type:
+              type: string
+              const: orderbook_snapshot
+              x-parser-schema-id: <anonymous-schema-48>
+            sid: &ref_0
+              type: integer
+              description: >-
+                Server-generated subscription identifier (sid) used to identify
+                the channel
+              minimum: 1
+              x-parser-schema-id: subscriptionId
+            seq: &ref_1
+              type: integer
+              description: >-
+                Sequential number that should be checked if you want to
+                guarantee you received all the messages. Used for snapshot/delta
+                consistency
+              minimum: 1
+              x-parser-schema-id: sequenceNumber
+            msg:
+              type: object
+              required:
+                - market_ticker
+                - market_id
+              properties:
+                market_ticker: &ref_2
+                  type: string
+                  description: Unique market identifier
+                  pattern: ^[A-Z0-9-]+$
+                  examples:
+                    - FED-23DEC-T3.00
+                    - HIGHNY-22DEC23-B53.5
+                  x-parser-schema-id: marketTicker
+                market_id: &ref_3
+                  type: string
+                  description: Unique market UUID
+                  format: uuid
+                  x-parser-schema-id: marketId
+                'yes':
+                  type: array
+                  description: >
+                    Optional - This key will not exist if there are no Yes
+                    offers in the orderbook.
+
+                    In case it exists there will be many price levels, so for
+                    compactness, every element in the list is
+
+                    an array with two integers, not an object.
+
+                    Format: [price_in_cents, number_of_resting_contracts]
+                  items:
+                    type: array
+                    items:
+                      type: integer
+                      x-parser-schema-id: <anonymous-schema-52>
+                    minItems: 2
+                    maxItems: 2
+                    x-parser-schema-id: <anonymous-schema-51>
+                  x-parser-schema-id: <anonymous-schema-50>
+                yes_dollars:
+                  type: array
+                  description: >
+                    Optional - This key will not exist if there are no Yes
+                    offers in the orderbook.
+
+                    Same as "yes" but with price in dollars.
+
+                    Format: [price_in_dollars, number_of_resting_contracts]
+                  items:
+                    type: array
+                    items:
+                      oneOf:
+                        - type: string
+                          x-parser-schema-id: <anonymous-schema-56>
+                        - type: integer
+                          x-parser-schema-id: <anonymous-schema-57>
+                      x-parser-schema-id: <anonymous-schema-55>
+                    minItems: 2
+                    maxItems: 2
+                    x-parser-schema-id: <anonymous-schema-54>
+                  x-parser-schema-id: <anonymous-schema-53>
+                yes_dollars_fp:
+                  type: array
+                  description: >
+                    Optional - This key will not exist if there are no Yes
+                    offers in the orderbook.
+
+                    Same as "yes_dollars" but with contract counts in
+                    fixed-point (2 decimals).
+
+                    Format: [price_in_dollars, contract_count_fp]
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      x-parser-schema-id: <anonymous-schema-60>
+                    minItems: 2
+                    maxItems: 2
+                    x-parser-schema-id: <anonymous-schema-59>
+                  x-parser-schema-id: <anonymous-schema-58>
+                'no':
+                  type: array
+                  description: >
+                    Optional - Same format as "yes" but for the NO side of the
+                    orderbook.
+
+                    This key will not exist if there are no No offers in the
+                    orderbook.
+
+                    Format: [price_in_cents, number_of_resting_contracts]
+                  items:
+                    type: array
+                    items:
+                      type: integer
+                      x-parser-schema-id: <anonymous-schema-63>
+                    minItems: 2
+                    maxItems: 2
+                    x-parser-schema-id: <anonymous-schema-62>
+                  x-parser-schema-id: <anonymous-schema-61>
+                no_dollars:
+                  type: array
+                  description: >
+                    Optional - Same format as "yes_dollars" but for the NO side
+                    of the orderbook.
+
+                    This key will not exist if there are no No offers in the
+                    orderbook.
+
+                    Format: [price_in_dollars, number_of_resting_contracts]
+                  items:
+                    type: array
+                    items:
+                      oneOf:
+                        - type: string
+                          x-parser-schema-id: <anonymous-schema-67>
+                        - type: integer
+                          x-parser-schema-id: <anonymous-schema-68>
+                      x-parser-schema-id: <anonymous-schema-66>
+                    minItems: 2
+                    maxItems: 2
+                    x-parser-schema-id: <anonymous-schema-65>
+                  x-parser-schema-id: <anonymous-schema-64>
+                no_dollars_fp:
+                  type: array
+                  description: >
+                    Optional - Same format as "yes_dollars_fp" but for the NO
+                    side of the orderbook.
+
+                    This key will not exist if there are no No offers in the
+                    orderbook.
+
+                    Format: [price_in_dollars, contract_count_fp]
+                  items:
+                    type: array
+                    items:
+                      type: string
+                      x-parser-schema-id: <anonymous-schema-71>
+                    minItems: 2
+                    maxItems: 2
+                    x-parser-schema-id: <anonymous-schema-70>
+                  x-parser-schema-id: <anonymous-schema-69>
+              x-parser-schema-id: <anonymous-schema-49>
+          x-parser-schema-id: orderbookSnapshotPayload
+        title: Orderbook Snapshot
+        description: Complete view of the order book's aggregated price levels
+        example: |-
+          {
+            "type": "orderbook_snapshot",
+            "sid": 2,
+            "seq": 2,
+            "msg": {
+              "market_ticker": "FED-23DEC-T3.00",
+              "market_id": "9b0f6b43-5b68-4f9f-9f02-9a2d1b8ac1a1",
+              "yes": [
+                [
+                  8,
+                  300
+                ],
+                [
+                  22,
+                  333
+                ]
+              ],
+              "yes_dollars": [
+                [
+                  "0.080",
+                  300
+                ],
+                [
+                  "0.220",
+                  333
+                ]
+              ],
+              "yes_dollars_fp": [
+                [
+                  "0.0800",
+                  "300.00"
+                ],
+                [
+                  "0.2200",
+                  "333.00"
+                ]
+              ],
+              "no": [
+                [
+                  54,
+                  20
+                ],
+                [
+                  56,
+                  146
+                ]
+              ],
+              "no_dollars": [
+                [
+                  "0.540",
+                  20
+                ],
+                [
+                  "0.560",
+                  146
+                ]
+              ],
+              "no_dollars_fp": [
+                [
+                  "0.5400",
+                  "20.00"
+                ],
+                [
+                  "0.5600",
+                  "146.00"
+                ]
+              ]
+            }
+          }
+        bindings: []
+        extensions:
+          - id: x-parser-unique-object-id
+            value: orderbookSnapshot
+    bindings: []
+    extensions: &ref_4
+      - id: x-parser-unique-object-id
+        value: orderbook_delta
+  - &ref_6
+    id: receiveOrderbookDelta
+    title: Orderbook Update
+    description: Receive incremental orderbook changes
+    type: send
+    messages:
+      - &ref_8
+        id: orderbookDelta
+        contentType: application/json
+        payload:
+          - name: Orderbook Delta
+            description: Update to be applied to the current order book view
+            type: object
+            properties:
+              - name: type
+                type: string
+                description: orderbook_delta
+                required: true
+              - name: sid
+                type: integer
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
+                required: true
+              - name: msg
+                type: object
+                required: true
+                properties:
+                  - name: market_ticker
+                    type: string
+                    description: Unique market identifier
+                    required: false
+                  - name: market_id
+                    type: string
+                    description: Unique market UUID
+                    required: false
+                  - name: price
+                    type: integer
+                    description: Price level in cents (1-99)
+                    required: false
+                  - name: price_dollars
+                    type: string
+                    description: Price level in dollars
+                    required: false
+                  - name: delta
+                    type: integer
+                    description: Change in contracts (positive=increase, negative=decrease)
+                    required: false
+                  - name: delta_fp
+                    type: string
+                    description: Fixed-point contract delta (2 decimals)
+                    required: false
+                  - name: side
+                    type: string
+                    description: Market side
+                    required: false
+                  - name: client_order_id
+                    type: string
+                    description: >
+                      Optional - Present only when you caused this orderbook
+                      change.
+
+                      Contains the client_order_id of your order that triggered
+                      this delta.
+                    required: false
+                  - name: subaccount
+                    type: integer
+                    description: >
+                      Optional - Present only when you caused this orderbook
+                      change and are using subaccounts.
+
+                      Contains the subaccount number of your order that
+                      triggered this delta.
+                    required: false
+                  - name: ts
+                    type: string
+                    description: >-
+                      Optional - Timestamp for when the orderbook change was
+                      recorded (RFC3339)
+                    required: false
+        headers: []
+        jsonPayloadSchema:
+          type: object
+          required:
+            - type
+            - sid
+            - seq
+            - msg
+          properties:
+            type:
+              type: string
+              const: orderbook_delta
+              x-parser-schema-id: <anonymous-schema-72>
+            sid: *ref_0
+            seq: *ref_1
+            msg:
+              type: object
+              required:
+                - market_ticker
+                - market_id
+                - price
+                - price_dollars
+                - delta
+                - delta_fp
+                - side
+              properties:
+                market_ticker: *ref_2
+                market_id: *ref_3
+                price:
+                  type: integer
+                  description: Price level in cents (1-99)
+                  minimum: 1
+                  maximum: 99
+                  x-parser-schema-id: <anonymous-schema-74>
+                price_dollars:
+                  type: string
+                  description: Price level in dollars
+                  x-parser-schema-id: <anonymous-schema-75>
+                delta:
+                  type: integer
+                  description: Change in contracts (positive=increase, negative=decrease)
+                  x-parser-schema-id: <anonymous-schema-76>
+                delta_fp:
+                  type: string
+                  description: Fixed-point contract delta (2 decimals)
+                  x-parser-schema-id: <anonymous-schema-77>
+                side:
+                  type: string
+                  description: Market side
+                  enum:
+                    - 'yes'
+                    - 'no'
+                  x-parser-schema-id: marketSide
+                client_order_id:
+                  type: string
+                  description: >
+                    Optional - Present only when you caused this orderbook
+                    change.
+
+                    Contains the client_order_id of your order that triggered
+                    this delta.
+                  x-parser-schema-id: <anonymous-schema-78>
+                subaccount:
+                  type: integer
+                  description: >
+                    Optional - Present only when you caused this orderbook
+                    change and are using subaccounts.
+
+                    Contains the subaccount number of your order that triggered
+                    this delta.
+                  x-parser-schema-id: <anonymous-schema-79>
+                ts:
+                  type: string
+                  description: >-
+                    Optional - Timestamp for when the orderbook change was
+                    recorded (RFC3339)
+                  format: date-time
+                  x-parser-schema-id: <anonymous-schema-80>
+              x-parser-schema-id: <anonymous-schema-73>
+          x-parser-schema-id: orderbookDeltaPayload
+        title: Orderbook Delta
+        description: Update to be applied to the current order book view
+        example: |-
+          {
+            "type": "orderbook_delta",
+            "sid": 2,
+            "seq": 3,
+            "msg": {
+              "market_ticker": "FED-23DEC-T3.00",
+              "market_id": "9b0f6b43-5b68-4f9f-9f02-9a2d1b8ac1a1",
+              "price": 96,
+              "price_dollars": "0.960",
+              "delta": -54,
+              "delta_fp": "-54.00",
+              "side": "yes",
+              "ts": "2022-11-22T20:44:01Z"
+            }
+          }
+        bindings: []
+        extensions:
+          - id: x-parser-unique-object-id
+            value: orderbookDelta
+    bindings: []
+    extensions: *ref_4
+sendOperations: []
+receiveOperations:
+  - *ref_5
+  - *ref_6
+sendMessages: []
+receiveMessages:
+  - *ref_7
+  - *ref_8
+extensions:
+  - id: x-parser-unique-object-id
+    value: orderbook_delta
+securitySchemes:
+  - id: apiKey
+    name: apiKey
+    type: apiKey
+    description: |
+      API key authentication required for WebSocket connections.
+      The API key should be provided during the WebSocket handshake.
+    in: user
+    extensions: []
+
+````

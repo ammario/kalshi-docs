@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-01-29T00:38:37.045Z
+lastmod: 2026-03-03T20:32:22.722Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -34,6 +34,7 @@ Used to submit a new order to the Exchange.
 | 448   | PartyID                 | UUID         | N        | **Only applicable for FCM entities .** Sub-account identifier.                                                                                                                                                                                                                                                                                                                             |
 | 452   | PartyRole               | Integer      | N        | **Only applicable for FCM entities .** Party role.<br /><br />Supported values:<br />24 = Customer Account                                                                                                                                                                                                                                                                                 |
 | 453   | NoPartyIDs              | Integer      | N        | **Only applicable for FCM entities .** Number of parties. Currently, only 1 is supported.                                                                                                                                                                                                                                                                                                  |
+| 79    | AllocAccount            | Integer      | N        | Subaccount number (0-32). Alternative to NoPartyIDs for specifying a subaccount.                                                                                                                                                                                                                                                                                                           |
 | 526   | SecondaryClOrdID        | UUID         | N        | Order group identifier. Please refer to the Order Groups tab for more information.                                                                                                                                                                                                                                                                                                         |
 | 2964  | SelfTradePreventionType | Char         | N        | Self-trade prevention mode. If unset, defaults to Taker At Cross. <br /><br />Supported values:<br />1 = Taker At Cross<br />2 = Maker                                                                                                                                                                                                                                                     |
 | 21006 | CancelOrderOnPause      | Boolean      | N        | If this flag is set to true, the order will be canceled if the order is open and trading on the exchange is paused for any reason.                                                                                                                                                                                                                                                         |
@@ -56,34 +57,36 @@ Used to modify an existing order without canceling it.
 * **OrderQty**: Increases or decreases the quantity of your order, note that increasing the quantity for the same point means forfeiting your queue position
 * **Price**: Changes the limit price of your order
 
-| Tag | Name        | Type    | Required | Description                                                                                                                                                                                                                                                                           |
-| --- | ----------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 11  | ClOrderID   | String  | Y        | Unique modification request identifier. Must not match any existing ClOrderID.<br /><br />**UUID format is preferred.**<br /><br />Validation:<br />• Maximum 64 characters<br />• Only alphanumeric, "+", "=", "\_", "-", and ":" characters allowed<br />• Pattern: `^[\-\w:+=/]*$` |
-| 37  | OrderID     | String  | N        | Order identifier provided by Kalshi Exchange.                                                                                                                                                                                                                                         |
-| 38  | OrderQty    | Integer | Y        | New total quantity for the order.<br /><br />**Note:** If OrderQty equals filled quantity, the order will be canceled. If less than filled quantity, the request will be rejected.                                                                                                    |
-| 40  | OrdType     | Char    | Y        | Order type.<br /><br />Supported values:<br />2 = Limit                                                                                                                                                                                                                               |
-| 41  | OrigClOrdID | String  | Y        | ClOrderID of the order to modify.                                                                                                                                                                                                                                                     |
-| 44  | Price       | Integer | N        | New price per contract in cents (1-99). Required if changing price.                                                                                                                                                                                                                   |
-| 54  | Side        | Char    | Y        | Must match the original order side.                                                                                                                                                                                                                                                   |
-| 55  | Symbol      | String  | Y        | Must match the original order symbol.                                                                                                                                                                                                                                                 |
-| 448 | PartyID     | UUID    | N        | **Only applicable for FCM entities .** Sub-account identifier. Must match the original order field value.                                                                                                                                                                             |
-| 452 | PartyRole   | Integer | N        | **Only applicable for FCM entities .** Party role. Must match the original order field value.<br /><br />Supported values:<br />24 = Customer Account                                                                                                                                 |
-| 453 | NoPartyIDs  | Integer | N        | **Only applicable for FCM entities .** Number of parties. Must match the original order field value. Currently, only 1 is supported.                                                                                                                                                  |
+| Tag | Name         | Type    | Required | Description                                                                                                                                                                                                                                                                           |
+| --- | ------------ | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 11  | ClOrderID    | String  | Y        | Unique modification request identifier. Must not match any existing ClOrderID.<br /><br />**UUID format is preferred.**<br /><br />Validation:<br />• Maximum 64 characters<br />• Only alphanumeric, "+", "=", "\_", "-", and ":" characters allowed<br />• Pattern: `^[\-\w:+=/]*$` |
+| 37  | OrderID      | String  | N        | Order identifier provided by Kalshi Exchange.                                                                                                                                                                                                                                         |
+| 38  | OrderQty     | Integer | Y        | New total quantity for the order.<br /><br />**Note:** If OrderQty equals filled quantity, the order will be canceled. If less than filled quantity, the request will be rejected.                                                                                                    |
+| 40  | OrdType      | Char    | Y        | Order type.<br /><br />Supported values:<br />2 = Limit                                                                                                                                                                                                                               |
+| 41  | OrigClOrdID  | String  | Y        | ClOrderID of the order to modify.                                                                                                                                                                                                                                                     |
+| 44  | Price        | Integer | N        | New price per contract in cents (1-99). Required if changing price.                                                                                                                                                                                                                   |
+| 54  | Side         | Char    | Y        | Must match the original order side.                                                                                                                                                                                                                                                   |
+| 55  | Symbol       | String  | Y        | Must match the original order symbol.                                                                                                                                                                                                                                                 |
+| 448 | PartyID      | UUID    | N        | **Only applicable for FCM entities .** Sub-account identifier. Must match the original order field value.                                                                                                                                                                             |
+| 452 | PartyRole    | Integer | N        | **Only applicable for FCM entities .** Party role. Must match the original order field value.<br /><br />Supported values:<br />24 = Customer Account                                                                                                                                 |
+| 453 | NoPartyIDs   | Integer | N        | **Only applicable for FCM entities .** Number of parties. Must match the original order field value. Currently, only 1 is supported.                                                                                                                                                  |
+| 79  | AllocAccount | Integer | N        | Subaccount number (0-32). Must match the original order. Alternative to NoPartyIDs for specifying a subaccount.                                                                                                                                                                       |
 
 ## Order Cancel Request (35=F)
 
 Cancel all remaining quantity of an existing order.
 
-| Tag | Name        | Type    | Required | Description                                                                                                                                                                                                                                                                     |
-| --- | ----------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 11  | ClOrderID   | String  | Y        | Unique cancel request identifier. Must not match any existing ClOrderID.<br /><br />**UUID format is preferred.**<br /><br />Validation:<br />• Maximum 64 characters<br />• Only alphanumeric, "+", "=", "\_", "-", and ":" characters allowed<br />• Pattern: `^[\-\w:+=/]*$` |
-| 37  | OrderID     | String  | N        | Order identifier provided by Kalshi Exchange.                                                                                                                                                                                                                                   |
-| 41  | OrigClOrdID | String  | Y        | ClOrderID of the order to cancel.                                                                                                                                                                                                                                               |
-| 54  | Side        | Char    | Y        | Must match the original order side.                                                                                                                                                                                                                                             |
-| 55  | Symbol      | String  | Y        | Must match the original order symbol.                                                                                                                                                                                                                                           |
-| 448 | PartyID     | UUID    | N        | **Only applicable for FCM entities .** Sub-account identifier. Must match the original order field value.                                                                                                                                                                       |
-| 452 | PartyRole   | Integer | N        | **Only applicable for FCM entities .** Party role. Must match the original order field value.<br /><br />Supported values:<br />24 = Customer Account                                                                                                                           |
-| 453 | NoPartyIDs  | Integer | N        | **Only applicable for FCM entities .** Number of parties. Must match the original order field value. Currently, only 1 is supported.                                                                                                                                            |
+| Tag | Name         | Type    | Required | Description                                                                                                                                                                                                                                                                     |
+| --- | ------------ | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 11  | ClOrderID    | String  | Y        | Unique cancel request identifier. Must not match any existing ClOrderID.<br /><br />**UUID format is preferred.**<br /><br />Validation:<br />• Maximum 64 characters<br />• Only alphanumeric, "+", "=", "\_", "-", and ":" characters allowed<br />• Pattern: `^[\-\w:+=/]*$` |
+| 37  | OrderID      | String  | N        | Order identifier provided by Kalshi Exchange.                                                                                                                                                                                                                                   |
+| 41  | OrigClOrdID  | String  | Y        | ClOrderID of the order to cancel.                                                                                                                                                                                                                                               |
+| 54  | Side         | Char    | Y        | Must match the original order side.                                                                                                                                                                                                                                             |
+| 55  | Symbol       | String  | Y        | Must match the original order symbol.                                                                                                                                                                                                                                           |
+| 448 | PartyID      | UUID    | N        | **Only applicable for FCM entities .** Sub-account identifier. Must match the original order field value.                                                                                                                                                                       |
+| 452 | PartyRole    | Integer | N        | **Only applicable for FCM entities .** Party role. Must match the original order field value.<br /><br />Supported values:<br />24 = Customer Account                                                                                                                           |
+| 453 | NoPartyIDs   | Integer | N        | **Only applicable for FCM entities .** Number of parties. Must match the original order field value. Currently, only 1 is supported.                                                                                                                                            |
+| 79  | AllocAccount | Integer | N        | Subaccount number (0-32). Must match the original order. Alternative to NoPartyIDs for specifying a subaccount.                                                                                                                                                                 |
 
 ## Execution Report (35=8)
 
@@ -113,6 +116,7 @@ This message is sent by Kalshi Exchange back to clients to reflect changes to an
 | 448 | PartyID      | UUID         | N        | **Only applicable for FCM entities .** Sub-account identifier.                                                                                                                                                                              |
 | 452 | PartyRole    | Integer      | N        | **Only applicable for FCM entities .** Party role.<br /><br />Supported values:<br />24 = Customer Account                                                                                                                                  |
 | 453 | NoPartyIDs   | Integer      | N        | **Only applicable for FCM entities .** Number of parties. Currently, only 1 is supported.                                                                                                                                                   |
+| 79  | AllocAccount | Integer      | C        | Subaccount number (0-32). Present if the order was placed for a subaccount.                                                                                                                                                                 |
 
 ### Order Status (39)
 
@@ -125,6 +129,11 @@ This message is sent by Kalshi Exchange back to clients to reflect changes to an
 * **Pending New\<A>**: Order pending acceptance
 * **Expired\<C>**: Time in force expired
 * **Pending Replace\<E>**: Modification pending
+
+<Note>
+  By default, expiry-style system cancellations are reported as **Canceled\<4>**.\
+  If Logon tag **21012 (UseExpiredOrdStatus)=Y**, expiry-style system cancellations (CloseCancel and OrderExpiryCancel) are reported as **Expired\<C>**.
+</Note>
 
 ### Order Rejection Reasons (103)
 
@@ -148,6 +157,11 @@ This message is sent by Kalshi Exchange back to clients to reflect changes to an
 * **Pending New\<A>**: Order pending acceptance
 * **Pending Cancel\<6>**: Cancel pending
 * **Pending Replace\<E>**: Modification pending
+
+<Note>
+  With default settings, expiry-style system cancellations emit **Canceled\<4>**.\
+  If Logon tag **21012 (UseExpiredOrdStatus)=Y**, expiry-style system cancellations (CloseCancel and OrderExpiryCancel) emit **Expired\<C>**.
+</Note>
 
 ### Text Field Values (58)
 
@@ -208,14 +222,15 @@ When ExecType=Trade:
 
 Party fields from the original order request are echoed back in ExecutionReports:
 
-| Tag | Name       | Description                          |
-| --- | ---------- | ------------------------------------ |
-| 453 | NoPartyIDs | Number of parties (for sub-accounts) |
-| 448 | PartyID    | Sub-account identifier               |
-| 452 | PartyRole  | Customer Account\<24>                |
+| Tag | Name         | Description                          |
+| --- | ------------ | ------------------------------------ |
+| 453 | NoPartyIDs   | Number of parties (for sub-accounts) |
+| 448 | PartyID      | Sub-account identifier               |
+| 452 | PartyRole    | Customer Account\<24>                |
+| 79  | AllocAccount | Subaccount number (0-32)             |
 
 <Note>
-  Party fields are only included when the order is placed under a sub-account. These fields help track orders across different sub-accounts or FCM clients.
+  Party and AllocAccount fields are only included when the order is placed under a sub-account. These fields help track orders across different sub-accounts or FCM clients.
 </Note>
 
 ### Rejection Reasons (102)
