@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/user-orders
-lastmod: 2026-02-19T08:36:34.352Z
+lastmod: 2026-03-05T20:30:49.114Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -103,6 +103,12 @@ operations:
                     type: string
                     description: Market side
                     required: false
+                  - name: is_yes
+                    type: boolean
+                    description: >-
+                      Whether the order is on the yes side. Equivalent to side
+                      == "yes"
+                    required: false
                   - name: yes_price_dollars
                     type: string
                     description: Yes price in fixed-point dollars (4 decimals)
@@ -194,6 +200,7 @@ operations:
                 - ticker
                 - status
                 - side
+                - is_yes
                 - yes_price_dollars
                 - fill_count_fp
                 - remaining_count_fp
@@ -236,76 +243,82 @@ operations:
                     - 'yes'
                     - 'no'
                   x-parser-schema-id: marketSide
+                is_yes:
+                  type: boolean
+                  description: >-
+                    Whether the order is on the yes side. Equivalent to side ==
+                    "yes"
+                  x-parser-schema-id: <anonymous-schema-263>
                 yes_price_dollars:
                   type: string
                   description: Yes price in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-263>
+                  x-parser-schema-id: <anonymous-schema-264>
                 fill_count_fp:
                   type: string
                   description: Number of contracts filled in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-264>
+                  x-parser-schema-id: <anonymous-schema-265>
                 remaining_count_fp:
                   type: string
                   description: Number of contracts remaining in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-265>
+                  x-parser-schema-id: <anonymous-schema-266>
                 initial_count_fp:
                   type: string
                   description: Initial number of contracts in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-266>
+                  x-parser-schema-id: <anonymous-schema-267>
                 taker_fill_cost_dollars:
                   type: string
                   description: Taker fill cost in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-267>
+                  x-parser-schema-id: <anonymous-schema-268>
                 maker_fill_cost_dollars:
                   type: string
                   description: Maker fill cost in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-268>
+                  x-parser-schema-id: <anonymous-schema-269>
                 taker_fees_dollars:
                   type: string
                   description: >-
                     Taker fees in fixed-point dollars (4 decimals). Omitted when
                     zero.
-                  x-parser-schema-id: <anonymous-schema-269>
+                  x-parser-schema-id: <anonymous-schema-270>
                 maker_fees_dollars:
                   type: string
                   description: >-
                     Maker fees in fixed-point dollars (4 decimals). Omitted when
                     zero.
-                  x-parser-schema-id: <anonymous-schema-270>
+                  x-parser-schema-id: <anonymous-schema-271>
                 client_order_id:
                   type: string
                   description: Client-provided order identifier
-                  x-parser-schema-id: <anonymous-schema-271>
+                  x-parser-schema-id: <anonymous-schema-272>
                 order_group_id:
                   type: string
                   description: Order group identifier, if applicable
-                  x-parser-schema-id: <anonymous-schema-272>
+                  x-parser-schema-id: <anonymous-schema-273>
                 self_trade_prevention_type:
                   type: string
                   description: Self-trade prevention type
                   enum:
                     - taker_at_cross
                     - maker
-                  x-parser-schema-id: <anonymous-schema-273>
+                  x-parser-schema-id: <anonymous-schema-274>
                 created_time:
                   type: string
                   description: Order creation time in RFC 3339 format
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-274>
+                  x-parser-schema-id: <anonymous-schema-275>
                 last_update_time:
                   type: string
                   description: Last update time in RFC 3339 format
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-275>
+                  x-parser-schema-id: <anonymous-schema-276>
                 expiration_time:
                   type: string
                   description: Order expiration time in RFC 3339 format
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-276>
+                  x-parser-schema-id: <anonymous-schema-277>
                 subaccount_number:
                   type: integer
                   description: Subaccount number (0 for primary, 1-32 for subaccounts)
-                  x-parser-schema-id: <anonymous-schema-277>
+                  x-parser-schema-id: <anonymous-schema-278>
               x-parser-schema-id: <anonymous-schema-259>
           x-parser-schema-id: userOrderPayload
         title: User Order Update
@@ -320,6 +333,7 @@ operations:
               "ticker": "FED-23DEC-T3.00",
               "status": "resting",
               "side": "yes",
+              "is_yes": true,
               "yes_price_dollars": "0.3500",
               "fill_count_fp": "0.00",
               "remaining_count_fp": "10.00",

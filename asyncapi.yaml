@@ -1295,6 +1295,7 @@ components:
               ticker: "FED-23DEC-T3.00"
               status: "resting"
               side: "yes"
+              is_yes: true
               yes_price_dollars: "0.3500"
               fill_count_fp: "0.00"
               remaining_count_fp: "10.00"
@@ -2341,7 +2342,7 @@ components:
           $ref: '#/components/schemas/subscriptionId'
         msg:
           type: object
-          required: ["order_id", "user_id", "ticker", "status", "side", "yes_price_dollars", "fill_count_fp", "remaining_count_fp", "initial_count_fp", "taker_fill_cost_dollars", "maker_fill_cost_dollars", "client_order_id", "created_time"]
+          required: ["order_id", "user_id", "ticker", "status", "side", "is_yes", "yes_price_dollars", "fill_count_fp", "remaining_count_fp", "initial_count_fp", "taker_fill_cost_dollars", "maker_fill_cost_dollars", "client_order_id", "created_time"]
           properties:
             order_id:
               type: string
@@ -2361,6 +2362,9 @@ components:
             side:
               $ref: '#/components/schemas/marketSide'
               description: Side of the order ("yes" or "no")
+            is_yes:
+              type: boolean
+              description: Whether the order is on the yes side. Equivalent to side == "yes"
             yes_price_dollars:
               type: string
               description: Yes price in fixed-point dollars (4 decimals)
