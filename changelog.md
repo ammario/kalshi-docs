@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-03-05T20:31:02.816Z
+lastmod: 2026-03-06T23:57:20.946Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,19 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Mar 12, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Historical trades endpoint",
+description: "New public GET /historical/trades endpoint for accessing trade data older than the historical cutoff."
+}}
+>
+  Added `GET /historical/trades` — a public endpoint for querying all trades archived to the historical database. Supports the same filters as `GET /markets/trades`.
+
+  Use this endpoint for trades that occurred before the `trades_created_ts` cutoff returned by `GET /historical/cutoff`. See [Historical Data](/getting_started/historical_data) for details.
+</Update>
 
 <Update
   label="Mar 5, 2026"

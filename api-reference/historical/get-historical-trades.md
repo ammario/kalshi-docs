@@ -1,21 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/market/get-trades
-lastmod: 2026-03-06T23:57:08.078Z
+url: https://docs.kalshi.com/api-reference/historical/get-historical-trades
+lastmod: 2026-03-06T23:57:07.572Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Trades
+# Get Historical Trades
 
-> Endpoint for getting all trades for all markets. A trade represents a completed transaction between two users on a specific market. Each trade includes the market ticker, price, quantity, and timestamp information. This endpoint returns a paginated response. Use the 'limit' parameter to control page size (1-1000, defaults to 100). The response includes a 'cursor' field - pass this value in the 'cursor' parameter of your next request to get the next page. An empty cursor indicates no more pages are available.
-
+>  Endpoint for getting all historical trades for all markets. Trades that were filled before the historical cutoff are available via this endpoint. See [Historical Data](https://kalshi.com/docs/getting_started/historical_data) for details.
 
 
 
 ## OpenAPI
 
-````yaml openapi.yaml get /markets/trades
+````yaml openapi.yaml get /historical/trades
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -59,40 +58,55 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /markets/trades:
+  /historical/trades:
     get:
       tags:
-        - market
-      summary: Get Trades
-      description: >
-        Endpoint for getting all trades for all markets. A trade represents a
-        completed transaction between two users on a specific market. Each trade
-        includes the market ticker, price, quantity, and timestamp information.
-        This endpoint returns a paginated response. Use the 'limit' parameter to
-        control page size (1-1000, defaults to 100). The response includes a
-        'cursor' field - pass this value in the 'cursor' parameter of your next
-        request to get the next page. An empty cursor indicates no more pages
-        are available.
-      operationId: GetTrades
+        - historical
+      summary: Get Historical Trades
+      description: ' Endpoint for getting all historical trades for all markets. Trades that were filled before the historical cutoff are available via this endpoint. See [Historical Data](https://kalshi.com/docs/getting_started/historical_data) for details.'
+      operationId: GetTradesHistorical
       parameters:
-        - $ref: '#/components/parameters/MarketLimitQuery'
-        - $ref: '#/components/parameters/CursorQuery'
         - $ref: '#/components/parameters/TickerQuery'
         - $ref: '#/components/parameters/MinTsQuery'
         - $ref: '#/components/parameters/MaxTsQuery'
+        - $ref: '#/components/parameters/MarketLimitQuery'
+        - $ref: '#/components/parameters/CursorQuery'
       responses:
         '200':
-          description: Trades retrieved successfully
+          description: Historical trades retrieved successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetTradesResponse'
         '400':
-          description: Bad request
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
-          description: Internal server error
+          $ref: '#/components/responses/InternalServerError'
 components:
   parameters:
+    TickerQuery:
+      name: ticker
+      in: query
+      description: Filter by market ticker
+      schema:
+        type: string
+        x-go-type-skip-optional-pointer: true
+    MinTsQuery:
+      name: min_ts
+      in: query
+      description: Filter items after this Unix timestamp
+      schema:
+        type: integer
+        format: int64
+    MaxTsQuery:
+      name: max_ts
+      in: query
+      description: Filter items before this Unix timestamp
+      schema:
+        type: integer
+        format: int64
     MarketLimitQuery:
       name: limit
       in: query
@@ -115,27 +129,6 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
-    TickerQuery:
-      name: ticker
-      in: query
-      description: Filter by market ticker
-      schema:
-        type: string
-        x-go-type-skip-optional-pointer: true
-    MinTsQuery:
-      name: min_ts
-      in: query
-      description: Filter items after this Unix timestamp
-      schema:
-        type: integer
-        format: int64
-    MaxTsQuery:
-      name: max_ts
-      in: query
-      description: Filter items before this Unix timestamp
-      schema:
-        type: integer
-        format: int64
   schemas:
     GetTradesResponse:
       type: object
@@ -205,6 +198,21 @@ components:
           type: string
           format: date-time
           description: Timestamp when this trade was executed
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional details about the error, if available
+        service:
+          type: string
+          description: The name of the service that generated the error
     FixedPointCount:
       type: string
       description: >-
@@ -224,5 +232,24 @@ components:
         quote intervals for a given market are constrained by that market's
         price level structure.
       example: '0.5600'
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
 
 ````

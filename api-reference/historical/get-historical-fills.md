@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-fills
-lastmod: 2026-03-02T23:31:21.758Z
+lastmod: 2026-03-06T23:57:07.549Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -81,6 +81,8 @@ paths:
           description: Bad request
         '401':
           description: Unauthorized
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           description: Internal server error
       security:
@@ -234,6 +236,21 @@ components:
           type: integer
           format: int64
           description: Unix timestamp when this fill was executed (legacy field name)
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional details about the error, if available
+        service:
+          type: string
+          description: The name of the service that generated the error
     FixedPointCount:
       type: string
       description: >-
@@ -253,6 +270,13 @@ components:
         quote intervals for a given market are constrained by that market's
         price level structure.
       example: '0.5600'
+  responses:
+    NotFoundError:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

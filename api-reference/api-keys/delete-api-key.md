@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/delete-api-key
-lastmod: 2026-03-02T23:31:22.763Z
+lastmod: 2026-03-06T23:57:08.016Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

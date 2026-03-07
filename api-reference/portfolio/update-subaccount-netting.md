@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/update-subaccount-netting
-lastmod: 2026-03-02T23:31:22.581Z
+lastmod: 2026-03-06T23:57:07.930Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
