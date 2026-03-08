@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/communications
-lastmod: 2026-03-05T20:30:49.084Z
+lastmod: 2026-03-07T21:51:17.095Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -145,7 +145,7 @@ operations:
             type:
               type: string
               const: rfq_created
-              x-parser-schema-id: <anonymous-schema-176>
+              x-parser-schema-id: <anonymous-schema-180>
             sid: &ref_0
               type: integer
               description: >-
@@ -164,48 +164,48 @@ operations:
                 id:
                   type: string
                   description: Unique identifier for the RFQ
-                  x-parser-schema-id: <anonymous-schema-178>
+                  x-parser-schema-id: <anonymous-schema-182>
                 creator_id:
                   type: string
                   description: >-
                     Public communications ID of the RFQ creator (anonymized).
                     Currently empty for rfq_created events.
-                  x-parser-schema-id: <anonymous-schema-179>
+                  x-parser-schema-id: <anonymous-schema-183>
                 market_ticker:
                   type: string
                   description: Market ticker for the RFQ
-                  x-parser-schema-id: <anonymous-schema-180>
+                  x-parser-schema-id: <anonymous-schema-184>
                 event_ticker:
                   type: string
                   description: Event ticker (optional)
-                  x-parser-schema-id: <anonymous-schema-181>
+                  x-parser-schema-id: <anonymous-schema-185>
                 contracts:
                   type: integer
                   description: Number of contracts requested (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-182>
+                  x-parser-schema-id: <anonymous-schema-186>
                 contracts_fp:
                   type: string
                   description: Fixed-point contracts requested (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-183>
+                  x-parser-schema-id: <anonymous-schema-187>
                 target_cost:
                   type: integer
                   description: Target cost in centicents (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-184>
+                  x-parser-schema-id: <anonymous-schema-188>
                 target_cost_dollars:
                   type: string
                   description: Target cost in dollars (optional)
-                  x-parser-schema-id: <anonymous-schema-185>
+                  x-parser-schema-id: <anonymous-schema-189>
                 created_ts:
                   type: string
                   description: Timestamp when the RFQ was created
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-186>
+                  x-parser-schema-id: <anonymous-schema-190>
                 mve_collection_ticker:
                   type: string
                   description: Multivariate event collection ticker (optional)
-                  x-parser-schema-id: <anonymous-schema-187>
+                  x-parser-schema-id: <anonymous-schema-191>
                 mve_selected_legs:
                   type: array
                   description: Selected legs for multivariate events (optional)
@@ -214,22 +214,22 @@ operations:
                     properties:
                       event_ticker:
                         type: string
-                        x-parser-schema-id: <anonymous-schema-190>
+                        x-parser-schema-id: <anonymous-schema-194>
                       market_ticker:
                         type: string
-                        x-parser-schema-id: <anonymous-schema-191>
+                        x-parser-schema-id: <anonymous-schema-195>
                       side:
                         type: string
-                        x-parser-schema-id: <anonymous-schema-192>
+                        x-parser-schema-id: <anonymous-schema-196>
                       yes_settlement_value_dollars:
                         type: string
                         description: >-
                           Yes settlement value in dollars for the selected leg
                           (optional)
-                        x-parser-schema-id: <anonymous-schema-193>
-                    x-parser-schema-id: <anonymous-schema-189>
-                  x-parser-schema-id: <anonymous-schema-188>
-              x-parser-schema-id: <anonymous-schema-177>
+                        x-parser-schema-id: <anonymous-schema-197>
+                    x-parser-schema-id: <anonymous-schema-193>
+                  x-parser-schema-id: <anonymous-schema-192>
+              x-parser-schema-id: <anonymous-schema-181>
           x-parser-schema-id: rfqCreatedPayload
         title: RFQ Created
         description: Notification when an RFQ is created
@@ -332,7 +332,7 @@ operations:
             type:
               type: string
               const: rfq_deleted
-              x-parser-schema-id: <anonymous-schema-194>
+              x-parser-schema-id: <anonymous-schema-198>
             sid: *ref_0
             msg:
               type: object
@@ -345,43 +345,43 @@ operations:
                 id:
                   type: string
                   description: Unique identifier for the RFQ
-                  x-parser-schema-id: <anonymous-schema-196>
+                  x-parser-schema-id: <anonymous-schema-200>
                 creator_id:
                   type: string
                   description: Public communications ID of the RFQ creator (anonymized)
-                  x-parser-schema-id: <anonymous-schema-197>
+                  x-parser-schema-id: <anonymous-schema-201>
                 market_ticker:
                   type: string
                   description: Market ticker for the RFQ
-                  x-parser-schema-id: <anonymous-schema-198>
+                  x-parser-schema-id: <anonymous-schema-202>
                 event_ticker:
                   type: string
                   description: Event ticker (optional)
-                  x-parser-schema-id: <anonymous-schema-199>
+                  x-parser-schema-id: <anonymous-schema-203>
                 contracts:
                   type: integer
                   description: Number of contracts requested (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-200>
+                  x-parser-schema-id: <anonymous-schema-204>
                 contracts_fp:
                   type: string
                   description: Fixed-point contracts requested (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-201>
+                  x-parser-schema-id: <anonymous-schema-205>
                 target_cost:
                   type: integer
                   description: Target cost in centicents (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-202>
+                  x-parser-schema-id: <anonymous-schema-206>
                 target_cost_dollars:
                   type: string
                   description: Target cost in dollars (optional)
-                  x-parser-schema-id: <anonymous-schema-203>
+                  x-parser-schema-id: <anonymous-schema-207>
                 deleted_ts:
                   type: string
                   description: Timestamp when the RFQ was deleted
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-204>
-              x-parser-schema-id: <anonymous-schema-195>
+                  x-parser-schema-id: <anonymous-schema-208>
+              x-parser-schema-id: <anonymous-schema-199>
           x-parser-schema-id: rfqDeletedPayload
         title: RFQ Deleted
         description: Notification when an RFQ is deleted
@@ -510,7 +510,7 @@ operations:
             type:
               type: string
               const: quote_created
-              x-parser-schema-id: <anonymous-schema-205>
+              x-parser-schema-id: <anonymous-schema-209>
             sid: *ref_0
             msg:
               type: object
@@ -528,74 +528,74 @@ operations:
                 quote_id:
                   type: string
                   description: Unique identifier for the quote
-                  x-parser-schema-id: <anonymous-schema-207>
+                  x-parser-schema-id: <anonymous-schema-211>
                 rfq_id:
                   type: string
                   description: Identifier of the RFQ this quote is for
-                  x-parser-schema-id: <anonymous-schema-208>
+                  x-parser-schema-id: <anonymous-schema-212>
                 quote_creator_id:
                   type: string
                   description: Public communications ID of the quote creator (anonymized)
-                  x-parser-schema-id: <anonymous-schema-209>
+                  x-parser-schema-id: <anonymous-schema-213>
                 market_ticker:
                   type: string
                   description: Market ticker for the quote
-                  x-parser-schema-id: <anonymous-schema-210>
+                  x-parser-schema-id: <anonymous-schema-214>
                 event_ticker:
                   type: string
                   description: Event ticker (optional)
-                  x-parser-schema-id: <anonymous-schema-211>
+                  x-parser-schema-id: <anonymous-schema-215>
                 yes_bid:
                   type: integer
                   description: Yes side bid price in cents
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-212>
+                  x-parser-schema-id: <anonymous-schema-216>
                 no_bid:
                   type: integer
                   description: No side bid price in cents
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-213>
+                  x-parser-schema-id: <anonymous-schema-217>
                 yes_bid_dollars:
                   type: string
                   description: Yes side bid price in dollars
-                  x-parser-schema-id: <anonymous-schema-214>
+                  x-parser-schema-id: <anonymous-schema-218>
                 no_bid_dollars:
                   type: string
                   description: No side bid price in dollars
-                  x-parser-schema-id: <anonymous-schema-215>
+                  x-parser-schema-id: <anonymous-schema-219>
                 yes_contracts_offered:
                   type: integer
                   description: Number of yes contracts offered (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-216>
+                  x-parser-schema-id: <anonymous-schema-220>
                 no_contracts_offered:
                   type: integer
                   description: Number of no contracts offered (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-217>
+                  x-parser-schema-id: <anonymous-schema-221>
                 yes_contracts_offered_fp:
                   type: string
                   description: Fixed-point yes contracts offered (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-218>
+                  x-parser-schema-id: <anonymous-schema-222>
                 no_contracts_offered_fp:
                   type: string
                   description: Fixed-point no contracts offered (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-219>
+                  x-parser-schema-id: <anonymous-schema-223>
                 rfq_target_cost:
                   type: integer
                   description: Target cost from the RFQ in centicents (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-220>
+                  x-parser-schema-id: <anonymous-schema-224>
                 rfq_target_cost_dollars:
                   type: string
                   description: Target cost from the RFQ in dollars (optional)
-                  x-parser-schema-id: <anonymous-schema-221>
+                  x-parser-schema-id: <anonymous-schema-225>
                 created_ts:
                   type: string
                   description: Timestamp when the quote was created
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-222>
-              x-parser-schema-id: <anonymous-schema-206>
+                  x-parser-schema-id: <anonymous-schema-226>
+              x-parser-schema-id: <anonymous-schema-210>
           x-parser-schema-id: quoteCreatedPayload
         title: Quote Created
         description: Notification when a quote is created on an RFQ
@@ -742,7 +742,7 @@ operations:
             type:
               type: string
               const: quote_accepted
-              x-parser-schema-id: <anonymous-schema-223>
+              x-parser-schema-id: <anonymous-schema-227>
             sid: *ref_0
             msg:
               type: object
@@ -759,87 +759,87 @@ operations:
                 quote_id:
                   type: string
                   description: Unique identifier for the quote
-                  x-parser-schema-id: <anonymous-schema-225>
+                  x-parser-schema-id: <anonymous-schema-229>
                 rfq_id:
                   type: string
                   description: Identifier of the RFQ this quote is for
-                  x-parser-schema-id: <anonymous-schema-226>
+                  x-parser-schema-id: <anonymous-schema-230>
                 quote_creator_id:
                   type: string
                   description: Public communications ID of the quote creator (anonymized)
-                  x-parser-schema-id: <anonymous-schema-227>
+                  x-parser-schema-id: <anonymous-schema-231>
                 market_ticker:
                   type: string
                   description: Market ticker for the quote
-                  x-parser-schema-id: <anonymous-schema-228>
+                  x-parser-schema-id: <anonymous-schema-232>
                 event_ticker:
                   type: string
                   description: Event ticker (optional)
-                  x-parser-schema-id: <anonymous-schema-229>
+                  x-parser-schema-id: <anonymous-schema-233>
                 yes_bid:
                   type: integer
                   description: Yes side bid price in cents
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-230>
+                  x-parser-schema-id: <anonymous-schema-234>
                 no_bid:
                   type: integer
                   description: No side bid price in cents
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-231>
+                  x-parser-schema-id: <anonymous-schema-235>
                 yes_bid_dollars:
                   type: string
                   description: Yes side bid price in dollars
-                  x-parser-schema-id: <anonymous-schema-232>
+                  x-parser-schema-id: <anonymous-schema-236>
                 no_bid_dollars:
                   type: string
                   description: No side bid price in dollars
-                  x-parser-schema-id: <anonymous-schema-233>
+                  x-parser-schema-id: <anonymous-schema-237>
                 accepted_side:
                   type: string
                   description: Which side was accepted (yes/no) (optional)
                   enum:
                     - 'yes'
                     - 'no'
-                  x-parser-schema-id: <anonymous-schema-234>
+                  x-parser-schema-id: <anonymous-schema-238>
                 contracts_accepted:
                   type: integer
                   description: >-
                     Number of contracts accepted. Present when the RFQ specified
                     OrderQty or when a partial fill was requested (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-235>
+                  x-parser-schema-id: <anonymous-schema-239>
                 yes_contracts_offered:
                   type: integer
                   description: Number of yes contracts offered (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-236>
+                  x-parser-schema-id: <anonymous-schema-240>
                 no_contracts_offered:
                   type: integer
                   description: Number of no contracts offered (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-237>
+                  x-parser-schema-id: <anonymous-schema-241>
                 contracts_accepted_fp:
                   type: string
                   description: Fixed-point contracts accepted (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-238>
+                  x-parser-schema-id: <anonymous-schema-242>
                 yes_contracts_offered_fp:
                   type: string
                   description: Fixed-point yes contracts offered (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-239>
+                  x-parser-schema-id: <anonymous-schema-243>
                 no_contracts_offered_fp:
                   type: string
                   description: Fixed-point no contracts offered (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-240>
+                  x-parser-schema-id: <anonymous-schema-244>
                 rfq_target_cost:
                   type: integer
                   description: Target cost from the RFQ in centicents (optional)
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-241>
+                  x-parser-schema-id: <anonymous-schema-245>
                 rfq_target_cost_dollars:
                   type: string
                   description: Target cost from the RFQ in dollars (optional)
-                  x-parser-schema-id: <anonymous-schema-242>
-              x-parser-schema-id: <anonymous-schema-224>
+                  x-parser-schema-id: <anonymous-schema-246>
+              x-parser-schema-id: <anonymous-schema-228>
           x-parser-schema-id: quoteAcceptedPayload
         title: Quote Accepted
         description: Notification when a quote is accepted
@@ -953,7 +953,7 @@ operations:
             type:
               type: string
               const: quote_executed
-              x-parser-schema-id: <anonymous-schema-243>
+              x-parser-schema-id: <anonymous-schema-247>
             sid: *ref_0
             msg:
               type: object
@@ -970,41 +970,41 @@ operations:
                 quote_id:
                   type: string
                   description: Unique identifier for the quote that was executed
-                  x-parser-schema-id: <anonymous-schema-245>
+                  x-parser-schema-id: <anonymous-schema-249>
                 rfq_id:
                   type: string
                   description: Identifier of the RFQ this quote was for
-                  x-parser-schema-id: <anonymous-schema-246>
+                  x-parser-schema-id: <anonymous-schema-250>
                 quote_creator_id:
                   type: string
                   description: Anonymized identifier for the quote creator
-                  x-parser-schema-id: <anonymous-schema-247>
+                  x-parser-schema-id: <anonymous-schema-251>
                 rfq_creator_id:
                   type: string
                   description: Anonymized identifier for the RFQ creator
-                  x-parser-schema-id: <anonymous-schema-248>
+                  x-parser-schema-id: <anonymous-schema-252>
                 order_id:
                   type: string
                   description: >-
                     Your order ID resulting from the quote execution. Use this
                     to match with fill messages
-                  x-parser-schema-id: <anonymous-schema-249>
+                  x-parser-schema-id: <anonymous-schema-253>
                 client_order_id:
                   type: string
                   description: >-
                     Your client order ID for the executed order. Use this to
                     correlate with fill messages
-                  x-parser-schema-id: <anonymous-schema-250>
+                  x-parser-schema-id: <anonymous-schema-254>
                 market_ticker:
                   type: string
                   description: Market ticker for the executed quote
-                  x-parser-schema-id: <anonymous-schema-251>
+                  x-parser-schema-id: <anonymous-schema-255>
                 executed_ts:
                   type: string
                   description: Timestamp when the quote was executed and orders were placed
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-252>
-              x-parser-schema-id: <anonymous-schema-244>
+                  x-parser-schema-id: <anonymous-schema-256>
+              x-parser-schema-id: <anonymous-schema-248>
           x-parser-schema-id: quoteExecutedPayload
         title: Quote Executed
         description: Notification when a quote is executed and orders are placed

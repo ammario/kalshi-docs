@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-03-06T23:57:20.946Z
+lastmod: 2026-03-07T21:51:29.015Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,7 +19,25 @@ This changelog is a work in progress. As always, we welcome any feedback in our 
 ## Recent Updates
 
 <Update
-  label="Mar 12, 2026"
+  label="Mar 7, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Higher precision for selected portfolio dollar fields",
+description: "Selected `_dollars` fields now emit up to 6 decimal places using micro_cent source values when available."
+}}
+>
+  Selected portfolio response `_dollars` fields now emit up to `6` decimal places, using micro\_cent source values from upstream portfolio protos.
+
+  **Affected endpoints:**
+
+  * `GET /portfolio/orders`
+  * `GET /portfolio/orders/{order_id}`
+  * `GET /portfolio/fills`
+  * `GET /portfolio/positions`
+</Update>
+
+<Update
+  label="Mar 6, 2026"
   tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Historical trades endpoint",

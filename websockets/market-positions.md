@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-positions
-lastmod: 2026-03-05T20:30:49.042Z
+lastmod: 2026-03-07T21:51:17.057Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -117,21 +117,39 @@ operations:
                       Current cost basis of the position in centi-cents
                       (1/10,000th of a dollar)
                     required: false
+                  - name: position_cost_dollars
+                    type: string
+                    description: >-
+                      Current cost basis of the position as a fixed-point dollar
+                      string
+                    required: false
                   - name: realized_pnl
                     type: integer
                     description: >-
                       Realized profit/loss in centi-cents (1/10,000th of a
                       dollar)
                     required: false
+                  - name: realized_pnl_dollars
+                    type: string
+                    description: Realized profit/loss as a fixed-point dollar string
+                    required: false
                   - name: fees_paid
                     type: integer
                     description: Total fees paid in centi-cents (1/10,000th of a dollar)
+                    required: false
+                  - name: fees_paid_dollars
+                    type: string
+                    description: Total fees paid as a fixed-point dollar string
                     required: false
                   - name: position_fee_cost
                     type: integer
                     description: >-
                       Total position fee cost in centi-cents (1/10,000th of a
                       dollar)
+                    required: false
+                  - name: position_fee_cost_dollars
+                    type: string
+                    description: Total position fee cost as a fixed-point dollar string
                     required: false
                   - name: volume
                     type: integer
@@ -172,9 +190,13 @@ operations:
                 - position
                 - position_fp
                 - position_cost
+                - position_cost_dollars
                 - realized_pnl
+                - realized_pnl_dollars
                 - fees_paid
+                - fees_paid_dollars
                 - position_fee_cost
+                - position_fee_cost_dollars
                 - volume
                 - volume_fp
               properties:
@@ -206,36 +228,54 @@ operations:
                     (1/10,000th of a dollar)
                   format: int64
                   x-parser-schema-id: <anonymous-schema-127>
+                position_cost_dollars:
+                  type: string
+                  description: >-
+                    Current cost basis of the position as a fixed-point dollar
+                    string
+                  x-parser-schema-id: <anonymous-schema-128>
                 realized_pnl:
                   type: integer
                   description: Realized profit/loss in centi-cents (1/10,000th of a dollar)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-128>
+                  x-parser-schema-id: <anonymous-schema-129>
+                realized_pnl_dollars:
+                  type: string
+                  description: Realized profit/loss as a fixed-point dollar string
+                  x-parser-schema-id: <anonymous-schema-130>
                 fees_paid:
                   type: integer
                   description: Total fees paid in centi-cents (1/10,000th of a dollar)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-129>
+                  x-parser-schema-id: <anonymous-schema-131>
+                fees_paid_dollars:
+                  type: string
+                  description: Total fees paid as a fixed-point dollar string
+                  x-parser-schema-id: <anonymous-schema-132>
                 position_fee_cost:
                   type: integer
                   description: >-
                     Total position fee cost in centi-cents (1/10,000th of a
                     dollar)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-130>
+                  x-parser-schema-id: <anonymous-schema-133>
+                position_fee_cost_dollars:
+                  type: string
+                  description: Total position fee cost as a fixed-point dollar string
+                  x-parser-schema-id: <anonymous-schema-134>
                 volume:
                   type: integer
                   description: Total volume traded
                   format: int32
-                  x-parser-schema-id: <anonymous-schema-131>
+                  x-parser-schema-id: <anonymous-schema-135>
                 volume_fp:
                   type: string
                   description: Fixed-point total volume traded (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-132>
+                  x-parser-schema-id: <anonymous-schema-136>
                 subaccount:
                   type: integer
                   description: Optional subaccount number for the position
-                  x-parser-schema-id: <anonymous-schema-133>
+                  x-parser-schema-id: <anonymous-schema-137>
               x-parser-schema-id: <anonymous-schema-123>
           x-parser-schema-id: marketPositionPayload
         title: Market Position Update
@@ -250,9 +290,13 @@ operations:
               "position": 100,
               "position_fp": "100.00",
               "position_cost": 500000,
+              "position_cost_dollars": "50.0000",
               "realized_pnl": 100000,
+              "realized_pnl_dollars": "10.0000",
               "fees_paid": 10000,
+              "fees_paid_dollars": "1.0000",
               "position_fee_cost": 5000,
+              "position_fee_cost_dollars": "0.5000",
               "volume": 15,
               "volume_fp": "15.00"
             }

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-orders
-lastmod: 2026-03-06T23:57:07.559Z
+lastmod: 2026-03-07T21:51:14.761Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -314,7 +314,7 @@ components:
     FixedPointDollars:
       type: string
       description: >-
-        US dollar amount as a fixed-point decimal string with up to 4 decimal
+        US dollar amount as a fixed-point decimal string with up to 6 decimal
         places of precision. This is the maximum supported precision; valid
         quote intervals for a given market are constrained by that market's
         price level structure.
