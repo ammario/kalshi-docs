@@ -1251,9 +1251,13 @@ components:
               position: 100
               position_fp: "100.00"
               position_cost: 500000
+              position_cost_dollars: "50.0000"
               realized_pnl: 100000
+              realized_pnl_dollars: "10.0000"
               fees_paid: 10000
+              fees_paid_dollars: "1.0000"
               position_fee_cost: 5000
+              position_fee_cost_dollars: "0.5000"
               volume: 15
               volume_fp: "15.00"
 
@@ -2263,7 +2267,7 @@ components:
           $ref: '#/components/schemas/subscriptionId'
         msg:
           type: object
-          required: ["user_id", "market_ticker", "position", "position_fp", "position_cost", "realized_pnl", "fees_paid", "position_fee_cost", "volume", "volume_fp"]
+          required: ["user_id", "market_ticker", "position", "position_fp", "position_cost", "position_cost_dollars", "realized_pnl", "realized_pnl_dollars", "fees_paid", "fees_paid_dollars", "position_fee_cost", "position_fee_cost_dollars", "volume", "volume_fp"]
           properties:
             user_id:
               type: string
@@ -2282,18 +2286,30 @@ components:
               type: integer
               description: Current cost basis of the position in centi-cents (1/10,000th of a dollar)
               format: int64
+            position_cost_dollars:
+              type: string
+              description: Current cost basis of the position as a fixed-point dollar string
             realized_pnl:
               type: integer
               description: Realized profit/loss in centi-cents (1/10,000th of a dollar)
               format: int64
+            realized_pnl_dollars:
+              type: string
+              description: Realized profit/loss as a fixed-point dollar string
             fees_paid:
               type: integer
               description: Total fees paid in centi-cents (1/10,000th of a dollar)
               format: int64
+            fees_paid_dollars:
+              type: string
+              description: Total fees paid as a fixed-point dollar string
             position_fee_cost:
               type: integer
               description: Total position fee cost in centi-cents (1/10,000th of a dollar)
               format: int64
+            position_fee_cost_dollars:
+              type: string
+              description: Total position fee cost as a fixed-point dollar string
             volume:
               type: integer
               description: Total volume traded
