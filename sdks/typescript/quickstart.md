@@ -59,3 +59,6 @@ const config = new Configuration({
 ## Source Code
 
 * NPM: [kalshi-typescript](https://www.npmjs.com/package/kalshi-typescript)
+
+
+Built with [Mintlify](https://mintlify.com).

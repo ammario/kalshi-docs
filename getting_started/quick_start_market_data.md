@@ -189,3 +189,6 @@ Now that you understand how to access market data without authentication, you ca
 4. Set up a WebSocket connection for live updates (requires authentication)
 
 For authenticated endpoints that allow trading and portfolio management, check out our [API Keys guide](/getting_started/api_keys).
+
+
+Built with [Mintlify](https://mintlify.com).

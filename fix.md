@@ -80,3 +80,6 @@ Need a machine-readable view of the Kalshi-specific FIX tags and messages? Downl
 ## Support
 
 For technical support or questions about the FIX API, please contact the Kalshi trading support team.
+
+
+Built with [Mintlify](https://mintlify.com).

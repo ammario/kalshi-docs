@@ -116,3 +116,6 @@ Response to order group management requests.
 <Note>
   Errors are returned as BusinessMessageReject (35=j) messages, not in the OrderGroupResponse.
 </Note>
+
+
+Built with [Mintlify](https://mintlify.com).

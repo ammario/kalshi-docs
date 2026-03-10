@@ -152,3 +152,6 @@ The drop copy session endpoint provides an alternative way for clients to query 
     * Verify signature generation uses the exact SendingTime from field 52
   </Accordion>
 </AccordionGroup>
+
+
+Built with [Mintlify](https://mintlify.com).

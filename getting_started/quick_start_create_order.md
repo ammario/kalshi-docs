@@ -171,3 +171,6 @@ For more information, check out:
 
 * [API Reference Documentation](https://docs.kalshi.com/api-reference)
 * [Kalshi Discord Community](https://discord.gg/kalshi)
+
+
+Built with [Mintlify](https://mintlify.com).

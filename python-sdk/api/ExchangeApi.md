@@ -138,3 +138,6 @@ This endpoint does not need any parameter.
 | ----------- | ------------------------------------------ |
 | **200**     | User data timestamp retrieved successfully |
 | **500**     | Internal server error                      |
+
+
+Built with [Mintlify](https://mintlify.com).

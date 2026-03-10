@@ -133,3 +133,6 @@ When both apply simultaneously, intermediate values can reach up to 6 decimal pl
     </Note>
   </Accordion>
 </AccordionGroup>
+
+
+Built with [Mintlify](https://mintlify.com).

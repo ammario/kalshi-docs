@@ -56,3 +56,6 @@ print(f"Balance: ${balance.balance / 100:.2f}")
 
 * PyPI (sync): [https://pypi.org/project/kalshi\_python\_sync/](https://pypi.org/project/kalshi_python_sync/)
 * PyPI (async): [https://pypi.org/project/kalshi\_python\_async/](https://pypi.org/project/kalshi_python_async/)
+
+
+Built with [Mintlify](https://mintlify.com).

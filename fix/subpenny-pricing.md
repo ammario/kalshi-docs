@@ -69,3 +69,6 @@ Affected Tags:
   ^^ avgPx        ^^ lastPx                        ^^ price
   ```
 </CodeGroup>
+
+
+Built with [Mintlify](https://mintlify.com).

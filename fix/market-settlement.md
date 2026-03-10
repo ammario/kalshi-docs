@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-settlement
-lastmod: 2026-03-03T00:39:48.157Z
+lastmod: 2026-03-09T14:54:47.766Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -61,13 +61,13 @@ Provides settlement details for a specific market.
 
 #### Fees (NoMiscFees)
 
-| Tag | Name         | Description                                                     |
-| --- | ------------ | --------------------------------------------------------------- |
-| 136 | NoMiscFees   | Number of fees (currently zero, single item with zeroed values) |
-| 137 | MiscFeeAmt   | Total fees for settlement in dollars                            |
-| 138 | MiscFeeCurr  | Currency (USD)                                                  |
-| 139 | MiscFeeType  | Type of fee (Exchange fees\<4>)                                 |
-| 891 | MiscFeeBasis | Unit for fee (Absolute\<0>)                                     |
+| Tag | Name         | Description                              |
+| --- | ------------ | ---------------------------------------- |
+| 136 | NoMiscFees   | Number of fee entries (always 1)         |
+| 137 | MiscFeeAmt   | Fee amount in dollars (zero when no fee) |
+| 138 | MiscFeeCurr  | Currency (USD)                           |
+| 139 | MiscFeeType  | Type of fee (Exchange fees\<4>)          |
+| 891 | MiscFeeBasis | Unit for fee (Absolute\<0>)              |
 
 ## Settlement Process
 
@@ -95,7 +95,7 @@ For each position:
 ## Example Settlement Report
 
 ```fix  theme={null}
-// Market settled as "Yes"
+// Market settled as "Yes", no fees
 8=FIXT.1.1|35=UMS|
 20105=settle-123|55=HIGHNY-23DEC31|715=20231231|
 20107=Yes|
@@ -103,18 +103,38 @@ For each position:
   20109=user-456|20110=24|
   704=100|705=0|
   1703=1|
-    1704=10000|1705=1|
+    1704=100.00|1705=1|
   136=1|
     137=0.00|138=USD|139=4|891=0|
 893=Y|
 ```
 
-This example shows:
+```fix  theme={null}
+// Market settled as "Yes", with sub-cent rounding fee
+8=FIXT.1.1|35=UMS|
+20105=settle-456|55=HIGHNY-23DEC31|715=20231231|
+20107=Yes|
+20108=1|
+  20109=user-789|20110=24|
+  704=100|705=0|
+  1703=1|
+    1704=100.00|1705=1|
+  136=1|
+    137=0.006|138=USD|139=4|891=0|
+893=Y|
+```
+
+The first example shows:
 
 * Market HIGHNY-23DEC31 settled as "Yes"
 * User held 100 Yes contracts
-* Received \$100.00 (10000 cents) to balance
-* No settlement fees
+* Received \$100.00 payout to balance
+* Zero settlement fees
+
+The second example shows:
+
+* Same market, different user
+* $100.00 payout with a $0.006 rounding fee
 
 ## Pagination
 
@@ -172,11 +192,13 @@ For sessions managing multiple accounts:
 
 ### 3. Fee Processing
 
-Currently settlement fees are zero, but implement handling for future changes:
+Fees ensure that `CollateralAmountChange` (the actual payout) is in whole cents, since balances are tracked in cents. Settlement fees will be zero for simple yes / no determinations but will be applied under edge case scenarios like sub-cent scalar settlement.
 
-* Parse NoMiscFees group
-* Account for fees in P\&L calculations
-* Track fee types for reporting
+When processing settlement reports:
+
+* Parse the `NoMiscFees` group for fee amounts
+* Account for fees (including negative rebates) in P\&L calculations
+* `CollateralAmountChange + MiscFeeAmt` equals the pre-rounding settlement value
 
 ## Best Practices
 
@@ -238,3 +260,6 @@ Position mismatches may indicate:
 * Late trades near expiration
 
 Always maintain independent position tracking for verification.
+
+
+Built with [Mintlify](https://mintlify.com).

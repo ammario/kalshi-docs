@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection
-lastmod: 2026-03-07T21:51:15.773Z
+lastmod: 2026-03-09T12:51:05.303Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-07T21:51:15.773Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -172,33 +172,20 @@ components:
         - settlement_timer_seconds
         - status
         - response_price_units
-        - notional_value
         - notional_value_dollars
-        - yes_bid
         - yes_bid_dollars
-        - yes_ask
         - yes_ask_dollars
-        - no_bid
         - no_bid_dollars
-        - no_ask
         - no_ask_dollars
         - yes_bid_size_fp
         - yes_ask_size_fp
-        - last_price
         - last_price_dollars
-        - previous_yes_bid
         - previous_yes_bid_dollars
-        - previous_yes_ask
         - previous_yes_ask_dollars
-        - previous_price
         - previous_price_dollars
-        - volume
         - volume_fp
-        - volume_24h
         - volume_24h_fp
-        - liquidity
         - liquidity_dollars
-        - open_interest
         - open_interest_fp
         - result
         - can_close_early
@@ -280,10 +267,6 @@ components:
             - usd_cent
           deprecated: true
           description: 'DEPRECATED: Use price_level_structure and price_ranges instead.'
-        yes_bid:
-          type: number
-          deprecated: true
-          description: 'DEPRECATED: Use yes_bid_dollars instead.'
         yes_bid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the highest YES buy offer on this market in dollars
@@ -292,10 +275,6 @@ components:
           description: >-
             Total contract size of orders to buy YES at the best bid price
             (fixed-point count string).
-        yes_ask:
-          type: number
-          deprecated: true
-          description: 'DEPRECATED: Use yes_ask_dollars instead.'
         yes_ask_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the lowest YES sell offer on this market in dollars
@@ -304,34 +283,18 @@ components:
           description: >-
             Total contract size of orders to sell YES at the best ask price
             (fixed-point count string).
-        no_bid:
-          type: number
-          deprecated: true
-          description: 'DEPRECATED: Use no_bid_dollars instead.'
         no_bid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the highest NO buy offer on this market in dollars
-        no_ask:
-          type: number
-          deprecated: true
-          description: 'DEPRECATED: Use no_ask_dollars instead.'
         no_ask_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the lowest NO sell offer on this market in dollars
-        last_price:
-          type: number
-          deprecated: true
-          description: 'DEPRECATED: Use last_price_dollars instead.'
         last_price_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Price for the last traded YES contract on this market in dollars
-        volume:
-          type: integer
         volume_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: String representation of the market volume in contracts
-        volume_24h:
-          type: integer
         volume_24h_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: String representation of the 24h market volume in contracts
@@ -346,65 +309,35 @@ components:
           type: boolean
         fractional_trading_enabled:
           type: boolean
-        open_interest:
-          type: integer
-          description: Number of contracts bought on this market disconsidering netting
         open_interest_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
             String representation of the number of contracts bought on this
             market disconsidering netting
-        notional_value:
-          type: integer
-          deprecated: true
-          description: 'DEPRECATED: Use notional_value_dollars instead.'
         notional_value_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: The total value of a single contract at settlement in dollars
-        previous_yes_bid:
-          type: integer
-          deprecated: true
-          description: 'DEPRECATED: Use previous_yes_bid_dollars instead.'
         previous_yes_bid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Price for the highest YES buy offer on this market a day ago in
             dollars
-        previous_yes_ask:
-          type: integer
-          deprecated: true
-          description: 'DEPRECATED: Use previous_yes_ask_dollars instead.'
         previous_yes_ask_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Price for the lowest YES sell offer on this market a day ago in
             dollars
-        previous_price:
-          type: integer
-          deprecated: true
-          description: 'DEPRECATED: Use previous_price_dollars instead.'
         previous_price_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
             Price for the last traded YES contract on this market a day ago in
             dollars
-        liquidity:
-          type: integer
-          deprecated: true
-          description: 'DEPRECATED: This field is deprecated and will always return 0.'
         liquidity_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           deprecated: true
           description: >-
             DEPRECATED: This field is deprecated and will always return
             "0.0000".
-        settlement_value:
-          type: integer
-          nullable: true
-          x-omitempty: true
-          description: >-
-            The settlement value of the YES/LONG side of the contract in cents.
-            Only filled after determination
         settlement_value_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           nullable: true
@@ -628,3 +561,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order
-lastmod: 2026-03-07T21:51:14.961Z
+lastmod: 2026-03-09T12:51:04.539Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-07T21:51:14.961Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -218,23 +218,15 @@ components:
         - action
         - type
         - status
-        - yes_price
-        - no_price
         - yes_price_dollars
         - no_price_dollars
-        - fill_count
         - fill_count_fp
-        - remaining_count
         - remaining_count_fp
-        - initial_count
         - initial_count_fp
-        - taker_fees
-        - maker_fees
-        - taker_fill_cost
-        - maker_fill_cost
+        - taker_fees_dollars
+        - maker_fees_dollars
         - taker_fill_cost_dollars
         - maker_fill_cost_dollars
-        - queue_position
       properties:
         order_id:
           type: string
@@ -262,68 +254,36 @@ components:
             - market
         status:
           $ref: '#/components/schemas/OrderStatus'
-        yes_price:
-          type: integer
-        no_price:
-          type: integer
         yes_price_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: The yes price for this order in fixed-point dollars
         no_price_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: The no price for this order in fixed-point dollars
-        fill_count:
-          type: integer
-          description: The number of contracts that have been filled
         fill_count_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
             String representation of the number of contracts that have been
             filled
-        remaining_count:
-          type: integer
         remaining_count_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: String representation of the remaining contracts for this order
-        initial_count:
-          type: integer
-          description: The initial size of the order (contract units)
         initial_count_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
             String representation of the initial size of the order (contract
             units)
-        taker_fees:
-          type: integer
-          description: Fees paid on filled taker contracts, in cents
-        maker_fees:
-          type: integer
-          description: Fees paid on filled maker contracts, in cents
-        taker_fill_cost:
-          type: integer
-          description: The cost of filled taker orders in cents
-        maker_fill_cost:
-          type: integer
-          description: The cost of filled maker orders in cents
         taker_fill_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: The cost of filled taker orders in dollars
         maker_fill_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: The cost of filled maker orders in dollars
-        queue_position:
-          type: integer
-          description: >-
-            **DEPRECATED**: This field is deprecated and will always return 0.
-            Please use the GET /portfolio/orders/{order_id}/queue_position
-            endpoint instead
         taker_fees_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
           description: Fees paid on filled taker contracts, in dollars
         maker_fees_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
           description: Fees paid on filled maker contracts, in dollars
         expiration_time:
           type: string
@@ -429,3 +389,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

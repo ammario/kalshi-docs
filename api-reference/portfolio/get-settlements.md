@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-03-07T21:51:15.208Z
+lastmod: 2026-03-09T12:51:04.785Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-07T21:51:15.208Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -168,10 +168,8 @@ components:
         - ticker
         - event_ticker
         - market_result
-        - yes_count
         - yes_count_fp
         - yes_total_cost
-        - no_count
         - no_count_fp
         - no_total_cost
         - revenue
@@ -196,10 +194,6 @@ components:
             YES, 'no' = market resolved to NO, 'scalar' = scalar market settled
             at a specific value, 'void' = market was voided/cancelled and all
             positions returned at original cost.
-        yes_count:
-          type: integer
-          format: int64
-          description: Number of YES contracts owned at the time of settlement.
         yes_count_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
@@ -208,10 +202,6 @@ components:
         yes_total_cost:
           type: integer
           description: Total cost basis of all YES contracts in cents.
-        no_count:
-          type: integer
-          format: int64
-          description: Number of NO contracts owned at the time of settlement.
         no_count_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
@@ -308,3 +298,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

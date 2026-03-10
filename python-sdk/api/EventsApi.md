@@ -204,3 +204,6 @@ Retrieve multivariate (combo) events. These are dynamically created events from 
 | **400**     | Bad request - invalid parameters           |
 | **401**     | Unauthorized                               |
 | **500**     | Internal server error                      |
+
+
+Built with [Mintlify](https://mintlify.com).

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/incentive-programs/get-incentives
-lastmod: 2026-03-07T21:51:15.530Z
+lastmod: 2026-03-09T12:51:05.041Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-07T21:51:15.530Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -205,11 +205,6 @@ components:
           format: int32
           nullable: true
           description: Discount factor in basis points (optional)
-        target_size:
-          type: integer
-          format: int32
-          nullable: true
-          description: Target size for the incentive program (optional)
         target_size_fp:
           $ref: '#/components/schemas/FixedPointCount'
           nullable: true
@@ -229,3 +224,5 @@ components:
       example: '10.00'
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

@@ -17,3 +17,6 @@ The following resources might help you on your journey to exploring Kalshi's mar
 * [**Quick Start: Market Data (No SDK)**](/getting_started/quick_start_market_data)
 * [**Quick Start: Authenticated Requests (No SDK)**](/getting_started/quick_start_authenticated_requests)
 * [**Discord**](https://discord.gg/kalshi) and check out #dev and #support
+
+
+Built with [Mintlify](https://mintlify.com).

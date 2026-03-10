@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
-lastmod: 2026-03-07T21:51:15.556Z
+lastmod: 2026-03-09T12:51:05.070Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,7 @@ This endpoint requires FCM member access level and allows filtering positions by
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -172,48 +172,28 @@ components:
       type: object
       required:
         - ticker
-        - total_traded
         - total_traded_dollars
-        - position
         - position_fp
-        - market_exposure
         - market_exposure_dollars
-        - realized_pnl
         - realized_pnl_dollars
         - resting_orders_count
-        - fees_paid
         - fees_paid_dollars
       properties:
         ticker:
           type: string
           description: Unique identifier for the market
           x-go-type-skip-optional-pointer: true
-        total_traded:
-          type: integer
-          description: Total spent on this market in cents
         total_traded_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total spent on this market in dollars
-        position:
-          type: integer
-          format: int32
-          description: >-
-            Number of contracts bought in this market. Negative means NO
-            contracts and positive means YES contracts
         position_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
             String representation of the number of contracts bought in this
             market. Negative means NO contracts and positive means YES contracts
-        market_exposure:
-          type: integer
-          description: Cost of the aggregate market position in cents
         market_exposure_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Cost of the aggregate market position in dollars
-        realized_pnl:
-          type: integer
-          description: Locked in profit and loss, in cents
         realized_pnl_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Locked in profit and loss, in dollars
@@ -221,9 +201,6 @@ components:
           type: integer
           format: int32
           description: '[DEPRECATED] Aggregate size of resting orders in contract units'
-        fees_paid:
-          type: integer
-          description: Fees paid on fill orders, in cents
         fees_paid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Fees paid on fill orders, in dollars
@@ -235,53 +212,30 @@ components:
       type: object
       required:
         - event_ticker
-        - total_cost
         - total_cost_dollars
-        - total_cost_shares
         - total_cost_shares_fp
-        - event_exposure
         - event_exposure_dollars
-        - realized_pnl
         - realized_pnl_dollars
         - resting_orders_count
-        - fees_paid
         - fees_paid_dollars
       properties:
         event_ticker:
           type: string
           description: Unique identifier for events
-        total_cost:
-          type: integer
-          description: Total spent on this event in cents
         total_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total spent on this event in dollars
-        total_cost_shares:
-          type: integer
-          format: int64
-          description: >-
-            Total number of shares traded on this event (including both YES and
-            NO contracts)
         total_cost_shares_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
             String representation of the total number of shares traded on this
             event (including both YES and NO contracts)
-        event_exposure:
-          type: integer
-          description: Cost of the aggregate event position in cents
         event_exposure_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Cost of the aggregate event position in dollars
-        realized_pnl:
-          type: integer
-          description: Locked in profit and loss, in cents
         realized_pnl_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Locked in profit and loss, in dollars
-        fees_paid:
-          type: integer
-          description: Fees paid on fill orders, in cents
         fees_paid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Fees paid on fill orders, in dollars
@@ -322,3 +276,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

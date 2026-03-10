@@ -262,3 +262,6 @@ Response to mass cancel request.
 <Note>
   Individual ExecutionReports will follow for each canceled order.
 </Note>
+
+
+Built with [Mintlify](https://mintlify.com).

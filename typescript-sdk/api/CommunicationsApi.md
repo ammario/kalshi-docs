@@ -412,3 +412,6 @@ Endpoint for getting RFQs
 | **200**     | RFQs retrieved successfully            | -                |
 | **401**     | Unauthorized - authentication required | -                |
 | **500**     | Internal server error                  | -                |
+
+
+Built with [Mintlify](https://mintlify.com).

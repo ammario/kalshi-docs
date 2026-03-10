@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series
-lastmod: 2026-03-07T21:51:15.823Z
+lastmod: 2026-03-09T12:51:05.353Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-07T21:51:15.823Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -192,9 +192,6 @@ components:
           description: >-
             AdditionalProhibitions is a list of additional trading prohibitions
             for this series.
-        volume:
-          type: integer
-          description: Total contracts traded across all events in this series.
         volume_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
@@ -256,3 +253,5 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

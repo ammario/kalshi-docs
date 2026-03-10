@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-order-queue-position
-lastmod: 2026-03-07T21:51:14.997Z
+lastmod: 2026-03-09T12:51:04.577Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-07T21:51:14.997Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -97,12 +97,8 @@ components:
     GetOrderQueuePositionResponse:
       type: object
       required:
-        - queue_position
+        - queue_position_fp
       properties:
-        queue_position:
-          type: integer
-          format: int32
-          description: The position of the order in the queue
         queue_position_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: The number of preceding shares before the order in the queue.
@@ -169,3 +165,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

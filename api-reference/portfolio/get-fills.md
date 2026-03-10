@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-03-07T21:51:15.245Z
+lastmod: 2026-03-09T12:51:04.809Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,7 @@ Fills that occurred before the historical cutoff are only available via `GET /hi
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -182,11 +182,7 @@ components:
         - market_ticker
         - side
         - action
-        - count
         - count_fp
-        - price
-        - yes_price
-        - no_price
         - yes_price_fixed
         - no_price_fixed
         - is_taker
@@ -222,23 +218,11 @@ components:
             - buy
             - sell
           description: Specifies if this is a buy or sell order
-        count:
-          type: integer
-          description: Number of contracts bought or sold in this fill
         count_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
             String representation of the number of contracts bought or sold in
             this fill
-        price:
-          type: number
-          description: Fill price (deprecated - use yes_price or no_price)
-        yes_price:
-          type: integer
-          description: Fill price for the yes side in cents
-        no_price:
-          type: integer
-          description: Fill price for the no side in cents
         yes_price_fixed:
           type: string
           description: Fill price for the yes side in fixed point dollars
@@ -305,3 +289,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

@@ -69,3 +69,6 @@ All SDKs use the same authentication mechanism with API keys and RSA-PSS signing
 2. A private key file for signing requests
 
 See the quickstart guide for your chosen SDK for detailed setup instructions.
+
+
+Built with [Mintlify](https://mintlify.com).

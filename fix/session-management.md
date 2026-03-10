@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/session-management
-lastmod: 2026-03-03T20:25:48.582Z
+lastmod: 2026-03-09T16:53:24.275Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -148,6 +148,30 @@ For unexpected sequence numbers:
 2. Check order status via REST API or UI
 3. Establish new session with reset sequence numbers
 
+## Maintenance Window
+
+Kalshi performs weekly scheduled maintenance every **Thursday from 3:00 AM to 5:00 AM ET**. During this window:
+
+1. All FIX sessions are forcibly disconnected
+2. Upon reconnecting after maintenance, all clients **must reset sequence numbers to 1**
+
+<Warning>
+  You must send `ResetSeqNumFlag=Y` (tag 141) on your first Logon after maintenance, or connect to a session type that always resets (KalshiNR, KalshiDC, KalshiPT).
+</Warning>
+
+### Resting Orders During Maintenance
+
+When trading is paused for maintenance, resting orders are handled based on the `CancelOrderOnPause` tag:
+
+| Tag   | Name               | Value       | Behavior                                                           |
+| ----- | ------------------ | ----------- | ------------------------------------------------------------------ |
+| 21006 | CancelOrderOnPause | Y           | Order is automatically cancelled when trading pauses               |
+| 21006 | CancelOrderOnPause | N (default) | Order remains resting on the book and resumes when trading reopens |
+
+<Note>
+  Orders without `CancelOrderOnPause=Y` are **not** cancelled during maintenance. They remain on the book unchanged and become active again once trading resumes.
+</Note>
+
 ## ResendRequest (35=2)
 
 <Note>
@@ -251,3 +275,6 @@ All messages must include standard FIX headers:
    * Rotate API keys periodically
    * Monitor for unauthorized access
    * Use secure storage for private keys
+
+
+Built with [Mintlify](https://mintlify.com).

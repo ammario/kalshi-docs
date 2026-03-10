@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/get-order-groups
-lastmod: 2026-03-07T21:51:15.010Z
+lastmod: 2026-03-09T12:51:04.590Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-07T21:51:15.010Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -113,13 +113,6 @@ components:
           type: string
           description: Unique identifier for the order group
           x-go-type-skip-optional-pointer: true
-        contracts_limit:
-          type: integer
-          format: int64
-          description: >-
-            Current maximum contracts allowed over a rolling 15-second window
-            (whole contracts only).
-          x-go-type-skip-optional-pointer: true
         contracts_limit_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
@@ -193,3 +186,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

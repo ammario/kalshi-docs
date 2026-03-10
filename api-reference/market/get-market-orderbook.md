@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market-orderbook
-lastmod: 2026-03-07T21:51:15.593Z
+lastmod: 2026-03-09T12:51:05.106Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-07T21:51:15.593Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -110,44 +110,11 @@ components:
     GetMarketOrderbookResponse:
       type: object
       required:
-        - orderbook
         - orderbook_fp
       properties:
-        orderbook:
-          $ref: '#/components/schemas/Orderbook'
-          description: >-
-            Legacy integer-count orderbook (will be deprecated). Prefer
-            orderbook_fp for fixed-point contract counts.
         orderbook_fp:
           $ref: '#/components/schemas/OrderbookCountFp'
           description: Orderbook with fixed-point contract counts (fp) in all price levels.
-    Orderbook:
-      type: object
-      required:
-        - 'yes'
-        - 'no'
-        - yes_dollars
-        - no_dollars
-      description: >-
-        Legacy integer-count orderbook (will be deprecated). Prefer
-        OrderbookCountFp / orderbook_fp for fixed-point contract counts.
-      properties:
-        'yes':
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderbookLevel'
-        'no':
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderbookLevel'
-        yes_dollars:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceLevelDollars'
-        no_dollars:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceLevelDollars'
     OrderbookCountFp:
       type: object
       required:
@@ -180,27 +147,6 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
-    OrderbookLevel:
-      type: array
-      items:
-        type: number
-      minItems: 2
-      maxItems: 2
-      description: >-
-        Price level represented as [price, count] where price is in cents and
-        count is the legacy integer contract count (will be deprecated).
-    PriceLevelDollars:
-      type: array
-      minItems: 2
-      maxItems: 2
-      example:
-        - '0.1500'
-        - 100
-      description: >-
-        Price level in dollars represented as [dollars_string, count] where
-        dollars_string is like "0.1500" and count is the legacy integer contract
-        count (will be deprecated). Use the *_fp variants for fixed-point
-        contract counts.
     PriceLevelDollarsCountFp:
       type: array
       minItems: 2
@@ -252,3 +198,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

@@ -163,3 +163,6 @@ Endpoint for getting the member's settlements historical track.
 | **400**     | Bad request - invalid input            |
 | **401**     | Unauthorized - authentication required |
 | **500**     | Internal server error                  |
+
+
+Built with [Mintlify](https://mintlify.com).

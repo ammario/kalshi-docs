@@ -78,3 +78,6 @@ Only the following APIs fall under the write limit, for the batch APIs, each ite
 </Info>
 
 At any time, any Member that uses FIX or is at the highest possible API tier is eligible for an upgrade to its rate limit upon demonstration that such a tier is necessary for its bona fide market activity.
+
+
+Built with [Mintlify](https://mintlify.com).

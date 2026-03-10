@@ -125,3 +125,6 @@ This endpoint does not need any parameter.
 | **200**     | List of API keys retrieved successfully |
 | **401**     | Unauthorized                            |
 | **500**     | Internal server error                   |
+
+
+Built with [Mintlify](https://mintlify.com).

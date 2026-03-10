@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-positions
-lastmod: 2026-03-07T21:51:17.057Z
+lastmod: 2026-03-09T04:44:13.502Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -101,21 +101,9 @@ operations:
                     type: string
                     description: Unique market identifier
                     required: false
-                  - name: position
-                    type: integer
-                    description: >-
-                      Current net position (positive for long, negative for
-                      short)
-                    required: false
                   - name: position_fp
                     type: string
                     description: Fixed-point net position (2 decimals)
-                    required: false
-                  - name: position_cost
-                    type: integer
-                    description: >-
-                      Current cost basis of the position in centi-cents
-                      (1/10,000th of a dollar)
                     required: false
                   - name: position_cost_dollars
                     type: string
@@ -123,37 +111,17 @@ operations:
                       Current cost basis of the position as a fixed-point dollar
                       string
                     required: false
-                  - name: realized_pnl
-                    type: integer
-                    description: >-
-                      Realized profit/loss in centi-cents (1/10,000th of a
-                      dollar)
-                    required: false
                   - name: realized_pnl_dollars
                     type: string
                     description: Realized profit/loss as a fixed-point dollar string
-                    required: false
-                  - name: fees_paid
-                    type: integer
-                    description: Total fees paid in centi-cents (1/10,000th of a dollar)
                     required: false
                   - name: fees_paid_dollars
                     type: string
                     description: Total fees paid as a fixed-point dollar string
                     required: false
-                  - name: position_fee_cost
-                    type: integer
-                    description: >-
-                      Total position fee cost in centi-cents (1/10,000th of a
-                      dollar)
-                    required: false
                   - name: position_fee_cost_dollars
                     type: string
                     description: Total position fee cost as a fixed-point dollar string
-                    required: false
-                  - name: volume
-                    type: integer
-                    description: Total volume traded
                     required: false
                   - name: volume_fp
                     type: string
@@ -174,7 +142,7 @@ operations:
             type:
               type: string
               const: market_position
-              x-parser-schema-id: <anonymous-schema-122>
+              x-parser-schema-id: <anonymous-schema-93>
             sid:
               type: integer
               description: >-
@@ -187,23 +155,17 @@ operations:
               required:
                 - user_id
                 - market_ticker
-                - position
                 - position_fp
-                - position_cost
                 - position_cost_dollars
-                - realized_pnl
                 - realized_pnl_dollars
-                - fees_paid
                 - fees_paid_dollars
-                - position_fee_cost
                 - position_fee_cost_dollars
-                - volume
                 - volume_fp
               properties:
                 user_id:
                   type: string
                   description: User ID for the position
-                  x-parser-schema-id: <anonymous-schema-124>
+                  x-parser-schema-id: <anonymous-schema-95>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -212,71 +174,37 @@ operations:
                     - FED-23DEC-T3.00
                     - HIGHNY-22DEC23-B53.5
                   x-parser-schema-id: marketTicker
-                position:
-                  type: integer
-                  description: Current net position (positive for long, negative for short)
-                  format: int32
-                  x-parser-schema-id: <anonymous-schema-125>
                 position_fp:
                   type: string
                   description: Fixed-point net position (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-126>
-                position_cost:
-                  type: integer
-                  description: >-
-                    Current cost basis of the position in centi-cents
-                    (1/10,000th of a dollar)
-                  format: int64
-                  x-parser-schema-id: <anonymous-schema-127>
+                  x-parser-schema-id: <anonymous-schema-96>
                 position_cost_dollars:
                   type: string
                   description: >-
                     Current cost basis of the position as a fixed-point dollar
                     string
-                  x-parser-schema-id: <anonymous-schema-128>
-                realized_pnl:
-                  type: integer
-                  description: Realized profit/loss in centi-cents (1/10,000th of a dollar)
-                  format: int64
-                  x-parser-schema-id: <anonymous-schema-129>
+                  x-parser-schema-id: <anonymous-schema-97>
                 realized_pnl_dollars:
                   type: string
                   description: Realized profit/loss as a fixed-point dollar string
-                  x-parser-schema-id: <anonymous-schema-130>
-                fees_paid:
-                  type: integer
-                  description: Total fees paid in centi-cents (1/10,000th of a dollar)
-                  format: int64
-                  x-parser-schema-id: <anonymous-schema-131>
+                  x-parser-schema-id: <anonymous-schema-98>
                 fees_paid_dollars:
                   type: string
                   description: Total fees paid as a fixed-point dollar string
-                  x-parser-schema-id: <anonymous-schema-132>
-                position_fee_cost:
-                  type: integer
-                  description: >-
-                    Total position fee cost in centi-cents (1/10,000th of a
-                    dollar)
-                  format: int64
-                  x-parser-schema-id: <anonymous-schema-133>
+                  x-parser-schema-id: <anonymous-schema-99>
                 position_fee_cost_dollars:
                   type: string
                   description: Total position fee cost as a fixed-point dollar string
-                  x-parser-schema-id: <anonymous-schema-134>
-                volume:
-                  type: integer
-                  description: Total volume traded
-                  format: int32
-                  x-parser-schema-id: <anonymous-schema-135>
+                  x-parser-schema-id: <anonymous-schema-100>
                 volume_fp:
                   type: string
                   description: Fixed-point total volume traded (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-136>
+                  x-parser-schema-id: <anonymous-schema-101>
                 subaccount:
                   type: integer
                   description: Optional subaccount number for the position
-                  x-parser-schema-id: <anonymous-schema-137>
-              x-parser-schema-id: <anonymous-schema-123>
+                  x-parser-schema-id: <anonymous-schema-102>
+              x-parser-schema-id: <anonymous-schema-94>
           x-parser-schema-id: marketPositionPayload
         title: Market Position Update
         description: Real-time position updates for authenticated user
@@ -287,17 +215,11 @@ operations:
             "msg": {
               "user_id": "user123",
               "market_ticker": "FED-23DEC-T3.00",
-              "position": 100,
               "position_fp": "100.00",
-              "position_cost": 500000,
               "position_cost_dollars": "50.0000",
-              "realized_pnl": 100000,
               "realized_pnl_dollars": "10.0000",
-              "fees_paid": 10000,
               "fees_paid_dollars": "1.0000",
-              "position_fee_cost": 5000,
               "position_fee_cost_dollars": "0.5000",
-              "volume": 15,
               "volume_fp": "15.00"
             }
           }
@@ -329,3 +251,5 @@ securitySchemes:
     extensions: []
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

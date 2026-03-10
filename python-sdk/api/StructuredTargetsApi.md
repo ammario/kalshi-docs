@@ -72,3 +72,6 @@ Page size (min: 1, max: 2000)
 | **200**     | Structured targets retrieved successfully |
 | **401**     | Unauthorized                              |
 | **500**     | Internal server error                     |
+
+
+Built with [Mintlify](https://mintlify.com).

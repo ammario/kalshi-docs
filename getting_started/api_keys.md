@@ -195,3 +195,6 @@ axios.get(baseUrl + path, { headers })
         console.error('Error:', error);
     });
 ```
+
+
+Built with [Mintlify](https://mintlify.com).

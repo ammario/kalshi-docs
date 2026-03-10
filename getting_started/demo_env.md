@@ -15,3 +15,6 @@ For testing purposes, Kalshi offers a *demo* environment with mock funds. You ca
 To set up a Kalshi Demo account, [follow this step-by-step tutorial](https://docs.google.com/presentation/d/e/2PACX-1vRvhUAqRBYzJmt7JCinMXmu6KVWkj-cc7ikDXGConmqjcv4mnlJacgHPcZJ20fWWnrYdubn-oczclKP/pub?start=false\&loop=false\&delayms=3000\&slide=id.p).
 
 Demo's API root is `https://demo-api.kalshi.co/trade-api/v2`.
+
+
+Built with [Mintlify](https://mintlify.com).

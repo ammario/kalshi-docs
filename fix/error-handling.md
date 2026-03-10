@@ -225,3 +225,6 @@ Delayed errors during processing:
 ```
 Request → Initial Accept → Processing → Later Error Report
 ```
+
+
+Built with [Mintlify](https://mintlify.com).

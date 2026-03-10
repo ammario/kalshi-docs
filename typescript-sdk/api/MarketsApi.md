@@ -352,3 +352,6 @@ No authorization required
 | **500**     | Internal server error         | -                |
 
 [\[Back to top\]](#) [\[Back to API list\]](../README.md#documentation-for-api-endpoints) [\[Back to Model list\]](../README.md#documentation-for-models) [\[Back to README\]](../README.md)
+
+
+Built with [Mintlify](https://mintlify.com).

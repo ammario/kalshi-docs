@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/search/get-filters-for-sports
-lastmod: 2026-03-07T21:51:15.344Z
+lastmod: 2026-03-09T12:51:04.885Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,7 +21,7 @@ This endpoint returns filtering options available for each sport, including scop
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -131,3 +131,5 @@ components:
             type: string
 
 ````
+
+Built with [Mintlify](https://mintlify.com).

@@ -246,3 +246,6 @@ def calculate_depth(orderbook_data, depth_cents=5):
 * Learn about [making authenticated requests](/getting_started/api_keys) to place orders
 * Explore [WebSocket connections](/websockets/orderbook-updates) for real-time orderbook updates
 * Read about [market mechanics](https://kalshi.com/learn) on the Kalshi website
+
+
+Built with [Mintlify](https://mintlify.com).

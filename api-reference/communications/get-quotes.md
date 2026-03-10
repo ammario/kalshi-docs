@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2026-03-07T21:51:15.689Z
+lastmod: 2026-03-09T12:51:05.211Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-07T21:51:15.689Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.8.0
+  version: 3.9.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -174,10 +174,7 @@ components:
         - creator_id
         - rfq_creator_id
         - market_ticker
-        - contracts
         - contracts_fp
-        - yes_bid
-        - no_bid
         - yes_bid_dollars
         - no_bid_dollars
         - created_ts
@@ -200,18 +197,9 @@ components:
         market_ticker:
           type: string
           description: The ticker of the market this quote is for
-        contracts:
-          type: integer
-          description: Number of contracts in the quote
         contracts_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: String representation of the number of contracts in the quote
-        yes_bid:
-          type: integer
-          description: Bid price for YES contracts, in cents
-        no_bid:
-          type: integer
-          description: Bid price for NO contracts, in cents
         yes_bid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Bid price for YES contracts, in dollars
@@ -272,13 +260,6 @@ components:
           type: string
           description: User ID of the RFQ creator (private field)
           x-go-type-skip-optional-pointer: true
-        rfq_target_cost_centi_cents:
-          type: integer
-          format: int64
-          description: >-
-            DEPRECATED: Total value requested in the RFQ in centi-cents. Use
-            rfq_target_cost_dollars instead.
-          deprecated: true
         rfq_target_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total value requested in the RFQ in dollars
@@ -355,3 +336,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+Built with [Mintlify](https://mintlify.com).
