@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fixed_point_migration
-lastmod: 2026-03-09T04:44:26.114Z
+lastmod: 2026-03-10T20:42:53.398Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-03-09T04:44:26.114Z
 
 > Migrating to fixed-point representation for contract quantities and prices.
 
-Last Updated: March 8, 2026
+Last Updated: March 10, 2026
 
 <Warning title="Upcoming Changes">
   | Date         | Change                                               | Details                                                                                                                                                                                                                                             |
@@ -147,12 +147,14 @@ The following legacy integer fields are removed from outgoing REST and WebSocket
 
 **Fill** (`GET /portfolio/fills`):
 
-| Removed field | Replacement                          |
-| ------------- | ------------------------------------ |
-| `count`       | `count_fp`                           |
-| `price`       | `yes_price_fixed` / `no_price_fixed` |
-| `yes_price`   | `yes_price_fixed`                    |
-| `no_price`    | `no_price_fixed`                     |
+| Removed field | Replacement                              |
+| ------------- | ---------------------------------------- |
+| `count`       | `count_fp`                               |
+| `price`       | `yes_price_dollars` / `no_price_dollars` |
+| `yes_price`   | `yes_price_dollars`                      |
+| `no_price`    | `no_price_dollars`                       |
+
+The legacy `yes_price_fixed` and `no_price_fixed` fields remain available temporarily as deprecated compatibility aliases. Migrate to `yes_price_dollars` and `no_price_dollars`.
 
 **MarketPosition / EventPosition** (`GET /portfolio/positions`):
 
@@ -173,6 +175,28 @@ The following legacy integer fields are removed from outgoing REST and WebSocket
 | ------------- | -------------- |
 | `yes_count`   | `yes_count_fp` |
 | `no_count`    | `no_count_fp`  |
+
+## Deprecated Fields Still Emitted For Compatibility
+
+The following legacy fields are still returned for now but are deprecated. They are not part of the March 12 hard cut, but clients should migrate now to avoid a later follow-up migration.
+
+**Fill** (`GET /portfolio/fills`, `GET /historical/fills`):
+
+| Deprecated field  | Recommended field   |
+| ----------------- | ------------------- |
+| `yes_price_fixed` | `yes_price_dollars` |
+| `no_price_fixed`  | `no_price_dollars`  |
+
+These `_fixed` aliases are retained only for compatibility. The preferred convention is `_dollars`.
+
+**Settlement** (`GET /portfolio/settlements`):
+
+| Deprecated field | Recommended field        |
+| ---------------- | ------------------------ |
+| `yes_total_cost` | `yes_total_cost_dollars` |
+| `no_total_cost`  | `no_total_cost_dollars`  |
+
+These cent-denominated settlement cost fields remain available for now because the `_dollars` fields were added later in the migration, but clients are recommended to migrate now.
 
 **Candlestick** (`GET /markets/{ticker}/candlesticks`):
 

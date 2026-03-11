@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-cutoff-timestamps
-lastmod: 2026-03-09T12:51:04.296Z
+lastmod: 2026-03-10T22:07:24.454Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,7 +24,7 @@ lastmod: 2026-03-09T12:51:04.296Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.9.0
+  version: 3.10.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

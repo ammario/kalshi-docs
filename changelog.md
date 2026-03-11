@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-03-09T04:44:26.072Z
+lastmod: 2026-03-10T20:42:52.966Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,21 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Mar 10, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Fill prices adopt _dollars aliases; settlements add dollar cost fields",
+description: "Fill responses now expose yes_price_dollars and no_price_dollars, and settlements now expose yes_total_cost_dollars and no_total_cost_dollars. Legacy aliases remain available for now but are deprecated."
+}}
+>
+  * `Fill` responses now expose `yes_price_dollars` and `no_price_dollars` to align with the API-wide `_dollars` naming convention. Legacy `yes_price_fixed` and `no_price_fixed` remain available for now but are deprecated.
+  * `GET /portfolio/settlements` now exposes `yes_total_cost_dollars` and `no_total_cost_dollars` in fixed-point dollars.
+  * Legacy settlement cent fields `yes_total_cost` and `no_total_cost` remain available for now because these `_dollars` fields were added late in the fixed-point migration, but clients are recommended to migrate now.
+
+  See [Fixed-Point Migration](/getting_started/fixed_point_migration) for the recommended field mappings.
+</Update>
 
 <Update
   label="Mar 8, 2026"

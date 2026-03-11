@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-03-09T12:51:04.809Z
+lastmod: 2026-03-10T22:07:24.963Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,7 @@ Fills that occurred before the historical cutoff are only available via `GET /hi
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.9.0
+  version: 3.10.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -183,6 +183,8 @@ components:
         - side
         - action
         - count_fp
+        - yes_price_dollars
+        - no_price_dollars
         - yes_price_fixed
         - no_price_fixed
         - is_taker
@@ -223,12 +225,26 @@ components:
           description: >-
             String representation of the number of contracts bought or sold in
             this fill
+        yes_price_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Fill price for the yes side in fixed-point dollars
         yes_price_fixed:
           type: string
-          description: Fill price for the yes side in fixed point dollars
+          description: >-
+            DEPRECATED: Use yes_price_dollars. This alias remains available for
+            now for compatibility. Fill price for the yes side in fixed point
+            dollars.
+          deprecated: true
+        no_price_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Fill price for the no side in fixed-point dollars
         no_price_fixed:
           type: string
-          description: Fill price for the no side in fixed point dollars
+          description: >-
+            DEPRECATED: Use no_price_dollars. This alias remains available for
+            now for compatibility. Fill price for the no side in fixed point
+            dollars.
+          deprecated: true
         is_taker:
           type: boolean
           description: >-
