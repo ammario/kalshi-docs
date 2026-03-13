@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/multivariate-lookups
-lastmod: 2026-03-09T04:44:13.526Z
+lastmod: 2026-03-11T19:30:26.168Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -93,7 +93,7 @@ operations:
             type:
               type: string
               const: multivariate_lookup
-              x-parser-schema-id: <anonymous-schema-136>
+              x-parser-schema-id: <anonymous-schema-140>
             sid:
               type: integer
               description: >-
@@ -111,13 +111,13 @@ operations:
               properties:
                 collection_ticker:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-138>
+                  x-parser-schema-id: <anonymous-schema-142>
                 event_ticker:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-139>
+                  x-parser-schema-id: <anonymous-schema-143>
                 market_ticker:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-140>
+                  x-parser-schema-id: <anonymous-schema-144>
                 selected_markets:
                   type: array
                   items:
@@ -129,10 +129,10 @@ operations:
                     properties:
                       event_ticker:
                         type: string
-                        x-parser-schema-id: <anonymous-schema-143>
+                        x-parser-schema-id: <anonymous-schema-147>
                       market_ticker:
                         type: string
-                        x-parser-schema-id: <anonymous-schema-144>
+                        x-parser-schema-id: <anonymous-schema-148>
                       side:
                         type: string
                         description: Market side
@@ -140,9 +140,9 @@ operations:
                           - 'yes'
                           - 'no'
                         x-parser-schema-id: marketSide
-                    x-parser-schema-id: <anonymous-schema-142>
-                  x-parser-schema-id: <anonymous-schema-141>
-              x-parser-schema-id: <anonymous-schema-137>
+                    x-parser-schema-id: <anonymous-schema-146>
+                  x-parser-schema-id: <anonymous-schema-145>
+              x-parser-schema-id: <anonymous-schema-141>
           x-parser-schema-id: multivariateLookupPayload
         title: Multivariate Lookup
         description: Multivariate collection lookup notification

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-03-10T20:42:52.966Z
+lastmod: 2026-03-12T22:38:25.136Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,51 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Mar 12, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "New market_lifecycle_v2 event types for fractional trading and price level structure changes",
+description: "The market_lifecycle_v2 WebSocket channel now emits events when a market's fractional trading setting or price level structure is changed."
+}}
+>
+  Two new event types added to the `market_lifecycle_v2` WebSocket channel:
+
+  * **`fractional_trading_updated`**: emitted when a market's fractional trading setting is changed. Includes `fractional_trading_enabled` (boolean).
+  * **`price_level_structure_updated`**: emitted when a market's price level structure is changed. Includes `price_level_structure` (string, e.g. `"linear_cent"`, `"deci_cent"`, `"tapered_deci_cent"`).
+
+  Additionally, the `created` event now includes `fractional_trading_enabled` and `price_level_structure` fields.
+
+  **Affected channel:**
+
+  * `market_lifecycle_v2`
+</Update>
+
+<Update
+  label="Mar 11, 2026"
+  tags={["Released", "Change"]}
+  rss={{
+title: "Yes no count in quotes",
+description: "Quotes now communicate the computes yes/no count based on the defined prices."
+}}
+>
+  When pulling quotes, two new fields return the computed quote size (measured in contracts) derived from the specified prices and the requested notional size in the RFQ.
+</Update>
+
+<Update
+  label="Mar 11, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Legacy fields temporarily restored; nested market bid sizes fixed",
+description: "Legacy fields temporarily restored on market_positions WebSocket and GetSettlements to allow additional migration time. yes_bid_size_fp and yes_ask_size_fp now populated on nested market responses."
+}}
+>
+  * The following legacy fields are temporarily restored to allow additional migration time. Their `_dollars` equivalents remain the recommended fields:
+    * `market_positions` WebSocket: `position_cost`, `realized_pnl`, `fees_paid`, `position_fee_cost`
+    * `GET /portfolio/settlements`: `yes_total_cost`, `no_total_cost`
+  * `yes_bid_size_fp` and `yes_ask_size_fp` are now correctly populated on nested market responses (`GET /events/{ticker}`).
+</Update>
 
 <Update
   label="Mar 10, 2026"

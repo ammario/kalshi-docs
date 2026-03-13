@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-03-03T20:32:22.722Z
+lastmod: 2026-03-11T14:19:37.453Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,7 +24,7 @@ Used to submit a new order to the Exchange.
 | ----- | ----------------------- | ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 11    | ClOrderID               | String       | Y        | Client order identifier for idempotency. Must not match any open orders.<br /><br />**UUID format is preferred.**<br /><br />Validation:<br />• Maximum 64 characters<br />• Only alphanumeric, "+", "=", "\_", "-", and ":" characters allowed<br />• Pattern: `^[\-\w:+=/]*$`                                                                                                            |
 | 18    | ExecInst                | Char         | N        | Execution instruction flags.<br /><br />Supported values:<br />6 = Post Only                                                                                                                                                                                                                                                                                                               |
-| 38    | OrderQty                | Integer      | Y        | Number of contracts to trade.                                                                                                                                                                                                                                                                                                                                                              |
+| 38    | OrderQty                | Decimal      | Y        | Quantity of contracts to trade. Fractional quantities are supported.                                                                                                                                                                                                                                                                                                                       |
 | 40    | OrdType                 | Char         | Y        | Order type.<br /><br />Supported values:<br />2 = Limit                                                                                                                                                                                                                                                                                                                                    |
 | 44    | Price                   | Integer      | Y        | Price per contract in cents (1-99).                                                                                                                                                                                                                                                                                                                                                        |
 | 54    | Side                    | Char         | Y        | Side of the order.<br /><br />Supported values:<br />1 = Buy (Yes contracts)<br />2 = Sell (No contracts)                                                                                                                                                                                                                                                                                  |
@@ -61,7 +61,7 @@ Used to modify an existing order without canceling it.
 | --- | ------------ | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 11  | ClOrderID    | String  | Y        | Unique modification request identifier. Must not match any existing ClOrderID.<br /><br />**UUID format is preferred.**<br /><br />Validation:<br />• Maximum 64 characters<br />• Only alphanumeric, "+", "=", "\_", "-", and ":" characters allowed<br />• Pattern: `^[\-\w:+=/]*$` |
 | 37  | OrderID      | String  | N        | Order identifier provided by Kalshi Exchange.                                                                                                                                                                                                                                         |
-| 38  | OrderQty     | Integer | Y        | New total quantity for the order.<br /><br />**Note:** If OrderQty equals filled quantity, the order will be canceled. If less than filled quantity, the request will be rejected.                                                                                                    |
+| 38  | OrderQty     | Decimal | Y        | New total quantity for the order. Fractional quantities are supported.<br /><br />**Note:** If OrderQty equals filled quantity, the order will be canceled. If less than filled quantity, the request will be rejected.                                                               |
 | 40  | OrdType      | Char    | Y        | Order type.<br /><br />Supported values:<br />2 = Limit                                                                                                                                                                                                                               |
 | 41  | OrigClOrdID  | String  | Y        | ClOrderID of the order to modify.                                                                                                                                                                                                                                                     |
 | 44  | Price        | Integer | N        | New price per contract in cents (1-99). Required if changing price.                                                                                                                                                                                                                   |
@@ -96,12 +96,12 @@ This message is sent by Kalshi Exchange back to clients to reflect changes to an
 | --- | ------------ | ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 6   | AvgPx        | Decimal      | Y        | Calculated average price of all fills on this order.                                                                                                                                                                                        |
 | 11  | ClOrderID    | String       | Y        | ClOrderID provided by the initiator on the last message that made any change to the order.                                                                                                                                                  |
-| 14  | CumQty       | Integer      | Y        | Total number of contracts filled in this order so far.                                                                                                                                                                                      |
+| 14  | CumQty       | Decimal      | Y        | Total quantity filled in this order so far.                                                                                                                                                                                                 |
 | 17  | ExecID       | String       | Y        | Unique sequenced identifier for this report message.<br /><br />**Format:** `integer;integer` pattern (e.g., "4;4", "4;7", "7;3")<br /><br />Monotonically increasing at the Exchange level. Returns "-1;-1" for PENDING execution reports. |
 | 31  | LastPx       | Integer      | C        | Price of this (last) fill in cents. Present only for trade execution reports.                                                                                                                                                               |
-| 32  | LastQty      | Integer      | C        | Number of contracts bought or sold in this fill. Present only for trade execution reports.                                                                                                                                                  |
+| 32  | LastQty      | Decimal      | C        | Quantity bought or sold in this fill. Present only for trade execution reports.                                                                                                                                                             |
 | 37  | OrderID      | String       | Y        | Unique identifier for the order in the Kalshi Exchange. Use this ID when referencing the order for support.                                                                                                                                 |
-| 38  | OrderQty     | Integer      | Y        | Total number of contracts currently in the order. OrderQty = CumQty + LeavesQty.                                                                                                                                                            |
+| 38  | OrderQty     | Decimal      | Y        | Total quantity currently in the order. OrderQty = CumQty + LeavesQty.                                                                                                                                                                       |
 | 39  | OrdStatus    | Char         | Y        | Current status of the order after this event. See Order Status values below.                                                                                                                                                                |
 | 41  | OrigClOrdID  | String       | C        | ClOrderID of the previous non-rejected order state. Present for Replaced/Canceled orders.                                                                                                                                                   |
 | 44  | Price        | Integer      | C        | Price per contract in cents.                                                                                                                                                                                                                |
@@ -112,7 +112,7 @@ This message is sent by Kalshi Exchange back to clients to reflect changes to an
 | 103 | OrdRejReason | Integer      | C        | Rejection reason. Present only when ExecType = Rejected. See Order Rejection Reasons below.                                                                                                                                                 |
 | 126 | ExpireTime   | UTCTimestamp | C        | Order expiration timestamp. Returns 11:59pm ET for Day orders.                                                                                                                                                                              |
 | 150 | ExecType     | Char         | Y        | Reason why this execution report was sent. See Execution Types below.                                                                                                                                                                       |
-| 151 | LeavesQty    | Integer      | Y        | Remaining quantity open for further execution on this order.                                                                                                                                                                                |
+| 151 | LeavesQty    | Decimal      | Y        | Remaining quantity open for further execution on this order.                                                                                                                                                                                |
 | 448 | PartyID      | UUID         | N        | **Only applicable for FCM entities .** Sub-account identifier.                                                                                                                                                                              |
 | 452 | PartyRole    | Integer      | N        | **Only applicable for FCM entities .** Party role.<br /><br />Supported values:<br />24 = Customer Account                                                                                                                                  |
 | 453 | NoPartyIDs   | Integer      | N        | **Only applicable for FCM entities .** Number of parties. Currently, only 1 is supported.                                                                                                                                                   |
@@ -198,17 +198,17 @@ Common values for the Text field in Execution Reports:
 
 When ExecType=Trade:
 
-| Tag  | Name               | Description                    |
-| ---- | ------------------ | ------------------------------ |
-| 704  | LongQty            | Net Yes position after trade   |
-| 705  | ShortQty           | Net No position after trade    |
-| 136  | NoMiscFees         | Number of fees                 |
-| 137  | MiscFeeAmt         | Total fees in dollars          |
-| 138  | MiscFeeCurr        | Currency (USD)                 |
-| 139  | MiscFeeType        | Exchange Fees\<4>              |
-| 891  | MiscFeeBasis       | Fee unit (always ABSOLUTE\<0>) |
-| 880  | TrdMatchID         | Unique trade identifier        |
-| 1057 | AggressorIndicator | Taker/Maker flag               |
+| Tag  | Name               | Description                                        |
+| ---- | ------------------ | -------------------------------------------------- |
+| 704  | LongQty            | Net Yes position after trade as a decimal quantity |
+| 705  | ShortQty           | Net No position after trade as a decimal quantity  |
+| 136  | NoMiscFees         | Number of fees                                     |
+| 137  | MiscFeeAmt         | Total fees in dollars                              |
+| 138  | MiscFeeCurr        | Currency (USD)                                     |
+| 139  | MiscFeeType        | Exchange Fees\<4>                                  |
+| 891  | MiscFeeBasis       | Fee unit (always ABSOLUTE\<0>)                     |
+| 880  | TrdMatchID         | Unique trade identifier                            |
+| 1057 | AggressorIndicator | Taker/Maker flag                                   |
 
 ### Collateral Changes
 
