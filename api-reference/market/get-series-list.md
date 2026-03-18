@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series-list
-lastmod: 2026-03-12T00:58:35.201Z
+lastmod: 2026-03-18T00:25:55.907Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:35.201Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /series
+````yaml /openapi.yaml get /series
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

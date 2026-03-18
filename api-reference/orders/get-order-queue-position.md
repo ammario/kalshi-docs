@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-order-queue-position
-lastmod: 2026-03-12T00:58:34.347Z
+lastmod: 2026-03-18T00:25:55.168Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.347Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /portfolio/orders/{order_id}/queue_position
+````yaml /openapi.yaml get /portfolio/orders/{order_id}/queue_position
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

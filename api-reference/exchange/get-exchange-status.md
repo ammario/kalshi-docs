@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-exchange-status
-lastmod: 2026-03-12T00:58:34.159Z
+lastmod: 2026-03-18T00:25:54.978Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.159Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /exchange/status
+````yaml /openapi.yaml get /exchange/status
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

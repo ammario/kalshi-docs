@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-market-candlesticks
-lastmod: 2026-03-12T00:58:34.081Z
+lastmod: 2026-03-18T00:25:54.900Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.081Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /historical/markets/{ticker}/candlesticks
+````yaml /openapi.yaml get /historical/markets/{ticker}/candlesticks
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-orders
-lastmod: 2026-03-12T00:58:34.864Z
+lastmod: 2026-03-18T00:25:55.618Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -16,7 +16,7 @@ This endpoint requires FCM member access level and allows filtering orders by su
 
 ## OpenAPI
 
-````yaml openapi.yaml get /fcm/orders
+````yaml /openapi.yaml get /fcm/orders
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

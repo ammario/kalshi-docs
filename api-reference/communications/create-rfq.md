@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-03-12T00:58:34.983Z
+lastmod: 2026-03-18T00:25:55.726Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.983Z
 
 ## OpenAPI
 
-````yaml openapi.yaml post /communications/rfqs
+````yaml /openapi.yaml post /communications/rfqs
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

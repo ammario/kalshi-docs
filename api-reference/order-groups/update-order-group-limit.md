@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/update-order-group-limit
-lastmod: 2026-03-12T00:58:34.445Z
+lastmod: 2026-03-18T00:25:55.251Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.445Z
 
 ## OpenAPI
 
-````yaml openapi.yaml put /portfolio/order_groups/{order_group_id}/limit
+````yaml /openapi.yaml put /portfolio/order_groups/{order_group_id}/limit
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

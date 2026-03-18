@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-forecast-percentile-history
-lastmod: 2026-03-12T00:58:34.810Z
+lastmod: 2026-03-18T00:25:55.571Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.810Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /series/{series_ticker}/events/{ticker}/forecast_percentile_history
+````yaml /openapi.yaml get /series/{series_ticker}/events/{ticker}/forecast_percentile_history
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

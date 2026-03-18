@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fixed_point_migration
-lastmod: 2026-03-10T20:42:53.398Z
+lastmod: 2026-03-17T15:15:08.760Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -13,11 +13,11 @@ lastmod: 2026-03-10T20:42:53.398Z
 Last Updated: March 10, 2026
 
 <Warning title="Upcoming Changes">
-  | Date         | Change                                               | Details                                                                                                                                                                                                                                             |
-  | ------------ | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | **March 9**  | Subpenny pricing enabled                             | `KXGREENLAND-29` (`deci_cent`), `KXGDPNOM-RUS26` (`tapered_deci_cent`)                                                                                                                                                                              |
-  | **March 12** | Fractional trading enabled                           | `KXJOBLESSCLAIMS-26MAR19`, `KXHOUHOMEVAL-26MAR19`, `KXDENHOMEVAL-26MAR19`, `KXSEAHOMEVAL-26MAR19`, `KXSDHOMEVAL-26MAR19`, `KXBOSHOMEVAL-26MAR19`, `KXUSHOMEVAL-26MAR19`, `KXCBDECISIONBRAZIL-26APR29`, `KXCBDECISIONJAPAN-26APR28`, `KXUE-AUS26APR` |
-  | **March 12** | Legacy integer fields removed from all API responses | See [removed fields](#removed-legacy-fields)                                                                                                                                                                                                        |
+  | Date         | Change                                                | Details                                                                                                                                                                                                                                             |
+  | ------------ | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | **March 9**  | Subpenny pricing enabled                              | `KXGREENLAND-29` (`deci_cent`), `KXGDPNOM-RUS26` (`tapered_deci_cent`)                                                                                                                                                                              |
+  | **March 12** | Fractional trading enabled                            | `KXJOBLESSCLAIMS-26MAR19`, `KXHOUHOMEVAL-26MAR19`, `KXDENHOMEVAL-26MAR19`, `KXSEAHOMEVAL-26MAR19`, `KXSDHOMEVAL-26MAR19`, `KXBOSHOMEVAL-26MAR19`, `KXUSHOMEVAL-26MAR19`, `KXCBDECISIONBRAZIL-26APR29`, `KXCBDECISIONJAPAN-26APR28`, `KXUE-AUS26APR` |
+  | **March 12** | Legacy integer fields removed from most API responses | Settlement cost fields `yes_total_cost` and `no_total_cost` remain temporarily available. See [removed fields](#removed-legacy-fields).                                                                                                             |
 </Warning>
 
 ## Overview
@@ -99,236 +99,13 @@ See [Fee Rounding](/getting_started/fee_rounding) for the mechanics and worked e
 
 ## Removed Legacy Fields
 
-The following legacy integer fields are removed from outgoing REST and WebSocket messages in the fixed-point hard cut. Use the corresponding `_fp` or `_dollars` field instead. For the full updated specs, see [openapi.yaml](https://docs.kalshi.com/openapi.yaml) and [asyncapi.yaml](https://docs.kalshi.com/asyncapi.yaml).
+Most legacy integer price and count fields were removed from outgoing REST and WebSocket payloads on March 12, 2026.
 
-### REST API (`/trade-api/v2`)
+### Settlement Compatibility
 
-**Market** (`GET /markets`, `GET /markets/{ticker}`):
+`GET /portfolio/settlements` still returns the deprecated cent-denominated fields `yes_total_cost` and `no_total_cost` for compatibility.
 
-| Removed field      | Replacement                |
-| ------------------ | -------------------------- |
-| `yes_bid`          | `yes_bid_dollars`          |
-| `yes_ask`          | `yes_ask_dollars`          |
-| `no_bid`           | `no_bid_dollars`           |
-| `no_ask`           | `no_ask_dollars`           |
-| `last_price`       | `last_price_dollars`       |
-| `volume`           | `volume_fp`                |
-| `volume_24h`       | `volume_24h_fp`            |
-| `open_interest`    | `open_interest_fp`         |
-| `notional_value`   | `notional_value_dollars`   |
-| `previous_yes_bid` | `previous_yes_bid_dollars` |
-| `previous_yes_ask` | `previous_yes_ask_dollars` |
-| `previous_price`   | `previous_price_dollars`   |
-| `liquidity`        | `liquidity_dollars`        |
-| `settlement_value` | `settlement_value_dollars` |
-
-**Order** (`GET /portfolio/orders`, `POST /portfolio/orders`, `PATCH /portfolio/orders/{order_id}`, `DELETE /portfolio/orders/{order_id}`):
-
-| Removed field     | Replacement               |
-| ----------------- | ------------------------- |
-| `yes_price`       | `yes_price_dollars`       |
-| `no_price`        | `no_price_dollars`        |
-| `fill_count`      | `fill_count_fp`           |
-| `remaining_count` | `remaining_count_fp`      |
-| `initial_count`   | `initial_count_fp`        |
-| `taker_fill_cost` | `taker_fill_cost_dollars` |
-| `maker_fill_cost` | `maker_fill_cost_dollars` |
-| `taker_fees`      | `taker_fees_dollars`      |
-| `maker_fees`      | `maker_fees_dollars`      |
-
-**Trade** (`GET /markets/{ticker}/trades`):
-
-| Removed field | Replacement                              |
-| ------------- | ---------------------------------------- |
-| `count`       | `count_fp`                               |
-| `price`       | `yes_price_dollars` / `no_price_dollars` |
-| `yes_price`   | `yes_price_dollars`                      |
-| `no_price`    | `no_price_dollars`                       |
-
-**Fill** (`GET /portfolio/fills`):
-
-| Removed field | Replacement                              |
-| ------------- | ---------------------------------------- |
-| `count`       | `count_fp`                               |
-| `price`       | `yes_price_dollars` / `no_price_dollars` |
-| `yes_price`   | `yes_price_dollars`                      |
-| `no_price`    | `no_price_dollars`                       |
-
-The legacy `yes_price_fixed` and `no_price_fixed` fields remain available temporarily as deprecated compatibility aliases. Migrate to `yes_price_dollars` and `no_price_dollars`.
-
-**MarketPosition / EventPosition** (`GET /portfolio/positions`):
-
-| Removed field       | Replacement               |
-| ------------------- | ------------------------- |
-| `position`          | `position_fp`             |
-| `total_traded`      | `total_traded_dollars`    |
-| `market_exposure`   | `market_exposure_dollars` |
-| `realized_pnl`      | `realized_pnl_dollars`    |
-| `fees_paid`         | `fees_paid_dollars`       |
-| `total_cost`        | `total_cost_dollars`      |
-| `total_cost_shares` | `total_cost_shares_fp`    |
-| `event_exposure`    | `event_exposure_dollars`  |
-
-**Settlement** (`GET /portfolio/settlements`):
-
-| Removed field | Replacement    |
-| ------------- | -------------- |
-| `yes_count`   | `yes_count_fp` |
-| `no_count`    | `no_count_fp`  |
-
-## Deprecated Fields Still Emitted For Compatibility
-
-The following legacy fields are still returned for now but are deprecated. They are not part of the March 12 hard cut, but clients should migrate now to avoid a later follow-up migration.
-
-**Fill** (`GET /portfolio/fills`, `GET /historical/fills`):
-
-| Deprecated field  | Recommended field   |
-| ----------------- | ------------------- |
-| `yes_price_fixed` | `yes_price_dollars` |
-| `no_price_fixed`  | `no_price_dollars`  |
-
-These `_fixed` aliases are retained only for compatibility. The preferred convention is `_dollars`.
-
-**Settlement** (`GET /portfolio/settlements`):
-
-| Deprecated field | Recommended field        |
-| ---------------- | ------------------------ |
-| `yes_total_cost` | `yes_total_cost_dollars` |
-| `no_total_cost`  | `no_total_cost_dollars`  |
-
-These cent-denominated settlement cost fields remain available for now because the `_dollars` fields were added later in the migration, but clients are recommended to migrate now.
-
-**Candlestick** (`GET /markets/{ticker}/candlesticks`):
-
-| Removed field                                                                       | Replacement                                                    |
-| ----------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| `volume`                                                                            | `volume_fp`                                                    |
-| `open_interest`                                                                     | `open_interest_fp`                                             |
-| BidAskDistribution: `open`, `close`, `high`, `low`                                  | `open_dollars`, `close_dollars`, `high_dollars`, `low_dollars` |
-| PriceDistribution: `open`, `close`, `high`, `low`, `mean`, `previous`, `min`, `max` | `*_dollars` counterparts                                       |
-
-**Orderbook** (`GET /markets/{ticker}/orderbook`):
-
-| Removed field                       | Replacement                                     |
-| ----------------------------------- | ----------------------------------------------- |
-| `orderbook` (legacy integer arrays) | `orderbook_fp` (dollar-priced, fp-count arrays) |
-
-**Queue Position** (`GET /portfolio/orders/{order_id}/queue_position`):
-
-| Removed field    | Replacement         |
-| ---------------- | ------------------- |
-| `queue_position` | `queue_position_fp` |
-
-**Cancel/Decrease Order** (`DELETE /portfolio/orders/{order_id}`):
-
-| Removed field | Replacement     |
-| ------------- | --------------- |
-| `reduced_by`  | `reduced_by_fp` |
-
-**OrderGroup** (`GET /portfolio/order_groups`):
-
-| Removed field     | Replacement          |
-| ----------------- | -------------------- |
-| `contracts_limit` | `contracts_limit_fp` |
-
-**RFQ** (`GET /rfqs`):
-
-| Removed field             | Replacement           |
-| ------------------------- | --------------------- |
-| `contracts`               | `contracts_fp`        |
-| `target_cost_centi_cents` | `target_cost_dollars` |
-
-**Quote** (`GET /rfqs/{rfq_id}/quotes`):
-
-| Removed field                 | Replacement               |
-| ----------------------------- | ------------------------- |
-| `contracts`                   | `contracts_fp`            |
-| `yes_bid`                     | `yes_bid_dollars`         |
-| `no_bid`                      | `no_bid_dollars`          |
-| `rfq_target_cost_centi_cents` | `rfq_target_cost_dollars` |
-
-**Series** (`GET /series`):
-
-| Removed field | Replacement |
-| ------------- | ----------- |
-| `volume`      | `volume_fp` |
-
-**IncentiveProgram** (`GET /exchange/incentive_programs`):
-
-| Removed field | Replacement      |
-| ------------- | ---------------- |
-| `target_size` | `target_size_fp` |
-
-### WebSocket API
-
-**orderbook\_snapshot**:
-
-| Removed field          | Replacement      |
-| ---------------------- | ---------------- |
-| `yes` (integer arrays) | `yes_dollars_fp` |
-| `no` (integer arrays)  | `no_dollars_fp`  |
-
-**orderbook\_delta**:
-
-| Removed field | Replacement     |
-| ------------- | --------------- |
-| `price`       | `price_dollars` |
-| `delta`       | `delta_fp`      |
-
-**ticker**:
-
-| Removed field   | Replacement        |
-| --------------- | ------------------ |
-| `price`         | `price_dollars`    |
-| `yes_bid`       | `yes_bid_dollars`  |
-| `yes_ask`       | `yes_ask_dollars`  |
-| `volume`        | `volume_fp`        |
-| `open_interest` | `open_interest_fp` |
-
-**trade**:
-
-| Removed field | Replacement         |
-| ------------- | ------------------- |
-| `yes_price`   | `yes_price_dollars` |
-| `no_price`    | `no_price_dollars`  |
-| `count`       | `count_fp`          |
-
-**fill**:
-
-| Removed field   | Replacement         |
-| --------------- | ------------------- |
-| `yes_price`     | `yes_price_dollars` |
-| `count`         | `count_fp`          |
-| `post_position` | `post_position_fp`  |
-
-**market\_position**:
-
-| Removed field       | Replacement                 |
-| ------------------- | --------------------------- |
-| `position`          | `position_fp`               |
-| `position_cost`     | `position_cost_dollars`     |
-| `realized_pnl`      | `realized_pnl_dollars`      |
-| `fees_paid`         | `fees_paid_dollars`         |
-| `position_fee_cost` | `position_fee_cost_dollars` |
-| `volume`            | `volume_fp`                 |
-
-**rfq\_created / rfq\_deleted**:
-
-| Removed field | Replacement           |
-| ------------- | --------------------- |
-| `contracts`   | `contracts_fp`        |
-| `target_cost` | `target_cost_dollars` |
-
-**quote\_created / quote\_accepted**:
-
-| Removed field           | Replacement                |
-| ----------------------- | -------------------------- |
-| `yes_bid`               | `yes_bid_dollars`          |
-| `no_bid`                | `no_bid_dollars`           |
-| `yes_contracts_offered` | `yes_contracts_offered_fp` |
-| `no_contracts_offered`  | `no_contracts_offered_fp`  |
-| `rfq_target_cost`       | `rfq_target_cost_dollars`  |
-| `contracts_accepted`    | `contracts_accepted_fp`    |
+Use `yes_total_cost_dollars` and `no_total_cost_dollars` going forward. The integer settlement cost fields will be removed in a later follow-up once clients have had more time to migrate.
 
 
 Built with [Mintlify](https://mintlify.com).

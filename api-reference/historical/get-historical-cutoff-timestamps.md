@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-cutoff-timestamps
-lastmod: 2026-03-12T00:58:34.068Z
+lastmod: 2026-03-18T00:25:54.887Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,7 @@ lastmod: 2026-03-12T00:58:34.068Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /historical/cutoff
+````yaml /openapi.yaml get /historical/cutoff
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/create-api-key
-lastmod: 2026-03-12T00:58:34.620Z
+lastmod: 2026-03-18T00:25:55.414Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.620Z
 
 ## OpenAPI
 
-````yaml openapi.yaml post /api_keys
+````yaml /openapi.yaml post /api_keys
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

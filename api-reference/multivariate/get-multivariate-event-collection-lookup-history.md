@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collection-lookup-history
-lastmod: 2026-03-12T00:58:35.156Z
+lastmod: 2026-03-18T00:25:55.867Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:35.156Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /multivariate_event_collections/{collection_ticker}/lookup
+````yaml /openapi.yaml get /multivariate_event_collections/{collection_ticker}/lookup
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

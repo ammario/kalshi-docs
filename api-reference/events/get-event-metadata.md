@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-metadata
-lastmod: 2026-03-12T00:58:34.797Z
+lastmod: 2026-03-18T00:25:55.560Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.797Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /events/{event_ticker}/metadata
+````yaml /openapi.yaml get /events/{event_ticker}/metadata
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2026-03-12T00:58:34.458Z
+lastmod: 2026-03-18T00:25:55.263Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.458Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /portfolio/balance
+````yaml /openapi.yaml get /portfolio/balance
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

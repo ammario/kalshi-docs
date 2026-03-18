@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/batch-get-market-candlesticks
-lastmod: 2026-03-12T00:58:35.242Z
+lastmod: 2026-03-18T00:25:55.943Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,7 @@ lastmod: 2026-03-12T00:58:35.242Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /markets/candlesticks
+````yaml /openapi.yaml get /markets/candlesticks
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

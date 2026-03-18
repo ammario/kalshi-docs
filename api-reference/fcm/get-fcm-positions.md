@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
-lastmod: 2026-03-12T00:58:34.877Z
+lastmod: 2026-03-18T00:25:55.629Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -16,7 +16,7 @@ This endpoint requires FCM member access level and allows filtering positions by
 
 ## OpenAPI
 
-````yaml openapi.yaml get /fcm/positions
+````yaml /openapi.yaml get /fcm/positions
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

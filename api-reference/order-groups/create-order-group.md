@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/create-order-group
-lastmod: 2026-03-12T00:58:34.378Z
+lastmod: 2026-03-18T00:25:55.193Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.378Z
 
 ## OpenAPI
 
-````yaml openapi.yaml post /portfolio/order_groups/create
+````yaml /openapi.yaml post /portfolio/order_groups/create
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

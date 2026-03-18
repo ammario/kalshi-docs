@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/confirm-quote
-lastmod: 2026-03-12T00:58:35.096Z
+lastmod: 2026-03-18T00:25:55.821Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:35.096Z
 
 ## OpenAPI
 
-````yaml openapi.yaml put /communications/quotes/{quote_id}/confirm
+````yaml /openapi.yaml put /communications/quotes/{quote_id}/confirm
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

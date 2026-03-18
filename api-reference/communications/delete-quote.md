@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-quote
-lastmod: 2026-03-12T00:58:35.070Z
+lastmod: 2026-03-18T00:25:55.796Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:35.070Z
 
 ## OpenAPI
 
-````yaml openapi.yaml delete /communications/quotes/{quote_id}
+````yaml /openapi.yaml delete /communications/quotes/{quote_id}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

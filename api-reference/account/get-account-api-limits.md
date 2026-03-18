@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/account/get-account-api-limits
-lastmod: 2026-03-12T00:58:34.698Z
+lastmod: 2026-03-18T00:25:55.474Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.698Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /account/limits
+````yaml /openapi.yaml get /account/limits
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

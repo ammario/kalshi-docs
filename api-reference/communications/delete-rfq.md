@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-rfq
-lastmod: 2026-03-12T00:58:35.010Z
+lastmod: 2026-03-18T00:25:55.749Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:35.010Z
 
 ## OpenAPI
 
-````yaml openapi.yaml delete /communications/rfqs/{rfq_id}
+````yaml /openapi.yaml delete /communications/rfqs/{rfq_id}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

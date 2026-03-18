@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/trigger-order-group
-lastmod: 2026-03-12T00:58:34.431Z
+lastmod: 2026-03-18T00:25:55.240Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.431Z
 
 ## OpenAPI
 
-````yaml openapi.yaml put /portfolio/order_groups/{order_group_id}/trigger
+````yaml /openapi.yaml put /portfolio/order_groups/{order_group_id}/trigger
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

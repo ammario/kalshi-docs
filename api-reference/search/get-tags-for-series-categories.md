@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/search/get-tags-for-series-categories
-lastmod: 2026-03-12T00:58:34.671Z
+lastmod: 2026-03-18T00:25:55.448Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,7 +17,7 @@ This endpoint returns a mapping of series categories to their associated tags, w
 
 ## OpenAPI
 
-````yaml openapi.yaml get /search/tags_by_categories
+````yaml /openapi.yaml get /search/tags_by_categories
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

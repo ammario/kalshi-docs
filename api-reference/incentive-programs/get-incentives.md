@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/incentive-programs/get-incentives
-lastmod: 2026-03-12T00:58:34.851Z
+lastmod: 2026-03-18T00:25:55.606Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.851Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /incentive_programs
+````yaml /openapi.yaml get /incentive_programs
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

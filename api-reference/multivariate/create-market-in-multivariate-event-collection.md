@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection
-lastmod: 2026-03-12T00:58:35.129Z
+lastmod: 2026-03-18T00:25:55.844Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:35.129Z
 
 ## OpenAPI
 
-````yaml openapi.yaml post /multivariate_event_collections/{collection_ticker}
+````yaml /openapi.yaml post /multivariate_event_collections/{collection_ticker}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

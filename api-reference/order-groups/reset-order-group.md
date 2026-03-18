@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/reset-order-group
-lastmod: 2026-03-12T00:58:34.417Z
+lastmod: 2026-03-18T00:25:55.228Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.417Z
 
 ## OpenAPI
 
-````yaml openapi.yaml put /portfolio/order_groups/{order_group_id}/reset
+````yaml /openapi.yaml put /portfolio/order_groups/{order_group_id}/reset
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

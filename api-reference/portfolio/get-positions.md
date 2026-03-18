@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2026-03-12T00:58:34.553Z
+lastmod: 2026-03-18T00:25:55.350Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.553Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /portfolio/positions
+````yaml /openapi.yaml get /portfolio/positions
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

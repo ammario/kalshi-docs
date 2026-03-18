@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2026-03-12T00:58:35.214Z
+lastmod: 2026-03-18T00:25:55.919Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -26,7 +26,7 @@ lastmod: 2026-03-12T00:58:35.214Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /markets
+````yaml /openapi.yaml get /markets
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

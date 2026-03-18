@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-exchange-schedule
-lastmod: 2026-03-12T00:58:34.203Z
+lastmod: 2026-03-18T00:25:55.025Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.203Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /exchange/schedule
+````yaml /openapi.yaml get /exchange/schedule
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

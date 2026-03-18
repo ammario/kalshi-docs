@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-live-data
-lastmod: 2026-03-12T00:58:34.824Z
+lastmod: 2026-03-18T00:25:55.583Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:34.824Z
 
 ## OpenAPI
 
-````yaml openapi.yaml get /live_data/{type}/milestone/{milestone_id}
+````yaml /openapi.yaml get /live_data/{type}/milestone/{milestone_id}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/accept-quote
-lastmod: 2026-03-12T00:58:35.083Z
+lastmod: 2026-03-18T00:25:55.808Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-03-12T00:58:35.083Z
 
 ## OpenAPI
 
-````yaml openapi.yaml put /communications/quotes/{quote_id}/accept
+````yaml /openapi.yaml put /communications/quotes/{quote_id}/accept
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
