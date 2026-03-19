@@ -501,6 +501,9 @@ operations:
                     required: false
                   - name: action
                     type: string
+                    enumValues:
+                      - add_markets
+                      - delete_markets
                     required: false
         headers: []
         jsonPayloadSchema: &ref_5
@@ -657,6 +660,9 @@ operations:
                     required: false
                   - name: action
                     type: string
+                    enumValues:
+                      - add_markets
+                      - delete_markets
                     required: false
         headers: []
         jsonPayloadSchema: *ref_5
@@ -753,6 +759,9 @@ operations:
                     required: false
                   - name: action
                     type: string
+                    enumValues:
+                      - add_markets
+                      - delete_markets
                     required: false
         headers: []
         jsonPayloadSchema: *ref_5

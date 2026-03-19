@@ -95,6 +95,9 @@ operations:
                   - name: taker_side
                     type: string
                     description: Market side
+                    enumValues:
+                      - 'yes'
+                      - 'no'
                     required: false
                   - name: ts
                     type: integer

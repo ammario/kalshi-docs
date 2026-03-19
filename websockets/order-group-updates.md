@@ -88,6 +88,12 @@ operations:
                   - name: event_type
                     type: string
                     description: Order group event type
+                    enumValues:
+                      - created
+                      - triggered
+                      - reset
+                      - deleted
+                      - limit_updated
                     required: false
                   - name: order_group_id
                     type: string

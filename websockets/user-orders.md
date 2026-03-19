@@ -98,10 +98,17 @@ operations:
                   - name: status
                     type: string
                     description: Current order status
+                    enumValues:
+                      - resting
+                      - canceled
+                      - executed
                     required: false
                   - name: side
                     type: string
                     description: Market side
+                    enumValues:
+                      - 'yes'
+                      - 'no'
                     required: false
                   - name: is_yes
                     type: boolean
@@ -152,6 +159,9 @@ operations:
                   - name: self_trade_prevention_type
                     type: string
                     description: Self-trade prevention type
+                    enumValues:
+                      - taker_at_cross
+                      - maker
                     required: false
                   - name: created_time
                     type: string

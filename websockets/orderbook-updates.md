@@ -301,6 +301,9 @@ operations:
                   - name: side
                     type: string
                     description: Market side
+                    enumValues:
+                      - 'yes'
+                      - 'no'
                     required: false
                   - name: client_order_id
                     type: string

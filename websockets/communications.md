@@ -595,6 +595,9 @@ operations:
                   - name: accepted_side
                     type: string
                     description: Which side was accepted (yes/no) (optional)
+                    enumValues:
+                      - 'yes'
+                      - 'no'
                     required: false
                   - name: contracts_accepted_fp
                     type: string

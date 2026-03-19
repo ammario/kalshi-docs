@@ -104,6 +104,9 @@ operations:
                   - name: side
                     type: string
                     description: Market side
+                    enumValues:
+                      - 'yes'
+                      - 'no'
                     required: false
                   - name: yes_price_dollars
                     type: string
@@ -120,6 +123,9 @@ operations:
                   - name: action
                     type: string
                     description: Order action type
+                    enumValues:
+                      - buy
+                      - sell
                     required: false
                   - name: ts
                     type: integer
@@ -136,6 +142,9 @@ operations:
                   - name: purchased_side
                     type: string
                     description: Market side
+                    enumValues:
+                      - 'yes'
+                      - 'no'
                     required: false
                   - name: subaccount
                     type: integer
