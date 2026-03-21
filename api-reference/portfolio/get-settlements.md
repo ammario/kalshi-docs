@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-03-18T00:25:55.362Z
+lastmod: 2026-03-20T18:57:45.222Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -169,10 +169,8 @@ components:
         - event_ticker
         - market_result
         - yes_count_fp
-        - yes_total_cost
         - yes_total_cost_dollars
         - no_count_fp
-        - no_total_cost
         - no_total_cost_dollars
         - revenue
         - settled_time
@@ -208,6 +206,7 @@ components:
             available for now for compatibility. Total cost basis of all YES
             contracts in cents.
           deprecated: true
+          x-go-type-skip-optional-pointer: true
         yes_total_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total cost basis of all YES contracts in fixed-point dollars.
@@ -223,6 +222,7 @@ components:
             available for now for compatibility. Total cost basis of all NO
             contracts in cents.
           deprecated: true
+          x-go-type-skip-optional-pointer: true
         no_total_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total cost basis of all NO contracts in fixed-point dollars.

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-user-data-timestamp
-lastmod: 2026-03-18T00:25:55.040Z
+lastmod: 2026-03-20T18:57:44.913Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

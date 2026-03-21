@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-trades
-lastmod: 2026-03-18T00:25:55.497Z
+lastmod: 2026-03-20T18:57:45.357Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -154,11 +154,11 @@ components:
       required:
         - trade_id
         - ticker
-        - price
         - count_fp
         - yes_price_dollars
         - no_price_dollars
         - taker_side
+        - created_time
       properties:
         trade_id:
           type: string
