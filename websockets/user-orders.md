@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/user-orders
-lastmod: 2026-03-11T19:30:26.215Z
+lastmod: 2026-03-23T22:47:46.025Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -190,7 +190,7 @@ operations:
             type:
               type: string
               const: user_order
-              x-parser-schema-id: <anonymous-schema-231>
+              x-parser-schema-id: <anonymous-schema-233>
             sid:
               type: integer
               description: >-
@@ -222,12 +222,12 @@ operations:
                   type: string
                   description: Unique order identifier
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-233>
+                  x-parser-schema-id: <anonymous-schema-235>
                 user_id:
                   type: string
                   description: User identifier
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-234>
+                  x-parser-schema-id: <anonymous-schema-236>
                 ticker:
                   type: string
                   description: Unique market identifier
@@ -243,7 +243,7 @@ operations:
                     - resting
                     - canceled
                     - executed
-                  x-parser-schema-id: <anonymous-schema-235>
+                  x-parser-schema-id: <anonymous-schema-237>
                 side:
                   type: string
                   description: Market side
@@ -256,74 +256,74 @@ operations:
                   description: >-
                     Whether the order is on the yes side. Equivalent to side ==
                     "yes"
-                  x-parser-schema-id: <anonymous-schema-236>
+                  x-parser-schema-id: <anonymous-schema-238>
                 yes_price_dollars:
                   type: string
                   description: Yes price in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-237>
+                  x-parser-schema-id: <anonymous-schema-239>
                 fill_count_fp:
                   type: string
                   description: Number of contracts filled in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-238>
+                  x-parser-schema-id: <anonymous-schema-240>
                 remaining_count_fp:
                   type: string
                   description: Number of contracts remaining in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-239>
+                  x-parser-schema-id: <anonymous-schema-241>
                 initial_count_fp:
                   type: string
                   description: Initial number of contracts in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-240>
+                  x-parser-schema-id: <anonymous-schema-242>
                 taker_fill_cost_dollars:
                   type: string
                   description: Taker fill cost in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-241>
+                  x-parser-schema-id: <anonymous-schema-243>
                 maker_fill_cost_dollars:
                   type: string
                   description: Maker fill cost in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-242>
+                  x-parser-schema-id: <anonymous-schema-244>
                 taker_fees_dollars:
                   type: string
                   description: Taker fees in fixed-point dollars (4 decimals).
-                  x-parser-schema-id: <anonymous-schema-243>
+                  x-parser-schema-id: <anonymous-schema-245>
                 maker_fees_dollars:
                   type: string
                   description: Maker fees in fixed-point dollars (4 decimals).
-                  x-parser-schema-id: <anonymous-schema-244>
+                  x-parser-schema-id: <anonymous-schema-246>
                 client_order_id:
                   type: string
                   description: Client-provided order identifier
-                  x-parser-schema-id: <anonymous-schema-245>
+                  x-parser-schema-id: <anonymous-schema-247>
                 order_group_id:
                   type: string
                   description: Order group identifier, if applicable
-                  x-parser-schema-id: <anonymous-schema-246>
+                  x-parser-schema-id: <anonymous-schema-248>
                 self_trade_prevention_type:
                   type: string
                   description: Self-trade prevention type
                   enum:
                     - taker_at_cross
                     - maker
-                  x-parser-schema-id: <anonymous-schema-247>
+                  x-parser-schema-id: <anonymous-schema-249>
                 created_time:
                   type: string
                   description: Order creation time in RFC 3339 format
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-248>
+                  x-parser-schema-id: <anonymous-schema-250>
                 last_update_time:
                   type: string
                   description: Last update time in RFC 3339 format
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-249>
+                  x-parser-schema-id: <anonymous-schema-251>
                 expiration_time:
                   type: string
                   description: Order expiration time in RFC 3339 format
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-250>
+                  x-parser-schema-id: <anonymous-schema-252>
                 subaccount_number:
                   type: integer
                   description: Subaccount number (0 for primary, 1-32 for subaccounts)
-                  x-parser-schema-id: <anonymous-schema-251>
-              x-parser-schema-id: <anonymous-schema-232>
+                  x-parser-schema-id: <anonymous-schema-253>
+              x-parser-schema-id: <anonymous-schema-234>
           x-parser-schema-id: userOrderPayload
         title: User Order Update
         description: Real-time order updates for authenticated user

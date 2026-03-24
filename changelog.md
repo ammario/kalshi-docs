@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-03-20T18:58:00.985Z
+lastmod: 2026-03-23T22:47:59.274Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,33 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Mar 19, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "New multivariate_market_lifecycle WebSocket channel",
+description: "Added a dedicated WebSocket lifecycle channel for multivariate event (MVE) markets."
+}}
+>
+  Added a new `multivariate_market_lifecycle` WebSocket channel for multivariate event (MVE) markets.
+
+  This channel emits MVE lifecycle messages for:
+
+  * `created`
+  * `activated`
+  * `deactivated`
+  * `close_date_updated`
+  * `determined`
+  * `settled`
+
+  The existing `market_lifecycle_v2` channel continues to exclude `KXMVE`-prefixed tickers.
+
+  **Affected channels:**
+
+  * `multivariate_market_lifecycle`
+  * `market_lifecycle_v2`
+</Update>
 
 <Update
   label="Mar 20, 2026"

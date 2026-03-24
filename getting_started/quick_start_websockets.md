@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_websockets
-lastmod: 2026-03-12T17:11:24.233Z
+lastmod: 2026-03-23T22:48:01.526Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -35,12 +35,14 @@ wss://demo-api.kalshi.co/trade-api/ws/v2
 
 ## Authentication
 
-WebSocket connections support both authenticated and unauthenticated usage:
+WebSocket connections require authentication during the connection handshake.
 
-* **Private channels (auth required):** `orderbook_delta`, `fill`, `market_positions`, `communications`, `order_group_updates`
-* **Public channels (no auth required):** `ticker`, `trade`, `market_lifecycle_v2`, `multivariate`
+Once connected, channels fall into two groups:
 
-You can still authenticate for public channels; the headers are only required if you subscribe to private channels.
+* **Private channels (user-specific data):** `orderbook_delta`, `fill`, `market_positions`, `communications`, `order_group_updates`
+* **Public market-data channels (no additional channel-level auth):** `ticker`, `trade`, `market_lifecycle_v2`, `multivariate_market_lifecycle`, `multivariate`
+
+In other words, even channels that carry public market data still use the authenticated WebSocket session, but they do not impose additional per-channel authorization checks.
 
 <Note>
   For detailed information about API key generation and request signing, see our [API Keys documentation](/getting_started/api_keys).

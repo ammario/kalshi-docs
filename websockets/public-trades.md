@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/public-trades
-lastmod: 2026-03-11T19:30:26.119Z
+lastmod: 2026-03-23T22:47:45.910Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,7 +11,7 @@ lastmod: 2026-03-11T19:30:26.119Z
 > Public trade notifications when trades occur.
 
 **Requirements:**
-- Authentication required (authenticated WebSocket connection)
+- No additional channel-level authentication beyond the authenticated WebSocket connection
 - Market specification optional (omit to receive all trades)
 - Updates sent immediately after trade execution
 
@@ -25,13 +25,19 @@ lastmod: 2026-03-11T19:30:26.119Z
 ````yaml asyncapi.yaml trade
 id: trade
 title: Public Trades
-description: |
+description: >
   Public trade notifications when trades occur.
 
+
   **Requirements:**
-  - Authentication required (authenticated WebSocket connection)
+
+  - No additional channel-level authentication beyond the authenticated
+  WebSocket connection
+
   - Market specification optional (omit to receive all trades)
+
   - Updates sent immediately after trade execution
+
 
   **Use case:** Trade feed, volume analysis
 servers:

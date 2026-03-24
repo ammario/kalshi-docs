@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-ticker
-lastmod: 2026-03-11T19:30:26.104Z
+lastmod: 2026-03-23T22:47:45.893Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,7 +11,7 @@ lastmod: 2026-03-11T19:30:26.104Z
 > Market price, volume, and open interest updates.
 
 **Requirements:**
-- Authentication required (authenticated WebSocket connection)
+- No additional channel-level authentication beyond the authenticated WebSocket connection
 - Market specification optional (omit to receive all markets)
 - Supports `market_ticker`/`market_tickers` and `market_id`/`market_ids`
 - Updates sent whenever any ticker field changes
@@ -26,14 +26,21 @@ lastmod: 2026-03-11T19:30:26.104Z
 ````yaml asyncapi.yaml ticker
 id: ticker
 title: Market Ticker
-description: |
+description: >
   Market price, volume, and open interest updates.
 
+
   **Requirements:**
-  - Authentication required (authenticated WebSocket connection)
+
+  - No additional channel-level authentication beyond the authenticated
+  WebSocket connection
+
   - Market specification optional (omit to receive all markets)
+
   - Supports `market_ticker`/`market_tickers` and `market_id`/`market_ids`
+
   - Updates sent whenever any ticker field changes
+
 
   **Use case:** Displaying current market prices and statistics
 servers:
