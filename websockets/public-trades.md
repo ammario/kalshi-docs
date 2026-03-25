@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/public-trades
-lastmod: 2026-03-23T22:47:45.910Z
+lastmod: 2026-03-24T15:42:45.460Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

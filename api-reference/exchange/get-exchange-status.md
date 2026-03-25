@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-exchange-status
-lastmod: 2026-03-20T18:57:44.863Z
+lastmod: 2026-03-24T17:26:49.692Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-03-23T22:47:59.274Z
+lastmod: 2026-03-24T17:27:06.919Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,26 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Mar 23, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Event and market response normalization",
+description: "Event responses now consistently include product_metadata, strike_date and strike_period are mutually exclusive, and contradictory custom_strike payloads are no longer emitted with non-custom strike types."
+}}
+>
+  * `EventData.product_metadata` is now always present on event responses, including cases where it is empty.
+  * `EventData.strike_date` and `EventData.strike_period` are now emitted as mutually exclusive fields.
+  * `Market.custom_strike` is no longer emitted alongside non-custom scalar `strike_type` values such as `greater` or `less`.
+
+  **Affected endpoints:**
+
+  * `GET /events`
+  * `GET /events/{ticker}`
+  * `GET /markets`
+  * `GET /markets/{ticker}`
+</Update>
 
 <Update
   label="Mar 19, 2026"

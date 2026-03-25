@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-candlesticks
-lastmod: 2026-03-20T18:57:45.376Z
+lastmod: 2026-03-24T17:26:50.082Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

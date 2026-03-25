@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2026-03-20T18:57:45.392Z
+lastmod: 2026-03-24T17:26:50.091Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -262,8 +262,6 @@ components:
           description: Whether this event is available to trade on brokers.
         product_metadata:
           type: object
-          nullable: true
-          x-omitempty: true
           description: Additional metadata for the event.
           x-go-type-skip-optional-pointer: true
         last_updated_ts:

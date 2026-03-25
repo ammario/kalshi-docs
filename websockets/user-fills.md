@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/user-fills
-lastmod: 2026-03-23T22:47:45.921Z
+lastmod: 2026-03-24T15:42:45.471Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
