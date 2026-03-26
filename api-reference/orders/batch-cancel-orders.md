@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders
-lastmod: 2026-03-24T17:26:49.788Z
+lastmod: 2026-03-25T12:17:37.163Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-03-24T17:26:49.964Z
+lastmod: 2026-03-25T12:17:37.380Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -199,14 +199,6 @@ components:
           description: >-
             String representation of the number of YES contracts owned at the
             time of settlement.
-        yes_total_cost:
-          type: integer
-          description: >-
-            DEPRECATED: Use yes_total_cost_dollars. This cents field remains
-            available for now for compatibility. Total cost basis of all YES
-            contracts in cents.
-          deprecated: true
-          x-go-type-skip-optional-pointer: true
         yes_total_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total cost basis of all YES contracts in fixed-point dollars.
@@ -215,14 +207,6 @@ components:
           description: >-
             String representation of the number of NO contracts owned at the
             time of settlement.
-        no_total_cost:
-          type: integer
-          description: >-
-            DEPRECATED: Use no_total_cost_dollars. This cents field remains
-            available for now for compatibility. Total cost basis of all NO
-            contracts in cents.
-          deprecated: true
-          x-go-type-skip-optional-pointer: true
         no_total_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total cost basis of all NO contracts in fixed-point dollars.

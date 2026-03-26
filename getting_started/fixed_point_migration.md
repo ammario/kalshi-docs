@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fixed_point_migration
-lastmod: 2026-03-17T15:15:08.760Z
+lastmod: 2026-03-25T12:17:52.564Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,21 +8,13 @@ lastmod: 2026-03-17T15:15:08.760Z
 
 # Fixed-Point Migration
 
-> Migrating to fixed-point representation for contract quantities and prices.
+> Fixed-point representation for contract quantities and prices.
 
-Last Updated: March 10, 2026
-
-<Warning title="Upcoming Changes">
-  | Date         | Change                                                | Details                                                                                                                                                                                                                                             |
-  | ------------ | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | **March 9**  | Subpenny pricing enabled                              | `KXGREENLAND-29` (`deci_cent`), `KXGDPNOM-RUS26` (`tapered_deci_cent`)                                                                                                                                                                              |
-  | **March 12** | Fractional trading enabled                            | `KXJOBLESSCLAIMS-26MAR19`, `KXHOUHOMEVAL-26MAR19`, `KXDENHOMEVAL-26MAR19`, `KXSEAHOMEVAL-26MAR19`, `KXSDHOMEVAL-26MAR19`, `KXBOSHOMEVAL-26MAR19`, `KXUSHOMEVAL-26MAR19`, `KXCBDECISIONBRAZIL-26APR29`, `KXCBDECISIONJAPAN-26APR28`, `KXUE-AUS26APR` |
-  | **March 12** | Legacy integer fields removed from most API responses | Settlement cost fields `yes_total_cost` and `no_total_cost` remain temporarily available. See [removed fields](#removed-legacy-fields).                                                                                                             |
-</Warning>
+Last Updated: April 2, 2026
 
 ## Overview
 
-Kalshi has migrated from integer to fixed-point representation across all APIs. This involves two independent changes:
+Kalshi uses fixed-point representation across all APIs. This involves two independent changes:
 
 1. **Subpenny Pricing** — price fields use fixed-point dollar strings (`_dollars` suffix)
 2. **Fractional Contracts** — contract count fields use fixed-point strings (`_fp` suffix)
@@ -65,8 +57,6 @@ Subpenny pricing is offered on a per-market basis. The `price_level_structure` f
 
 `deci_cent` applies \$0.001 precision across the entire range.
 
-See the summary above for the initial subpenny-enabled markets.
-
 ***
 
 ## Fractional Contracts
@@ -83,7 +73,7 @@ Contract count fields use fixed-point strings.
 * Accept 0-2 decimal places on input (responses always emit 2 decimals)
 * In requests where both integer and `_fp` fields are provided, they must match
 
-Check the `fractional_trading_enabled` field on Market responses to determine whether a given market supports fractional order sizes. See the summary above for the initial fractional-enabled markets.
+Check the `fractional_trading_enabled` field on Market responses to determine whether a given market supports fractional order sizes.
 
 Even if you are not placing fractional orders, you may encounter fractional values in other parts of the API (for example, fills on fractional-enabled markets). One way to prepare is to internally multiply the `_fp` value by 100 and cast to an integer. For example, treating `"1.55"` as 155 units of 1c contracts allows continued use of integer arithmetic.
 
@@ -94,18 +84,6 @@ Even if you are not placing fractional orders, you may encounter fractional valu
 Both subpenny pricing and fractional contracts can produce sub-cent balance changes on fills. When this happens, the exchange applies a rounding fee to restore cent-alignment, and a fee accumulator issues rebates to prevent systematic overpayment.
 
 See [Fee Rounding](/getting_started/fee_rounding) for the mechanics and worked examples.
-
-***
-
-## Removed Legacy Fields
-
-Most legacy integer price and count fields were removed from outgoing REST and WebSocket payloads on March 12, 2026.
-
-### Settlement Compatibility
-
-`GET /portfolio/settlements` still returns the deprecated cent-denominated fields `yes_total_cost` and `no_total_cost` for compatibility.
-
-Use `yes_total_cost_dollars` and `no_total_cost_dollars` going forward. The integer settlement cost fields will be removed in a later follow-up once clients have had more time to migrate.
 
 
 Built with [Mintlify](https://mintlify.com).

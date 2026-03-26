@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/orderbook-updates
-lastmod: 2026-03-24T15:42:45.437Z
+lastmod: 2026-03-25T12:17:39.654Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

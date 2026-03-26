@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/account/get-account-api-limits
-lastmod: 2026-03-24T17:26:50.054Z
+lastmod: 2026-03-25T12:17:37.469Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
