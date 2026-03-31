@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-multiple-live-data
-lastmod: 2026-03-25T12:17:37.570Z
+lastmod: 2026-03-30T23:20:55.299Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -77,6 +77,18 @@ paths:
             maxItems: 100
           style: form
           explode: true
+        - name: include_player_stats
+          in: query
+          required: false
+          description: >-
+            When true, includes player-level statistics in the live data
+            response. Supported for Pro Football, Pro Basketball, and College
+            Men's Basketball milestones that have player ID mappings configured.
+            Has no effect for other sports or milestones without player
+            mappings.
+          schema:
+            type: boolean
+            default: false
       responses:
         '200':
           description: Live data retrieved successfully

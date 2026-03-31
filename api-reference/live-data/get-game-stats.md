@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/structured-targets/get-structured-target
-lastmod: 2026-03-30T23:20:55.371Z
+url: https://docs.kalshi.com/api-reference/live-data/get-game-stats
+lastmod: 2026-03-30T23:20:55.316Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Structured Target
+# Get Game Stats
 
->  Endpoint for getting data about a specific structured target by its ID.
+> Get play-by-play game statistics for a specific milestone. Supported sports: Pro Football, College Football, Pro Basketball, College Men's Basketball, College Women's Basketball, WNBA, Soccer, Pro Hockey, and Pro Baseball. Returns null for unsupported milestone types or milestones without a Sportradar ID.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /structured_targets/{structured_target_id}
+````yaml /openapi.yaml get /live_data/milestone/{milestone_id}/game_stats
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,71 +58,57 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /structured_targets/{structured_target_id}:
+  /live_data/milestone/{milestone_id}/game_stats:
     get:
       tags:
-        - structured-targets
-      summary: Get Structured Target
-      description: ' Endpoint for getting data about a specific structured target by its ID.'
-      operationId: GetStructuredTarget
+        - live-data
+      summary: Get Game Stats
+      description: >-
+        Get play-by-play game statistics for a specific milestone. Supported
+        sports: Pro Football, College Football, Pro Basketball, College Men's
+        Basketball, College Women's Basketball, WNBA, Soccer, Pro Hockey, and
+        Pro Baseball. Returns null for unsupported milestone types or milestones
+        without a Sportradar ID.
+      operationId: GetGameStats
       parameters:
-        - name: structured_target_id
+        - name: milestone_id
           in: path
           required: true
-          description: Structured target ID
+          description: Milestone ID
           schema:
             type: string
       responses:
         '200':
-          description: Structured target retrieved successfully
+          description: Game stats retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetStructuredTargetResponse'
-        '401':
-          description: Unauthorized
+                $ref: '#/components/schemas/GetGameStatsResponse'
         '404':
-          description: Not found
+          description: Game stats not found
         '500':
           description: Internal server error
 components:
   schemas:
-    GetStructuredTargetResponse:
+    GetGameStatsResponse:
       type: object
       properties:
-        structured_target:
-          $ref: '#/components/schemas/StructuredTarget'
-    StructuredTarget:
+        pbp:
+          $ref: '#/components/schemas/PlayByPlay'
+    PlayByPlay:
       type: object
+      description: Play-by-play data organized by period.
       properties:
-        id:
-          type: string
-          description: Unique identifier for the structured target.
-        name:
-          type: string
-          description: Name of the structured target.
-        type:
-          type: string
-          description: Type of the structured target.
-        details:
-          type: object
-          description: >-
-            Additional details about the structured target. Contains flexible
-            JSON data specific to the target type.
-        source_id:
-          type: string
-          description: >-
-            External source identifier for the structured target, if available
-            (e.g., third-party data provider ID).
-        source_ids:
-          type: object
-          additionalProperties:
-            type: string
-          description: Source ids of structured target if available.
-        last_updated_ts:
-          type: string
-          format: date-time
-          description: Timestamp when this structured target was last updated.
+        periods:
+          type: array
+          items:
+            type: object
+            properties:
+              events:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
 
 ````
 

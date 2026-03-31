@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/structured-targets/get-structured-target
-lastmod: 2026-03-30T23:20:55.371Z
+url: https://docs.kalshi.com/api-reference/live-data/get-live-data-with-type
+lastmod: 2026-03-30T23:20:55.287Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Structured Target
+# Get Live Data (with type)
 
->  Endpoint for getting data about a specific structured target by its ID.
+> Get live data for a specific milestone. This is the legacy endpoint that requires a type path parameter. Prefer using `/live_data/milestone/{milestone_id}` instead.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /structured_targets/{structured_target_id}
+````yaml /openapi.yaml get /live_data/{type}/milestone/{milestone_id}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,71 +58,78 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /structured_targets/{structured_target_id}:
+  /live_data/{type}/milestone/{milestone_id}:
     get:
       tags:
-        - structured-targets
-      summary: Get Structured Target
-      description: ' Endpoint for getting data about a specific structured target by its ID.'
-      operationId: GetStructuredTarget
+        - live-data
+      summary: Get Live Data (with type)
+      description: >-
+        Get live data for a specific milestone. This is the legacy endpoint that
+        requires a type path parameter. Prefer using
+        `/live_data/milestone/{milestone_id}` instead.
+      operationId: GetLiveData
       parameters:
-        - name: structured_target_id
+        - name: type
           in: path
           required: true
-          description: Structured target ID
+          description: Type of live data
           schema:
             type: string
+        - name: milestone_id
+          in: path
+          required: true
+          description: Milestone ID
+          schema:
+            type: string
+        - name: include_player_stats
+          in: query
+          required: false
+          description: >-
+            When true, includes player-level statistics in the live data
+            response. Supported for Pro Football, Pro Basketball, and College
+            Men's Basketball milestones that have player ID mappings configured.
+            Has no effect for other sports or milestones without player
+            mappings.
+          schema:
+            type: boolean
+            default: false
       responses:
         '200':
-          description: Structured target retrieved successfully
+          description: Live data retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetStructuredTargetResponse'
-        '401':
-          description: Unauthorized
+                $ref: '#/components/schemas/GetLiveDataResponse'
         '404':
-          description: Not found
+          description: Live data not found
         '500':
           description: Internal server error
 components:
   schemas:
-    GetStructuredTargetResponse:
+    GetLiveDataResponse:
       type: object
+      required:
+        - live_data
       properties:
-        structured_target:
-          $ref: '#/components/schemas/StructuredTarget'
-    StructuredTarget:
+        live_data:
+          $ref: '#/components/schemas/LiveData'
+    LiveData:
       type: object
+      required:
+        - type
+        - details
+        - milestone_id
       properties:
-        id:
-          type: string
-          description: Unique identifier for the structured target.
-        name:
-          type: string
-          description: Name of the structured target.
         type:
           type: string
-          description: Type of the structured target.
+          description: Type of live data
         details:
           type: object
-          description: >-
-            Additional details about the structured target. Contains flexible
-            JSON data specific to the target type.
-        source_id:
+          additionalProperties: true
+          description: Live data details as a flexible object
+        milestone_id:
           type: string
-          description: >-
-            External source identifier for the structured target, if available
-            (e.g., third-party data provider ID).
-        source_ids:
-          type: object
-          additionalProperties:
-            type: string
-          description: Source ids of structured target if available.
-        last_updated_ts:
-          type: string
-          format: date-time
-          description: Timestamp when this structured target was last updated.
+          description: Milestone ID
 
 ````
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-live-data
-lastmod: 2026-03-25T12:17:37.561Z
+lastmod: 2026-03-30T23:20:55.275Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,13 +8,13 @@ lastmod: 2026-03-25T12:17:37.561Z
 
 # Get Live Data
 
-> Get live data for a specific milestone
+> Get live data for a specific milestone.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /live_data/{type}/milestone/{milestone_id}
+````yaml /openapi.yaml get /live_data/milestone/{milestone_id}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,26 +58,32 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /live_data/{type}/milestone/{milestone_id}:
+  /live_data/milestone/{milestone_id}:
     get:
       tags:
         - live-data
       summary: Get Live Data
-      description: Get live data for a specific milestone
-      operationId: GetLiveData
+      description: Get live data for a specific milestone.
+      operationId: GetLiveDataByMilestone
       parameters:
-        - name: type
-          in: path
-          required: true
-          description: Type of live data
-          schema:
-            type: string
         - name: milestone_id
           in: path
           required: true
           description: Milestone ID
           schema:
             type: string
+        - name: include_player_stats
+          in: query
+          required: false
+          description: >-
+            When true, includes player-level statistics in the live data
+            response. Supported for Pro Football, Pro Basketball, and College
+            Men's Basketball milestones that have player ID mappings configured.
+            Has no effect for other sports or milestones without player
+            mappings.
+          schema:
+            type: boolean
+            default: false
       responses:
         '200':
           description: Live data retrieved successfully

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-trades
-lastmod: 2026-03-25T12:17:37.003Z
+lastmod: 2026-03-30T23:20:54.665Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -114,11 +114,11 @@ components:
       schema:
         type: integer
         format: int64
-        minimum: 1
+        minimum: 0
         maximum: 1000
         default: 100
         x-oapi-codegen-extra-tags:
-          validate: omitempty,gte=1,lte=1000
+          validate: omitempty,gte=0,lte=1000
     CursorQuery:
       name: cursor
       in: query

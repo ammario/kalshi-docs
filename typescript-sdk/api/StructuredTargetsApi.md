@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/StructuredTargetsApi
-lastmod: 2026-01-29T00:38:37.818Z
+lastmod: 2026-03-30T23:16:28.580Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -59,12 +59,13 @@ Page size (min: 1, max: 2000)
 
 ### Parameters
 
-| Name            | Type          | Description                                             | Notes                            |
-| --------------- | ------------- | ------------------------------------------------------- | -------------------------------- |
-| **type**        | \[**string**] | Filter by structured target type                        | (optional) defaults to undefined |
-| **competition** | \[**string**] | Filter by competition                                   | (optional) defaults to undefined |
-| **pageSize**    | \[**number**] | Number of items per page (min 1, max 2000, default 100) | (optional) defaults to 100       |
-| **cursor**      | \[**string**] | Pagination cursor                                       | (optional) defaults to undefined |
+| Name            | Type               | Description                                                                                                              | Notes                            |
+| --------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------ | -------------------------------- |
+| **ids**         | **Array\<string>** | Filter by specific structured target IDs. Pass multiple IDs by repeating the parameter (e.g. \`?ids=uuid1\&ids=uuid2\`). | (optional) defaults to undefined |
+| **type**        | \[**string**]      | Filter by structured target type                                                                                         | (optional) defaults to undefined |
+| **competition** | \[**string**]      | Filter by competition. Matches against the league, conference, division, or tour in the structured target details.       | (optional) defaults to undefined |
+| **pageSize**    | \[**number**]      | Number of items per page (min 1, max 2000, default 100)                                                                  | (optional) defaults to 100       |
+| **cursor**      | \[**string**]      | Pagination cursor                                                                                                        | (optional) defaults to undefined |
 
 ### Return type
 

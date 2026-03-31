@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-fills
-lastmod: 2026-03-25T12:17:36.982Z
+lastmod: 2026-03-30T23:20:54.643Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -165,9 +165,6 @@ components:
         order_id:
           type: string
           description: Unique identifier for the order that resulted in this fill
-        client_order_id:
-          type: string
-          description: Client-provided identifier for the order that resulted in this fill
         ticker:
           type: string
           description: Unique identifier for the market

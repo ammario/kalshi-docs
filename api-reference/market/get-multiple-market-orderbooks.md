@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/order-groups/create-order-group
-lastmod: 2026-03-30T23:20:54.894Z
+url: https://docs.kalshi.com/api-reference/market/get-multiple-market-orderbooks
+lastmod: 2026-03-30T23:20:55.394Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Create Order Group
+# Get Multiple Market Orderbooks
 
->  Creates a new order group with a contracts limit measured over a rolling 15-second window. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.
+> Endpoint for getting the current order books for multiple markets in a single request. The order book shows all active bid orders for both yes and no sides of a binary market. It returns yes bids and no bids only (no asks are returned). This is because in binary markets, a bid for yes at price X is equivalent to an ask for no at price (100-X). For example, a yes bid at 7¢ is the same as a no ask at 93¢, with identical contract sizes. Each side shows price levels with their corresponding quantities and order counts, organized from best to worst prices. Returns one orderbook per requested market ticker.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml post /portfolio/order_groups/create
+````yaml /openapi.yaml get /markets/orderbooks
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,26 +58,45 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/order_groups/create:
-    post:
+  /markets/orderbooks:
+    get:
       tags:
-        - order-groups
-      summary: Create Order Group
-      description: ' Creates a new order group with a contracts limit measured over a rolling 15-second window. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.'
-      operationId: CreateOrderGroup
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateOrderGroupRequest'
+        - market
+      summary: Get Multiple Market Orderbooks
+      description: >-
+        Endpoint for getting the current order books for multiple markets in a
+        single request. The order book shows all active bid orders for both yes
+        and no sides of a binary market. It returns yes bids and no bids only
+        (no asks are returned). This is because in binary markets, a bid for yes
+        at price X is equivalent to an ask for no at price (100-X). For example,
+        a yes bid at 7¢ is the same as a no ask at 93¢, with identical contract
+        sizes. Each side shows price levels with their corresponding quantities
+        and order counts, organized from best to worst prices. Returns one
+        orderbook per requested market ticker.
+      operationId: GetMarketOrderbooks
+      parameters:
+        - name: tickers
+          in: query
+          required: true
+          description: List of market tickers to fetch orderbooks for
+          schema:
+            type: array
+            items:
+              type: string
+              maxLength: 200
+            minItems: 1
+            maxItems: 100
+          style: form
+          explode: true
+          x-oapi-codegen-extra-tags:
+            validate: required,min=1,max=100,dive,max=200
       responses:
-        '201':
-          description: Order group created successfully
+        '200':
+          description: Orderbooks retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateOrderGroupResponse'
+                $ref: '#/components/schemas/GetMarketOrderbooksResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
@@ -90,56 +109,25 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
-    CreateOrderGroupRequest:
-      type: object
-      properties:
-        subaccount:
-          type: integer
-          minimum: 0
-          description: >-
-            Optional subaccount number to use for this order group (0 for
-            primary, 1-32 for subaccounts)
-          default: 0
-          x-go-type-skip-optional-pointer: true
-        contracts_limit:
-          type: integer
-          format: int64
-          minimum: 1
-          description: >-
-            Specifies the maximum number of contracts that can be matched within
-            this group over a rolling 15-second window. Whole contracts only.
-            Provide contracts_limit or contracts_limit_fp; if both provided they
-            must match.
-          x-go-type-skip-optional-pointer: true
-          x-oapi-codegen-extra-tags:
-            validate: omitempty,gte=1
-        contracts_limit_fp:
-          $ref: '#/components/schemas/FixedPointCount'
-          nullable: true
-          description: >-
-            String representation of the maximum number of contracts that can be
-            matched within this group over a rolling 15-second window (whole
-            contracts only). Provide contracts_limit or contracts_limit_fp; if
-            both provided they must match.
-    CreateOrderGroupResponse:
+    GetMarketOrderbooksResponse:
       type: object
       required:
-        - order_group_id
+        - orderbooks
       properties:
-        order_group_id:
+        orderbooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketOrderbookFp'
+    MarketOrderbookFp:
+      type: object
+      required:
+        - ticker
+        - orderbook_fp
+      properties:
+        ticker:
           type: string
-          description: The unique identifier for the created order group
-    FixedPointCount:
-      type: string
-      description: >-
-        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
-        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Currently only
-        whole contract values are permitted, but the format supports future
-        fractional precision. Integer contract count fields are legacy and will
-        be deprecated; when both integer and fp fields are provided, they must
-        match.
-      example: '10.00'
+        orderbook_fp:
+          $ref: '#/components/schemas/OrderbookCountFp'
     ErrorResponse:
       type: object
       properties:
@@ -155,6 +143,37 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    OrderbookCountFp:
+      type: object
+      required:
+        - yes_dollars
+        - no_dollars
+      properties:
+        yes_dollars:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLevelDollarsCountFp'
+        no_dollars:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLevelDollarsCountFp'
+      description: >-
+        Orderbook with fixed-point contract counts (fp) in all dollar price
+        levels.
+    PriceLevelDollarsCountFp:
+      type: array
+      minItems: 2
+      maxItems: 2
+      example:
+        - '0.1500'
+        - '100.00'
+      items:
+        type: string
+      description: >-
+        Price level in dollars represented as [dollars_string, fp] where
+        dollars_string is like "0.1500" and fp is a FixedPointCount string
+        (fixed-point contract count). The second element is the contract
+        quantity (not price).
   responses:
     BadRequestError:
       description: Bad request - invalid input

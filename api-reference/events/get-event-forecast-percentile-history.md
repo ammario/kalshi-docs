@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-forecast-percentile-history
-lastmod: 2026-03-25T12:17:37.550Z
+lastmod: 2026-03-30T23:20:55.261Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

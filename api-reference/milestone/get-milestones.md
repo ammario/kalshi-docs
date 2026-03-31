@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/milestone/get-milestones
-lastmod: 2026-03-25T12:17:37.653Z
+lastmod: 2026-03-30T23:20:55.416Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -83,16 +83,22 @@ paths:
             format: date-time
         - name: category
           in: query
-          description: Filter by milestone category
+          description: >-
+            Filter by milestone category. E.g. Sports, Elections, Esports,
+            Crypto.
           required: false
           schema:
             type: string
+            example: Sports
         - name: competition
           in: query
-          description: Filter by competition
+          description: >-
+            Filter by competition. E.g. Pro Football, Pro Basketball (M), Pro
+            Baseball, Pro Hockey, College Football.
           required: false
           schema:
             type: string
+            example: Pro Football
         - name: source_id
           in: query
           description: Filter by source id
@@ -101,10 +107,14 @@ paths:
             type: string
         - name: type
           in: query
-          description: Filter by milestone type
+          description: >-
+            Filter by milestone type. E.g. football_game, basketball_game,
+            soccer_tournament_multi_leg, baseball_game, hockey_match,
+            political_race.
           required: false
           schema:
             type: string
+            example: football_game
         - name: related_event_ticker
           in: query
           description: Filter by related event ticker
@@ -175,10 +185,15 @@ components:
           description: Unique identifier for the milestone.
         category:
           type: string
-          description: Category of the milestone.
+          description: Category of the milestone. E.g. Sports, Elections, Esports, Crypto.
+          example: Sports
         type:
           type: string
-          description: Type of the milestone.
+          description: >-
+            Type of the milestone. E.g. football_game, basketball_game,
+            soccer_tournament_multi_leg, baseball_game, hockey_match,
+            golf_tournament, political_race.
+          example: football_game
         start_date:
           type: string
           format: date-time
