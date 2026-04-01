@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2026-03-30T23:20:55.049Z
+lastmod: 2026-03-31T23:42:01.510Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-30T23:20:55.049Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.10.0
+  version: 3.11.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

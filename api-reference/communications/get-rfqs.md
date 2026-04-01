@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfqs
-lastmod: 2026-03-30T23:20:55.438Z
+lastmod: 2026-03-31T23:42:01.985Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-30T23:20:55.438Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.10.0
+  version: 3.11.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -170,9 +170,7 @@ components:
           description: Unique identifier for the RFQ
         creator_id:
           type: string
-          description: >-
-            Public communications ID of the RFQ creator. Exposed post-execution
-            to the creator.
+          description: Public communications ID of the RFQ creator.
         market_ticker:
           type: string
           description: The ticker of the market this RFQ is for

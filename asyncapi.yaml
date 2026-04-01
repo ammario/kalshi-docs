@@ -1277,6 +1277,9 @@ components:
               open_interest_fp: '20422.00'
               dollar_volume: 16948
               dollar_open_interest: 10211
+              yes_bid_size_fp: '300.00'
+              yes_ask_size_fp: '150.00'
+              last_trade_size_fp: '25.00'
               ts: 1669149841
               time: '2022-11-22T20:44:01Z'
     trade:
@@ -2170,6 +2173,9 @@ components:
             - price_dollars
             - yes_bid_dollars
             - yes_ask_dollars
+            - yes_bid_size_fp
+            - yes_ask_size_fp
+            - last_trade_size_fp
             - volume_fp
             - open_interest_fp
             - dollar_volume
@@ -2204,6 +2210,15 @@ components:
               type: integer
               description: Number of dollars positioned in the market currently
               minimum: 0
+            yes_bid_size_fp:
+              type: string
+              description: Fixed-point contracts at best bid (2 decimals)
+            yes_ask_size_fp:
+              type: string
+              description: Fixed-point contracts at best ask (2 decimals)
+            last_trade_size_fp:
+              type: string
+              description: Fixed-point contracts in last trade (2 decimals)
             ts:
               type: integer
               description: Unix timestamp for when the update happened (in seconds)

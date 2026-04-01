@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/public-trades
-lastmod: 2026-03-25T12:17:39.715Z
+lastmod: 2026-03-31T16:46:17.475Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -120,7 +120,7 @@ operations:
             type:
               type: string
               const: trade
-              x-parser-schema-id: <anonymous-schema-74>
+              x-parser-schema-id: <anonymous-schema-77>
             sid:
               type: integer
               description: >-
@@ -143,7 +143,7 @@ operations:
                   type: string
                   description: Unique identifier for the trade
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-76>
+                  x-parser-schema-id: <anonymous-schema-79>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -155,15 +155,15 @@ operations:
                 yes_price_dollars:
                   type: string
                   description: Yes side price in dollars
-                  x-parser-schema-id: <anonymous-schema-77>
+                  x-parser-schema-id: <anonymous-schema-80>
                 no_price_dollars:
                   type: string
                   description: No side price in dollars
-                  x-parser-schema-id: <anonymous-schema-78>
+                  x-parser-schema-id: <anonymous-schema-81>
                 count_fp:
                   type: string
                   description: Fixed-point contracts traded (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-79>
+                  x-parser-schema-id: <anonymous-schema-82>
                 taker_side:
                   type: string
                   description: Market side
@@ -175,8 +175,8 @@ operations:
                   type: integer
                   description: Unix timestamp in seconds
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-80>
-              x-parser-schema-id: <anonymous-schema-75>
+                  x-parser-schema-id: <anonymous-schema-83>
+              x-parser-schema-id: <anonymous-schema-78>
           x-parser-schema-id: tradePayload
         title: Trade Update
         description: Public trade information

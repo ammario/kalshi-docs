@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-03-30T23:21:12.013Z
+lastmod: 2026-03-31T21:03:04.484Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -1035,20 +1035,6 @@ description: "New _fp string fields for precise contract quantity representation
   See [Fixed-Point Contracts](/getting_started/fixed_point_contracts) for migration details.
 
   Release date: `Jan 22, 2026`
-</Update>
-
-<Update
-  label="Jan 13, 2025"
-  tags={["Breaking", "Upcoming"]}
-  rss={{
-title: "Anonymize RFQ creator IDs when open",
-description: "By default RFQ creator IDs will be anonymized while the RFQ is open"
-}}
->
-  RFQ creator IDs will be exposed only after the RFQ is closed/executes. Accordingly the RFQ creator ID is removed
-  entirely from related websocket messages that are created before this point (RFQCreated, QuoteCreated).
-
-  Release date: `Jan 15, 2025`
 </Update>
 
 <Update
