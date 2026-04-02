@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quote
-lastmod: 2026-03-31T23:42:02.076Z
+lastmod: 2026-04-01T23:36:33.024Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-03-31T23:42:02.076Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.11.0
+  version: 3.12.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -181,6 +181,12 @@ components:
           type: string
           format: date-time
           description: Timestamp when the quote was cancelled
+        expiration_ts:
+          type: string
+          format: date-time
+          description: >-
+            Optional timestamp after which this quote should no longer be
+            accepted
         rest_remainder:
           type: boolean
           description: Whether to rest the remainder of the quote after execution

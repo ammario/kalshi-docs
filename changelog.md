@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-03-31T21:03:04.484Z
+lastmod: 2026-04-01T19:38:13.954Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,27 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Mar 30, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "POST /communications/quotes: added optional expiration_ts field",
+description: "Market makers can now set a TTL on quotes to prevent them from being accepted after a specified time."
+}}
+>
+  Added optional `expiration_ts` field to `POST /trade-api/v2/communications/quotes`.
+
+  * Accepts a Unix timestamp in seconds
+  * Quotes past their `expiration_ts` will be automatically cancelled and will no longer be accepted
+  * `expiration_ts` is returned on `GET /trade-api/v2/communications/quotes/:quote_id`
+  * Market makers subscribed to the communications WebSocket channel will receive a `quote_cancelled` message when a quote expires
+
+  **Affected endpoints:**
+
+  * `POST /trade-api/v2/communications/quotes`
+  * `GET /trade-api/v2/communications/quotes/:quote_id`
+</Update>
 
 <Update
   label="Mar 30, 2026"
