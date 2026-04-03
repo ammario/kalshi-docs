@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2026-04-01T23:36:32.999Z
+lastmod: 2026-04-02T21:00:01.428Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -245,12 +245,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the quote was cancelled
-        expiration_ts:
-          type: string
-          format: date-time
-          description: >-
-            Optional timestamp after which this quote should no longer be
-            accepted
         rest_remainder:
           type: boolean
           description: Whether to rest the remainder of the quote after execution

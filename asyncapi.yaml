@@ -1611,35 +1611,6 @@ components:
               yes_contracts_offered_fp: '100.00'
               no_contracts_offered_fp: '200.00'
               rfq_target_cost_dollars: '0.35'
-    quoteCancelled:
-      name: quote_cancelled
-      title: Quote Cancelled
-      summary: Notification when a quote is cancelled
-      description: >
-        Sent to both the quote creator and the RFQ creator when a quote is
-        cancelled.
-
-        This includes cancellations due to TTL expiry (cancellation_reason:
-        "quote expired")
-
-        as well as manual cancellations.
-      contentType: application/json
-      payload:
-        $ref: '#/components/schemas/quoteCancelledPayload'
-      examples:
-        - name: quoteCancelledNotification
-          summary: Quote cancelled notification
-          payload:
-            type: quote_cancelled
-            sid: 15
-            msg:
-              quote_id: quote_456
-              rfq_id: rfq_123
-              quote_creator_id: comm_def456
-              market_ticker: FED-23DEC-T3.00
-              event_ticker: FED-23DEC
-              cancellation_reason: quote expired
-              cancelled_ts: '2026-03-31T12:00:00Z'
     quoteExecuted:
       name: quote_executed
       title: Quote Executed
@@ -2995,12 +2966,6 @@ components:
               type: string
               description: Timestamp when the quote was created
               format: date-time
-            expiration_ts:
-              type: string
-              description: >-
-                Optional timestamp after which this quote should no longer be
-                accepted
-              format: date-time
     quoteAcceptedPayload:
       type: object
       required:
@@ -3062,52 +3027,6 @@ components:
             rfq_target_cost_dollars:
               type: string
               description: Target cost from the RFQ in dollars (optional)
-    quoteCancelledPayload:
-      type: object
-      required:
-        - type
-        - sid
-        - msg
-      properties:
-        type:
-          type: string
-          const: quote_cancelled
-        sid:
-          $ref: '#/components/schemas/subscriptionId'
-        msg:
-          type: object
-          required:
-            - quote_id
-            - rfq_id
-            - quote_creator_id
-            - market_ticker
-            - cancellation_reason
-            - cancelled_ts
-          properties:
-            quote_id:
-              type: string
-              description: Unique identifier for the cancelled quote
-            rfq_id:
-              type: string
-              description: Identifier of the RFQ this quote was for
-            quote_creator_id:
-              type: string
-              description: Public communications ID of the quote creator (anonymized)
-            market_ticker:
-              type: string
-              description: Market ticker for the quote
-            event_ticker:
-              type: string
-              description: Event ticker (optional)
-            cancellation_reason:
-              type: string
-              description: >-
-                Reason the quote was cancelled (e.g. "quote expired", "manually
-                cancelled")
-            cancelled_ts:
-              type: string
-              format: date-time
-              description: Timestamp when the quote was cancelled
     quoteExecutedPayload:
       type: object
       required:

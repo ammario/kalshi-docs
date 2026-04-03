@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-04-01T19:38:13.954Z
+lastmod: 2026-04-02T21:00:17.451Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,27 +17,6 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
-
-<Update
-  label="Mar 30, 2026"
-  tags={["New Feature", "Upcoming"]}
-  rss={{
-title: "POST /communications/quotes: added optional expiration_ts field",
-description: "Market makers can now set a TTL on quotes to prevent them from being accepted after a specified time."
-}}
->
-  Added optional `expiration_ts` field to `POST /trade-api/v2/communications/quotes`.
-
-  * Accepts a Unix timestamp in seconds
-  * Quotes past their `expiration_ts` will be automatically cancelled and will no longer be accepted
-  * `expiration_ts` is returned on `GET /trade-api/v2/communications/quotes/:quote_id`
-  * Market makers subscribed to the communications WebSocket channel will receive a `quote_cancelled` message when a quote expires
-
-  **Affected endpoints:**
-
-  * `POST /trade-api/v2/communications/quotes`
-  * `GET /trade-api/v2/communications/quotes/:quote_id`
-</Update>
 
 <Update
   label="Mar 30, 2026"
@@ -99,26 +78,6 @@ description: "Market responses now return the actual multivariate event ticker f
 }}
 >
   Fixed `GET /markets` and `GET /markets/{ticker}` so `custom_strike["Multivariate Event Ticker"]` returns the actual multivariate event ticker instead of the MVE collection ticker.
-</Update>
-
-<Update
-  label="Mar 23, 2026"
-  tags={["Change", "Upcoming"]}
-  rss={{
-title: "Event and market response normalization",
-description: "Event responses now consistently include product_metadata, strike_date and strike_period are mutually exclusive, and contradictory custom_strike payloads are no longer emitted with non-custom strike types."
-}}
->
-  * `EventData.product_metadata` is now always present on event responses, including cases where it is empty.
-  * `EventData.strike_date` and `EventData.strike_period` are now emitted as mutually exclusive fields.
-  * `Market.custom_strike` is no longer emitted alongside non-custom scalar `strike_type` values such as `greater` or `less`.
-
-  **Affected endpoints:**
-
-  * `GET /events`
-  * `GET /events/{ticker}`
-  * `GET /markets`
-  * `GET /markets/{ticker}`
 </Update>
 
 <Update
