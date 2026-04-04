@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/error-handling
-lastmod: 2026-01-29T00:38:37.042Z
+lastmod: 2026-04-03T21:24:29.069Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -115,7 +115,7 @@ In OrderCancelReject (35=9):
 8=FIXT.1.1|35=3|45=5|58=Undefined tag received|371=333333|372=D|373=3|
 ```
 
-### Example 2: Business Logic Error
+### Example 2: Order Rejected by Exchange
 
 **Scenario**: Trading during maintenance
 
@@ -123,17 +123,21 @@ In OrderCancelReject (35=9):
 // Sent
 8=FIXT.1.1|35=D|11=456|38=10|55=HIGHNY-23DEC31|...
 
-// Response: BusinessMessageReject
-8=FIXT.1.1|35=j|45=10|58=Kalshi exchange unavailable|372=D|380=4|
+// Response: ExecutionReport (Rejected)
+8=FIXT.1.1|35=8|11=456|150=8|39=8|58=EXCHANGE_PAUSED|103=2|...
 ```
+
+<Note>
+  Order-entry failures returned by the exchange are sent as ExecutionReport (35=8) with ExecType=Rejected, not as BusinessMessageReject. BusinessMessageReject (35=j) is used for application-layer failures before normal exchange rejection handling, such as rate limiting or listener-session restrictions.
+</Note>
 
 ### Example 3: Order Rejection
 
-**Scenario**: Insufficient funds
+**Scenario**: Insufficient balance
 
 ```fix  theme={null}
 // Response: ExecutionReport
-8=FIXT.1.1|35=8|11=789|150=8|39=8|58=Insufficient funds|103=99|...
+8=FIXT.1.1|35=8|11=789|150=8|39=8|58=INSUFFICIENT_BALANCE|103=3|...
 ```
 
 ## Error Handling Best Practices
@@ -152,13 +156,13 @@ def handle_message(msg):
 
 ### 2. Retry Strategies
 
-| Error Type         | Retry Strategy                  |
-| ------------------ | ------------------------------- |
-| Session errors     | Fix protocol issue before retry |
-| Rate limit         | Exponential backoff             |
-| Exchange closed    | Wait for market open            |
-| Insufficient funds | Check balance before retry      |
-| Unknown symbol     | Verify symbol, don't retry      |
+| Error Type           | Retry Strategy                  |
+| -------------------- | ------------------------------- |
+| Session errors       | Fix protocol issue before retry |
+| Rate limit           | Exponential backoff             |
+| Exchange closed      | Wait for market open            |
+| Insufficient balance | Check balance before retry      |
+| Unknown symbol       | Verify symbol, don't retry      |
 
 ### 3. Graceful Degradation
 
@@ -189,12 +193,12 @@ def handle_message(msg):
 
 ### Order Entry Errors
 
-| Error               | Check           | Action                                         |
-| ------------------- | --------------- | ---------------------------------------------- |
-| Unknown symbol      | Symbol format   | Use exact ticker from market data              |
-| Order exceeds limit | Position limits | Query current position                         |
-| Duplicate ClOrdID   | ID generation   | Ensure UUID uniqueness                         |
-| Invalid price       | Price range     | Ensure (0, 100) cents with valid tick interval |
+| Error               | Check                               | Action                                         |
+| ------------------- | ----------------------------------- | ---------------------------------------------- |
+| Unknown symbol      | Symbol format                       | Use exact ticker from market data              |
+| Order exceeds limit | Position limits / available balance | Query current position and balance             |
+| Duplicate ClOrdID   | ID generation                       | Ensure UUID uniqueness                         |
+| Invalid price       | Price range                         | Ensure (0, 100) cents with valid tick interval |
 
 ### Connection Errors
 

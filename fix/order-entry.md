@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-03-11T14:19:37.453Z
+lastmod: 2026-04-03T21:24:29.896Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -174,17 +174,14 @@ Common values for the Text field in Execution Reports:
 * **SELF\_CROSS\_ATTEMPT** - maps to ExecutionType "Canceled"
 * **SELF\_CROSS\_ATTEMPT\_PARTIALLY\_FILLED** - maps to ExecutionType "Canceled"
 * **ORDER\_ALREADY\_EXISTS** - maps to OrdRejReason "Duplicate order"
-* **INVALID\_AMEND\_QTY\_FOR\_ORDER** - maps to OrdRejReason "Other"
-* **CANNOT\_UPDATE\_FILLED\_ORDER** - maps to OrdRejReason "Too late to enter"
 * **EXCEEDED\_ORDER\_GROUP\_RISK\_LIMIT** - maps to OrdRejReason "Order exceeds limit"
-* **INSUFFICIENT\_BALANCE** - maps to OrdRejReason "Other"
+* **INSUFFICIENT\_BALANCE** - maps to OrdRejReason "Order exceeds limit"
 * **EXCHANGE\_PAUSED** - maps to OrdRejReason "Exchange closed"
 * **TRADING\_PAUSED** - maps to OrdRejReason "Exchange closed"
 * **INVALID\_ORDER** - maps to OrdRejReason "Unsupported order characteristic"
 * **ORDER\_GROUP\_NOT\_FOUND** - maps to OrdRejReason "Unsupported order characteristic"
 * **EXCEEDED\_PER\_MARKET\_RISK\_LIMIT** - maps to OrdRejReason "Order exceeds limit"
 * **EXCEEDED\_SELL\_POSITION\_FLOOR** - maps to OrdRejReason "Order exceeds limit"
-* **NOT\_FOUND** - maps to OrdRejReason "Unknown symbol"
 * **CUSTOMER\_ACCOUNT\_NOT\_FOUND** - maps to OrdRejReason "Unknown account"
 * **PERMISSION\_DENIED\_FOR\_CUSTOMER\_ACCOUNT** - maps to OrdRejReason "Unknown account"
 * **FOK\_INSUFFICIENT\_VOLUME** - maps to ExecutionType "Canceled"
@@ -193,6 +190,16 @@ Common values for the Text field in Execution Reports:
 * **TAKER\_CANCEL\_FOR\_SELF\_TRADE\_PREVENTION** - maps to ExecutionType "Canceled"
 * **MAKER\_CANCEL\_FOR\_SELF\_TRADE\_PREVENTION** - maps to ExecutionType "Canceled"
 * **IMMEDIATE\_OR\_CANCELLED** - maps to ExecutionType "Canceled"
+
+### OrderCancelReject (35=9)
+
+Exchange-side amend and cancel failures are returned as OrderCancelReject (35=9), not ExecutionReport.
+
+| Text (58)                     | CxlRejReason (102)      |
+| ----------------------------- | ----------------------- |
+| `INVALID_AMEND_QTY_FOR_ORDER` | Broker                  |
+| `CANNOT_UPDATE_FILLED_ORDER`  | Broker                  |
+| `SELF_CROSS_ATTEMPT`          | Invalid price increment |
 
 ### Position and Fee Information
 
@@ -212,11 +219,11 @@ When ExecType=Trade:
 
 ### Collateral Changes
 
-| Tag  | Name                    | Description                  |
-| ---- | ----------------------- | ---------------------------- |
-| 1703 | NoCollateralAmounts     | Number of collateral changes |
-| 1704 | CurrentCollateralAmount | Delta in dollars             |
-| 1705 | CollateralType          | BALANCE or PAYOUT            |
+| Tag  | Name                      | Description                  |
+| ---- | ------------------------- | ---------------------------- |
+| 1703 | NoCollateralAmountChanges | Number of collateral changes |
+| 1704 | CollateralAmountChange    | Delta in dollars             |
+| 1705 | CollateralAmountType      | BALANCE or PAYOUT            |
 
 ### Party Information
 
@@ -241,7 +248,7 @@ Party fields from the original order request are echoed back in ExecutionReports
 
 ## Mass Cancel Request (35=q)
 
-Cancel all orders for the trading session.
+Cancel all orders for the trading session. Only available on KalshiNR (NewOrderMode) sessions.
 
 | Tag | Name                  | Description            |
 | --- | --------------------- | ---------------------- |

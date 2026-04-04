@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-groups
-lastmod: 2026-01-29T00:38:37.043Z
+lastmod: 2026-04-03T21:24:29.895Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,7 +17,7 @@ lastmod: 2026-01-29T00:38:37.043Z
 Order groups provide automatic order cancellation when a contracts limit is reached. This feature helps manage risk by ensuring positions don't exceed predefined thresholds. Limits are evaluated over a rolling 15-second window. Order groups are managed through custom FIX message types.
 
 <Info>
-  When an order group's contracts limit is hit, all orders in the group are automatically canceled and no new orders can be placed until the group is reset.
+  When an order group's contracts limit is exceeded, all orders in the group are automatically canceled and no new orders can be placed until the group is reset.
 </Info>
 
 ## Order Group Request (35=UOG)
@@ -53,6 +53,10 @@ Manage order groups with Create, Reset, Delete, Trigger, and Update operations.
 | Tag   | Name         | Description           | Required |
 | ----- | ------------ | --------------------- | -------- |
 | 20130 | OrderGroupID | ID of group to delete | Yes      |
+
+<Warning>
+  Deleting an order group cancels all resting orders in that group.
+</Warning>
 
 #### Trigger (Action=4)
 
@@ -114,7 +118,7 @@ Response to order group management requests.
 | 20130 | OrderGroupID | ID of the order group |
 
 <Note>
-  Errors are returned as BusinessMessageReject (35=j) messages, not in the OrderGroupResponse.
+  Business-logic errors (e.g. order group not found, exchange-returned errors) are returned as BusinessMessageReject (35=j) messages. Malformed fields (e.g. invalid UUID format for OrderGroupID) produce a session-level Reject (35=3).
 </Note>
 
 

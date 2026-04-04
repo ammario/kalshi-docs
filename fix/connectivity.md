@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2026-01-29T00:38:37.040Z
+lastmod: 2026-04-03T21:24:29.068Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -57,10 +57,11 @@ Before logging onto a FIX session, clients must establish a secure connection to
 <Info>
   Session layer messages excluded from rate limits:
 
-  * Logon (35=A)
   * Logout (35=5)
   * Heartbeat (35=0)
   * TestRequest (35=1)
+
+  Logon (35=A) is rate-limited.
 </Info>
 
 ## TCP SSL Configuration
