@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/historical_data
-lastmod: 2026-03-06T23:57:20.978Z
+lastmod: 2026-04-07T18:48:39.517Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -23,7 +23,7 @@ This separation means that if you query for data that is older than the cutoff (
 
 The boundary between live and historical data is defined by a set of **cutoff timestamps**, which you can retrieve at any time via `GET /historical/cutoff`. Any record older than the relevant cutoff must be queried through the corresponding historical endpoint.
 
-The cutoff timestamps will be regularly updated, advancing forward over time. The target window for live data is approximately **3 months**, though the initial cutoff will start at **1 year** of lookback.
+The cutoff timestamps will be regularly updated, advancing forward over time. The target window for live data is **3 months**.
 
 ## Cutoff Timestamps
 
@@ -70,12 +70,6 @@ The following live endpoints will no longer return data older than the correspon
 <Info>
   The historical endpoints support the same [cursor-based pagination](/getting_started/pagination) as their live counterparts.
 </Info>
-
-<Warning>
-  For the time being, historical data is still available through the standard live endpoints. However, we are targeting **March 6th, 2026** for the removal of historical data from the live API. Please migrate to the historical endpoints before this date.
-
-  The initial cutoff timestamps are initially intended to be the same across **markets**, **trades**, and **orders**, and to start with a 1 year lookback. Over time, the cutoff timestamps are intended to move up to approximately 2-3 months.
-</Warning>
 
 
 Built with [Mintlify](https://mintlify.com).

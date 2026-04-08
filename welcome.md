@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/welcome
-lastmod: 2026-02-20T19:17:14.721Z
+lastmod: 2026-04-07T18:17:21.419Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -71,58 +71,44 @@ lastmod: 2026-02-20T19:17:14.721Z
       Make your first API call and start trading on Kalshi.
     </Card>
 
-    <Card title="OpenAPI Specification" icon="file-code" href="https://docs.kalshi.com/openapi.yaml">
-      Download the OpenAPI specification for API integration.
-    </Card>
-
     <Card title="Demo Environment" icon="atom" href="/getting_started/demo_env">
       Test your integration in our safe demo environment.
     </Card>
-  </CardGroup>
 
-  <CardGroup cols={4}>
-    <Card title="Rate Limits" icon="gauge" href="/getting_started/rate_limits">
-      Understand API rate limits and best practices.
+    <Card title="API Keys" icon="key" href="/getting_started/api_keys">
+      Learn how to generate and manage your API credentials.
     </Card>
 
-    <Card title="API Reference" icon="code" href="/api-reference">
-      Explore our complete API documentation.
-    </Card>
-
-    <Card title="Changelog" icon="list-tree" href="/changelog">
-      Stay updated with the latest API changes.
-    </Card>
-  </CardGroup>
-
-  <CardGroup cols={4}>
-    <Card title="Kalshi Glossary" icon="book-open" href="/getting_started/terms">
-      Learn key terms and concepts used in the Kalshi exchange.
+    <Card title="Market Data" icon="chart-candlestick" href="/getting_started/quick_start_market_data">
+      Quick start guide for accessing market data.
     </Card>
 
     <Card title="WebSocket API" icon="plug" href="/getting_started/quick_start_websockets">
       Learn about real-time data streaming via WebSockets.
     </Card>
 
-    <Card title="Market Data" icon="chart-candlestick" href="/getting_started/quick_start_market_data">
-      Quick start guide for accessing market data.
+    <Card title="API Reference" icon="code" href="/api-reference">
+      Explore our complete API documentation.
     </Card>
-  </CardGroup>
 
-  <br />
-
-  <h2 className="text-white dark:text-white" style={{ fontFamily: 'Inter', fontWeight: '600', fontSize: '1.25rem', marginBottom: '1rem', textAlign: 'left' }}>Learn more about Kalshi</h2>
-
-  <CardGroup cols={4}>
-    <Card title="API Keys" icon="key" href="/getting_started/api_keys">
-      Learn how to generate and manage your API credentials.
+    <Card title="OpenAPI Specification" icon="file-code" href="https://docs.kalshi.com/openapi.yaml">
+      Download the OpenAPI specification for API integration.
     </Card>
 
     <Card title="AsyncAPI Specification" icon="file-code" href="https://docs.kalshi.com/asyncapi.yaml">
       Download the AsyncAPI specification for WebSocket integration.
     </Card>
 
-    <Card title="Trading Console" icon="square-terminal" href="https://kalshi.com">
-      Access the Kalshi trading platform.
+    <Card title="Rate Limits" icon="gauge" href="/getting_started/rate_limits">
+      Understand API rate limits and best practices.
+    </Card>
+
+    <Card title="Kalshi Glossary" icon="book-open" href="/getting_started/terms">
+      Learn key terms and concepts used in the Kalshi exchange.
+    </Card>
+
+    <Card title="Changelog" icon="list-tree" href="/changelog">
+      Stay updated with the latest API changes.
     </Card>
 
     <Card title="Kalshi Academy" icon="graduation-cap" href="https://help.kalshi.com/">

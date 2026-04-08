@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/user-orders
-lastmod: 2026-04-02T21:00:03.223Z
+lastmod: 2026-04-07T19:12:11.037Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
