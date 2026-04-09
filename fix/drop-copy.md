@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/drop-copy
-lastmod: 2026-01-29T00:38:37.041Z
+lastmod: 2026-04-08T18:36:44.118Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,10 +21,9 @@ The drop copy session provides an alternative method to query for missed executi
 * Building backup systems
 * Compliance recording
 
-<Info>
-  Kalshi's DropCopy format utilizes a request-response message type, if you are interested in a session that "follows along" the execution report activity of your trading
-  session, consider using a KalshiRT session with the ListenerFlag parameter.
-</Info>
+<Warning>
+  **This is not a traditional drop copy session.** Kalshi's Drop Copy session uses a request-response pattern for querying historical execution reports. If you are looking for a real-time streaming feed of your execution reports (what most exchanges call a "drop copy"), use a [Listener Session](/fix/listener-sessions) on KalshiRT instead.
+</Warning>
 
 ## Connection Details
 

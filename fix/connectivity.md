@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2026-04-03T21:24:29.068Z
+lastmod: 2026-04-08T18:36:44.114Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -45,6 +45,10 @@ Before logging onto a FIX session, clients must establish a secure connection to
 <Warning>
   Sessions are potentially dropped during trading closed hours for maintenance. For now, this is on Thursdays from 3 AM to 5 AM ET. All users are required to restart their sessions during this time and reset sequence numbers to 0.
 </Warning>
+
+<Tip>
+  **Looking for a real-time feed of your execution reports?** Use a [Listener Session](/fix/listener-sessions) on KalshiRT. The Drop Copy session (KalshiDC) is a request-response tool for querying historical execution reports, not a live streaming feed.
+</Tip>
 
 ## Rate Limits
 
@@ -98,7 +102,7 @@ For endpoints without retransmission support:
 
 ### Alternative Recovery
 
-The drop copy session endpoint provides an alternative way for clients to query for missed execution reports without using the retransmission protocol.
+The [drop copy session](/fix/drop-copy) endpoint provides an alternative way for clients to query for missed execution reports without using the retransmission protocol. For a real-time streaming feed, see [Listener Sessions](/fix/listener-sessions).
 
 ## Session Configuration
 

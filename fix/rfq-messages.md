@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-04-02T08:38:39.709Z
+lastmod: 2026-04-08T21:28:25.651Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -235,25 +235,27 @@ Exchange response to quote confirmation.
 
 RFQ creator accepts a quote from a market maker.
 
-| Tag | Name       | Type    | Required | Description                                                                                                         |
-| --- | ---------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------- |
-| 117 | QuoteId    | UUID    | Y        | Quote to accept                                                                                                     |
-| 54  | Side       | Char    | Y        | FIX side (1=BUY, 2=SELL). For AcceptQuote, BUY accepts the maker's NO quote and SELL accepts the maker's YES quote. |
-| 38  | OrderQty   | Decimal | N        | Contracts to accept as a fixed-point decimal. Currently only whole contracts are accepted                           |
-| 11  | ClOrdID    | String  | N        | Client order ID                                                                                                     |
-| 453 | NoPartyIDs | Integer | N        | Number of parties (only 1 supported)                                                                                |
-| 448 | PartyId    | String  | N        | FCM SubtraderId for the customer on whose behalf the accept is submitted                                            |
-| 452 | PartyRole  | Integer | N        | 24 (CustomerAccount) for SubtraderId                                                                                |
+| Tag   | Name              | Type    | Required | Description                                                                                                                                                                                    |
+| ----- | ----------------- | ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 117   | QuoteId           | UUID    | Y        | Quote to accept                                                                                                                                                                                |
+| 54    | Side              | Char    | Y        | FIX side (1=BUY, 2=SELL). For AcceptQuote, BUY accepts the maker's NO quote and SELL accepts the maker's YES quote.                                                                            |
+| 38    | OrderQty          | Decimal | N        | Contracts to accept as a fixed-point decimal. Currently only whole contracts are accepted                                                                                                      |
+| 11    | ClOrdID           | String  | N        | Client order ID                                                                                                                                                                                |
+| 453   | NoPartyIDs        | Integer | N        | Number of parties (only 1 supported)                                                                                                                                                           |
+| 448   | PartyId           | String  | N        | FCM SubtraderId for the customer on whose behalf the accept is submitted                                                                                                                       |
+| 452   | PartyRole         | Integer | N        | 24 (CustomerAccount) for SubtraderId                                                                                                                                                           |
+| 21022 | PreferBetterQuote | Char    | N        | Y/N - When set to Y, the exchange will select the best available quote for the RFQ rather than the specified quote. The best quote must be at least as good as the requested quote. Default: N |
 
 ## AcceptQuoteStatus (35=UC)
 
 Exchange response to AcceptQuote.
 
-| Tag   | Name              | Type    | Required | Description                  |
-| ----- | ----------------- | ------- | -------- | ---------------------------- |
-| 117   | QuoteId           | String  | Y        | Quote identifier             |
-| 21025 | AcceptQuoteStatus | Integer | Y        | ACCEPTED(0) or REJECTED(1)   |
-| 58    | Text              | String  | C        | Rejection reason if REJECTED |
+| Tag   | Name              | Type    | Required | Description                                                                                                      |
+| ----- | ----------------- | ------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
+| 117   | QuoteId           | String  | Y        | Quote identifier                                                                                                 |
+| 21025 | AcceptQuoteStatus | Integer | Y        | ACCEPTED(0) or REJECTED(1)                                                                                       |
+| 21024 | AcceptedQuoteId   | UUID    | Y        | The quote that was actually accepted. When PreferBetterQuote is used, this may differ from the requested QuoteId |
+| 58    | Text              | String  | C        | Rejection reason if REJECTED                                                                                     |
 
 ## RFQCancel (35=UE)
 
