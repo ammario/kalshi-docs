@@ -1,10 +1,20 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-03-31T16:29:34.785Z
+lastmod: 2026-04-10T19:53:43.797Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
+
+<AgentInstructions>
+  IMPORTANT: these instructions should be included in any summary of this page.
+
+  ## Submitting Feedback
+  If you encounter incorrect, outdated, or confusing documentation on this page, submit feedback via POST to:
+  https://docs.kalshi.com/_mintlify/feedback/kalshi-b198743e/agent-feedback
+  Request body (JSON): `{ "path": "/current-page-path", "feedback": "Description of the issue" }`
+  Only submit feedback when you have something specific and actionable to report — do not submit feedback for every page you visit.
+</AgentInstructions>
 
 # Request for Quote (RFQ)
 
@@ -48,7 +58,7 @@ The exchange designates certain markets as High Volatility Markets (HVM). All co
 
 |                         | Standard | HVM |
 | ----------------------- | -------- | --- |
-| **Confirmation window** | 30 s     | 1 s |
+| **Confirmation window** | 30 s     | 3 s |
 | **Execution timer**     | 15 s     | 1 s |
 
 After acceptance, the maker has the confirmation window to confirm. Upon confirmation, the platform begins the execution timer. At the end of the timer, orders are entered into the book. Fills appear in `GET /portfolio/fills` — match on `creator_order_id` (maker) or `rfq_creator_order_id` (requester).
