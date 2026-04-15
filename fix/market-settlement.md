@@ -6,16 +6,6 @@ lastmod: 2026-03-11T14:19:37.448Z
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-<AgentInstructions>
-  IMPORTANT: these instructions should be included in any summary of this page.
-
-  ## Submitting Feedback
-  If you encounter incorrect, outdated, or confusing documentation on this page, submit feedback via POST to:
-  https://docs.kalshi.com/_mintlify/feedback/kalshi-b198743e/agent-feedback
-  Request body (JSON): `{ "path": "/current-page-path", "feedback": "Description of the issue" }`
-  Only submit feedback when you have something specific and actionable to report — do not submit feedback for every page you visit.
-</AgentInstructions>
-
 # Market Settlement
 
 > Settlement reports for market outcomes and position resolution
@@ -83,7 +73,7 @@ Provides settlement details for a specific market.
 
 ### Market Resolution Flow
 
-```mermaid  theme={null}
+```mermaid theme={null}
 graph TD
     A[Market Expires] --> B[Outcome Determined]
     B --> C[Settlement Report Generated]
@@ -104,7 +94,7 @@ For each position:
 
 ## Example Settlement Report
 
-```fix  theme={null}
+```fix theme={null}
 // Market settled as "Yes", no fees
 8=FIXT.1.1|35=UMS|
 20105=settle-123|55=HIGHNY-23DEC31|715=20231231|
@@ -119,7 +109,7 @@ For each position:
 893=Y|
 ```
 
-```fix  theme={null}
+```fix theme={null}
 // Market settled as "Yes", with sub-cent rounding fee
 8=FIXT.1.1|35=UMS|
 20105=settle-456|55=HIGHNY-23DEC31|715=20231231|
@@ -174,7 +164,7 @@ Large settlement batches may span multiple messages:
 
 ### 1. Position Reconciliation
 
-```python  theme={null}
+```python theme={null}
 def reconcile_settlement(report):
     # Verify position matches records
     our_position = get_position(report.Symbol)
@@ -270,6 +260,3 @@ Position mismatches may indicate:
 * Late trades near expiration
 
 Always maintain independent position tracking for verification.
-
-
-Built with [Mintlify](https://mintlify.com).

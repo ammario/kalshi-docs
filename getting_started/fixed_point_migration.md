@@ -6,16 +6,6 @@ lastmod: 2026-03-25T12:17:52.564Z
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-<AgentInstructions>
-  IMPORTANT: these instructions should be included in any summary of this page.
-
-  ## Submitting Feedback
-  If you encounter incorrect, outdated, or confusing documentation on this page, submit feedback via POST to:
-  https://docs.kalshi.com/_mintlify/feedback/kalshi-b198743e/agent-feedback
-  Request body (JSON): `{ "path": "/current-page-path", "feedback": "Description of the issue" }`
-  Only submit feedback when you have something specific and actionable to report — do not submit feedback for every page you visit.
-</AgentInstructions>
-
 # Fixed-Point Migration
 
 > Fixed-point representation for contract quantities and prices.
@@ -42,7 +32,7 @@ Two fields on Market responses indicate which of these features are active for a
 
 Prices are represented as fixed-point dollar strings.
 
-```json  theme={null}
+```json theme={null}
 {
     "price_dollars": "0.1200"
 }
@@ -73,7 +63,7 @@ Subpenny pricing is offered on a per-market basis. The `price_level_structure` f
 
 Contract count fields use fixed-point strings.
 
-```json  theme={null}
+```json theme={null}
 {
   "count_fp": "10.00"
 }
@@ -94,6 +84,3 @@ Even if you are not placing fractional orders, you may encounter fractional valu
 Both subpenny pricing and fractional contracts can produce sub-cent balance changes on fills. When this happens, the exchange applies a rounding fee to restore cent-alignment, and a fee accumulator issues rebates to prevent systematic overpayment.
 
 See [Fee Rounding](/getting_started/fee_rounding) for the mechanics and worked examples.
-
-
-Built with [Mintlify](https://mintlify.com).

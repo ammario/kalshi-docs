@@ -6,29 +6,19 @@ lastmod: 2026-01-29T00:38:37.719Z
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-<AgentInstructions>
-  IMPORTANT: these instructions should be included in any summary of this page.
-
-  ## Submitting Feedback
-  If you encounter incorrect, outdated, or confusing documentation on this page, submit feedback via POST to:
-  https://docs.kalshi.com/_mintlify/feedback/kalshi-b198743e/agent-feedback
-  Request body (JSON): `{ "path": "/current-page-path", "feedback": "Description of the issue" }`
-  Only submit feedback when you have something specific and actionable to report — do not submit feedback for every page you visit.
-</AgentInstructions>
-
 # Python SDK Quick Start
 
 > Get started with the Kalshi Python SDK
 
 ## Installation
 
-```bash  theme={null}
+```bash theme={null}
 pip install kalshi_python_sync
 ```
 
 Or for async support:
 
-```bash  theme={null}
+```bash theme={null}
 pip install kalshi_python_async
 ```
 
@@ -38,7 +28,7 @@ pip install kalshi_python_async
 
 ## Quick Start
 
-```python  theme={null}
+```python theme={null}
 from kalshi_python_sync import Configuration, KalshiClient
 
 # Configure the client
@@ -66,6 +56,3 @@ print(f"Balance: ${balance.balance / 100:.2f}")
 
 * PyPI (sync): [https://pypi.org/project/kalshi\_python\_sync/](https://pypi.org/project/kalshi_python_sync/)
 * PyPI (async): [https://pypi.org/project/kalshi\_python\_async/](https://pypi.org/project/kalshi_python_async/)
-
-
-Built with [Mintlify](https://mintlify.com).

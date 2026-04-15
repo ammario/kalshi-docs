@@ -6,16 +6,6 @@ lastmod: 2026-03-12T17:11:24.230Z
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-<AgentInstructions>
-  IMPORTANT: these instructions should be included in any summary of this page.
-
-  ## Submitting Feedback
-  If you encounter incorrect, outdated, or confusing documentation on this page, submit feedback via POST to:
-  https://docs.kalshi.com/_mintlify/feedback/kalshi-b198743e/agent-feedback
-  Request body (JSON): `{ "path": "/current-page-path", "feedback": "Description of the issue" }`
-  Only submit feedback when you have something specific and actionable to report — do not submit feedback for every page you visit.
-</AgentInstructions>
-
 # Orderbook Responses
 
 > Understanding Kalshi orderbook structure and binary prediction market mechanics
@@ -72,7 +62,7 @@ Both values are strings to support subpenny pricing and fractional contract size
 
 ### Example Response
 
-```json  theme={null}
+```json theme={null}
 {
   "orderbook_fp": {
     "yes_dollars": [
@@ -150,7 +140,7 @@ To find the bid-ask spread for a market:
 
 ### Example Calculation
 
-```python  theme={null}
+```python theme={null}
 from decimal import Decimal
 
 # Using the example orderbook above
@@ -231,7 +221,7 @@ spread = best_yes_ask - best_yes_bid  # $0.44 - $0.42 = $0.02
 
 ### Calculate Market Depth
 
-```python  theme={null}
+```python theme={null}
 from decimal import Decimal
 
 def calculate_depth(orderbook_data, depth_dollars="0.05"):
@@ -268,6 +258,3 @@ def calculate_depth(orderbook_data, depth_dollars="0.05"):
 * Learn about [making authenticated requests](/getting_started/api_keys) to place orders
 * Explore [WebSocket connections](/websockets/orderbook-updates) for real-time orderbook updates
 * Read about [market mechanics](https://kalshi.com/learn) on the Kalshi website
-
-
-Built with [Mintlify](https://mintlify.com).
