@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-market
-lastmod: 2026-04-10T21:56:19.726Z
+lastmod: 2026-04-16T02:56:39.571Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -297,6 +297,13 @@ components:
         expiration_value:
           type: string
           description: The value that was considered for the settlement
+        occurrence_datetime:
+          type: string
+          format: date-time
+          nullable: true
+          description: >-
+            The recorded datetime when the underlying event occurred, if
+            available
         fee_waiver_expiration_time:
           type: string
           format: date-time
