@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/websocket-connection
-lastmod: 2026-04-07T19:12:10.886Z
+lastmod: 2026-04-16T14:17:12.520Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

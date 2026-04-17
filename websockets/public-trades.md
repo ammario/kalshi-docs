@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/public-trades
-lastmod: 2026-04-07T19:12:10.937Z
+lastmod: 2026-04-16T14:17:12.786Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -107,7 +107,12 @@ operations:
                     required: false
                   - name: ts
                     type: integer
-                    description: Unix timestamp in seconds
+                    description: Deprecated - Unix timestamp in seconds. Use ts_ms instead.
+                    deprecated: true
+                    required: false
+                  - name: ts_ms
+                    type: integer
+                    description: Unix timestamp in milliseconds
                     required: false
         headers: []
         jsonPayloadSchema:
@@ -120,7 +125,7 @@ operations:
             type:
               type: string
               const: trade
-              x-parser-schema-id: <anonymous-schema-77>
+              x-parser-schema-id: <anonymous-schema-79>
             sid:
               type: integer
               description: >-
@@ -138,12 +143,13 @@ operations:
                 - count_fp
                 - taker_side
                 - ts
+                - ts_ms
               properties:
                 trade_id:
                   type: string
                   description: Unique identifier for the trade
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-79>
+                  x-parser-schema-id: <anonymous-schema-81>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -155,15 +161,15 @@ operations:
                 yes_price_dollars:
                   type: string
                   description: Yes side price in dollars
-                  x-parser-schema-id: <anonymous-schema-80>
+                  x-parser-schema-id: <anonymous-schema-82>
                 no_price_dollars:
                   type: string
                   description: No side price in dollars
-                  x-parser-schema-id: <anonymous-schema-81>
+                  x-parser-schema-id: <anonymous-schema-83>
                 count_fp:
                   type: string
                   description: Fixed-point contracts traded (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-82>
+                  x-parser-schema-id: <anonymous-schema-84>
                 taker_side:
                   type: string
                   description: Market side
@@ -173,10 +179,16 @@ operations:
                   x-parser-schema-id: marketSide
                 ts:
                   type: integer
-                  description: Unix timestamp in seconds
+                  deprecated: true
+                  description: Deprecated - Unix timestamp in seconds. Use ts_ms instead.
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-83>
-              x-parser-schema-id: <anonymous-schema-78>
+                  x-parser-schema-id: <anonymous-schema-85>
+                ts_ms:
+                  type: integer
+                  description: Unix timestamp in milliseconds
+                  format: int64
+                  x-parser-schema-id: <anonymous-schema-86>
+              x-parser-schema-id: <anonymous-schema-80>
           x-parser-schema-id: tradePayload
         title: Trade Update
         description: Public trade information
@@ -191,7 +203,8 @@ operations:
               "no_price_dollars": "0.640",
               "count_fp": "136.00",
               "taker_side": "no",
-              "ts": 1669149841
+              "ts": 1669149841,
+              "ts_ms": 1669149841000
             }
           }
         bindings: []

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-series-fee-changes
-lastmod: 2026-04-16T02:56:39.609Z
+lastmod: 2026-04-17T01:58:23.320Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

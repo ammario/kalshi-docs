@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/orderbook-updates
-lastmod: 2026-04-07T19:12:10.911Z
+lastmod: 2026-04-16T14:17:12.644Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -326,8 +326,15 @@ operations:
                   - name: ts
                     type: string
                     description: >-
-                      Optional - Timestamp for when the orderbook change was
-                      recorded (RFC3339)
+                      Deprecated - Optional timestamp for when the orderbook
+                      change was recorded (RFC3339). Use ts_ms instead.
+                    deprecated: true
+                    required: false
+                  - name: ts_ms
+                    type: integer
+                    description: >-
+                      Optional - Unix timestamp for when the orderbook change
+                      was recorded (in milliseconds)
                     required: false
         headers: []
         jsonPayloadSchema:
@@ -390,11 +397,19 @@ operations:
                   x-parser-schema-id: <anonymous-schema-61>
                 ts:
                   type: string
+                  deprecated: true
                   description: >-
-                    Optional - Timestamp for when the orderbook change was
-                    recorded (RFC3339)
+                    Deprecated - Optional timestamp for when the orderbook
+                    change was recorded (RFC3339). Use ts_ms instead.
                   format: date-time
                   x-parser-schema-id: <anonymous-schema-62>
+                ts_ms:
+                  type: integer
+                  description: >-
+                    Optional - Unix timestamp for when the orderbook change was
+                    recorded (in milliseconds)
+                  format: int64
+                  x-parser-schema-id: <anonymous-schema-63>
               x-parser-schema-id: <anonymous-schema-57>
           x-parser-schema-id: orderbookDeltaPayload
         title: Orderbook Delta
@@ -410,7 +425,8 @@ operations:
               "price_dollars": "0.960",
               "delta_fp": "-54.00",
               "side": "yes",
-              "ts": "2022-11-22T20:44:01Z"
+              "ts": "2022-11-22T20:44:01Z",
+              "ts_ms": 1669149841000
             }
           }
         bindings: []

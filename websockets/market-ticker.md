@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-ticker
-lastmod: 2026-04-07T19:12:10.925Z
+lastmod: 2026-04-16T14:17:12.700Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -131,11 +131,23 @@ operations:
                     required: false
                   - name: ts
                     type: integer
-                    description: Unix timestamp for when the update happened (in seconds)
+                    description: >-
+                      Deprecated - Unix timestamp for when the update happened
+                      (in seconds). Use ts_ms instead.
+                    deprecated: true
+                    required: false
+                  - name: ts_ms
+                    type: integer
+                    description: >-
+                      Unix timestamp for when the update happened (in
+                      milliseconds)
                     required: false
                   - name: time
                     type: string
-                    description: Timestamp for when the update happened (RFC3339)
+                    description: >-
+                      Deprecated - Timestamp for when the update happened
+                      (RFC3339). Use ts_ms instead.
+                    deprecated: true
                     required: false
         headers: []
         jsonPayloadSchema:
@@ -148,7 +160,7 @@ operations:
             type:
               type: string
               const: ticker
-              x-parser-schema-id: <anonymous-schema-63>
+              x-parser-schema-id: <anonymous-schema-64>
             sid:
               type: integer
               description: >-
@@ -172,6 +184,7 @@ operations:
                 - dollar_volume
                 - dollar_open_interest
                 - ts
+                - ts_ms
                 - time
               properties:
                 market_ticker:
@@ -190,56 +203,69 @@ operations:
                 price_dollars:
                   type: string
                   description: Last traded price in dollars
-                  x-parser-schema-id: <anonymous-schema-65>
+                  x-parser-schema-id: <anonymous-schema-66>
                 yes_bid_dollars:
                   type: string
                   description: Best bid price for yes side in dollars
-                  x-parser-schema-id: <anonymous-schema-66>
+                  x-parser-schema-id: <anonymous-schema-67>
                 yes_ask_dollars:
                   type: string
                   description: Best ask price for yes side in dollars
-                  x-parser-schema-id: <anonymous-schema-67>
+                  x-parser-schema-id: <anonymous-schema-68>
                 volume_fp:
                   type: string
                   description: Fixed-point total contracts traded (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-68>
+                  x-parser-schema-id: <anonymous-schema-69>
                 open_interest_fp:
                   type: string
                   description: Fixed-point open interest (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-69>
+                  x-parser-schema-id: <anonymous-schema-70>
                 dollar_volume:
                   type: integer
                   description: Number of dollars traded in the market so far
                   minimum: 0
-                  x-parser-schema-id: <anonymous-schema-70>
+                  x-parser-schema-id: <anonymous-schema-71>
                 dollar_open_interest:
                   type: integer
                   description: Number of dollars positioned in the market currently
                   minimum: 0
-                  x-parser-schema-id: <anonymous-schema-71>
+                  x-parser-schema-id: <anonymous-schema-72>
                 yes_bid_size_fp:
                   type: string
                   description: Fixed-point contracts at best bid (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-72>
+                  x-parser-schema-id: <anonymous-schema-73>
                 yes_ask_size_fp:
                   type: string
                   description: Fixed-point contracts at best ask (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-73>
+                  x-parser-schema-id: <anonymous-schema-74>
                 last_trade_size_fp:
                   type: string
                   description: Fixed-point contracts in last trade (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-74>
+                  x-parser-schema-id: <anonymous-schema-75>
                 ts:
                   type: integer
-                  description: Unix timestamp for when the update happened (in seconds)
+                  deprecated: true
+                  description: >-
+                    Deprecated - Unix timestamp for when the update happened (in
+                    seconds). Use ts_ms instead.
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-75>
+                  x-parser-schema-id: <anonymous-schema-76>
+                ts_ms:
+                  type: integer
+                  description: >-
+                    Unix timestamp for when the update happened (in
+                    milliseconds)
+                  format: int64
+                  x-parser-schema-id: <anonymous-schema-77>
                 time:
                   type: string
-                  description: Timestamp for when the update happened (RFC3339)
+                  deprecated: true
+                  description: >-
+                    Deprecated - Timestamp for when the update happened
+                    (RFC3339). Use ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-76>
-              x-parser-schema-id: <anonymous-schema-64>
+                  x-parser-schema-id: <anonymous-schema-78>
+              x-parser-schema-id: <anonymous-schema-65>
           x-parser-schema-id: tickerPayload
         title: Ticker Update
         description: Market price ticker information
@@ -261,6 +287,7 @@ operations:
               "yes_ask_size_fp": "150.00",
               "last_trade_size_fp": "25.00",
               "ts": 1669149841,
+              "ts_ms": 1669149841000,
               "time": "2022-11-22T20:44:01Z"
             }
           }

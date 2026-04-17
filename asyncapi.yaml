@@ -1254,6 +1254,7 @@ components:
               delta_fp: '-54.00'
               side: 'yes'
               ts: '2022-11-22T20:44:01Z'
+              ts_ms: 1669149841000
     ticker:
       name: ticker
       title: Ticker Update
@@ -1281,6 +1282,7 @@ components:
               yes_ask_size_fp: '150.00'
               last_trade_size_fp: '25.00'
               ts: 1669149841
+              ts_ms: 1669149841000
               time: '2022-11-22T20:44:01Z'
     trade:
       name: trade
@@ -1303,6 +1305,7 @@ components:
               count_fp: '136.00'
               taker_side: 'no'
               ts: 1669149841
+              ts_ms: 1669149841000
     fill:
       name: fill
       title: Fill Update
@@ -1326,6 +1329,7 @@ components:
               count_fp: '278.00'
               action: buy
               ts: 1671899397
+              ts_ms: 1671899397000
               post_position_fp: '500.00'
               purchased_side: 'yes'
               subaccount: 3
@@ -1516,7 +1520,9 @@ components:
               order_group_id: og_123
               self_trade_prevention_type: taker_at_cross
               created_time: '2024-12-01T10:00:00Z'
+              created_ts_ms: 1733047200000
               expiration_time: '2024-12-01T11:00:00Z'
+              expiration_ts_ms: 1733050800000
               subaccount_number: 0
     rfqCreated:
       name: rfq_created
@@ -2149,10 +2155,17 @@ components:
                 delta.
             ts:
               type: string
+              deprecated: true
               description: >-
-                Optional - Timestamp for when the orderbook change was recorded
-                (RFC3339)
+                Deprecated - Optional timestamp for when the orderbook change
+                was recorded (RFC3339). Use ts_ms instead.
               format: date-time
+            ts_ms:
+              type: integer
+              description: >-
+                Optional - Unix timestamp for when the orderbook change was
+                recorded (in milliseconds)
+              format: int64
     tickerPayload:
       type: object
       required:
@@ -2181,6 +2194,7 @@ components:
             - dollar_volume
             - dollar_open_interest
             - ts
+            - ts_ms
             - time
           properties:
             market_ticker:
@@ -2221,11 +2235,21 @@ components:
               description: Fixed-point contracts in last trade (2 decimals)
             ts:
               type: integer
-              description: Unix timestamp for when the update happened (in seconds)
+              deprecated: true
+              description: >-
+                Deprecated - Unix timestamp for when the update happened (in
+                seconds). Use ts_ms instead.
+              format: int64
+            ts_ms:
+              type: integer
+              description: Unix timestamp for when the update happened (in milliseconds)
               format: int64
             time:
               type: string
-              description: Timestamp for when the update happened (RFC3339)
+              deprecated: true
+              description: >-
+                Deprecated - Timestamp for when the update happened (RFC3339).
+                Use ts_ms instead.
               format: date-time
     tradePayload:
       type: object
@@ -2249,6 +2273,7 @@ components:
             - count_fp
             - taker_side
             - ts
+            - ts_ms
           properties:
             trade_id:
               type: string
@@ -2269,7 +2294,12 @@ components:
               $ref: '#/components/schemas/marketSide'
             ts:
               type: integer
-              description: Unix timestamp in seconds
+              deprecated: true
+              description: Deprecated - Unix timestamp in seconds. Use ts_ms instead.
+              format: int64
+            ts_ms:
+              type: integer
+              description: Unix timestamp in milliseconds
               format: int64
     fillPayload:
       type: object
@@ -2296,6 +2326,7 @@ components:
             - fee_cost
             - action
             - ts
+            - ts_ms
             - post_position_fp
             - purchased_side
           properties:
@@ -2336,7 +2367,14 @@ components:
               description: Action that initiated the fill. Either "buy" or "sell"
             ts:
               type: integer
-              description: Unix timestamp for when the update happened (in seconds)
+              deprecated: true
+              description: >-
+                Deprecated - Unix timestamp for when the update happened (in
+                seconds). Use ts_ms instead.
+              format: int64
+            ts_ms:
+              type: integer
+              description: Unix timestamp for when the update happened (in milliseconds)
               format: int64
             client_order_id:
               type: string
@@ -2724,6 +2762,7 @@ components:
             - maker_fees_dollars
             - client_order_id
             - created_time
+            - created_ts_ms
           properties:
             order_id:
               type: string
@@ -2789,16 +2828,37 @@ components:
                 - maker
             created_time:
               type: string
-              description: Order creation time in RFC 3339 format
+              deprecated: true
+              description: >-
+                Deprecated - Order creation time in RFC3339 format. Use
+                created_ts_ms instead.
               format: date-time
+            created_ts_ms:
+              type: integer
+              description: Order creation time as a Unix timestamp in milliseconds
+              format: int64
             last_update_time:
               type: string
-              description: Last update time in RFC 3339 format
+              deprecated: true
+              description: >-
+                Deprecated - Last update time in RFC3339 format. Use
+                last_updated_ts_ms instead.
               format: date-time
+            last_updated_ts_ms:
+              type: integer
+              description: Last update time as a Unix timestamp in milliseconds
+              format: int64
             expiration_time:
               type: string
-              description: Order expiration time in RFC 3339 format
+              deprecated: true
+              description: >-
+                Deprecated - Order expiration time in RFC3339 format. Use
+                expiration_ts_ms instead.
               format: date-time
+            expiration_ts_ms:
+              type: integer
+              description: Order expiration time as a Unix timestamp in milliseconds
+              format: int64
             subaccount_number:
               type: integer
               description: Subaccount number (0 for primary, 1-32 for subaccounts)

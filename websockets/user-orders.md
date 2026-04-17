@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/user-orders
-lastmod: 2026-04-07T19:12:11.037Z
+lastmod: 2026-04-16T14:17:13.046Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -165,15 +165,36 @@ operations:
                     required: false
                   - name: created_time
                     type: string
-                    description: Order creation time in RFC 3339 format
+                    description: >-
+                      Deprecated - Order creation time in RFC3339 format. Use
+                      created_ts_ms instead.
+                    deprecated: true
+                    required: false
+                  - name: created_ts_ms
+                    type: integer
+                    description: Order creation time as a Unix timestamp in milliseconds
                     required: false
                   - name: last_update_time
                     type: string
-                    description: Last update time in RFC 3339 format
+                    description: >-
+                      Deprecated - Last update time in RFC3339 format. Use
+                      last_updated_ts_ms instead.
+                    deprecated: true
+                    required: false
+                  - name: last_updated_ts_ms
+                    type: integer
+                    description: Last update time as a Unix timestamp in milliseconds
                     required: false
                   - name: expiration_time
                     type: string
-                    description: Order expiration time in RFC 3339 format
+                    description: >-
+                      Deprecated - Order expiration time in RFC3339 format. Use
+                      expiration_ts_ms instead.
+                    deprecated: true
+                    required: false
+                  - name: expiration_ts_ms
+                    type: integer
+                    description: Order expiration time as a Unix timestamp in milliseconds
                     required: false
                   - name: subaccount_number
                     type: integer
@@ -190,7 +211,7 @@ operations:
             type:
               type: string
               const: user_order
-              x-parser-schema-id: <anonymous-schema-234>
+              x-parser-schema-id: <anonymous-schema-238>
             sid:
               type: integer
               description: >-
@@ -217,17 +238,18 @@ operations:
                 - maker_fees_dollars
                 - client_order_id
                 - created_time
+                - created_ts_ms
               properties:
                 order_id:
                   type: string
                   description: Unique order identifier
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-236>
+                  x-parser-schema-id: <anonymous-schema-240>
                 user_id:
                   type: string
                   description: User identifier
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-237>
+                  x-parser-schema-id: <anonymous-schema-241>
                 ticker:
                   type: string
                   description: Unique market identifier
@@ -243,7 +265,7 @@ operations:
                     - resting
                     - canceled
                     - executed
-                  x-parser-schema-id: <anonymous-schema-238>
+                  x-parser-schema-id: <anonymous-schema-242>
                 side:
                   type: string
                   description: Market side
@@ -256,74 +278,98 @@ operations:
                   description: >-
                     Whether the order is on the yes side. Equivalent to side ==
                     "yes"
-                  x-parser-schema-id: <anonymous-schema-239>
+                  x-parser-schema-id: <anonymous-schema-243>
                 yes_price_dollars:
                   type: string
                   description: Yes price in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-240>
+                  x-parser-schema-id: <anonymous-schema-244>
                 fill_count_fp:
                   type: string
                   description: Number of contracts filled in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-241>
+                  x-parser-schema-id: <anonymous-schema-245>
                 remaining_count_fp:
                   type: string
                   description: Number of contracts remaining in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-242>
+                  x-parser-schema-id: <anonymous-schema-246>
                 initial_count_fp:
                   type: string
                   description: Initial number of contracts in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-243>
+                  x-parser-schema-id: <anonymous-schema-247>
                 taker_fill_cost_dollars:
                   type: string
                   description: Taker fill cost in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-244>
+                  x-parser-schema-id: <anonymous-schema-248>
                 maker_fill_cost_dollars:
                   type: string
                   description: Maker fill cost in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-245>
+                  x-parser-schema-id: <anonymous-schema-249>
                 taker_fees_dollars:
                   type: string
                   description: Taker fees in fixed-point dollars (4 decimals).
-                  x-parser-schema-id: <anonymous-schema-246>
+                  x-parser-schema-id: <anonymous-schema-250>
                 maker_fees_dollars:
                   type: string
                   description: Maker fees in fixed-point dollars (4 decimals).
-                  x-parser-schema-id: <anonymous-schema-247>
+                  x-parser-schema-id: <anonymous-schema-251>
                 client_order_id:
                   type: string
                   description: Client-provided order identifier
-                  x-parser-schema-id: <anonymous-schema-248>
+                  x-parser-schema-id: <anonymous-schema-252>
                 order_group_id:
                   type: string
                   description: Order group identifier, if applicable
-                  x-parser-schema-id: <anonymous-schema-249>
+                  x-parser-schema-id: <anonymous-schema-253>
                 self_trade_prevention_type:
                   type: string
                   description: Self-trade prevention type
                   enum:
                     - taker_at_cross
                     - maker
-                  x-parser-schema-id: <anonymous-schema-250>
+                  x-parser-schema-id: <anonymous-schema-254>
                 created_time:
                   type: string
-                  description: Order creation time in RFC 3339 format
+                  deprecated: true
+                  description: >-
+                    Deprecated - Order creation time in RFC3339 format. Use
+                    created_ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-251>
+                  x-parser-schema-id: <anonymous-schema-255>
+                created_ts_ms:
+                  type: integer
+                  description: Order creation time as a Unix timestamp in milliseconds
+                  format: int64
+                  x-parser-schema-id: <anonymous-schema-256>
                 last_update_time:
                   type: string
-                  description: Last update time in RFC 3339 format
+                  deprecated: true
+                  description: >-
+                    Deprecated - Last update time in RFC3339 format. Use
+                    last_updated_ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-252>
+                  x-parser-schema-id: <anonymous-schema-257>
+                last_updated_ts_ms:
+                  type: integer
+                  description: Last update time as a Unix timestamp in milliseconds
+                  format: int64
+                  x-parser-schema-id: <anonymous-schema-258>
                 expiration_time:
                   type: string
-                  description: Order expiration time in RFC 3339 format
+                  deprecated: true
+                  description: >-
+                    Deprecated - Order expiration time in RFC3339 format. Use
+                    expiration_ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-253>
+                  x-parser-schema-id: <anonymous-schema-259>
+                expiration_ts_ms:
+                  type: integer
+                  description: Order expiration time as a Unix timestamp in milliseconds
+                  format: int64
+                  x-parser-schema-id: <anonymous-schema-260>
                 subaccount_number:
                   type: integer
                   description: Subaccount number (0 for primary, 1-32 for subaccounts)
-                  x-parser-schema-id: <anonymous-schema-254>
-              x-parser-schema-id: <anonymous-schema-235>
+                  x-parser-schema-id: <anonymous-schema-261>
+              x-parser-schema-id: <anonymous-schema-239>
           x-parser-schema-id: userOrderPayload
         title: User Order Update
         description: Real-time order updates for authenticated user
@@ -348,7 +394,9 @@ operations:
               "order_group_id": "og_123",
               "self_trade_prevention_type": "taker_at_cross",
               "created_time": "2024-12-01T10:00:00Z",
+              "created_ts_ms": 1733047200000,
               "expiration_time": "2024-12-01T11:00:00Z",
+              "expiration_ts_ms": 1733050800000,
               "subaccount_number": 0
             }
           }

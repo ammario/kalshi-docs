@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-04-10T21:56:36.865Z
+lastmod: 2026-04-16T20:33:15.937Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,70 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Apr 16, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Market responses now include occurrence_datetime",
+description: "Added occurrence_datetime to API v2 market responses, including nested event-child markets."
+}}
+>
+  Added `occurrence_datetime` to API v2 market responses.
+
+  This field returns the recorded datetime when the underlying event occurred, when that value is available.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/markets`
+  * `GET /trade-api/v2/markets/:ticker`
+  * `GET /trade-api/v2/events`
+  * `GET /trade-api/v2/events/:event_ticker`
+</Update>
+
+<Update
+  label="Apr 15, 2026"
+  tags={["New Feature", "Deprecation", "Upcoming"]}
+  rss={{
+title: "WebSocket timestamp millisecond fields",
+description: "Added millisecond Unix timestamp fields to non-margin WebSocket messages and deprecated the older timestamp fields."
+}}
+>
+  Added new millisecond Unix timestamp fields to non-margin WebSocket messages while keeping the existing seconds and RFC3339 timestamp fields unchanged for now.
+
+  ```diff theme={null}
+  + ticker.ts_ms
+  + trade.ts_ms
+  + fill.ts_ms
+  + orderbook_delta.ts_ms
+  + user_order.created_ts_ms
+  + user_order.last_updated_ts_ms
+  + user_order.expiration_ts_ms
+  ```
+
+  The older timestamp fields are now deprecated in the AsyncAPI documentation:
+
+  ```diff theme={null}
+  - ticker.ts
+  - ticker.time
+  - trade.ts
+  - fill.ts
+  - orderbook_delta.ts
+  - user_order.created_time
+  - user_order.last_update_time
+  - user_order.expiration_time
+  ```
+
+  These deprecated fields will be removed in a future API version only after a separate pre-announcement that includes the exact removal date.
+
+  **Affected WebSocket channels:**
+
+  * `ticker`: added `ts_ms`
+  * `trade`: added `ts_ms`
+  * `fill`: added `ts_ms`
+  * `orderbook_delta`: added optional `ts_ms`
+  * `user_order`: added `created_ts_ms`, `last_updated_ts_ms`, and `expiration_ts_ms`
+</Update>
 
 <Update
   label="Apr 10, 2026"
