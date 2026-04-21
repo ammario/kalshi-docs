@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-04-16T20:33:15.937Z
+lastmod: 2026-04-21T02:02:56.171Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,36 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Apr 20, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Orderbook snapshot request via WebSocket",
+description: "New get_snapshot action on the orderbook_delta channel returns an immediate orderbook snapshot without modifying the subscription."
+}}
+>
+  Added `get_snapshot` action to `update_subscription` on the `orderbook_delta` WebSocket channel.
+
+  Sends an `orderbook_snapshot` response for the requested markets without adding them to the subscription or affecting the existing delta stream.
+
+  ```json theme={null}
+  {
+    "cmd": "update_subscription",
+    "params": {
+      "sids": [456],
+      "market_tickers": ["MARKET-1", "MARKET-2"],
+      "action": "get_snapshot"
+    }
+  }
+  ```
+
+  Only `market_tickers` is supported (not `market_ticker`, `market_id`, or `market_ids`).
+
+  **Affected channel:**
+
+  * `orderbook_delta`
+</Update>
 
 <Update
   label="Apr 16, 2026"

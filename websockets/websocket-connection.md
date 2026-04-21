@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/websocket-connection
-lastmod: 2026-04-16T14:17:12.520Z
+lastmod: 2026-04-21T02:02:41.411Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -505,6 +505,7 @@ operations:
                     enumValues:
                       - add_markets
                       - delete_markets
+                      - get_snapshot
                     required: false
         headers: []
         jsonPayloadSchema: &ref_5
@@ -565,6 +566,7 @@ operations:
                   enum:
                     - add_markets
                     - delete_markets
+                    - get_snapshot
                   x-parser-schema-id: <anonymous-schema-24>
               x-parser-schema-id: <anonymous-schema-17>
           x-parser-schema-id: updateSubscriptionCommandPayload
@@ -664,6 +666,7 @@ operations:
                     enumValues:
                       - add_markets
                       - delete_markets
+                      - get_snapshot
                     required: false
         headers: []
         jsonPayloadSchema: *ref_5
@@ -763,6 +766,7 @@ operations:
                     enumValues:
                       - add_markets
                       - delete_markets
+                      - get_snapshot
                     required: false
         headers: []
         jsonPayloadSchema: *ref_5
