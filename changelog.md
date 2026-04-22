@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-04-21T02:02:56.171Z
+lastmod: 2026-04-21T19:24:31.589Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,23 @@ You can reference the pending API spec under the "version" dropdown menu at the 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Apr 23, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "New rate-limit system goes live",
+description: "A token-cost rate-limit model replaces the previous per-second scheme. All existing tiers get at least as much headroom as before."
+}}
+>
+  Rolling out a new token-cost rate-limit system with separate read and write
+  budgets and a new **Paragon** tier. All existing tiers get at least as much
+  headroom as before and no client changes are required. See
+  [Rate Limits and Tiers](/getting_started/rate_limits) for full details.
+
+  In the coming weeks, single-query read endpoints will be priced below
+  the default cost.
+</Update>
 
 <Update
   label="Apr 20, 2026"

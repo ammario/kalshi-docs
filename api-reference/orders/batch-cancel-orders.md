@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders
-lastmod: 2026-04-16T02:56:39.696Z
+lastmod: 2026-04-22T01:05:50.383Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,8 +8,11 @@ lastmod: 2026-04-16T02:56:39.696Z
 
 # Batch Cancel Orders
 
->  Endpoint for cancelling up to 20 orders at once.
+> Endpoint for cancelling a batch of orders. The maximum batch size scales with your tier's write budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
 
+<Note>
+  **Rate limit:** 2 tokens per order in the batch — billed per item, so total cost for a batch of N cancels is N × 2. Other endpoints cost 10 tokens per request unless noted on their own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
+</Note>
 
 
 ## OpenAPI
@@ -18,7 +21,7 @@ lastmod: 2026-04-16T02:56:39.696Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.13.0
+  version: 3.14.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -63,7 +66,10 @@ paths:
       tags:
         - orders
       summary: Batch Cancel Orders
-      description: ' Endpoint for cancelling up to 20 orders at once.'
+      description: >-
+        Endpoint for cancelling a batch of orders. The maximum batch size scales
+        with your tier's write budget — see [Rate Limits and
+        Tiers](/getting_started/rate_limits).
       operationId: BatchCancelOrders
       requestBody:
         required: true
