@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-04-21T19:24:31.589Z
+lastmod: 2026-04-22T20:58:38.213Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -195,6 +195,18 @@ description: "Removed the last legacy fields from Settlement, Fill, and market_p
   * Removed `yes_total_cost` and `no_total_cost` (integer cents) from `GET /portfolio/settlements`. Use `yes_total_cost_dollars` and `no_total_cost_dollars`.
   * Removed `yes_price_fixed` and `no_price_fixed` (string aliases) from `GET /portfolio/fills`. Use `yes_price_dollars` and `no_price_dollars`.
   * Removed `position_cost`, `realized_pnl`, `fees_paid`, and `position_fee_cost` (integer centi-cents) from the `market_positions` WebSocket channel. Use the `_dollars` equivalents.
+</Update>
+
+<Update
+  label="Mar 26, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Subaccount field added to quote accepted and quote executed responses",
+description: "Quote responses now include the caller's subaccount number on REST, WebSocket, and FIX surfaces."
+}}
+>
+  * The `subaccount` field is now returned on **WebSocket** `quote_accepted` and `quote_executed` messages when the quote or RFQ was placed from a subaccount.
+  * The **REST** `Quote` object now includes `creator_subaccount` and `rfq_creator_subaccount` fields, visible to the respective party.
 </Update>
 
 <Update
