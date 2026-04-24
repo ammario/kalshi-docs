@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/ApiKeysApi
-lastmod: 2026-01-29T00:38:37.724Z
+lastmod: 2026-04-23T16:58:17.362Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -23,7 +23,7 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 
 > CreateApiKeyResponse createApiKey(createApiKeyRequest)
 
-Endpoint for creating a new API key with a user-provided public key.  This endpoint allows users with Premier or Market Maker API usage levels to create API keys by providing their own RSA public key. The platform will use this public key to verify signatures on API requests.
+Endpoint for creating a new API key with a user-provided public key. This endpoint allows users to create API keys by providing their own RSA public key. The platform will use this public key to verify signatures on API requests.
 
 ### Parameters
 

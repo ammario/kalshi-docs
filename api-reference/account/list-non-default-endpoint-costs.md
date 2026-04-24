@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/live-data/get-multiple-live-data
-lastmod: 2026-04-23T22:36:09.119Z
+url: https://docs.kalshi.com/api-reference/account/list-non-default-endpoint-costs
+lastmod: 2026-04-23T22:36:08.990Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Multiple Live Data
+# List Non-Default Endpoint Costs
 
-> Get live data for multiple milestones
+> Lists API v2 endpoints whose configured token cost differs from the default cost. Endpoints that use the default cost are omitted.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /live_data/batch
+````yaml /openapi.yaml get /account/endpoint_costs
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,73 +58,61 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /live_data/batch:
+  /account/endpoint_costs:
     get:
       tags:
-        - live-data
-      summary: Get Multiple Live Data
-      description: Get live data for multiple milestones
-      operationId: GetLiveDatas
-      parameters:
-        - name: milestone_ids
-          in: query
-          required: true
-          description: Array of milestone IDs
-          schema:
-            type: array
-            items:
-              type: string
-            maxItems: 100
-          style: form
-          explode: true
-        - name: include_player_stats
-          in: query
-          required: false
-          description: >-
-            When true, includes player-level statistics in the live data
-            response. Supported for Pro Football, Pro Basketball, and College
-            Men's Basketball milestones that have player ID mappings configured.
-            Has no effect for other sports or milestones without player
-            mappings.
-          schema:
-            type: boolean
-            default: false
+        - account
+      summary: List Non-Default Endpoint Costs
+      description: >-
+        Lists API v2 endpoints whose configured token cost differs from the
+        default cost. Endpoints that use the default cost are omitted.
+      operationId: GetAccountEndpointCosts
       responses:
         '200':
-          description: Live data retrieved successfully
+          description: Non-default endpoint costs retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetLiveDatasResponse'
+                $ref: '#/components/schemas/GetAccountEndpointCostsResponse'
         '500':
           description: Internal server error
 components:
   schemas:
-    GetLiveDatasResponse:
+    GetAccountEndpointCostsResponse:
       type: object
       required:
-        - live_datas
+        - default_cost
+        - endpoint_costs
       properties:
-        live_datas:
+        default_cost:
+          type: integer
+          description: >-
+            Default token cost applied to endpoints that are not listed in
+            `endpoint_costs`. This is currently 10.
+        endpoint_costs:
           type: array
+          description: >-
+            API v2 endpoints whose configured token cost differs from
+            `default_cost`. Endpoints that use the default cost are omitted.
           items:
-            $ref: '#/components/schemas/LiveData'
-    LiveData:
+            $ref: '#/components/schemas/EndpointTokenCost'
+    EndpointTokenCost:
       type: object
       required:
-        - type
-        - details
-        - milestone_id
+        - method
+        - path
+        - cost
       properties:
-        type:
+        method:
           type: string
-          description: Type of live data
-        details:
-          type: object
-          additionalProperties: true
-          description: Live data details as a flexible object
-        milestone_id:
+          description: HTTP method for the endpoint.
+        path:
           type: string
-          description: Milestone ID
+          description: API route path for the endpoint.
+        cost:
+          type: integer
+          description: >-
+            Configured token cost for an endpoint whose cost differs from the
+            default cost.
 
 ````

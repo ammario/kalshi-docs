@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-04-21T22:44:02.392Z
+lastmod: 2026-04-24T03:02:39.471Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -76,6 +76,10 @@ A rate-limited request returns `429 Too Many Requests` with the body:
 
 429 responses don't currently include `Retry-After` or `X-RateLimit-*` headers. Apply exponential backoff on 429 until your bucket refills.
 
-## How the bucket refills
+## Bursting above your per-second budget
 
-Limits are enforced with a **leaky-bucket** algorithm: each bucket has a cap, drains by the cost of every request you send, and refills at a constant rate up to the cap. Unused capacity doesn't accumulate past the cap, but within the cap you can briefly burst above the steady-state rate.
+Your Write bucket holds **two seconds** of your per-second budget — so idle or below-steady traffic builds up headroom you can spend in a single burst. Useful for event-driven clients reacting quickly to market moves or price prints. Each request drains the bucket by its token cost; the bucket refills continuously at your per-second budget up to its capacity.
+
+Over-drawing returns `429 Too Many Requests`. There's no enforced cooldown — your next request is allowed as soon as the bucket has enough tokens to cover it.
+
+Basic tier is the exception — its Write bucket holds one second of budget, with no accumulated headroom.
