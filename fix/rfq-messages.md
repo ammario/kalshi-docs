@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-04-08T21:28:25.651Z
+lastmod: 2026-04-24T20:33:31.053Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -255,6 +255,7 @@ Exchange response to AcceptQuote.
 | 117   | QuoteId           | String  | Y        | Quote identifier                                                                                                 |
 | 21025 | AcceptQuoteStatus | Integer | Y        | ACCEPTED(0) or REJECTED(1)                                                                                       |
 | 21024 | AcceptedQuoteId   | UUID    | Y        | The quote that was actually accepted. When PreferBetterQuote is used, this may differ from the requested QuoteId |
+| 11    | ClOrdID           | String  | C        | Echoed back when provided on the AcceptQuote request                                                             |
 | 58    | Text              | String  | C        | Rejection reason if REJECTED                                                                                     |
 
 ## RFQCancel (35=UE)
@@ -366,11 +367,11 @@ Exchange notifies that a quote request was cancelled.
   ```
 
   ```fix Accept Quote (Creator → Exchange) theme={null}
-  8=FIXT.1.1|35=UA|117=quote-789|54=1|38=100|
+  8=FIXT.1.1|35=UA|117=quote-789|54=1|38=100|11=client-accept-123|
   ```
 
   ```fix AcceptQuoteStatus (Exchange → Creator) theme={null}
-  8=FIXT.1.1|35=UC|117=quote-789|21025=0|
+  8=FIXT.1.1|35=UC|117=quote-789|21025=0|21024=quote-789|11=client-accept-123|
   ```
 
   ```fix Cancel RFQ (Creator → Exchange) theme={null}
