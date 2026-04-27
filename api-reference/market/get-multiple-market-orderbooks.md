@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-multiple-market-orderbooks
-lastmod: 2026-04-23T22:36:09.209Z
+lastmod: 2026-04-26T21:59:02.885Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -103,10 +103,6 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
         '500':
           $ref: '#/components/responses/InternalServerError'
-      security:
-        - kalshiAccessKey: []
-          kalshiAccessSignature: []
-          kalshiAccessTimestamp: []
 components:
   schemas:
     GetMarketOrderbooksResponse:
@@ -193,21 +189,5 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-  securitySchemes:
-    kalshiAccessKey:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-KEY
-      description: Your API key ID
-    kalshiAccessSignature:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-SIGNATURE
-      description: RSA-PSS signature of the request
-    kalshiAccessTimestamp:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-TIMESTAMP
-      description: Request timestamp in milliseconds
 
 ````

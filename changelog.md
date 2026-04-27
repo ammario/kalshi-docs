@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-04-24T03:02:39.476Z
+lastmod: 2026-04-26T15:27:38.174Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,8 +11,6 @@ lastmod: 2026-04-24T03:02:39.476Z
 > Stay updated with API changes and version history
 
 You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to stay ahead of breaking changes.
-
-You can reference the pending API spec under the "version" dropdown menu at the top left. When the actual API is upgraded to this new version, you will see the version marked as "Stable" in the drop-down menu and become the new default on the landing page.
 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 

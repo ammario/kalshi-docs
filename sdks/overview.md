@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/sdks/overview
-lastmod: 2026-01-29T00:38:37.725Z
+lastmod: 2026-04-26T15:27:38.166Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,7 +12,7 @@ lastmod: 2026-01-29T00:38:37.725Z
 
 ## Available SDKs
 
-Kalshi provides official SDKs to make integration easier. Each SDK provides full access to the Kalshi API with language-specific conventions and best practices.
+Kalshi SDKs are updated periodically, but active traders should use the REST [OpenAPI specification](https://docs.kalshi.com/openapi.yaml), WebSocket [AsyncAPI specification](https://docs.kalshi.com/asyncapi.yaml), and the rest of the API documentation as the source of truth for maintaining their own clients.
 
 <CardGroup cols={2}>
   <Card title="Python" icon="python" href="/sdks/python/quickstart">

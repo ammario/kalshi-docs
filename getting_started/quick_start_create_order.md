@@ -1,12 +1,12 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_create_order
-lastmod: 2026-01-29T22:57:35.455Z
+lastmod: 2026-04-26T15:27:38.168Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Quick Start: Create your first order (No SDK)
+# Quick Start: Create your first order
 
 > Learn how to find markets, place orders, check status, and cancel orders on Kalshi
 

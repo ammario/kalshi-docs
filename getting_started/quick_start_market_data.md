@@ -1,12 +1,12 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_market_data
-lastmod: 2026-03-12T17:11:24.232Z
+lastmod: 2026-04-26T15:27:38.162Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Quick Start: Market Data (No SDK)
+# Quick Start: Market Data
 
 > Learn how to access real-time market data without authentication
 

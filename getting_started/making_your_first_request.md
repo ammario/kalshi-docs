@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/making_your_first_request
-lastmod: 2026-01-29T22:57:35.450Z
+lastmod: 2026-04-26T15:27:38.165Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,6 +14,6 @@ To make your request we recommend testing a public endpoint like [GetMarkets](ht
 
 The following resources might help you on your journey to exploring Kalshi's markets:
 
-* [**Quick Start: Market Data (No SDK)**](/getting_started/quick_start_market_data)
-* [**Quick Start: Authenticated Requests (No SDK)**](/getting_started/quick_start_authenticated_requests)
+* [**Quick Start: Market Data**](/getting_started/quick_start_market_data)
+* [**Quick Start: Authenticated Requests**](/getting_started/quick_start_authenticated_requests)
 * [**Discord**](https://discord.gg/kalshi) and check out #dev and #support
