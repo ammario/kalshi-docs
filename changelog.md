@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-04-26T15:27:38.174Z
+lastmod: 2026-04-27T20:53:59.014Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -47,6 +47,26 @@ description: "Write endpoints now allow brief bursts above your per-second budge
   your client is running below its steady rate, the unused capacity
   accumulates and can be spent in a single pulse. See
   [Rate Limits and Tiers](/getting_started/rate_limits) for details.
+</Update>
+
+<Update
+  label="Apr 22, 2026"
+  tags={["New Feature", "Deprecation", "Upcoming"]}
+  rss={{
+title: "V2 event-order endpoints at /portfolio/events/orders",
+description: "New event-order endpoints using a bid/ask single-book shape with fixed-point dollar prices and lightweight responses. The legacy /portfolio/orders endpoints will be deprecated no earlier than May 6, 2026."
+}}
+>
+  **New endpoints:**
+
+  * `POST /trade-api/v2/portfolio/events/orders` — create
+  * `DELETE /trade-api/v2/portfolio/events/orders/{order_id}` — cancel
+  * `POST /trade-api/v2/portfolio/events/orders/{order_id}/amend` — amend
+  * `POST /trade-api/v2/portfolio/events/orders/{order_id}/decrease` — decrease
+  * `POST /trade-api/v2/portfolio/events/orders/batched` — batch create
+  * `DELETE /trade-api/v2/portfolio/events/orders/batched` — batch cancel
+
+  **We recommend all clients switch over.** The existing `/portfolio/orders*` endpoints will be marked deprecated no earlier than **May 6, 2026**.
 </Update>
 
 <Update

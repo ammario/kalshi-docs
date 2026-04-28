@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collection-lookup-history
-lastmod: 2026-04-26T21:59:03.091Z
+lastmod: 2026-04-27T23:34:09.550Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,8 +8,11 @@ lastmod: 2026-04-26T21:59:03.091Z
 
 # Get Multivariate Event Collection Lookup History
 
->  Endpoint for retrieving which markets in an event collection were recently looked up.
+> DEPRECATED: This endpoint predates RFQs and should not be used for new integrations. Endpoint for retrieving which markets in an event collection were recently looked up.
 
+<Warning>
+  This endpoint is deprecated and predates RFQs. Do not use it for new integrations.
+</Warning>
 
 
 ## OpenAPI
@@ -63,7 +66,10 @@ paths:
       tags:
         - multivariate
       summary: Get Multivariate Event Collection Lookup History
-      description: ' Endpoint for retrieving which markets in an event collection were recently looked up.'
+      description: >-
+        DEPRECATED: This endpoint predates RFQs and should not be used for new
+        integrations. Endpoint for retrieving which markets in an event
+        collection were recently looked up.
       operationId: GetMultivariateEventCollectionLookupHistory
       parameters:
         - name: collection_ticker
@@ -98,6 +104,7 @@ paths:
           $ref: '#/components/responses/BadRequestError'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      deprecated: true
 components:
   schemas:
     GetMultivariateEventCollectionLookupHistoryResponse:

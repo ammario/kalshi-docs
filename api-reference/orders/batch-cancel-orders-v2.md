@@ -1,20 +1,23 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-04-27T23:34:09.406Z
+url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders-v2
+lastmod: 2026-04-27T23:34:08.757Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Create RFQ
+# Batch Cancel Orders (V2)
 
->  Endpoint for creating a new RFQ. You can have a maximum of 100 open RFQs at a time.
+> Endpoint for cancelling a batch of event-market orders using the V2 response shape. The maximum batch size scales with your tier's write budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
 
+<Note>
+  **Rate limit:** 2 tokens per order in the batch — billed per item, so total cost for a batch of N cancels is N × 2. Other endpoints cost 10 tokens per request unless noted on their own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
+</Note>
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml post /communications/rfqs
+````yaml /openapi.yaml delete /portfolio/events/orders/batched
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,32 +61,35 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /communications/rfqs:
-    post:
+  /portfolio/events/orders/batched:
+    delete:
       tags:
-        - communications
-      summary: Create RFQ
-      description: ' Endpoint for creating a new RFQ. You can have a maximum of 100 open RFQs at a time.'
-      operationId: CreateRFQ
+        - orders
+      summary: Batch Cancel Orders (V2)
+      description: >-
+        Endpoint for cancelling a batch of event-market orders using the V2
+        response shape. The maximum batch size scales with your tier's write
+        budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
+      operationId: BatchCancelOrdersV2
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateRFQRequest'
+              $ref: '#/components/schemas/BatchCancelOrdersV2Request'
       responses:
-        '201':
-          description: RFQ created successfully
+        '200':
+          description: Batch order cancellation completed
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateRFQResponse'
+                $ref: '#/components/schemas/BatchCancelOrdersV2Response'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '409':
-          $ref: '#/components/responses/ConflictError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -92,67 +98,64 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
-    CreateRFQRequest:
+    BatchCancelOrdersV2Request:
       type: object
       required:
-        - market_ticker
-        - rest_remainder
+        - orders
       properties:
-        market_ticker:
-          type: string
-          description: The ticker of the market for which to create an RFQ
-        contracts:
-          type: integer
+        orders:
+          type: array
+          x-oapi-codegen-extra-tags:
+            validate: required,dive
           description: >-
-            The number of contracts for the RFQ. Whole contracts only. Contracts
-            may be provided via contracts or contracts_fp; if both provided they
-            must match.
-          x-go-type-skip-optional-pointer: true
-        contracts_fp:
-          $ref: '#/components/schemas/FixedPointCount'
-          nullable: true
-          description: >-
-            String representation of the number of contracts for the RFQ.
-            Contracts may be provided via contracts or contracts_fp; if both
-            provided they must match.
-        target_cost_centi_cents:
-          type: integer
-          format: int64
-          description: >-
-            DEPRECATED: The target cost for the RFQ in centi-cents. Use
-            target_cost_dollars instead.
-          deprecated: true
-          x-go-type-skip-optional-pointer: true
-        target_cost_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          description: The target cost for the RFQ in dollars
-          x-go-type-skip-optional-pointer: true
-        rest_remainder:
-          type: boolean
-          description: Whether to rest the remainder of the RFQ after execution
-        replace_existing:
-          type: boolean
-          description: Whether to delete existing RFQs as part of this RFQ's creation
-          default: false
-          x-go-type-skip-optional-pointer: true
-        subtrader_id:
-          type: string
-          description: The subtrader to create the RFQ for (FCM members only)
-          x-go-type-skip-optional-pointer: true
-        subaccount:
-          type: integer
-          description: >-
-            The subaccount number to create the RFQ for (direct members only; 0
-            for primary, 1-32 for subaccounts)
-          x-go-type-skip-optional-pointer: true
-    CreateRFQResponse:
+            An array of orders to cancel, each optionally specifying a
+            subaccount.
+          items:
+            type: object
+            required:
+              - order_id
+            properties:
+              order_id:
+                type: string
+                description: Order ID to cancel.
+              subaccount:
+                type: integer
+                minimum: 0
+                default: 0
+                description: >-
+                  Optional subaccount number to use for this cancellation (0 for
+                  primary, 1-32 for subaccounts).
+                x-go-type-skip-optional-pointer: true
+    BatchCancelOrdersV2Response:
       type: object
       required:
-        - id
+        - orders
       properties:
-        id:
-          type: string
-          description: The ID of the newly created RFQ
+        orders:
+          type: array
+          items:
+            type: object
+            required:
+              - order_id
+              - reduced_by
+            properties:
+              order_id:
+                type: string
+                description: >-
+                  The order ID identifying which order this entry corresponds
+                  to.
+              client_order_id:
+                type: string
+                nullable: true
+              reduced_by:
+                $ref: '#/components/schemas/FixedPointCount'
+                description: >-
+                  Number of contracts that were canceled (i.e. the remaining
+                  count at time of cancellation). Zero if the cancel errored.
+              error:
+                allOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                nullable: true
     FixedPointCount:
       type: string
       description: >-
@@ -164,14 +167,6 @@ components:
         contract count fields are legacy and will be deprecated; when both
         integer and fp fields are provided, they must match.
       example: '10.00'
-    FixedPointDollars:
-      type: string
-      description: >-
-        US dollar amount as a fixed-point decimal string with up to 6 decimal
-        places of precision. This is the maximum supported precision; valid
-        quote intervals for a given market are constrained by that market's
-        price level structure.
-      example: '0.5600'
     ErrorResponse:
       type: object
       properties:
@@ -200,8 +195,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    ConflictError:
-      description: Conflict - resource already exists or cannot be modified
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:

@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/create-subaccount
-lastmod: 2026-04-27T23:34:08.897Z
+url: https://docs.kalshi.com/api-reference/orders/cancel-order-v2
+lastmod: 2026-04-27T23:34:08.768Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Create Subaccount
+# Cancel Order (V2)
 
-> Creates a new subaccount for the authenticated user. Subaccounts are numbered sequentially starting from 1. Maximum 32 subaccounts per user.
+> Endpoint for cancelling event-market orders using the V2 response shape. Returns `{order_id, client_order_id, reduced_by}` rather than a full order object.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml post /portfolio/subaccounts
+````yaml /openapi.yaml delete /portfolio/events/orders/{order_id}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,26 +58,30 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/subaccounts:
-    post:
+  /portfolio/events/orders/{order_id}:
+    delete:
       tags:
-        - portfolio
-      summary: Create Subaccount
+        - orders
+      summary: Cancel Order (V2)
       description: >-
-        Creates a new subaccount for the authenticated user. Subaccounts are
-        numbered sequentially starting from 1. Maximum 32 subaccounts per user.
-      operationId: CreateSubaccount
+        Endpoint for cancelling event-market orders using the V2 response shape.
+        Returns `{order_id, client_order_id, reduced_by}` rather than a full
+        order object.
+      operationId: CancelOrderV2
+      parameters:
+        - $ref: '#/components/parameters/OrderIdPath'
+        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
       responses:
-        '201':
-          description: Subaccount created successfully
+        '200':
+          description: Order cancelled successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateSubaccountResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestError'
+                $ref: '#/components/schemas/CancelOrderV2Response'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -85,15 +89,47 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
+  parameters:
+    OrderIdPath:
+      name: order_id
+      in: path
+      required: true
+      description: Order ID
+      schema:
+        type: string
+    SubaccountQueryDefaultPrimary:
+      name: subaccount
+      in: query
+      description: Subaccount number (0 for primary, 1-32 for subaccounts). Defaults to 0.
+      schema:
+        type: integer
   schemas:
-    CreateSubaccountResponse:
+    CancelOrderV2Response:
       type: object
       required:
-        - subaccount_number
+        - order_id
+        - reduced_by
       properties:
-        subaccount_number:
-          type: integer
-          description: The sequential number assigned to this subaccount (1-32).
+        order_id:
+          type: string
+        client_order_id:
+          type: string
+        reduced_by:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            Number of contracts that were canceled (i.e. the remaining count at
+            time of cancellation).
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
+        contract values (e.g., "2.50") are supported on markets with fractional
+        trading enabled; the minimum granularity is 0.01 contracts. Integer
+        contract count fields are legacy and will be deprecated; when both
+        integer and fp fields are provided, they must match.
+      example: '10.00'
     ErrorResponse:
       type: object
       properties:
@@ -110,14 +146,14 @@ components:
           type: string
           description: The name of the service that generated the error
   responses:
-    BadRequestError:
-      description: Bad request - invalid input
+    UnauthorizedError:
+      description: Unauthorized - authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    UnauthorizedError:
-      description: Unauthorized - authentication required
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:

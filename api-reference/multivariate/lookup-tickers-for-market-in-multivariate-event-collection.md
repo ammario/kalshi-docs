@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/lookup-tickers-for-market-in-multivariate-event-collection
-lastmod: 2026-04-26T21:59:03.102Z
+lastmod: 2026-04-27T23:34:09.572Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,11 @@ lastmod: 2026-04-26T21:59:03.102Z
 
 # Lookup Tickers For Market In Multivariate Event Collection
 
->  Endpoint for looking up an individual market in a multivariate event collection. If CreateMarketInMultivariateEventCollection has never been hit with that variable combination before, this will return a 404.
+> DEPRECATED: This endpoint predates RFQs and should not be used for new integrations. Endpoint for looking up an individual market in a multivariate event collection. If CreateMarketInMultivariateEventCollection has never been hit with that variable combination before, this will return a 404.
+
+<Warning>
+  This endpoint is deprecated and predates RFQs. Do not use it for new integrations.
+</Warning>
 
 <Note>
   **Rate limit:** 2 tokens per request. Other endpoints use the default cost of 10 tokens per request unless noted on their own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
@@ -66,7 +70,12 @@ paths:
       tags:
         - multivariate
       summary: Lookup Tickers For Market In Multivariate Event Collection
-      description: ' Endpoint for looking up an individual market in a multivariate event collection. If CreateMarketInMultivariateEventCollection has never been hit with that variable combination before, this will return a 404.'
+      description: >-
+        DEPRECATED: This endpoint predates RFQs and should not be used for new
+        integrations. Endpoint for looking up an individual market in a
+        multivariate event collection. If
+        CreateMarketInMultivariateEventCollection has never been hit with that
+        variable combination before, this will return a 404.
       operationId: LookupTickersForMarketInMultivariateEventCollection
       parameters:
         - name: collection_ticker
@@ -98,6 +107,7 @@ paths:
           $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      deprecated: true
       security:
         - kalshiAccessKey: []
           kalshiAccessSignature: []

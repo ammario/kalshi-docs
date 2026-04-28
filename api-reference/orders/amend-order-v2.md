@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-04-27T23:34:09.406Z
+url: https://docs.kalshi.com/api-reference/orders/amend-order-v2
+lastmod: 2026-04-27T23:34:08.779Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Create RFQ
+# Amend Order (V2)
 
->  Endpoint for creating a new RFQ. You can have a maximum of 100 open RFQs at a time.
+> Endpoint for amending the price and/or remaining count of an existing event-market order using the V2 request/response shape.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml post /communications/rfqs
+````yaml /openapi.yaml post /portfolio/events/orders/{order_id}/amend
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,32 +58,37 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /communications/rfqs:
+  /portfolio/events/orders/{order_id}/amend:
     post:
       tags:
-        - communications
-      summary: Create RFQ
-      description: ' Endpoint for creating a new RFQ. You can have a maximum of 100 open RFQs at a time.'
-      operationId: CreateRFQ
+        - orders
+      summary: Amend Order (V2)
+      description: >-
+        Endpoint for amending the price and/or remaining count of an existing
+        event-market order using the V2 request/response shape.
+      operationId: AmendOrderV2
+      parameters:
+        - $ref: '#/components/parameters/OrderIdPath'
+        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateRFQRequest'
+              $ref: '#/components/schemas/AmendOrderV2Request'
       responses:
-        '201':
-          description: RFQ created successfully
+        '200':
+          description: Order amended successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateRFQResponse'
+                $ref: '#/components/schemas/AmendOrderV2Response'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '409':
-          $ref: '#/components/responses/ConflictError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -91,68 +96,103 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
+  parameters:
+    OrderIdPath:
+      name: order_id
+      in: path
+      required: true
+      description: Order ID
+      schema:
+        type: string
+    SubaccountQueryDefaultPrimary:
+      name: subaccount
+      in: query
+      description: Subaccount number (0 for primary, 1-32 for subaccounts). Defaults to 0.
+      schema:
+        type: integer
   schemas:
-    CreateRFQRequest:
+    AmendOrderV2Request:
       type: object
       required:
-        - market_ticker
-        - rest_remainder
+        - ticker
+        - side
+        - price
+        - count
       properties:
-        market_ticker:
+        ticker:
           type: string
-          description: The ticker of the market for which to create an RFQ
-        contracts:
-          type: integer
-          description: >-
-            The number of contracts for the RFQ. Whole contracts only. Contracts
-            may be provided via contracts or contracts_fp; if both provided they
-            must match.
+          description: Market ticker
+          x-oapi-codegen-extra-tags:
+            validate: required,min=1
+        side:
+          $ref: '#/components/schemas/BookSide'
+          description: Side of the order
+          x-oapi-codegen-extra-tags:
+            validate: required,oneof=bid ask
+        price:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Updated price for the order in fixed-point dollars.
           x-go-type-skip-optional-pointer: true
-        contracts_fp:
+        count:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: String representation of the updated quantity for the order.
+          x-go-type-skip-optional-pointer: true
+        client_order_id:
+          type: string
+          description: The original client-specified order ID to be amended
+          x-go-type-skip-optional-pointer: true
+        updated_client_order_id:
+          type: string
+          description: The new client-specified order ID after amendment
+          x-go-type-skip-optional-pointer: true
+    AmendOrderV2Response:
+      type: object
+      required:
+        - order_id
+      properties:
+        order_id:
+          type: string
+        client_order_id:
+          type: string
+        remaining_count:
           $ref: '#/components/schemas/FixedPointCount'
           nullable: true
+          x-omitempty: false
           description: >-
-            String representation of the number of contracts for the RFQ.
-            Contracts may be provided via contracts or contracts_fp; if both
-            provided they must match.
-        target_cost_centi_cents:
-          type: integer
-          format: int64
+            Number of contracts remaining after the amend. Only present when the
+            amend caused a fill or changed the resting size.
+        fill_count:
+          $ref: '#/components/schemas/FixedPointCount'
+          nullable: true
+          x-omitempty: false
           description: >-
-            DEPRECATED: The target cost for the RFQ in centi-cents. Use
-            target_cost_dollars instead.
-          deprecated: true
-          x-go-type-skip-optional-pointer: true
-        target_cost_dollars:
+            Number of contracts filled as a result of the amend crossing the
+            book. Only present when fills occurred or remaining size changed.
+        average_fill_price:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: The target cost for the RFQ in dollars
-          x-go-type-skip-optional-pointer: true
-        rest_remainder:
-          type: boolean
-          description: Whether to rest the remainder of the RFQ after execution
-        replace_existing:
-          type: boolean
-          description: Whether to delete existing RFQs as part of this RFQ's creation
-          default: false
-          x-go-type-skip-optional-pointer: true
-        subtrader_id:
-          type: string
-          description: The subtrader to create the RFQ for (FCM members only)
-          x-go-type-skip-optional-pointer: true
-        subaccount:
-          type: integer
+          nullable: true
+          x-omitempty: false
           description: >-
-            The subaccount number to create the RFQ for (direct members only; 0
-            for primary, 1-32 for subaccounts)
-          x-go-type-skip-optional-pointer: true
-    CreateRFQResponse:
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          type: string
-          description: The ID of the newly created RFQ
+            Volume-weighted average fill price for fills resulting from the
+            amend. Only present when fills occurred.
+    BookSide:
+      type: string
+      enum:
+        - bid
+        - ask
+      description: >-
+        Side of the book for an order or trade. For event markets, this refers
+        to the YES leg only: `bid` means buy YES, `ask` means sell YES. (Selling
+        YES is economically equivalent to buying NO at `1 - price`, but this
+        endpoint quotes everything from the YES side.)
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with up to 6 decimal
+        places of precision. This is the maximum supported precision; valid
+        quote intervals for a given market are constrained by that market's
+        price level structure.
+      example: '0.5600'
     FixedPointCount:
       type: string
       description: >-
@@ -164,14 +204,6 @@ components:
         contract count fields are legacy and will be deprecated; when both
         integer and fp fields are provided, they must match.
       example: '10.00'
-    FixedPointDollars:
-      type: string
-      description: >-
-        US dollar amount as a fixed-point decimal string with up to 6 decimal
-        places of precision. This is the maximum supported precision; valid
-        quote intervals for a given market are constrained by that market's
-        price level structure.
-      example: '0.5600'
     ErrorResponse:
       type: object
       properties:
@@ -200,8 +232,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    ConflictError:
-      description: Conflict - resource already exists or cannot be modified
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:

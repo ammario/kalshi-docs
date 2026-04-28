@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/create-subaccount
-lastmod: 2026-04-27T23:34:08.897Z
+url: https://docs.kalshi.com/api-reference/orders/decrease-order-v2
+lastmod: 2026-04-27T23:34:08.790Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Create Subaccount
+# Decrease Order (V2)
 
-> Creates a new subaccount for the authenticated user. Subaccounts are numbered sequentially starting from 1. Maximum 32 subaccounts per user.
+> Endpoint for decreasing the remaining count of an existing event-market order using the V2 request/response shape. Only `reduce_to` is supported.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml post /portfolio/subaccounts
+````yaml /openapi.yaml post /portfolio/events/orders/{order_id}/decrease
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -58,26 +58,38 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/subaccounts:
+  /portfolio/events/orders/{order_id}/decrease:
     post:
       tags:
-        - portfolio
-      summary: Create Subaccount
+        - orders
+      summary: Decrease Order (V2)
       description: >-
-        Creates a new subaccount for the authenticated user. Subaccounts are
-        numbered sequentially starting from 1. Maximum 32 subaccounts per user.
-      operationId: CreateSubaccount
+        Endpoint for decreasing the remaining count of an existing event-market
+        order using the V2 request/response shape. Only `reduce_to` is
+        supported.
+      operationId: DecreaseOrderV2
+      parameters:
+        - $ref: '#/components/parameters/OrderIdPath'
+        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecreaseOrderV2Request'
       responses:
-        '201':
-          description: Subaccount created successfully
+        '200':
+          description: Order decreased successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateSubaccountResponse'
+                $ref: '#/components/schemas/DecreaseOrderV2Response'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -85,15 +97,53 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
+  parameters:
+    OrderIdPath:
+      name: order_id
+      in: path
+      required: true
+      description: Order ID
+      schema:
+        type: string
+    SubaccountQueryDefaultPrimary:
+      name: subaccount
+      in: query
+      description: Subaccount number (0 for primary, 1-32 for subaccounts). Defaults to 0.
+      schema:
+        type: integer
   schemas:
-    CreateSubaccountResponse:
+    DecreaseOrderV2Request:
       type: object
       required:
-        - subaccount_number
+        - reduce_to
       properties:
-        subaccount_number:
-          type: integer
-          description: The sequential number assigned to this subaccount (1-32).
+        reduce_to:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: String representation of the number of contracts to reduce to.
+    DecreaseOrderV2Response:
+      type: object
+      required:
+        - order_id
+        - remaining_count
+      properties:
+        order_id:
+          type: string
+        client_order_id:
+          type: string
+        remaining_count:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: Number of contracts remaining after the decrease.
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
+        contract values (e.g., "2.50") are supported on markets with fractional
+        trading enabled; the minimum granularity is 0.01 contracts. Integer
+        contract count fields are legacy and will be deprecated; when both
+        integer and fp fields are provided, they must match.
+      example: '10.00'
     ErrorResponse:
       type: object
       properties:
@@ -118,6 +168,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:
