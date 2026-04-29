@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/EventsApi
-lastmod: 2026-01-29T00:38:37.158Z
+lastmod: 2026-04-28T23:46:47.052Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -27,14 +27,16 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 
 Get Event
 
-Endpoint for getting data about an event by its ticker.  An event represents a real-world occurrence that can be traded on, such as an election, sports game, or economic indicator release. Events contain one or more markets where users can place trades on different outcomes.
+Endpoint for getting data about an event by its ticker. An event represents a real-world occurrence that can be traded on, such as an election, sports game, or economic indicator release.
+Events contain one or more markets where users can place trades on different outcomes.
+All events are accessible through this endpoint, even if their associated markets are older than the historical cutoff.
 
 ### Parameters
 
-| Name                      | Type     | Description                                                                                                                                    | Notes                           |
-| ------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| **event\_ticker**         | **str**  | Event ticker                                                                                                                                   |                                 |
-| **with\_nested\_markets** | **bool** | If true, markets are included within the event object. If false (default), markets are returned as a separate top-level field in the response. | \[optional] \[default to False] |
+| Name                      | Type     | Description                                                                                                                                                                                                                  | Notes                           |
+| ------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| **event\_ticker**         | **str**  | Event ticker                                                                                                                                                                                                                 |                                 |
+| **with\_nested\_markets** | **bool** | If true, markets are included within the event object. If false (default), markets are returned as a separate top-level field in the response. Historical markets settled before the historical cutoff will not be included. | \[optional] \[default to False] |
 
 ### Return type
 
@@ -112,23 +114,26 @@ Endpoint for getting metadata about an event by its ticker.  Returns only the me
 
 # **get\_events**
 
-> GetEventsResponse get\_events(limit=limit, cursor=cursor, with\_nested\_markets=with\_nested\_markets, with\_milestones=with\_milestones, status=status, series\_ticker=series\_ticker, min\_close\_ts=min\_close\_ts)
+> GetEventsResponse get\_events(limit=limit, cursor=cursor, with\_nested\_markets=with\_nested\_markets, with\_milestones=with\_milestones, status=status, series\_ticker=series\_ticker, min\_close\_ts=min\_close\_ts, min\_updated\_ts=min\_updated\_ts)
 
 Get Events
 
-Filter by event status. Possible values: 'open', 'closed', 'settled'. Leave empty to return events with any status.
+Get all events. This endpoint excludes multivariate events.
+To retrieve multivariate events, use the GET /events/multivariate endpoint.
+All events are accessible through this endpoint, even if their associated markets are older than the historical cutoff.
 
 ### Parameters
 
-| Name                      | Type     | Description                                                                                                                                                                                     | Notes                           |
-| ------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| **limit**                 | **int**  | Parameter to specify the number of results per page. Defaults to 200. Maximum value is 200.                                                                                                     | \[optional] \[default to 200]   |
-| **cursor**                | **str**  | Parameter to specify the pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page.                           | \[optional]                     |
-| **with\_nested\_markets** | **bool** | Parameter to specify if nested markets should be included in the response. When true, each event will include a 'markets' field containing a list of Market objects associated with that event. | \[optional] \[default to False] |
-| **with\_milestones**      | **bool** | If true, includes related milestones as a field alongside events.                                                                                                                               | \[optional] \[default to False] |
-| **status**                | **str**  | Filter by event status. Possible values are 'open', 'closed', 'settled'. Leave empty to return events with any status.                                                                          | \[optional]                     |
-| **series\_ticker**        | **str**  | Filter by series ticker                                                                                                                                                                         | \[optional]                     |
-| **min\_close\_ts**        | **int**  | Filter events with at least one market with close timestamp greater than this Unix timestamp (in seconds).                                                                                      | \[optional]                     |
+| Name                      | Type     | Description                                                                                                                                                                                                                                                                   | Notes                           |
+| ------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| **limit**                 | **int**  | Parameter to specify the number of results per page. Defaults to 200. Maximum value is 200.                                                                                                                                                                                   | \[optional] \[default to 200]   |
+| **cursor**                | **str**  | Parameter to specify the pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page.                                                                                                         | \[optional]                     |
+| **with\_nested\_markets** | **bool** | Parameter to specify if nested markets should be included in the response. When true, each event will include a 'markets' field containing a list of Market objects associated with that event. Historical markets settled before the historical cutoff will not be included. | \[optional] \[default to False] |
+| **with\_milestones**      | **bool** | If true, includes related milestones as a field alongside events.                                                                                                                                                                                                             | \[optional] \[default to False] |
+| **status**                | **str**  | Filter by event status. Possible values are 'unopened', 'open', 'closed', 'settled'. Leave empty to return events with any status.                                                                                                                                            | \[optional]                     |
+| **series\_ticker**        | **str**  | Filter by series ticker                                                                                                                                                                                                                                                       | \[optional]                     |
+| **min\_close\_ts**        | **int**  | Filter events with at least one market with close timestamp greater than this Unix timestamp (in seconds).                                                                                                                                                                    | \[optional]                     |
+| **min\_updated\_ts**      | **int**  | Filter events with metadata updated after this Unix timestamp (in seconds). Use this to efficiently poll for changes.                                                                                                                                                         | \[optional]                     |
 
 ### Return type
 

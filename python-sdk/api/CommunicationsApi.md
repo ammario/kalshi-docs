@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/CommunicationsApi
-lastmod: 2026-01-29T00:38:37.159Z
+lastmod: 2026-04-28T23:46:47.048Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -256,7 +256,7 @@ Endpoint for getting quotes
 | Name                            | Type    | Description                                                                                                                                  | Notes                         |
 | ------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
 | **cursor**                      | **str** | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | \[optional]                   |
-| **event\_ticker**               | **str** | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10).                            | \[optional]                   |
+| **event\_ticker**               | **str** | Event ticker to filter by. Only a single event ticker is supported.                                                                          | \[optional]                   |
 | **market\_ticker**              | **str** | Filter by market ticker                                                                                                                      | \[optional]                   |
 | **limit**                       | **int** | Parameter to specify the number of results per page. Defaults to 500.                                                                        | \[optional] \[default to 500] |
 | **status**                      | **str** | Filter quotes by status                                                                                                                      | \[optional]                   |
@@ -306,7 +306,7 @@ Endpoint for getting a single RFQ by id
 
 # **get\_rfqs**
 
-> GetRFQsResponse get\_rfqs(cursor=cursor, event\_ticker=event\_ticker, market\_ticker=market\_ticker, limit=limit, status=status, creator\_user\_id=creator\_user\_id)
+> GetRFQsResponse get\_rfqs(cursor=cursor, event\_ticker=event\_ticker, market\_ticker=market\_ticker, subaccount=subaccount, limit=limit, status=status, creator\_user\_id=creator\_user\_id)
 
 Get RFQs
 
@@ -317,8 +317,9 @@ Endpoint for getting RFQs
 | Name                  | Type    | Description                                                                                                                                  | Notes                         |
 | --------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
 | **cursor**            | **str** | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | \[optional]                   |
-| **event\_ticker**     | **str** | Event ticker of desired positions. Multiple event tickers can be provided as a comma-separated list (maximum 10).                            | \[optional]                   |
+| **event\_ticker**     | **str** | Event ticker to filter by. Only a single event ticker is supported.                                                                          | \[optional]                   |
 | **market\_ticker**    | **str** | Filter by market ticker                                                                                                                      | \[optional]                   |
+| **subaccount**        | **int** | Subaccount number (0 for primary, 1-32 for subaccounts). If omitted, defaults to all subaccounts.                                            | \[optional]                   |
 | **limit**             | **int** | Parameter to specify the number of results per page. Defaults to 100.                                                                        | \[optional] \[default to 100] |
 | **status**            | **str** | Filter RFQs by status                                                                                                                        | \[optional]                   |
 | **creator\_user\_id** | **str** | Filter RFQs by creator user ID                                                                                                               | \[optional]                   |

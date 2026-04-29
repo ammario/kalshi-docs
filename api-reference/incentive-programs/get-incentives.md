@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/incentive-programs/get-incentives
-lastmod: 2026-04-27T23:34:09.269Z
+lastmod: 2026-04-28T23:46:30.148Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-04-27T23:34:09.269Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.14.0
+  version: 3.15.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -92,6 +92,12 @@ paths:
               - all
               - liquidity
               - volume
+        - name: incentive_description
+          in: query
+          required: false
+          description: Filter by exact incentive description.
+          schema:
+            type: string
         - name: limit
           in: query
           required: false
@@ -161,6 +167,7 @@ components:
         - market_id
         - market_ticker
         - incentive_type
+        - incentive_description
         - start_date
         - end_date
         - period_reward
@@ -185,6 +192,9 @@ components:
             - liquidity
             - volume
           description: Type of incentive program
+        incentive_description:
+          type: string
+          description: Plain text description of the incentive program
         start_date:
           type: string
           format: date-time

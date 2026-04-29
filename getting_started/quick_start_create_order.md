@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_create_order
-lastmod: 2026-04-26T15:27:38.168Z
+lastmod: 2026-04-28T16:38:08.235Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -43,11 +43,14 @@ Now let's place an order to buy 1 YES contract for 1 cent (limit order). We'll u
 
 ```python theme={null}
 import uuid
+from urllib.parse import urlparse
 
 def post(private_key, api_key_id, path, data, base_url=BASE_URL):
     """Make an authenticated POST request to the Kalshi API."""
     timestamp = str(int(datetime.datetime.now().timestamp() * 1000))
-    signature = create_signature(private_key, timestamp, "POST", path)
+    # Signing requires the full URL path from root (e.g. /trade-api/v2/portfolio/orders)
+    sign_path = urlparse(base_url + path).path
+    signature = create_signature(private_key, timestamp, "POST", sign_path)
 
     headers = {
         'KALSHI-ACCESS-KEY': api_key_id,
@@ -69,7 +72,7 @@ order_data = {
     "client_order_id": str(uuid.uuid4())  # Unique ID for deduplication
 }
 
-response = post(private_key, API_KEY_ID, '/trade-api/v2/portfolio/orders', order_data)
+response = post(private_key, API_KEY_ID, '/portfolio/orders', order_data)
 
 if response.status_code == 201:
     order = response.json()['order']
@@ -88,13 +91,16 @@ Here's a complete script that creates your first order:
 ```python theme={null}
 import requests
 import uuid
+from urllib.parse import urlparse
 # Assumes you have the authentication code from the prerequisites
 
 # Add POST function to your existing auth code
 def post(private_key, api_key_id, path, data, base_url=BASE_URL):
     """Make an authenticated POST request to the Kalshi API."""
     timestamp = str(int(datetime.datetime.now().timestamp() * 1000))
-    signature = create_signature(private_key, timestamp, "POST", path)
+    # Signing requires the full URL path from root (e.g. /trade-api/v2/portfolio/orders)
+    sign_path = urlparse(base_url + path).path
+    signature = create_signature(private_key, timestamp, "POST", sign_path)
 
     headers = {
         'KALSHI-ACCESS-KEY': api_key_id,
@@ -124,7 +130,7 @@ order_data = {
     "client_order_id": client_order_id
 }
 
-response = post(private_key, API_KEY_ID, '/trade-api/v2/portfolio/orders', order_data)
+response = post(private_key, API_KEY_ID, '/portfolio/orders', order_data)
 
 if response.status_code == 201:
     order = response.json()['order']

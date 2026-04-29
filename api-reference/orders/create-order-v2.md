@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order-v2
-lastmod: 2026-04-27T23:34:08.733Z
+lastmod: 2026-04-28T23:46:29.683Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-04-27T23:34:08.733Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.14.0
+  version: 3.15.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -194,6 +194,11 @@ components:
           description: >-
             Volume-weighted average fill price. Only present when fill_count >
             0.
+        average_fee_paid:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            Volume-weighted average fee paid per contract for fills resulting
+            from this request. Only present when fill_count > 0.
     BookSide:
       type: string
       enum:

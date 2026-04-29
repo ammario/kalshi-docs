@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/StructuredTargetsApi
-lastmod: 2026-01-29T00:38:37.239Z
+lastmod: 2026-04-28T23:46:47.083Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -46,7 +46,7 @@ Endpoint for getting data about a specific structured target by its ID.
 
 # **get\_structured\_targets**
 
-> GetStructuredTargetsResponse get\_structured\_targets(type=type, competition=competition, page\_size=page\_size, cursor=cursor)
+> GetStructuredTargetsResponse get\_structured\_targets(ids=ids, type=type, competition=competition, page\_size=page\_size, cursor=cursor)
 
 Get Structured Targets
 
@@ -54,12 +54,13 @@ Page size (min: 1, max: 2000)
 
 ### Parameters
 
-| Name            | Type    | Description                                             | Notes                         |
-| --------------- | ------- | ------------------------------------------------------- | ----------------------------- |
-| **type**        | **str** | Filter by structured target type                        | \[optional]                   |
-| **competition** | **str** | Filter by competition                                   | \[optional]                   |
-| **page\_size**  | **int** | Number of items per page (min 1, max 2000, default 100) | \[optional] \[default to 100] |
-| **cursor**      | **str** | Pagination cursor                                       | \[optional]                   |
+| Name            | Type                                                             | Description                                                                                                              | Notes                         |
+| --------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------- |
+| **ids**         | [**List\[str\]**](https://docs.kalshi.com/python-sdk/models/str) | Filter by specific structured target IDs. Pass multiple IDs by repeating the parameter (e.g. \`?ids=uuid1\&ids=uuid2\`). | \[optional]                   |
+| **type**        | **str**                                                          | Filter by structured target type                                                                                         | \[optional]                   |
+| **competition** | **str**                                                          | Filter by competition. Matches against the league, conference, division, or tour in the structured target details.       | \[optional]                   |
+| **page\_size**  | **int**                                                          | Number of items per page (min 1, max 2000, default 100)                                                                  | \[optional] \[default to 100] |
+| **cursor**      | **str**                                                          | Pagination cursor                                                                                                        | \[optional]                   |
 
 ### Return type
 

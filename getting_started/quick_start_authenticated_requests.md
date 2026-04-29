@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_authenticated_requests
-lastmod: 2026-04-26T15:27:38.167Z
+lastmod: 2026-04-28T16:38:08.233Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -41,7 +41,7 @@ The signature proves you own the private key. Here's how it works:
 
 1. **Create a message string**: Concatenate `timestamp + HTTP_METHOD + path`
    * Example: `1703123456789GET/trade-api/v2/portfolio/balance`
-   * **Important**: Use the path **without query parameters**. For `/portfolio/orders?limit=5`, sign only `/trade-api/v2/portfolio/orders`
+   * **Important**: Sign the full URL path from the API root, without query parameters. For `https://demo-api.kalshi.co/trade-api/v2/portfolio/orders?limit=5`, sign `/trade-api/v2/portfolio/orders`.
 
 2. **Sign with your private key**: Use RSA-PSS with SHA256
 
@@ -163,12 +163,12 @@ print(f"Your balance: ${response.json()['balance'] / 100:.2f}")
 
 ## Common Issues
 
-| Problem                           | Solution                                                                                                                      |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| 401 Unauthorized                  | Check your API Key ID and private key file path                                                                               |
-| Signature error                   | Ensure timestamp is in milliseconds (not seconds)                                                                             |
-| Path not found                    | Path includes `/trade-api/v2`, pass only the endpoint path (e.g. `/portfolio/balance`, not `/trade-api/v2/portfolio/balance`) |
-| Signature error with query params | Strip query parameters before signing (use `path.split('?')[0]`)                                                              |
+| Problem                           | Solution                                                                                                                                                                                                     |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 401 Unauthorized                  | Check your API Key ID and private key file path                                                                                                                                                              |
+| Signature error                   | Ensure timestamp is in milliseconds (not seconds)                                                                                                                                                            |
+| Path not found                    | If your `BASE_URL` already ends with `/trade-api/v2`, pass only the endpoint path to the helper (e.g. `/portfolio/balance`, not `/trade-api/v2/portfolio/balance`) so the request URL is not double-prefixed |
+| Signature error with query params | Sign the request path without query parameters. The examples do this with `path.split('?')[0]` after building the full URL path                                                                              |
 
 ## Next Steps
 
