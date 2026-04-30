@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order
-lastmod: 2026-04-28T23:46:29.644Z
+lastmod: 2026-04-29T19:09:18.104Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -345,7 +345,13 @@ components:
       enum:
         - taker_at_cross
         - maker
-      description: The self-trade prevention type for orders
+      description: >
+        The self-trade prevention type for orders. `taker_at_cross` cancels the
+        taker order when it would trade against another order from the same
+        user; execution stops and any partial fills already matched are
+        executed. `maker` cancels the resting maker order and continues
+        matching; after execution, any remaining taker quantity is canceled and
+        any fills are executed.
   responses:
     BadRequestError:
       description: Bad request - invalid input

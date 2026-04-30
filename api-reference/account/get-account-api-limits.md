@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/account/get-account-api-limits
-lastmod: 2026-04-28T23:46:29.995Z
+lastmod: 2026-04-29T19:09:18.825Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -86,18 +86,39 @@ components:
       type: object
       required:
         - usage_tier
-        - read_limit
-        - write_limit
+        - read
+        - write
       properties:
         usage_tier:
           type: string
-          description: User's API usage tier
-        read_limit:
+          description: User's API usage tier.
+        read:
+          $ref: '#/components/schemas/BucketLimit'
+        write:
+          $ref: '#/components/schemas/BucketLimit'
+    BucketLimit:
+      type: object
+      description: |
+        Token-bucket budget for one rate-limit bucket. Each request deducts
+        tokens equal to its endpoint cost; the bucket refills at refill_rate
+        tokens per second up to bucket_capacity. A request is allowed if the
+        bucket holds enough tokens to cover its cost; otherwise the request
+        is rejected with HTTP 429.
+      required:
+        - refill_rate
+        - bucket_capacity
+      properties:
+        refill_rate:
           type: integer
-          description: Maximum read requests per second
-        write_limit:
+          description: Tokens added to the bucket per second.
+        bucket_capacity:
           type: integer
-          description: Maximum write requests per second
+          description: |
+            Maximum tokens the bucket can hold. When equal to refill_rate the
+            bucket holds one second of budget; larger values represent burst
+            headroom that idle clients accumulate and can spend in a single
+            pulse (e.g. write buckets at non-Basic tiers hold two seconds of
+            budget).
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

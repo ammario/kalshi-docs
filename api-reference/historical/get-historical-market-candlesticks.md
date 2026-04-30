@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-market-candlesticks
-lastmod: 2026-04-28T23:46:29.467Z
+lastmod: 2026-04-29T19:09:17.902Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

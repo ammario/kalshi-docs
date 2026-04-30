@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/decrease-order-v2
-lastmod: 2026-04-28T23:46:29.737Z
+lastmod: 2026-04-29T19:09:18.204Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
