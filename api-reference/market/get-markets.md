@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2026-04-29T19:09:19.326Z
+lastmod: 2026-05-01T00:13:55.990Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -472,11 +472,6 @@ components:
           x-omitempty: true
           description: The condition under which the market can close early
           x-go-type-skip-optional-pointer: true
-        tick_size:
-          type: integer
-          deprecated: true
-          x-go-type-skip-optional-pointer: true
-          description: 'DEPRECATED: Use price_level_structure and price_ranges instead.'
         strike_type:
           type: string
           enum:

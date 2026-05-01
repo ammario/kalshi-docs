@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-settlement
-lastmod: 2026-03-11T14:19:37.448Z
+lastmod: 2026-04-30T03:43:38.581Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,18 +10,7 @@ lastmod: 2026-03-11T14:19:37.448Z
 
 > Settlement reports for market outcomes and position resolution
 
-# Market Settlement
-
-## Overview
-
-Market settlement messages provide information about market outcomes and the resulting position settlements. These messages are available on:
-
-* **KalshiPT** (Post Trade) sessions
-* **KalshiRT** sessions when `ReceiveSettlementReports=Y` in Logon
-
-<Info>
-  Settlement occurs when a market's outcome is determined, triggering automatic position resolution and fund transfers.
-</Info>
+See [Market Settlement](/getting_started/market_settlement) for an overview. Settlement reports are available on **KalshiPT** sessions and **KalshiRT** sessions with `ReceiveSettlementReports=Y` (tag 20127) set during Logon.
 
 ## Market Settlement Report (35=UMS)
 
@@ -68,29 +57,6 @@ Provides settlement details for a specific market.
 | 138 | MiscFeeCurr  | Currency (USD)                           |
 | 139 | MiscFeeType  | Type of fee (Exchange fees\<4>)          |
 | 891 | MiscFeeBasis | Unit for fee (Absolute\<0>)              |
-
-## Settlement Process
-
-### Market Resolution Flow
-
-```mermaid theme={null}
-graph TD
-    A[Market Expires] --> B[Outcome Determined]
-    B --> C[Settlement Report Generated]
-    C --> D[Positions Resolved]
-    D --> E[Funds Transferred]
-
-    D --> F[Yes Holders: Receive $1]
-    D --> G[No Holders: Receive $0]
-```
-
-### Settlement Calculations
-
-For each position:
-
-* **Yes outcome**: Yes contract holders receive \$1 per contract
-* **No outcome**: No contract holders receive \$1 per contract
-* **Net position**: Only net positions are settled (after netting)
 
 ## Example Settlement Report
 
@@ -149,114 +115,3 @@ Large settlement batches may span multiple messages:
   **Important:** The `MarketSettlementReportID` (tag 20105) will be different across paginated responses.
   Each page of results generates a new unique settlement ID. Use the `Symbol` (tag 55) ticker to identify fragments belonging to the same paginated settlement.
 </Warning>
-
-## Settlement Timing
-
-<Warning>
-  Markets typically settle shortly after expiration, but timing can vary based on:
-
-  * Market type
-  * Data source availability
-  * Manual review requirements
-</Warning>
-
-## Integration Considerations
-
-### 1. Position Reconciliation
-
-```python theme={null}
-def reconcile_settlement(report):
-    # Verify position matches records
-    our_position = get_position(report.Symbol)
-
-    if report.LongQty != our_position.yes_contracts:
-        alert("Position mismatch", report)
-
-    # Verify payout calculation
-    if report.MarketResult == "Yes":
-        expected_payout = report.LongQty * 100  # cents
-    else:
-        expected_payout = report.ShortQty * 100
-
-    if report.CollateralAmountChange != expected_payout:
-        alert("Payout mismatch", report)
-```
-
-### 2. Multi-Account Handling
-
-For sessions managing multiple accounts:
-
-* Each party (sub-account) receives separate entry
-* Aggregate by MarketSettlementPartyID
-* Track settlements per account
-
-### 3. Fee Processing
-
-Fees ensure that `CollateralAmountChange` (the actual payout) is in whole cents, since balances are tracked in cents. Settlement fees will be zero for simple yes / no determinations but will be applied under edge case scenarios like sub-cent scalar settlement.
-
-When processing settlement reports:
-
-* Parse the `NoMiscFees` group for fee amounts
-* Account for fees (including negative rebates) in P\&L calculations
-* `CollateralAmountChange + MiscFeeAmt` equals the pre-rounding settlement value
-
-## Best Practices
-
-### Real-time Processing
-
-<Steps>
-  <Step title="Subscribe to Reports">
-    Set ReceiveSettlementReports=Y in KalshiRT Logon
-  </Step>
-
-  <Step title="Process Immediately">
-    Update positions and balances in real-time
-  </Step>
-
-  <Step title="Reconcile">
-    Compare with expected outcomes and positions
-  </Step>
-
-  <Step title="Update Risk">
-    Adjust risk calculations for settled positions
-  </Step>
-</Steps>
-
-### Batch Processing
-
-For post-trade reconciliation:
-
-1. Connect to KalshiPT session
-2. Query for day's settlements
-3. Process in sequence order
-4. Generate settlement reports
-
-## Related Systems
-
-| System      | Purpose                               |
-| ----------- | ------------------------------------- |
-| Order Entry | Track positions leading to settlement |
-| Drop Copy   | Audit trail of trades                 |
-| Market Data | Market expiration times               |
-| REST API    | Query market details and outcomes     |
-
-## Error Scenarios
-
-### Missing Settlements
-
-If settlements are missing:
-
-1. Check connection to appropriate session
-2. Verify ReceiveSettlementReports flag
-3. Use REST API as backup data source
-4. Contact support if discrepancies persist
-
-### Incorrect Positions
-
-Position mismatches may indicate:
-
-* Missed execution reports
-* Incorrect position tracking
-* Late trades near expiration
-
-Always maintain independent position tracking for verification.

@@ -1,16 +1,14 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-04-24T20:33:31.053Z
+lastmod: 2026-04-30T03:43:38.584Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# RFQ Messages
+# RFQ
 
 > Request for Quote functionality for RFQ creators and market makers
-
-# RFQ (Request for Quote) Messages
 
 ## Overview
 
@@ -155,6 +153,8 @@ If a new Quote is created when an existing quote for the same market already exi
 | 132 | BidPx      | Decimal | C        | Yes price in dollars (e.g. 0.4500). Not present when zero                          |
 | 133 | OfferPx    | Decimal | C        | No price in dollars (e.g. 0.5500). Not present when zero                           |
 | 38  | OrderQty   | Decimal | N        | Number of contracts as a fixed-point decimal. Currently emitted as whole contracts |
+| 134 | BidSize    | Decimal | N        | Quantity offered on the Yes side                                                   |
+| 135 | OfferSize  | Decimal | N        | Quantity offered on the No side                                                    |
 
 <Warning>
   Either BidPx or OfferPx can be zero, but not both. Zero indicates no quote for that side.
@@ -262,13 +262,10 @@ Exchange response to AcceptQuote.
 
 RFQ creator cancels/deletes an active RFQ.
 
-| Tag | Name       | Type | Required | Description                                         |
-| --- | ---------- | ---- | -------- | --------------------------------------------------- |
-| 131 | QuoteReqId | UUID | Y        | Client-assigned RFQ ID (from original QuoteRequest) |
-
-<Note>
-  Use your original client-assigned QuoteReqId from the QuoteRequest message. The RFQ ID already identifies the associated subtrader, so no PartyID fields are needed. When an RFQ is cancelled, market makers receive a QuoteRequestReject (35=AG) notification.
-</Note>
+| Tag   | Name       | Type | Required | Description                                                               |
+| ----- | ---------- | ---- | -------- | ------------------------------------------------------------------------- |
+| 131   | QuoteReqId | UUID | Y        | Client-assigned RFQ ID (from original QuoteRequest)                       |
+| 21023 | RfqId      | UUID | N        | Server-assigned RFQ ID (from QuoteRequestAck). Alternative to QuoteReqId. |
 
 ## RFQCancelStatus (35=UB)
 
@@ -293,53 +290,6 @@ Exchange notifies that a quote request was cancelled.
 <Info>
   Market makers do not send QuoteRequestReject when ignoring a request.
 </Info>
-
-## Best Practices
-
-### For RFQ Creators
-
-1. **RFQ ID Management**
-   * Store the server-assigned RFQ ID from QuoteRequestAck if you want to reconcile later Quote or QuoteStatusReport messages to the created RFQ
-   * Use your original client-assigned QuoteReqId for RFQCancel
-
-2. **Quote Selection**
-   * Compare quotes from multiple market makers
-   * Accept quotes promptly as they may expire
-   * Verify price and quantity before accepting
-
-3. **Cancellation**
-   * Cancel RFQs you no longer need
-   * Wait for RFQCancelStatus before considering cancelled
-
-### For Market Makers
-
-1. **Response Time**
-   * Respond to quote requests promptly
-   * Confirm accepted quotes within 30 seconds
-   * Cancel stale quotes proactively
-
-2. **Quote Management**
-   * Track active quotes locally
-   * Handle quote replacements properly
-   * Monitor for acceptance notifications
-
-3. **Risk Management**
-   * Validate prices before quoting
-   * Implement position limits
-   * Handle partial quotes (one-sided)
-
-### Error Handling
-
-1. **Rejection Scenarios**
-   * Invalid price range
-   * Symbol not found
-   * Insufficient balance
-   * Technical issues
-
-2. **Timeout Handling**
-   * 30-second confirmation window
-   * Automatic quote expiration
-   * Network disconnection recovery
 
 ## Example Workflow
 
@@ -410,10 +360,3 @@ Exchange notifies that a quote request was cancelled.
   8=FIXT.1.1|35=U8|117=quote-789|21010=0|
   ```
 </CodeGroup>
-
-## Integration Notes
-
-* **RFQ Creators** use the KalshiRT endpoint (RT mode) - same connection as order entry, with message persistence and retransmission support
-* **Market Makers** use the KalshiRFQ endpoint (RfqMode) to receive RFQ broadcasts and submit quotes
-* ExecutionReport (35=8) is sent to the RFQ creator after trade execution
-* RFQs expire after 24 hours if not cancelled or accepted

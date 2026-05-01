@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/drop-copy
-lastmod: 2026-04-08T18:36:44.118Z
+lastmod: 2026-04-30T03:43:38.583Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,52 +10,26 @@ lastmod: 2026-04-08T18:36:44.118Z
 
 > Recover missed execution reports and query historical order events
 
-# Drop Copy Session
-
-## Overview
-
-The drop copy session provides an alternative method to query for missed execution reports without using the FIX retransmission protocol. This is particularly useful for:
-
-* Recovering from connection failures
-* Auditing order activity
-* Building backup systems
-* Compliance recording
-
 <Warning>
-  **This is not a traditional drop copy session.** Kalshi's Drop Copy session uses a request-response pattern for querying historical execution reports. If you are looking for a real-time streaming feed of your execution reports (what most exchanges call a "drop copy"), use a [Listener Session](/fix/listener-sessions) on KalshiRT instead.
+  **This is not a traditional drop copy session.** Kalshi's Drop Copy uses a request-response pattern for querying historical execution reports. For a real-time streaming feed, use a [Listener Session](/fix/listener-sessions) on KalshiRT instead.
 </Warning>
 
-## Connection Details
+Lookback window is limited to the last 3 hours. Only ExecutionReport (35=8) messages are returned. Rejects and pending orders (ExecID `"-1;-1"`) are excluded.
 
-| Environment | URL                      | Port | TargetCompID |
-| ----------- | ------------------------ | ---- | ------------ |
-| Production  | fix.elections.kalshi.com | 8229 | KalshiDC     |
-| Demo        | fix.demo.kalshi.co       | 8229 | KalshiDC     |
+<Note>
+  Resent messages have new FIX sequence numbers, different from their original numbers on the order entry session. Use ExecID to reconcile.
+</Note>
 
 ## EventResendRequest (35=U1)
 
 Request execution reports within a specified ExecID range.
 
-### Fields
+| Tag   | Name        | Description                                                      | Required |
+| ----- | ----------- | ---------------------------------------------------------------- | -------- |
+| 21001 | BeginExecID | Starting ExecID (inclusive)                                      | Yes      |
+| 21002 | EndExecID   | Ending ExecID (inclusive). Defaults to latest ExecID if omitted. | No       |
 
-| Tag   | Name        | Description                 | Required |
-| ----- | ----------- | --------------------------- | -------- |
-| 21001 | BeginExecID | Starting ExecID (inclusive) | Yes      |
-| 21002 | EndExecID   | Ending ExecID (inclusive)   | No       |
-
-<Note>
-  If EndExecID is not provided, it defaults to the latest ExecID in your history.
-</Note>
-
-### Limitations
-
-* **Lookback Window**: Last 3 hours only
-* **Message Types**: Only ExecutionReport (35=8) supported
-* **Excluded Messages**:
-  * Rejects (no valid ExecID)
-  * Pending new orders (ExecID = "-1;-1")
-
-### Example Request
+**Example:**
 
 ```fix theme={null}
 8=FIXT.1.1|35=U1|21001=12345;67890|21002=12350;67895|
@@ -64,8 +38,6 @@ Request execution reports within a specified ExecID range.
 ## EventResendComplete (35=U2)
 
 Sent after all requested events have been resent.
-
-### Fields
 
 | Tag   | Name             | Description                         | Required |
 | ----- | ---------------- | ----------------------------------- | -------- |
@@ -76,80 +48,7 @@ Sent after all requested events have been resent.
 
 Sent when a resend request cannot be fulfilled.
 
-### Fields
-
-| Tag   | Name                    | Description                         | Required |
-| ----- | ----------------------- | ----------------------------------- | -------- |
-| 45    | RefSeqNum               | MsgSeqNum of the EventResendRequest | Yes      |
-| 21004 | EventResendRejectReason | Rejection code                      | Yes      |
-
-### Rejection Reasons (21004)
-
-| Code | Description                               |
-| ---- | ----------------------------------------- |
-| 1    | Too many resend requests                  |
-| 2    | Server error                              |
-| 3    | BeginExecID is too small (outside window) |
-| 4    | EndExecID is too large                    |
-
-## Usage Patterns
-
-### Recovery After Disconnect
-
-<Steps>
-  <Step title="Track Last ExecID">
-    Store the last processed ExecID before disconnect
-  </Step>
-
-  <Step title="Reconnect to Drop Copy">
-    Establish new drop copy session
-  </Step>
-
-  <Step title="Request Missing Events">
-    Send EventResendRequest starting from last ExecID
-  </Step>
-
-  <Step title="Process Resent Events">
-    Handle execution reports with new sequence numbers
-  </Step>
-</Steps>
-
-## Best Practices
-
-### 1. ExecID Management
-
-* Store ExecIDs persistently
-* Handle the two-part format correctly (e.g., "12345;67890")
-* Implement proper ID comparison logic
-
-### 2. Rate Limiting
-
-* Avoid excessive resend requests
-* Implement exponential backoff on failures
-* Batch requests when possible
-
-### 3. Deduplication
-
-* Events may arrive via both primary and drop copy sessions
-* Implement deduplication based on ExecID
-* Handle out-of-order delivery
-
-### 4. Error Recovery
-
-* Handle all rejection codes appropriately
-* Implement retry logic with delays
-* Alert on persistent failures
-
-## Comparison with Retransmission
-
-| Feature          | Drop Copy            | Retransmission      |
-| ---------------- | -------------------- | ------------------- |
-| Session Type     | Separate             | Same as order entry |
-| Sequence Numbers | Independent          | Original preserved  |
-| Lookback Window  | 3 hours              | 3 hours             |
-| Message Types    | ExecutionReport only | All types           |
-| Use Case         | Recovery/Audit       | Real-time gaps      |
-
-<Warning>
-  All resent messages will have new FIX sequence numbers in the drop copy session, different from their original sequence numbers in the order entry session.
-</Warning>
+| Tag   | Name                    | Description                                                                                                                         | Required |
+| ----- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| 45    | RefSeqNum               | MsgSeqNum of the EventResendRequest                                                                                                 | Yes      |
+| 21004 | EventResendRejectReason | Rejection code: `1`=Too many resend requests, `2`=Server error, `3`=BeginExecID too small (outside window), `4`=EndExecID too large | Yes      |

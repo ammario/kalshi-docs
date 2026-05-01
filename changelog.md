@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-04-29T17:04:19.410Z
+lastmod: 2026-05-01T00:14:13.843Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,25 @@ You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="Apr 30, 2026"
+  tags={["Breaking Change", "Deprecation", "Upcoming"]}
+  rss={{
+title: "Market tick_size field will be removed May 7",
+description: "The deprecated Market tick_size field has been deprecated since Jan 5, 2026 and will be removed from Market responses on May 7, 2026."
+}}
+>
+  The deprecated `tick_size` field on Market response objects has been
+  deprecated since **Jan 5, 2026** and will be removed on **May 7, 2026**.
+
+  Use `price_level_structure` and `price_ranges[].step` to determine each
+  market's valid tick sizes.
+
+  **Affected responses:**
+
+  * Market response objects returned by REST API v2 endpoints
+</Update>
 
 <Update
   label="Apr 30, 2026"

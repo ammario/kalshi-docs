@@ -1,24 +1,16 @@
 ---
 url: https://docs.kalshi.com/fix/order-groups
-lastmod: 2026-04-20T23:35:45.486Z
+lastmod: 2026-04-30T03:43:38.577Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Order Group Messages
+# Order Groups
 
 > Manage order groups for automatic position management
 
-# Order Group Messages
-
-## Overview
-
-Order groups provide automatic order cancellation when a contracts limit is reached. This feature helps manage risk by ensuring positions don't exceed predefined thresholds. Limits are evaluated over a rolling 15-second window. Order groups are managed through custom FIX message types.
-
-<Info>
-  When an order group's contracts limit is exceeded, all orders in the group are automatically canceled and no new orders can be placed until the group is reset.
-</Info>
+For an overview of order groups and how they work, see [Order Groups](/getting_started/order_groups).
 
 ## Order Group Request (35=UOG)
 
@@ -95,7 +87,7 @@ Manage order groups with Create, Reset, Delete, Trigger, and Update operations.
   orders in the group and marks it as triggered. No new orders can be placed until the group is reset.
 </Note>
 
-### Example Messages
+**Examples:**
 
 ```fix Create Order Group theme={null}
 8=FIXT.1.1|9=150|35=UOG|34=5|52=20230809-12:34:56.789|49=your-api-key|56=KalshiNR|

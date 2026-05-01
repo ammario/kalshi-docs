@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/error-handling
-lastmod: 2026-04-03T21:24:29.069Z
+lastmod: 2026-04-30T03:43:38.579Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,8 +9,6 @@ lastmod: 2026-04-03T21:24:29.069Z
 # Error Handling
 
 > Understanding and handling errors in the FIX protocol
-
-# Error Handling
 
 ## Overview
 
@@ -35,20 +33,20 @@ Used for session-level protocol violations.
 
 #### Session Reject Reasons (373)
 
-| Code | Reason                      | Description                         |
-| ---- | --------------------------- | ----------------------------------- |
-| 0    | Invalid tag number          | Unknown tag in message              |
-| 1    | Required tag missing        | Mandatory field not present         |
-| 2    | Tag not defined for message | Tag not valid for this message type |
-| 3    | Undefined tag               | Tag number not in FIX specification |
-| 4    | Tag without value           | Empty tag value                     |
-| 5    | Incorrect value             | Invalid value for tag               |
-| 6    | Incorrect data format       | Wrong data type                     |
-| 7    | Decryption problem          | Security issue                      |
-| 8    | Signature problem           | Authentication failure              |
-| 9    | CompID problem              | SenderCompID/TargetCompID issue     |
-| 10   | SendingTime accuracy        | Time outside acceptable window      |
-| 11   | Invalid MsgType             | Unknown message type                |
+| Code | Reason                      | Description                                          |
+| ---- | --------------------------- | ---------------------------------------------------- |
+| 0    | Invalid tag number          | Unknown tag in message                               |
+| 1    | Required tag missing        | Mandatory field not present                          |
+| 2    | Tag not defined for message | Tag not valid for this message type                  |
+| 3    | Undefined tag               | Tag number not in FIX specification                  |
+| 4    | Tag without value           | Empty tag value                                      |
+| 5    | Incorrect value             | Invalid value for tag                                |
+| 6    | Incorrect data format       | Wrong data type                                      |
+| 7    | Decryption problem          | Security issue                                       |
+| 8    | Signature problem           | Authentication failure                               |
+| 9    | CompID problem              | SenderCompID/TargetCompID issue                      |
+| 10   | SendingTime accuracy        | SendingTime must be within 30 seconds of server time |
+| 11   | Invalid MsgType             | Unknown message type                                 |
 
 ### BusinessMessageReject (35=j)
 
@@ -103,7 +101,7 @@ In OrderCancelReject (35=9):
 
 ## Common Error Scenarios
 
-### Example 1: Invalid Tag
+**Example: Invalid Tag**
 
 **Scenario**: Undefined tag in NewOrderSingle
 
@@ -115,7 +113,7 @@ In OrderCancelReject (35=9):
 8=FIXT.1.1|35=3|45=5|58=Undefined tag received|371=333333|372=D|373=3|
 ```
 
-### Example 2: Order Rejected by Exchange
+**Example: Order Rejected by Exchange**
 
 **Scenario**: Trading during maintenance
 
@@ -131,101 +129,44 @@ In OrderCancelReject (35=9):
   Order-entry failures returned by the exchange are sent as ExecutionReport (35=8) with ExecType=Rejected, not as BusinessMessageReject. BusinessMessageReject (35=j) is used for application-layer failures before normal exchange rejection handling, such as rate limiting or listener-session restrictions.
 </Note>
 
-### Example 3: Order Rejection
-
-**Scenario**: Insufficient balance
+**Example: Insufficient Balance**
 
 ```fix theme={null}
 // Response: ExecutionReport
 8=FIXT.1.1|35=8|11=789|150=8|39=8|58=INSUFFICIENT_BALANCE|103=3|...
 ```
 
-## Error Handling Best Practices
+## Troubleshooting
 
-### 1. Comprehensive Logging
+### MsgSeqNum Too High on Logon
 
-```python theme={null}
-def handle_message(msg):
-    if msg.type == 'Reject':
-        log.error(f"Session reject: {msg.Text} (Tag: {msg.RefTagID}, Reason: {msg.SessionRejectReason})")
-    elif msg.type == 'BusinessMessageReject':
-        log.error(f"Business reject: {msg.Text} (Reason: {msg.BusinessRejectReason})")
-    elif msg.type == 'ExecutionReport' and msg.ExecType == 'Rejected':
-        log.error(f"Order rejected: {msg.Text} (Reason: {msg.OrdRejReason})")
-```
+**Symptom**: Logon fails or the server sends a ResendRequest for messages the client doesn't have.
 
-### 2. Retry Strategies
+**Cause**: The client is sending a `MsgSeqNum` higher than what the server last saw. This typically happens when the client's local sequence store persists across sessions but the server has reset (e.g. after maintenance or a prior `ResetSeqNumFlag=Y` logon).
 
-| Error Type           | Retry Strategy                  |
-| -------------------- | ------------------------------- |
-| Session errors       | Fix protocol issue before retry |
-| Rate limit           | Exponential backoff             |
-| Exchange closed      | Wait for market open            |
-| Insufficient balance | Check balance before retry      |
-| Unknown symbol       | Verify symbol, don't retry      |
+**Fix**:
 
-### 3. Graceful Degradation
+* **KalshiNR, KalshiDC, KalshiPT**: Set `ResetSeqNumFlag<141>=Y` on every Logon. These sessions require it; Logon will be rejected without it.
+* **KalshiRT, KalshiRFQ**: If you don't need to recover missed messages, set `ResetSeqNumFlag<141>=Y` to reset both sides to 1. If you do need retransmission continuity, ensure your local sequence store matches the server's state.
 
-<Steps>
-  <Step title="Identify Error Type">
-    Distinguish between recoverable and non-recoverable errors
-  </Step>
+If using QuickFIX, set `ResetOnLogon=Y` in your session config for non-retransmission sessions.
 
-  <Step title="Apply Appropriate Action">
-    * Recoverable: Implement retry with backoff
-    * Non-recoverable: Alert and halt
-  </Step>
+### SendingTime Rejected
 
-  <Step title="Monitor and Alert">
-    Track error rates and patterns for system health
-  </Step>
-</Steps>
+**Symptom**: Reject (35=3) with `SessionRejectReason<373>=10`.
 
-## Specific Error Conditions
+**Cause**: The client's clock is more than 30 seconds off from the server. Sync your system clock via NTP.
 
-### Authentication Errors
+### Duplicate Session ("already exists")
 
-| Symptom        | Likely Cause      | Resolution                            |
-| -------------- | ----------------- | ------------------------------------- |
-| Logon rejected | Invalid signature | Check RSA key and signature algorithm |
-| CompID problem | Wrong API key     | Verify SenderCompID matches API key   |
-| Time accuracy  | Clock skew        | Sync system time with NTP             |
+**Symptom**: Logout (35=5) immediately after Logon with `Text<58>="already exists"`.
 
-### Order Entry Errors
+**Cause**: Another FIX connection is already active with the same API key and TargetCompID. Only one connection is allowed per API key per session type. This can also occur if a previous connection was not cleanly closed and the server hasn't yet detected the disconnect.
 
-| Error               | Check                               | Action                                         |
-| ------------------- | ----------------------------------- | ---------------------------------------------- |
-| Unknown symbol      | Symbol format                       | Use exact ticker from market data              |
-| Order exceeds limit | Position limits / available balance | Query current position and balance             |
-| Duplicate ClOrdID   | ID generation                       | Ensure UUID uniqueness                         |
-| Invalid price       | Price range                         | Ensure (0, 100) cents with valid tick interval |
+**Fix**: Ensure the previous session is fully disconnected before reconnecting. If the prior connection was lost unexpectedly, wait for the server's heartbeat timeout to expire (up to 60 seconds depending on your `HeartbeatInt` setting) before retrying. Use separate API keys for concurrent connections.
 
-### Connection Errors
+### Logon Signature Rejected
 
-<Warning>
-  Connection errors often manifest as:
+**Symptom**: Logout immediately after Logon with a signature error.
 
-  * Heartbeat timeout
-  * Sequence number gaps
-  * Socket disconnection
-
-  Always implement reconnection logic with appropriate delays.
-</Warning>
-
-## Error Response Patterns
-
-### Synchronous Errors
-
-Immediate response to invalid request:
-
-```
-Request → Validation → Immediate Error Response
-```
-
-### Asynchronous Errors
-
-Delayed errors during processing:
-
-```
-Request → Initial Accept → Processing → Later Error Report
-```
+**Cause**: The `SendingTime` used in the pre-hash string doesn't match the `SendingTime<52>` in the actual Logon message. If using a FIX library, the library may auto-populate `SendingTime`. Use that exact value when computing the signature, not a separately generated timestamp.
