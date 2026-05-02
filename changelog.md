@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-05-01T00:14:13.843Z
+lastmod: 2026-05-01T20:03:44.186Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -163,6 +163,23 @@ description: "New get_snapshot action on the orderbook_delta channel returns an 
   **Affected channel:**
 
   * `orderbook_delta`
+</Update>
+
+<Update
+  label="Apr 17, 2026"
+  tags={["Deprecation", "Upcoming"]}
+  rss={{
+title: "fractional_trading_enabled deprecated",
+description: "The fractional_trading_enabled field on Market and EventChildMarket is deprecated and now always true."
+}}
+>
+  The `fractional_trading_enabled` field on `Market` and `EventChildMarket` responses is deprecated. It no longer carries information:
+
+  * `Market` and `EventChildMarket` responses now support fractional trading unconditionally — the field is always `true`.
+
+  The `fractional_trading_updated` event on the `market_lifecycle_v2` WebSocket channel is removed, since the underlying state can no longer change.
+
+  The `fractional_trading_enabled` field will be removed in a future release after a separate pre-announcement that includes the exact removal date. Clients relying on this field should stop reading it; treat every active market returned by these responses as fractional.
 </Update>
 
 <Update

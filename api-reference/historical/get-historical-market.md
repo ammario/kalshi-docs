@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-market
-lastmod: 2026-05-01T00:13:56.987Z
+lastmod: 2026-05-01T20:03:27.121Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -250,6 +250,10 @@ components:
           type: boolean
         fractional_trading_enabled:
           type: boolean
+          deprecated: true
+          description: >-
+            Deprecated. This flag is always `true` and carries no information.
+            Will be removed after a pre-announcement with the removal date.
         open_interest_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-

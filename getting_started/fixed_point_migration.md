@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fixed_point_migration
-lastmod: 2026-03-25T12:17:52.564Z
+lastmod: 2026-05-01T20:03:44.271Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-03-25T12:17:52.564Z
 
 > Fixed-point representation for contract quantities and prices.
 
-Last Updated: April 2, 2026
+Last Updated: April 17, 2026
 
 ## Overview
 
@@ -19,12 +19,7 @@ Kalshi uses fixed-point representation across all APIs. This involves two indepe
 1. **Subpenny Pricing** — price fields use fixed-point dollar strings (`_dollars` suffix)
 2. **Fractional Contracts** — contract count fields use fixed-point strings (`_fp` suffix)
 
-Two fields on Market responses indicate which of these features are active for a given market:
-
-| Field                        | Type    | Description                                                |
-| ---------------------------- | ------- | ---------------------------------------------------------- |
-| `price_level_structure`      | string  | Price level structure defining price ranges and tick sizes |
-| `fractional_trading_enabled` | boolean | Whether fractional order sizes are accepted                |
+The `price_level_structure` field on Market responses indicates which pricing tier is active for a given market.
 
 ***
 
@@ -61,7 +56,7 @@ Subpenny pricing is offered on a per-market basis. The `price_level_structure` f
 
 ## Fractional Contracts
 
-Contract count fields use fixed-point strings.
+Contract count fields use fixed-point strings and support fractional contract sizes.
 
 ```json theme={null}
 {
@@ -71,11 +66,10 @@ Contract count fields use fixed-point strings.
 
 * `*_fp` fields are strings
 * Accept 0-2 decimal places on input (responses always emit 2 decimals)
+* Minimum granularity is 0.01 contracts
 * In requests where both integer and `_fp` fields are provided, they must match
 
-Check the `fractional_trading_enabled` field on Market responses to determine whether a given market supports fractional order sizes.
-
-Even if you are not placing fractional orders, you may encounter fractional values in other parts of the API (for example, fills on fractional-enabled markets). One way to prepare is to internally multiply the `_fp` value by 100 and cast to an integer. For example, treating `"1.55"` as 155 units of 1c contracts allows continued use of integer arithmetic.
+Even if you are not placing fractional orders, you will encounter fractional values elsewhere in the API (for example, fills). One way to prepare is to internally multiply the `_fp` value by 100 and cast to an integer. For example, treating `"1.55"` as 155 units of 1c contracts allows continued use of integer arithmetic.
 
 ***
 
