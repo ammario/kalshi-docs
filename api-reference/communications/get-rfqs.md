@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfqs
-lastmod: 2026-05-01T20:03:26.614Z
+lastmod: 2026-05-02T13:41:01.743Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -89,8 +89,17 @@ paths:
         - name: creator_user_id
           in: query
           description: Filter RFQs by creator user ID
+          deprecated: true
           schema:
             type: string
+        - name: user_filter
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/UserFilter'
+            x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: omitempty,oneof=self
       responses:
         '200':
           description: RFQs retrieved successfully
@@ -141,6 +150,15 @@ components:
       schema:
         type: integer
   schemas:
+    UserFilter:
+      type: string
+      enum:
+        - self
+      x-enum-varnames:
+        - UserFilterSelf
+      description: >-
+        Omit or leave empty to return all results. Use `self` to filter by the
+        authenticated user.
     GetRFQsResponse:
       type: object
       required:

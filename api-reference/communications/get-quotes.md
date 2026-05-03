@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2026-05-01T20:03:26.661Z
+lastmod: 2026-05-02T13:41:01.785Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -89,12 +89,22 @@ paths:
         - name: quote_creator_user_id
           in: query
           description: Filter quotes by quote creator user ID
+          deprecated: true
           schema:
             type: string
             x-go-type-skip-optional-pointer: true
+        - name: user_filter
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/UserFilter'
+            x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: omitempty,oneof=self
         - name: rfq_creator_user_id
           in: query
           description: Filter quotes by RFQ creator user ID
+          deprecated: true
           schema:
             type: string
             x-go-type-skip-optional-pointer: true
@@ -152,6 +162,15 @@ components:
         type: string
         x-go-type-skip-optional-pointer: true
   schemas:
+    UserFilter:
+      type: string
+      enum:
+        - self
+      x-enum-varnames:
+        - UserFilterSelf
+      description: >-
+        Omit or leave empty to return all results. Use `self` to filter by the
+        authenticated user.
     GetQuotesResponse:
       type: object
       required:
