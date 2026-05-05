@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/communications
-lastmod: 2026-05-01T20:03:29.053Z
+lastmod: 2026-05-04T20:00:35.487Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -734,126 +734,6 @@ operations:
             description: Notification when a quote is executed and orders are placed
             type: object
             properties:
-              - name: const
-                type: string
-                description: Unknown channel name
-                required: false
-              - name: description
-                type: string
-                description: Invalid channel in subscribe
-                required: false
-              - name: const
-                type: string
-                description: Authentication required
-                required: false
-              - name: description
-                type: string
-                description: Channel requires authenticated connection
-                required: false
-              - name: const
-                type: string
-                description: Channel error
-                required: false
-              - name: description
-                type: string
-                description: Channel-specific error
-                required: false
-              - name: const
-                type: string
-                description: Invalid parameter
-                required: false
-              - name: description
-                type: string
-                description: Malformed parameter value
-                required: false
-              - name: const
-                type: string
-                description: Exactly one subscription ID is required
-                required: false
-              - name: description
-                type: string
-                description: For update_subscription
-                required: false
-              - name: const
-                type: string
-                description: Unsupported action
-                required: false
-              - name: description
-                type: string
-                description: Invalid action for update_subscription
-                required: false
-              - name: const
-                type: string
-                description: Market Ticker required
-                required: false
-              - name: description
-                type: string
-                description: Missing market specification (market_ticker or market_id)
-                required: false
-              - name: const
-                type: string
-                description: Action required
-                required: false
-              - name: description
-                type: string
-                description: Missing action in update_subscription
-                required: false
-              - name: const
-                type: string
-                description: Market not found
-                required: false
-              - name: description
-                type: string
-                description: Invalid market_ticker or market_id
-                required: false
-              - name: const
-                type: string
-                description: Internal error
-                required: false
-              - name: description
-                type: string
-                description: Server-side processing error
-                required: false
-              - name: const
-                type: string
-                description: Command timeout
-                required: false
-              - name: description
-                type: string
-                description: Server timed out while processing command
-                required: false
-              - name: const
-                type: string
-                description: shard_factor must be > 0
-                required: false
-              - name: description
-                type: string
-                description: Invalid shard_factor
-                required: false
-              - name: const
-                type: string
-                description: shard_factor is required when shard_key is set
-                required: false
-              - name: description
-                type: string
-                description: Missing shard_factor when shard_key is set
-                required: false
-              - name: const
-                type: string
-                description: shard_key must be >= 0 and < shard_factor
-                required: false
-              - name: description
-                type: string
-                description: Invalid shard_key
-                required: false
-              - name: const
-                type: string
-                description: shard_factor must be <= 100
-                required: false
-              - name: description
-                type: string
-                description: shard_factor too large
-                required: false
               - name: type
                 type: string
                 description: quote_executed
@@ -914,70 +794,10 @@ operations:
             - sid
             - msg
           properties:
-            '8':
-              const: Unknown channel name
-              description: Invalid channel in subscribe
-              x-parser-schema-id: <anonymous-schema-207>
-            '9':
-              const: Authentication required
-              description: Channel requires authenticated connection
-              x-parser-schema-id: <anonymous-schema-208>
-            '10':
-              const: Channel error
-              description: Channel-specific error
-              x-parser-schema-id: <anonymous-schema-209>
-            '11':
-              const: Invalid parameter
-              description: Malformed parameter value
-              x-parser-schema-id: <anonymous-schema-210>
-            '12':
-              const: Exactly one subscription ID is required
-              description: For update_subscription
-              x-parser-schema-id: <anonymous-schema-211>
-            '13':
-              const: Unsupported action
-              description: Invalid action for update_subscription
-              x-parser-schema-id: <anonymous-schema-212>
-            '14':
-              const: Market Ticker required
-              description: Missing market specification (market_ticker or market_id)
-              x-parser-schema-id: <anonymous-schema-213>
-            '15':
-              const: Action required
-              description: Missing action in update_subscription
-              x-parser-schema-id: <anonymous-schema-214>
-            '16':
-              const: Market not found
-              description: Invalid market_ticker or market_id
-              x-parser-schema-id: <anonymous-schema-215>
-            '17':
-              const: Internal error
-              description: Server-side processing error
-              x-parser-schema-id: <anonymous-schema-216>
-            '18':
-              const: Command timeout
-              description: Server timed out while processing command
-              x-parser-schema-id: <anonymous-schema-217>
-            '19':
-              const: shard_factor must be > 0
-              description: Invalid shard_factor
-              x-parser-schema-id: <anonymous-schema-218>
-            '20':
-              const: shard_factor is required when shard_key is set
-              description: Missing shard_factor when shard_key is set
-              x-parser-schema-id: <anonymous-schema-219>
-            '21':
-              const: shard_key must be >= 0 and < shard_factor
-              description: Invalid shard_key
-              x-parser-schema-id: <anonymous-schema-220>
-            '22':
-              const: shard_factor must be <= 100
-              description: shard_factor too large
-              x-parser-schema-id: <anonymous-schema-221>
             type:
               type: string
               const: quote_executed
-              x-parser-schema-id: <anonymous-schema-222>
+              x-parser-schema-id: <anonymous-schema-207>
             sid: *ref_0
             msg:
               type: object
@@ -994,41 +814,41 @@ operations:
                 quote_id:
                   type: string
                   description: Unique identifier for the quote that was executed
-                  x-parser-schema-id: <anonymous-schema-224>
+                  x-parser-schema-id: <anonymous-schema-209>
                 rfq_id:
                   type: string
                   description: Identifier of the RFQ this quote was for
-                  x-parser-schema-id: <anonymous-schema-225>
+                  x-parser-schema-id: <anonymous-schema-210>
                 quote_creator_id:
                   type: string
                   description: Anonymized identifier for the quote creator
-                  x-parser-schema-id: <anonymous-schema-226>
+                  x-parser-schema-id: <anonymous-schema-211>
                 rfq_creator_id:
                   type: string
                   description: Anonymized identifier for the RFQ creator
-                  x-parser-schema-id: <anonymous-schema-227>
+                  x-parser-schema-id: <anonymous-schema-212>
                 order_id:
                   type: string
                   description: >-
                     Your order ID resulting from the quote execution. Use this
                     to match with fill messages
-                  x-parser-schema-id: <anonymous-schema-228>
+                  x-parser-schema-id: <anonymous-schema-213>
                 client_order_id:
                   type: string
                   description: >-
                     Your client order ID for the executed order. Use this to
                     correlate with fill messages
-                  x-parser-schema-id: <anonymous-schema-229>
+                  x-parser-schema-id: <anonymous-schema-214>
                 market_ticker:
                   type: string
                   description: Market ticker for the executed quote
-                  x-parser-schema-id: <anonymous-schema-230>
+                  x-parser-schema-id: <anonymous-schema-215>
                 executed_ts:
                   type: string
                   description: Timestamp when the quote was executed and orders were placed
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-231>
-              x-parser-schema-id: <anonymous-schema-223>
+                  x-parser-schema-id: <anonymous-schema-216>
+              x-parser-schema-id: <anonymous-schema-208>
           x-parser-schema-id: quoteExecutedPayload
         title: Quote Executed
         description: Notification when a quote is executed and orders are placed

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/multivariate-lookups-deprecated
-lastmod: 2026-05-01T20:03:29.041Z
+lastmod: 2026-05-04T20:00:35.473Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
