@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-positions
-lastmod: 2026-05-04T20:00:35.429Z
+lastmod: 2026-05-06T00:22:33.079Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -55,7 +55,7 @@ description: >
 servers:
   - id: production
     protocol: wss
-    host: api.elections.kalshi.com
+    host: external-api-ws.kalshi.com
     bindings: []
     variables: []
 address: market_positions

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2026-05-02T13:41:01.795Z
+lastmod: 2026-05-05T23:51:39.131Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -26,8 +26,14 @@ info:
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
 servers:
+  - url: https://external-api.kalshi.com/trade-api/v2
+    description: Production Trade API server
   - url: https://api.elections.kalshi.com/trade-api/v2
-    description: Production server
+    description: Production shared API server, also supported
+  - url: https://external-api.demo.kalshi.co/trade-api/v2
+    description: Demo Trade API server
+  - url: https://demo-api.kalshi.co/trade-api/v2
+    description: Demo shared API server, also supported
 security: []
 tags:
   - name: api-keys
@@ -115,6 +121,11 @@ components:
         rest_remainder:
           type: boolean
           description: Whether to rest the remainder of the quote after execution
+        post_only:
+          type: boolean
+          description: >-
+            If true, the quote creator's resting order will be cancelled rather
+            than crossed if it would take liquidity. Defaults to false.
         subaccount:
           type: integer
           description: >-

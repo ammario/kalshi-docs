@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/PortfolioApi
-lastmod: 2026-04-28T23:46:47.079Z
+lastmod: 2026-05-05T21:10:39.195Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-04-28T23:46:47.079Z
 
 > Python SDK methods for Portfolio operations
 
-All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
+All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https://external-api.kalshi.com/trade-api/v2)*
 
 | Method                                                                                       | HTTP request                                            | Description                   |
 | -------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ----------------------------- |
@@ -111,7 +111,7 @@ Endpoint for getting the balance and portfolio value of a member. Both values ar
 Get Fills
 
 Endpoint for getting all fills for the member. A fill is when a trade you have is matched.
-Fills that occurred before the historical cutoff are only available via `GET /historical/fills`. See [Historical Data](https://kalshi.com/docs/getting_started/historical_data) for details.
+Fills that occurred before the historical cutoff are only available via `GET /historical/fills`. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
 
 ### Parameters
 

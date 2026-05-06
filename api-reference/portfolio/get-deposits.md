@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/order-groups/reset-order-group
-lastmod: 2026-05-05T23:51:38.871Z
+url: https://docs.kalshi.com/api-reference/portfolio/get-deposits
+lastmod: 2026-05-05T23:51:39.011Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Reset Order Group
+# Get Deposits
 
->  Resets the order group's matched contracts counter to zero, allowing new orders to be placed again after the limit was hit.
+> Endpoint for getting the member's deposit history.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml put /portfolio/order_groups/{order_group_id}/reset
+````yaml /openapi.yaml get /portfolio/deposits
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,33 +64,27 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/order_groups/{order_group_id}/reset:
-    put:
+  /portfolio/deposits:
+    get:
       tags:
-        - order-groups
-      summary: Reset Order Group
-      description: ' Resets the order group''s matched contracts counter to zero, allowing new orders to be placed again after the limit was hit.'
-      operationId: ResetOrderGroup
+        - portfolio
+      summary: Get Deposits
+      description: Endpoint for getting the member's deposit history.
+      operationId: GetDeposits
       parameters:
-        - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmptyResponse'
+        - $ref: '#/components/parameters/WithdrawalLimitQuery'
+        - $ref: '#/components/parameters/CursorQuery'
       responses:
         '200':
-          description: Order group reset successfully
+          description: Deposits retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
+                $ref: '#/components/schemas/GetDepositsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -99,23 +93,91 @@ paths:
           kalshiAccessTimestamp: []
 components:
   parameters:
-    OrderGroupIdPath:
-      name: order_group_id
-      in: path
-      required: true
-      description: Order group ID
-      schema:
-        type: string
-    SubaccountQueryDefaultPrimary:
-      name: subaccount
+    WithdrawalLimitQuery:
+      name: limit
       in: query
-      description: Subaccount number (0 for primary, 1-32 for subaccounts). Defaults to 0.
+      description: Number of results per page. Defaults to 100. Maximum value is 500.
       schema:
         type: integer
+        format: int64
+        minimum: 1
+        maximum: 500
+        default: 100
+        x-oapi-codegen-extra-tags:
+          validate: omitempty,min=1,max=500
+    CursorQuery:
+      name: cursor
+      in: query
+      description: >-
+        Pagination cursor. Use the cursor value returned from the previous
+        response to get the next page of results. Leave empty for the first
+        page.
+      schema:
+        type: string
+        x-go-type-skip-optional-pointer: true
   schemas:
-    EmptyResponse:
+    GetDepositsResponse:
       type: object
-      description: An empty response body
+      required:
+        - deposits
+      properties:
+        deposits:
+          type: array
+          items:
+            $ref: '#/components/schemas/Deposit'
+        cursor:
+          type: string
+    Deposit:
+      type: object
+      required:
+        - id
+        - status
+        - type
+        - amount_cents
+        - fee_cents
+        - created_ts
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the deposit.
+        status:
+          type: string
+          enum:
+            - pending
+            - applied
+            - failed
+            - returned
+          description: >-
+            Current status of the deposit. 'applied' means funds are reflected
+            in balance.
+        type:
+          type: string
+          enum:
+            - ach
+            - wire
+            - crypto
+            - debit
+            - apm
+          description: Payment method used for the deposit.
+        amount_cents:
+          type: integer
+          format: int64
+          description: Deposit amount in cents.
+        fee_cents:
+          type: integer
+          format: int64
+          description: Fee charged for the deposit in cents.
+        created_ts:
+          type: integer
+          format: int64
+          description: Unix timestamp of when the deposit was created.
+        finalized_ts:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            Unix timestamp of when the deposit was finalized (applied, failed,
+            or returned).
     ErrorResponse:
       type: object
       properties:
@@ -132,14 +194,14 @@ components:
           type: string
           description: The name of the service that generated the error
   responses:
-    UnauthorizedError:
-      description: Unauthorized - authentication required
+    BadRequestError:
+      description: Bad request - invalid input
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
+    UnauthorizedError:
+      description: Unauthorized - authentication required
       content:
         application/json:
           schema:

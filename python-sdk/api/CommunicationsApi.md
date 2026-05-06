@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/CommunicationsApi
-lastmod: 2026-04-28T23:46:47.048Z
+lastmod: 2026-05-05T21:10:39.148Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-04-28T23:46:47.048Z
 
 > Python SDK methods for Communications operations
 
-All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
+All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https://external-api.kalshi.com/trade-api/v2)*
 
 | Method                                                | HTTP request                                      | Description           |
 | ----------------------------------------------------- | ------------------------------------------------- | --------------------- |
@@ -245,7 +245,7 @@ Endpoint for getting a particular quote
 
 # **get\_quotes**
 
-> GetQuotesResponse get\_quotes(cursor=cursor, event\_ticker=event\_ticker, market\_ticker=market\_ticker, limit=limit, status=status, quote\_creator\_user\_id=quote\_creator\_user\_id, rfq\_creator\_user\_id=rfq\_creator\_user\_id, rfq\_creator\_subtrader\_id=rfq\_creator\_subtrader\_id, rfq\_id=rfq\_id)
+> GetQuotesResponse get\_quotes(cursor=cursor, event\_ticker=event\_ticker, market\_ticker=market\_ticker, limit=limit, status=status, quote\_creator\_user\_id=quote\_creator\_user\_id, user\_filter=user\_filter, rfq\_creator\_user\_id=rfq\_creator\_user\_id, rfq\_creator\_subtrader\_id=rfq\_creator\_subtrader\_id, rfq\_id=rfq\_id)
 
 Get Quotes
 
@@ -253,17 +253,18 @@ Endpoint for getting quotes
 
 ### Parameters
 
-| Name                            | Type    | Description                                                                                                                                  | Notes                         |
-| ------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| **cursor**                      | **str** | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | \[optional]                   |
-| **event\_ticker**               | **str** | Event ticker to filter by. Only a single event ticker is supported.                                                                          | \[optional]                   |
-| **market\_ticker**              | **str** | Filter by market ticker                                                                                                                      | \[optional]                   |
-| **limit**                       | **int** | Parameter to specify the number of results per page. Defaults to 500.                                                                        | \[optional] \[default to 500] |
-| **status**                      | **str** | Filter quotes by status                                                                                                                      | \[optional]                   |
-| **quote\_creator\_user\_id**    | **str** | Filter quotes by quote creator user ID                                                                                                       | \[optional]                   |
-| **rfq\_creator\_user\_id**      | **str** | Filter quotes by RFQ creator user ID                                                                                                         | \[optional]                   |
-| **rfq\_creator\_subtrader\_id** | **str** | Filter quotes by RFQ creator subtrader ID (FCM members only)                                                                                 | \[optional]                   |
-| **rfq\_id**                     | **str** | Filter quotes by RFQ ID                                                                                                                      | \[optional]                   |
+| Name                            | Type                                                         | Description                                                                                                                                  | Notes                         |
+| ------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| **cursor**                      | **str**                                                      | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | \[optional]                   |
+| **event\_ticker**               | **str**                                                      | Event ticker to filter by. Only a single event ticker is supported.                                                                          | \[optional]                   |
+| **market\_ticker**              | **str**                                                      | Filter by market ticker                                                                                                                      | \[optional]                   |
+| **limit**                       | **int**                                                      | Parameter to specify the number of results per page. Defaults to 500.                                                                        | \[optional] \[default to 500] |
+| **status**                      | **str**                                                      | Filter quotes by status                                                                                                                      | \[optional]                   |
+| **quote\_creator\_user\_id**    | **str**                                                      | Filter quotes by quote creator user ID                                                                                                       | \[optional]                   |
+| **user\_filter**                | [**UserFilter**](https://docs.kalshi.com/python-sdk/models/) |                                                                                                                                              | \[optional]                   |
+| **rfq\_creator\_user\_id**      | **str**                                                      | Filter quotes by RFQ creator user ID                                                                                                         | \[optional]                   |
+| **rfq\_creator\_subtrader\_id** | **str**                                                      | Filter quotes by RFQ creator subtrader ID (FCM members only)                                                                                 | \[optional]                   |
+| **rfq\_id**                     | **str**                                                      | Filter quotes by RFQ ID                                                                                                                      | \[optional]                   |
 
 ### Return type
 
@@ -306,7 +307,7 @@ Endpoint for getting a single RFQ by id
 
 # **get\_rfqs**
 
-> GetRFQsResponse get\_rfqs(cursor=cursor, event\_ticker=event\_ticker, market\_ticker=market\_ticker, subaccount=subaccount, limit=limit, status=status, creator\_user\_id=creator\_user\_id)
+> GetRFQsResponse get\_rfqs(cursor=cursor, event\_ticker=event\_ticker, market\_ticker=market\_ticker, subaccount=subaccount, limit=limit, status=status, creator\_user\_id=creator\_user\_id, user\_filter=user\_filter)
 
 Get RFQs
 
@@ -314,15 +315,16 @@ Endpoint for getting RFQs
 
 ### Parameters
 
-| Name                  | Type    | Description                                                                                                                                  | Notes                         |
-| --------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| **cursor**            | **str** | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | \[optional]                   |
-| **event\_ticker**     | **str** | Event ticker to filter by. Only a single event ticker is supported.                                                                          | \[optional]                   |
-| **market\_ticker**    | **str** | Filter by market ticker                                                                                                                      | \[optional]                   |
-| **subaccount**        | **int** | Subaccount number (0 for primary, 1-32 for subaccounts). If omitted, defaults to all subaccounts.                                            | \[optional]                   |
-| **limit**             | **int** | Parameter to specify the number of results per page. Defaults to 100.                                                                        | \[optional] \[default to 100] |
-| **status**            | **str** | Filter RFQs by status                                                                                                                        | \[optional]                   |
-| **creator\_user\_id** | **str** | Filter RFQs by creator user ID                                                                                                               | \[optional]                   |
+| Name                  | Type                                                         | Description                                                                                                                                  | Notes                         |
+| --------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| **cursor**            | **str**                                                      | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | \[optional]                   |
+| **event\_ticker**     | **str**                                                      | Event ticker to filter by. Only a single event ticker is supported.                                                                          | \[optional]                   |
+| **market\_ticker**    | **str**                                                      | Filter by market ticker                                                                                                                      | \[optional]                   |
+| **subaccount**        | **int**                                                      | Subaccount number (0 for primary, 1-32 for subaccounts). If omitted, defaults to all subaccounts.                                            | \[optional]                   |
+| **limit**             | **int**                                                      | Parameter to specify the number of results per page. Defaults to 100.                                                                        | \[optional] \[default to 100] |
+| **status**            | **str**                                                      | Filter RFQs by status                                                                                                                        | \[optional]                   |
+| **creator\_user\_id** | **str**                                                      | Filter RFQs by creator user ID                                                                                                               | \[optional]                   |
+| **user\_filter**      | [**UserFilter**](https://docs.kalshi.com/python-sdk/models/) |                                                                                                                                              | \[optional]                   |
 
 ### Return type
 

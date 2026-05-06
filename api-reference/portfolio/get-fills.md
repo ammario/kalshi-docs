@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-05-02T13:41:01.711Z
+lastmod: 2026-05-05T23:51:39.046Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,7 +9,7 @@ lastmod: 2026-05-02T13:41:01.711Z
 # Get Fills
 
 > Endpoint for getting all fills for the member. A fill is when a trade you have is matched.
-Fills that occurred before the historical cutoff are only available via `GET /historical/fills`. See [Historical Data](https://kalshi.com/docs/getting_started/historical_data) for details.
+Fills that occurred before the historical cutoff are only available via `GET /historical/fills`. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
 
 
 
@@ -25,8 +25,14 @@ info:
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
 servers:
+  - url: https://external-api.kalshi.com/trade-api/v2
+    description: Production Trade API server
   - url: https://api.elections.kalshi.com/trade-api/v2
-    description: Production server
+    description: Production shared API server, also supported
+  - url: https://external-api.demo.kalshi.co/trade-api/v2
+    description: Demo Trade API server
+  - url: https://demo-api.kalshi.co/trade-api/v2
+    description: Demo shared API server, also supported
 security: []
 tags:
   - name: api-keys
@@ -71,7 +77,7 @@ paths:
 
         Fills that occurred before the historical cutoff are only available via
         `GET /historical/fills`. See [Historical
-        Data](https://kalshi.com/docs/getting_started/historical_data) for
+        Data](https://docs.kalshi.com/getting_started/historical_data) for
         details.
       operationId: GetFills
       parameters:

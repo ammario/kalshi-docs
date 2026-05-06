@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/sdks/typescript/quickstart
-lastmod: 2026-01-29T00:38:37.722Z
+lastmod: 2026-05-05T21:10:40.134Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -25,7 +25,7 @@ import { Configuration, PortfolioApi } from 'kalshi-typescript';
 const config = new Configuration({
     apiKey: 'your-api-key-id',
     privateKeyPath: 'path/to/your/private-key.pem', // or use privateKeyPem
-    basePath: 'https://api.elections.kalshi.com/trade-api/v2'
+    basePath: 'https://external-api.kalshi.com/trade-api/v2'
 });
 
 // Create API instance
@@ -45,14 +45,14 @@ The SDK uses RSA-PSS signing for authentication. You can provide your private ke
 const config = new Configuration({
     apiKey: 'your-api-key-id',
     privateKeyPath: 'path/to/private-key.pem',
-    basePath: 'https://api.elections.kalshi.com/trade-api/v2'
+    basePath: 'https://external-api.kalshi.com/trade-api/v2'
 });
 
 // Using PEM string
 const config = new Configuration({
     apiKey: 'your-api-key-id',
     privateKeyPem: '-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----',
-    basePath: 'https://api.elections.kalshi.com/trade-api/v2'
+    basePath: 'https://external-api.kalshi.com/trade-api/v2'
 });
 ```
 

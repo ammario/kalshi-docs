@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/PortfolioApi
-lastmod: 2026-04-03T20:52:43.417Z
+lastmod: 2026-05-05T21:10:40.194Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,13 +10,14 @@ lastmod: 2026-04-03T20:52:43.417Z
 
 > TypeScript SDK methods for Portfolio operations
 
-All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
+All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https://external-api.kalshi.com/trade-api/v2)*
 
 | Method                                                                        | HTTP request                                            | Description                   |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------- | ----------------------------- |
 | [**applySubaccountTransfer**](#applysubaccounttransfer)                       | **POST** /portfolio/subaccounts/transfer                | Transfer Between Subaccounts  |
 | [**createSubaccount**](#createsubaccount)                                     | **POST** /portfolio/subaccounts                         | Create Subaccount             |
 | [**getBalance**](#getbalance)                                                 | **GET** /portfolio/balance                              | Get Balance                   |
+| [**getDeposits**](#getdeposits)                                               | **GET** /portfolio/deposits                             | Get Deposits                  |
 | [**getFills**](#getfills)                                                     | **GET** /portfolio/fills                                | Get Fills                     |
 | [**getPortfolioRestingOrderTotalValue**](#getportfoliorestingordertotalvalue) | **GET** /portfolio/summary/total\_resting\_order\_value | Get Total Resting Order Value |
 | [**getPositions**](#getpositions)                                             | **GET** /portfolio/positions                            | Get Positions                 |
@@ -24,6 +25,7 @@ All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https:
 | [**getSubaccountBalances**](#getsubaccountbalances)                           | **GET** /portfolio/subaccounts/balances                 | Get All Subaccount Balances   |
 | [**getSubaccountNetting**](#getsubaccountnetting)                             | **GET** /portfolio/subaccounts/netting                  | Get Subaccount Netting        |
 | [**getSubaccountTransfers**](#getsubaccounttransfers)                         | **GET** /portfolio/subaccounts/transfers                | Get Subaccount Transfers      |
+| [**getWithdrawals**](#getwithdrawals)                                         | **GET** /portfolio/withdrawals                          | Get Withdrawals               |
 | [**updateSubaccountNetting**](#updatesubaccountnetting)                       | **PUT** /portfolio/subaccounts/netting                  | Update Subaccount Netting     |
 
 # **applySubaccountTransfer**
@@ -125,11 +127,46 @@ Endpoint for getting the balance and portfolio value of a member. Both values ar
 | **401**     | Unauthorized - authentication required | -                |
 | **500**     | Internal server error                  | -                |
 
+# **getDeposits**
+
+> GetDepositsResponse getDeposits()
+
+Endpoint for getting the member's deposit history.
+
+### Parameters
+
+| Name       | Type          | Description                                                                                                                                  | Notes                            |
+| ---------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| **limit**  | \[**number**] | Number of results per page. Defaults to 100.                                                                                                 | (optional) defaults to 100       |
+| **cursor** | \[**string**] | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
+
+### Return type
+
+**GetDepositsResponse**
+
+### Authorization
+
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **200**     | Deposits retrieved successfully        | -                |
+| **400**     | Bad request - invalid input            | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **500**     | Internal server error                  | -                |
+
 # **getFills**
 
 > GetFillsResponse getFills()
 
-Endpoint for getting all fills for the member. A fill is when a trade you have is matched. Fills that occurred before the historical cutoff are only available via `GET /historical/fills`. See [Historical Data](https://kalshi.com/docs/getting_started/historical_data) for details.
+Endpoint for getting all fills for the member. A fill is when a trade you have is matched. Fills that occurred before the historical cutoff are only available via `GET /historical/fills`. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
 
 ### Parameters
 
@@ -368,6 +405,41 @@ Gets a paginated list of all transfers between subaccounts for the authenticated
 | Status code | Description                            | Response headers |
 | ----------- | -------------------------------------- | ---------------- |
 | **200**     | Transfers retrieved successfully       | -                |
+| **401**     | Unauthorized - authentication required | -                |
+| **500**     | Internal server error                  | -                |
+
+# **getWithdrawals**
+
+> GetWithdrawalsResponse getWithdrawals()
+
+Endpoint for getting the member's withdrawal history.
+
+### Parameters
+
+| Name       | Type          | Description                                                                                                                                  | Notes                            |
+| ---------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| **limit**  | \[**number**] | Number of results per page. Defaults to 100. Maximum value is 500.                                                                           | (optional) defaults to 100       |
+| **cursor** | \[**string**] | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
+
+### Return type
+
+**GetWithdrawalsResponse**
+
+### Authorization
+
+[kalshiAccessSignature](../README.md#kalshiAccessSignature), [kalshiAccessKey](../README.md#kalshiAccessKey), [kalshiAccessTimestamp](../README.md#kalshiAccessTimestamp)
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **200**     | Withdrawals retrieved successfully     | -                |
+| **400**     | Bad request - invalid input            | -                |
 | **401**     | Unauthorized - authentication required | -                |
 | **500**     | Internal server error                  | -                |
 

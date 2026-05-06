@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_authenticated_requests
-lastmod: 2026-04-28T16:38:08.233Z
+lastmod: 2026-05-05T21:10:39.098Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-04-28T16:38:08.233Z
 
 > Three simple steps to make your first authenticated API request to Kalshi
 
-This guide shows you how to make authenticated requests to the Kalshi API in three simple steps.
+This guide shows you how to make authenticated requests to the Kalshi API in three simple steps. For the full production and demo endpoint list, see [API Environments and Endpoints](/getting_started/api_environments).
 
 ## Step 1: Get Your API Keys
 
@@ -41,7 +41,7 @@ The signature proves you own the private key. Here's how it works:
 
 1. **Create a message string**: Concatenate `timestamp + HTTP_METHOD + path`
    * Example: `1703123456789GET/trade-api/v2/portfolio/balance`
-   * **Important**: Sign the full URL path from the API root, without query parameters. For `https://demo-api.kalshi.co/trade-api/v2/portfolio/orders?limit=5`, sign `/trade-api/v2/portfolio/orders`.
+   * **Important**: Sign the full URL path from the API root, without query parameters. For `https://external-api.demo.kalshi.co/trade-api/v2/portfolio/orders?limit=5`, sign `/trade-api/v2/portfolio/orders`.
 
 2. **Sign with your private key**: Use RSA-PSS with SHA256
 
@@ -98,7 +98,7 @@ headers = {
     'KALSHI-ACCESS-TIMESTAMP': timestamp
 }
 
-response = requests.get('https://demo-api.kalshi.co' + path, headers=headers)
+response = requests.get('https://external-api.demo.kalshi.co' + path, headers=headers)
 balance = response.json()
 
 print(f"Your balance: ${balance['balance'] / 100:.2f}")
@@ -120,7 +120,7 @@ from cryptography.hazmat.primitives.asymmetric import padding
 # Configuration
 API_KEY_ID = 'your-api-key-id-here'
 PRIVATE_KEY_PATH = 'path/to/your/kalshi-key.key'
-BASE_URL = 'https://demo-api.kalshi.co/trade-api/v2'  # or 'https://api.elections.kalshi.com/trade-api/v2' for production
+BASE_URL = 'https://external-api.demo.kalshi.co/trade-api/v2'  # or 'https://external-api.kalshi.com/trade-api/v2' for production
 
 def load_private_key(key_path):
     with open(key_path, "rb") as f:

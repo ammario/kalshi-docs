@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_websockets
-lastmod: 2026-04-26T15:27:38.166Z
+lastmod: 2026-05-05T21:10:39.099Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,14 +24,16 @@ Kalshi's WebSocket API provides real-time updates for:
 Connect to the WebSocket endpoint at:
 
 ```
-wss://api.elections.kalshi.com/trade-api/ws/v2
+wss://external-api-ws.kalshi.com/trade-api/ws/v2
 ```
 
 For the demo environment, use:
 
 ```
-wss://demo-api.kalshi.co/trade-api/ws/v2
+wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2
 ```
+
+The existing shared WebSocket hosts, `wss://api.elections.kalshi.com/trade-api/ws/v2` for production and `wss://demo-api.kalshi.co/trade-api/ws/v2` for demo, remain supported. For the full endpoint list, see [API Environments and Endpoints](/getting_started/api_environments).
 
 ## Authentication
 
@@ -86,7 +88,7 @@ import websockets
 import asyncio
 
 # WebSocket URL
-ws_url = "wss://demo-api.kalshi.co/trade-api/ws/v2"  # Demo environment
+ws_url = "wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2"  # Demo environment
 
 # Generate authentication headers (see API Keys documentation)
 auth_headers = {
@@ -326,7 +328,7 @@ from cryptography.hazmat.primitives.asymmetric import padding
 KEY_ID = "your_api_key_id"
 PRIVATE_KEY_PATH = "path/to/private_key.pem"
 MARKET_TICKER = "KXHARRIS24-LSV"  # Replace with any open market
-WS_URL = "wss://demo-api.kalshi.co/trade-api/ws/v2"
+WS_URL = "wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2"
 
 def sign_pss_text(private_key, text: str) -> str:
     """Sign message using RSA-PSS"""

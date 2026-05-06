@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/CommunicationsApi
-lastmod: 2026-03-02T23:31:39.689Z
+lastmod: 2026-05-05T21:10:40.145Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-03-02T23:31:39.689Z
 
 > TypeScript SDK methods for Communications operations
 
-All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
+All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https://external-api.kalshi.com/trade-api/v2)*
 
 | Method                                          | HTTP request                                      | Description           |
 | ----------------------------------------------- | ------------------------------------------------- | --------------------- |
@@ -307,17 +307,18 @@ Endpoint for getting quotes
 
 ### Parameters
 
-| Name                      | Type          | Description                                                                                                                                  | Notes                            |
-| ------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| **cursor**                | \[**string**] | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
-| **eventTicker**           | \[**string**] | Event ticker to filter by. Only a single event ticker is supported.                                                                          | (optional) defaults to undefined |
-| **marketTicker**          | \[**string**] | Filter by market ticker                                                                                                                      | (optional) defaults to undefined |
-| **limit**                 | \[**number**] | Parameter to specify the number of results per page. Defaults to 500.                                                                        | (optional) defaults to 500       |
-| **status**                | \[**string**] | Filter quotes by status                                                                                                                      | (optional) defaults to undefined |
-| **quoteCreatorUserId**    | \[**string**] | Filter quotes by quote creator user ID                                                                                                       | (optional) defaults to undefined |
-| **rfqCreatorUserId**      | \[**string**] | Filter quotes by RFQ creator user ID                                                                                                         | (optional) defaults to undefined |
-| **rfqCreatorSubtraderId** | \[**string**] | Filter quotes by RFQ creator subtrader ID (FCM members only)                                                                                 | (optional) defaults to undefined |
-| **rfqId**                 | \[**string**] | Filter quotes by RFQ ID                                                                                                                      | (optional) defaults to undefined |
+| Name                      | Type           | Description                                                                                                                                  | Notes                            |
+| ------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| **cursor**                | \[**string**]  | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
+| **eventTicker**           | \[**string**]  | Event ticker to filter by. Only a single event ticker is supported.                                                                          | (optional) defaults to undefined |
+| **marketTicker**          | \[**string**]  | Filter by market ticker                                                                                                                      | (optional) defaults to undefined |
+| **limit**                 | \[**number**]  | Parameter to specify the number of results per page. Defaults to 500.                                                                        | (optional) defaults to 500       |
+| **status**                | \[**string**]  | Filter quotes by status                                                                                                                      | (optional) defaults to undefined |
+| **quoteCreatorUserId**    | \[**string**]  | Filter quotes by quote creator user ID                                                                                                       | (optional) defaults to undefined |
+| **userFilter**            | **UserFilter** |                                                                                                                                              | (optional) defaults to undefined |
+| **rfqCreatorUserId**      | \[**string**]  | Filter quotes by RFQ creator user ID                                                                                                         | (optional) defaults to undefined |
+| **rfqCreatorSubtraderId** | \[**string**]  | Filter quotes by RFQ creator subtrader ID (FCM members only)                                                                                 | (optional) defaults to undefined |
+| **rfqId**                 | \[**string**]  | Filter quotes by RFQ ID                                                                                                                      | (optional) defaults to undefined |
 
 ### Return type
 
@@ -382,15 +383,16 @@ Endpoint for getting RFQs
 
 ### Parameters
 
-| Name              | Type          | Description                                                                                                                                  | Notes                            |
-| ----------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| **cursor**        | \[**string**] | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
-| **eventTicker**   | \[**string**] | Event ticker to filter by. Only a single event ticker is supported.                                                                          | (optional) defaults to undefined |
-| **marketTicker**  | \[**string**] | Filter by market ticker                                                                                                                      | (optional) defaults to undefined |
-| **subaccount**    | \[**number**] | Subaccount number (0 for primary, 1-32 for subaccounts). If omitted, defaults to all subaccounts.                                            | (optional) defaults to undefined |
-| **limit**         | \[**number**] | Parameter to specify the number of results per page. Defaults to 100.                                                                        | (optional) defaults to 100       |
-| **status**        | \[**string**] | Filter RFQs by status                                                                                                                        | (optional) defaults to undefined |
-| **creatorUserId** | \[**string**] | Filter RFQs by creator user ID                                                                                                               | (optional) defaults to undefined |
+| Name              | Type           | Description                                                                                                                                  | Notes                            |
+| ----------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| **cursor**        | \[**string**]  | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
+| **eventTicker**   | \[**string**]  | Event ticker to filter by. Only a single event ticker is supported.                                                                          | (optional) defaults to undefined |
+| **marketTicker**  | \[**string**]  | Filter by market ticker                                                                                                                      | (optional) defaults to undefined |
+| **subaccount**    | \[**number**]  | Subaccount number (0 for primary, 1-32 for subaccounts). If omitted, defaults to all subaccounts.                                            | (optional) defaults to undefined |
+| **limit**         | \[**number**]  | Parameter to specify the number of results per page. Defaults to 100.                                                                        | (optional) defaults to 100       |
+| **status**        | \[**string**]  | Filter RFQs by status                                                                                                                        | (optional) defaults to undefined |
+| **creatorUserId** | \[**string**]  | Filter RFQs by creator user ID                                                                                                               | (optional) defaults to undefined |
+| **userFilter**    | **UserFilter** |                                                                                                                                              | (optional) defaults to undefined |
 
 ### Return type
 

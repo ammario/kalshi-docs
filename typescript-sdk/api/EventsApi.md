@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/EventsApi
-lastmod: 2026-04-30T03:43:39.204Z
+lastmod: 2026-05-05T21:10:40.144Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-04-30T03:43:39.204Z
 
 > TypeScript SDK methods for Events operations
 
-All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
+All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https://external-api.kalshi.com/trade-api/v2)*
 
 | Method                                                                        | HTTP request                                                                  | Description                           |
 | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------- |

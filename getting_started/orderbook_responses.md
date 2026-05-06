@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/orderbook_responses
-lastmod: 2026-03-12T17:11:24.230Z
+lastmod: 2026-05-05T21:10:39.100Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -30,7 +30,7 @@ No authentication is required for this endpoint.
 
   # Get orderbook for a specific market
   market_ticker = "KXHIGHNY-24JAN01-T60"
-  url = f"https://api.elections.kalshi.com/trade-api/v2/markets/{market_ticker}/orderbook"
+  url = f"https://external-api.kalshi.com/trade-api/v2/markets/{market_ticker}/orderbook"
 
   response = requests.get(url)
   orderbook_data = response.json()
@@ -39,7 +39,7 @@ No authentication is required for this endpoint.
   ```javascript JavaScript theme={null}
   // Get orderbook for a specific market
   const marketTicker = "KXHIGHNY-24JAN01-T60";
-  const url = `https://api.elections.kalshi.com/trade-api/v2/markets/${marketTicker}/orderbook`;
+  const url = `https://external-api.kalshi.com/trade-api/v2/markets/${marketTicker}/orderbook`;
 
   fetch(url)
     .then(response => response.json())
@@ -47,7 +47,7 @@ No authentication is required for this endpoint.
   ```
 
   ```curl cURL theme={null}
-  curl -X GET "https://api.elections.kalshi.com/trade-api/v2/markets/KXHIGHNY-24JAN01-T60/orderbook"
+  curl -X GET "https://external-api.kalshi.com/trade-api/v2/markets/KXHIGHNY-24JAN01-T60/orderbook"
   ```
 </CodeGroup>
 
@@ -256,5 +256,5 @@ def calculate_depth(orderbook_data, depth_dollars="0.05"):
 ## Next Steps
 
 * Learn about [making authenticated requests](/getting_started/api_keys) to place orders
-* Explore [WebSocket connections](/websockets/orderbook-updates) for real-time orderbook updates
+* Explore [WebSocket connections](/websockets) for real-time orderbook updates
 * Read about [market mechanics](https://kalshi.com/learn) on the Kalshi website

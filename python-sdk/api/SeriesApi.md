@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/SeriesApi
-lastmod: 2026-01-29T00:38:37.236Z
+lastmod: 2026-05-05T21:10:39.238Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-01-29T00:38:37.236Z
 
 > Python SDK methods for Series operations
 
-All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
+All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https://external-api.kalshi.com/trade-api/v2)*
 
 | Method                                               | HTTP request             | Description          |
 | ---------------------------------------------------- | ------------------------ | -------------------- |
@@ -33,10 +33,10 @@ from kalshi_python.models.get_series_response import GetSeriesResponse
 from kalshi_python.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# Defining the host is optional and defaults to https://external-api.kalshi.com/trade-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = kalshi_python.Configuration(
-    host = "https://api.elections.kalshi.com/trade-api/v2"
+    host = "https://external-api.kalshi.com/trade-api/v2"
 )
 
 # Read private key from file
@@ -97,10 +97,10 @@ from kalshi_python.models.get_series_by_ticker_response import GetSeriesByTicker
 from kalshi_python.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# Defining the host is optional and defaults to https://external-api.kalshi.com/trade-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = kalshi_python.Configuration(
-    host = "https://api.elections.kalshi.com/trade-api/v2"
+    host = "https://external-api.kalshi.com/trade-api/v2"
 )
 
 # Read private key from file

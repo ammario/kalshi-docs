@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/sdks/python/quickstart
-lastmod: 2026-01-29T00:38:37.719Z
+lastmod: 2026-05-05T21:10:40.100Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -33,7 +33,7 @@ from kalshi_python_sync import Configuration, KalshiClient
 
 # Configure the client
 config = Configuration(
-    host="https://api.elections.kalshi.com/trade-api/v2"
+    host="https://external-api.kalshi.com/trade-api/v2"
 )
 
 # For authenticated requests

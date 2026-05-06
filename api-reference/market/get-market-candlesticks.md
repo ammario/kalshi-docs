@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market-candlesticks
-lastmod: 2026-05-02T13:41:01.149Z
+lastmod: 2026-05-05T23:51:38.490Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,7 +9,7 @@ lastmod: 2026-05-02T13:41:01.149Z
 # Get Market Candlesticks
 
 > Time period length of each candlestick in minutes. Valid values: 1 (1 minute), 60 (1 hour), 1440 (1 day).
-Candlesticks for markets that settled before the historical cutoff are only available via `GET /historical/markets/{ticker}/candlesticks`. See [Historical Data](https://kalshi.com/docs/getting_started/historical_data) for details.
+Candlesticks for markets that settled before the historical cutoff are only available via `GET /historical/markets/{ticker}/candlesticks`. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
 
 
 
@@ -25,8 +25,14 @@ info:
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
 servers:
+  - url: https://external-api.kalshi.com/trade-api/v2
+    description: Production Trade API server
   - url: https://api.elections.kalshi.com/trade-api/v2
-    description: Production server
+    description: Production shared API server, also supported
+  - url: https://external-api.demo.kalshi.co/trade-api/v2
+    description: Demo Trade API server
+  - url: https://demo-api.kalshi.co/trade-api/v2
+    description: Demo shared API server, also supported
 security: []
 tags:
   - name: api-keys
@@ -72,7 +78,7 @@ paths:
         Candlesticks for markets that settled before the historical cutoff are
         only available via `GET /historical/markets/{ticker}/candlesticks`. See
         [Historical
-        Data](https://kalshi.com/docs/getting_started/historical_data) for
+        Data](https://docs.kalshi.com/getting_started/historical_data) for
         details.
       operationId: GetMarketCandlesticks
       parameters:

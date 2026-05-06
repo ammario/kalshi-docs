@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/multivariate-lookups-deprecated
-lastmod: 2026-05-04T20:00:35.473Z
+lastmod: 2026-05-06T00:22:37.073Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -46,7 +46,7 @@ description: >
 servers:
   - id: production
     protocol: wss
-    host: api.elections.kalshi.com
+    host: external-api-ws.kalshi.com
     bindings: []
     variables: []
 address: multivariate

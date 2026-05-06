@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/pagination
-lastmod: 2026-01-29T00:38:37.114Z
+lastmod: 2026-05-05T21:10:39.084Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -39,7 +39,7 @@ To paginate through results:
       """Fetch all markets for a series, handling pagination"""
       all_markets = []
       cursor = None
-      base_url = "https://api.elections.kalshi.com/trade-api/v2/markets"
+      base_url = "https://external-api.kalshi.com/trade-api/v2/markets"
 
       while True:
           # Build URL with cursor if we have one
@@ -71,7 +71,7 @@ To paginate through results:
   async function getAllMarkets(seriesTicker) {
     const allMarkets = [];
     let cursor = null;
-    const baseUrl = 'https://api.elections.kalshi.com/trade-api/v2/markets';
+    const baseUrl = 'https://external-api.kalshi.com/trade-api/v2/markets';
 
     while (true) {
       // Build URL with cursor if we have one
@@ -139,7 +139,7 @@ If you only need recent items, you can limit results without pagination:
 
 ```python theme={null}
 # Get just the 10 most recent markets
-url = "https://api.elections.kalshi.com/trade-api/v2/markets?limit=10&status=open"
+url = "https://external-api.kalshi.com/trade-api/v2/markets?limit=10&status=open"
 ```
 
 ### Filtering While Paginating

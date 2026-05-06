@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/MarketsApi
-lastmod: 2026-01-29T00:38:37.199Z
+lastmod: 2026-05-05T21:10:39.191Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-01-29T00:38:37.199Z
 
 > Python SDK methods for Markets operations
 
-All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
+All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https://external-api.kalshi.com/trade-api/v2)*
 
 | Method                                                    | HTTP request                                                  | Description             |
 | --------------------------------------------------------- | ------------------------------------------------------------- | ----------------------- |
@@ -38,10 +38,10 @@ from kalshi_python.models.get_market_response import GetMarketResponse
 from kalshi_python.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# Defining the host is optional and defaults to https://external-api.kalshi.com/trade-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = kalshi_python.Configuration(
-    host = "https://api.elections.kalshi.com/trade-api/v2"
+    host = "https://external-api.kalshi.com/trade-api/v2"
 )
 
 # Read private key from file
@@ -103,10 +103,10 @@ from kalshi_python.models.get_market_candlesticks_response import GetMarketCandl
 from kalshi_python.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# Defining the host is optional and defaults to https://external-api.kalshi.com/trade-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = kalshi_python.Configuration(
-    host = "https://api.elections.kalshi.com/trade-api/v2"
+    host = "https://external-api.kalshi.com/trade-api/v2"
 )
 
 # Read private key from file
@@ -181,10 +181,10 @@ from kalshi_python.models.get_market_orderbook_response import GetMarketOrderboo
 from kalshi_python.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# Defining the host is optional and defaults to https://external-api.kalshi.com/trade-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = kalshi_python.Configuration(
-    host = "https://api.elections.kalshi.com/trade-api/v2"
+    host = "https://external-api.kalshi.com/trade-api/v2"
 )
 
 # Read private key from file
@@ -253,10 +253,10 @@ from kalshi_python.models.get_markets_response import GetMarketsResponse
 from kalshi_python.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# Defining the host is optional and defaults to https://external-api.kalshi.com/trade-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = kalshi_python.Configuration(
-    host = "https://api.elections.kalshi.com/trade-api/v2"
+    host = "https://external-api.kalshi.com/trade-api/v2"
 )
 
 # Read private key from file
@@ -343,10 +343,10 @@ from kalshi_python.models.get_trades_response import GetTradesResponse
 from kalshi_python.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# Defining the host is optional and defaults to https://external-api.kalshi.com/trade-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = kalshi_python.Configuration(
-    host = "https://api.elections.kalshi.com/trade-api/v2"
+    host = "https://external-api.kalshi.com/trade-api/v2"
 )
 
 

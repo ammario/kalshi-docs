@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-05-02T13:41:18.791Z
+lastmod: 2026-05-05T23:51:56.716Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,80 @@ You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="May 7, 2026"
+  tags={["Documentation", "Upcoming"]}
+  rss={{
+title: "Dedicated external Trade API endpoints documented",
+description: "Added dedicated external REST and WebSocket hosts for production and demo. Existing shared hosts remain supported."
+}}
+>
+  Added the dedicated external Trade API hosts to the docs and examples:
+
+  * Production REST: `https://external-api.kalshi.com/trade-api/v2`
+  * Production WebSocket: `wss://external-api-ws.kalshi.com/trade-api/ws/v2`
+  * Demo REST: `https://external-api.demo.kalshi.co/trade-api/v2`
+  * Demo WebSocket: `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2`
+
+  Existing shared hosts remain supported for compatibility. Request signing is unchanged: sign the full request path from the API root, without the hostname or query string.
+</Update>
+
+<Update
+  label="May 5, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Post-only option for quotes",
+description: "POST /communications/quotes now accepts post_only."
+}}
+>
+  Added `post_only` as an option when creating a quote.
+  If the quote is marked post-only, it will never take resting orders on the book or be subject to a taker fee: it will be automatically cancelled at the normal execution if it were to match with a resting order.
+</Update>
+
+<Update
+  label="May 5, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "New endpoints: GET /portfolio/deposits and GET /portfolio/withdrawals",
+description: "Query deposit and withdrawal history with cursor-based pagination."
+}}
+>
+  Added `GET /trade-api/v2/portfolio/deposits` and `GET /trade-api/v2/portfolio/withdrawals` endpoints.
+
+  * Query deposit/withdrawal history for the authenticated user
+  * Cursor-based pagination via `limit` and `cursor` parameters
+
+  **New endpoints:**
+
+  * `GET /trade-api/v2/portfolio/deposits`
+  * `GET /trade-api/v2/portfolio/withdrawals`
+</Update>
+
+<Update
+  label="May 5, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Matching-engine timestamps on V2 order responses and order group WS updates",
+description: "V2 order mutating endpoints now return a `ts_ms` field, and the order_group_updates WebSocket channel now includes `ts_ms`, both carrying the matching engine's event timestamp as Unix epoch milliseconds."
+}}
+>
+  V2 order mutating endpoints now include a `ts_ms` field carrying the
+  matching engine's wall-clock timestamp at which the request was
+  processed, as Unix epoch milliseconds:
+
+  * `POST /trade-api/v2/portfolio/events/orders`
+  * `DELETE /trade-api/v2/portfolio/events/orders/{order_id}`
+  * `POST /trade-api/v2/portfolio/events/orders/{order_id}/decrease`
+  * `POST /trade-api/v2/portfolio/events/orders/{order_id}/amend`
+  * `POST /trade-api/v2/portfolio/events/orders/batched`
+  * `DELETE /trade-api/v2/portfolio/events/orders/batched`
+
+  The `order_group_updates` WebSocket channel payload now includes a
+  `ts_ms` field with the same matching-engine timestamp, matching the
+  pattern already used by `trades`, `fill`, `user_orders`, and
+  `orderbook_delta`.
+</Update>
 
 <Update
   label="May 1, 2026"

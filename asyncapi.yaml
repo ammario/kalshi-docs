@@ -94,10 +94,10 @@ info:
       description: Private/authenticated data channels
 servers:
   production:
-    host: api.elections.kalshi.com
+    host: external-api-ws.kalshi.com
     pathname: /trade-api/ws/v2
     protocol: wss
-    description: Production WebSocket server (encrypted connection only)
+    description: Production Trade API WebSocket server (encrypted connection only)
     security:
       - $ref: '#/components/securitySchemes/apiKey'
 defaultContentType: application/json
@@ -2734,6 +2734,7 @@ components:
           required:
             - event_type
             - order_group_id
+            - ts_ms
           properties:
             event_type:
               type: string
@@ -2752,6 +2753,12 @@ components:
               description: >-
                 Updated contracts limit in fixed-point (2 decimals). Present for
                 "created" and "limit_updated" events only.
+            ts_ms:
+              type: integer
+              format: int64
+              description: >-
+                Matching engine timestamp at which the event was processed, as
+                Unix epoch milliseconds.
     userOrderPayload:
       type: object
       required:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/SeriesApi
-lastmod: 2026-01-29T00:38:37.820Z
+lastmod: 2026-05-05T21:10:40.236Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-01-29T00:38:37.820Z
 
 > TypeScript SDK methods for Series operations
 
-All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
+All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https://external-api.kalshi.com/trade-api/v2)*
 
 | Method                                      | HTTP request             | Description          |
 | ------------------------------------------- | ------------------------ | -------------------- |

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/MultivariateCollectionsApi
-lastmod: 2026-01-29T00:38:37.192Z
+lastmod: 2026-05-05T21:10:39.187Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-01-29T00:38:37.192Z
 
 > Python SDK methods for MultivariateCollections operations
 
-All URIs are relative to *[https://api.elections.kalshi.com/trade-api/v2](https://api.elections.kalshi.com/trade-api/v2)*
+All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https://external-api.kalshi.com/trade-api/v2)*
 
 | Method                                                                                              | HTTP request                                                          | Description                                 |
 | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------- |
@@ -34,10 +34,10 @@ from kalshi_python.models.get_multivariate_event_collection_response import GetM
 from kalshi_python.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# Defining the host is optional and defaults to https://external-api.kalshi.com/trade-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = kalshi_python.Configuration(
-    host = "https://api.elections.kalshi.com/trade-api/v2"
+    host = "https://external-api.kalshi.com/trade-api/v2"
 )
 
 # Read private key from file
@@ -99,10 +99,10 @@ from kalshi_python.models.get_multivariate_event_collections_response import Get
 from kalshi_python.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# Defining the host is optional and defaults to https://external-api.kalshi.com/trade-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = kalshi_python.Configuration(
-    host = "https://api.elections.kalshi.com/trade-api/v2"
+    host = "https://external-api.kalshi.com/trade-api/v2"
 )
 
 # Read private key from file
@@ -164,10 +164,10 @@ from kalshi_python.models.lookup_bundle_response import LookupBundleResponse
 from kalshi_python.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.elections.kalshi.com/trade-api/v2
+# Defining the host is optional and defaults to https://external-api.kalshi.com/trade-api/v2
 # See configuration.py for a list of all supported configuration parameters.
 configuration = kalshi_python.Configuration(
-    host = "https://api.elections.kalshi.com/trade-api/v2"
+    host = "https://external-api.kalshi.com/trade-api/v2"
 )
 
 # Read private key from file
