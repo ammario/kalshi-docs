@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-05-05T23:51:39.046Z
+lastmod: 2026-05-07T01:24:56.489Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,7 @@ Fills that occurred before the historical cutoff are only available via `GET /hi
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.15.0
+  version: 3.16.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

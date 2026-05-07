@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order
-lastmod: 2026-05-05T23:51:38.663Z
+lastmod: 2026-05-07T01:24:56.134Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-05-05T23:51:38.663Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.15.0
+  version: 3.16.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -208,6 +208,11 @@ components:
             The subaccount number to use for this order. 0 is the primary
             subaccount.
           x-go-type-skip-optional-pointer: true
+        exchange_index:
+          allOf:
+            - $ref: '#/components/schemas/ExchangeIndex'
+          default: 0
+          x-go-type-skip-optional-pointer: true
     CreateOrderResponse:
       type: object
       required:
@@ -244,8 +249,11 @@ components:
         taker order when it would trade against another order from the same
         user; execution stops and any partial fills already matched are
         executed. `maker` cancels the resting maker order and continues
-        matching; after execution, any remaining taker quantity is canceled and
-        any fills are executed.
+        matching.
+    ExchangeIndex:
+      type: integer
+      description: 'Defaults to 0. Note: currently only 0 supported.'
+      example: 0
     Order:
       type: object
       required:

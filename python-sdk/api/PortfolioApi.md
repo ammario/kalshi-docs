@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/python-sdk/api/PortfolioApi
-lastmod: 2026-05-05T21:10:39.195Z
+lastmod: 2026-05-07T01:25:13.393Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,7 @@ All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https:/
 | [**apply\_subaccount\_transfer**](#apply-subaccount-transfer)                                | **POST** /portfolio/subaccounts/transfer                | Transfer Between Subaccounts  |
 | [**create\_subaccount**](#create-subaccount)                                                 | **POST** /portfolio/subaccounts                         | Create Subaccount             |
 | [**get\_balance**](#get-balance)                                                             | **GET** /portfolio/balance                              | Get Balance                   |
+| [**get\_deposits**](#get-deposits)                                                           | **GET** /portfolio/deposits                             | Get Deposits                  |
 | [**get\_fills**](#get-fills)                                                                 | **GET** /portfolio/fills                                | Get Fills                     |
 | [**get\_portfolio\_resting\_order\_total\_value**](#get-portfolio-resting-order-total-value) | **GET** /portfolio/summary/total\_resting\_order\_value | Get Total Resting Order Value |
 | [**get\_positions**](#get-positions)                                                         | **GET** /portfolio/positions                            | Get Positions                 |
@@ -24,6 +25,7 @@ All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https:/
 | [**get\_subaccount\_balances**](#get-subaccount-balances)                                    | **GET** /portfolio/subaccounts/balances                 | Get All Subaccount Balances   |
 | [**get\_subaccount\_netting**](#get-subaccount-netting)                                      | **GET** /portfolio/subaccounts/netting                  | Get Subaccount Netting        |
 | [**get\_subaccount\_transfers**](#get-subaccount-transfers)                                  | **GET** /portfolio/subaccounts/transfers                | Get Subaccount Transfers      |
+| [**get\_withdrawals**](#get-withdrawals)                                                     | **GET** /portfolio/withdrawals                          | Get Withdrawals               |
 | [**update\_subaccount\_netting**](#update-subaccount-netting)                                | **PUT** /portfolio/subaccounts/netting                  | Update Subaccount Netting     |
 
 # **apply\_subaccount\_transfer**
@@ -101,6 +103,34 @@ Endpoint for getting the balance and portfolio value of a member. Both values ar
 | Status code | Description                            |
 | ----------- | -------------------------------------- |
 | **200**     | Balance retrieved successfully         |
+| **401**     | Unauthorized - authentication required |
+| **500**     | Internal server error                  |
+
+# **get\_deposits**
+
+> GetDepositsResponse get\_deposits(limit=limit, cursor=cursor)
+
+Get Deposits
+
+Endpoint for getting the member's deposit history.
+
+### Parameters
+
+| Name       | Type    | Description                                                                                                                                  | Notes                         |
+| ---------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| **limit**  | **int** | Number of results per page. Defaults to 100. Maximum value is 500.                                                                           | \[optional] \[default to 100] |
+| **cursor** | **str** | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | \[optional]                   |
+
+### Return type
+
+[**GetDepositsResponse**](https://docs.kalshi.com/python-sdk/models/GetDepositsResponse)
+
+### HTTP response details
+
+| Status code | Description                            |
+| ----------- | -------------------------------------- |
+| **200**     | Deposits retrieved successfully        |
+| **400**     | Bad request - invalid input            |
 | **401**     | Unauthorized - authentication required |
 | **500**     | Internal server error                  |
 
@@ -299,6 +329,34 @@ Gets a paginated list of all transfers between subaccounts for the authenticated
 | Status code | Description                            |
 | ----------- | -------------------------------------- |
 | **200**     | Transfers retrieved successfully       |
+| **401**     | Unauthorized - authentication required |
+| **500**     | Internal server error                  |
+
+# **get\_withdrawals**
+
+> GetWithdrawalsResponse get\_withdrawals(limit=limit, cursor=cursor)
+
+Get Withdrawals
+
+Endpoint for getting the member's withdrawal history.
+
+### Parameters
+
+| Name       | Type    | Description                                                                                                                                  | Notes                         |
+| ---------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| **limit**  | **int** | Number of results per page. Defaults to 100. Maximum value is 500.                                                                           | \[optional] \[default to 100] |
+| **cursor** | **str** | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | \[optional]                   |
+
+### Return type
+
+[**GetWithdrawalsResponse**](https://docs.kalshi.com/python-sdk/models/GetWithdrawalsResponse)
+
+### HTTP response details
+
+| Status code | Description                            |
+| ----------- | -------------------------------------- |
+| **200**     | Withdrawals retrieved successfully     |
+| **400**     | Bad request - invalid input            |
 | **401**     | Unauthorized - authentication required |
 | **500**     | Internal server error                  |
 

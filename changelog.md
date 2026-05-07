@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-05-05T23:51:56.716Z
+lastmod: 2026-05-07T02:08:16.010Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -32,6 +32,24 @@ description: "Added dedicated external REST and WebSocket hosts for production a
   * Demo WebSocket: `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2`
 
   Existing shared hosts remain supported for compatibility. Request signing is unchanged: sign the full request path from the API root, without the hostname or query string.
+</Update>
+
+<Update
+  label="May 5, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "market_lifecycle_v2 WS channel emits metadata_updated events",
+description: "The market_lifecycle_v2 websocket channel now emits metadata_updated events."
+}}
+>
+  The `market_lifecycle_v2` websocket channel now supports a new event type
+  `metadata_updated`. Initially this will only be triggered by a floor strike
+  update, but may expand to more fields in the future. The message contains the
+  updated `floor_strike` as a top-level field.
+
+  **Affected channels:**
+
+  * `market_lifecycle_v2`
 </Update>
 
 <Update

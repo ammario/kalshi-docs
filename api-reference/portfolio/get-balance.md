@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2026-05-05T23:51:38.903Z
+lastmod: 2026-05-07T01:24:56.362Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-05-05T23:51:38.903Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.15.0
+  version: 3.16.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -120,6 +120,21 @@ components:
           type: integer
           format: int64
           description: Unix timestamp of the last update to the balance.
+        balance_breakdown:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndexedBalance'
+          description: Balance broken down per exchange index.
+    IndexedBalance:
+      type: object
+      required:
+        - exchange_index
+        - balance
+      properties:
+        exchange_index:
+          $ref: '#/components/schemas/ExchangeIndex'
+        balance:
+          $ref: '#/components/schemas/FixedPointDollars'
     ErrorResponse:
       type: object
       properties:
@@ -135,6 +150,18 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    ExchangeIndex:
+      type: integer
+      description: 'Defaults to 0. Note: currently only 0 supported.'
+      example: 0
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with up to 6 decimal
+        places of precision. This is the maximum supported precision; valid
+        quote intervals for a given market are constrained by that market's
+        price level structure.
+      example: '0.5600'
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required

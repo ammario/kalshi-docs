@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order
-lastmod: 2026-05-05T23:51:38.684Z
+lastmod: 2026-05-07T01:24:56.154Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,7 +21,7 @@ lastmod: 2026-05-05T23:51:38.684Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.15.0
+  version: 3.16.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -285,8 +285,7 @@ components:
         taker order when it would trade against another order from the same
         user; execution stops and any partial fills already matched are
         executed. `maker` cancels the resting maker order and continues
-        matching; after execution, any remaining taker quantity is canceled and
-        any fills are executed.
+        matching.
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required
