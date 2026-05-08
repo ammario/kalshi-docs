@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-trades
-lastmod: 2026-05-07T01:24:55.976Z
+lastmod: 2026-05-07T16:48:43.199Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -164,6 +164,8 @@ components:
         - yes_price_dollars
         - no_price_dollars
         - taker_side
+        - taker_outcome_side
+        - taker_book_side
         - created_time
       properties:
         trade_id:
@@ -191,7 +193,47 @@ components:
           x-enum-varnames:
             - TradeTakerSideYes
             - TradeTakerSideNo
-          description: Side for the taker of this trade
+          deprecated: true
+          description: >
+            Deprecated. Use `taker_outcome_side` (or `taker_book_side`) instead.
+            See [Order direction](/getting_started/order_direction). This field
+            will not be removed before May 14, 2026.
+        taker_outcome_side:
+          type: string
+          enum:
+            - 'yes'
+            - 'no'
+          x-enum-varnames:
+            - TradeTakerOutcomeSideYes
+            - TradeTakerOutcomeSideNo
+          description: >
+            The outcome side the taker is positioned for. buy-yes and sell-no
+            produce 'yes'; buy-no and sell-yes produce 'no'.
+
+
+            `taker_outcome_side` describes directional exposure only; it does
+            not change the trade's price. A trade at price `p` with
+            `taker_outcome_side=no` is matched against the maker at the same
+            price `p` with the opposite direction — both parties trade at the
+            same price.
+
+
+            `taker_outcome_side` and `taker_book_side` will become the canonical
+            way to determine trade direction. The legacy `taker_side` field will
+            be deprecated in a future release — please migrate to these new
+            fields.
+        taker_book_side:
+          $ref: '#/components/schemas/BookSide'
+          description: >
+            Same directional bit as taker_outcome_side in book vocabulary. 'bid'
+            is equivalent to taker_outcome_side 'yes'; 'ask' is equivalent to
+            taker_outcome_side 'no'.
+
+
+            `taker_outcome_side` and `taker_book_side` will become the canonical
+            way to determine trade direction. The legacy `taker_side` field will
+            be deprecated in a future release — please migrate to these new
+            fields.
         created_time:
           type: string
           format: date-time
@@ -215,5 +257,15 @@ components:
         quote intervals for a given market are constrained by that market's
         price level structure.
       example: '0.5600'
+    BookSide:
+      type: string
+      enum:
+        - bid
+        - ask
+      description: >-
+        Side of the book for an order or trade. For event markets, this refers
+        to the YES leg only: `bid` means buy YES, `ask` means sell YES. (Selling
+        YES is economically equivalent to buying NO at `1 - price`, but this
+        endpoint quotes everything from the YES side.)
 
 ````

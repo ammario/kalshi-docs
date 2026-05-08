@@ -55,13 +55,13 @@ address: user_orders
 parameters: []
 bindings: []
 operations:
-  - &ref_0
+  - &ref_1
     id: receiveUserOrder
     title: User Order Update
     description: Receive notifications for your order creates and updates
     type: send
     messages:
-      - &ref_1
+      - &ref_2
         id: userOrder
         contentType: application/json
         payload:
@@ -112,9 +112,28 @@ operations:
                     required: false
                   - name: is_yes
                     type: boolean
+                    description: >
+                      Deprecated. Use `outcome_side` (or `book_side`) instead.
+                      See [Order direction](/getting_started/order_direction).
+                      This field will not be removed before May 14, 2026.
+                    deprecated: true
+                    required: false
+                  - name: outcome_side
+                    type: string
+                    description: Market side
+                    enumValues:
+                      - 'yes'
+                      - 'no'
+                    required: false
+                  - name: book_side
+                    type: string
                     description: >-
-                      Whether the order is on the yes side. Equivalent to side
-                      == "yes"
+                      Side of the book for an order or trade. 'bid' is
+                      equivalent to outcome_side 'yes'; 'ask' is equivalent to
+                      outcome_side 'no'.
+                    enumValues:
+                      - bid
+                      - ask
                     required: false
                   - name: yes_price_dollars
                     type: string
@@ -211,7 +230,7 @@ operations:
             type:
               type: string
               const: user_order
-              x-parser-schema-id: <anonymous-schema-224>
+              x-parser-schema-id: <anonymous-schema-225>
             sid:
               type: integer
               description: >-
@@ -228,6 +247,8 @@ operations:
                 - status
                 - side
                 - is_yes
+                - outcome_side
+                - book_side
                 - yes_price_dollars
                 - fill_count_fp
                 - remaining_count_fp
@@ -244,12 +265,12 @@ operations:
                   type: string
                   description: Unique order identifier
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-226>
+                  x-parser-schema-id: <anonymous-schema-227>
                 user_id:
                   type: string
                   description: User identifier
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-227>
+                  x-parser-schema-id: <anonymous-schema-228>
                 ticker:
                   type: string
                   description: Unique market identifier
@@ -265,8 +286,8 @@ operations:
                     - resting
                     - canceled
                     - executed
-                  x-parser-schema-id: <anonymous-schema-228>
-                side:
+                  x-parser-schema-id: <anonymous-schema-229>
+                side: &ref_0
                   type: string
                   description: Market side
                   enum:
@@ -275,57 +296,70 @@ operations:
                   x-parser-schema-id: marketSide
                 is_yes:
                   type: boolean
+                  deprecated: true
+                  description: >
+                    Deprecated. Use `outcome_side` (or `book_side`) instead. See
+                    [Order direction](/getting_started/order_direction). This
+                    field will not be removed before May 14, 2026.
+                  x-parser-schema-id: <anonymous-schema-230>
+                outcome_side: *ref_0
+                book_side:
+                  type: string
                   description: >-
-                    Whether the order is on the yes side. Equivalent to side ==
-                    "yes"
-                  x-parser-schema-id: <anonymous-schema-229>
+                    Side of the book for an order or trade. 'bid' is equivalent
+                    to outcome_side 'yes'; 'ask' is equivalent to outcome_side
+                    'no'.
+                  enum:
+                    - bid
+                    - ask
+                  x-parser-schema-id: bookSide
                 yes_price_dollars:
                   type: string
                   description: Yes price in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-230>
+                  x-parser-schema-id: <anonymous-schema-231>
                 fill_count_fp:
                   type: string
                   description: Number of contracts filled in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-231>
+                  x-parser-schema-id: <anonymous-schema-232>
                 remaining_count_fp:
                   type: string
                   description: Number of contracts remaining in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-232>
+                  x-parser-schema-id: <anonymous-schema-233>
                 initial_count_fp:
                   type: string
                   description: Initial number of contracts in fixed-point (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-233>
+                  x-parser-schema-id: <anonymous-schema-234>
                 taker_fill_cost_dollars:
                   type: string
                   description: Taker fill cost in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-234>
+                  x-parser-schema-id: <anonymous-schema-235>
                 maker_fill_cost_dollars:
                   type: string
                   description: Maker fill cost in fixed-point dollars (4 decimals)
-                  x-parser-schema-id: <anonymous-schema-235>
+                  x-parser-schema-id: <anonymous-schema-236>
                 taker_fees_dollars:
                   type: string
                   description: Taker fees in fixed-point dollars (4 decimals).
-                  x-parser-schema-id: <anonymous-schema-236>
+                  x-parser-schema-id: <anonymous-schema-237>
                 maker_fees_dollars:
                   type: string
                   description: Maker fees in fixed-point dollars (4 decimals).
-                  x-parser-schema-id: <anonymous-schema-237>
+                  x-parser-schema-id: <anonymous-schema-238>
                 client_order_id:
                   type: string
                   description: Client-provided order identifier
-                  x-parser-schema-id: <anonymous-schema-238>
+                  x-parser-schema-id: <anonymous-schema-239>
                 order_group_id:
                   type: string
                   description: Order group identifier, if applicable
-                  x-parser-schema-id: <anonymous-schema-239>
+                  x-parser-schema-id: <anonymous-schema-240>
                 self_trade_prevention_type:
                   type: string
                   description: Self-trade prevention type
                   enum:
                     - taker_at_cross
                     - maker
-                  x-parser-schema-id: <anonymous-schema-240>
+                  x-parser-schema-id: <anonymous-schema-241>
                 created_time:
                   type: string
                   deprecated: true
@@ -333,12 +367,12 @@ operations:
                     Deprecated - Order creation time in RFC3339 format. Use
                     created_ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-241>
+                  x-parser-schema-id: <anonymous-schema-242>
                 created_ts_ms:
                   type: integer
                   description: Order creation time as a Unix timestamp in milliseconds
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-242>
+                  x-parser-schema-id: <anonymous-schema-243>
                 last_update_time:
                   type: string
                   deprecated: true
@@ -346,12 +380,12 @@ operations:
                     Deprecated - Last update time in RFC3339 format. Use
                     last_updated_ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-243>
+                  x-parser-schema-id: <anonymous-schema-244>
                 last_updated_ts_ms:
                   type: integer
                   description: Last update time as a Unix timestamp in milliseconds
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-244>
+                  x-parser-schema-id: <anonymous-schema-245>
                 expiration_time:
                   type: string
                   deprecated: true
@@ -359,17 +393,17 @@ operations:
                     Deprecated - Order expiration time in RFC3339 format. Use
                     expiration_ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-245>
+                  x-parser-schema-id: <anonymous-schema-246>
                 expiration_ts_ms:
                   type: integer
                   description: Order expiration time as a Unix timestamp in milliseconds
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-246>
+                  x-parser-schema-id: <anonymous-schema-247>
                 subaccount_number:
                   type: integer
                   description: Subaccount number (0 for primary, 1-32 for subaccounts)
-                  x-parser-schema-id: <anonymous-schema-247>
-              x-parser-schema-id: <anonymous-schema-225>
+                  x-parser-schema-id: <anonymous-schema-248>
+              x-parser-schema-id: <anonymous-schema-226>
           x-parser-schema-id: userOrderPayload
         title: User Order Update
         description: Real-time order updates for authenticated user
@@ -410,10 +444,10 @@ operations:
         value: user_orders
 sendOperations: []
 receiveOperations:
-  - *ref_0
+  - *ref_1
 sendMessages: []
 receiveMessages:
-  - *ref_1
+  - *ref_2
 extensions:
   - id: x-parser-unique-object-id
     value: user_orders

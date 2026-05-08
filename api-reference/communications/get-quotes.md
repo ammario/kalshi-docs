@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2026-05-07T01:24:56.547Z
+lastmod: 2026-05-07T16:48:43.702Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -102,6 +102,18 @@ paths:
         - name: user_filter
           in: query
           required: false
+          description: Filter for quotes created by the authenticated user.
+          schema:
+            $ref: '#/components/schemas/UserFilter'
+            x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: omitempty,oneof=self
+        - name: rfq_user_filter
+          in: query
+          required: false
+          description: >-
+            Filter for quotes responding to RFQs created by the authenticated
+            user.
           schema:
             $ref: '#/components/schemas/UserFilter'
             x-go-type-skip-optional-pointer: true

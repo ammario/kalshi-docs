@@ -131,6 +131,37 @@ operations:
                       If true, OK responses omit the market_tickers/market_ids
                       lists for this subscription
                     required: false
+                  - name: use_yes_price
+                    type: boolean
+                    description: >
+                      Orderbook channel only. When true, no-side
+                      `orderbook_delta` and `orderbook_snapshot` updates
+
+                      are reported in yes-leg pricing instead of no-leg pricing
+                      — so a single `price_dollars` scale
+
+                      applies to both sides. Default false (no-side reported in
+                      no-leg pricing, the existing
+
+                      long-standing behavior). See [Order
+                      direction](/getting_started/order_direction).
+
+
+                      **Migration plan.** The default will be flipped to `true`
+                      in a future release, and the flag
+
+                      will then be removed entirely in a subsequent release — at
+                      which point unified yes-leg
+
+                      pricing becomes the only supported behavior and
+                      `use_yes_price: false` will no longer toggle
+
+                      the legacy no-leg pricing. Integrations relying on the
+                      legacy behavior should migrate before
+
+                      the default flip; concrete dates will be announced before
+                      each step.
+                    required: false
                   - name: shard_factor
                     type: integer
                     description: >-
@@ -250,20 +281,52 @@ operations:
                     lists for this subscription
                   default: false
                   x-parser-schema-id: <anonymous-schema-10>
+                use_yes_price:
+                  type: boolean
+                  description: >
+                    Orderbook channel only. When true, no-side `orderbook_delta`
+                    and `orderbook_snapshot` updates
+
+                    are reported in yes-leg pricing instead of no-leg pricing —
+                    so a single `price_dollars` scale
+
+                    applies to both sides. Default false (no-side reported in
+                    no-leg pricing, the existing
+
+                    long-standing behavior). See [Order
+                    direction](/getting_started/order_direction).
+
+
+                    **Migration plan.** The default will be flipped to `true` in
+                    a future release, and the flag
+
+                    will then be removed entirely in a subsequent release — at
+                    which point unified yes-leg
+
+                    pricing becomes the only supported behavior and
+                    `use_yes_price: false` will no longer toggle
+
+                    the legacy no-leg pricing. Integrations relying on the
+                    legacy behavior should migrate before
+
+                    the default flip; concrete dates will be announced before
+                    each step.
+                  default: false
+                  x-parser-schema-id: <anonymous-schema-11>
                 shard_factor:
                   type: integer
                   description: >-
                     Number of shards for communications channel fanout
                     (optional)
                   minimum: 1
-                  x-parser-schema-id: <anonymous-schema-11>
+                  x-parser-schema-id: <anonymous-schema-12>
                 shard_key:
                   type: integer
                   description: >-
                     Shard key for communications channel fanout (requires
                     shard_factor)
                   minimum: 0
-                  x-parser-schema-id: <anonymous-schema-12>
+                  x-parser-schema-id: <anonymous-schema-13>
               x-parser-schema-id: <anonymous-schema-2>
           x-parser-schema-id: subscribeCommandPayload
         title: Subscribe Command
@@ -337,7 +400,7 @@ operations:
             cmd:
               type: string
               const: unsubscribe
-              x-parser-schema-id: <anonymous-schema-13>
+              x-parser-schema-id: <anonymous-schema-14>
             params:
               type: object
               required:
@@ -354,8 +417,8 @@ operations:
                     minimum: 1
                     x-parser-schema-id: subscriptionId
                   minItems: 1
-                  x-parser-schema-id: <anonymous-schema-15>
-              x-parser-schema-id: <anonymous-schema-14>
+                  x-parser-schema-id: <anonymous-schema-16>
+              x-parser-schema-id: <anonymous-schema-15>
           x-parser-schema-id: unsubscribeCommandPayload
         title: Unsubscribe Command
         description: Cancel one or more subscriptions
@@ -417,7 +480,7 @@ operations:
             cmd:
               type: string
               const: list_subscriptions
-              x-parser-schema-id: <anonymous-schema-25>
+              x-parser-schema-id: <anonymous-schema-26>
           x-parser-schema-id: listSubscriptionsCommandPayload
         title: List Subscriptions Command
         description: List all active subscriptions
@@ -519,7 +582,7 @@ operations:
             cmd:
               type: string
               const: update_subscription
-              x-parser-schema-id: <anonymous-schema-16>
+              x-parser-schema-id: <anonymous-schema-17>
             params:
               type: object
               required:
@@ -534,41 +597,41 @@ operations:
                   items: *ref_2
                   minItems: 1
                   maxItems: 1
-                  x-parser-schema-id: <anonymous-schema-18>
+                  x-parser-schema-id: <anonymous-schema-19>
                 market_ticker:
                   description: 'Add/remove a single market. Type: string'
                   type: string
-                  x-parser-schema-id: <anonymous-schema-19>
+                  x-parser-schema-id: <anonymous-schema-20>
                 market_tickers:
                   type: array
                   description: 'Add/remove multiple markets. Type: array of strings'
                   items: *ref_3
-                  x-parser-schema-id: <anonymous-schema-20>
+                  x-parser-schema-id: <anonymous-schema-21>
                 market_id:
                   type: string
                   format: uuid
                   description: Add/remove a single market by UUID (ticker only)
-                  x-parser-schema-id: <anonymous-schema-21>
+                  x-parser-schema-id: <anonymous-schema-22>
                 market_ids:
                   type: array
                   description: Add/remove multiple markets by UUID (ticker only)
                   items: *ref_4
-                  x-parser-schema-id: <anonymous-schema-22>
+                  x-parser-schema-id: <anonymous-schema-23>
                 send_initial_snapshot:
                   type: boolean
                   description: >-
                     If true, receive an initial snapshot for newly added market
                     tickers on the ticker channel
                   default: false
-                  x-parser-schema-id: <anonymous-schema-23>
+                  x-parser-schema-id: <anonymous-schema-24>
                 action:
                   type: string
                   enum:
                     - add_markets
                     - delete_markets
                     - get_snapshot
-                  x-parser-schema-id: <anonymous-schema-24>
-              x-parser-schema-id: <anonymous-schema-17>
+                  x-parser-schema-id: <anonymous-schema-25>
+              x-parser-schema-id: <anonymous-schema-18>
           x-parser-schema-id: updateSubscriptionCommandPayload
         title: Update Subscription - Add Markets
         description: Add markets to an existing subscription
@@ -845,7 +908,7 @@ operations:
             type:
               type: string
               const: subscribed
-              x-parser-schema-id: <anonymous-schema-26>
+              x-parser-schema-id: <anonymous-schema-27>
             msg:
               type: object
               required:
@@ -854,9 +917,9 @@ operations:
               properties:
                 channel:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-28>
+                  x-parser-schema-id: <anonymous-schema-29>
                 sid: *ref_2
-              x-parser-schema-id: <anonymous-schema-27>
+              x-parser-schema-id: <anonymous-schema-28>
           x-parser-schema-id: subscribedResponsePayload
         title: Subscribed Response
         description: Confirmation that subscription was successful
@@ -939,7 +1002,7 @@ operations:
             type:
               type: string
               const: unsubscribed
-              x-parser-schema-id: <anonymous-schema-33>
+              x-parser-schema-id: <anonymous-schema-34>
           x-parser-schema-id: unsubscribedResponsePayload
         title: Unsubscribed Response
         description: Confirmation that unsubscription was successful
@@ -1023,7 +1086,7 @@ operations:
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-34>
+              x-parser-schema-id: <anonymous-schema-35>
             msg:
               type: object
               properties:
@@ -1031,13 +1094,13 @@ operations:
                   type: array
                   description: Full list of market tickers after update
                   items: *ref_3
-                  x-parser-schema-id: <anonymous-schema-36>
+                  x-parser-schema-id: <anonymous-schema-37>
                 market_ids:
                   type: array
                   description: Full list of market IDs after update
                   items: *ref_4
-                  x-parser-schema-id: <anonymous-schema-37>
-              x-parser-schema-id: <anonymous-schema-35>
+                  x-parser-schema-id: <anonymous-schema-38>
+              x-parser-schema-id: <anonymous-schema-36>
           x-parser-schema-id: okResponsePayload
         title: OK Response
         description: Successful update operation response
@@ -1107,7 +1170,7 @@ operations:
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-29>
+              x-parser-schema-id: <anonymous-schema-30>
             msg:
               type: array
               description: List of active subscriptions
@@ -1120,10 +1183,10 @@ operations:
                   channel:
                     type: string
                     description: Name of the subscribed channel
-                    x-parser-schema-id: <anonymous-schema-32>
+                    x-parser-schema-id: <anonymous-schema-33>
                   sid: *ref_2
-                x-parser-schema-id: <anonymous-schema-31>
-              x-parser-schema-id: <anonymous-schema-30>
+                x-parser-schema-id: <anonymous-schema-32>
+              x-parser-schema-id: <anonymous-schema-31>
           x-parser-schema-id: listSubscriptionsResponsePayload
         title: List Subscriptions Response
         description: Response containing all active subscriptions
@@ -1269,7 +1332,7 @@ operations:
             type:
               type: string
               const: error
-              x-parser-schema-id: <anonymous-schema-38>
+              x-parser-schema-id: <anonymous-schema-39>
             msg:
               type: object
               required:
@@ -1334,20 +1397,20 @@ operations:
                     - 22: shard_factor must be <= 100 - shard_factor too large
                   minimum: 1
                   maximum: 22
-                  x-parser-schema-id: <anonymous-schema-40>
+                  x-parser-schema-id: <anonymous-schema-41>
                 msg:
                   type: string
                   description: Human-readable error message
-                  x-parser-schema-id: <anonymous-schema-41>
+                  x-parser-schema-id: <anonymous-schema-42>
                 market_id:
                   type: string
                   description: Market UUID if error is market-specific (optional)
-                  x-parser-schema-id: <anonymous-schema-42>
+                  x-parser-schema-id: <anonymous-schema-43>
                 market_ticker:
                   type: string
                   description: Market ticker if error is market-specific (optional)
-                  x-parser-schema-id: <anonymous-schema-43>
-              x-parser-schema-id: <anonymous-schema-39>
+                  x-parser-schema-id: <anonymous-schema-44>
+              x-parser-schema-id: <anonymous-schema-40>
           x-parser-schema-id: errorResponsePayload
         title: Error Response
         description: Error response for failed operations

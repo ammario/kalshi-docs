@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/create-order-group
-lastmod: 2026-05-07T01:24:56.299Z
+lastmod: 2026-05-07T16:48:43.480Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -131,10 +131,18 @@ components:
       type: object
       required:
         - order_group_id
+        - subaccount
       properties:
         order_group_id:
           type: string
           description: The unique identifier for the created order group
+        subaccount:
+          type: integer
+          minimum: 0
+          description: >-
+            Subaccount number that owns the created order group (0 for primary,
+            1-32 for subaccounts).
+          x-go-type-skip-optional-pointer: true
     FixedPointCount:
       type: string
       description: >-

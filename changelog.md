@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-05-07T02:08:16.010Z
+lastmod: 2026-05-07T16:49:02.112Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,77 @@ You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="May 7, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Order group creation response includes subaccount",
+description: "CreateOrderGroup now returns the subaccount that owns the created order group."
+}}
+>
+  `CreateOrderGroup` now returns `subaccount`, the subaccount number that owns the created order group. The value is `0` for the primary account and `1-32` for subaccounts.
+
+  Affected endpoint: `POST /portfolio/order_groups/create`.
+</Update>
+
+<Update
+  label="May 7, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "RFQ User Filter on Get Quotes",
+description: "RFQ User Filter on Get Quotes"
+}}
+>
+  Added `rfq_user_filter` to `GetQuotes` for filtering by quotes in response to RFQs created by the authenticated user.
+
+  Affected endpoint: `GET /communications/quotes`.
+</Update>
+
+<Update
+  label="May 6, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Normalized outcome_side and book_side on Order, Fill, and Trade responses",
+description: "REST and WebSocket Order, Fill, and Trade responses now include outcome_side (yes/no) and book_side (bid/ask), each carrying the full directional bit so the action × side matrix is no longer required to interpret a response."
+}}
+>
+  Order, Fill, and Trade responses now include two new normalized direction
+  fields. Each carries the full directional bit on its own — combining
+  `action` with `side` is no longer required to know what the user is
+  positioned for. The two fields encode the same bit in two vocabularies:
+  `bid` is equivalent to `yes`, `ask` is equivalent to `no`.
+
+  * `outcome_side` (`yes` | `no`) — the outcome the user profits from.
+    Buy-yes and sell-no produce `yes`; buy-no and sell-yes produce `no`.
+  * `book_side` (`bid` | `ask`) — same bit in book vocabulary.
+
+  Affected REST responses (`svc-api2`):
+
+  * `Order` (GetOrders, GetOrder, GetHistoricalOrders, and order-write responses)
+  * `Fill` (GetFills, GetFillsHistorical)
+  * `Trade` (public) — fields are named `taker_outcome_side` and `taker_book_side` to match the existing `taker_side`
+
+  Affected WebSocket channels (`svc-apiexternal-ws`):
+
+  * `user_orders`
+  * `fill`
+  * `trade` — `taker_outcome_side` and `taker_book_side`
+
+  `outcome_side` describes directional exposure only; it does not change
+  the order's price. An order at price `p` with `outcome_side=no` is
+  matched by an order at the same price `p` with `outcome_side=yes` —
+  both parties trade at the same price, just on opposite directions.
+
+  Existing `action`, `side`, `is_yes`, `purchased_side`, and `taker_side`
+  fields are now marked deprecated. `outcome_side` and `book_side` are
+  the canonical way to determine order/trade direction going forward.
+  The legacy fields **will not be removed before May 14, 2026** — please
+  migrate to the new fields when integrating against these endpoints.
+
+  See the [Order direction](/getting_started/order_direction) reference
+  page for the full migration table and equivalence rules.
+</Update>
 
 <Update
   label="May 7, 2026"
