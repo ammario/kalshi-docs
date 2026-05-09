@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-04-30T03:43:38.588Z
+lastmod: 2026-05-08T20:53:29.044Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -102,7 +102,7 @@ Sent by the exchange to reflect order state changes.
 | 54  | Side         | Char         | Y        | `1`=Buy (Yes), `2`=Sell (No)                                                                                        |
 | 55  | Symbol       | String       | Y        | Market ticker.                                                                                                      |
 | 58  | Text         | String       | N        | Human-readable result description. See Text Field Values below.                                                     |
-| 60  | TransactTime | UTCTimestamp | Y        | Timestamp of the triggering event.                                                                                  |
+| 60  | TransactTime | UTCTimestamp | C        | Timestamp of the triggering event.                                                                                  |
 | 103 | OrdRejReason | Integer      | C        | Rejection reason. Present when ExecType=Rejected. See below.                                                        |
 | 126 | ExpireTime   | UTCTimestamp | C        | Expiration timestamp. 11:59pm ET for Day orders.                                                                    |
 | 150 | ExecType     | Char         | Y        | Report reason. See Execution Types below.                                                                           |
