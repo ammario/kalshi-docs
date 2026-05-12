@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-05-07T16:49:02.112Z
+lastmod: 2026-05-12T01:52:54.096Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,57 @@ You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="May 11, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Cancelled quotes are automatically deleted after 14 days",
+description: "Cancelled quotes are now automatically deleted 14 days after cancellation."
+}}
+>
+  Cancelled quotes are now automatically deleted 14 days after cancellation. Previously, only quotes associated with closed RFQs were cleaned up. This applies to all cancelled quotes regardless of their parent RFQ status.
+
+  Affected endpoint: `GET /communications/quotes`.
+</Update>
+
+<Update
+  label="May 11, 2026"
+  tags={["Breaking Change", "Upcoming"]}
+  rss={{
+title: "/margin/fee_tiers response replaced with per-market fee rates",
+description: "GET /trade-api/v2/margin/fee_tiers now returns maker_fee_rates and taker_fee_rates maps (ticker -> rate as a decimal fraction of notional). The maker_fee_tiers and taker_fee_tiers fields have been removed."
+}}
+>
+  `GET /trade-api/v2/margin/fee_tiers` now returns `maker_fee_rates` and
+  `taker_fee_rates`. Each is a map from market ticker to the fee rate as
+  a decimal fraction of notional (e.g. `0.0008` = 0.08% = 8 bps). Compute
+  the expected fee directly as `notional * rate`.
+
+  The previous `maker_fee_tiers` and `taker_fee_tiers` tier-name maps have
+  been removed from the response.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/margin/fee_tiers`
+</Update>
+
+<Update
+  label="May 11, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "metadata_updated WS event now includes yes_sub_title",
+description: "The market_lifecycle_v2 metadata_updated event now emits yes_sub_title when a market's subtitle changes."
+}}
+>
+  The `metadata_updated` event on the `market_lifecycle_v2` websocket channel
+  now includes `yes_sub_title` as a top-level field when a market's yes
+  subtitle changes.
+
+  **Affected channels:**
+
+  * `market_lifecycle_v2`
+</Update>
 
 <Update
   label="May 7, 2026"
@@ -80,7 +131,7 @@ description: "REST and WebSocket Order, Fill, and Trade responses now include ou
   Existing `action`, `side`, `is_yes`, `purchased_side`, and `taker_side`
   fields are now marked deprecated. `outcome_side` and `book_side` are
   the canonical way to determine order/trade direction going forward.
-  The legacy fields **will not be removed before May 14, 2026** — please
+  The legacy fields **will not be removed before May 28, 2026** — please
   migrate to the new fields when integrating against these endpoints.
 
   See the [Order direction](/getting_started/order_direction) reference
@@ -278,7 +329,7 @@ description: "Write endpoints now allow brief bursts above your per-second budge
   tags={["New Feature", "Deprecation", "Upcoming"]}
   rss={{
 title: "V2 event-order endpoints at /portfolio/events/orders",
-description: "New event-order endpoints using a bid/ask single-book shape with fixed-point dollar prices and lightweight responses. The legacy /portfolio/orders endpoints will be deprecated no earlier than May 6, 2026."
+description: "New event-order endpoints using a bid/ask single-book shape with fixed-point dollar prices and lightweight responses. The legacy /portfolio/orders endpoints will be deprecated no earlier than May 21, 2026, and rate-limit costs on the legacy endpoints may increase starting May 14, 2026."
 }}
 >
   **New endpoints:**
@@ -290,7 +341,7 @@ description: "New event-order endpoints using a bid/ask single-book shape with f
   * `POST /trade-api/v2/portfolio/events/orders/batched` — batch create
   * `DELETE /trade-api/v2/portfolio/events/orders/batched` — batch cancel
 
-  **We recommend all clients switch over.** The existing `/portfolio/orders*` endpoints will be marked deprecated no earlier than **May 6, 2026**.
+  **We recommend all clients switch over.** The existing `/portfolio/orders*` endpoints will be marked deprecated no earlier than **May 21, 2026**. Rate-limit costs on the legacy `/portfolio/orders*` endpoints may also increase starting **May 14, 2026** — migrate to the V2 endpoints to avoid disruption.
 </Update>
 
 <Update

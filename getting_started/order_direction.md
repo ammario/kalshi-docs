@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/order_direction
-lastmod: 2026-05-07T16:04:58.214Z
+lastmod: 2026-05-11T17:49:40.181Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -50,7 +50,7 @@ collapse explicit:
 
 `outcome_side` and `book_side` are the canonical way to determine
 direction going forward. The legacy fields below are marked
-deprecated and **will not be removed before May 14, 2026**.
+deprecated and **will not be removed before May 28, 2026**.
 
 | Legacy field     | Surface           | Replacement                              |
 | ---------------- | ----------------- | ---------------------------------------- |

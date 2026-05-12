@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-04-10T19:53:43.797Z
+lastmod: 2026-05-11T23:41:35.413Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -36,7 +36,9 @@ When creating an RFQ, the requester specifies size in exactly one of:
 
 ## Quotes
 
-Each quote has two prices: `yes_bid` (price per YES contract) and `no_bid` (price per NO contract). These are typically different. Either can be `"0"` to decline that side, but not both.
+Each quote has two prices: `yes_bid` (price per YES contract) and `no_bid` (price per NO contract). These are typically different. Either can be `"0"` to decline that side, but not both. If `yes_bid + no_bid > $1` the quote is rejected.
+
+Quoters do not specify a size — each quote is implicitly for the full RFQ amount (`contracts_fp`, or whatever count `target_cost_dollars` resolves to at the quoted prices).
 
 Prices must land on the market's price grid. Check `price_ranges` on `GET /markets/{ticker}` for the valid step size.
 
