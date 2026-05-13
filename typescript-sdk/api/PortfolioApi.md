@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/PortfolioApi
-lastmod: 2026-05-07T01:25:14.145Z
+lastmod: 2026-05-13T00:07:31.123Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -66,7 +66,7 @@ Transfers funds between the authenticated user's subaccounts. Use 0 for the prim
 
 > CreateSubaccountResponse createSubaccount()
 
-Creates a new subaccount for the authenticated user. Subaccounts are numbered sequentially starting from 1. Maximum 32 subaccounts per user.
+Creates a new subaccount for the authenticated user. This endpoint is currently only available to institutions and market makers. Subaccounts are numbered sequentially starting from 1. Maximum 32 subaccounts per user.
 
 ### Parameters
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-settlement
-lastmod: 2026-04-30T03:43:38.581Z
+lastmod: 2026-05-12T23:42:08.191Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-04-30T03:43:38.581Z
 
 > Settlement reports for market outcomes and position resolution
 
-See [Market Settlement](/getting_started/market_settlement) for an overview. Settlement reports are available on **KalshiPT** sessions and **KalshiRT** sessions with `ReceiveSettlementReports=Y` (tag 20127) set during Logon.
+See [Market Settlement](/getting_started/market_settlement) for an overview. Settlement reports are available on **KalshiPT** sessions by default, unless `ReceiveSettlementReports=N` (tag 20127) is set during Logon, and on **KalshiRT** sessions with `ReceiveSettlementReports=Y`.
 
 ## Market Settlement Report (35=UMS)
 
@@ -24,11 +24,13 @@ Provides settlement details for a specific market.
 | 55    | Symbol                        | Market ticker (e.g., NHIGH-23JAN02-66)                               | Yes      |
 | 715   | ClearingBusinessDate          | Date settlement cleared (YYYYMMDD)                                   | Yes      |
 | 20106 | TotNumMarketSettlementReports | Total number of settlement reports in sequence                       | No       |
-| 20107 | MarketResult                  | Result of the market when determined                                 | Yes      |
+| 20107 | MarketResult                  | Result of the market when determined: `yes`, `no`, or `scalar`       | Yes      |
 | 893   | LastFragment                  | Last page indicator (Y/N)                                            | No       |
 | 730   | SettlementPrice               | Settlement price of market in cents (2 decimal places, e.g. `30.60`) | Yes      |
 
 ### Repeating Groups
+
+Collateral changes and fees are nested inside each `NoMarketSettlementPartyIDs` entry.
 
 #### Party Information (NoMarketSettlementPartyIDs)
 
@@ -46,7 +48,7 @@ Provides settlement details for a specific market.
 | ---- | ------------------------- | ----------------------------------------------------------------------- |
 | 1703 | NoCollateralAmountChanges | Number of collateral changes (should be only 1 - payout balance change) |
 | 1704 | CollateralAmountChange    | Delta in dollars                                                        |
-| 1705 | CollateralAmountType      | Balance\<1> or Payout\<2>                                               |
+| 1705 | CollateralAmountType      | `BALANCE` or `PAYOUT`                                                   |
 
 #### Fees (NoMiscFees)
 
@@ -61,30 +63,30 @@ Provides settlement details for a specific market.
 ## Example Settlement Report
 
 ```fix theme={null}
-// Market settled as "Yes", no fees
+// Market settled as "yes", no fees
 8=FIXT.1.1|35=UMS|
 20105=settle-123|55=HIGHNY-23DEC31|715=20231231|
-20107=Yes|
+20107=yes|730=100.00|
 20108=1|
   20109=user-456|20110=24|
   704=100|705=0|
   1703=1|
-    1704=100.00|1705=1|
+    1704=100.00|1705=PAYOUT|
   136=1|
     137=0.00|138=USD|139=4|891=0|
 893=Y|
 ```
 
 ```fix theme={null}
-// Market settled as "Yes", with sub-cent rounding fee
+// Market settled as "yes", with sub-cent rounding fee
 8=FIXT.1.1|35=UMS|
 20105=settle-456|55=HIGHNY-23DEC31|715=20231231|
-20107=Yes|
+20107=yes|730=100.00|
 20108=1|
   20109=user-789|20110=24|
   704=100|705=0|
   1703=1|
-    1704=100.00|1705=1|
+    1704=100.00|1705=PAYOUT|
   136=1|
     137=0.006|138=USD|139=4|891=0|
 893=Y|
@@ -92,7 +94,7 @@ Provides settlement details for a specific market.
 
 The first example shows:
 
-* Market HIGHNY-23DEC31 settled as "Yes"
+* Market HIGHNY-23DEC31 settled as "yes"
 * User held 100 Yes contracts
 * Received \$100.00 payout to balance
 * Zero settlement fees

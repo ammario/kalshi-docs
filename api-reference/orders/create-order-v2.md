@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order-v2
-lastmod: 2026-05-08T15:40:01.795Z
+lastmod: 2026-05-13T00:07:11.943Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-05-08T15:40:01.795Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.16.0
+  version: 3.18.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -137,8 +137,33 @@ components:
         expiration_time:
           type: integer
           format: int64
+          description: >
+            Optional Unix timestamp in seconds for when the order expires. To
+            place
+
+            an expiring order, set `time_in_force` to `good_till_canceled` and
+
+            provide this `expiration_time`. `GTT` is an internal execution type
+            and
+
+            is not a valid API value for `time_in_force`. The
+
+            `immediate_or_cancel` time-in-force value cannot be combined with
+
+            `expiration_time`.
         time_in_force:
           type: string
+          description: >
+            Specifies how long the order remains active. Use
+            `good_till_canceled`
+
+            with `expiration_time` for an order that should rest until a
+            specific
+
+            expiration time; without `expiration_time`, `good_till_canceled` is
+            a
+
+            true good-till-canceled order. `GTT` is not a valid API value.
           enum:
             - fill_or_kill
             - good_till_canceled

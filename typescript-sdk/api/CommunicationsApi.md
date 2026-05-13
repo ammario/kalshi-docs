@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/CommunicationsApi
-lastmod: 2026-05-05T21:10:40.145Z
+lastmod: 2026-05-13T00:07:31.086Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -315,7 +315,8 @@ Endpoint for getting quotes
 | **limit**                 | \[**number**]  | Parameter to specify the number of results per page. Defaults to 500.                                                                        | (optional) defaults to 500       |
 | **status**                | \[**string**]  | Filter quotes by status                                                                                                                      | (optional) defaults to undefined |
 | **quoteCreatorUserId**    | \[**string**]  | Filter quotes by quote creator user ID                                                                                                       | (optional) defaults to undefined |
-| **userFilter**            | **UserFilter** |                                                                                                                                              | (optional) defaults to undefined |
+| **userFilter**            | **UserFilter** | Filter for quotes created by the authenticated user.                                                                                         | (optional) defaults to undefined |
+| **rfqUserFilter**         | **UserFilter** | Filter for quotes responding to RFQs created by the authenticated user.                                                                      | (optional) defaults to undefined |
 | **rfqCreatorUserId**      | \[**string**]  | Filter quotes by RFQ creator user ID                                                                                                         | (optional) defaults to undefined |
 | **rfqCreatorSubtraderId** | \[**string**]  | Filter quotes by RFQ creator subtrader ID (FCM members only)                                                                                 | (optional) defaults to undefined |
 | **rfqId**                 | \[**string**]  | Filter quotes by RFQ ID                                                                                                                      | (optional) defaults to undefined |

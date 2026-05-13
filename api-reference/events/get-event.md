@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2026-05-08T15:40:01.683Z
+lastmod: 2026-05-13T00:07:11.761Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,7 +21,7 @@ All events are accessible through this endpoint, even if their associated market
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.16.0
+  version: 3.18.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -214,6 +214,21 @@ components:
           type: string
           format: date-time
           description: Timestamp of when this event's metadata was last updated.
+        fee_type_override:
+          type: string
+          nullable: true
+          x-omitempty: true
+          description: >-
+            Fee type override for this event. When present, takes precedence
+            over the series-level fee for this event's markets.
+        fee_multiplier_override:
+          type: number
+          format: double
+          nullable: true
+          x-omitempty: true
+          description: >-
+            Fee multiplier override for this event. Paired with
+            fee_type_override.
     Market:
       type: object
       required:

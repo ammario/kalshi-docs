@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/error-handling
-lastmod: 2026-04-30T03:43:38.579Z
+lastmod: 2026-05-12T23:42:08.195Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -63,14 +63,16 @@ Used for application-level business logic errors.
 
 #### Business Reject Reasons (380)
 
-| Code | Reason                               | Description                    |
-| ---- | ------------------------------------ | ------------------------------ |
-| 0    | Other                                | See Text field for details     |
-| 1    | Unknown ID                           | Referenced ID not found        |
-| 2    | Unknown Security                     | Invalid symbol                 |
-| 3    | Unsupported Message Type             | Message type not implemented   |
-| 4    | Application not available            | System temporarily unavailable |
-| 5    | Conditionally required field missing | Context-specific field missing |
+| Code | Reason                               | Description                                                |
+| ---- | ------------------------------------ | ---------------------------------------------------------- |
+| 0    | Other                                | See Text field for details                                 |
+| 1    | Unknown ID                           | Referenced ID not found                                    |
+| 2    | Unknown Security                     | Invalid symbol                                             |
+| 3    | Unsupported Message Type             | Message type not implemented                               |
+| 4    | Application not available            | System temporarily unavailable                             |
+| 5    | Conditionally required field missing | Context-specific field missing                             |
+| 6    | Not authorized                       | User or API key is not authorized for the requested action |
+| 8    | Rate limit exceeded                  | Request was rejected by FIX rate limits                    |
 
 ## Order-Specific Rejections
 
@@ -85,19 +87,23 @@ In ExecutionReport (35=8) with ExecType=Rejected:
 | 3    | Order exceeds limit              | Position or order size limit, insufficient balance               |
 | 4    | Too late to enter                | Market expired/closed                                            |
 | 6    | Duplicate order                  | ClOrdID already used                                             |
+| 8    | Stale order                      | Timestamp or RFQ quote was expired                               |
 | 11   | Unsupported order characteristic | Invalid order parameters, order ID/side/ticker mismatch on amend |
 | 13   | Incorrect quantity               | Invalid order size                                               |
+| 15   | Unknown account                  | Subaccount or sub-trader does not exist                          |
 | 99   | Other                            | See Text field                                                   |
 
 ### Cancel Reject Reasons (102)
 
 In OrderCancelReject (35=9):
 
-| Code | Reason             | Description                                       |
-| ---- | ------------------ | ------------------------------------------------- |
-| 0    | Too late to cancel | Order already filled                              |
-| 1    | Unknown order      | Order ID not found, order ID/side/ticker mismatch |
-| 99   | Other              | See Text field                                    |
+| Code | Reason                  | Description                                                              |
+| ---- | ----------------------- | ------------------------------------------------------------------------ |
+| 0    | Too late to cancel      | Order already filled                                                     |
+| 1    | Unknown order           | Order ID not found, order ID/side/ticker mismatch                        |
+| 2    | Broker                  | Invalid amend quantity, or order already fully filled                    |
+| 18   | Invalid price increment | Replace would self-cross with another order belonging to the same trader |
+| 99   | Other                   | See Text field                                                           |
 
 ## Common Error Scenarios
 
@@ -146,8 +152,8 @@ In OrderCancelReject (35=9):
 
 **Fix**:
 
-* **KalshiNR, KalshiDC, KalshiPT**: Set `ResetSeqNumFlag<141>=Y` on every Logon. These sessions require it; Logon will be rejected without it.
-* **KalshiRT, KalshiRFQ**: If you don't need to recover missed messages, set `ResetSeqNumFlag<141>=Y` to reset both sides to 1. If you do need retransmission continuity, ensure your local sequence store matches the server's state.
+* **KalshiNR, KalshiDC, KalshiRFQ**: Set `ResetSeqNumFlag<141>=Y` on every Logon. These sessions require it; Logon will be rejected without it.
+* **KalshiRT, KalshiPT**: If you don't need to recover missed messages, set `ResetSeqNumFlag<141>=Y` to reset both sides to 1. If you do need retransmission continuity, ensure your local sequence store matches the server's state.
 
 If using QuickFIX, set `ResetOnLogon=Y` in your session config for non-retransmission sessions.
 
@@ -161,7 +167,7 @@ If using QuickFIX, set `ResetOnLogon=Y` in your session config for non-retransmi
 
 **Symptom**: Logout (35=5) immediately after Logon with `Text<58>="already exists"`.
 
-**Cause**: Another FIX connection is already active with the same API key and TargetCompID. Only one connection is allowed per API key per session type. This can also occur if a previous connection was not cleanly closed and the server hasn't yet detected the disconnect.
+**Cause**: Another FIX connection is already active with the same API key. Only one connection is allowed per API key. This can also occur if a previous connection was not cleanly closed and the server hasn't yet detected the disconnect.
 
 **Fix**: Ensure the previous session is fully disconnected before reconnecting. If the prior connection was lost unexpectedly, wait for the server's heartbeat timeout to expire (up to 60 seconds depending on your `HeartbeatInt` setting) before retrying. Use separate API keys for concurrent connections.
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-05-11T23:41:35.418Z
+lastmod: 2026-05-12T23:42:08.194Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -108,15 +108,15 @@ This message is used bidirectionally:
 
 Exchange response to an inbound QuoteRequest from an RFQ creator.
 
-| Tag   | Name             | Type    | Required | Description                                                  |
-| ----- | ---------------- | ------- | -------- | ------------------------------------------------------------ |
-| 131   | QuoteReqId       | UUID    | Y        | Client-assigned RFQ ID (echoed back)                         |
-| 303   | QuoteRequestType | Integer | Y        | 1 (MANUAL)                                                   |
-| 21023 | RfqId            | UUID    | Y        | Server-assigned RFQ ID                                       |
-| 55    | Symbol           | String  | C        | Resolved market ticker. Present when MVE legs were submitted |
+| Tag   | Name             | Type    | Required | Description                                                              |
+| ----- | ---------------- | ------- | -------- | ------------------------------------------------------------------------ |
+| 131   | QuoteReqId       | UUID    | Y        | Client-assigned RFQ ID (echoed back)                                     |
+| 303   | QuoteRequestType | Integer | Y        | 1 (MANUAL)                                                               |
+| 21023 | RfqId            | UUID    | C        | Server-assigned RFQ ID. Present when an RFQ ID is returned by the server |
+| 55    | Symbol           | String  | C        | Resolved market ticker. Present when MVE legs were submitted             |
 
 <Note>
-  The server-assigned RFQ ID is returned in tag 21023. Store it if you want to reconcile later Quote or QuoteStatusReport messages to the created RFQ. For RFQCancel, use your original client-assigned QuoteReqId (tag 131).
+  The server-assigned RFQ ID is returned in tag 21023. Store it if you want to reconcile later Quote or QuoteStatusReport messages to the created RFQ. RFQCancel accepts either your original client-assigned QuoteReqId (tag 131) or the server-assigned RfqId (tag 21023).
 </Note>
 
 <Info>
@@ -246,29 +246,32 @@ RFQ creator accepts a quote from a market maker.
 | 11    | ClOrdID           | String  | N        | Client order ID                                                                                                                                                                                |
 | 453   | NoPartyIDs        | Integer | N        | Number of parties (only 1 supported)                                                                                                                                                           |
 | 448   | PartyId           | String  | N        | FCM SubtraderId for the customer on whose behalf the accept is submitted                                                                                                                       |
-| 452   | PartyRole         | Integer | N        | 24 (CustomerAccount) for SubtraderId                                                                                                                                                           |
+| 452   | PartyRole         | Integer | N        | 24 (CustomerAccount). Required when using PartyId                                                                                                                                              |
 | 21022 | PreferBetterQuote | Char    | N        | Y/N - When set to Y, the exchange will select the best available quote for the RFQ rather than the specified quote. The best quote must be at least as good as the requested quote. Default: N |
 
 ## AcceptQuoteStatus (35=UC)
 
 Exchange response to AcceptQuote.
 
-| Tag   | Name              | Type    | Required | Description                                                                                                      |
-| ----- | ----------------- | ------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
-| 117   | QuoteId           | String  | Y        | Quote identifier                                                                                                 |
-| 21025 | AcceptQuoteStatus | Integer | Y        | ACCEPTED(0) or REJECTED(1)                                                                                       |
-| 21024 | AcceptedQuoteId   | UUID    | Y        | The quote that was actually accepted. When PreferBetterQuote is used, this may differ from the requested QuoteId |
-| 11    | ClOrdID           | String  | C        | Echoed back when provided on the AcceptQuote request                                                             |
-| 58    | Text              | String  | C        | Rejection reason if REJECTED                                                                                     |
+| Tag   | Name              | Type    | Required | Description                                                                                                                                        |
+| ----- | ----------------- | ------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 117   | QuoteId           | String  | Y        | Quote identifier                                                                                                                                   |
+| 21025 | AcceptQuoteStatus | Integer | Y        | ACCEPTED(0) or REJECTED(1)                                                                                                                         |
+| 21024 | AcceptedQuoteId   | UUID    | C        | Present when the accept succeeds. The quote that was actually accepted. When PreferBetterQuote is used, this may differ from the requested QuoteId |
+| 11    | ClOrdID           | String  | C        | Echoed back when provided on the AcceptQuote request                                                                                               |
+| 58    | Text              | String  | C        | Rejection reason if REJECTED                                                                                                                       |
 
 ## RFQCancel (35=UE)
 
 RFQ creator cancels/deletes an active RFQ.
 
-| Tag   | Name       | Type | Required | Description                                                               |
-| ----- | ---------- | ---- | -------- | ------------------------------------------------------------------------- |
-| 131   | QuoteReqId | UUID | Y        | Client-assigned RFQ ID (from original QuoteRequest)                       |
-| 21023 | RfqId      | UUID | N        | Server-assigned RFQ ID (from QuoteRequestAck). Alternative to QuoteReqId. |
+| Tag   | Name       | Type    | Required | Description                                                                              |
+| ----- | ---------- | ------- | -------- | ---------------------------------------------------------------------------------------- |
+| 131   | QuoteReqId | UUID    | C        | Client-assigned RFQ ID from the original QuoteRequest. Required unless RfqId is provided |
+| 21023 | RfqId      | UUID    | C        | Server-assigned RFQ ID from QuoteRequestAck. Required unless QuoteReqId is provided      |
+| 453   | NoPartyIDs | Integer | N        | Number of parties (only 1 supported)                                                     |
+| 448   | PartyId    | String  | N        | FCM SubtraderId for the customer on whose behalf the RFQ is canceled                     |
+| 452   | PartyRole  | Integer | N        | 24 (CustomerAccount). Required when using PartyId                                        |
 
 ## RFQCancelStatus (35=UB)
 
@@ -282,13 +285,13 @@ Exchange response to RFQCancel.
 
 ## QuoteRequestReject (35=AG)
 
-Exchange notifies that a quote request was cancelled.
+Exchange notifies that an RFQ creation request was rejected or that a quote request was cancelled.
 
-| Tag | Name                     | Type    | Required | Description                         |
-| --- | ------------------------ | ------- | -------- | ----------------------------------- |
-| 58  | Text                     | String  | Y        | Reason the quote has been cancelled |
-| 131 | QuoteReqId               | String  | Y        | Request identifier                  |
-| 658 | QuoteRequestRejectReason | Integer | Y        | OTHER(99)                           |
+| Tag | Name                     | Type    | Required | Description                                                                                   |
+| --- | ------------------------ | ------- | -------- | --------------------------------------------------------------------------------------------- |
+| 58  | Text                     | String  | Y        | Reason the RFQ creation was rejected or the quote request was cancelled                       |
+| 131 | QuoteReqId               | String  | Y        | Request identifier                                                                            |
+| 658 | QuoteRequestRejectReason | Integer | Y        | UNKNOWN\_SYMBOL(1), QUOTE\_REQUEST\_EXCEEDS\_LIMIT(3), INSUFFICIENT\_CREDIT(11), or OTHER(99) |
 
 <Info>
   Market makers do not send QuoteRequestReject when ignoring a request.
@@ -300,7 +303,7 @@ Exchange notifies that a quote request was cancelled.
 
 <CodeGroup>
   ```fix Create RFQ (Creator → Exchange) theme={null}
-  8=FIXT.1.1|35=R|131=client-req-123|146=1|38=100|55=HIGHNY-23DEC31|
+  8=FIXT.1.1|35=R|131=client-req-123|146=1|55=HIGHNY-23DEC31|38=100|
   ```
 
   ```fix Create RFQ with MVE Legs (Creator → Exchange) theme={null}
@@ -316,7 +319,7 @@ Exchange notifies that a quote request was cancelled.
   ```
 
   ```fix Quote Notification (Exchange → Creator) theme={null}
-  8=FIXT.1.1|35=S|117=quote-789|131=server-rfq-456|55=HIGHNY-23DEC31|132=75|133=25|38=100|
+  8=FIXT.1.1|35=S|117=quote-789|131=server-rfq-456|55=HIGHNY-23DEC31|132=0.7500|133=0.2500|38=100|
   ```
 
   ```fix Accept Quote (Creator → Exchange) theme={null}
@@ -340,7 +343,7 @@ Exchange notifies that a quote request was cancelled.
 
 <CodeGroup>
   ```fix QuoteRequest (Exchange → MM) theme={null}
-  8=FIXT.1.1|35=R|131=server-rfq-456|146=1|38=100|55=HIGHNY-23DEC31|453=1|448=anon-456|
+  8=FIXT.1.1|35=R|131=server-rfq-456|146=1|55=HIGHNY-23DEC31|38=100|453=1|448=anon-456|
   ```
 
   ```fix Quote Response (MM → Exchange) theme={null}

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-05-08T20:53:29.044Z
+lastmod: 2026-05-12T23:42:08.197Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -16,7 +16,7 @@ Used to submit a new order to the Exchange.
 
 | Tag   | Name                    | Type         | Required | Description                                                                                                 |
 | ----- | ----------------------- | ------------ | -------- | ----------------------------------------------------------------------------------------------------------- |
-| 11    | ClOrderID               | String       | Y        | Client order ID for idempotency. UUID preferred, max 64 chars. Must not match any open order.               |
+| 11    | ClOrdID                 | String       | Y        | Client order ID for idempotency. UUID preferred, max 64 chars. Must not match any open order.               |
 | 18    | ExecInst                | Char         | N        | `6`=Post Only                                                                                               |
 | 38    | OrderQty                | Decimal      | Y        | Quantity of contracts. Fractional quantities supported.                                                     |
 | 40    | OrdType                 | Char         | Y        | `2`=Limit                                                                                                   |
@@ -26,11 +26,11 @@ Used to submit a new order to the Exchange.
 | 59    | TimeInForce             | Char         | N        | `0`=Day (expires 11:59:59.999pm ET), `1`=GTC, `3`=IOC, `4`=FOK, `6`=GTD. Past GTD dates are treated as IOC. |
 | 126   | ExpireTime              | UTCTimestamp | C        | Required when TimeInForce=GTD.                                                                              |
 | 448   | PartyID                 | UUID         | N        | FCM only. Sub-account identifier.                                                                           |
-| 452   | PartyRole               | Integer      | N        | FCM only. `24`=Customer Account                                                                             |
+| 452   | PartyRole               | Integer      | N        | FCM only. `24`=Customer Account. Required when using PartyID.                                               |
 | 453   | NoPartyIDs              | Integer      | N        | FCM only. Number of parties (only 1 supported).                                                             |
 | 79    | AllocAccount            | Integer      | N        | Subaccount number (0–32). Alternative to NoPartyIDs.                                                        |
 | 526   | SecondaryClOrdID        | UUID         | N        | [Order group](/getting_started/order_groups) identifier.                                                    |
-| 2964  | SelfTradePreventionType | Char         | N        | `1`=Taker At Cross (default), `2`=Maker                                                                     |
+| 2964  | SelfTradePreventionType | Integer      | N        | `1`=Taker At Cross (default), `2`=Maker                                                                     |
 | 21006 | CancelOrderOnPause      | Boolean      | N        | Cancel order if trading is paused.                                                                          |
 | 21009 | MaxExecutionCost        | Decimal      | N        | Max execution cost in dollars. Order canceled if unable to fill within cost.                                |
 
@@ -51,36 +51,36 @@ Used to modify an existing order without canceling it.
 * **OrderQty**: Increases or decreases the quantity of your order, note that increasing the quantity for the same point means forfeiting your queue position
 * **Price**: Changes the limit price of your order
 
-| Tag | Name         | Type    | Required | Description                                                                       |
-| --- | ------------ | ------- | -------- | --------------------------------------------------------------------------------- |
-| 11  | ClOrderID    | String  | Y        | Unique modification request ID. UUID preferred, max 64 chars.                     |
-| 37  | OrderID      | String  | N        | Exchange-assigned order identifier.                                               |
-| 38  | OrderQty     | Decimal | Y        | New total quantity. If equal to filled qty, order is canceled. If less, rejected. |
-| 40  | OrdType      | Char    | Y        | `2`=Limit                                                                         |
-| 41  | OrigClOrdID  | String  | Y        | ClOrderID of the order to modify.                                                 |
-| 44  | Price        | Integer | N        | New price in cents (1–99). Required if changing price.                            |
-| 54  | Side         | Char    | Y        | Must match original order.                                                        |
-| 55  | Symbol       | String  | Y        | Must match original order.                                                        |
-| 448 | PartyID      | UUID    | N        | FCM only. Must match original order.                                              |
-| 452 | PartyRole    | Integer | N        | FCM only. `24`=Customer Account. Must match original order.                       |
-| 453 | NoPartyIDs   | Integer | N        | FCM only. Must match original order (only 1 supported).                           |
-| 79  | AllocAccount | Integer | N        | Subaccount number (0–32). Must match original order.                              |
+| Tag | Name         | Type    | Required | Description                                                                              |
+| --- | ------------ | ------- | -------- | ---------------------------------------------------------------------------------------- |
+| 11  | ClOrdID      | String  | Y        | Unique modification request ID. UUID preferred, max 64 chars.                            |
+| 37  | OrderID      | String  | N        | Exchange-assigned order identifier.                                                      |
+| 38  | OrderQty     | Decimal | Y        | New total quantity. If equal to filled qty, order is canceled. If less, rejected.        |
+| 40  | OrdType      | Char    | Y        | `2`=Limit                                                                                |
+| 41  | OrigClOrdID  | String  | Y        | ClOrdID of the order to modify.                                                          |
+| 44  | Price        | Integer | N        | New price in cents (1–99). Required if changing price.                                   |
+| 54  | Side         | Char    | Y        | Must match original order.                                                               |
+| 55  | Symbol       | String  | Y        | Must match original order.                                                               |
+| 448 | PartyID      | UUID    | N        | FCM only. Must match original order.                                                     |
+| 452 | PartyRole    | Integer | N        | FCM only. `24`=Customer Account. Must match original order. Required when using PartyID. |
+| 453 | NoPartyIDs   | Integer | N        | FCM only. Must match original order (only 1 supported).                                  |
+| 79  | AllocAccount | Integer | N        | Subaccount number (0–32). Must match original order.                                     |
 
 ## Order Cancel Request (35=F)
 
 Cancel all remaining quantity of an existing order.
 
-| Tag | Name         | Type    | Required | Description                                                 |
-| --- | ------------ | ------- | -------- | ----------------------------------------------------------- |
-| 11  | ClOrderID    | String  | Y        | Unique cancel request ID. UUID preferred, max 64 chars.     |
-| 37  | OrderID      | String  | N        | Exchange-assigned order identifier.                         |
-| 41  | OrigClOrdID  | String  | Y        | ClOrderID of the order to cancel.                           |
-| 54  | Side         | Char    | Y        | Must match original order.                                  |
-| 55  | Symbol       | String  | Y        | Must match original order.                                  |
-| 448 | PartyID      | UUID    | N        | FCM only. Must match original order.                        |
-| 452 | PartyRole    | Integer | N        | FCM only. `24`=Customer Account. Must match original order. |
-| 453 | NoPartyIDs   | Integer | N        | FCM only. Must match original order (only 1 supported).     |
-| 79  | AllocAccount | Integer | N        | Subaccount number (0–32). Must match original order.        |
+| Tag | Name         | Type    | Required | Description                                                                              |
+| --- | ------------ | ------- | -------- | ---------------------------------------------------------------------------------------- |
+| 11  | ClOrdID      | String  | Y        | Unique cancel request ID. UUID preferred, max 64 chars.                                  |
+| 37  | OrderID      | String  | N        | Exchange-assigned order identifier.                                                      |
+| 41  | OrigClOrdID  | String  | Y        | ClOrdID of the order to cancel.                                                          |
+| 54  | Side         | Char    | Y        | Must match original order.                                                               |
+| 55  | Symbol       | String  | Y        | Must match original order.                                                               |
+| 448 | PartyID      | UUID    | N        | FCM only. Must match original order.                                                     |
+| 452 | PartyRole    | Integer | N        | FCM only. `24`=Customer Account. Must match original order. Required when using PartyID. |
+| 453 | NoPartyIDs   | Integer | N        | FCM only. Must match original order (only 1 supported).                                  |
+| 79  | AllocAccount | Integer | N        | Subaccount number (0–32). Must match original order.                                     |
 
 ## Execution Report (35=8)
 
@@ -89,7 +89,7 @@ Sent by the exchange to reflect order state changes.
 | Tag | Name         | Type         | Required | Description                                                                                                         |
 | --- | ------------ | ------------ | -------- | ------------------------------------------------------------------------------------------------------------------- |
 | 6   | AvgPx        | Decimal      | Y        | Average price of all fills on this order.                                                                           |
-| 11  | ClOrderID    | String       | Y        | ClOrderID from the last message that changed the order.                                                             |
+| 11  | ClOrdID      | String       | Y        | ClOrdID from the last message that changed the order.                                                               |
 | 14  | CumQty       | Decimal      | Y        | Total quantity filled so far.                                                                                       |
 | 17  | ExecID       | String       | Y        | Unique sequenced report ID (`int;int` format, e.g. `4;7`). Monotonically increasing. `"-1;-1"` for PENDING reports. |
 | 31  | LastPx       | Integer      | C        | Fill price in cents. Present only for ExecType=Trade.                                                               |
@@ -97,7 +97,7 @@ Sent by the exchange to reflect order state changes.
 | 37  | OrderID      | String       | Y        | Exchange-assigned order identifier.                                                                                 |
 | 38  | OrderQty     | Decimal      | Y        | Total order quantity. OrderQty = CumQty + LeavesQty.                                                                |
 | 39  | OrdStatus    | Char         | Y        | Current order status. See Order Status below.                                                                       |
-| 41  | OrigClOrdID  | String       | C        | Previous ClOrderID. Present for Replaced/Canceled orders.                                                           |
+| 41  | OrigClOrdID  | String       | C        | Previous ClOrdID. Present for Replaced/Canceled orders.                                                             |
 | 44  | Price        | Integer      | C        | Price per contract in cents.                                                                                        |
 | 54  | Side         | Char         | Y        | `1`=Buy (Yes), `2`=Sell (No)                                                                                        |
 | 55  | Symbol       | String       | Y        | Market ticker.                                                                                                      |
@@ -108,7 +108,7 @@ Sent by the exchange to reflect order state changes.
 | 150 | ExecType     | Char         | Y        | Report reason. See Execution Types below.                                                                           |
 | 151 | LeavesQty    | Decimal      | Y        | Remaining quantity open for execution.                                                                              |
 | 448 | PartyID      | UUID         | N        | FCM only. Sub-account identifier.                                                                                   |
-| 452 | PartyRole    | Integer      | N        | FCM only. `24`=Customer Account                                                                                     |
+| 452 | PartyRole    | Integer      | N        | FCM only. `24`=Customer Account. Present when PartyID is present.                                                   |
 | 453 | NoPartyIDs   | Integer      | N        | FCM only. Number of parties (only 1 supported).                                                                     |
 | 79  | AllocAccount | Integer      | C        | Subaccount number (0–32). Present if order was placed for a subaccount.                                             |
 
@@ -136,7 +136,9 @@ Sent by the exchange to reflect order state changes.
 * **Order exceeds limit\<3>**
 * **Too late to enter\<4>**
 * **Duplicate order\<6>**
+* **Stale order\<8>**
 * **Unsupported order characteristic\<11>**
+* **Incorrect quantity\<13>**
 * **Unknown account\<15>**
 * **Other\<99>**
 
@@ -238,7 +240,7 @@ Cancel all orders for the trading session. Only available on KalshiNR (NewOrderM
 
 | Tag | Name                  | Description            |
 | --- | --------------------- | ---------------------- |
-| 11  | ClOrderID             | Unique request ID      |
+| 11  | ClOrdID               | Unique request ID      |
 | 530 | MassCancelRequestType | Cancel for session\<6> |
 
 ## Mass Cancel Report (35=r)
@@ -247,7 +249,7 @@ Response to mass cancel request.
 
 | Tag | Name                   | Description                 |
 | --- | ---------------------- | --------------------------- |
-| 11  | ClOrderID              | Request ID                  |
+| 11  | ClOrdID                | Request ID                  |
 | 37  | OrderID                | Operation ID                |
 | 531 | MassCancelResponse     | Success\<6> or Rejected\<0> |
 | 532 | MassCancelRejectReason | If rejected                 |

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/drop-copy
-lastmod: 2026-04-30T03:43:38.583Z
+lastmod: 2026-05-12T23:42:08.195Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -42,7 +42,7 @@ Sent after all requested events have been resent.
 | Tag   | Name             | Description                         | Required |
 | ----- | ---------------- | ----------------------------------- | -------- |
 | 45    | RefSeqNum        | MsgSeqNum of the EventResendRequest | Yes      |
-| 21003 | ResentEventCount | Total number of events resent       | Yes      |
+| 21003 | ResendEventCount | Total number of events resent       | Yes      |
 
 ## EventResendReject (35=U3)
 
