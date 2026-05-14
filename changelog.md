@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-05-13T00:07:30.087Z
+lastmod: 2026-05-13T16:13:10.058Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,19 @@ You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="May 12, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "reduce_by supported on V2 decrease endpoint",
+description: "POST /portfolio/events/orders/{order_id}/decrease now accepts reduce_by in addition to reduce_to. Exactly one must be provided."
+}}
+>
+  `POST /trade-api/v2/portfolio/events/orders/{order_id}/decrease` now
+  accepts `reduce_by` (fixed-point contract count) in addition to
+  `reduce_to`. Exactly one of the two must be provided.
+</Update>
 
 <Update
   label="May 12, 2026"

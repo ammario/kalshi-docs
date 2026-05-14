@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/decrease-order-v2
-lastmod: 2026-05-13T00:07:12.007Z
+lastmod: 2026-05-13T16:12:53.916Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-05-13T00:07:12.007Z
 
 # Decrease Order (V2)
 
-> Endpoint for decreasing the remaining count of an existing event-market order using the V2 request/response shape. Only `reduce_to` is supported.
+> Endpoint for decreasing the remaining count of an existing event-market order using the V2 request/response shape. Exactly one of `reduce_by` or `reduce_to` must be provided.
 
 
 
@@ -71,8 +71,8 @@ paths:
       summary: Decrease Order (V2)
       description: >-
         Endpoint for decreasing the remaining count of an existing event-market
-        order using the V2 request/response shape. Only `reduce_to` is
-        supported.
+        order using the V2 request/response shape. Exactly one of `reduce_by` or
+        `reduce_to` must be provided.
       operationId: DecreaseOrderV2
       parameters:
         - $ref: '#/components/parameters/OrderIdPath'
@@ -120,12 +120,19 @@ components:
   schemas:
     DecreaseOrderV2Request:
       type: object
-      required:
-        - reduce_to
       properties:
+        reduce_by:
+          $ref: '#/components/schemas/FixedPointCount'
+          nullable: true
+          description: >-
+            String representation of the number of contracts to reduce by.
+            Exactly one of `reduce_by` or `reduce_to` must be provided.
         reduce_to:
           $ref: '#/components/schemas/FixedPointCount'
-          description: String representation of the number of contracts to reduce to.
+          nullable: true
+          description: >-
+            String representation of the number of contracts to reduce to.
+            Exactly one of `reduce_by` or `reduce_to` must be provided.
     DecreaseOrderV2Response:
       type: object
       required:
