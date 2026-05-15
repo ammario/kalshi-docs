@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2026-05-13T16:12:53.992Z
+lastmod: 2026-05-14T20:50:06.715Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -152,7 +152,9 @@ components:
           description: The name of the service that generated the error
     ExchangeIndex:
       type: integer
-      description: 'Defaults to 0. Note: currently only 0 supported.'
+      description: >-
+        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
+        currently only 0 supported.
       example: 0
     FixedPointDollars:
       type: string

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-05-12T23:42:08.194Z
+lastmod: 2026-05-14T22:31:56.917Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -81,7 +81,7 @@ This message is used bidirectionally:
 | 20181 | NoMultivariateSelectedLegs       | Integer | C        | Number of MVE legs (repeating group). Required with 20180                                                                                                                |
 | 20182 | MultivariateSelectedEventTicker  | String  | Y        | Event ticker for the leg                                                                                                                                                 |
 | 20183 | MultivariateSelectedMarketTicker | String  | Y        | Market ticker for the leg                                                                                                                                                |
-| 20184 | MultivariateSelectedMarketSide   | String  | Y        | Side for the leg ("yes" or "no")                                                                                                                                         |
+| 20184 | MultivariateSelectedSide         | String  | Y        | Side for the leg ("yes" or "no")                                                                                                                                         |
 
 <Info>
   **MVE/Parlay Support**: Instead of specifying a Symbol, you can submit MVE legs directly. The server will automatically resolve or create the parlay market and return the resolved market ticker in the QuoteRequestAck.
@@ -102,7 +102,7 @@ This message is used bidirectionally:
 | 20181 | NoMultivariateSelectedLegs       | Integer | N        | Number of MVE legs (repeating group)                                                                  |
 | 20182 | MultivariateSelectedEventTicker  | String  | N        | Event ticker for the leg                                                                              |
 | 20183 | MultivariateSelectedMarketTicker | String  | N        | Market ticker for the leg                                                                             |
-| 20184 | MultivariateSelectedMarketSide   | String  | N        | Side for the leg ("yes" or "no")                                                                      |
+| 20184 | MultivariateSelectedSide         | String  | N        | Side for the leg ("yes" or "no")                                                                      |
 
 ## QuoteRequestAck (35=b)
 

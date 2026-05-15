@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders
-lastmod: 2026-05-13T16:12:53.810Z
+lastmod: 2026-05-14T20:50:06.501Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -145,6 +145,11 @@ components:
             Optional subaccount number to use for this cancellation (0 for
             primary, 1-32 for subaccounts)
           x-go-type-skip-optional-pointer: true
+        exchange_index:
+          allOf:
+            - $ref: '#/components/schemas/ExchangeIndex'
+          default: 0
+          x-go-type-skip-optional-pointer: true
     BatchCancelOrdersIndividualResponse:
       type: object
       required:
@@ -184,6 +189,12 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    ExchangeIndex:
+      type: integer
+      description: >-
+        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
+        currently only 0 supported.
+      example: 0
     Order:
       type: object
       required:
@@ -340,6 +351,10 @@ components:
           nullable: true
           x-omitempty: true
           description: Subaccount number (0 for primary, 1-32 for subaccounts).
+        exchange_index:
+          allOf:
+            - $ref: '#/components/schemas/ExchangeIndex'
+          x-go-type-skip-optional-pointer: true
     FixedPointCount:
       type: string
       description: >-

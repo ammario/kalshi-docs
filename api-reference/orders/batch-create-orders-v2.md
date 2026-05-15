@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-create-orders-v2
-lastmod: 2026-05-13T16:12:53.870Z
+lastmod: 2026-05-14T20:50:06.569Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -325,7 +325,9 @@ components:
         matching.
     ExchangeIndex:
       type: integer
-      description: 'Defaults to 0. Note: currently only 0 supported.'
+      description: >-
+        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
+        currently only 0 supported.
       example: 0
   responses:
     BadRequestError:
