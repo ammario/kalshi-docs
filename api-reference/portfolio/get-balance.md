@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2026-05-14T20:50:06.715Z
+lastmod: 2026-05-15T18:45:52.412Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -101,6 +101,7 @@ components:
       type: object
       required:
         - balance
+        - balance_dollars
         - portfolio_value
         - updated_ts
       properties:
@@ -110,6 +111,11 @@ components:
           description: >-
             Member's available balance in cents. This represents the amount
             available for trading.
+        balance_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            Member's available balance as a fixed-point dollar string. This
+            represents the amount available for trading.
         portfolio_value:
           type: integer
           format: int64
@@ -125,6 +131,14 @@ components:
           items:
             $ref: '#/components/schemas/IndexedBalance'
           description: Balance broken down per exchange index.
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with up to 6 decimal
+        places of precision. This is the maximum supported precision; valid
+        quote intervals for a given market are constrained by that market's
+        price level structure.
+      example: '0.5600'
     IndexedBalance:
       type: object
       required:
@@ -156,14 +170,6 @@ components:
         Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
         currently only 0 supported.
       example: 0
-    FixedPointDollars:
-      type: string
-      description: >-
-        US dollar amount as a fixed-point decimal string with up to 6 decimal
-        places of precision. This is the maximum supported precision; valid
-        quote intervals for a given market are constrained by that market's
-        price level structure.
-      example: '0.5600'
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-forecast-percentile-history
-lastmod: 2026-05-14T20:50:06.424Z
+lastmod: 2026-05-15T18:45:52.147Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -89,14 +89,14 @@ paths:
         - name: percentiles
           in: query
           required: true
-          description: Array of percentile values to retrieve (0-10000, max 10 values)
+          description: Array of percentile values to retrieve (0-9999, max 10 values)
           schema:
             type: array
             items:
               type: integer
               format: int32
               minimum: 0
-              maximum: 10000
+              maximum: 9999
             maxItems: 10
           style: form
           explode: true
@@ -193,7 +193,7 @@ components:
         percentile:
           type: integer
           format: int32
-          description: The percentile value (0-10000).
+          description: The percentile value (0-9999).
         raw_numerical_forecast:
           type: number
           description: The raw numerical forecast value.
