@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-create-orders
-lastmod: 2026-05-15T18:45:52.199Z
+lastmod: 2026-05-18T18:56:42.927Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,9 +10,6 @@ lastmod: 2026-05-15T18:45:52.199Z
 
 > Endpoint for submitting a batch of orders. The maximum batch size scales with your tier's write budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
 
-<Note>
-  **Rate limit:** 10 tokens per order in the batch — billed per item, so total cost for a batch of N orders is N × 10. Other endpoints cost 10 tokens per request (not per item) unless noted on their own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
-</Note>
 
 
 ## OpenAPI
