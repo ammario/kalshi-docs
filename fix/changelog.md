@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/changelog
-lastmod: 2026-05-11T23:41:35.415Z
+lastmod: 2026-05-19T15:23:43.125Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,6 +11,16 @@ lastmod: 2026-05-11T23:41:35.415Z
 > Version history and updates for the Kalshi FIX API
 
 # FIX API Changelog
+
+## Version 1.0.26 (2026-05-18)
+
+* Added `SplitCollateralReturn` (21027) Logon flag
+  * With Logon flag `21027=Y`, Execution Reports with `ExecType=Trade` include two new tags:
+    * `SingleMarketCollateralReturn` (21030): collateral freed from reducing/closing a position in a single market
+    * `RangedMarketCollateralReturn` (21031): collateral freed from MECNET/DIRECNET netting across a market group
+  * Both values are in dollars and only present when non-zero
+  * These are informational subsets of the existing BALANCE collateral change — they describe components within the total balance delta
+  * Without `21027`, Execution Reports remain unchanged (existing behavior)
 
 ## Version 1.0.25 (2026-05-08)
 

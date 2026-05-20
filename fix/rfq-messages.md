@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-05-14T22:31:56.917Z
+lastmod: 2026-05-19T16:57:05.640Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -72,6 +72,7 @@ This message is used bidirectionally:
 | 55    | Symbol                           | String  | C        | Market ticker. Required unless MVE legs are specified                                                                                                                    |
 | 38    | OrderQty                         | Decimal | C        | Number of contracts as a fixed-point decimal. Currently only whole contracts are accepted (for example `5`, `5.0`, or `5.00`). Required unless CashOrderQty is specified |
 | 152   | CashOrderQty                     | Decimal | C        | Target cost in dollars. Required unless OrderQty is specified                                                                                                            |
+| 79    | AllocAccount                     | Integer | N        | Subaccount number (0-32) for direct members. Alternative to NoPartyIDs; omit or set to 0 for the primary account                                                         |
 | 453   | NoPartyIDs                       | Integer | N        | Number of parties (only 1 supported)                                                                                                                                     |
 | 448   | PartyId                          | String  | N        | FCM SubtraderId for the customer on whose behalf the RFQ is submitted                                                                                                    |
 | 452   | PartyRole                        | Integer | N        | 24 (CustomerAccount) - required when using PartyId                                                                                                                       |

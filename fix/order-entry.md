@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-05-14T22:31:56.920Z
+lastmod: 2026-05-19T15:23:43.129Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -216,6 +216,17 @@ When ExecType=Trade:
 | 1703 | NoCollateralAmountChanges | Number of collateral changes |
 | 1704 | CollateralAmountChange    | Delta in dollars             |
 | 1705 | CollateralAmountType      | BALANCE or PAYOUT            |
+
+### Collateral Return Breakdown
+
+When Logon tag `21027` (`SplitCollateralReturn`) is set to `Y`, Execution Reports with `ExecType=Trade` include:
+
+| Tag   | Name                         | Type    | Description                                                                                                   |
+| ----- | ---------------------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
+| 21030 | SingleMarketCollateralReturn | Decimal | Collateral freed from reducing/closing a position in a single market. In dollars. Only present when non-zero. |
+| 21031 | RangedMarketCollateralReturn | Decimal | Collateral freed from MECNET/DIRECNET netting across a market group. In dollars. Only present when non-zero.  |
+
+Both values are informational subsets of the `BALANCE` collateral change — they describe components within the total balance delta, not additional amounts.
 
 ### Party Information
 
