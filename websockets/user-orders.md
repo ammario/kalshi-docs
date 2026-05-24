@@ -55,13 +55,13 @@ address: user_orders
 parameters: []
 bindings: []
 operations:
-  - &ref_1
+  - &ref_2
     id: receiveUserOrder
     title: User Order Update
     description: Receive notifications for your order creates and updates
     type: send
     messages:
-      - &ref_2
+      - &ref_3
         id: userOrder
         contentType: application/json
         payload:
@@ -86,15 +86,18 @@ operations:
                   - name: order_id
                     type: string
                     description: Unique order identifier
-                    required: false
+                    required: true
                   - name: user_id
                     type: string
                     description: User identifier
-                    required: false
+                    required: true
                   - name: ticker
                     type: string
                     description: Unique market identifier
-                    required: false
+                    examples: &ref_0
+                      - FED-23DEC-T3.00
+                      - HIGHNY-22DEC23-B53.5
+                    required: true
                   - name: status
                     type: string
                     description: Current order status
@@ -102,14 +105,14 @@ operations:
                       - resting
                       - canceled
                       - executed
-                    required: false
+                    required: true
                   - name: side
                     type: string
                     description: Market side
                     enumValues:
                       - 'yes'
                       - 'no'
-                    required: false
+                    required: true
                   - name: is_yes
                     type: boolean
                     description: >
@@ -117,14 +120,14 @@ operations:
                       See [Order direction](/getting_started/order_direction).
                       This field will not be removed before May 14, 2026.
                     deprecated: true
-                    required: false
+                    required: true
                   - name: outcome_side
                     type: string
                     description: Market side
                     enumValues:
                       - 'yes'
                       - 'no'
-                    required: false
+                    required: true
                   - name: book_side
                     type: string
                     description: >-
@@ -134,43 +137,43 @@ operations:
                     enumValues:
                       - bid
                       - ask
-                    required: false
+                    required: true
                   - name: yes_price_dollars
                     type: string
                     description: Yes price in fixed-point dollars (4 decimals)
-                    required: false
+                    required: true
                   - name: fill_count_fp
                     type: string
                     description: Number of contracts filled in fixed-point (2 decimals)
-                    required: false
+                    required: true
                   - name: remaining_count_fp
                     type: string
                     description: Number of contracts remaining in fixed-point (2 decimals)
-                    required: false
+                    required: true
                   - name: initial_count_fp
                     type: string
                     description: Initial number of contracts in fixed-point (2 decimals)
-                    required: false
+                    required: true
                   - name: taker_fill_cost_dollars
                     type: string
                     description: Taker fill cost in fixed-point dollars (4 decimals)
-                    required: false
+                    required: true
                   - name: maker_fill_cost_dollars
                     type: string
                     description: Maker fill cost in fixed-point dollars (4 decimals)
-                    required: false
+                    required: true
                   - name: taker_fees_dollars
                     type: string
                     description: Taker fees in fixed-point dollars (4 decimals).
-                    required: false
+                    required: true
                   - name: maker_fees_dollars
                     type: string
                     description: Maker fees in fixed-point dollars (4 decimals).
-                    required: false
+                    required: true
                   - name: client_order_id
                     type: string
                     description: Client-provided order identifier
-                    required: false
+                    required: true
                   - name: order_group_id
                     type: string
                     description: Order group identifier, if applicable
@@ -188,11 +191,11 @@ operations:
                       Deprecated - Order creation time in RFC3339 format. Use
                       created_ts_ms instead.
                     deprecated: true
-                    required: false
+                    required: true
                   - name: created_ts_ms
                     type: integer
                     description: Order creation time as a Unix timestamp in milliseconds
-                    required: false
+                    required: true
                   - name: last_update_time
                     type: string
                     description: >-
@@ -275,9 +278,7 @@ operations:
                   type: string
                   description: Unique market identifier
                   pattern: ^[A-Z0-9-]+$
-                  examples:
-                    - FED-23DEC-T3.00
-                    - HIGHNY-22DEC23-B53.5
+                  examples: *ref_0
                   x-parser-schema-id: marketTicker
                 status:
                   type: string
@@ -287,7 +288,7 @@ operations:
                     - canceled
                     - executed
                   x-parser-schema-id: <anonymous-schema-230>
-                side: &ref_0
+                side: &ref_1
                   type: string
                   description: Market side
                   enum:
@@ -302,7 +303,7 @@ operations:
                     [Order direction](/getting_started/order_direction). This
                     field will not be removed before May 14, 2026.
                   x-parser-schema-id: <anonymous-schema-231>
-                outcome_side: *ref_0
+                outcome_side: *ref_1
                 book_side:
                   type: string
                   description: >-
@@ -444,10 +445,10 @@ operations:
         value: user_orders
 sendOperations: []
 receiveOperations:
-  - *ref_1
+  - *ref_2
 sendMessages: []
 receiveMessages:
-  - *ref_2
+  - *ref_3
 extensions:
   - id: x-parser-unique-object-id
     value: user_orders

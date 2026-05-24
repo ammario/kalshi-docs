@@ -94,11 +94,11 @@ operations:
                       - reset
                       - deleted
                       - limit_updated
-                    required: false
+                    required: true
                   - name: order_group_id
                     type: string
                     description: Order group identifier
-                    required: false
+                    required: true
                   - name: contracts_limit_fp
                     type: string
                     description: >-
@@ -110,7 +110,7 @@ operations:
                     description: >-
                       Matching engine timestamp at which the event was
                       processed, as Unix epoch milliseconds.
-                    required: false
+                    required: true
         headers: []
         jsonPayloadSchema:
           type: object

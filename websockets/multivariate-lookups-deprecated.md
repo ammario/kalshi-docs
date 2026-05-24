@@ -83,16 +83,30 @@ operations:
                 properties:
                   - name: collection_ticker
                     type: string
-                    required: false
+                    required: true
                   - name: event_ticker
                     type: string
-                    required: false
+                    required: true
                   - name: market_ticker
                     type: string
-                    required: false
+                    required: true
                   - name: selected_markets
                     type: array
-                    required: false
+                    required: true
+                    properties:
+                      - name: event_ticker
+                        type: string
+                        required: true
+                      - name: market_ticker
+                        type: string
+                        required: true
+                      - name: side
+                        type: string
+                        description: Market side
+                        enumValues:
+                          - 'yes'
+                          - 'no'
+                        required: true
         headers: []
         jsonPayloadSchema:
           type: object

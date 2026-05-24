@@ -50,13 +50,13 @@ address: trade
 parameters: []
 bindings: []
 operations:
-  - &ref_1
+  - &ref_2
     id: receiveTrade
     title: Trade Update
     description: Receive public trade notifications
     type: send
     messages:
-      - &ref_2
+      - &ref_3
         id: trade
         contentType: application/json
         payload:
@@ -81,37 +81,40 @@ operations:
                   - name: trade_id
                     type: string
                     description: Unique identifier for the trade
-                    required: false
+                    required: true
                   - name: market_ticker
                     type: string
                     description: Unique market identifier
-                    required: false
+                    examples: &ref_0
+                      - FED-23DEC-T3.00
+                      - HIGHNY-22DEC23-B53.5
+                    required: true
                   - name: yes_price_dollars
                     type: string
                     description: Yes side price in dollars
-                    required: false
+                    required: true
                   - name: no_price_dollars
                     type: string
                     description: No side price in dollars
-                    required: false
+                    required: true
                   - name: count_fp
                     type: string
                     description: Fixed-point contracts traded (2 decimals)
-                    required: false
+                    required: true
                   - name: taker_side
                     type: string
                     description: Market side
                     enumValues:
                       - 'yes'
                       - 'no'
-                    required: false
+                    required: true
                   - name: taker_outcome_side
                     type: string
                     description: Market side
                     enumValues:
                       - 'yes'
                       - 'no'
-                    required: false
+                    required: true
                   - name: taker_book_side
                     type: string
                     description: >-
@@ -121,16 +124,16 @@ operations:
                     enumValues:
                       - bid
                       - ask
-                    required: false
+                    required: true
                   - name: ts
                     type: integer
                     description: Deprecated - Unix timestamp in seconds. Use ts_ms instead.
                     deprecated: true
-                    required: false
+                    required: true
                   - name: ts_ms
                     type: integer
                     description: Unix timestamp in milliseconds
-                    required: false
+                    required: true
         headers: []
         jsonPayloadSchema:
           type: object
@@ -173,9 +176,7 @@ operations:
                   type: string
                   description: Unique market identifier
                   pattern: ^[A-Z0-9-]+$
-                  examples:
-                    - FED-23DEC-T3.00
-                    - HIGHNY-22DEC23-B53.5
+                  examples: *ref_0
                   x-parser-schema-id: marketTicker
                 yes_price_dollars:
                   type: string
@@ -189,14 +190,14 @@ operations:
                   type: string
                   description: Fixed-point contracts traded (2 decimals)
                   x-parser-schema-id: <anonymous-schema-85>
-                taker_side: &ref_0
+                taker_side: &ref_1
                   type: string
                   description: Market side
                   enum:
                     - 'yes'
                     - 'no'
                   x-parser-schema-id: marketSide
-                taker_outcome_side: *ref_0
+                taker_outcome_side: *ref_1
                 taker_book_side:
                   type: string
                   description: >-
@@ -247,10 +248,10 @@ operations:
         value: trade
 sendOperations: []
 receiveOperations:
-  - *ref_1
+  - *ref_2
 sendMessages: []
 receiveMessages:
-  - *ref_2
+  - *ref_3
 extensions:
   - id: x-parser-unique-object-id
     value: trade

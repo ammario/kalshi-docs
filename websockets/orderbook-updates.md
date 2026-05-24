@@ -63,13 +63,13 @@ address: orderbook_delta
 parameters: []
 bindings: []
 operations:
-  - &ref_5
+  - &ref_6
     id: receiveOrderbookSnapshot
     title: Orderbook Snapshot
     description: Receive complete orderbook state
     type: send
     messages:
-      - &ref_7
+      - &ref_8
         id: orderbookSnapshot
         contentType: application/json
         payload:
@@ -101,11 +101,14 @@ operations:
                   - name: market_ticker
                     type: string
                     description: Unique market identifier
-                    required: false
+                    examples: &ref_0
+                      - FED-23DEC-T3.00
+                      - HIGHNY-22DEC23-B53.5
+                    required: true
                   - name: market_id
                     type: string
                     description: Unique market UUID
-                    required: false
+                    required: true
                   - name: yes_dollars_fp
                     type: array
                     description: >
@@ -117,6 +120,14 @@ operations:
 
                       Format: [price_in_dollars, contract_count_fp]
                     required: false
+                    properties:
+                      - name: item
+                        type: array
+                        required: false
+                        properties:
+                          - name: item
+                            type: string
+                            required: false
                   - name: no_dollars_fp
                     type: array
                     description: >
@@ -128,6 +139,14 @@ operations:
 
                       Format: [price_in_dollars, contract_count_fp]
                     required: false
+                    properties:
+                      - name: item
+                        type: array
+                        required: false
+                        properties:
+                          - name: item
+                            type: string
+                            required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -141,14 +160,14 @@ operations:
               type: string
               const: orderbook_snapshot
               x-parser-schema-id: <anonymous-schema-49>
-            sid: &ref_0
+            sid: &ref_1
               type: integer
               description: >-
                 Server-generated subscription identifier (sid) used to identify
                 the channel
               minimum: 1
               x-parser-schema-id: subscriptionId
-            seq: &ref_1
+            seq: &ref_2
               type: integer
               description: >-
                 Sequential number that should be checked if you want to
@@ -162,15 +181,13 @@ operations:
                 - market_ticker
                 - market_id
               properties:
-                market_ticker: &ref_2
+                market_ticker: &ref_3
                   type: string
                   description: Unique market identifier
                   pattern: ^[A-Z0-9-]+$
-                  examples:
-                    - FED-23DEC-T3.00
-                    - HIGHNY-22DEC23-B53.5
+                  examples: *ref_0
                   x-parser-schema-id: marketTicker
-                market_id: &ref_3
+                market_id: &ref_4
                   type: string
                   description: Unique market UUID
                   format: uuid
@@ -252,16 +269,16 @@ operations:
           - id: x-parser-unique-object-id
             value: orderbookSnapshot
     bindings: []
-    extensions: &ref_4
+    extensions: &ref_5
       - id: x-parser-unique-object-id
         value: orderbook_delta
-  - &ref_6
+  - &ref_7
     id: receiveOrderbookDelta
     title: Orderbook Update
     description: Receive incremental orderbook changes
     type: send
     messages:
-      - &ref_8
+      - &ref_9
         id: orderbookDelta
         contentType: application/json
         payload:
@@ -293,26 +310,27 @@ operations:
                   - name: market_ticker
                     type: string
                     description: Unique market identifier
-                    required: false
+                    examples: *ref_0
+                    required: true
                   - name: market_id
                     type: string
                     description: Unique market UUID
-                    required: false
+                    required: true
                   - name: price_dollars
                     type: string
                     description: Price level in dollars
-                    required: false
+                    required: true
                   - name: delta_fp
                     type: string
                     description: Fixed-point contract delta (2 decimals)
-                    required: false
+                    required: true
                   - name: side
                     type: string
                     description: Market side
                     enumValues:
                       - 'yes'
                       - 'no'
-                    required: false
+                    required: true
                   - name: client_order_id
                     type: string
                     description: >
@@ -357,8 +375,8 @@ operations:
               type: string
               const: orderbook_delta
               x-parser-schema-id: <anonymous-schema-57>
-            sid: *ref_0
-            seq: *ref_1
+            sid: *ref_1
+            seq: *ref_2
             msg:
               type: object
               required:
@@ -368,8 +386,8 @@ operations:
                 - delta_fp
                 - side
               properties:
-                market_ticker: *ref_2
-                market_id: *ref_3
+                market_ticker: *ref_3
+                market_id: *ref_4
                 price_dollars:
                   type: string
                   description: Price level in dollars
@@ -442,15 +460,15 @@ operations:
           - id: x-parser-unique-object-id
             value: orderbookDelta
     bindings: []
-    extensions: *ref_4
+    extensions: *ref_5
 sendOperations: []
 receiveOperations:
-  - *ref_5
   - *ref_6
+  - *ref_7
 sendMessages: []
 receiveMessages:
-  - *ref_7
   - *ref_8
+  - *ref_9
 extensions:
   - id: x-parser-unique-object-id
     value: orderbook_delta

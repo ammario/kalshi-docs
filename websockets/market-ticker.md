@@ -53,13 +53,13 @@ address: ticker
 parameters: []
 bindings: []
 operations:
-  - &ref_0
+  - &ref_1
     id: receiveTicker
     title: Ticker Update
     description: Receive market ticker updates
     type: send
     messages:
-      - &ref_1
+      - &ref_2
         id: ticker
         contentType: application/json
         payload:
@@ -84,71 +84,74 @@ operations:
                   - name: market_ticker
                     type: string
                     description: Unique market identifier
-                    required: false
+                    examples: &ref_0
+                      - FED-23DEC-T3.00
+                      - HIGHNY-22DEC23-B53.5
+                    required: true
                   - name: market_id
                     type: string
                     description: Unique market UUID
-                    required: false
+                    required: true
                   - name: price_dollars
                     type: string
                     description: Last traded price in dollars
-                    required: false
+                    required: true
                   - name: yes_bid_dollars
                     type: string
                     description: Best bid price for yes side in dollars
-                    required: false
+                    required: true
                   - name: yes_ask_dollars
                     type: string
                     description: Best ask price for yes side in dollars
-                    required: false
+                    required: true
                   - name: volume_fp
                     type: string
                     description: Fixed-point total contracts traded (2 decimals)
-                    required: false
+                    required: true
                   - name: open_interest_fp
                     type: string
                     description: Fixed-point open interest (2 decimals)
-                    required: false
+                    required: true
                   - name: dollar_volume
                     type: integer
                     description: Number of dollars traded in the market so far
-                    required: false
+                    required: true
                   - name: dollar_open_interest
                     type: integer
                     description: Number of dollars positioned in the market currently
-                    required: false
+                    required: true
                   - name: yes_bid_size_fp
                     type: string
                     description: Fixed-point contracts at best bid (2 decimals)
-                    required: false
+                    required: true
                   - name: yes_ask_size_fp
                     type: string
                     description: Fixed-point contracts at best ask (2 decimals)
-                    required: false
+                    required: true
                   - name: last_trade_size_fp
                     type: string
                     description: Fixed-point contracts in last trade (2 decimals)
-                    required: false
+                    required: true
                   - name: ts
                     type: integer
                     description: >-
                       Deprecated - Unix timestamp for when the update happened
                       (in seconds). Use ts_ms instead.
                     deprecated: true
-                    required: false
+                    required: true
                   - name: ts_ms
                     type: integer
                     description: >-
                       Unix timestamp for when the update happened (in
                       milliseconds)
-                    required: false
+                    required: true
                   - name: time
                     type: string
                     description: >-
                       Deprecated - Timestamp for when the update happened
                       (RFC3339). Use ts_ms instead.
                     deprecated: true
-                    required: false
+                    required: true
         headers: []
         jsonPayloadSchema:
           type: object
@@ -191,9 +194,7 @@ operations:
                   type: string
                   description: Unique market identifier
                   pattern: ^[A-Z0-9-]+$
-                  examples:
-                    - FED-23DEC-T3.00
-                    - HIGHNY-22DEC23-B53.5
+                  examples: *ref_0
                   x-parser-schema-id: marketTicker
                 market_id:
                   type: string
@@ -301,10 +302,10 @@ operations:
         value: ticker
 sendOperations: []
 receiveOperations:
-  - *ref_0
+  - *ref_1
 sendMessages: []
 receiveMessages:
-  - *ref_1
+  - *ref_2
 extensions:
   - id: x-parser-unique-object-id
     value: ticker
