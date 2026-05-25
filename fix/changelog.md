@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/changelog
-lastmod: 2026-05-19T15:23:43.125Z
+lastmod: 2026-05-24T22:30:44.924Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,6 +11,10 @@ lastmod: 2026-05-19T15:23:43.125Z
 > Version history and updates for the Kalshi FIX API
 
 # FIX API Changelog
+
+## Version 1.0.27 (2026-05-28)
+
+* Starting Thursday, May 28, 2026, direct member BALANCE collateral changes on ExecutionReport (35=8) may be emitted with four decimal places
 
 ## Version 1.0.26 (2026-05-18)
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fee_rounding
-lastmod: 2026-03-20T00:25:23.361Z
+lastmod: 2026-05-24T22:30:44.923Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,18 +8,23 @@ lastmod: 2026-03-20T00:25:23.361Z
 
 # Fee Rounding
 
-> How the exchange rounds fees to maintain cent-aligned balances.
+> How the exchange rounds fees to maintain balance precision.
 
 ## Overview
 
-User balances must be exact multiples of **\$0.01** before and after every fill. When a trade produces a sub-cent balance change, the exchange charges a **rounding fee** to bring the balance back to cent alignment. A **fee accumulator** applies rounding across all fills of an order collectively so that the total fee converges to what a single equivalent fill would cost.
+User balances have a target precision before and after every fill:
+
+* Direct member balances are rounded to the nearest `$0.0001` (`0.01c`)
+* Non-direct member balances are rounded to the nearest `$0.01` (`1c`)
+
+When a trade produces a balance change that is more precise than the user's target balance precision, the exchange charges a **rounding fee** to bring the balance back to that target. The **fee accumulator** still applies across all fills of an order so that the total fee converges to what a single equivalent fill would cost.
 
 Every fill produces three fee components:
 
 | Component        | Description                                                                |
 | ---------------- | -------------------------------------------------------------------------- |
 | **Trade fee**    | Fee from the fee model, rounded up to the nearest \$0.0001 (centicent)     |
-| **Rounding fee** | Sub-cent adjustment that restores cent-alignment (\$0.0000 - \$0.0099)     |
+| **Rounding fee** | Adjustment that restores the user's target balance precision               |
 | **Rebate**       | Refund from accumulated rounding overpayment (always a multiple of \$0.01) |
 
 **Net fee** = trade fee + rounding fee - rebate (always >= \$0.00)
@@ -30,10 +35,10 @@ Given a fill's `revenue` (signed; negative for buyers) and `trade_fee`:
 
 1. Round trade fee **up** to the nearest \$0.0001
 2. Compute `balance_change = revenue - trade_fee`
-3. Floor `balance_change` toward negative infinity to the nearest \$0.01
+3. Floor `balance_change` toward negative infinity to the user's target balance precision
 4. `rounding_fee = balance_change - floor(balance_change)`
 
-The user's balance changes by `floor(balance_change)`, which is always cent-aligned.
+The user's balance changes by `floor(balance_change)`, which is always aligned to the user's target balance precision.
 
 ## Fee Accumulator
 
@@ -43,26 +48,9 @@ The fee accumulator tracks cumulative rounding overpayment across all fills of a
   The fee accumulator is maintained per order across all fills regardless of whether the fills are taker or maker. If an order initially takes (matching resting orders) and then becomes a resting maker order, the accumulated rounding carries over to subsequent maker fills.
 </Note>
 
-## When Does Rounding Apply?
-
-Rounding applies whenever `revenue - trade_fee` has a sub-cent component. This can happen two ways:
-
-* **Subpenny prices** (e.g., \$0.0550) — sub-cent revenue from the price itself
-* **Fractional contracts** (e.g., 0.30 contracts) — sub-cent revenue from the fractional quantity
-
-When both apply simultaneously, intermediate values can reach up to 6 decimal places (for example, `$0.3301 * 0.03 = $0.009903`). The worked examples below show each scenario.
-
-## Settlement Rounding
-
-Settlement can also create sub-cent balance changes. When that happens, the exchange rounds the posted payout down to the nearest cent and records the fractional remainder as a settlement fee.
-
-Example: if a user holds 10.60 YES contracts and the market settles at \$0.5970, the raw payout is `10.60 * \$0.5970 = \$6.3282`. Because posted payouts must be whole-cent amounts, the exchange credits \$6.32 and records the remaining \$0.0082 as a settlement fee.
-
-This rounding adjustment is always less than \$0.01 on any posted payout and exists only to keep balances in whole-cent increments.
-
-***
-
 ## Worked Examples
+
+The examples below assume a target balance precision of `$0.01` (`1c`). For direct members of the exchange, apply the same mechanics with `$0.0001` (`0.01c`) as the target precision.
 
 <AccordionGroup>
   <Accordion title="Subpenny prices: buy 3 contracts at $0.055 (three 1-lot matches)">
@@ -137,7 +125,7 @@ This rounding adjustment is always less than \$0.01 on any posted payout and exi
     The accumulator triggers a rebate on both Fill 2 and Fill 3, keeping the total net fee close to the single-fill equivalent.
 
     <Note>
-      Subpenny prices alone produce 4-decimal-place intermediates. Fractional contracts alone also produce 4-decimal-place intermediates. When combined, intermediates can reach 6 decimal places (e.g., \$0.3301 x 0.03 = \$0.009903). Final balances are always rounded to whole cents.
+      Subpenny prices alone produce 4-decimal-place intermediates. Fractional contracts alone also produce 4-decimal-place intermediates. When combined, intermediates can reach 6 decimal places (e.g., \$0.3301 x 0.03 = \$0.009903). Final balances are rounded to the user's target balance precision.
     </Note>
   </Accordion>
 </AccordionGroup>

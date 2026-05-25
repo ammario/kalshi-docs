@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-05-15T22:05:34.958Z
+lastmod: 2026-05-24T22:30:44.931Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,19 @@ You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="May 28, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Fixed-point dollars added to GET /portfolio/balance",
+description: "Starting Thursday, May 28, 2026, GET /portfolio/balance returns balance_dollars alongside the existing balance field. Direct member balances use centi-cent precision."
+}}
+>
+  Starting Thursday, May 28, 2026, `GET /portfolio/balance` returns `balance_dollars`, the member's available balance as a fixed-point dollar string, alongside the existing integer-cent `balance` field. This precision change applies only to direct members of the exchange: direct member balances are aligned to centi-cent (`$0.0001`, or `0.01c`) precision. The legacy `balance` field truncates any sub-cent amount, so use `balance_dollars` for exact values.
+
+  See [Fee Rounding](/getting_started/fee_rounding) for balance alignment and rounding mechanics.
+</Update>
 
 <Update
   label="May 21, 2026"
@@ -32,17 +45,6 @@ description: "In certain uncommon cases, V2 cancel and amend responses don't des
 
   * `DELETE /trade-api/v2/portfolio/events/orders/{order_id}`
   * `POST /trade-api/v2/portfolio/events/orders/{order_id}/amend`
-</Update>
-
-<Update
-  label="May 21, 2026"
-  tags={["New Feature", "Upcoming"]}
-  rss={{
-title: "Fixed-point dollars added to GET /portfolio/balance",
-description: "GET /portfolio/balance now returns balance_dollars alongside the existing balance field."
-}}
->
-  `GET /portfolio/balance` now returns `balance_dollars`, the member's available balance as a fixed-point dollar string, alongside the existing integer-cent `balance` field.
 </Update>
 
 <Update
