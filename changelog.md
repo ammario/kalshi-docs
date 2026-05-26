@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-05-24T22:30:44.931Z
+lastmod: 2026-05-25T17:12:26.548Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -27,6 +27,28 @@ description: "Starting Thursday, May 28, 2026, GET /portfolio/balance returns ba
   Starting Thursday, May 28, 2026, `GET /portfolio/balance` returns `balance_dollars`, the member's available balance as a fixed-point dollar string, alongside the existing integer-cent `balance` field. This precision change applies only to direct members of the exchange: direct member balances are aligned to centi-cent (`$0.0001`, or `0.01c`) precision. The legacy `balance` field truncates any sub-cent amount, so use `balance_dollars` for exact values.
 
   See [Fee Rounding](/getting_started/fee_rounding) for balance alignment and rounding mechanics.
+</Update>
+
+<Update
+  label="May 25, 2026"
+  tags={["Change", "Released"]}
+  rss={{
+title: "Legacy order mutation rate-limit costs updated",
+description: "Effective Monday, May 25, 2026, legacy /portfolio/orders mutation and batch endpoint rate-limit costs are increased. The V2 /portfolio/events/orders endpoints are unchanged."
+}}
+>
+  Effective Monday, May 25, 2026, rate-limit token costs for legacy
+  `/portfolio/orders` mutation and batch endpoints are increased. The V2
+  `/portfolio/events/orders` endpoints are unchanged.
+
+  **Affected endpoints:**
+
+  * `POST /trade-api/v2/portfolio/orders` - cost `10` to `15`
+  * `DELETE /trade-api/v2/portfolio/orders/{order_id}` - cost `2` to `3`
+  * `POST /trade-api/v2/portfolio/orders/{order_id}/amend` - cost `10` to `15`
+  * `POST /trade-api/v2/portfolio/orders/{order_id}/decrease` - cost `10` to `15`
+  * `POST /trade-api/v2/portfolio/orders/batched` - cost `10` to `15`
+  * `DELETE /trade-api/v2/portfolio/orders/batched` - cost `2` to `3`
 </Update>
 
 <Update
