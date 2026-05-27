@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-multivariate-events
-lastmod: 2026-05-21T15:41:48.873Z
+lastmod: 2026-05-26T22:19:05.423Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-05-21T15:41:48.873Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.19.0
+  version: 3.20.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -161,7 +161,6 @@ components:
         - collateral_return_type
         - mutually_exclusive
         - available_on_brokers
-        - product_metadata
       properties:
         event_ticker:
           type: string

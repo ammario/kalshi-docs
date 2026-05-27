@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/milestone/get-milestones
-lastmod: 2026-05-21T15:41:49.657Z
+lastmod: 2026-05-26T22:19:06.179Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-05-21T15:41:49.657Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.19.0
+  version: 3.20.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

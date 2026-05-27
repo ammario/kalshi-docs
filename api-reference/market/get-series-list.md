@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series-list
-lastmod: 2026-05-21T15:41:48.795Z
+lastmod: 2026-05-26T22:19:05.359Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-05-21T15:41:48.795Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.19.0
+  version: 3.20.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -167,6 +167,7 @@ components:
           description: Category specifies the category which this series belongs to.
         tags:
           type: array
+          nullable: true
           items:
             type: string
           description: >-
@@ -174,6 +175,7 @@ components:
             series from different categories can have the same tags.
         settlement_sources:
           type: array
+          nullable: true
           items:
             $ref: '#/components/schemas/SettlementSource'
           description: >-
@@ -196,11 +198,8 @@ components:
           x-omitempty: true
           description: Internal product metadata of the series.
         fee_type:
-          type: string
-          enum:
-            - quadratic
-            - quadratic_with_maker_fees
-            - flat
+          allOf:
+            - $ref: '#/components/schemas/FeeType'
           description: >-
             FeeType is a string representing the series' fee structure. Fee
             structures can be found at
@@ -257,6 +256,17 @@ components:
           type: string
           description: URL to the settlement source
           x-go-type-skip-optional-pointer: true
+    FeeType:
+      type: string
+      enum:
+        - quadratic
+        - quadratic_with_maker_fees
+        - flat
+      x-enum-varnames:
+        - FeeTypeQuadratic
+        - FeeTypeQuadraticWithMakerFees
+        - FeeTypeFlat
+      description: Fee type for a series or scheduled fee override.
     FixedPointCount:
       type: string
       description: >-

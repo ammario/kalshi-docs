@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-series-fee-changes
-lastmod: 2026-05-25T17:12:20.305Z
+lastmod: 2026-05-26T22:19:05.269Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -16,7 +16,7 @@ lastmod: 2026-05-25T17:12:20.305Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.19.0
+  version: 3.20.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -120,11 +120,8 @@ components:
           type: string
           description: Series ticker this fee change applies to
         fee_type:
-          type: string
-          enum:
-            - quadratic
-            - quadratic_with_maker_fees
-            - flat
+          allOf:
+            - $ref: '#/components/schemas/FeeType'
           description: New fee type for the series
         fee_multiplier:
           type: number
@@ -149,6 +146,17 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    FeeType:
+      type: string
+      enum:
+        - quadratic
+        - quadratic_with_maker_fees
+        - flat
+      x-enum-varnames:
+        - FeeTypeQuadratic
+        - FeeTypeQuadraticWithMakerFees
+        - FeeTypeFlat
+      description: Fee type for a series or scheduled fee override.
   responses:
     BadRequestError:
       description: Bad request - invalid input

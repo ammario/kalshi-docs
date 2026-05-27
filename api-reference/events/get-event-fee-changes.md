@@ -1,20 +1,21 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-subaccount-transfers
-lastmod: 2026-05-26T22:19:05.780Z
+url: https://docs.kalshi.com/api-reference/events/get-event-fee-changes
+lastmod: 2026-05-26T22:19:05.434Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Subaccount Transfers
+# Get Event Fee Changes
 
-> Gets a paginated list of all transfers between subaccounts for the authenticated user.
+> Event fees are an override layered on top of the parent series' fee structure. If `fee_type_override` and `fee_multiplier_override` are null, that indicates the override is cleared.
+
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/subaccounts/transfers
+````yaml /openapi.yaml get /events/fee_changes
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,33 +65,36 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/subaccounts/transfers:
+  /events/fee_changes:
     get:
       tags:
-        - portfolio
-      summary: Get Subaccount Transfers
-      description: >-
-        Gets a paginated list of all transfers between subaccounts for the
-        authenticated user.
-      operationId: GetSubaccountTransfers
+        - events
+      summary: Get Event Fee Changes
+      description: >
+        Event fees are an override layered on top of the parent series' fee
+        structure. If `fee_type_override` and `fee_multiplier_override` are
+        null, that indicates the override is cleared.
+      operationId: GetEventFeeChanges
       parameters:
+        - name: event_ticker
+          in: query
+          required: false
+          schema:
+            type: string
+          x-go-type-skip-optional-pointer: true
         - $ref: '#/components/parameters/LimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
       responses:
         '200':
-          description: Transfers retrieved successfully
+          description: Event fee changes retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetSubaccountTransfersResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+                $ref: '#/components/schemas/GetEventFeeChangesResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '500':
           $ref: '#/components/responses/InternalServerError'
-      security:
-        - kalshiAccessKey: []
-          kalshiAccessSignature: []
-          kalshiAccessTimestamp: []
 components:
   parameters:
     LimitQuery:
@@ -116,44 +120,60 @@ components:
         type: string
         x-go-type-skip-optional-pointer: true
   schemas:
-    GetSubaccountTransfersResponse:
+    GetEventFeeChangesResponse:
       type: object
       required:
-        - transfers
+        - event_fee_changes
+        - cursor
       properties:
-        transfers:
+        event_fee_changes:
           type: array
           items:
-            $ref: '#/components/schemas/SubaccountTransfer'
+            $ref: '#/components/schemas/EventFeeChange'
         cursor:
           type: string
-          description: Cursor for the next page of results.
-    SubaccountTransfer:
+          description: >-
+            Pagination cursor for the next page. Empty if there are no more
+            results.
+    EventFeeChange:
       type: object
       required:
-        - transfer_id
-        - from_subaccount
-        - to_subaccount
-        - amount_cents
-        - created_ts
+        - id
+        - event_ticker
+        - series_ticker
+        - fee_type_override
+        - fee_multiplier_override
+        - scheduled_ts
       properties:
-        transfer_id:
+        id:
           type: string
-          description: Unique identifier for this transfer.
-        from_subaccount:
-          type: integer
-          description: Source subaccount number (0 for primary, 1-32 for subaccounts).
-        to_subaccount:
-          type: integer
-          description: Destination subaccount number (0 for primary, 1-32 for subaccounts).
-        amount_cents:
-          type: integer
-          format: int64
-          description: Transfer amount in cents.
-        created_ts:
-          type: integer
-          format: int64
-          description: Unix timestamp when the transfer was created.
+          description: Unique identifier for this fee change
+        event_ticker:
+          type: string
+          description: Event ticker this fee change applies to
+        series_ticker:
+          type: string
+          description: Series ticker for the event
+        fee_type_override:
+          allOf:
+            - $ref: '#/components/schemas/FeeType'
+          nullable: true
+          example: quadratic
+          description: >-
+            New fee type override for the event. When null, the event clears any
+            prior override and falls back to the parent series' fee structure.
+        fee_multiplier_override:
+          type: number
+          format: double
+          nullable: true
+          description: >-
+            New fee multiplier override for the event. When null, the event
+            clears any prior override and falls back to the parent series' fee
+            multiplier.
+        scheduled_ts:
+          type: string
+          format: date-time
+          description: Timestamp when this fee change is scheduled to take effect
     ErrorResponse:
       type: object
       properties:
@@ -169,9 +189,20 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    FeeType:
+      type: string
+      enum:
+        - quadratic
+        - quadratic_with_maker_fees
+        - flat
+      x-enum-varnames:
+        - FeeTypeQuadratic
+        - FeeTypeQuadraticWithMakerFees
+        - FeeTypeFlat
+      description: Fee type for a series or scheduled fee override.
   responses:
-    UnauthorizedError:
-      description: Unauthorized - authentication required
+    BadRequestError:
+      description: Bad request - invalid input
       content:
         application/json:
           schema:
@@ -182,21 +213,5 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-  securitySchemes:
-    kalshiAccessKey:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-KEY
-      description: Your API key ID
-    kalshiAccessSignature:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-SIGNATURE
-      description: RSA-PSS signature of the request
-    kalshiAccessTimestamp:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-TIMESTAMP
-      description: Request timestamp in milliseconds
 
 ````

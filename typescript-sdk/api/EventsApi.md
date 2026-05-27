@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/typescript-sdk/api/EventsApi
-lastmod: 2026-05-15T17:48:46.382Z
+lastmod: 2026-05-26T22:19:22.806Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,7 @@ All URIs are relative to *[https://external-api.kalshi.com/trade-api/v2](https:/
 | Method                                                                        | HTTP request                                                                  | Description                           |
 | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------- |
 | [**getEvent**](#getevent)                                                     | **GET** /events/{event_ticker}                                                | Get Event                             |
+| [**getEventFeeChanges**](#geteventfeechanges)                                 | **GET** /events/fee\_changes                                                  | Get Event Fee Changes                 |
 | [**getEventForecastPercentilesHistory**](#geteventforecastpercentileshistory) | **GET** /series/{series_ticker}/events/{ticker}/forecast\_percentile\_history | Get Event Forecast Percentile History |
 | [**getEventMetadata**](#geteventmetadata)                                     | **GET** /events/{event_ticker}/metadata                                       | Get Event Metadata                    |
 | [**getEvents**](#getevents)                                                   | **GET** /events                                                               | Get Events                            |
@@ -56,6 +57,41 @@ No authorization required
 | **404**     | Event not found              | -                |
 | **401**     | Unauthorized                 | -                |
 | **500**     | Internal server error        | -                |
+
+# **getEventFeeChanges**
+
+> GetEventFeeChangesResponse getEventFeeChanges()
+
+Event fees are an override layered on top of the parent series' fee structure. If `fee_type_override` and `fee_multiplier_override` are null, that indicates the override is cleared.
+
+### Parameters
+
+| Name            | Type          | Description                                                                                                                                  | Notes                            |
+| --------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| **eventTicker** | \[**string**] |                                                                                                                                              | (optional) defaults to undefined |
+| **limit**       | \[**number**] | Number of results per page. Defaults to 100.                                                                                                 | (optional) defaults to 100       |
+| **cursor**      | \[**string**] | Pagination cursor. Use the cursor value returned from the previous response to get the next page of results. Leave empty for the first page. | (optional) defaults to undefined |
+
+### Return type
+
+**GetEventFeeChangesResponse**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+* **Content-Type**: Not defined
+* **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description                              | Response headers |
+| ----------- | ---------------------------------------- | ---------------- |
+| **200**     | Event fee changes retrieved successfully | -                |
+| **400**     | Bad request - invalid input              | -                |
+| **500**     | Internal server error                    | -                |
 
 # **getEventForecastPercentilesHistory**
 
