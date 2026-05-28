@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/error-handling
-lastmod: 2026-05-12T23:42:08.195Z
+lastmod: 2026-05-28T02:33:33.463Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -152,7 +152,7 @@ In OrderCancelReject (35=9):
 
 **Fix**:
 
-* **KalshiNR, KalshiDC, KalshiRFQ**: Set `ResetSeqNumFlag<141>=Y` on every Logon. These sessions require it; Logon will be rejected without it.
+* **KalshiNR, KalshiDC, KalshiRFQ, KalshiMD**: Set `ResetSeqNumFlag<141>=Y` on every Logon. These sessions require it; Logon will be rejected without it.
 * **KalshiRT, KalshiPT**: If you don't need to recover missed messages, set `ResetSeqNumFlag<141>=Y` to reset both sides to 1. If you do need retransmission continuity, ensure your local sequence store matches the server's state.
 
 If using QuickFIX, set `ResetOnLogon=Y` in your session config for non-retransmission sessions.

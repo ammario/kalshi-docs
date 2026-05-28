@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2026-05-04T19:23:16.030Z
+lastmod: 2026-05-28T02:33:33.466Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -23,6 +23,7 @@ lastmod: 2026-05-04T19:23:16.030Z
     | Drop Copy                            | 8229 | KalshiDC     | Request-response queries for historical execution reports                                                                                                                                                                                            |
     | Post Trade                           | 8231 | KalshiPT     | Read-only stream for market settlement reports and position resolution. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access                                                                                               |
     | RFQ                                  | 8232 | KalshiRFQ    | Market maker session for receiving RFQ broadcasts, submitting quotes, and managing quote lifecycle                                                                                                                                                   |
+    | Market Data                          | 8233 | KalshiMD     | Order book snapshots and incremental updates                                                                                                                                                                                                         |
   </Tab>
 
   <Tab title="Demo">
@@ -35,6 +36,7 @@ lastmod: 2026-05-04T19:23:16.030Z
     | Drop Copy                            | 8229 | KalshiDC     | Request-response queries for historical execution reports                                                                                                                                                                                            |
     | Post Trade                           | 8231 | KalshiPT     | Read-only stream for market settlement reports and position resolution. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access                                                                                               |
     | RFQ                                  | 8232 | KalshiRFQ    | Market maker session for receiving RFQ broadcasts, submitting quotes, and managing quote lifecycle                                                                                                                                                   |
+    | Market Data                          | 8233 | KalshiMD     | Order book snapshots and incremental updates                                                                                                                                                                                                         |
   </Tab>
 </Tabs>
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/changelog
-lastmod: 2026-05-24T22:30:44.924Z
+lastmod: 2026-05-28T02:33:32.988Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,6 +11,15 @@ lastmod: 2026-05-24T22:30:44.924Z
 > Version history and updates for the Kalshi FIX API
 
 # FIX API Changelog
+
+## Version 1.0.28 (2026-05-28)
+
+* Added market data support on the dedicated `KalshiMD` session
+  * Subscriptions are identified by `Symbol<55>`
+  * `MarketDataRequest` (35=V) requests order book snapshots (`263=0`) or snapshot-plus-updates subscriptions (`263=1`); cancel with `263=2` (symbols in `55`, or none to cancel all)
+  * `MarketDataSnapshotFullRefresh` (35=W) returns the full aggregated book; `MarketDataIncrementalRefresh` (35=X) streams subsequent level changes
+  * `MarketDataRequestReject` (35=Y) is sent when a request cannot be accepted
+  * For more info see [Market Data](/fix/market-data)
 
 ## Version 1.0.27 (2026-05-28)
 
