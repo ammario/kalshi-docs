@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/market_lifecycle
-lastmod: 2026-05-07T02:08:16.064Z
+lastmod: 2026-05-28T15:49:19.115Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -89,6 +89,8 @@ Market lifecycle events are delivered on two channels:
 | `multivariate_market_lifecycle` | MVE markets only (`KXMVE*`)       | `created`, `activated`, `deactivated`, `close_date_updated`, `determined`, `settled`                     |
 
 Both channels also emit `event_lifecycle` messages when new events are created.
+
+The `market_lifecycle_v2` channel additionally emits `event_fee_update` messages when an event-level fee override is set or cleared.
 
 The WebSocket `settled` event corresponds to settlement being processed; in REST, settled markets end up at `finalized`.
 
