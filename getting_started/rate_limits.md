@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-04-24T03:02:39.471Z
+lastmod: 2026-05-31T16:40:12.339Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,6 +24,12 @@ You have two independent token budgets:
 | --------- | ----------------------------------------------------------------------- |
 | **Read**  | `GET` endpoints and anything not explicitly routed elsewhere.           |
 | **Write** | Order placement, amends, cancels, order groups, and the RFQ quote flow. |
+
+## Perps limits use separate buckets
+
+The Perps API uses the **same tiers and per-second token budgets** described here, but perps traffic is metered in its **own** Read and Write buckets. Perps calls don't draw down your event-contract budgets, and event-contract calls don't draw down your perps budgets — though a single tier assignment applies to both. In effect you have up to four independent buckets: event-contract Read, event-contract Write, perps Read, and perps Write.
+
+See the [Perps API](/margin) overview for the full perps surface.
 
 ## Batch endpoints don't save tokens
 

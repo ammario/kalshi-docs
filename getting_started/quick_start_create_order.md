@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_create_order
-lastmod: 2026-05-05T21:10:39.090Z
+lastmod: 2026-05-31T16:40:12.314Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ Before you begin, you'll need:
 
 * A Kalshi account with API access configured
 * Python with the `requests` and `cryptography` libraries installed
-* Your authentication functions set up (see our [authentication guide](quick_start_authenticated_requests))
+* Your authentication functions set up (see our [authentication guide](/getting_started/quick_start_authenticated_requests))
 
 <Info>
   This guide assumes you have the authentication code from our authentication guide, including the `get()` function for making authenticated requests.

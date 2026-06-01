@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/sdks/overview
-lastmod: 2026-04-26T15:27:38.166Z
+lastmod: 2026-05-31T16:40:12.343Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,64 +8,32 @@ lastmod: 2026-04-26T15:27:38.166Z
 
 # Kalshi SDKs
 
-> Official SDKs for integrating with the Kalshi API
+> Official Python and TypeScript SDKs for the Kalshi API
 
-## Available SDKs
+Kalshi publishes Python and TypeScript SDKs to help you get started quickly.
 
-Kalshi SDKs are updated periodically, but active traders should use the REST [OpenAPI specification](https://docs.kalshi.com/openapi.yaml), WebSocket [AsyncAPI specification](https://docs.kalshi.com/asyncapi.yaml), and the rest of the API documentation as the source of truth for maintaining their own clients.
+<Warning>
+  SDKs are updated periodically and may lag the API. Active traders should treat the REST [OpenAPI specification](https://docs.kalshi.com/openapi.yaml) and WebSocket [AsyncAPI specification](https://docs.kalshi.com/asyncapi.yaml) as the source of truth. For production, we recommend generating your own client from those specs — or integrating directly — for full control over your implementation.
+</Warning>
+
+## Packages
 
 <CardGroup cols={2}>
-  <Card title="Python" icon="python" href="/sdks/python/quickstart">
-    Full-featured Python SDK with async support
+  <Card title="Python (sync)" icon="python" href="https://pypi.org/project/kalshi_python_sync/">
+    `pip install kalshi_python_sync`
   </Card>
 
-  <Card title="TypeScript" icon="js" href="/sdks/typescript/quickstart">
-    TypeScript/JavaScript SDK for Node.js and browsers
+  <Card title="Python (async)" icon="python" href="https://pypi.org/project/kalshi_python_async/">
+    `pip install kalshi_python_async`
+  </Card>
+
+  <Card title="TypeScript" icon="js" href="https://www.npmjs.com/package/kalshi-typescript">
+    `npm install kalshi-typescript`
   </Card>
 </CardGroup>
 
-## Versioning and Updates
-
-SDK versions are aligned with the [OpenAPI specification](https://docs.kalshi.com/openapi.yaml). New SDK releases are generally published on Tuesdays or Wednesdays each week, in advance of any corresponding API changes going live. However, release timing may vary and is not guaranteed. We recommend checking the SDK package repositories and the [API Changelog](/changelog) for the latest updates.
-
-These SDKs are intended to help developers get started quickly with the Kalshi API. For production applications, we recommend generating your own client libraries from the [OpenAPI specification](https://docs.kalshi.com/openapi.yaml) or implementing direct API integration to ensure full control over your implementation.
-
-## Features
-
-All SDKs provide:
-
-* Full API coverage for trading, market data, and portfolio management
-* Authentication with RSA-PSS signing
-* Automatic request signing and timestamp handling
-* Type-safe models and responses
-* Error handling and retries
-* Comprehensive documentation and examples
-
-## Installation
-
-<CodeGroup>
-  ```bash Python (sync) theme={null}
-  pip install kalshi_python_sync
-  ```
-
-  ```bash Python (async) theme={null}
-  pip install kalshi_python_async
-  ```
-
-  ```bash TypeScript theme={null}
-  npm install kalshi-typescript
-  ```
-</CodeGroup>
-
 <Note>
-  The old `kalshi-python` package is deprecated. Please migrate to `kalshi-python-sync` or `kalshi-python-async`.
+  The old `kalshi-python` package is deprecated — use `kalshi_python_sync` or `kalshi_python_async`.
 </Note>
 
-## Authentication
-
-All SDKs use the same authentication mechanism with API keys and RSA-PSS signing. You'll need:
-
-1. An API key ID from your Kalshi account
-2. A private key file for signing requests
-
-See the quickstart guide for your chosen SDK for detailed setup instructions.
+SDK releases track the [OpenAPI specification](https://docs.kalshi.com/openapi.yaml) and are generally published Tuesday–Wednesday each week, ahead of the corresponding API changes; check the package pages and the [API Changelog](/changelog) for updates. All SDKs authenticate with an API key and RSA-PSS request signing — see [API Keys](/getting_started/api_keys) for setup.

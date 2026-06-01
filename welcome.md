@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/welcome
-lastmod: 2026-04-07T18:17:21.419Z
+lastmod: 2026-05-31T16:40:12.397Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -66,53 +66,56 @@ paddingLeft: '1.25rem',
 paddingRight: '1.25rem'
 }}
 >
-  <CardGroup cols={4}>
+  ## The APIs
+
+  <CardGroup cols={2}>
+    <Card title="Predictions APIs" icon="chart-line" href="/api-reference">
+      Event-contract markets — REST, WebSocket, and FIX.
+    </Card>
+
+    <Card title="Perps APIs" icon="chart-candlestick" href="/margin">
+      Perpetual futures (margin) — REST, WebSocket, and FIX.
+    </Card>
+  </CardGroup>
+
+  ## Get started
+
+  <CardGroup cols={3}>
     <Card title="Making Your First Request" icon="rocket" href="/getting_started/making_your_first_request">
       Make your first API call and start trading on Kalshi.
     </Card>
 
     <Card title="Demo Environment" icon="atom" href="/getting_started/demo_env">
-      Test your integration in our safe demo environment.
+      Build and test safely against the demo environment.
     </Card>
 
     <Card title="API Keys" icon="key" href="/getting_started/api_keys">
-      Learn how to generate and manage your API credentials.
+      Generate and manage your API credentials.
     </Card>
+  </CardGroup>
 
-    <Card title="Market Data" icon="chart-candlestick" href="/getting_started/quick_start_market_data">
-      Quick start guide for accessing market data.
-    </Card>
+  ## Reference
 
-    <Card title="WebSocket API" icon="plug" href="/getting_started/quick_start_websockets">
-      Learn about real-time data streaming via WebSockets.
-    </Card>
-
-    <Card title="API Reference" icon="code" href="/api-reference">
-      Explore our complete API documentation.
-    </Card>
-
-    <Card title="OpenAPI Specification" icon="file-code" href="https://docs.kalshi.com/openapi.yaml">
-      Download the OpenAPI specification for API integration.
-    </Card>
-
-    <Card title="AsyncAPI Specification" icon="file-code" href="https://docs.kalshi.com/asyncapi.yaml">
-      Download the AsyncAPI specification for WebSocket integration.
-    </Card>
-
+  <CardGroup cols={3}>
     <Card title="Rate Limits" icon="gauge" href="/getting_started/rate_limits">
-      Understand API rate limits and best practices.
-    </Card>
-
-    <Card title="Kalshi Glossary" icon="book-open" href="/getting_started/terms">
-      Learn key terms and concepts used in the Kalshi exchange.
+      Token budgets, tiers, and bursting.
     </Card>
 
     <Card title="Changelog" icon="list-tree" href="/changelog">
       Stay updated with the latest API changes.
     </Card>
 
-    <Card title="Kalshi Academy" icon="graduation-cap" href="https://help.kalshi.com/">
-      Explore educational resources and tutorials.
+    <Card title="Glossary" icon="book-open" href="/getting_started/terms">
+      Key terms and concepts used across the exchange.
     </Card>
   </CardGroup>
+
+  ## Specifications
+
+  Download the raw spec files for code generation or building your own client:
+
+  * **Predictions** — [`openapi.yaml`](/openapi.yaml) (REST) · [`asyncapi.yaml`](/asyncapi.yaml) (WebSocket)
+  * **Perps** — [`perps_openapi.yaml`](/perps_openapi.yaml) (REST) · [`perps_asyncapi.yaml`](/perps_asyncapi.yaml) (WebSocket)
+
+  New to prediction markets? Visit [Kalshi Academy](https://help.kalshi.com/).
 </div>

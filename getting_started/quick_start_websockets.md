@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_websockets
-lastmod: 2026-05-13T03:40:16.915Z
+lastmod: 2026-05-31T19:51:47.171Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -260,7 +260,7 @@ The server sends error messages in this format:
 
 | Code | Error                                            | Description                                                                                                                                                            | User error? |
 | ---- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| 1    | Unable to process message                        | The incoming message was not valid JSON, or a JSON field had a type incompatible with the websocket command schema.                                                    | Y           |
+| 1    | Unable to process message                        | The incoming message was not valid JSON, or a JSON field had a type incompatible with the WebSocket command schema.                                                    | Y           |
 | 2    | Params required                                  | The command requires `params` or required subscription parameters are missing.                                                                                         | Y           |
 | 3    | Channels required                                | The `subscribe` command must include at least one channel.                                                                                                             | Y           |
 | 4    | Subscription IDs required                        | The `unsubscribe` command must include at least one subscription ID in `sids`.                                                                                         | Y           |
