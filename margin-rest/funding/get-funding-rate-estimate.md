@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/funding/get-funding-rate-estimate
-lastmod: 2026-05-31T19:51:38.544Z
+lastmod: 2026-06-01T15:43:43.285Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -25,13 +25,9 @@ info:
     approach
 servers:
   - url: https://external-api.kalshi.com/trade-api/v2
-    description: Production Trade API server
-  - url: https://api.elections.kalshi.com/trade-api/v2
-    description: Production shared API server, also supported
+    description: Production perps REST API server
   - url: https://external-api.demo.kalshi.co/trade-api/v2
-    description: Demo Trade API server
-  - url: https://demo-api.kalshi.co/trade-api/v2
-    description: Demo shared API server, also supported
+    description: Demo perps REST API server
 security: []
 tags:
   - name: exchange

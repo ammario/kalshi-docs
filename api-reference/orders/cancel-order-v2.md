@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order-v2
-lastmod: 2026-05-31T19:51:37.641Z
+lastmod: 2026-06-01T15:43:42.311Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-trades
-lastmod: 2026-05-31T19:51:38.279Z
+lastmod: 2026-06-01T15:43:42.989Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-05-31T19:51:38.279Z
 
 # Get Historical Trades
 
->  Endpoint for getting all historical trades for all markets. Trades that were filled before the historical cutoff are available via this endpoint. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
+>  Endpoint for getting all historical trades for all markets. Trades that were filled before the historical cutoff are available via this endpoint. Block trades are included by default and identified by the `is_block_trade` field; use the `is_block_trade` query parameter to filter by block / non-block. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
 
 
 
@@ -69,7 +69,7 @@ paths:
       tags:
         - historical
       summary: Get Historical Trades
-      description: ' Endpoint for getting all historical trades for all markets. Trades that were filled before the historical cutoff are available via this endpoint. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.'
+      description: ' Endpoint for getting all historical trades for all markets. Trades that were filled before the historical cutoff are available via this endpoint. Block trades are included by default and identified by the `is_block_trade` field; use the `is_block_trade` query parameter to filter by block / non-block. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.'
       operationId: GetTradesHistorical
       parameters:
         - $ref: '#/components/parameters/TickerQuery'
@@ -77,6 +77,7 @@ paths:
         - $ref: '#/components/parameters/MaxTsQuery'
         - $ref: '#/components/parameters/MarketLimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
+        - $ref: '#/components/parameters/IsBlockTradeQuery'
       responses:
         '200':
           description: Historical trades retrieved successfully
@@ -135,6 +136,15 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    IsBlockTradeQuery:
+      name: is_block_trade
+      in: query
+      description: >
+        Filter trades by whether they are block trades. Omit to return all
+        trades. Set to `true` to return only block trades. Set to `false` to
+        return only non-block trades.
+      schema:
+        type: boolean
   schemas:
     GetTradesResponse:
       type: object
@@ -160,6 +170,7 @@ components:
         - taker_outcome_side
         - taker_book_side
         - created_time
+        - is_block_trade
       properties:
         trade_id:
           type: string
@@ -231,6 +242,12 @@ components:
           type: string
           format: date-time
           description: Timestamp when this trade was executed
+        is_block_trade:
+          type: boolean
+          description: >-
+            True if this trade was matched off-book as a block trade (e.g. via
+            RFQ / negotiated block proposal); false for trades that filled on
+            the standard order book.
     ErrorResponse:
       type: object
       properties:

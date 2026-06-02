@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin
-lastmod: 2026-05-31T21:43:43.224Z
+lastmod: 2026-06-01T19:18:21.162Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -25,23 +25,25 @@ The **Perps API** is how you trade Kalshi's perpetual futures. **"Perps", "margi
 | Demo        | `https://external-api.demo.kalshi.co/trade-api/v2/margin/`                            |
 | Production  | `https://external-api.kalshi.com/trade-api/v2/margin/` (rolling out member by member) |
 
-Perps shares the same hosts as the event contract API (the `external-api` hosts are recommended; the shared `api.elections.kalshi.com` / `demo-api.kalshi.co` hosts also work). See [API Environments and Endpoints](/getting_started/api_environments) for the full list.
+Use the `external-api` hosts for perps REST. WebSocket and FIX use the separate perps hosts listed below.
 
 ### WebSocket API
 
-| Environment | URL                                                                                      |
-| ----------- | ---------------------------------------------------------------------------------------- |
-| Demo        | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2/margin`                            |
-| Production  | `wss://external-api-ws.kalshi.com/trade-api/ws/v2/margin` (rolling out member by member) |
+| Environment | URL                                                                                             |
+| ----------- | ----------------------------------------------------------------------------------------------- |
+| Demo        | `wss://external-api-margin-ws.demo.kalshi.co/trade-api/ws/v2/margin`                            |
+| Production  | `wss://external-api-margin-ws.kalshi.com/trade-api/ws/v2/margin` (rolling out member by member) |
 
 ### FIX API
 
 The margin FIX gateway uses a **separate host** from event contract FIX.
 
-| Environment | Host                        |
-| ----------- | --------------------------- |
-| Demo        | `margin-fix.demo.kalshi.co` |
-| Production  | Coming soon                 |
+| Environment | Type                      | Host                                      |
+| ----------- | ------------------------- | ----------------------------------------- |
+| Demo        | Order entry and drop copy | `margin-fix.demo.kalshi.co`               |
+| Demo        | Market data               | `margin-marketdata.fix.demo.kalshi.co`    |
+| Production  | Order entry and drop copy | `margin-fix-api.fix.elections.kalshi.com` |
+| Production  | Market data               | Coming soon                               |
 
 Available session types:
 
@@ -50,6 +52,7 @@ Available session types:
 | Order Entry (without retransmission) | 8228 | KalshiNR     |
 | Drop Copy                            | 8229 | KalshiDC     |
 | Order Entry (with retransmission)    | 8230 | KalshiRT     |
+| Market Data                          | 8233 | KalshiMD     |
 
 ## API Reference
 
@@ -62,6 +65,7 @@ The Perps API mirrors the event contract API (same auth, pagination, error forma
   * [Authentication & Sessions](/fix-margin/authentication)
   * [Order Entry](/fix-margin/order-entry)
   * [Order Groups](/fix-margin/order-groups)
+  * [Market Data](/fix-margin/market-data)
   * [Drop Copy](/fix-margin/drop-copy)
   * [Listener Sessions](/fix-margin/listener-sessions)
   * [Error Handling](/fix-margin/error-handling)
@@ -111,10 +115,10 @@ The Perps API mirrors the event contract API (same auth, pagination, error forma
 
 **Key differences:**
 
-|                               | Event Contract FIX      | Margin FIX                                                         |
-| ----------------------------- | ----------------------- | ------------------------------------------------------------------ |
-| **Pricing**                   | Integer cents (1–99)    | Decimal dollars up to 4 decimal places                             |
-| **Session types**             | 5 (NR, RT, DC, PT, RFQ) | 3 (NR, RT, DC)                                                     |
-| **RFQ / Quotes**              | Supported               | Not available                                                      |
-| **Market settlement reports** | Supported (on KalshiRT) | Not available                                                      |
-| **UseDollars (21005)**        | Optional logon flag     | Always enabled (margin uses fixed-point dollar pricing by default) |
+|                               | Event Contract FIX          | Margin FIX                                                         |
+| ----------------------------- | --------------------------- | ------------------------------------------------------------------ |
+| **Pricing**                   | Integer cents (1–99)        | Decimal dollars up to 4 decimal places                             |
+| **Session types**             | 6 (NR, RT, DC, PT, RFQ, MD) | 4 (NR, RT, DC, MD)                                                 |
+| **RFQ / Quotes**              | Supported                   | Not available                                                      |
+| **Market settlement reports** | Supported (on KalshiRT)     | Not available                                                      |
+| **UseDollars (21005)**        | Optional logon flag         | Always enabled (margin uses fixed-point dollar pricing by default) |

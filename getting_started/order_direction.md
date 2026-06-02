@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/order_direction
-lastmod: 2026-05-11T17:49:40.181Z
+lastmod: 2026-06-01T19:43:33.338Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

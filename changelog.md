@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-05-31T19:51:47.101Z
+lastmod: 2026-06-01T16:28:45.489Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -40,6 +40,48 @@ description: "RFQs will support fractional contract quantities in API and FIX fl
   * `GET /communications/rfqs`
   * `GET /communications/quotes`
   * FIX `QuoteRequest (35=R)`, `Quote (35=S)`, and `QuoteStatusReport (35=AI)`
+</Update>
+
+<Update
+  label="June 1, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Legacy order mutation rate-limit costs increase to 5x V2",
+description: "Legacy /portfolio/orders mutation and batch endpoint rate-limit costs will be 5x the corresponding V2 /portfolio/events/orders endpoint costs. V2 endpoint costs are unchanged."
+}}
+>
+  Legacy `/portfolio/orders` mutation and batch endpoint rate-limit token costs
+  will be 5x the corresponding V2 `/portfolio/events/orders` endpoint costs.
+  The V2 endpoint costs are unchanged.
+
+  **Affected endpoints:**
+
+  * `POST /trade-api/v2/portfolio/orders` - cost `15` to `50`
+  * `DELETE /trade-api/v2/portfolio/orders/{order_id}` - cost `3` to `10`
+  * `POST /trade-api/v2/portfolio/orders/{order_id}/amend` - cost `15` to `50`
+  * `POST /trade-api/v2/portfolio/orders/{order_id}/decrease` - cost `15` to `50`
+  * `POST /trade-api/v2/portfolio/orders/batched` - cost `15` to `50`
+  * `DELETE /trade-api/v2/portfolio/orders/batched` - cost `3` to `10`
+</Update>
+
+<Update
+  label="May 29, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Block trade indicators and filters for public trades",
+description: "Public V2 trade endpoints now identify block trades with is_block_trade and support filtering by block trade status."
+}}
+>
+  Public V2 trade responses now include `is_block_trade`, which identifies
+  trades matched off-book as block trades. The same endpoints now support an
+  optional `is_block_trade` query parameter; omit it to return all trades, set
+  it to `true` for only block trades, or set it to `false` for only non-block
+  trades.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/markets/trades`
+  * `GET /trade-api/v2/historical/trades`
 </Update>
 
 <Update

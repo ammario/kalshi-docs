@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_create_order
-lastmod: 2026-05-31T16:40:12.314Z
+lastmod: 2026-06-01T16:28:45.481Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -48,7 +48,7 @@ from urllib.parse import urlparse
 def post(private_key, api_key_id, path, data, base_url=BASE_URL):
     """Make an authenticated POST request to the Kalshi API."""
     timestamp = str(int(datetime.datetime.now().timestamp() * 1000))
-    # Signing requires the full URL path from root (e.g. /trade-api/v2/portfolio/orders)
+    # Signing requires the full URL path from root (e.g. /trade-api/v2/portfolio/events/orders)
     sign_path = urlparse(base_url + path).path
     signature = create_signature(private_key, timestamp, "POST", sign_path)
 
@@ -64,22 +64,22 @@ def post(private_key, api_key_id, path, data, base_url=BASE_URL):
 # Place a buy order for 1 YES contract at 1 cent
 order_data = {
     "ticker": market['ticker'],
-    "action": "buy",
-    "side": "yes",
-    "count": 1,
-    "type": "limit",
-    "yes_price": 1,
+    "side": "bid",
+    "count": "1",
+    "price": "0.0100",
+    "time_in_force": "good_till_canceled",
+    "self_trade_prevention_type": "taker_at_cross",
     "client_order_id": str(uuid.uuid4())  # Unique ID for deduplication
 }
 
-response = post(private_key, API_KEY_ID, '/portfolio/orders', order_data)
+response = post(private_key, API_KEY_ID, '/portfolio/events/orders', order_data)
 
 if response.status_code == 201:
-    order = response.json()['order']
+    order = response.json()
     print(f"Order placed successfully!")
     print(f"Order ID: {order['order_id']}")
     print(f"Client Order ID: {order_data['client_order_id']}")
-    print(f"Status: {order['status']}")
+    print(f"Remaining Count: {order['remaining_count']}")
 else:
     print(f"Error: {response.status_code} - {response.text}")
 ```
@@ -98,7 +98,7 @@ from urllib.parse import urlparse
 def post(private_key, api_key_id, path, data, base_url=BASE_URL):
     """Make an authenticated POST request to the Kalshi API."""
     timestamp = str(int(datetime.datetime.now().timestamp() * 1000))
-    # Signing requires the full URL path from root (e.g. /trade-api/v2/portfolio/orders)
+    # Signing requires the full URL path from root (e.g. /trade-api/v2/portfolio/events/orders)
     sign_path = urlparse(base_url + path).path
     signature = create_signature(private_key, timestamp, "POST", sign_path)
 
@@ -122,22 +122,22 @@ print("\nPlacing order...")
 client_order_id = str(uuid.uuid4())
 order_data = {
     "ticker": market['ticker'],
-    "action": "buy",
-    "side": "yes",
-    "count": 1,
-    "type": "limit",
-    "yes_price": 1,
+    "side": "bid",
+    "count": "1",
+    "price": "0.0100",
+    "time_in_force": "good_till_canceled",
+    "self_trade_prevention_type": "taker_at_cross",
     "client_order_id": client_order_id
 }
 
-response = post(private_key, API_KEY_ID, '/portfolio/orders', order_data)
+response = post(private_key, API_KEY_ID, '/portfolio/events/orders', order_data)
 
 if response.status_code == 201:
-    order = response.json()['order']
+    order = response.json()
     print(f"Order placed successfully!")
     print(f"Order ID: {order['order_id']}")
     print(f"Client Order ID: {client_order_id}")
-    print(f"Status: {order['status']}")
+    print(f"Remaining Count: {order['remaining_count']}")
 else:
     print(f"Error: {response.status_code} - {response.text}")
 ```
@@ -166,10 +166,9 @@ Common errors and how to handle them:
 
 Now that you've created your first order, you can:
 
-* Check order status using the `/portfolio/orders/{order_id}` endpoint
-* List all your orders with `/portfolio/orders`
-* Amend your order price or quantity using PUT `/portfolio/orders/{order_id}`
-* Cancel orders using DELETE `/portfolio/orders/{order_id}`
+* Store the returned `order_id` and `client_order_id` for local tracking
+* Amend your order price or quantity using POST `/portfolio/events/orders/{order_id}/amend`
+* Cancel orders using DELETE `/portfolio/events/orders/{order_id}`
 * Implement WebSocket connections for real-time updates
 * Build automated trading strategies
 

@@ -35,12 +35,12 @@ description: >
 servers:
   - id: production
     protocol: wss
-    host: external-api-ws.kalshi.com
+    host: external-api-margin-ws.kalshi.com
     bindings: []
     variables: []
   - id: demo
     protocol: wss
-    host: external-api-ws.demo.kalshi.co
+    host: external-api-margin-ws.demo.kalshi.co
     bindings: []
     variables: []
 address: trade
