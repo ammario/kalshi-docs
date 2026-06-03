@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-05-19T15:23:43.129Z
+lastmod: 2026-06-02T18:45:31.836Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -158,7 +158,8 @@ Sent by the exchange to reflect order state changes.
 
 Common values for the Text field in Execution Reports:
 
-* **EXCHANGE\_UNAVAILABLE** - Catch-all for Exchange outage or unmapped errors, maps to OrdRejReason "Other"
+* **EXCHANGE\_UNAVAILABLE** - the gateway could not confirm whether the order was applied (exchange unreachable, request timed out, or interrupted after the order may have been accepted). Reconcile the order's state, or retry with the same ClOrdID. Maps to OrdRejReason "Other"
+* **INTERNAL\_ERROR** - a reject from a healthy exchange that could not be mapped to a specific reason. The order was not applied, so it is safe to fix and resubmit. Maps to OrdRejReason "Other"
 * **MARKET\_ALREADY\_CLOSED** - maps to OrdRejReason "Exchange closed"
 * **MARKET\_INACTIVE** - maps to OrdRejReason "Exchange closed"
 * **MARKET\_NOT\_FOUND** - maps to OrdRejReason "Unknown symbol"

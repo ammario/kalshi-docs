@@ -27,13 +27,13 @@ You have two independent token budgets:
 
 ## Perps limits use separate buckets
 
-The Perps API uses the **same tiers and per-second token budgets** described here, but perps traffic is metered in its **own** Read and Write buckets. Perps calls don't draw down your event-contract budgets, and event-contract calls don't draw down your perps budgets — though a single tier assignment applies to both. In effect you have up to four independent buckets: event-contract Read, event-contract Write, perps Read, and perps Write.
+The Perps API uses the **same tiers and per-second token budgets** described here, but perps traffic is metered in its **own** Read and Write buckets. Perps calls don't draw down your event-contract budgets, and event-contract calls don't draw down your perps budgets, though a single tier assignment applies to both. In effect you have up to four independent buckets: event-contract Read, event-contract Write, perps Read, and perps Write.
 
 See the [Perps API](/margin) overview for the full perps surface.
 
 ## Batch endpoints don't save tokens
 
-A batch request costs the same as making each call individually — every item in the batch is billed separately:
+A batch request costs the same as making each call individually. Every item in the batch is billed separately:
 
 * [Batch Create Orders](/api-reference/orders/batch-create-orders): submitting 25 orders costs `25 × 10 = 250` tokens.
 * [Batch Cancel Orders](/api-reference/orders/batch-cancel-orders): cancelling 25 orders costs `25 × 2 = 50` tokens.
@@ -69,7 +69,7 @@ Per-second token budgets in each bucket:
 * **Premier, Paragon, Prime**: qualification criteria will be published shortly.
 
 <Info>
-  Kalshi may, at its discretion, adjust your tier at any time — including downgrading you from higher tiers following prolonged inactivity. Members may request an upgrade by contacting support with a description of their use case.
+  Kalshi may, at its discretion, adjust your tier at any time, including downgrading you from higher tiers following prolonged inactivity. Members may request an upgrade by contacting support with a description of their use case.
 </Info>
 
 ## When you hit the limit
@@ -84,8 +84,8 @@ A rate-limited request returns `429 Too Many Requests` with the body:
 
 ## Bursting above your per-second budget
 
-Your Write bucket holds **two seconds** of your per-second budget — so idle or below-steady traffic builds up headroom you can spend in a single burst. Useful for event-driven clients reacting quickly to market moves or price prints. Each request drains the bucket by its token cost; the bucket refills continuously at your per-second budget up to its capacity.
+Your Write bucket holds **two seconds** of your per-second budget, so idle or below-steady traffic builds up headroom you can spend in a single burst. Useful for event-driven clients reacting quickly to market moves or price prints. Each request drains the bucket by its token cost; the bucket refills continuously at your per-second budget up to its capacity.
 
-Over-drawing returns `429 Too Many Requests`. There's no enforced cooldown — your next request is allowed as soon as the bucket has enough tokens to cover it.
+Over-drawing returns `429 Too Many Requests`. There's no enforced cooldown; your next request is allowed as soon as the bucket has enough tokens to cover it.
 
-Basic tier is the exception — its Write bucket holds one second of budget, with no accumulated headroom.
+Basic tier is the exception: its Write bucket holds one second of budget, with no accumulated headroom.

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/common-components
-lastmod: 2026-05-28T02:33:33.469Z
+lastmod: 2026-06-02T17:02:31.701Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -101,6 +101,8 @@ After an EventResendRequest, the server replays the matching historical order up
 | W       | MarketDataSnapshotFullRefresh | KalshiMD | Server -> Client |
 | X       | MarketDataIncrementalRefresh  | KalshiMD | Server -> Client |
 | Y       | MarketDataRequestReject       | KalshiMD | Server -> Client |
+| e       | SecurityStatusRequest         | KalshiMD | Client -> Server |
+| f       | SecurityStatus                | KalshiMD | Server -> Client |
 
 #### Post Trade
 

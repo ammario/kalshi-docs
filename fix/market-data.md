@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-data
-lastmod: 2026-05-28T02:33:33.461Z
+lastmod: 2026-06-02T17:02:31.676Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-05-28T02:33:33.461Z
 
 > Request order book snapshots and incremental updates through FIX
 
-Market data is available on the dedicated **KalshiMD** session. It supports order book snapshots and incremental updates for event-contract markets. Subscriptions are identified by `Symbol<55>`.
+Market data is available on the dedicated **KalshiMD** session. It supports order book snapshots, incremental updates, and per-market trading-status changes via [Security Status](#security-status). Subscriptions are identified by `Symbol<55>`.
 
 `KalshiMD` does not support message retransmission. Use `ResetSeqNumFlag<141>=Y` on Logon.
 
@@ -99,3 +99,44 @@ Sent when a market data request cannot be accepted. Unknown market tickers are n
 
 * `2`=Insufficient bandwidth, including request or session symbol limits
 * `4`=Unsupported `SubscriptionRequestType`
+
+## Security Status
+
+`KalshiMD` also streams per-market trading-status changes as `SecurityStatus<35=f>`. Subscribe by `Symbol<55>` with `SecurityStatusRequest<35=e>`. Updates are changes-only; no initial status is sent on subscribe.
+
+### Security Status Request (35=e)
+
+| Tag | Name                    | Type   | Required | Description                                              |
+| --- | ----------------------- | ------ | -------- | -------------------------------------------------------- |
+| 263 | SubscriptionRequestType | Char   | Y        | `1`=Subscribe, `2`=Unsubscribe.                          |
+| 55  | Symbol                  | String | Y        | The single market ticker to subscribe to or unsubscribe. |
+
+```fix Example subscribe theme={null}
+8=FIXT.1.1|35=e|49=your-api-key|56=KalshiMD|263=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|
+```
+
+```fix Example unsubscribe theme={null}
+8=FIXT.1.1|35=e|49=your-api-key|56=KalshiMD|263=2|55=KXNBAGAME-26MAY25NYKCLE-NYK|
+```
+
+### Security Status (35=f)
+
+Streamed when a subscribed market changes trading state. Correlate by `Symbol<55>`.
+
+| Tag | Name                  | Type   | Required | Description                                                    |
+| --- | --------------------- | ------ | -------- | -------------------------------------------------------------- |
+| 55  | Symbol                | String | Y        | Market ticker.                                                 |
+| 326 | SecurityTradingStatus | Int    | Y        | See [Trading Status Lifecycle](#trading-status-lifecycle-326). |
+
+```fix Example trading halt theme={null}
+8=FIXT.1.1|35=f|49=KalshiMD|56=your-api-key|55=KXNBAGAME-26MAY25NYKCLE-NYK|326=2|
+```
+
+### Trading Status Lifecycle (326)
+
+* `3`=Resume: the market was activated and is open for trading
+* `2`=Trading halt: the market was deactivated
+* `100`=Kalshi determined: the market was determined; trading has ended and the result is known
+* `101`=Kalshi settled: the market settled. The subscription for that symbol is then dropped.
+
+Scheduled (time-based) opens and closes are not emitted as discrete events and are not reported here.

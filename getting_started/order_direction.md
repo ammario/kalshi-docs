@@ -13,11 +13,11 @@ lastmod: 2026-06-01T19:43:33.338Z
 Direction on every Order, Fill, and Trade response is expressed by two
 fields that carry the same bit in two vocabularies:
 
-* **`outcome_side`** (`yes` | `no`) — which outcome the user is positioned
+* **`outcome_side`** (`yes` | `no`): which outcome the user is positioned
   for. A user paying to be long the yes outcome has `outcome_side=yes`;
   paying to be long the no outcome has `outcome_side=no`.
-* **`book_side`** (`bid` | `ask`) — same bit in book-vocabulary.
-  **`bid ≡ yes`, `ask ≡ no`** — always.
+* **`book_side`** (`bid` | `ask`): same bit in book-vocabulary.
+  **`bid ≡ yes`, `ask ≡ no`**, always.
 
 Pick whichever vocabulary fits your integration; you only need one of
 them to know the trade's direction.
@@ -30,7 +30,7 @@ has no user perspective and reports the taker's side.
 
 `outcome_side` describes directional exposure only; it does not change
 the order's price. An order at price `p` with `outcome_side=no` is
-matched by an order at the same price `p` with `outcome_side=yes` —
+matched by an order at the same price `p` with `outcome_side=yes`:
 both parties trade at the same price, just on opposite directions.
 
 ## Equivalence between (action, side) and outcome\_side
@@ -71,7 +71,7 @@ exception to the price-doesn't-change rule above. By default, no-side
 deltas and snapshot levels are reported in **no-leg pricing**: a no-side
 delta at `price_dollars=0.30` corresponds to a market offer of "no at
 30c", which would match against "yes at 70c". The yes-side and no-side
-therefore use different price scales by default — toggling sides flips
+therefore use different price scales by default: toggling sides flips
 the price.
 
 Subscriptions can opt into a single-scale view by passing
@@ -93,7 +93,7 @@ set it.
 `true` in a future release, so subscriptions that don't explicitly set
 it will start receiving the unified yes-leg pricing automatically. The
 flag itself will then be removed in a subsequent release and the
-unified-pricing behavior will be the only supported behavior — explicit
+unified-pricing behavior will be the only supported behavior; explicit
 `use_yes_price: false` requests will no longer toggle the legacy
 no-leg pricing once the flag is removed. We will announce concrete
 dates for both steps before they happen; integrations that depend on

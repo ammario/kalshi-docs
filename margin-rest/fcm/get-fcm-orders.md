@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fcm/get-fcm-orders
-lastmod: 2026-06-01T15:43:43.093Z
+lastmod: 2026-06-02T19:56:47.413Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

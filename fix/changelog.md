@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/changelog
-lastmod: 2026-05-28T02:33:32.988Z
+lastmod: 2026-06-02T18:45:31.833Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,6 +11,21 @@ lastmod: 2026-05-28T02:33:32.988Z
 > Version history and updates for the Kalshi FIX API
 
 # FIX API Changelog
+
+## Version 1.0.30 (2026-06-04)
+
+* Starting Thursday, June 4, 2026, the FIX API ExecutionReport (35=8) rejection Text (58) distinguishes rejects where the order's outcome is unconfirmed from rejects where the order was definitely not applied
+  * `EXCHANGE_UNAVAILABLE` now means the gateway could not confirm whether the order was applied (the exchange was unreachable, the request timed out, or it was interrupted after the order may have been accepted). Reconcile the order's state, or retry with the same ClOrdID
+  * `INTERNAL_ERROR` is a new value for a reject from a healthy exchange that could not be mapped to a specific reason. The order was not applied, so it is safe to fix and resubmit
+  * Previously both cases returned `EXCHANGE_UNAVAILABLE`
+
+## Version 1.0.29 (2026-05-29)
+
+* Added market lifecycle support on the `KalshiMD` session via Security Status messages
+  * `SecurityStatusRequest` (35=e) subscribes (`263=1`) or unsubscribes (`263=2`) a single `Symbol<55>`
+  * `SecurityStatus` (35=f) streams `SecurityTradingStatus<326>` changes: `3`=resume (activated), `2`=trading halt, `100`=Kalshi determined, `101`=Kalshi settled
+  * Changes-only: no initial snapshot is sent on subscribe
+  * For more info see [Market Data](/fix/market-data)
 
 ## Version 1.0.28 (2026-05-28)
 

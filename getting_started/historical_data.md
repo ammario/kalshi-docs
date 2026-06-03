@@ -14,7 +14,7 @@ lastmod: 2026-06-01T19:43:33.339Z
 
 As trading activity on Kalshi grows, so does the volume of settled markets, completed trades, and fulfilled orders. To keep the live API fast and responsive, Kalshi partitions exchange data into **live** and **historical** tiers.
 
-Live endpoints return current and recent data — open and recently closed markets, active orders, and recent fills. Older data that is no longer actively referenced is made available through a separate set of historical endpoints.
+Live endpoints return current and recent data: open and recently closed markets, active orders, and recent fills. Older data that is no longer actively referenced is made available through a separate set of historical endpoints.
 
 This separation means that if you query for data that is older than the cutoff (described below), you'll need to use the historical API instead of the standard live endpoints. The partitioning happens for **markets**, **market\_candlesticks**,
 **trades**, and **orders**. Old **Events** and **Series** will always still be available through their original endpoints.
@@ -63,9 +63,9 @@ The following live endpoints will no longer return data older than the correspon
 
 ## Migration Guide
 
-1. **Fetch the cutoff** — call `GET /historical/cutoff` to get the current timestamps.
-2. **Route queries accordingly** — if the data you need is older than the relevant cutoff, use the corresponding `GET /historical/...` endpoint instead.
-3. **Combine results if needed** — for use cases like building a complete fill history, query both the live and historical endpoints and merge the results.
+1. **Fetch the cutoff**: call `GET /historical/cutoff` to get the current timestamps.
+2. **Route queries accordingly**: if the data you need is older than the relevant cutoff, use the corresponding `GET /historical/...` endpoint instead.
+3. **Combine results if needed**: for use cases like building a complete fill history, query both the live and historical endpoints and merge the results.
 
 <Info>
   The historical endpoints support the same [cursor-based pagination](/getting_started/pagination) as their live counterparts.

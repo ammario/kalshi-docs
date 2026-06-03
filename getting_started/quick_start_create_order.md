@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_create_order
-lastmod: 2026-06-01T16:28:45.481Z
+lastmod: 2026-06-02T19:56:58.429Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -146,11 +146,11 @@ else:
 
 ### Client Order ID
 
-The `client_order_id` field is crucial for order deduplication:
+The `client_order_id` field is optional, but strongly recommended for order deduplication:
 
-* Generate a unique ID (like UUID4) for each order before submission
+* Generate a unique ID (like UUID4) for each order before submission when you want idempotent retries
 * If network issues occur, you can resubmit with the same `client_order_id`
-* The API will reject duplicate submissions, preventing accidental double orders
+* The API will reject duplicate submissions with the same `client_order_id`, preventing accidental double orders
 * Store this ID locally to track orders before receiving the server's `order_id`
 
 ### Error Handling

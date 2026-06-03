@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order-v2
-lastmod: 2026-06-01T15:43:42.280Z
+lastmod: 2026-06-02T19:56:46.580Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -109,7 +109,6 @@ components:
       type: object
       required:
         - ticker
-        - client_order_id
         - side
         - count
         - price

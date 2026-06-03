@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-01T16:28:45.489Z
+lastmod: 2026-06-02T22:58:11.901Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,14 +17,14 @@ This changelog is a work in progress. As always, we welcome any feedback in our 
 ## Recent Updates
 
 <Update
-  label="June 4, 2026"
+  label="June 11, 2026"
   tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Fractional quantities for RFQs",
 description: "RFQs will support fractional contract quantities in API and FIX flows."
 }}
 >
-  RFQs will support fractional contract quantities beginning with the June 4,
+  RFQs will support fractional contract quantities beginning with the June 11,
   2026 release. API clients will be able to create RFQs with positive
   `contracts_fp` values in `0.01`-contract increments, and quote responses may
   include fractional values in fixed-point quantity fields such as

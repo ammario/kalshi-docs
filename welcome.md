@@ -70,11 +70,11 @@ paddingRight: '1.25rem'
 
   <CardGroup cols={2}>
     <Card title="Predictions APIs" icon="chart-line" href="/api-reference">
-      Event-contract markets — REST, WebSocket, and FIX.
+      Event-contract markets: REST, WebSocket, and FIX.
     </Card>
 
     <Card title="Perps APIs" icon="chart-candlestick" href="/margin">
-      Perpetual futures (margin) — REST, WebSocket, and FIX.
+      Perpetual futures (margin): REST, WebSocket, and FIX.
     </Card>
   </CardGroup>
 
@@ -114,8 +114,8 @@ paddingRight: '1.25rem'
 
   Download the raw spec files for code generation or building your own client:
 
-  * **Predictions** — [`openapi.yaml`](/openapi.yaml) (REST) · [`asyncapi.yaml`](/asyncapi.yaml) (WebSocket)
-  * **Perps** — [`perps_openapi.yaml`](/perps_openapi.yaml) (REST) · [`perps_asyncapi.yaml`](/perps_asyncapi.yaml) (WebSocket)
+  * **Predictions**: [`openapi.yaml`](/openapi.yaml) (REST) · [`asyncapi.yaml`](/asyncapi.yaml) (WebSocket)
+  * **Perps**: [`perps_openapi.yaml`](/perps_openapi.yaml) (REST) · [`perps_asyncapi.yaml`](/perps_asyncapi.yaml) (WebSocket)
 
   New to prediction markets? Visit [Kalshi Academy](https://help.kalshi.com/).
 </div>
