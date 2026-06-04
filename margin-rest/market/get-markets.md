@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-markets
-lastmod: 2026-06-02T19:56:47.471Z
+lastmod: 2026-06-03T14:55:30.296Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -101,6 +101,7 @@ components:
         - status
         - title
         - contract_size
+        - tick_size
         - fractional_trading_enabled
       properties:
         ticker:
@@ -110,6 +111,9 @@ components:
         contract_size:
           type: string
           description: Fixed-point number with 6 decimal places
+        tick_size:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Minimum price increment in dollars.
         status:
           $ref: '#/components/schemas/MarginMarketStatus'
         fractional_trading_enabled:

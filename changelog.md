@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-02T22:58:11.901Z
+lastmod: 2026-06-03T22:57:54.460Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,38 @@ You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="June 11, 2026"
+  tags={["Bug Fix", "Upcoming"]}
+  rss={{
+title: "Margin fee-tier endpoint returns active rates",
+description: "GET /trade-api/v2/margin/fee_tiers now returns active maker and taker fee rates instead of zeroing the response."
+}}
+>
+  `GET /trade-api/v2/margin/fee_tiers` now returns active maker and taker
+  fee rates for each eligible margin market instead of zeroing the response.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/margin/fee_tiers`
+</Update>
+
+<Update
+  label="June 11, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Tick size added to GET Margin Markets",
+description: "Tick size added to GET Margin Markets."
+}}
+>
+  Margin market responses now report `tick_size`.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/margin/markets`
+  * `GET /trade-api/v2/margin/markets/{ticker}`
+</Update>
 
 <Update
   label="June 11, 2026"
@@ -40,6 +72,20 @@ description: "RFQs will support fractional contract quantities in API and FIX fl
   * `GET /communications/rfqs`
   * `GET /communications/quotes`
   * FIX `QuoteRequest (35=R)`, `Quote (35=S)`, and `QuoteStatusReport (35=AI)`
+</Update>
+
+<Update
+  label="June 2, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Transfer-scoped API key permissions",
+description: "API keys can now use write::transfer for transfer-scoped write endpoint access."
+}}
+>
+  API keys can now use `write::transfer` to grant access only to
+  transfer-scoped write endpoints without granting the broad `write` parent
+  scope. Parent scopes still grant broad access, so `write` continues to grant
+  all write endpoint groups, including transfer-scoped writes.
 </Update>
 
 <Update

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/create-api-key
-lastmod: 2026-06-02T19:56:47.011Z
+lastmod: 2026-06-03T14:55:29.877Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -115,11 +115,12 @@ components:
         scopes:
           type: array
           description: >-
-            List of scopes to grant to the API key. Valid values are 'read' and
-            'write'. If 'write' is included, 'read' must also be included.
-            Defaults to full access (['read', 'write']) if not provided.
+            List of scopes to grant to the API key. If the broad `write` parent
+            scope is included, `read` must also be included. Child write scopes
+            may be granted without the broad parent scope. Defaults to full
+            access (`read`, `write`) if not provided.
           items:
-            type: string
+            $ref: '#/components/schemas/ApiKeyScope'
     CreateApiKeyResponse:
       type: object
       required:
@@ -128,6 +129,21 @@ components:
         api_key_id:
           type: string
           description: Unique identifier for the newly created API key
+    ApiKeyScope:
+      type: string
+      enum:
+        - read
+        - write
+        - write::transfer
+      x-enum-varnames:
+        - ApiKeyScopeRead
+        - ApiKeyScopeWrite
+        - ApiKeyScopeWriteTransfer
+      description: >-
+        Scope granted to an API key. Parent scopes grant broad access; for
+        example, `read` grants all read endpoints and `write` grants all write
+        endpoints. Child scopes such as `write::transfer` grant only their
+        specific endpoint group and can be granted without the parent scope.
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

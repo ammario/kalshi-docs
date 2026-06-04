@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-06-02T18:45:31.836Z
+lastmod: 2026-06-03T22:14:14.119Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -118,6 +118,7 @@ Sent by the exchange to reflect order state changes.
 * **Partially Filled\<1>**: Some quantity filled
 * **Filled\<2>**: Completely filled
 * **Canceled\<4>**: Canceled (may have partial fills)
+* **Replaced\<5>**: Order modified via Cancel/Replace
 * **Pending Cancel\<6>**: Cancel pending
 * **Rejected\<8>**: Order rejected
 * **Pending New\<A>**: Order pending acceptance

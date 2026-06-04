@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/get-api-keys
-lastmod: 2026-06-02T19:56:47.000Z
+lastmod: 2026-06-03T14:55:29.866Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -113,11 +113,24 @@ components:
           description: User-provided name for the API key
         scopes:
           type: array
-          description: >-
-            List of scopes granted to this API key. Valid values are 'read' and
-            'write'.
+          description: List of scopes granted to this API key.
           items:
-            type: string
+            $ref: '#/components/schemas/ApiKeyScope'
+    ApiKeyScope:
+      type: string
+      enum:
+        - read
+        - write
+        - write::transfer
+      x-enum-varnames:
+        - ApiKeyScopeRead
+        - ApiKeyScopeWrite
+        - ApiKeyScopeWriteTransfer
+      description: >-
+        Scope granted to an API key. Parent scopes grant broad access; for
+        example, `read` grants all read endpoints and `write` grants all write
+        endpoints. Child scopes such as `write::transfer` grant only their
+        specific endpoint group and can be granted without the parent scope.
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

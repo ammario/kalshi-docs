@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/error-handling
-lastmod: 2026-05-28T02:33:33.463Z
+lastmod: 2026-06-03T22:14:14.117Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -56,8 +56,7 @@ Used for application-level business logic errors.
 | --- | -------------------- | ----------------------------------- | -------- |
 | 45  | RefSeqNum            | Sequence number of rejected message | Yes      |
 | 58  | Text                 | Human-readable error description    | No       |
-| 371 | RefTagID             | Tag that caused the rejection       | No       |
-| 372 | RefMsgType           | Message type being rejected         | No       |
+| 372 | RefMsgType           | Message type being rejected         | Yes      |
 | 379 | BusinessRejectRefID  | Business ID from rejected message   | No       |
 | 380 | BusinessRejectReason | Business rejection reason code      | Yes      |
 
