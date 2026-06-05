@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-06-03T14:55:29.768Z
+lastmod: 2026-06-04T22:53:15.957Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -110,17 +110,16 @@ components:
         contracts:
           type: integer
           description: >-
-            The number of contracts for the RFQ. Whole contracts only. Contracts
-            may be provided via contracts or contracts_fp; if both provided they
-            must match.
+            Whole-contract count for the RFQ. Use contracts_fp for partial
+            contract values; if both are provided, they must match.
           x-go-type-skip-optional-pointer: true
         contracts_fp:
           $ref: '#/components/schemas/FixedPointCount'
           nullable: true
           description: >-
-            String representation of the number of contracts for the RFQ.
-            Contracts may be provided via contracts or contracts_fp; if both
-            provided they must match.
+            Fixed-point number of contracts for the RFQ. Supports partial
+            contracts in 0.01-contract increments; if contracts is also
+            provided, both values must match.
         target_cost_centi_cents:
           type: integer
           format: int64

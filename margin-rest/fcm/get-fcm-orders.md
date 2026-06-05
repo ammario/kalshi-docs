@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fcm/get-fcm-orders
-lastmod: 2026-06-03T14:55:30.245Z
+lastmod: 2026-06-04T22:53:16.463Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -255,6 +255,7 @@ components:
         - SelfTradeCancel
         - ExpiryCancel
         - Trade
+        - PostOnlyCrossCancel
     FixedPointDollars:
       type: string
       description: >-

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders-v2
-lastmod: 2026-06-03T14:55:29.463Z
+lastmod: 2026-06-04T22:53:15.661Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -108,6 +108,14 @@ components:
       type: object
       required:
         - orders
+      example:
+        orders:
+          - order_id: 3b23c1c7-f4ef-4f0d-8b9a-9e53c61f1a0d
+            subaccount: 0
+            exchange_index: 0
+          - order_id: a6d6010d-6d5f-40a1-a7e7-5501386bb621
+            subaccount: 0
+            exchange_index: 0
       properties:
         orders:
           type: array
@@ -141,6 +149,16 @@ components:
       type: object
       required:
         - orders
+      example:
+        orders:
+          - order_id: 3b23c1c7-f4ef-4f0d-8b9a-9e53c61f1a0d
+            client_order_id: 8c35ecb3-328f-4f52-8c7c-0f4b9862f8d1
+            reduced_by: '10.00'
+            ts_ms: 1715793660456
+          - order_id: a6d6010d-6d5f-40a1-a7e7-5501386bb621
+            client_order_id: 2a0e3fc9-b593-4aa3-96e5-82f7f7566c2a
+            reduced_by: '5.00'
+            ts_ms: 1715793660789
       properties:
         orders:
           type: array

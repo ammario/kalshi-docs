@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-06-01T19:43:33.333Z
+lastmod: 2026-06-04T22:53:27.437Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -31,7 +31,7 @@ RFQs are accessible over [REST](/api-reference/communications), [FIX](/fix/rfq-m
 
 When creating an RFQ, the requester specifies size in exactly one of:
 
-* `contracts_fp`: number of contracts (whole only).
+* `contracts_fp`: number of contracts, including partial contracts in `0.01`-contract increments.
 * `target_cost_dollars`: dollar amount to spend. The exchange derives a contract count from the quote price, returned as `yes_contracts_fp` / `no_contracts_fp` on the quote.
 
 ## Quotes

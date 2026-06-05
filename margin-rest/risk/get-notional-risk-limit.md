@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/risk/get-notional-risk-limit
-lastmod: 2026-06-03T14:55:30.383Z
+lastmod: 2026-06-04T22:53:16.613Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

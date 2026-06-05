@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/milestone/get-milestone
-lastmod: 2026-06-03T14:55:30.019Z
+lastmod: 2026-06-04T22:53:16.227Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

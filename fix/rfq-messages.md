@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-05-19T16:57:05.640Z
+lastmod: 2026-06-04T22:53:26.448Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -65,24 +65,24 @@ This message is used bidirectionally:
 
 ### Creator → Exchange (Create RFQ)
 
-| Tag   | Name                             | Type    | Required | Description                                                                                                                                                              |
-| ----- | -------------------------------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 131   | QuoteReqId                       | UUID    | Y        | Client-assigned RFQ identifier                                                                                                                                           |
-| 146   | NoRelatedSym                     | Integer | Y        | Number of symbols (must be 1)                                                                                                                                            |
-| 55    | Symbol                           | String  | C        | Market ticker. Required unless MVE legs are specified                                                                                                                    |
-| 38    | OrderQty                         | Decimal | C        | Number of contracts as a fixed-point decimal. Currently only whole contracts are accepted (for example `5`, `5.0`, or `5.00`). Required unless CashOrderQty is specified |
-| 152   | CashOrderQty                     | Decimal | C        | Target cost in dollars. Required unless OrderQty is specified                                                                                                            |
-| 79    | AllocAccount                     | Integer | N        | Subaccount number (0-32) for direct members. Alternative to NoPartyIDs; omit or set to 0 for the primary account                                                         |
-| 453   | NoPartyIDs                       | Integer | N        | Number of parties (only 1 supported)                                                                                                                                     |
-| 448   | PartyId                          | String  | N        | FCM SubtraderId for the customer on whose behalf the RFQ is submitted                                                                                                    |
-| 452   | PartyRole                        | Integer | N        | 24 (CustomerAccount) - required when using PartyId                                                                                                                       |
-| 21015 | RestRemainder                    | Char    | N        | Y/N - Rest the quote remainder after execution (default: N)                                                                                                              |
-| 21016 | ReplaceExisting                  | Char    | N        | Y/N - Whether to delete existing RFQs as part of this RFQ's creation (default: N)                                                                                        |
-| 20180 | MultivariateCollectionTicker     | String  | C        | Collection ticker for parlay/MVE markets. Use instead of Symbol                                                                                                          |
-| 20181 | NoMultivariateSelectedLegs       | Integer | C        | Number of MVE legs (repeating group). Required with 20180                                                                                                                |
-| 20182 | MultivariateSelectedEventTicker  | String  | Y        | Event ticker for the leg                                                                                                                                                 |
-| 20183 | MultivariateSelectedMarketTicker | String  | Y        | Market ticker for the leg                                                                                                                                                |
-| 20184 | MultivariateSelectedSide         | String  | Y        | Side for the leg ("yes" or "no")                                                                                                                                         |
+| Tag   | Name                             | Type    | Required | Description                                                                                                                                                       |
+| ----- | -------------------------------- | ------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 131   | QuoteReqId                       | UUID    | Y        | Client-assigned RFQ identifier                                                                                                                                    |
+| 146   | NoRelatedSym                     | Integer | Y        | Number of symbols (must be 1)                                                                                                                                     |
+| 55    | Symbol                           | String  | C        | Market ticker. Required unless MVE legs are specified                                                                                                             |
+| 38    | OrderQty                         | Decimal | C        | Number of contracts as a fixed-point decimal. Supports `0.01`-contract increments (for example `5`, `5.00`, or `5.25`). Required unless CashOrderQty is specified |
+| 152   | CashOrderQty                     | Decimal | C        | Target cost in dollars. Required unless OrderQty is specified                                                                                                     |
+| 79    | AllocAccount                     | Integer | N        | Subaccount number (0-32) for direct members. Alternative to NoPartyIDs; omit or set to 0 for the primary account                                                  |
+| 453   | NoPartyIDs                       | Integer | N        | Number of parties (only 1 supported)                                                                                                                              |
+| 448   | PartyId                          | String  | N        | FCM SubtraderId for the customer on whose behalf the RFQ is submitted                                                                                             |
+| 452   | PartyRole                        | Integer | N        | 24 (CustomerAccount) - required when using PartyId                                                                                                                |
+| 21015 | RestRemainder                    | Char    | N        | Y/N - Rest the quote remainder after execution (default: N)                                                                                                       |
+| 21016 | ReplaceExisting                  | Char    | N        | Y/N - Whether to delete existing RFQs as part of this RFQ's creation (default: N)                                                                                 |
+| 20180 | MultivariateCollectionTicker     | String  | C        | Collection ticker for parlay/MVE markets. Use instead of Symbol                                                                                                   |
+| 20181 | NoMultivariateSelectedLegs       | Integer | C        | Number of MVE legs (repeating group). Required with 20180                                                                                                         |
+| 20182 | MultivariateSelectedEventTicker  | String  | Y        | Event ticker for the leg                                                                                                                                          |
+| 20183 | MultivariateSelectedMarketTicker | String  | Y        | Market ticker for the leg                                                                                                                                         |
+| 20184 | MultivariateSelectedSide         | String  | Y        | Side for the leg ("yes" or "no")                                                                                                                                  |
 
 <Info>
   **MVE/Parlay Support**: Instead of specifying a Symbol, you can submit MVE legs directly. The server will automatically resolve or create the parlay market and return the resolved market ticker in the QuoteRequestAck.
@@ -95,7 +95,7 @@ This message is used bidirectionally:
 | 131   | QuoteReqId                       | UUID    | Y        | Server-assigned RFQ identifier                                                                        |
 | 146   | NoRelatedSym                     | Integer | Y        | Number of symbols (always 1)                                                                          |
 | 55    | Symbol                           | String  | Y        | Market ticker                                                                                         |
-| 38    | OrderQty                         | Decimal | Y        | Number of contracts as a fixed-point decimal. Currently emitted as whole contracts                    |
+| 38    | OrderQty                         | Decimal | Y        | Number of contracts as a fixed-point decimal                                                          |
 | 152   | CashOrderQty                     | Decimal | N        | Target cost in dollars (if specified by creator)                                                      |
 | 453   | NoPartyIDs                       | Integer | N        | Number of parties (always 1)                                                                          |
 | 448   | PartyId                          | String  | N        | Requester public communications ID. This value is pseudonymous and is not the requester's SubtraderId |
@@ -147,16 +147,16 @@ If a new Quote is created when an existing quote for the same market already exi
 
 ### Exchange → Creator (Quote Notification)
 
-| Tag | Name       | Type    | Required | Description                                                                        |
-| --- | ---------- | ------- | -------- | ---------------------------------------------------------------------------------- |
-| 117 | QuoteId    | UUID    | Y        | Quote identifier (use this to accept)                                              |
-| 131 | QuoteReqId | UUID    | Y        | Server-assigned RFQ ID                                                             |
-| 55  | Symbol     | String  | Y        | Market ticker                                                                      |
-| 132 | BidPx      | Decimal | C        | Yes price in dollars (e.g. 0.4500). Not present when zero                          |
-| 133 | OfferPx    | Decimal | C        | No price in dollars (e.g. 0.5500). Not present when zero                           |
-| 38  | OrderQty   | Decimal | N        | Number of contracts as a fixed-point decimal. Currently emitted as whole contracts |
-| 134 | BidSize    | Decimal | N        | Quantity offered on the Yes side                                                   |
-| 135 | OfferSize  | Decimal | N        | Quantity offered on the No side                                                    |
+| Tag | Name       | Type    | Required | Description                                               |
+| --- | ---------- | ------- | -------- | --------------------------------------------------------- |
+| 117 | QuoteId    | UUID    | Y        | Quote identifier (use this to accept)                     |
+| 131 | QuoteReqId | UUID    | Y        | Server-assigned RFQ ID                                    |
+| 55  | Symbol     | String  | Y        | Market ticker                                             |
+| 132 | BidPx      | Decimal | C        | Yes price in dollars (e.g. 0.4500). Not present when zero |
+| 133 | OfferPx    | Decimal | C        | No price in dollars (e.g. 0.5500). Not present when zero  |
+| 38  | OrderQty   | Decimal | N        | Number of contracts as a fixed-point decimal              |
+| 134 | BidSize    | Decimal | N        | Quantity offered on the Yes side                          |
+| 135 | OfferSize  | Decimal | N        | Quantity offered on the No side                           |
 
 <Warning>
   Either BidPx or OfferPx can be zero, but not both. Zero indicates no quote for that side.
@@ -243,7 +243,7 @@ RFQ creator accepts a quote from a market maker.
 | ----- | ----------------- | ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 117   | QuoteId           | UUID    | Y        | Quote to accept                                                                                                                                                                                |
 | 54    | Side              | Char    | Y        | FIX side (1=BUY, 2=SELL). For AcceptQuote, BUY accepts the maker's NO quote and SELL accepts the maker's YES quote.                                                                            |
-| 38    | OrderQty          | Decimal | N        | Contracts to accept as a fixed-point decimal. Currently only whole contracts are accepted                                                                                                      |
+| 38    | OrderQty          | Decimal | N        | Contracts to accept as a fixed-point decimal. Supports `0.01`-contract increments                                                                                                              |
 | 11    | ClOrdID           | String  | N        | Client order ID                                                                                                                                                                                |
 | 453   | NoPartyIDs        | Integer | N        | Number of parties (only 1 supported)                                                                                                                                                           |
 | 448   | PartyId           | String  | N        | FCM SubtraderId for the customer on whose behalf the accept is submitted                                                                                                                       |

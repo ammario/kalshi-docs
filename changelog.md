@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-03T22:57:54.460Z
+lastmod: 2026-06-04T20:25:40.219Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -72,6 +72,56 @@ description: "RFQs will support fractional contract quantities in API and FIX fl
   * `GET /communications/rfqs`
   * `GET /communications/quotes`
   * FIX `QuoteRequest (35=R)`, `Quote (35=S)`, and `QuoteStatusReport (35=AI)`
+</Update>
+
+<Update
+  label="June 4, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Legacy order mutation rate-limit costs increase to 10x V2",
+description: "Legacy /portfolio/orders mutation and batch endpoint rate-limit costs will be 10x the corresponding V2 /portfolio/events/orders endpoint costs. V2 endpoint costs are unchanged."
+}}
+>
+  Legacy `/portfolio/orders` mutation and batch endpoint rate-limit token costs
+  will be 10x the corresponding V2 `/portfolio/events/orders` endpoint costs.
+  The V2 endpoint costs are unchanged.
+
+  Switch to the V2 event-order endpoints to keep full write rate-limit access
+  for these workflows:
+
+  * [Create Order (V2)](/api-reference/orders/create-order-v2)
+  * [Cancel Order (V2)](/api-reference/orders/cancel-order-v2)
+  * [Amend Order (V2)](/api-reference/orders/amend-order-v2)
+  * [Decrease Order (V2)](/api-reference/orders/decrease-order-v2)
+  * [Batch Create Orders (V2)](/api-reference/orders/batch-create-orders-v2)
+  * [Batch Cancel Orders (V2)](/api-reference/orders/batch-cancel-orders-v2)
+
+  **Affected endpoints:**
+
+  * `POST /trade-api/v2/portfolio/orders` - cost `50` to `100`
+  * `DELETE /trade-api/v2/portfolio/orders/{order_id}` - cost `10` to `20`
+  * `POST /trade-api/v2/portfolio/orders/{order_id}/amend` - cost `50` to `100`
+  * `POST /trade-api/v2/portfolio/orders/{order_id}/decrease` - cost `50` to `100`
+  * `POST /trade-api/v2/portfolio/orders/batched` - cost `50` to `100`
+  * `DELETE /trade-api/v2/portfolio/orders/batched` - cost `10` to `20`
+</Update>
+
+<Update
+  label="June 4, 2026"
+  tags={["Change", "Upcoming"]}
+  rss={{
+title: "Post Only Cross Cancel update reason added",
+description: "Post Only Cross Cancel update reason added"
+}}
+>
+  When a post-only order would cross the book, the `last_update_reason` field is
+  now reported as `PostOnlyCrossCancel` instead of `Decrease`.
+
+  **Affected surfaces:**
+
+  * `GET /portfolio/orders`
+  * `GET /portfolio/order/{orderId}`
+  * `orderbook_delta` WebSocket channel
 </Update>
 
 <Update

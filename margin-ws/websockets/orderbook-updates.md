@@ -221,6 +221,7 @@ operations:
                       - SelfTradeCancel
                       - ExpiryCancel
                       - Trade
+                      - PostOnlyCrossCancel
                     required: false
                   - name: client_order_id
                     type: string
@@ -278,6 +279,7 @@ operations:
                     - SelfTradeCancel
                     - ExpiryCancel
                     - Trade
+                    - PostOnlyCrossCancel
                   description: >-
                     Margin order update reason when the delta corresponds to the
                     authenticated user's order.

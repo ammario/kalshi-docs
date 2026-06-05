@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-06-03T22:14:14.119Z
+lastmod: 2026-06-04T05:31:41.350Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -178,7 +178,7 @@ Common values for the Text field in Execution Reports:
 * **CUSTOMER\_ACCOUNT\_NOT\_FOUND** - maps to OrdRejReason "Unknown account"
 * **PERMISSION\_DENIED\_FOR\_CUSTOMER\_ACCOUNT** - maps to OrdRejReason "Unknown account"
 * **FOK\_INSUFFICIENT\_VOLUME** - maps to ExecutionType "Canceled"
-* **POST\_ONLY\_CROSS** - maps to OrdRejReason "Other"
+* **POST\_ONLY\_CROSS** - maps to ExecutionType "Canceled"
 * **ORDER\_GROUP\_CANCEL** - maps to ExecutionType "Canceled"
 * **TAKER\_CANCEL\_FOR\_SELF\_TRADE\_PREVENTION** - maps to ExecutionType "Canceled"
 * **MAKER\_CANCEL\_FOR\_SELF\_TRADE\_PREVENTION** - maps to ExecutionType "Canceled"

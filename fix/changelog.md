@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/changelog
-lastmod: 2026-06-02T18:45:31.833Z
+lastmod: 2026-06-04T05:31:41.354Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,6 +11,10 @@ lastmod: 2026-06-02T18:45:31.833Z
 > Version history and updates for the Kalshi FIX API
 
 # FIX API Changelog
+
+## Version 1.0.31 (2026-06-04)
+
+* ExecutionReports (35=8) for post-only orders canceled because they would cross now carry a Text (58) reason of `POST_ONLY_CROSS`
 
 ## Version 1.0.30 (2026-06-04)
 

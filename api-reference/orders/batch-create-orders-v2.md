@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-create-orders-v2
-lastmod: 2026-06-03T14:55:29.453Z
+lastmod: 2026-06-04T22:53:15.651Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -109,6 +109,24 @@ components:
       type: object
       required:
         - orders
+      example:
+        orders:
+          - ticker: HIGHNY-24JAN01-T60
+            client_order_id: 8c35ecb3-328f-4f52-8c7c-0f4b9862f8d1
+            side: bid
+            count: '10.00'
+            price: '0.5600'
+            time_in_force: good_till_canceled
+            self_trade_prevention_type: taker_at_cross
+            exchange_index: 0
+          - ticker: HIGHNY-24JAN01-T60
+            client_order_id: 2a0e3fc9-b593-4aa3-96e5-82f7f7566c2a
+            side: ask
+            count: '5.00'
+            price: '0.5800'
+            time_in_force: immediate_or_cancel
+            self_trade_prevention_type: maker
+            exchange_index: 0
       properties:
         orders:
           type: array
@@ -120,6 +138,20 @@ components:
       type: object
       required:
         - orders
+      example:
+        orders:
+          - order_id: 3b23c1c7-f4ef-4f0d-8b9a-9e53c61f1a0d
+            client_order_id: 8c35ecb3-328f-4f52-8c7c-0f4b9862f8d1
+            fill_count: '0.00'
+            remaining_count: '10.00'
+            ts_ms: 1715793600123
+          - order_id: a6d6010d-6d5f-40a1-a7e7-5501386bb621
+            client_order_id: 2a0e3fc9-b593-4aa3-96e5-82f7f7566c2a
+            fill_count: '5.00'
+            remaining_count: '0.00'
+            average_fill_price: '0.5800'
+            average_fee_paid: '0.0012'
+            ts_ms: 1715793600456
       properties:
         orders:
           type: array
@@ -176,6 +208,19 @@ components:
         - price
         - time_in_force
         - self_trade_prevention_type
+      example:
+        ticker: HIGHNY-24JAN01-T60
+        client_order_id: 8c35ecb3-328f-4f52-8c7c-0f4b9862f8d1
+        side: bid
+        count: '10.00'
+        price: '0.5600'
+        time_in_force: good_till_canceled
+        self_trade_prevention_type: taker_at_cross
+        post_only: false
+        cancel_order_on_pause: false
+        reduce_only: false
+        subaccount: 0
+        exchange_index: 0
       properties:
         ticker:
           type: string

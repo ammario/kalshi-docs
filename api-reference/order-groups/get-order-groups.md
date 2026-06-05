@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/get-order-groups
-lastmod: 2026-06-03T14:55:29.506Z
+lastmod: 2026-06-04T22:53:15.705Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

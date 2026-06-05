@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/get-order
-lastmod: 2026-06-03T14:55:30.256Z
+lastmod: 2026-06-04T22:53:16.473Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -189,6 +189,7 @@ components:
         - SelfTradeCancel
         - ExpiryCancel
         - Trade
+        - PostOnlyCrossCancel
     FixedPointDollars:
       type: string
       description: >-

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order-v2
-lastmod: 2026-06-03T14:55:29.485Z
+lastmod: 2026-06-04T22:53:15.683Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -130,6 +130,14 @@ components:
         - side
         - price
         - count
+      example:
+        ticker: HIGHNY-24JAN01-T60
+        side: bid
+        price: '0.5700'
+        count: '8.00'
+        client_order_id: 8c35ecb3-328f-4f52-8c7c-0f4b9862f8d1
+        updated_client_order_id: 2a0e3fc9-b593-4aa3-96e5-82f7f7566c2a
+        exchange_index: 0
       properties:
         ticker:
           type: string
@@ -170,6 +178,12 @@ components:
       required:
         - order_id
         - ts_ms
+      example:
+        order_id: 3b23c1c7-f4ef-4f0d-8b9a-9e53c61f1a0d
+        client_order_id: 2a0e3fc9-b593-4aa3-96e5-82f7f7566c2a
+        remaining_count: '8.00'
+        fill_count: '0.00'
+        ts_ms: 1715793690123
       properties:
         order_id:
           type: string
