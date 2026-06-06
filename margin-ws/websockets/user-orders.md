@@ -142,7 +142,7 @@ operations:
             type:
               type: string
               const: user_order
-              x-parser-schema-id: <anonymous-schema-88>
+              x-parser-schema-id: <anonymous-schema-91>
             sid:
               type: integer
               minimum: 1
@@ -164,14 +164,14 @@ operations:
                 order_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-90>
+                  x-parser-schema-id: <anonymous-schema-93>
                 user_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-91>
+                  x-parser-schema-id: <anonymous-schema-94>
                 client_order_id:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-92>
+                  x-parser-schema-id: <anonymous-schema-95>
                 ticker:
                   type: string
                   description: Unique market identifier
@@ -184,13 +184,13 @@ operations:
                   x-parser-schema-id: bookSide
                 price:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-93>
+                  x-parser-schema-id: <anonymous-schema-96>
                 fill_count:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-94>
+                  x-parser-schema-id: <anonymous-schema-97>
                 remaining_count:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-95>
+                  x-parser-schema-id: <anonymous-schema-98>
                 self_trade_prevention_type:
                   type: string
                   enum:
@@ -203,26 +203,26 @@ operations:
                   description: >-
                     Order group identifier, if the order belongs to an order
                     group
-                  x-parser-schema-id: <anonymous-schema-96>
+                  x-parser-schema-id: <anonymous-schema-99>
                 expiration_ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-97>
+                  x-parser-schema-id: <anonymous-schema-100>
                 created_ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-98>
+                  x-parser-schema-id: <anonymous-schema-101>
                 last_updated_ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-99>
+                  x-parser-schema-id: <anonymous-schema-102>
                 subaccount_number:
                   type: integer
-                  x-parser-schema-id: <anonymous-schema-100>
-              x-parser-schema-id: <anonymous-schema-89>
+                  x-parser-schema-id: <anonymous-schema-103>
+              x-parser-schema-id: <anonymous-schema-92>
           x-parser-schema-id: marginUserOrderPayload
         title: User Order Update
         description: Private margin order create/update notifications

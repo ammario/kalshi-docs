@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market-candlesticks
-lastmod: 2026-06-04T22:53:16.551Z
+lastmod: 2026-06-05T21:02:00.724Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -148,7 +148,9 @@ components:
         - ask
         - price
         - volume
+        - volume_notional_value_dollars
         - open_interest
+        - open_interest_notional_value_dollars
       properties:
         end_period_ts:
           type: integer
@@ -174,11 +176,21 @@ components:
           description: >-
             Number of contracts traded on the market during the candlestick
             period.
+        volume_notional_value_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            Notional value of contracts traded on the market during the
+            candlestick period.
         open_interest:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
             Number of contracts held on the market by end of the candlestick
             period (end_period_ts).
+        open_interest_notional_value_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            Notional value of contracts held on the market by end of the
+            candlestick period (end_period_ts).
     ErrorResponse:
       type: object
       properties:

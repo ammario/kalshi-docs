@@ -117,12 +117,31 @@ operations:
                     required: true
                   - name: volume
                     type: string
+                    description: One sided total trade volume in contracts.
+                    required: true
+                  - name: volume_notional_value_dollars
+                    type: string
+                    description: Total notional value of one sided trade volume in dollars.
                     required: true
                   - name: volume_24h
                     type: string
+                    description: One sided trade volume in the last 24 hours in contracts.
+                    required: true
+                  - name: volume_24h_notional_value_dollars
+                    type: string
+                    description: >-
+                      Total notional value of one sided trade volume in the last
+                      24 hours in dollars.
                     required: true
                   - name: open_interest
                     type: string
+                    description: One sided open interest in contracts.
+                    required: true
+                  - name: open_interest_notional_value_dollars
+                    type: string
+                    description: >-
+                      Total notional value of one sided open interest in
+                      dollars.
                     required: true
                   - name: reference_price
                     type: object
@@ -213,8 +232,11 @@ operations:
                 - ask_size_fp
                 - last_trade_size_fp
                 - volume
+                - volume_notional_value_dollars
                 - volume_24h
+                - volume_24h_notional_value_dollars
                 - open_interest
+                - open_interest_notional_value_dollars
                 - ts_ms
               properties:
                 market_ticker:
@@ -246,13 +268,30 @@ operations:
                   x-parser-schema-id: <anonymous-schema-59>
                 volume:
                   type: string
+                  description: One sided total trade volume in contracts.
                   x-parser-schema-id: <anonymous-schema-60>
+                volume_notional_value_dollars:
+                  type: string
+                  description: Total notional value of one sided trade volume in dollars.
+                  x-parser-schema-id: <anonymous-schema-61>
                 volume_24h:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-61>
+                  description: One sided trade volume in the last 24 hours in contracts.
+                  x-parser-schema-id: <anonymous-schema-62>
+                volume_24h_notional_value_dollars:
+                  type: string
+                  description: >-
+                    Total notional value of one sided trade volume in the last
+                    24 hours in dollars.
+                  x-parser-schema-id: <anonymous-schema-63>
                 open_interest:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-62>
+                  description: One sided open interest in contracts.
+                  x-parser-schema-id: <anonymous-schema-64>
+                open_interest_notional_value_dollars:
+                  type: string
+                  description: Total notional value of one sided open interest in dollars.
+                  x-parser-schema-id: <anonymous-schema-65>
                 reference_price:
                   description: Reference price of underlying asset, when available.
                   allOf:
@@ -267,14 +306,14 @@ operations:
                           description: >-
                             USD price as a fixed-point decimal string (4
                             decimals)
-                          x-parser-schema-id: <anonymous-schema-64>
+                          x-parser-schema-id: <anonymous-schema-67>
                         ts_ms:
                           type: integer
                           format: int64
                           description: Unix timestamp in milliseconds.
-                          x-parser-schema-id: <anonymous-schema-65>
+                          x-parser-schema-id: <anonymous-schema-68>
                       x-parser-schema-id: tickerPrice
-                  x-parser-schema-id: <anonymous-schema-63>
+                  x-parser-schema-id: <anonymous-schema-66>
                 settlement_mark_price: *ref_0
                 liquidation_mark_price: *ref_0
                 funding_rate:
@@ -288,25 +327,25 @@ operations:
                       type: number
                       format: double
                       description: Funding rate as a decimal value.
-                      x-parser-schema-id: <anonymous-schema-66>
+                      x-parser-schema-id: <anonymous-schema-69>
                     next_funding_time_ms:
                       type: integer
                       format: int64
                       description: >-
                         Unix timestamp in milliseconds for the next funding
                         time.
-                      x-parser-schema-id: <anonymous-schema-67>
+                      x-parser-schema-id: <anonymous-schema-70>
                     ts_ms:
                       type: integer
                       format: int64
                       description: Unix timestamp in milliseconds for the funding snapshot.
-                      x-parser-schema-id: <anonymous-schema-68>
+                      x-parser-schema-id: <anonymous-schema-71>
                   x-parser-schema-id: fundingRate
                 ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-69>
+                  x-parser-schema-id: <anonymous-schema-72>
               x-parser-schema-id: <anonymous-schema-53>
           x-parser-schema-id: marginTickerPayload
         title: Ticker Update

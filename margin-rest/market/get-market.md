@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market
-lastmod: 2026-06-04T22:53:16.530Z
+lastmod: 2026-06-05T21:02:00.704Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -126,12 +126,23 @@ components:
         volume:
           $ref: '#/components/schemas/FixedPointCount'
           description: One sided total trade volume.
+        volume_notional_value_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Total notional value of one sided trade volume in dollars.
         open_interest:
           $ref: '#/components/schemas/FixedPointCount'
           description: One sided open interest.
+        open_interest_notional_value_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Total notional value of one sided open interest in dollars.
         volume_24h:
           $ref: '#/components/schemas/FixedPointCount'
           description: One sided trade volume in the last 24 hours.
+        volume_24h_notional_value_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            Total notional value of one sided trade volume in the last 24 hours
+            in dollars.
         bid:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Best bid price in dollars.

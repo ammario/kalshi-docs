@@ -106,7 +106,7 @@ operations:
             type:
               type: string
               const: trade
-              x-parser-schema-id: <anonymous-schema-70>
+              x-parser-schema-id: <anonymous-schema-73>
             sid:
               type: integer
               minimum: 1
@@ -125,17 +125,17 @@ operations:
                 trade_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-72>
+                  x-parser-schema-id: <anonymous-schema-75>
                 market_ticker:
                   type: string
                   description: Unique market identifier
                   x-parser-schema-id: marketTicker
                 price:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-73>
+                  x-parser-schema-id: <anonymous-schema-76>
                 count:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-74>
+                  x-parser-schema-id: <anonymous-schema-77>
                 taker_side:
                   type: string
                   enum:
@@ -146,8 +146,8 @@ operations:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-75>
-              x-parser-schema-id: <anonymous-schema-71>
+                  x-parser-schema-id: <anonymous-schema-78>
+              x-parser-schema-id: <anonymous-schema-74>
           x-parser-schema-id: marginTradePayload
         title: Trade Update
         description: Public margin trade information
