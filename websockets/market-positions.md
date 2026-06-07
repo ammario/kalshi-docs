@@ -142,7 +142,7 @@ operations:
             type:
               type: string
               const: market_position
-              x-parser-schema-id: <anonymous-schema-101>
+              x-parser-schema-id: <anonymous-schema-109>
             sid:
               type: integer
               description: >-
@@ -165,7 +165,7 @@ operations:
                 user_id:
                   type: string
                   description: User ID for the position
-                  x-parser-schema-id: <anonymous-schema-103>
+                  x-parser-schema-id: <anonymous-schema-111>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -175,34 +175,34 @@ operations:
                 position_fp:
                   type: string
                   description: Fixed-point net position (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-104>
+                  x-parser-schema-id: <anonymous-schema-112>
                 position_cost_dollars:
                   type: string
                   description: >-
                     Current cost basis of the position as a fixed-point dollar
                     string
-                  x-parser-schema-id: <anonymous-schema-105>
+                  x-parser-schema-id: <anonymous-schema-113>
                 realized_pnl_dollars:
                   type: string
                   description: Realized profit/loss as a fixed-point dollar string
-                  x-parser-schema-id: <anonymous-schema-106>
+                  x-parser-schema-id: <anonymous-schema-114>
                 fees_paid_dollars:
                   type: string
                   description: Total fees paid as a fixed-point dollar string
-                  x-parser-schema-id: <anonymous-schema-107>
+                  x-parser-schema-id: <anonymous-schema-115>
                 position_fee_cost_dollars:
                   type: string
                   description: Total position fee cost as a fixed-point dollar string
-                  x-parser-schema-id: <anonymous-schema-108>
+                  x-parser-schema-id: <anonymous-schema-116>
                 volume_fp:
                   type: string
                   description: Fixed-point total volume traded (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-109>
+                  x-parser-schema-id: <anonymous-schema-117>
                 subaccount:
                   type: integer
                   description: Optional subaccount number for the position
-                  x-parser-schema-id: <anonymous-schema-110>
-              x-parser-schema-id: <anonymous-schema-102>
+                  x-parser-schema-id: <anonymous-schema-118>
+              x-parser-schema-id: <anonymous-schema-110>
           x-parser-schema-id: marketPositionPayload
         title: Market Position Update
         description: Real-time position updates for authenticated user

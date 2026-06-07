@@ -60,7 +60,7 @@ operations:
     description: Subscribe to one or more market data channels
     type: receive
     messages:
-      - &ref_19
+      - &ref_20
         id: subscribeCommand
         contentType: application/json
         payload:
@@ -107,6 +107,7 @@ operations:
                           - communications
                           - order_group_updates
                           - user_orders
+                          - cfbenchmarks_value
                         required: false
                   - name: market_ticker
                     type: string
@@ -203,6 +204,18 @@ operations:
                       Shard key for communications channel fanout (requires
                       shard_factor)
                     required: false
+                  - name: index_ids
+                    type: array
+                    description: >-
+                      cfbenchmarks_value channel only. CF Benchmarks index IDs
+                      to seed on the initial subscribe (omit to subscribe with
+                      no indices and add them later via update_subscription; use
+                      ["all"] to track every available index).
+                    required: false
+                    properties:
+                      - name: item
+                        type: string
+                        required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -250,6 +263,7 @@ operations:
                       - communications
                       - order_group_updates
                       - user_orders
+                      - cfbenchmarks_value
                     x-parser-schema-id: <anonymous-schema-4>
                   minItems: 1
                   x-parser-schema-id: <anonymous-schema-3>
@@ -354,6 +368,18 @@ operations:
                     shard_factor)
                   minimum: 0
                   x-parser-schema-id: <anonymous-schema-13>
+                index_ids:
+                  type: array
+                  description: >-
+                    cfbenchmarks_value channel only. CF Benchmarks index IDs to
+                    seed on the initial subscribe (omit to subscribe with no
+                    indices and add them later via update_subscription; use
+                    ["all"] to track every available index).
+                  items:
+                    type: string
+                    x-parser-schema-id: <anonymous-schema-15>
+                  minItems: 1
+                  x-parser-schema-id: <anonymous-schema-14>
               x-parser-schema-id: <anonymous-schema-2>
           x-parser-schema-id: subscribeCommandPayload
         title: Subscribe Command
@@ -383,7 +409,7 @@ operations:
     description: Cancel one or more active subscriptions
     type: receive
     messages:
-      - &ref_20
+      - &ref_21
         id: unsubscribeCommand
         contentType: application/json
         payload:
@@ -434,7 +460,7 @@ operations:
             cmd:
               type: string
               const: unsubscribe
-              x-parser-schema-id: <anonymous-schema-14>
+              x-parser-schema-id: <anonymous-schema-16>
             params:
               type: object
               required:
@@ -451,8 +477,8 @@ operations:
                     minimum: 1
                     x-parser-schema-id: subscriptionId
                   minItems: 1
-                  x-parser-schema-id: <anonymous-schema-16>
-              x-parser-schema-id: <anonymous-schema-15>
+                  x-parser-schema-id: <anonymous-schema-18>
+              x-parser-schema-id: <anonymous-schema-17>
           x-parser-schema-id: unsubscribeCommandPayload
         title: Unsubscribe Command
         description: Cancel one or more subscriptions
@@ -479,7 +505,7 @@ operations:
     description: List all active subscriptions
     type: receive
     messages:
-      - &ref_21
+      - &ref_22
         id: listSubscriptionsCommand
         contentType: application/json
         payload:
@@ -514,7 +540,7 @@ operations:
             cmd:
               type: string
               const: list_subscriptions
-              x-parser-schema-id: <anonymous-schema-26>
+              x-parser-schema-id: <anonymous-schema-34>
           x-parser-schema-id: listSubscriptionsCommandPayload
         title: List Subscriptions Command
         description: List all active subscriptions
@@ -535,7 +561,7 @@ operations:
     description: Add markets to an existing subscription
     type: receive
     messages:
-      - &ref_22
+      - &ref_23
         id: updateSubscriptionCommand
         contentType: application/json
         payload:
@@ -634,7 +660,7 @@ operations:
             cmd:
               type: string
               const: update_subscription
-              x-parser-schema-id: <anonymous-schema-17>
+              x-parser-schema-id: <anonymous-schema-19>
             params:
               type: object
               required:
@@ -649,41 +675,41 @@ operations:
                   items: *ref_3
                   minItems: 1
                   maxItems: 1
-                  x-parser-schema-id: <anonymous-schema-19>
+                  x-parser-schema-id: <anonymous-schema-21>
                 market_ticker:
                   description: 'Add/remove a single market. Type: string'
                   type: string
-                  x-parser-schema-id: <anonymous-schema-20>
+                  x-parser-schema-id: <anonymous-schema-22>
                 market_tickers:
                   type: array
                   description: 'Add/remove multiple markets. Type: array of strings'
                   items: *ref_4
-                  x-parser-schema-id: <anonymous-schema-21>
+                  x-parser-schema-id: <anonymous-schema-23>
                 market_id:
                   type: string
                   format: uuid
                   description: Add/remove a single market by UUID (ticker only)
-                  x-parser-schema-id: <anonymous-schema-22>
+                  x-parser-schema-id: <anonymous-schema-24>
                 market_ids:
                   type: array
                   description: Add/remove multiple markets by UUID (ticker only)
                   items: *ref_5
-                  x-parser-schema-id: <anonymous-schema-23>
+                  x-parser-schema-id: <anonymous-schema-25>
                 send_initial_snapshot:
                   type: boolean
                   description: >-
                     If true, receive an initial snapshot for newly added market
                     tickers on the ticker channel
                   default: false
-                  x-parser-schema-id: <anonymous-schema-24>
+                  x-parser-schema-id: <anonymous-schema-26>
                 action:
                   type: string
                   enum:
                     - add_markets
                     - delete_markets
                     - get_snapshot
-                  x-parser-schema-id: <anonymous-schema-25>
-              x-parser-schema-id: <anonymous-schema-18>
+                  x-parser-schema-id: <anonymous-schema-27>
+              x-parser-schema-id: <anonymous-schema-20>
           x-parser-schema-id: updateSubscriptionCommandPayload
         title: Update Subscription - Add Markets
         description: Add markets to an existing subscription
@@ -714,7 +740,7 @@ operations:
     description: Remove markets from an existing subscription
     type: receive
     messages:
-      - &ref_23
+      - &ref_24
         id: updateSubscriptionDeleteCommand
         contentType: application/json
         payload:
@@ -832,7 +858,7 @@ operations:
     description: Update subscription using single sid parameter
     type: receive
     messages:
-      - &ref_24
+      - &ref_25
         id: updateSubscriptionSingleSidCommand
         contentType: application/json
         payload:
@@ -943,12 +969,172 @@ operations:
     bindings: []
     extensions: *ref_2
   - &ref_14
+    id: sendCFBenchmarksUpdateSubscription
+    title: Update Subscription - CF Benchmarks Indices
+    description: >-
+      Add or remove tracked index IDs, or list available indices, on a
+      cfbenchmarks_value subscription
+    type: receive
+    messages:
+      - &ref_26
+        id: cfbenchmarksUpdateSubscriptionCommand
+        contentType: application/json
+        payload:
+          - name: Update Subscription - CF Benchmarks Indices
+            description: >-
+              Add or remove tracked index IDs, or list available indices, on a
+              cfbenchmarks_value subscription
+            type: object
+            properties:
+              - name: id
+                type: integer
+                description: >
+                  Unique ID of the command request. Generated by the client and
+                  should be unique within a WS session.
+
+                  The simplest way to use it would be to start from 1 and then
+                  increment the value for every new command sent to the server.
+
+                  If the id is set to 0, the server treats it the same way as if
+                  there was no id.
+                required: true
+              - name: cmd
+                type: string
+                description: update_subscription
+                required: true
+              - name: params
+                type: object
+                required: true
+                properties:
+                  - name: sid
+                    type: integer
+                    description: >-
+                      Server-generated subscription identifier (sid) used to
+                      identify the channel
+                    required: false
+                  - name: sids
+                    type: array
+                    description: >-
+                      Array containing exactly one subscription ID (alternative
+                      to sid). Either sid or sids must be provided, not both.
+                    required: false
+                    properties:
+                      - name: item
+                        type: integer
+                        description: >-
+                          Server-generated subscription identifier (sid) used to
+                          identify the channel
+                        required: false
+                  - name: action
+                    type: string
+                    description: >
+                      - `subscribe_indices`: add the supplied `index_ids` to the
+                      subscription (requires `index_ids`)
+
+                      - `unsubscribe_indices`: remove the supplied `index_ids`
+                      from the subscription (requires `index_ids`)
+
+                      - `indexlist`: respond with the available index IDs
+                      without modifying the subscription
+                    enumValues:
+                      - subscribe_indices
+                      - unsubscribe_indices
+                      - indexlist
+                    required: true
+                  - name: index_ids
+                    type: array
+                    description: >-
+                      CF Benchmarks index IDs to add or remove. Use ["all"] to
+                      track every available index. Required for
+                      subscribe_indices and unsubscribe_indices.
+                    required: false
+                    properties:
+                      - name: item
+                        type: string
+                        required: false
+        headers: []
+        jsonPayloadSchema:
+          type: object
+          required:
+            - id
+            - cmd
+            - params
+          properties:
+            id: *ref_1
+            cmd:
+              type: string
+              const: update_subscription
+              x-parser-schema-id: <anonymous-schema-28>
+            params:
+              type: object
+              required:
+                - action
+              properties:
+                sid: *ref_3
+                sids:
+                  type: array
+                  description: >-
+                    Array containing exactly one subscription ID (alternative to
+                    sid). Either sid or sids must be provided, not both.
+                  items: *ref_3
+                  minItems: 1
+                  maxItems: 1
+                  x-parser-schema-id: <anonymous-schema-30>
+                action:
+                  type: string
+                  description: >
+                    - `subscribe_indices`: add the supplied `index_ids` to the
+                    subscription (requires `index_ids`)
+
+                    - `unsubscribe_indices`: remove the supplied `index_ids`
+                    from the subscription (requires `index_ids`)
+
+                    - `indexlist`: respond with the available index IDs without
+                    modifying the subscription
+                  enum:
+                    - subscribe_indices
+                    - unsubscribe_indices
+                    - indexlist
+                  x-parser-schema-id: <anonymous-schema-31>
+                index_ids:
+                  type: array
+                  description: >-
+                    CF Benchmarks index IDs to add or remove. Use ["all"] to
+                    track every available index. Required for subscribe_indices
+                    and unsubscribe_indices.
+                  items:
+                    type: string
+                    x-parser-schema-id: <anonymous-schema-33>
+                  minItems: 1
+                  x-parser-schema-id: <anonymous-schema-32>
+              x-parser-schema-id: <anonymous-schema-29>
+          x-parser-schema-id: cfbenchmarksUpdateSubscriptionCommandPayload
+        title: Update Subscription - CF Benchmarks Indices
+        description: >-
+          Add or remove tracked index IDs, or list available indices, on a
+          cfbenchmarks_value subscription
+        example: |-
+          {
+            "id": 2,
+            "cmd": "update_subscription",
+            "params": {
+              "sid": 1,
+              "action": "indexlist"
+            }
+          }
+        bindings: []
+        extensions:
+          - id: x-parser-unique-object-id
+            value: cfbenchmarksUpdateSubscriptionCommand
+    bindings: []
+    extensions: *ref_2
+  - &ref_15
     id: receiveSubscribed
     title: Subscription Confirmed
     description: Receive confirmation that subscription was successful
     type: send
     messages:
-      - &ref_25
+      - &ref_27
         id: subscribedResponse
         contentType: application/json
         payload:
@@ -996,7 +1182,7 @@ operations:
             type:
               type: string
               const: subscribed
-              x-parser-schema-id: <anonymous-schema-27>
+              x-parser-schema-id: <anonymous-schema-35>
             msg:
               type: object
               required:
@@ -1005,9 +1191,9 @@ operations:
               properties:
                 channel:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-29>
+                  x-parser-schema-id: <anonymous-schema-37>
                 sid: *ref_3
-              x-parser-schema-id: <anonymous-schema-28>
+              x-parser-schema-id: <anonymous-schema-36>
           x-parser-schema-id: subscribedResponsePayload
         title: Subscribed Response
         description: Confirmation that subscription was successful
@@ -1026,13 +1212,13 @@ operations:
             value: subscribedResponse
     bindings: []
     extensions: *ref_2
-  - &ref_15
+  - &ref_16
     id: receiveUnsubscribed
     title: Unsubscription Confirmed
     description: Receive confirmation that unsubscription was successful
     type: send
     messages:
-      - &ref_26
+      - &ref_28
         id: unsubscribedResponse
         contentType: application/json
         payload:
@@ -1090,7 +1276,7 @@ operations:
             type:
               type: string
               const: unsubscribed
-              x-parser-schema-id: <anonymous-schema-34>
+              x-parser-schema-id: <anonymous-schema-42>
           x-parser-schema-id: unsubscribedResponsePayload
         title: Unsubscribed Response
         description: Confirmation that unsubscription was successful
@@ -1107,13 +1293,13 @@ operations:
             value: unsubscribedResponse
     bindings: []
     extensions: *ref_2
-  - &ref_16
+  - &ref_17
     id: receiveOk
     title: Update Confirmed
     description: Receive confirmation that subscription update was successful
     type: send
     messages:
-      - &ref_27
+      - &ref_29
         id: okResponse
         contentType: application/json
         payload:
@@ -1185,7 +1371,7 @@ operations:
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-35>
+              x-parser-schema-id: <anonymous-schema-43>
             msg:
               type: object
               properties:
@@ -1193,13 +1379,13 @@ operations:
                   type: array
                   description: Full list of market tickers after update
                   items: *ref_4
-                  x-parser-schema-id: <anonymous-schema-37>
+                  x-parser-schema-id: <anonymous-schema-45>
                 market_ids:
                   type: array
                   description: Full list of market IDs after update
                   items: *ref_5
-                  x-parser-schema-id: <anonymous-schema-38>
-              x-parser-schema-id: <anonymous-schema-36>
+                  x-parser-schema-id: <anonymous-schema-46>
+              x-parser-schema-id: <anonymous-schema-44>
           x-parser-schema-id: okResponsePayload
         title: OK Response
         description: Successful update operation response
@@ -1223,13 +1409,13 @@ operations:
             value: okResponse
     bindings: []
     extensions: *ref_2
-  - &ref_17
+  - &ref_18
     id: receiveListSubscriptions
     title: List Subscriptions Response
     description: Receive list of all active subscriptions
     type: send
     messages:
-      - &ref_28
+      - &ref_30
         id: listSubscriptionsResponse
         contentType: application/json
         payload:
@@ -1280,7 +1466,7 @@ operations:
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-30>
+              x-parser-schema-id: <anonymous-schema-38>
             msg:
               type: array
               description: List of active subscriptions
@@ -1293,10 +1479,10 @@ operations:
                   channel:
                     type: string
                     description: Name of the subscribed channel
-                    x-parser-schema-id: <anonymous-schema-33>
+                    x-parser-schema-id: <anonymous-schema-41>
                   sid: *ref_3
-                x-parser-schema-id: <anonymous-schema-32>
-              x-parser-schema-id: <anonymous-schema-31>
+                x-parser-schema-id: <anonymous-schema-40>
+              x-parser-schema-id: <anonymous-schema-39>
           x-parser-schema-id: listSubscriptionsResponsePayload
         title: List Subscriptions Response
         description: Response containing all active subscriptions
@@ -1325,13 +1511,13 @@ operations:
             value: listSubscriptionsResponse
     bindings: []
     extensions: *ref_2
-  - &ref_18
+  - &ref_19
     id: receiveError
     title: Error Response
     description: Receive error message when a command fails
     type: send
     messages:
-      - &ref_29
+      - &ref_31
         id: errorResponse
         contentType: application/json
         payload:
@@ -1418,6 +1604,16 @@ operations:
                       shard_key
 
                       - 22: shard_factor must be <= 100 - shard_factor too large
+
+                      - 23: Match IDs required - Missing match_ids for the
+                      channel/action
+
+                      - 24: Index IDs required - Missing index_ids for
+                      subscribe_indices/unsubscribe_indices on
+                      cfbenchmarks_value
+
+                      - 25: Subscription buffer overflow - The subscription's
+                      outbound buffer was exceeded
                     required: true
                   - name: msg
                     type: string
@@ -1442,7 +1638,7 @@ operations:
             type:
               type: string
               const: error
-              x-parser-schema-id: <anonymous-schema-39>
+              x-parser-schema-id: <anonymous-schema-47>
             msg:
               type: object
               required:
@@ -1505,22 +1701,31 @@ operations:
                     shard_key
 
                     - 22: shard_factor must be <= 100 - shard_factor too large
+
+                    - 23: Match IDs required - Missing match_ids for the
+                    channel/action
+
+                    - 24: Index IDs required - Missing index_ids for
+                    subscribe_indices/unsubscribe_indices on cfbenchmarks_value
+
+                    - 25: Subscription buffer overflow - The subscription's
+                    outbound buffer was exceeded
                   minimum: 1
-                  maximum: 22
-                  x-parser-schema-id: <anonymous-schema-41>
+                  maximum: 25
+                  x-parser-schema-id: <anonymous-schema-49>
                 msg:
                   type: string
                   description: Human-readable error message
-                  x-parser-schema-id: <anonymous-schema-42>
+                  x-parser-schema-id: <anonymous-schema-50>
                 market_id:
                   type: string
                   description: Market UUID if error is market-specific (optional)
-                  x-parser-schema-id: <anonymous-schema-43>
+                  x-parser-schema-id: <anonymous-schema-51>
                 market_ticker:
                   type: string
                   description: Market ticker if error is market-specific (optional)
-                  x-parser-schema-id: <anonymous-schema-44>
-              x-parser-schema-id: <anonymous-schema-40>
+                  x-parser-schema-id: <anonymous-schema-52>
+              x-parser-schema-id: <anonymous-schema-48>
           x-parser-schema-id: errorResponsePayload
         title: Error Response
         description: Error response for failed operations
@@ -1546,25 +1751,27 @@ sendOperations:
   - *ref_11
   - *ref_12
   - *ref_13
-receiveOperations:
   - *ref_14
+receiveOperations:
   - *ref_15
   - *ref_16
   - *ref_17
   - *ref_18
-sendMessages:
   - *ref_19
+sendMessages:
   - *ref_20
   - *ref_21
   - *ref_22
   - *ref_23
   - *ref_24
-receiveMessages:
   - *ref_25
   - *ref_26
+receiveMessages:
   - *ref_27
   - *ref_28
   - *ref_29
+  - *ref_30
+  - *ref_31
 extensions:
   - id: x-parser-unique-object-id
     value: root

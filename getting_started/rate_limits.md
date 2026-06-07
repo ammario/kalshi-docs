@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-06-01T19:43:33.336Z
+lastmod: 2026-06-06T21:04:00.360Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -27,7 +27,9 @@ You have two independent token budgets:
 
 ## Perps limits use separate buckets
 
-The Perps API uses the **same tiers and per-second token budgets** described here, but perps traffic is metered in its **own** Read and Write buckets. Perps calls don't draw down your event-contract budgets, and event-contract calls don't draw down your perps budgets, though a single tier assignment applies to both. In effect you have up to four independent buckets: event-contract Read, event-contract Write, perps Read, and perps Write.
+The Perps API uses the **same tiers and per-second token budgets** described here, but perps traffic is metered in its **own** Read and Write buckets. Perps calls don't draw down your event-contract budgets, and event-contract calls don't draw down your perps budgets. In effect you have up to four independent buckets: event-contract Read, event-contract Write, perps Read, and perps Write.
+
+Check your perps tier and limits with [`GET /account/limits/perps`](/api-reference/account/get-perps-account-api-limits), the perps counterpart of [`GET /account/limits`](/api-reference/account/get-account-api-limits).
 
 See the [Perps API](/margin) overview for the full perps surface.
 
@@ -66,11 +68,50 @@ Per-second token budgets in each bucket:
 
 * **Basic**: complete account signup.
 * **Advanced**: complete the [Advanced API application](https://kalshi.typeform.com/advanced-api).
-* **Premier, Paragon, Prime**: qualification criteria will be published shortly.
+* **Premier, Paragon, and Prime**: earned automatically from your trading volume (see [Earning higher tiers](#earning-higher-tiers-by-volume) below), or assigned by Kalshi.
 
 <Info>
   Kalshi may, at its discretion, adjust your tier at any time, including downgrading you from higher tiers following prolonged inactivity. Members may request an upgrade by contacting support with a description of their use case.
 </Info>
+
+## Earning higher tiers by volume
+
+Once a day, Kalshi reviews your trading volume and grants Premier, Paragon, or Prime if you qualify. Your **volume share** is your trailing 30-day volume (counting both sides of every trade you're part of, as maker and as taker) divided by twice the previous calendar month's total exchange volume:
+
+`volume share = your trailing 30-day volume ÷ (previous month's exchange volume × 2)`
+
+Qualifying grants the tier for **30 days**, so a slow day never drops you right away. The daily review renews that window for as long as you keep qualifying, and each tier has two thresholds (a higher bar to **earn** it and a lower **keep** bar to hold it), so a small dip doesn't cost you the tier:
+
+| Tier    | Earn  | Keep  |
+| ------- | ----- | ----- |
+| Premier | 0.25% | 0.20% |
+| Paragon | 0.50% | 0.40% |
+| Prime   | 1.00% | 0.80% |
+
+If your volume falls below the **Keep** bar, the tier doesn't drop immediately. It lapses only when your current 30-day grant runs out.
+
+## Your grants
+
+Your tier is the highest level among your active **grants**. Each grant raises you to a level on a lane, `event_contract` (predictions) or `margined` (margin), until it expires, and records how you got it:
+
+* **`volume`**: earned automatically from your trading volume.
+* **`manual`**: assigned by Kalshi.
+
+Fetch your grants from [`GET /account/limits`](/api-reference/account/get-account-api-limits), returned alongside your current `usage_tier`:
+
+```json theme={null}
+{
+  "usage_tier": "premier",
+  "read":  { "refill_rate": 1000, "bucket_capacity": 1000 },
+  "write": { "refill_rate": 1000, "bucket_capacity": 2000 },
+  "grants": [
+    { "exchange_instance": "event_contract", "level": "premier", "expires_ts": 1751558400, "source": "volume" },
+    { "exchange_instance": "event_contract", "level": "advanced", "source": "manual" }
+  ]
+}
+```
+
+A grant with no `expires_ts` is permanent. You keep your best grant at each level, so a longer-lived manual grant is never shortened by a volume grant. Similarly, if a manual grant is close to expiry but you're now qualifying for the tier by volume, your grant is extended to a fresh 30 days.
 
 ## When you hit the limit
 

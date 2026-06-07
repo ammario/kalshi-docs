@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/account/list-non-default-endpoint-costs
-lastmod: 2026-06-05T21:02:00.289Z
+lastmod: 2026-06-06T20:08:11.989Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

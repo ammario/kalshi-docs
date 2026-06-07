@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-05T14:49:10.409Z
+lastmod: 2026-06-06T20:08:22.115Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -67,6 +67,29 @@ description: "Tick size added to GET Margin Markets."
 
   * `GET /trade-api/v2/margin/markets`
   * `GET /trade-api/v2/margin/markets/{ticker}`
+</Update>
+
+<Update
+  label="June 5, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Introducing automated API rate-limit tiers",
+description: "Premier and above can now be earned automatically from your trading volume, with tier grants viewable via the API. Live Thursday, June 11, 2026."
+}}
+>
+  We're introducing automated API rate-limit tiers: Premier, Paragon, and Prime are now earned
+  automatically from your trailing trading volume (and can still be granted manually). Each tier is
+  backed by a **grant**, which you can view in the new `grants` array of
+  `GET /trade-api/v2/account/limits`.
+
+  See [Rate Limits and Tiers](/getting_started/rate_limits) for the thresholds and how grants work.
+
+  **Live Thursday, June 11, 2026.**
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/account/limits`
+  * `GET /trade-api/v2/account/limits/perps`
 </Update>
 
 <Update
