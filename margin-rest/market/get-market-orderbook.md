@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market-orderbook
-lastmod: 2026-06-06T20:08:12.322Z
+lastmod: 2026-06-07T21:57:52.275Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -29,6 +29,8 @@ servers:
     description: Demo perps REST API server
 security: []
 tags:
+  - name: account
+    description: Account information endpoints
   - name: exchange
     description: Exchange status and information endpoints
   - name: market

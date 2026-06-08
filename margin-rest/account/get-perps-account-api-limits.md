@@ -1,79 +1,65 @@
 ---
-url: https://docs.kalshi.com/api-reference/account/get-account-api-limits
-lastmod: 2026-06-07T21:57:51.842Z
+url: https://docs.kalshi.com/margin-rest/account/get-perps-account-api-limits
+lastmod: 2026-06-07T21:57:52.147Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Account API Limits
+# Get Perps Account API Limits
 
->  Endpoint to retrieve the API tier limits associated with the authenticated user.
+>  Endpoint to retrieve the Perps (margin) API tier limits associated with the authenticated user.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /account/limits
+````yaml /perps_openapi.yaml get /account/limits/perps
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.20.0
+  version: 0.0.1
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
 servers:
   - url: https://external-api.kalshi.com/trade-api/v2
-    description: Production Trade API server
-  - url: https://api.elections.kalshi.com/trade-api/v2
-    description: Production shared API server, also supported
+    description: Production perps REST API server
   - url: https://external-api.demo.kalshi.co/trade-api/v2
-    description: Demo Trade API server
-  - url: https://demo-api.kalshi.co/trade-api/v2
-    description: Demo shared API server, also supported
+    description: Demo perps REST API server
 security: []
 tags:
-  - name: api-keys
-    description: API key management endpoints
+  - name: account
+    description: Account information endpoints
+  - name: exchange
+    description: Exchange status and information endpoints
+  - name: market
+    description: Market data endpoints
   - name: orders
     description: Order management endpoints
   - name: order-groups
     description: Order group management endpoints
   - name: portfolio
     description: Portfolio and balance information endpoints
-  - name: communications
-    description: Request-for-quote (RFQ) endpoints
-  - name: multivariate
-    description: Multivariate event collection endpoints
-  - name: exchange
-    description: Exchange status and information endpoints
-  - name: live-data
-    description: Live data endpoints
-  - name: markets
-    description: Market data endpoints
-  - name: milestone
-    description: Milestone endpoints
-  - name: search
-    description: Search and filtering endpoints
-  - name: incentive-programs
-    description: Incentive program endpoints
   - name: fcm
     description: FCM member specific endpoints
-  - name: events
-    description: Event endpoints
-  - name: structured-targets
-    description: Structured targets endpoints
+  - name: risk
+    description: Margin risk metrics, parameters, and limits
+  - name: funding
+    description: Funding rates and payment history
+  - name: fees
+    description: Margin fee schedule
 paths:
-  /account/limits:
+  /account/limits/perps:
     get:
       tags:
         - account
-      summary: Get Account API Limits
-      description: ' Endpoint to retrieve the API tier limits associated with the authenticated user.'
-      operationId: GetAccountApiLimits
+      summary: Get Perps Account API Limits
+      description: ' Endpoint to retrieve the Perps (margin) API tier limits associated with the authenticated user.'
+      operationId: GetPerpsAccountApiLimits
       responses:
         '200':
-          description: Account API tier limits retrieved successfully
+          description: Perps account API tier limits retrieved successfully
           content:
             application/json:
               schema:

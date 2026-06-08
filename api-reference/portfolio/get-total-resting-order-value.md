@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-total-resting-order-value
-lastmod: 2026-06-06T20:08:11.820Z
+lastmod: 2026-06-07T21:57:51.657Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

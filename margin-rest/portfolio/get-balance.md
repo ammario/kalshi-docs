@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-balance
-lastmod: 2026-06-06T20:08:12.383Z
+lastmod: 2026-06-07T21:57:52.358Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -32,6 +32,8 @@ servers:
     description: Demo perps REST API server
 security: []
 tags:
+  - name: account
+    description: Account information endpoints
   - name: exchange
     description: Exchange status and information endpoints
   - name: market

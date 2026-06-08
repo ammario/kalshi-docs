@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-06-06T21:04:00.360Z
+lastmod: 2026-06-07T21:58:03.039Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -29,7 +29,7 @@ You have two independent token budgets:
 
 The Perps API uses the **same tiers and per-second token budgets** described here, but perps traffic is metered in its **own** Read and Write buckets. Perps calls don't draw down your event-contract budgets, and event-contract calls don't draw down your perps budgets. In effect you have up to four independent buckets: event-contract Read, event-contract Write, perps Read, and perps Write.
 
-Check your perps tier and limits with [`GET /account/limits/perps`](/api-reference/account/get-perps-account-api-limits), the perps counterpart of [`GET /account/limits`](/api-reference/account/get-account-api-limits).
+Check your perps tier and limits with [`GET /account/limits/perps`](/margin-rest/account/get-perps-account-api-limits), the perps counterpart of [`GET /account/limits`](/api-reference/account/get-account-api-limits).
 
 See the [Perps API](/margin) overview for the full perps surface.
 
