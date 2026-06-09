@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/create-order
-lastmod: 2026-06-07T21:57:52.190Z
+lastmod: 2026-06-08T21:06:36.576Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -144,7 +144,9 @@ components:
           type: boolean
           description: >-
             Specifies whether the order place count should be capped by the
-            member's current position.
+            member's current position. Orders with reduce_only set to true will
+            be rejected unless time_in_force is immediate_or_cancel or
+            fill_or_kill.
         subaccount:
           type: integer
           minimum: 0
@@ -258,9 +260,8 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     RateLimitError:
       description: >-
-        Rate limit exceeded. The default cost is 10 tokens per request;
-        endpoints that deviate show a **Rate limit** callout at the top of their
-        own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
+        Rate limit exceeded. The default cost is 10 tokens per request. Use GET
+        /trade-api/v2/account/endpoint_costs to list non-default endpoint costs.
       content:
         application/json:
           schema:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order
-lastmod: 2026-06-07T21:57:51.349Z
+lastmod: 2026-06-08T21:06:35.679Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -123,7 +123,7 @@ components:
           minimum: 0
           description: >-
             Optional subaccount number to use for this amendment (0 for primary,
-            1-32 for subaccounts)
+            1-63 for subaccounts)
           default: 0
           x-go-type-skip-optional-pointer: true
         ticker:
@@ -382,7 +382,7 @@ components:
           type: integer
           nullable: true
           x-omitempty: true
-          description: Subaccount number (0 for primary, 1-32 for subaccounts).
+          description: Subaccount number (0 for primary, 1-63 for subaccounts).
         exchange_index:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'

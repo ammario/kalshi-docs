@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-orders
-lastmod: 2026-06-07T21:57:51.270Z
+lastmod: 2026-06-08T21:06:35.615Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -169,7 +169,7 @@ components:
       name: subaccount
       in: query
       description: >-
-        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
+        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
         defaults to all subaccounts.
       schema:
         type: integer
@@ -341,7 +341,7 @@ components:
           type: integer
           nullable: true
           x-omitempty: true
-          description: Subaccount number (0 for primary, 1-32 for subaccounts).
+          description: Subaccount number (0 for primary, 1-63 for subaccounts).
         exchange_index:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'

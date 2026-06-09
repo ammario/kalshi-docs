@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order-v2
-lastmod: 2026-06-07T21:57:51.424Z
+lastmod: 2026-06-08T21:06:35.752Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,9 @@ lastmod: 2026-06-07T21:57:51.424Z
 
 > Endpoint for cancelling event-market orders using the V2 response shape. Returns `{order_id, client_order_id, reduced_by}` rather than a full order object.
 
+<Note>
+  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI
@@ -107,7 +110,7 @@ components:
     SubaccountQueryDefaultPrimary:
       name: subaccount
       in: query
-      description: Subaccount number (0 for primary, 1-32 for subaccounts). Defaults to 0.
+      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
       schema:
         type: integer
     ExchangeIndexQuery:

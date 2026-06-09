@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/order-groups/create-order-group
-lastmod: 2026-06-07T21:57:52.467Z
+lastmod: 2026-06-08T21:06:36.867Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -93,7 +93,7 @@ components:
           minimum: 0
           description: >-
             Optional subaccount number to use for this order group (0 for
-            primary, 1-32 for subaccounts)
+            primary, 1-63 for subaccounts)
           default: 0
           x-go-type-skip-optional-pointer: true
         contracts_limit:
@@ -135,7 +135,7 @@ components:
           minimum: 0
           description: >-
             Subaccount number that owns the created order group (0 for primary,
-            1-32 for subaccounts).
+            1-63 for subaccounts).
           x-go-type-skip-optional-pointer: true
         exchange_index:
           allOf:

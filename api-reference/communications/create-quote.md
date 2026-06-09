@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2026-06-07T21:57:51.741Z
+lastmod: 2026-06-08T21:06:36.108Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,7 +11,7 @@ lastmod: 2026-06-07T21:57:51.741Z
 >  Endpoint for creating a quote in response to an RFQ
 
 <Note>
-  **Rate limit:** 2 tokens per request. Other endpoints use the default cost of 10 tokens per request unless noted on their own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
+  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
 </Note>
 
 
@@ -130,7 +130,7 @@ components:
           type: integer
           description: >-
             Optional subaccount number to place the quote under (0 for primary,
-            1-32 for subaccounts)
+            1-63 for subaccounts)
     CreateQuoteResponse:
       type: object
       required:

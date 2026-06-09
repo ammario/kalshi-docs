@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-balance
-lastmod: 2026-06-07T21:57:52.358Z
+lastmod: 2026-06-08T21:06:36.737Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,7 +11,7 @@ lastmod: 2026-06-07T21:57:52.358Z
 > Endpoint for retrieving the balance breakdown for the authenticated direct margin user. Returns cash balance (aggregate and per-subaccount), position value, total balance, and maintenance margin requirement.
 
 <Note>
-  **Rate limit:** 5 tokens per request, or 50 tokens when `compute_available_balance=true` (the available-balance computation scans all resting orders). Other endpoints use the default cost of 10 tokens per request unless noted on their own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
+  **Rate limit:** 5 tokens per request, or 50 tokens when `compute_available_balance=true` (the available-balance computation scans all resting orders). See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
 </Note>
 
 
@@ -123,7 +123,7 @@ components:
       properties:
         subaccount:
           type: integer
-          description: The subaccount number (0 for primary, 1-32 for subaccounts)
+          description: The subaccount number (0 for primary, 1-63 for subaccounts)
         position_value:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
@@ -192,9 +192,8 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     RateLimitError:
       description: >-
-        Rate limit exceeded. The default cost is 10 tokens per request;
-        endpoints that deviate show a **Rate limit** callout at the top of their
-        own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
+        Rate limit exceeded. The default cost is 10 tokens per request. Use GET
+        /trade-api/v2/account/endpoint_costs to list non-default endpoint costs.
       content:
         application/json:
           schema:

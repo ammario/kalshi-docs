@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders-v2
-lastmod: 2026-06-07T21:57:51.413Z
+lastmod: 2026-06-08T21:06:35.741Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,7 +11,7 @@ lastmod: 2026-06-07T21:57:51.413Z
 > Endpoint for cancelling a batch of event-market orders using the V2 response shape. The maximum batch size scales with your tier's write budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
 
 <Note>
-  **Rate limit:** 2 tokens per order in the batch — billed per item, so total cost for a batch of N cancels is N × 2. Other endpoints cost 10 tokens per request unless noted on their own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
+  **Rate limit:** 2 tokens per order in the batch — billed per item, so total cost for a batch of N cancels is N × 2. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
 </Note>
 
 
@@ -138,7 +138,7 @@ components:
                 default: 0
                 description: >-
                   Optional subaccount number to use for this cancellation (0 for
-                  primary, 1-32 for subaccounts).
+                  primary, 1-63 for subaccounts).
                 x-go-type-skip-optional-pointer: true
               exchange_index:
                 allOf:

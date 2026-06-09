@@ -3584,7 +3584,7 @@ components:
               format: int64
             subaccount_number:
               type: integer
-              description: Subaccount number (0 for primary, 1-32 for subaccounts)
+              description: Subaccount number (0 for primary, 1-63 for subaccounts)
     rfqCreatedPayload:
       type: object
       required:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/risk/get-risk
-lastmod: 2026-06-07T21:57:52.368Z
+lastmod: 2026-06-08T21:06:36.747Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -129,7 +129,7 @@ components:
       properties:
         subaccount:
           type: integer
-          description: The subaccount number (0 for primary, 1-32 for subaccounts)
+          description: The subaccount number (0 for primary, 1-63 for subaccounts)
         market_ticker:
           type: string
           description: Market ticker symbol

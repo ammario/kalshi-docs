@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/decrease-order
-lastmod: 2026-06-07T21:57:51.359Z
+lastmod: 2026-06-08T21:06:35.689Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,9 @@ lastmod: 2026-06-07T21:57:51.359Z
 
 >  Endpoint for decreasing the number of contracts in an existing order. This is the only kind of edit available on order quantity. Cancelling an order is equivalent to decreasing an order amount to zero.
 
+<Note>
+  **Rate limit:** 100 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI
@@ -116,7 +119,7 @@ components:
           minimum: 0
           description: >-
             Optional subaccount number to use for this decrease (0 for primary,
-            1-32 for subaccounts)
+            1-63 for subaccounts)
           default: 0
           x-go-type-skip-optional-pointer: true
         reduce_by:
@@ -335,7 +338,7 @@ components:
           type: integer
           nullable: true
           x-omitempty: true
-          description: Subaccount number (0 for primary, 1-32 for subaccounts).
+          description: Subaccount number (0 for primary, 1-63 for subaccounts).
         exchange_index:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'

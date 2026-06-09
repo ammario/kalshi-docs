@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-06-07T21:57:51.667Z
+lastmod: 2026-06-08T21:06:36.033Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -161,7 +161,7 @@ components:
       name: subaccount
       in: query
       description: >-
-        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
+        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
         defaults to all subaccounts.
       schema:
         type: integer
@@ -292,7 +292,7 @@ components:
           nullable: true
           x-omitempty: true
           description: >-
-            Subaccount number (0 for primary, 1-32 for subaccounts). Present for
+            Subaccount number (0 for primary, 1-63 for subaccounts). Present for
             direct users.
         ts:
           type: integer

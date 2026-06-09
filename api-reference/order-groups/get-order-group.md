@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/get-order-group
-lastmod: 2026-06-07T21:57:51.482Z
+lastmod: 2026-06-08T21:06:35.809Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -104,7 +104,7 @@ components:
       name: subaccount
       in: query
       description: >-
-        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
+        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
         defaults to all subaccounts.
       schema:
         type: integer

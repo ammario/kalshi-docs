@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/update-subaccount-netting
-lastmod: 2026-06-07T21:57:51.599Z
+lastmod: 2026-06-08T21:06:35.951Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-06-07T21:57:51.599Z
 
 # Update Subaccount Netting
 
-> Updates the netting enabled setting for a specific subaccount. Use 0 for the primary account, or 1-32 for numbered subaccounts.
+> Updates the netting enabled setting for a specific subaccount. Use 0 for the primary account, or 1-63 for numbered subaccounts.
 
 
 
@@ -71,7 +71,7 @@ paths:
       summary: Update Subaccount Netting
       description: >-
         Updates the netting enabled setting for a specific subaccount. Use 0 for
-        the primary account, or 1-32 for numbered subaccounts.
+        the primary account, or 1-63 for numbered subaccounts.
       operationId: UpdateSubaccountNetting
       requestBody:
         required: true
@@ -102,7 +102,7 @@ components:
       properties:
         subaccount_number:
           type: integer
-          description: Subaccount number (0 for primary, 1-32 for subaccounts).
+          description: Subaccount number (0 for primary, 1-63 for subaccounts).
         enabled:
           type: boolean
           description: Whether netting is enabled for this subaccount.

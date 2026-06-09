@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/reset-order-group
-lastmod: 2026-06-07T21:57:51.502Z
+lastmod: 2026-06-08T21:06:35.830Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -110,7 +110,7 @@ components:
     SubaccountQueryDefaultPrimary:
       name: subaccount
       in: query
-      description: Subaccount number (0 for primary, 1-32 for subaccounts). Defaults to 0.
+      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
       schema:
         type: integer
     ExchangeIndexQuery:

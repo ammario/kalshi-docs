@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order
-lastmod: 2026-06-07T21:57:51.306Z
+lastmod: 2026-06-08T21:06:35.647Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,7 +11,7 @@ lastmod: 2026-06-07T21:57:51.306Z
 >  Endpoint for canceling orders. The value for the orderId should match the id field of the order you want to decrease. Commonly, DELETE-type endpoints return 204 status with no body content on success. But we can't completely delete the order, as it may be partially filled already. Instead, the DeleteOrder endpoint reduce the order completely, essentially zeroing the remaining resting contracts on it. The zeroed order is returned on the response payload as a form of validation for the client.
 
 <Note>
-  **Rate limit:** 2 tokens per request. Other endpoints use the default cost of 10 tokens per request unless noted on their own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
+  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
 </Note>
 
 
@@ -107,7 +107,7 @@ components:
     SubaccountQueryDefaultPrimary:
       name: subaccount
       in: query
-      description: Subaccount number (0 for primary, 1-32 for subaccounts). Defaults to 0.
+      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
       schema:
         type: integer
     ExchangeIndexQuery:
@@ -291,7 +291,7 @@ components:
           type: integer
           nullable: true
           x-omitempty: true
-          description: Subaccount number (0 for primary, 1-32 for subaccounts).
+          description: Subaccount number (0 for primary, 1-63 for subaccounts).
         exchange_index:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'

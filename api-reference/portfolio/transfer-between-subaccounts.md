@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/transfer-between-subaccounts
-lastmod: 2026-06-07T21:57:51.557Z
+lastmod: 2026-06-08T21:06:35.901Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-06-07T21:57:51.557Z
 
 # Transfer Between Subaccounts
 
-> Transfers funds between the authenticated user's subaccounts. Use 0 for the primary account, or 1-32 for numbered subaccounts.
+> Transfers funds between the authenticated user's subaccounts. Use 0 for the primary account, or 1-63 for numbered subaccounts.
 
 
 
@@ -71,7 +71,7 @@ paths:
       summary: Transfer Between Subaccounts
       description: >-
         Transfers funds between the authenticated user's subaccounts. Use 0 for
-        the primary account, or 1-32 for numbered subaccounts.
+        the primary account, or 1-63 for numbered subaccounts.
       operationId: ApplySubaccountTransfer
       requestBody:
         required: true
@@ -115,12 +115,12 @@ components:
         from_subaccount:
           type: integer
           description: >-
-            Source subaccount number (0 for primary, 1-32 for numbered
+            Source subaccount number (0 for primary, 1-63 for numbered
             subaccounts).
         to_subaccount:
           type: integer
           description: >-
-            Destination subaccount number (0 for primary, 1-32 for numbered
+            Destination subaccount number (0 for primary, 1-63 for numbered
             subaccounts).
         amount_cents:
           type: integer

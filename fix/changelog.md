@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/changelog
-lastmod: 2026-06-04T05:31:41.354Z
+lastmod: 2026-06-08T21:06:50.002Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -60,7 +60,7 @@ BidSize (134) and OfferSize (135) conditionally offered on QuoteStatusReport (35
 
 ## Version 1.0.24 (2026-05-07)
 
-* OrderGroupResponse (UOH) now echoes AllocAccount (tag 79), with `79=0` for the primary account and `79=1-32` for subaccounts
+* OrderGroupResponse (UOH) now echoes AllocAccount (tag 79), with `79=0` for the primary account and `79=1-63` for subaccounts
 
 ## Version 1.0.23 (2026-05-05)
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-06T20:08:22.115Z
+lastmod: 2026-06-08T21:06:46.349Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,22 @@ You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
 ## Recent Updates
+
+<Update
+  label="June 11, 2026"
+  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "Self-serve Advanced API usage tier upgrade",
+description: "Users can now self-promote to the Advanced API tier by calling POST /trade-api/v2/account/api_usage_level/upgrade."
+}}
+>
+  Users can now self-promote to the Advanced API tier by calling
+  `POST /trade-api/v2/account/api_usage_level/upgrade`.
+
+  **Affected endpoints:**
+
+  * `POST /trade-api/v2/account/api_usage_level/upgrade`
+</Update>
 
 <Update
   label="June 11, 2026"
@@ -380,7 +396,7 @@ title: "Order group creation response includes subaccount",
 description: "CreateOrderGroup now returns the subaccount that owns the created order group."
 }}
 >
-  `CreateOrderGroup` now returns `subaccount`, the subaccount number that owns the created order group. The value is `0` for the primary account and `1-32` for subaccounts.
+  `CreateOrderGroup` now returns `subaccount`, the subaccount number that owns the created order group. The value is `0` for the primary account and `1-63` for subaccounts.
 
   Affected endpoint: `POST /portfolio/order_groups/create`.
 </Update>
@@ -1074,7 +1090,7 @@ description: "New endpoints to get and update netting settings per subaccount.",
   * **`GET /portfolio/subaccounts/netting`**: returns the netting enabled status for all subaccounts
   * **`PUT /portfolio/subaccounts/netting`**: updates the netting enabled status for a specific subaccount (pass `subaccount_number` and `enabled` in the request body)
 
-  Use `subaccount_number=0` for the primary account or `1`–`32` for numbered subaccounts. New subaccounts inherit the primary account's netting setting at creation time.
+  Use `subaccount_number=0` for the primary account or `1`–`63` for numbered subaccounts. New subaccounts inherit the primary account's netting setting at creation time.
 </Update>
 
 <Update
@@ -1382,7 +1398,7 @@ title: "Orders return subaccount number",
 description: "Order responses now include subaccount_number for direct users."
 }}
 >
-  Order responses now include `subaccount_number` (0 for primary, 1-32 for subaccounts) for direct users.
+  Order responses now include `subaccount_number` (0 for primary, 1-63 for subaccounts) for direct users.
 
   **Affected endpoints:**
 

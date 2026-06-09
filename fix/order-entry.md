@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-06-04T05:31:41.350Z
+lastmod: 2026-06-08T21:06:50.509Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -28,7 +28,7 @@ Used to submit a new order to the Exchange.
 | 448   | PartyID                 | UUID         | N        | FCM only. Sub-account identifier.                                                                           |
 | 452   | PartyRole               | Integer      | N        | FCM only. `24`=Customer Account. Required when using PartyID.                                               |
 | 453   | NoPartyIDs              | Integer      | N        | FCM only. Number of parties (only 1 supported).                                                             |
-| 79    | AllocAccount            | Integer      | N        | Subaccount number (0–32). Alternative to NoPartyIDs.                                                        |
+| 79    | AllocAccount            | Integer      | N        | Subaccount number (0–63). Alternative to NoPartyIDs.                                                        |
 | 526   | SecondaryClOrdID        | UUID         | N        | [Order group](/fix/order-groups) identifier.                                                                |
 | 2964  | SelfTradePreventionType | Integer      | N        | `1`=Taker At Cross (default), `2`=Maker                                                                     |
 | 21006 | CancelOrderOnPause      | Boolean      | N        | Cancel order if trading is paused.                                                                          |
@@ -64,7 +64,7 @@ Used to modify an existing order without canceling it.
 | 448 | PartyID      | UUID    | N        | FCM only. Must match original order.                                                     |
 | 452 | PartyRole    | Integer | N        | FCM only. `24`=Customer Account. Must match original order. Required when using PartyID. |
 | 453 | NoPartyIDs   | Integer | N        | FCM only. Must match original order (only 1 supported).                                  |
-| 79  | AllocAccount | Integer | N        | Subaccount number (0–32). Must match original order.                                     |
+| 79  | AllocAccount | Integer | N        | Subaccount number (0–63). Must match original order.                                     |
 
 ## Order Cancel Request (35=F)
 
@@ -80,7 +80,7 @@ Cancel all remaining quantity of an existing order.
 | 448 | PartyID      | UUID    | N        | FCM only. Must match original order.                                                     |
 | 452 | PartyRole    | Integer | N        | FCM only. `24`=Customer Account. Must match original order. Required when using PartyID. |
 | 453 | NoPartyIDs   | Integer | N        | FCM only. Must match original order (only 1 supported).                                  |
-| 79  | AllocAccount | Integer | N        | Subaccount number (0–32). Must match original order.                                     |
+| 79  | AllocAccount | Integer | N        | Subaccount number (0–63). Must match original order.                                     |
 
 ## Execution Report (35=8)
 
@@ -110,7 +110,7 @@ Sent by the exchange to reflect order state changes.
 | 448 | PartyID      | UUID         | N        | FCM only. Sub-account identifier.                                                                                   |
 | 452 | PartyRole    | Integer      | N        | FCM only. `24`=Customer Account. Present when PartyID is present.                                                   |
 | 453 | NoPartyIDs   | Integer      | N        | FCM only. Number of parties (only 1 supported).                                                                     |
-| 79  | AllocAccount | Integer      | C        | Subaccount number (0–32). Present if order was placed for a subaccount.                                             |
+| 79  | AllocAccount | Integer      | C        | Subaccount number (0–63). Present if order was placed for a subaccount.                                             |
 
 ### Order Status (39)
 
@@ -239,7 +239,7 @@ Party fields from the original order request are echoed back in ExecutionReports
 | 453 | NoPartyIDs   | Number of parties (for sub-accounts) |
 | 448 | PartyID      | Sub-account identifier               |
 | 452 | PartyRole    | Customer Account\<24>                |
-| 79  | AllocAccount | Subaccount number (0-32)             |
+| 79  | AllocAccount | Subaccount number (0-63)             |
 
 ### Rejection Reasons (102)
 

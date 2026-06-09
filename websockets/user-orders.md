@@ -220,7 +220,7 @@ operations:
                     required: false
                   - name: subaccount_number
                     type: integer
-                    description: Subaccount number (0 for primary, 1-32 for subaccounts)
+                    description: Subaccount number (0 for primary, 1-63 for subaccounts)
                     required: false
         headers: []
         jsonPayloadSchema:
@@ -402,7 +402,7 @@ operations:
                   x-parser-schema-id: <anonymous-schema-261>
                 subaccount_number:
                   type: integer
-                  description: Subaccount number (0 for primary, 1-32 for subaccounts)
+                  description: Subaccount number (0 for primary, 1-63 for subaccounts)
                   x-parser-schema-id: <anonymous-schema-262>
               x-parser-schema-id: <anonymous-schema-240>
           x-parser-schema-id: userOrderPayload

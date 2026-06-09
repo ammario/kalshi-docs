@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/get-orders
-lastmod: 2026-06-07T21:57:52.179Z
+lastmod: 2026-06-08T21:06:36.566Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -62,7 +62,7 @@ paths:
         - $ref: '#/components/parameters/MinTsQuery'
         - $ref: '#/components/parameters/MaxTsQuery'
         - $ref: '#/components/parameters/StatusQuery'
-        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/MarginOrdersLimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
         - $ref: '#/components/parameters/SubaccountQuery'
       responses:
@@ -111,18 +111,18 @@ components:
       description: Filter by status. Possible values depend on the endpoint.
       schema:
         type: string
-    LimitQuery:
+    MarginOrdersLimitQuery:
       name: limit
       in: query
-      description: Number of results per page. Defaults to 100.
+      description: Number of margin orders per page. Defaults to 100.
       schema:
         type: integer
         format: int64
         minimum: 1
-        maximum: 1000
+        maximum: 10000
         default: 100
         x-oapi-codegen-extra-tags:
-          validate: omitempty,min=1,max=1000
+          validate: omitempty,min=1,max=10000
     CursorQuery:
       name: cursor
       in: query
@@ -138,7 +138,7 @@ components:
       in: query
       required: false
       description: >-
-        Subaccount number (0 for primary, 1-32 for subaccounts). If omitted,
+        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
         defaults to all subaccounts.
       schema:
         type: integer

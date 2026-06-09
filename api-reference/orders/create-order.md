@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order
-lastmod: 2026-06-07T21:57:51.283Z
+lastmod: 2026-06-08T21:06:35.626Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,9 @@ lastmod: 2026-06-07T21:57:51.283Z
 
 >  Endpoint for submitting orders in a market. Each user is limited to 200 000 open orders at a time.
 
+<Note>
+  **Rate limit:** 100 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI
@@ -432,7 +435,7 @@ components:
           type: integer
           nullable: true
           x-omitempty: true
-          description: Subaccount number (0 for primary, 1-32 for subaccounts).
+          description: Subaccount number (0 for primary, 1-63 for subaccounts).
         exchange_index:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'
@@ -490,9 +493,8 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     RateLimitError:
       description: >-
-        Rate limit exceeded. The default cost is 10 tokens per request;
-        endpoints that deviate show a **Rate limit** callout at the top of their
-        own page. See [Rate Limits and Tiers](/getting_started/rate_limits).
+        Rate limit exceeded. The default cost is 10 tokens per request. Use GET
+        /trade-api/v2/account/endpoint_costs to list non-default endpoint costs.
       content:
         application/json:
           schema:
