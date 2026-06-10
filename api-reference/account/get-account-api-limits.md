@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/account/get-account-api-limits
-lastmod: 2026-06-08T21:06:36.216Z
+lastmod: 2026-06-10T02:45:05.306Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-06-08T21:06:36.216Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.20.0
+  version: 3.21.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

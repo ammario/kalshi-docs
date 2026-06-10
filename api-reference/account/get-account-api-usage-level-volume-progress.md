@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/order-groups/get-order-group
-lastmod: 2026-06-10T02:45:04.933Z
+url: https://docs.kalshi.com/api-reference/account/get-account-api-usage-level-volume-progress
+lastmod: 2026-06-10T02:45:05.332Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Order Group
+# Get Account API Usage Level Volume Progress
 
->  Retrieves details for a single order group including all order IDs and auto-cancel status.
+> Returns the authenticated user's latest cron-computed trading volume progress toward volume-based API usage tiers for the predictions (event_contract) lane. Volume figures are reported as fixed-point contract counts.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/order_groups/{order_group_id}
+````yaml /openapi.yaml get /account/api_usage_level/volume_progress
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,76 +64,67 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/order_groups/{order_group_id}:
+  /account/api_usage_level/volume_progress:
     get:
       tags:
-        - order-groups
-      summary: Get Order Group
-      description: ' Retrieves details for a single order group including all order IDs and auto-cancel status.'
-      operationId: GetOrderGroup
-      parameters:
-        - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQuery'
+        - account
+      summary: Get Account API Usage Level Volume Progress
+      description: >-
+        Returns the authenticated user's latest cron-computed trading volume
+        progress toward volume-based API usage tiers for the predictions
+        (event_contract) lane. Volume figures are reported as fixed-point
+        contract counts.
+      operationId: GetAccountApiUsageLevelVolumeProgress
       responses:
         '200':
-          description: Order group retrieved successfully
+          description: Account API usage level volume progress retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetOrderGroupResponse'
+                $ref: >-
+                  #/components/schemas/GetAccountApiUsageLevelVolumeProgressResponse
         '401':
-          $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+          description: Unauthorized
         '500':
-          $ref: '#/components/responses/InternalServerError'
+          description: Internal server error
       security:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderGroupIdPath:
-      name: order_group_id
-      in: path
-      required: true
-      description: Order group ID
-      schema:
-        type: string
-    SubaccountQuery:
-      name: subaccount
-      in: query
-      description: >-
-        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
-        defaults to all subaccounts.
-      schema:
-        type: integer
   schemas:
-    GetOrderGroupResponse:
+    GetAccountApiUsageLevelVolumeProgressResponse:
       type: object
       required:
-        - is_auto_cancel_enabled
-        - orders
+        - volume_progress
       properties:
-        is_auto_cancel_enabled:
-          type: boolean
-          description: Whether auto-cancel is enabled for this order group
-        contracts_limit_fp:
-          $ref: '#/components/schemas/FixedPointCount'
+        volume_progress:
+          type: array
           description: >-
-            String representation of the current maximum contracts allowed over
-            a rolling 15-second window.
-          x-go-type-skip-optional-pointer: true
-        orders:
+            Latest cron-computed trading volume progress toward volume-based API
+            usage tiers for the predictions (event_contract) lane.
+          items:
+            $ref: '#/components/schemas/AccountApiUsageLevelVolumeProgress'
+    AccountApiUsageLevelVolumeProgress:
+      type: object
+      required:
+        - computed_ts
+        - trailing_30d_volume_fp
+        - goals
+      properties:
+        computed_ts:
+          type: integer
+          format: int64
+          description: >-
+            Unix timestamp (seconds) when this progress was computed;
+            trailing_30d_volume_fp covers the trailing 30 days ending at this
+            time.
+        trailing_30d_volume_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+        goals:
           type: array
           items:
-            type: string
-          description: List of order IDs that belong to this order group
-          x-go-type-skip-optional-pointer: true
-        exchange_index:
-          allOf:
-            - $ref: '#/components/schemas/ExchangeIndex'
-          x-go-type-skip-optional-pointer: true
+            $ref: '#/components/schemas/AccountApiUsageLevelVolumeGoal'
     FixedPointCount:
       type: string
       description: >-
@@ -145,46 +136,20 @@ components:
         contract count fields are legacy and will be deprecated; when both
         integer and fp fields are provided, they must match.
       example: '10.00'
-    ExchangeIndex:
-      type: integer
-      description: >-
-        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
-        currently only 0 supported.
-      example: 0
-    ErrorResponse:
+    AccountApiUsageLevelVolumeGoal:
       type: object
+      required:
+        - level
+        - earn_volume_goal_fp
+        - keep_volume_goal_fp
       properties:
-        code:
+        level:
           type: string
-          description: Error code
-        message:
-          type: string
-          description: Human-readable error message
-        details:
-          type: string
-          description: Additional details about the error, if available
-        service:
-          type: string
-          description: The name of the service that generated the error
-  responses:
-    UnauthorizedError:
-      description: Unauthorized - authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+          description: API usage level for this volume goal.
+        earn_volume_goal_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+        keep_volume_goal_fp:
+          $ref: '#/components/schemas/FixedPointCount'
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

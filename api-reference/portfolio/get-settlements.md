@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-06-08T21:06:35.974Z
+lastmod: 2026-06-10T02:45:05.081Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-06-08T21:06:35.974Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.20.0
+  version: 3.21.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -194,12 +194,10 @@ components:
             - 'yes'
             - 'no'
             - scalar
-            - void
           description: >-
             The outcome of the market settlement. 'yes' = market resolved to
             YES, 'no' = market resolved to NO, 'scalar' = scalar market settled
-            at a specific value, 'void' = market was voided/cancelled and all
-            positions returned at original cost.
+            at a specific value.
         yes_count_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-

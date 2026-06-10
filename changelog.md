@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-08T21:06:46.349Z
+lastmod: 2026-06-09T23:50:46.141Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,11 +14,20 @@ You can subscribe to the RSS changelog at `/changelog/rss.xml` if you'd like to 
 
 This changelog is a work in progress. As always, we welcome any feedback in our Discord #dev channel!
 
-## Recent Updates
+{/* changelog-tags: ["Upcoming"] */}
 
 <Update
   label="June 11, 2026"
-  tags={["New Feature", "Upcoming"]}
+  rss={{
+title: "API usage volume progress endpoint",
+description: "A new endpoint reports your trailing 30d volume and earn/keep volume goals for volume-based API usage tiers."
+}}
+>
+  New endpoint: `GET /trade-api/v2/account/api_usage_level/volume_progress` reports your trailing 30d volume and the earn/keep volume goals for each volume-based API usage tier.
+</Update>
+
+<Update
+  label="June 11, 2026"
   rss={{
 title: "Self-serve Advanced API usage tier upgrade",
 description: "Users can now self-promote to the Advanced API tier by calling POST /trade-api/v2/account/api_usage_level/upgrade."
@@ -34,7 +43,6 @@ description: "Users can now self-promote to the Advanced API tier by calling POS
 
 <Update
   label="June 11, 2026"
-  tags={["Bug Fix", "Upcoming"]}
   rss={{
 title: "Margin fee-tier endpoint returns active rates",
 description: "GET /trade-api/v2/margin/fee_tiers now returns active maker and taker fee rates instead of zeroing the response."
@@ -50,7 +58,6 @@ description: "GET /trade-api/v2/margin/fee_tiers now returns active maker and ta
 
 <Update
   label="June 11, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Perps volume and open interest notional fields",
 description: "Perps REST and WebSocket market data now include dollar notional companions for lifetime volume, 24h volume, and open interest contract counts."
@@ -71,7 +78,6 @@ description: "Perps REST and WebSocket market data now include dollar notional c
 
 <Update
   label="June 11, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Tick size added to GET Margin Markets",
 description: "Tick size added to GET Margin Markets."
@@ -86,31 +92,7 @@ description: "Tick size added to GET Margin Markets."
 </Update>
 
 <Update
-  label="June 5, 2026"
-  tags={["New Feature", "Upcoming"]}
-  rss={{
-title: "Introducing automated API rate-limit tiers",
-description: "Premier and above can now be earned automatically from your trading volume, with tier grants viewable via the API. Live Thursday, June 11, 2026."
-}}
->
-  We're introducing automated API rate-limit tiers: Premier, Paragon, and Prime are now earned
-  automatically from your trailing trading volume (and can still be granted manually). Each tier is
-  backed by a **grant**, which you can view in the new `grants` array of
-  `GET /trade-api/v2/account/limits`.
-
-  See [Rate Limits and Tiers](/getting_started/rate_limits) for the thresholds and how grants work.
-
-  **Live Thursday, June 11, 2026.**
-
-  **Affected endpoints:**
-
-  * `GET /trade-api/v2/account/limits`
-  * `GET /trade-api/v2/account/limits/perps`
-</Update>
-
-<Update
   label="June 11, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Fractional quantities for RFQs",
 description: "RFQs will support fractional contract quantities in API and FIX flows."
@@ -135,8 +117,29 @@ description: "RFQs will support fractional contract quantities in API and FIX fl
 </Update>
 
 <Update
+  label="June 5, 2026"
+  rss={{
+title: "Introducing automated API rate-limit tiers",
+description: "Premier and above can now be earned automatically from your trading volume, with tier grants viewable via the API. Live Thursday, June 11, 2026."
+}}
+>
+  We're introducing automated API rate-limit tiers: Premier, Paragon, and Prime are now earned
+  automatically from your trailing trading volume (and can still be granted manually). Each tier is
+  backed by a **grant**, which you can view in the new `grants` array of
+  `GET /trade-api/v2/account/limits`.
+
+  See [Rate Limits and Tiers](/getting_started/rate_limits) for the thresholds and how grants work.
+
+  **Live Thursday, June 11, 2026.**
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/account/limits`
+  * `GET /trade-api/v2/account/limits/perps`
+</Update>
+
+<Update
   label="June 4, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Legacy order mutation rate-limit costs increase to 10x V2",
 description: "Legacy /portfolio/orders mutation and batch endpoint rate-limit costs will be 10x the corresponding V2 /portfolio/events/orders endpoint costs. V2 endpoint costs are unchanged."
@@ -168,7 +171,6 @@ description: "Legacy /portfolio/orders mutation and batch endpoint rate-limit co
 
 <Update
   label="June 4, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Post Only Cross Cancel update reason added",
 description: "Post Only Cross Cancel update reason added"
@@ -186,7 +188,6 @@ description: "Post Only Cross Cancel update reason added"
 
 <Update
   label="June 2, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Transfer-scoped API key permissions",
 description: "API keys can now use write::transfer for transfer-scoped write endpoint access."
@@ -200,7 +201,6 @@ description: "API keys can now use write::transfer for transfer-scoped write end
 
 <Update
   label="June 1, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Legacy order mutation rate-limit costs increase to 5x V2",
 description: "Legacy /portfolio/orders mutation and batch endpoint rate-limit costs will be 5x the corresponding V2 /portfolio/events/orders endpoint costs. V2 endpoint costs are unchanged."
@@ -222,7 +222,6 @@ description: "Legacy /portfolio/orders mutation and batch endpoint rate-limit co
 
 <Update
   label="May 29, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Block trade indicators and filters for public trades",
 description: "Public V2 trade endpoints now identify block trades with is_block_trade and support filtering by block trade status."
@@ -242,7 +241,6 @@ description: "Public V2 trade endpoints now identify block trades with is_block_
 
 <Update
   label="May 28, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Fixed-point dollars added to GET /portfolio/balance",
 description: "Starting Thursday, May 28, 2026, GET /portfolio/balance returns balance_dollars alongside the existing balance field. Direct member balances use centi-cent precision."
@@ -255,7 +253,6 @@ description: "Starting Thursday, May 28, 2026, GET /portfolio/balance returns ba
 
 <Update
   label="May 25, 2026"
-  tags={["Change", "Released"]}
   rss={{
 title: "Legacy order mutation rate-limit costs updated",
 description: "Effective Monday, May 25, 2026, legacy /portfolio/orders mutation and batch endpoint rate-limit costs are increased. The V2 /portfolio/events/orders endpoints are unchanged."
@@ -277,7 +274,6 @@ description: "Effective Monday, May 25, 2026, legacy /portfolio/orders mutation 
 
 <Update
   label="May 21, 2026"
-  tags={["Bug Fix", "Upcoming"]}
   rss={{
 title: "V2 cancel/amend response correctness",
 description: "In certain uncommon cases, V2 cancel and amend responses don't describe the order that was cancelled or amended. The legacy /portfolio/orders* rate-limit cost bump is delayed until May 21."
@@ -295,7 +291,6 @@ description: "In certain uncommon cases, V2 cancel and amend responses don't des
 
 <Update
   label="May 12, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "reduce_by supported on V2 decrease endpoint",
 description: "POST /portfolio/events/orders/{order_id}/decrease now accepts reduce_by in addition to reduce_to. Exactly one must be provided."
@@ -308,7 +303,6 @@ description: "POST /portfolio/events/orders/{order_id}/decrease now accepts redu
 
 <Update
   label="May 12, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Subaccount creation for direct members",
 description: "Subaccount creation now supported for all direct members with advanced API access."
@@ -319,7 +313,6 @@ description: "Subaccount creation now supported for all direct members with adva
 
 <Update
   label="May 12, 2026"
-  tags={["Documentation", "Upcoming"]}
   rss={{
 title: "WebSocket error code list documented",
 description: "The WebSocket docs now include the current public error code list, and code 25 is now returned for subscription buffer overflow."
@@ -339,7 +332,6 @@ description: "The WebSocket docs now include the current public error code list,
 
 <Update
   label="May 11, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Cancelled quotes are automatically deleted after 14 days",
 description: "Cancelled quotes are now automatically deleted 14 days after cancellation."
@@ -352,7 +344,6 @@ description: "Cancelled quotes are now automatically deleted 14 days after cance
 
 <Update
   label="May 11, 2026"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "/margin/fee_tiers response replaced with per-market fee rates",
 description: "GET /trade-api/v2/margin/fee_tiers now returns maker_fee_rates and taker_fee_rates maps (ticker -> rate as a decimal fraction of notional). The maker_fee_tiers and taker_fee_tiers fields have been removed."
@@ -373,7 +364,6 @@ description: "GET /trade-api/v2/margin/fee_tiers now returns maker_fee_rates and
 
 <Update
   label="May 11, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "metadata_updated WS event now includes yes_sub_title",
 description: "The market_lifecycle_v2 metadata_updated event now emits yes_sub_title when a market's subtitle changes."
@@ -390,7 +380,6 @@ description: "The market_lifecycle_v2 metadata_updated event now emits yes_sub_t
 
 <Update
   label="May 7, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Order group creation response includes subaccount",
 description: "CreateOrderGroup now returns the subaccount that owns the created order group."
@@ -403,7 +392,6 @@ description: "CreateOrderGroup now returns the subaccount that owns the created 
 
 <Update
   label="May 7, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "RFQ User Filter on Get Quotes",
 description: "RFQ User Filter on Get Quotes"
@@ -416,7 +404,6 @@ description: "RFQ User Filter on Get Quotes"
 
 <Update
   label="May 6, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Normalized outcome_side and book_side on Order, Fill, and Trade responses",
 description: "REST and WebSocket Order, Fill, and Trade responses now include outcome_side (yes/no) and book_side (bid/ask), each carrying the full directional bit so the action × side matrix is no longer required to interpret a response."
@@ -461,7 +448,6 @@ description: "REST and WebSocket Order, Fill, and Trade responses now include ou
 
 <Update
   label="May 7, 2026"
-  tags={["Documentation", "Upcoming"]}
   rss={{
 title: "Dedicated external Trade API endpoints documented",
 description: "Added dedicated external REST and WebSocket hosts for production and demo. Existing shared hosts remain supported."
@@ -479,7 +465,6 @@ description: "Added dedicated external REST and WebSocket hosts for production a
 
 <Update
   label="May 5, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "market_lifecycle_v2 WS channel emits metadata_updated events",
 description: "The market_lifecycle_v2 WebSocket channel now emits metadata_updated events."
@@ -497,7 +482,6 @@ description: "The market_lifecycle_v2 WebSocket channel now emits metadata_updat
 
 <Update
   label="May 5, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Post-only option for quotes",
 description: "POST /communications/quotes now accepts post_only."
@@ -509,7 +493,6 @@ description: "POST /communications/quotes now accepts post_only."
 
 <Update
   label="May 5, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "New endpoints: GET /portfolio/deposits and GET /portfolio/withdrawals",
 description: "Query deposit and withdrawal history with cursor-based pagination."
@@ -528,7 +511,6 @@ description: "Query deposit and withdrawal history with cursor-based pagination.
 
 <Update
   label="May 5, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Matching-engine timestamps on V2 order responses and order group WS updates",
 description: "V2 order mutating endpoints now return a `ts_ms` field, and the order_group_updates WebSocket channel now includes `ts_ms`, both carrying the matching engine's event timestamp as Unix epoch milliseconds."
@@ -553,7 +535,6 @@ description: "V2 order mutating endpoints now return a `ts_ms` field, and the or
 
 <Update
   label="May 1, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "RFQ and quote user filters",
 description: "GET /communications/rfqs and GET /communications/quotes now accept user_filter=self."
@@ -565,7 +546,6 @@ description: "GET /communications/rfqs and GET /communications/quotes now accept
 
 <Update
   label="Apr 30, 2026"
-  tags={["Breaking Change", "Deprecation", "Upcoming"]}
   rss={{
 title: "Market tick_size field will be removed May 7",
 description: "The deprecated Market tick_size field has been deprecated since Jan 5, 2026 and will be removed from Market responses on May 7, 2026."
@@ -584,7 +564,6 @@ description: "The deprecated Market tick_size field has been deprecated since Ja
 
 <Update
   label="Apr 30, 2026"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "/account/limits exposes per-bucket refill rate and capacity",
 description: "Response restructured to a nested object per bucket with refill_rate and bucket_capacity."
@@ -614,7 +593,6 @@ description: "Response restructured to a nested object per bucket with refill_ra
 
 <Update
   label="Apr 22, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Endpoint cost introspection",
 description: "Added a public endpoint that lists endpoints whose configured token cost differs from the default 10-token cost."
@@ -633,7 +611,6 @@ description: "Added a public endpoint that lists endpoints whose configured toke
 
 <Update
   label="Apr 23, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Short bursts on Write endpoints",
 description: "Write endpoints now allow brief bursts above your per-second budget."
@@ -647,7 +624,6 @@ description: "Write endpoints now allow brief bursts above your per-second budge
 
 <Update
   label="Apr 22, 2026"
-  tags={["New Feature", "Deprecation", "Upcoming"]}
   rss={{
 title: "V2 event-order endpoints at /portfolio/events/orders",
 description: "New event-order endpoints using a bid/ask single-book shape with fixed-point dollar prices and lightweight responses. The legacy /portfolio/orders endpoints will be deprecated no earlier than May 21, 2026, and rate-limit costs on the legacy endpoints may increase starting May 14, 2026."
@@ -667,7 +643,6 @@ description: "New event-order endpoints using a bid/ask single-book shape with f
 
 <Update
   label="Apr 23, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "New rate-limit system goes live",
 description: "A token-cost rate-limit model replaces the previous per-second scheme. All existing tiers get at least as much headroom as before."
@@ -684,7 +659,6 @@ description: "A token-cost rate-limit model replaces the previous per-second sch
 
 <Update
   label="Apr 20, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Orderbook snapshot request via WebSocket",
 description: "New get_snapshot action on the orderbook_delta channel returns an immediate orderbook snapshot without modifying the subscription."
@@ -714,7 +688,6 @@ description: "New get_snapshot action on the orderbook_delta channel returns an 
 
 <Update
   label="Apr 17, 2026"
-  tags={["Deprecation", "Upcoming"]}
   rss={{
 title: "fractional_trading_enabled deprecated",
 description: "The fractional_trading_enabled field on Market and EventChildMarket is deprecated and now always true."
@@ -731,7 +704,6 @@ description: "The fractional_trading_enabled field on Market and EventChildMarke
 
 <Update
   label="Apr 16, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Market responses now include occurrence_datetime",
 description: "Added occurrence_datetime to API v2 market responses, including nested event-child markets."
@@ -751,7 +723,6 @@ description: "Added occurrence_datetime to API v2 market responses, including ne
 
 <Update
   label="Apr 15, 2026"
-  tags={["New Feature", "Deprecation", "Upcoming"]}
   rss={{
 title: "WebSocket timestamp millisecond fields",
 description: "Added millisecond Unix timestamp fields to non-margin WebSocket messages and deprecated the older timestamp fields."
@@ -795,7 +766,6 @@ description: "Added millisecond Unix timestamp fields to non-margin WebSocket me
 
 <Update
   label="Apr 10, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Historical markets support series_ticker filtering",
 description: "GET /historical/markets now accepts a series_ticker query parameter."
@@ -812,7 +782,6 @@ description: "GET /historical/markets now accepts a series_ticker query paramete
 
 <Update
   label="Mar 30, 2026"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "GET /portfolio/fills: removed client_order_id field",
 description: "Removed the client_order_id field from the Fill response object."
@@ -828,7 +797,6 @@ description: "Removed the client_order_id field from the Fill response object."
 
 <Update
   label="Mar 30, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "GET /markets/orderbooks: fetch multiple orderbooks in one request",
 description: "New endpoint to retrieve orderbooks for multiple market tickers in a single API call."
@@ -846,7 +814,6 @@ description: "New endpoint to retrieve orderbooks for multiple market tickers in
 
 <Update
   label="Mar 25, 2026"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "Fixed-point migration cleanup: remove last legacy fields (effective Apr 2)",
 description: "Removed the last legacy fields from Settlement, Fill, and market_positions responses. Effective April 2, 2026."
@@ -863,7 +830,6 @@ description: "Removed the last legacy fields from Settlement, Fill, and market_p
 
 <Update
   label="Mar 26, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Subaccount field added to quote accepted and quote executed responses",
 description: "Quote responses now include the caller's subaccount number on REST, WebSocket, and FIX surfaces."
@@ -875,7 +841,6 @@ description: "Quote responses now include the caller's subaccount number on REST
 
 <Update
   label="Mar 25, 2026"
-  tags={["Bug Fix", "Upcoming"]}
   rss={{
 title: "Correct multivariate event ticker on market custom strike responses",
 description: "Market responses now return the actual multivariate event ticker for the custom_strike field labeled Multivariate Event Ticker."
@@ -886,7 +851,6 @@ description: "Market responses now return the actual multivariate event ticker f
 
 <Update
   label="Mar 19, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "New multivariate_market_lifecycle WebSocket channel",
 description: "Added a dedicated WebSocket lifecycle channel for multivariate event (MVE) markets."
@@ -913,7 +877,6 @@ description: "Added a dedicated WebSocket lifecycle channel for multivariate eve
 
 <Update
   label="Mar 20, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "OpenAPI schema cleanup for deprecated compatibility fields",
 description: "Trade and market position timestamps are now required in the spec, deprecated compatibility fields are now optional, and several schema inconsistencies were corrected."
@@ -927,7 +890,6 @@ description: "Trade and market position timestamps are now required in the spec,
 
 <Update
   label="Mar 12, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "New market_lifecycle_v2 event types for fractional trading and price level structure changes",
 description: "The market_lifecycle_v2 WebSocket channel now emits events when a market's fractional trading setting or price level structure is changed."
@@ -947,7 +909,6 @@ description: "The market_lifecycle_v2 WebSocket channel now emits events when a 
 
 <Update
   label="Mar 11, 2026"
-  tags={["Released", "Change"]}
   rss={{
 title: "Yes no count in quotes",
 description: "Quotes now communicate the computes yes/no count based on the defined prices."
@@ -958,7 +919,6 @@ description: "Quotes now communicate the computes yes/no count based on the defi
 
 <Update
   label="Mar 11, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Legacy fields temporarily restored; nested market bid sizes fixed",
 description: "Legacy fields temporarily restored on market_positions WebSocket and GetSettlements to allow additional migration time. yes_bid_size_fp and yes_ask_size_fp now populated on nested market responses."
@@ -972,7 +932,6 @@ description: "Legacy fields temporarily restored on market_positions WebSocket a
 
 <Update
   label="Mar 10, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Fill prices adopt _dollars aliases; settlements add dollar cost fields",
 description: "Fill responses now expose yes_price_dollars and no_price_dollars, and settlements now expose yes_total_cost_dollars and no_total_cost_dollars. Legacy aliases remain available for now but are deprecated."
@@ -987,7 +946,6 @@ description: "Fill responses now expose yes_price_dollars and no_price_dollars, 
 
 <Update
   label="Mar 8, 2026"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "Legacy fields removed March 12; fractional trading and subpenny pricing on new markets",
 description: "Legacy integer count and price fields will be removed March 12. Fractional trading enabled on 10 new markets March 12. Subpenny pricing on 2 markets March 9."
@@ -1002,7 +960,6 @@ description: "Legacy integer count and price fields will be removed March 12. Fr
 
 <Update
   label="Mar 7, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Higher precision for selected portfolio dollar fields",
 description: "Selected `_dollars` fields now emit up to 6 decimal places using micro_cent source values when available."
@@ -1020,7 +977,6 @@ description: "Selected `_dollars` fields now emit up to 6 decimal places using m
 
 <Update
   label="Mar 6, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Historical trades endpoint",
 description: "New public GET /historical/trades endpoint for accessing trade data older than the historical cutoff."
@@ -1033,7 +989,6 @@ description: "New public GET /historical/trades endpoint for accessing trade dat
 
 <Update
   label="Mar 5, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "User orders WebSocket: added is_yes",
 description: "The user orders WebSocket channel adds an is_yes boolean field while retaining the side string field."
@@ -1045,7 +1000,6 @@ description: "The user orders WebSocket channel adds an is_yes boolean field whi
 
 <Update
   label="Mar 3, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Fixed-point migration: deprecation March 12; fractional trading week of March 9",
 description: "Legacy integer count and price fields will be removed March 12, 2026. Fractional trading rolls out per-market starting the week of March 9."
@@ -1060,7 +1014,6 @@ description: "Legacy integer count and price fields will be removed March 12, 20
 
 <Update
   label="Feb 24, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Top-of-book sizes available on Market responses",
 description: "Top-of-book sizes available on Market responses"
@@ -1079,7 +1032,6 @@ description: "Top-of-book sizes available on Market responses"
 
 <Update
   label="Feb 23, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Per-subaccount netting settings",
 description: "New endpoints to get and update netting settings per subaccount.",
@@ -1095,7 +1047,6 @@ description: "New endpoints to get and update netting settings per subaccount.",
 
 <Update
   label="Feb 21, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Legacy field deprecation on March 5 and fractional trading in demo",
 description: "Legacy integer count and price fields will be deprecated on March 5, 2026. Fractional share trading is available for testing in demo.",
@@ -1116,7 +1067,6 @@ description: "Legacy integer count and price fields will be deprecated on March 
 
 <Update
   label="Feb 19, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "settlement_value added to market_lifecycle_v2 determined events",
 description: "The market_lifecycle_v2 WebSocket channel now includes settlement_value on market determined events"
@@ -1129,7 +1079,6 @@ description: "The market_lifecycle_v2 WebSocket channel now includes settlement_
 
 <Update
   label="Feb 17, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Subaccount filtering on GET /portfolio/balance",
 description: "The GET /portfolio/balance endpoint now supports an optional subaccount query parameter to retrieve balance and portfolio value for a specific subaccount."
@@ -1143,7 +1092,6 @@ description: "The GET /portfolio/balance endpoint now supports an optional subac
 
 <Update
   label="Feb 13, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Market liquidity fields deprecated",
 description: "Market liquidity fields deprecated"
@@ -1162,7 +1110,6 @@ description: "Market liquidity fields deprecated"
 
 <Update
   label="Feb 16, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Deprecation of non fixed-point fields pushed back",
 description: "Fields that have a `_fp` equivalent will continue to be returned via API until at least February 26, 2026.",
@@ -1176,7 +1123,6 @@ description: "Fields that have a `_fp` equivalent will continue to be returned v
 
 <Update
   label="Feb 19, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Historical data endpoints and cutoff timestamps",
 description: "New endpoints for retrieving historical exchange data and cutoff timestamps defining the live/historical boundary"
@@ -1210,7 +1156,6 @@ description: "New endpoints for retrieving historical exchange data and cutoff t
 
 <Update
   label="Feb 11, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "CreateOrder no longer offers market type",
 description: "CreateOrder no longer offers market as an order type."
@@ -1221,7 +1166,6 @@ description: "CreateOrder no longer offers market as an order type."
 
 <Update
   label="Feb 12, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "MVE events excluded from market_lifecycle_v2 WebSocket channel",
 description: "The market_lifecycle_v2 WebSocket channel no longer emits messages for multivariate event (KXMVE-prefixed) tickers."
@@ -1237,7 +1181,6 @@ description: "The market_lifecycle_v2 WebSocket channel no longer emits messages
 
 <Update
   label="Feb 12, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "ticker_v2 WebSocket channel removed",
 description: "The undocumented ticker_v2 WebSocket channel has been removed from the API."
@@ -1256,7 +1199,6 @@ description: "The undocumented ticker_v2 WebSocket channel has been removed from
 
 <Update
   label="Feb 11, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "WebSocket QoL Improvements",
 description: "WebSocket QoL Improvements"
@@ -1268,7 +1210,6 @@ description: "WebSocket QoL Improvements"
 
 <Update
   label="Feb 11, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "fractional_trading_enabled added to market response payloads",
 description: "Market payloads now include fractional_trading_enabled consistently across endpoints."
@@ -1286,7 +1227,6 @@ description: "Market payloads now include fractional_trading_enabled consistentl
 
 <Update
   label="Feb 5, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "market_id added to Incentive Programs API",
 description: "Incentive Programs API responses now include market_id field"
@@ -1301,7 +1241,6 @@ description: "Incentive Programs API responses now include market_id field"
 
 <Update
   label="Feb 3, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "User orders WebSocket channel",
 description: "New WebSocket channel for real-time order created and updated notifications"
@@ -1318,7 +1257,6 @@ description: "New WebSocket channel for real-time order created and updated noti
 
 <Update
   label="Feb 3, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Order group read endpoints support optional subaccount parameter",
 description: "GetOrderGroup and GetOrderGroups now accept an optional subaccount query parameter to filter by subaccount."
@@ -1336,7 +1274,6 @@ description: "GetOrderGroup and GetOrderGroups now accept an optional subaccount
 
 <Update
   label="Feb 2, 2026"
-  tags={["Upcoming", "New Feature"]}
   rss={{
 title: "Subaccount support for RFQs",
 description: "CreateRFQ and GetRFQs endpoints now support subaccounts"
@@ -1353,7 +1290,6 @@ description: "CreateRFQ and GetRFQs endpoints now support subaccounts"
 
 <Update
   label="Jan 30, 2026"
-  tags={["Upcoming", "New Feature"]}
   rss={{
 title: "Order queue position returns fixed point field",
 description: "Order queue position returns fixed point field",
@@ -1370,7 +1306,6 @@ description: "Order queue position returns fixed point field",
 
 <Update
   label="Feb 12, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "L1 orderbook sizes added to ticker WebSocket channel",
 description: "The ticker WebSocket channel now includes top-of-book sizes and last trade size, providing a complete L1 orderbook view."
@@ -1392,7 +1327,6 @@ description: "The ticker WebSocket channel now includes top-of-book sizes and la
 
 <Update
   label="Jan 29, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Orders return subaccount number",
 description: "Order responses now include subaccount_number for direct users."
@@ -1408,7 +1342,6 @@ description: "Order responses now include subaccount_number for direct users."
 
 <Update
   label="Jan 29, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Subaccount filter behavior change for orders, fills, and settlements",
 description: "When subaccount is omitted, these endpoints now return results across all subaccounts."
@@ -1427,7 +1360,6 @@ description: "When subaccount is omitted, these endpoints now return results acr
 
 <Update
   label="Jan 29, 2026"
-  tags={["Upcoming", "Breaking Change"]}
   rss={{
 title: "Deprecation of non fixed-point fields",
 description: "Fields that have a `_fp` equivalent will no longer be returned via API in a future release.",
@@ -1438,7 +1370,6 @@ description: "Fields that have a `_fp` equivalent will no longer be returned via
 
 <Update
   label="Jan 29, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Fee cost added to fill WebSocket messages",
 description: "Fill WebSocket messages now include fee_cost as a fixed-point dollars string."
@@ -1453,7 +1384,6 @@ description: "Fill WebSocket messages now include fee_cost as a fixed-point doll
 
 <Update
   label="Jan 28, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Subaccount support for cancel, amend, decrease order, and order group operations",
 description: "Cancel, amend, and decrease order endpoints now accept an optional subaccount parameter. Order group operations also support subaccounts."
@@ -1477,7 +1407,6 @@ description: "Cancel, amend, and decrease order endpoints now accept an optional
 
 <Update
   label="Jan 28, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Per-order subaccount support in batch cancels",
 description: "Batch cancel orders now accepts per-order subaccount values while remaining backwards compatible."
@@ -1494,7 +1423,6 @@ description: "Batch cancel orders now accepts per-order subaccount values while 
 
 <Update
   label="Jan 28, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Dollar-denominated target cost for RFQs",
 description: "RFQ and Quote endpoints now support target_cost_dollars as a fixed-point dollar string"
@@ -1517,7 +1445,6 @@ description: "RFQ and Quote endpoints now support target_cost_dollars as a fixed
 
 <Update
   label="Jan 27, 2026"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "Subaccount Balance returns string dollars representation",
 description: "Subaccount Balance returns string dollars representation"
@@ -1533,7 +1460,6 @@ description: "Subaccount Balance returns string dollars representation"
 
 <Update
   label="Jan 27, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Exchange Fee available on Fills API",
 description: "Exchange Fee available on Fills API"
@@ -1548,7 +1474,6 @@ description: "Exchange Fee available on Fills API"
 
 <Update
   label="Jan 26, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "More specific error codes for order validation",
 description: "New error codes provide more detailed information about order rejection reasons"
@@ -1573,7 +1498,6 @@ description: "New error codes provide more detailed information about order reje
 
 <Update
   label="Jan 22, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Subaccount support for RFQ quotes",
 description: "CreateQuote endpoint now accepts a subaccount parameter"
@@ -1588,7 +1512,6 @@ description: "CreateQuote endpoint now accepts a subaccount parameter"
 
 <Update
   label="Jan 22, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Get api tier limits endpoint",
 description: "New endpoint to retrieve the authorized user's api tier limits"
@@ -1605,7 +1528,6 @@ description: "New endpoint to retrieve the authorized user's api tier limits"
 
 <Update
   label="Jan 22, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Order group updates WebSocket channel",
 description: "New WebSocket channel for order group lifecycle updates"
@@ -1624,7 +1546,6 @@ description: "New WebSocket channel for order group lifecycle updates"
 
 <Update
   label="Jan 21, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Amend order endpoint: client_order_id fields now optional",
 description: "client_order_id and updated_client_order_id are now optional in amend order requests"
@@ -1660,7 +1581,6 @@ description: "client_order_id and updated_client_order_id are now optional in am
 
 <Update
   label="Jan 29, 2026"
-  tags={["Released"]}
   rss={{
 title: "Release Jan 29, 2026",
 description: "Release Jan 29, 2026"
@@ -1671,7 +1591,6 @@ description: "Release Jan 29, 2026"
 
 <Update
   label="Jan 29, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Order group limit update endpoint",
 description: "Update order group contracts limits"
@@ -1695,7 +1614,6 @@ description: "Update order group contracts limits"
 
 <Update
   label="Jan 22, 2026"
-  tags={["Documentation", "Released"]}
   rss={{
 title: "WebSocket AsyncAPI fixed-point counts",
 description: "Documented *_fp fields for WebSocket payloads in AsyncAPI"
@@ -1709,7 +1627,6 @@ description: "Documented *_fp fields for WebSocket payloads in AsyncAPI"
 
 <Update
   label="Jan 21, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "GetMarkets Min Updated Ts Filter",
 description: "GetMarkets Min Updated Ts Filter"
@@ -1725,7 +1642,6 @@ description: "GetMarkets Min Updated Ts Filter"
 
 <Update
   label="Jan 20, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "Get markets may return scalar result",
 description: "Get markets may return scalar result"
@@ -1744,7 +1660,6 @@ description: "Get markets may return scalar result"
 
 <Update
   label="Jan 21, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Manual order group trigger endpoint",
 description: "New endpoint to trigger order groups"
@@ -1761,7 +1676,6 @@ description: "New endpoint to trigger order groups"
 
 <Update
   label="Jan 16, 2026"
-  tags={["Change", "Upcoming"]}
   rss={{
 title: "RFQ maker client order ID format update",
 description: "RFQ maker client order ID format update"
@@ -1775,7 +1689,6 @@ description: "RFQ maker client order ID format update"
 
 <Update
   label="Jan 16, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Candlesticks include_latest_before_start parameter",
 description: "New parameter for single market candlestick endpoint to include synthetic initial data point"
@@ -1797,7 +1710,6 @@ description: "New parameter for single market candlestick endpoint to include sy
 
 <Update
   label="Jan 15, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Fixed-point contract count fields added to REST API",
 description: "New _fp string fields for precise contract quantity representation"
@@ -1823,7 +1735,6 @@ description: "New _fp string fields for precise contract quantity representation
 
 <Update
   label="Jan 13, 2025"
-  tags={["Feature", "Upcoming"]}
   rss={{
 title: "Yes settlement values in MVE legs",
 description: "MVE legs now report settlement value, when known"
@@ -1836,7 +1747,6 @@ description: "MVE legs now report settlement value, when known"
 
 <Update
   label="Jan 12, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Communications WebSocket channel sharding support",
 description: "New shard_factor and shard_key parameters for the communications channel"
@@ -1876,7 +1786,6 @@ description: "New shard_factor and shard_key parameters for the communications c
 
 <Update
   label="Jan 9, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Subaccount API endpoints",
 description: "New endpoints for managing subaccounts and transferring funds between them"
@@ -1896,7 +1805,6 @@ description: "New endpoints for managing subaccounts and transferring funds betw
 
 <Update
   label="Jan 9, 2025"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "New market response field Is Provisional",
 description: "New market response field Is Provisional"
@@ -1915,7 +1823,6 @@ description: "New market response field Is Provisional"
 
 <Update
   label="Jan 6, 2026"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Series volume field added to Series API",
 description: "Optional volume field added to Series responses"
@@ -1935,7 +1842,6 @@ description: "Optional volume field added to Series responses"
 
 <Update
   label="Jan 6, 2026"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "Cent-denominated price fields removed from Market responses",
 description: "Cent-denominated price fields removed from Market responses"
@@ -1960,7 +1866,6 @@ description: "Cent-denominated price fields removed from Market responses"
 
 <Update
   label="Jan 5, 2026"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "Deprecated Market fields removed: category and risk_limit_cents",
 description: "Deprecated fields category and risk_limit_cents removed from Market responses"
@@ -1978,7 +1883,6 @@ description: "Deprecated fields category and risk_limit_cents removed from Marke
 
 <Update
   label="Dec 22, 2025"
-  tags={["Bug Fix", "Released"]}
   rss={{
 title: "Lowercase query parameters support for search",
 description: "Search endpoints now support lowercase query parameters"
@@ -1991,7 +1895,6 @@ description: "Search endpoints now support lowercase query parameters"
 
 <Update
   label="Dec 19, 2025"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Settlement timestamp added to Markets API",
 description: "Settlement timestamp added to Markets API"
@@ -2004,7 +1907,6 @@ description: "Settlement timestamp added to Markets API"
 
 <Update
   label="Dec 16, 2025"
-  tags={["Documentation", "Released"]}
   rss={{
 title: "Market Status Values",
 description: "Documented all possible market status values in response"
@@ -2015,7 +1917,6 @@ description: "Documented all possible market status values in response"
 
 <Update
   label="Dec 13, 2025"
-  tags={["Upcoming"]}
   rss={{
 title: "Paused filter added to Get Markets",
 description: "Paused filter added to Get Markets",
@@ -2026,7 +1927,6 @@ description: "Paused filter added to Get Markets",
 
 <Update
   label="Dec 11, 2025"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Event ticker available in Settlements API",
 description: "Event ticker available in Settlements API"
@@ -2038,7 +1938,6 @@ description: "Event ticker available in Settlements API"
 
 <Update
   label="Dec 18, 2025"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Read-Only API Keys",
 description: "API keys now support scopes for read-only or full access permissions"
@@ -2051,7 +1950,6 @@ description: "API keys now support scopes for read-only or full access permissio
 
 <Update
   label="Dec 5, 2025"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "GET /portfolio/positions no longer supports settled positions",
 description: "GET /portfolio/positions no longer supports settled positions",
@@ -2064,7 +1962,6 @@ description: "GET /portfolio/positions no longer supports settled positions",
 
 <Update
   label="Dec 2, 2025"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "GET /events no longer returns multivariate events",
 description: "GET /events now excludes all multivariate events. Use GET /events/multivariate for MVE events.",
@@ -2077,7 +1974,6 @@ description: "GET /events now excludes all multivariate events. Use GET /events/
 
 <Update
   label="Dec 1, 2025"
-  tags={["Upcoming"]}
   rss={{
 title: "SDK Updates and kalshi_python renamed to kalshi_python_sync",
 description: "New SDK versions will be released by Thursday. SDK versions will track openapi spec versions. Kalshi will be publishing sync and async python clients as well as updating the existing typescript client."
@@ -2088,7 +1984,6 @@ description: "New SDK versions will be released by Thursday. SDK versions will t
 
 <Update
   label="Dec 1, 2025"
-  tags={["Upcoming"]}
   rss={{
 title: "General availability for Batch Cancel Orders API",
 description: "General availability for Batch Cancel Orders API"
@@ -2101,7 +1996,6 @@ description: "General availability for Batch Cancel Orders API"
 
 <Update
   label="Nov 29, 2025"
-  tags={["Upcoming"]}
   rss={{
 title: "Live Data Response Includes Milestone ID",
 description: "Live Data Response Includes Milestone ID"
@@ -2114,7 +2008,6 @@ description: "Live Data Response Includes Milestone ID"
 
 <Update
   label="Nov 23, 2025"
-  tags={["Upcoming"]}
   rss={{
 title: "Get Markets Filter Updates",
 description: "Get Markets Filter Updates"
@@ -2131,7 +2024,6 @@ description: "Get Markets Filter Updates"
 
 <Update
   label="Nov 21, 2025"
-  tags={["Upcoming"]}
   rss={{
 title: "Subpenny bids added to Get Quote API",
 description: "Subpenny bids added to Get Quote API"
@@ -2145,7 +2037,6 @@ description: "Subpenny bids added to Get Quote API"
 
 <Update
   label="Nov 27, 2025"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Batch Market Candlesticks endpoint",
 description: "New endpoint for retrieving candlestick data for multiple markets in a single request"
@@ -2160,7 +2051,6 @@ description: "New endpoint for retrieving candlestick data for multiple markets 
 
 <Update
   label="Nov 21, 2025"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "Order expiration and IoC behavior changes",
 description: "Orders with past expiration timestamps will be rejected instead of coerced to IoC. IoC flag can no longer be combined with expiration_ts."
@@ -2181,7 +2071,6 @@ description: "Orders with past expiration timestamps will be rejected instead of
 
 <Update
   label="Nov 20, 2025"
-  tags={["Upcoming"]}
   rss={{
 title: "Removing pending from status enum",
 description: "'Pending' is being removed from the status enum on orders"
@@ -2194,7 +2083,6 @@ description: "'Pending' is being removed from the status enum on orders"
 
 <Update
   label="Nov 14, 2025"
-  tags={["Upcoming"]}
   rss={{
 title: "General availability for Batch Create Orders API",
 description: "General availability for Batch Create Orders API"
@@ -2207,7 +2095,6 @@ description: "General availability for Batch Create Orders API"
 
 <Update
   label="Nov 14, 2025"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "New timestamp filters for Markets API",
 description: "New timestamp filters for Markets API"
@@ -2220,7 +2107,6 @@ description: "New timestamp filters for Markets API"
 
 <Update
   label="Nov 11, 2025"
-  tags={["Breaking Change", "Released"]}
   rss={{
 title: "Restrictions to GetMarkets Filters",
 description: "Restrictions to GetMarkets Filters"
@@ -2238,7 +2124,6 @@ description: "Restrictions to GetMarkets Filters"
 
 <Update
   label="Nov 11, 2025"
-  tags={["New Feature", "Released"]}
   rss={{
 title: "New timestamp filters for Markets API",
 description: "New timestamp filters for Markets API"
@@ -2254,7 +2139,6 @@ description: "New timestamp filters for Markets API"
 
 <Update
   label="Nov 7, 2025"
-  tags={["Breaking Change", "Upcoming"]}
   rss={{
 title: "Resting market positions filter removed",
 description: "Resting market positions filter removed"
@@ -2268,7 +2152,6 @@ description: "Resting market positions filter removed"
 
 <Update
   label="Nov 13, 2025"
-  tags={["Upcoming"]}
   rss={{
 title: "Settlements API returns fee cost",
 description: "Settlements API returns fee cost"
@@ -2279,7 +2162,6 @@ description: "Settlements API returns fee cost"
 
 <Update
   label="Nov 6, 2025"
-  tags={["Bug Fix", "Upcoming"]}
   rss={{
 title: "GetEvents limit parameter now defaults to 200 and respects the parameter.",
 description: "Fixed GetEvents limit parameter."
@@ -2293,7 +2175,6 @@ description: "Fixed GetEvents limit parameter."
 
 <Update
   label="Nov 6, 2025"
-  tags={["Upcoming"]}
   rss={{
 title: "Portfolio positions now include total_cost_shares",
 description: "Added total_cost_shares field to portfolio/positions endpoint showing total shares traded per event."
@@ -2304,7 +2185,6 @@ description: "Added total_cost_shares field to portfolio/positions endpoint show
 
 <Update
   label="Nov 6, 2025"
-  tags={["New Feature", "Upcoming"]}
   rss={{
 title: "Multivariate Events API and Enhanced Market Filtering",
 description: "New endpoint for multivariate events and enhanced market filtering capabilities"
@@ -2329,7 +2209,6 @@ description: "New endpoint for multivariate events and enhanced market filtering
 
 <Update
   label="Oct 24, 2025"
-  tags={["Bug Fix", "Upcoming"]}
   rss={{
 title: "Batch order creation now returns post-only cross errors",
 description: "Post-only orders that cross the market in batch requests now return detailed error messages instead of just status canceled."
@@ -2345,7 +2224,6 @@ description: "Post-only orders that cross the market in batch requests now retur
 
 <Update
   label="Oct 20, 2025"
-  tags={["Released"]}
   rss={{
 title: "Get Orders endpoint supports multiple event tickers",
 description: "The event_ticker parameter now accepts comma-separated values to filter orders across multiple events."
@@ -2367,7 +2245,6 @@ description: "The event_ticker parameter now accepts comma-separated values to f
 
 <Update
   label="Oct 19, 2025"
-  tags={["Bug Fix", "Released"]}
   rss={{
 title: "Added missing fields to Quote responses",
 description: "Restored rfq_target_cost_centi_cents, rfq_creator_order_id, and creator_order_id fields to Quote API responses"
@@ -2378,7 +2255,6 @@ description: "Restored rfq_target_cost_centi_cents, rfq_creator_order_id, and cr
 
 <Update
   label="Oct 16, 2025"
-  tags={["Released"]}
   rss={{
 title: "'with_milestones' flag on Events API",
 description: "Adds an optional flag to request milestone data along with events."
@@ -2391,7 +2267,6 @@ description: "Adds an optional flag to request milestone data along with events.
 
 <Update
   label="Oct 14, 2025"
-  tags={["Released"]}
   rss={{
 title: "Create Order Response Updated",
 description: "Create Order now returns the full Order model"
@@ -2402,7 +2277,6 @@ description: "Create Order now returns the full Order model"
 
 <Update
   label="Oct 13, 2025"
-  tags={["Released"]}
   rss={{
 title: "Incentive Programs API includes series_ticker",
 description: "Incentive Programs API responses now include series_ticker field"
@@ -2415,7 +2289,6 @@ description: "Incentive Programs API responses now include series_ticker field"
 
 <Update
   label="Oct 10, 2025"
-  tags={["Breaking Change", "Released"]}
   rss={{
 title: "Price level structure moved from event to market level",
 description: "Price level structure moved from event to market level"
@@ -2437,7 +2310,6 @@ description: "Price level structure moved from event to market level"
 
 <Update
   label="Oct 13, 2025"
-  tags={["Bug Fix", "Breaking Change", "Released"]}
   rss={{
 title: "Fixed series tag filtering to support tags with spaces",
 description: "Series tags parameter now only uses comma separation, allowing tags with spaces like 'Rotten Tomatoes' to work correctly"
@@ -2476,7 +2348,6 @@ description: "Series tags parameter now only uses comma separation, allowing tag
 
 <Update
   label="Oct 8, 2025"
-  tags={["Bug Fix", "Released"]}
   rss={{
 title: "Fixed trailing slash redirects on collection endpoints",
 description: "Fixed inconsistent 301 redirects on collection endpoints - requests without trailing slashes now return 200 directly"
@@ -2498,7 +2369,6 @@ description: "Fixed inconsistent 301 redirects on collection endpoints - request
 
 <Update
   label="Oct 9, 2025"
-  tags={["Released"]}
   rss={{
 title: "Missing subpenny fields in Orders and Trades",
 description: "Missing subpenny fields in Orders and Trades"
@@ -2514,7 +2384,6 @@ description: "Missing subpenny fields in Orders and Trades"
 
 <Update
   label="Oct 9, 2025"
-  tags={["Released"]}
   rss={{
 title: "Subpenny support in WS for RFQs and Quotes",
 description: "Subpenny support in WS for RFQs and Quotes"
@@ -2529,7 +2398,6 @@ description: "Subpenny support in WS for RFQs and Quotes"
 
 <Update
   label="Oct 7, 2025"
-  tags={["Released"]}
   rss={{
 title: "Enhanced Portfolio Balance Endpoint",
 description: "Added portfolio_value field to GET /portfolio/balance endpoint"
@@ -2540,7 +2408,6 @@ description: "Added portfolio_value field to GET /portfolio/balance endpoint"
 
 <Update
   label="Oct 1, 2025"
-  tags={["Released"]}
   rss={{
 title: "Series Fee Changes API returns user-facing fee type names",
 description: "Series Fee Changes API and notifications now return user-facing fee type names"
@@ -2553,7 +2420,6 @@ description: "Series Fee Changes API and notifications now return user-facing fe
 
 <Update
   label="Sep 25, 2025"
-  tags={["Released"]}
   rss={{
 title: "WebSocket subscribe idempotent",
 description: "WebSocket subscribe idempotent"
@@ -2570,7 +2436,6 @@ description: "WebSocket subscribe idempotent"
 
 <Update
   label="Sep 25, 2025"
-  tags={["Released"]}
   rss={{
 title: "FoK orders that self-cross treated as IoC",
 description: "FoK orders that self-cross treated as IoC."
@@ -2589,7 +2454,6 @@ description: "FoK orders that self-cross treated as IoC."
 
 <Update
   label="Sep 22, 2025"
-  tags={["Released"]}
   rss={{
 title: "Adding purchased_side to REST and ws fills",
 description: "User seeking a simple way to determine the direction of their fill should reference purchased_side. Both BUY YES or SELL NO result in purchased_side = YES. The addition of this field is the first step in standardizing the fills WebSocket and REST endpoints, which have different conventions for the interpretation 'side' and 'user_action'"
@@ -2602,7 +2466,6 @@ description: "User seeking a simple way to determine the direction of their fill
 
 <Update
   label="Sep 21, 2025"
-  tags={["Released"]}
   rss={{
 title: "Scheduled Series Fees API Endpoint",
 description: "New endpoint for getting all of a series' scheduled fees"
@@ -2615,7 +2478,6 @@ description: "New endpoint for getting all of a series' scheduled fees"
 
 <Update
   label="Sep 25, 2025"
-  tags={["Breaking Change", "Released"]}
   rss={{
 title: "Deprecating order type `market`",
 description: "Deprecating order type `market`"
@@ -2634,7 +2496,6 @@ description: "Deprecating order type `market`"
 
 <Update
   label="Sep 18, 2025"
-  tags={["Breaking change", "Released"]}
   rss={{
 title: "WebSocket API Session Limit",
 description: "WebSocket API Session Limit"
@@ -2645,7 +2506,6 @@ description: "WebSocket API Session Limit"
 
 <Update
   label="Sep 18, 2025"
-  tags={["Released"]}
   rss={{
 title: "Communications WS channel",
 description: "Streamed RFQs and quotes"
@@ -2656,7 +2516,6 @@ description: "Streamed RFQs and quotes"
 
 <Update
   label="Sep 15, 2025"
-  tags={["Released"]}
   rss={{
 title: "Additional RFQ and market metadata",
 description: "MVE related meatadata"
@@ -2667,7 +2526,6 @@ description: "MVE related meatadata"
 
 <Update
   label="Sep 15, 2025"
-  tags={["Released"]}
   rss={{
 title: "Event Candlesticks API Endpoint",
 description: "New endpoint for getting event candlesticks"
@@ -2680,7 +2538,6 @@ description: "New endpoint for getting event candlesticks"
 
 <Update
   label="Sept 11, 2025"
-  tags={["SDK", "Released"]}
   rss={{
 title: "TypeScript SDK Release",
 description: "Official TypeScript SDK now available via NPM"
@@ -2693,7 +2550,6 @@ description: "Official TypeScript SDK now available via NPM"
 
 <Update
   label="Sep 11, 2025"
-  tags={["Released"]}
   rss={{
 title: "Forecast Percentiles History API Endpoint",
 description: "New endpoint for getting forecast percentiles history"
@@ -2706,7 +2562,6 @@ description: "New endpoint for getting forecast percentiles history"
 
 <Update
   label="Sep 10, 2025"
-  tags={["Released"]}
   rss={{
 title: "Incentive Programs API Endpoint",
 description: "New endpoint for retrieving incentive program information"
@@ -2719,7 +2574,6 @@ description: "New endpoint for retrieving incentive program information"
 
 <Update
   label="Sep 9, 2025"
-  tags={["Released"]}
   rss={{
 title: "Subpenny pricing added to WebSocket",
 description: "Subpenny pricing added to WebSocket"
@@ -2733,7 +2587,6 @@ description: "Subpenny pricing added to WebSocket"
 
 <Update
   label="Sep 9, 2025"
-  tags={["Released"]}
   rss={{
 title: "Events endpoints now return broker availability",
 description: "Events endpoints now return broker availabilit"
@@ -2744,7 +2597,6 @@ description: "Events endpoints now return broker availabilit"
 
 <Update
   label="Sep 6, 2025"
-  tags={["Breaking Change", "Released"]}
   rss={{
 title: "Python SDK",
 description: "Python SDK"
@@ -2756,7 +2608,6 @@ description: "Python SDK"
 
 <Update
   label="Aug 31, 2025"
-  tags={["Breaking Change", "Released"]}
   rss={{
 title: "Exposing read-only subpenny pricing",
 description: "Exposing read-only subpenny pricing in the API."
@@ -2775,7 +2626,6 @@ description: "Exposing read-only subpenny pricing in the API."
 
 <Update
   label="Sep 2, 2025"
-  tags={["Released"]}
   rss={{
 title: "New Market Fields for Multivariate Event Collections",
 description: "Optional fields added to describe markets that are part of MVEs"
@@ -2786,7 +2636,6 @@ description: "Optional fields added to describe markets that are part of MVEs"
 
 <Update
   label="Sep 2, 2025"
-  tags={["Released"]}
   rss={{
 title: "New Market Fields for Multivariate Event Collections",
 description: "Optional fields added to describe markets that are part of MVEs"
@@ -2797,7 +2646,6 @@ description: "Optional fields added to describe markets that are part of MVEs"
 
 <Update
   label="Aug 21, 2025"
-  tags={["Released"]}
   rss={{
 title: "Multivariate Event Collections Extension",
 description: "The MVE payload has been expanded to support more flexible structures."
@@ -2808,7 +2656,6 @@ description: "The MVE payload has been expanded to support more flexible structu
 
 <Update
   label="Aug 21, 2025"
-  tags={["New Feature", "Released"]}
   rss={{
 title: "Settlement value added to Settlements API",
 description: "Settlement value added to Settlements API."
@@ -2819,7 +2666,6 @@ description: "Settlement value added to Settlements API."
 
 <Update
   label="Aug 21, 2025"
-  tags={["Bug Fix", "Released"]}
   rss={{
 title: "Case-insensitive category filtering for milestones",
 description: "Fixed get_milestones endpoint to use case-insensitive matching for the category parameter."
@@ -2830,7 +2676,6 @@ description: "Fixed get_milestones endpoint to use case-insensitive matching for
 
 <Update
   label="Aug 14, 2025"
-  tags={["New Feature", "Released"]}
   rss={{
 title: "Additional Events and Series Filters",
 description: "Filtering events by close ts and series by tags supported in the API."
@@ -2841,7 +2686,6 @@ description: "Filtering events by close ts and series by tags supported in the A
 
 <Update
   label="Aug 13, 2025"
-  tags={["Released"]}
   rss={{
 title: "Batch endpoints now available to all users in demo environment",
 description: "BatchCreateOrders and BatchCancelOrders endpoints are now accessible to Basic tier users in the demo environment for testing purposes."
@@ -2865,7 +2709,6 @@ description: "BatchCreateOrders and BatchCancelOrders endpoints are now accessib
 
 <Update
   label="Aug 13, 2025"
-  tags={["Documentation", "Released"]}
   rss={{
 title: "API Signing Error Messages Improved",
 description: "The error messages when an incorrect API signature is passed have been improved"
@@ -2876,7 +2719,6 @@ description: "The error messages when an incorrect API signature is passed have 
 
 <Update
   label="Aug 9, 2025"
-  tags={["Documentation", "Released"]}
   rss={{
 title: "OpenAPI Specification Now Available",
 description: "The OpenAPI specification is now available for download at docs.kalshi.com/openapi.yaml"
@@ -2887,7 +2729,6 @@ description: "The OpenAPI specification is now available for download at docs.ka
 
 <Update
   label="Aug 8, 2025"
-  tags={["Released", "New Feature"]}
   rss={{
 title: "Added client_order_id to orderbook delta messages",
 description: "Orderbook delta WebSocket messages now include client_order_id field when the change is caused by your own order."
@@ -2906,7 +2747,6 @@ description: "Orderbook delta WebSocket messages now include client_order_id fie
 
 <Update
   label="Aug 1, 2025"
-  tags={["Released", "New Feature"]}
   rss={{
 title: "Added GetOrderQueuePositions Endpoint",
 description: "New endpoint for retrieving queue positions for multiple orders in a single request."
@@ -2924,7 +2764,6 @@ description: "New endpoint for retrieving queue positions for multiple orders in
 
 <Update
   label="July 31, 2025"
-  tags={["Released", "Breaking Change", "Documentation"]}
   rss={{
 title: "Documentation and RSS Feed Migration",
 description: "RSS feed moved from trading-api.readme.io/changelog.rss to docs.kalshi.com/changelog/rss.xml. The trading-api.readme.io site is deprecated - use docs.kalshi.com instead."
@@ -2942,7 +2781,6 @@ description: "RSS feed moved from trading-api.readme.io/changelog.rss to docs.ka
 
 <Update
   label="July 31, 2025"
-  tags={["Released"]}
   rss={{
 title: "Additional event metadata",
 description: "The GetEventMetadata endpoint has been expanded to include settlement sources."
@@ -2953,7 +2791,6 @@ description: "The GetEventMetadata endpoint has been expanded to include settlem
 
 <Update
   label="July 29, 2025"
-  tags={["Released", "Breaking Change"]}
   rss={{
 title: "Removed API versioning",
 description: "The GetApiVersion endpoint has been removed. API versioning will not be available for the time being."

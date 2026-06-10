@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-06-07T21:58:03.039Z
+lastmod: 2026-06-09T15:47:36.344Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -67,7 +67,7 @@ Per-second token budgets in each bucket:
 ## Tier qualification
 
 * **Basic**: complete account signup.
-* **Advanced**: complete the [Advanced API application](https://kalshi.typeform.com/advanced-api).
+* **Advanced**: call the [Upgrade Account API Usage Level endpoint](/api-reference/account/upgrade-account-api-usage-level).
 * **Premier, Paragon, and Prime**: earned automatically from your trading volume (see [Earning higher tiers](#earning-higher-tiers-by-volume) below), or assigned by Kalshi.
 
 <Info>
