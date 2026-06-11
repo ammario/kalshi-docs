@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market
-lastmod: 2026-06-10T02:45:05.772Z
+lastmod: 2026-06-10T22:23:28.360Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -161,6 +161,15 @@ components:
         ask:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Best ask price in dollars.
+        settlement_mark_price:
+          $ref: '#/components/schemas/TickerPrice'
+          description: Mark price used for settlement and funding.
+        liquidation_mark_price:
+          $ref: '#/components/schemas/TickerPrice'
+          description: Mark price used for liquidation.
+        reference_price:
+          $ref: '#/components/schemas/TickerPrice'
+          description: Underlying reference price, scaled per contract.
     ErrorResponse:
       type: object
       properties:
@@ -202,6 +211,19 @@ components:
         contract count fields are legacy and will be deprecated; when both
         integer and fp fields are provided, they must match.
       example: '10.00'
+    TickerPrice:
+      type: object
+      required:
+        - price
+        - ts_ms
+      properties:
+        price:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Price in dollars.
+        ts_ms:
+          type: integer
+          format: int64
+          description: Source timestamp in epoch milliseconds.
   responses:
     BadRequestError:
       description: Bad request - invalid input

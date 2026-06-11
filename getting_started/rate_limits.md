@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-06-09T15:47:36.344Z
+lastmod: 2026-06-10T21:29:35.253Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,37 +8,72 @@ lastmod: 2026-06-09T15:47:36.344Z
 
 # Rate Limits and Tiers
 
-> Understanding API rate limits, token costs, and access tiers
+> Token costs, tier budgets, and burst capacity for the Kalshi API
 
 ## Token-based limits
 
-Every authenticated request costs **tokens**. Your tier defines how many tokens you can spend per second. Most requests cost the default of **10 tokens**; each operation's API reference page lists its cost where it differs (order cancellations, single-order reads, quote create/cancel, and multivariate-collection lookup are currently cheaper than the default).
+Every authenticated request costs **tokens**. Your tier sets your **budget**: the rate, in tokens per second, at which your balance refills. Your sustained rate for an endpoint is `budget ÷ cost`.
 
-Your effective rate for any given endpoint is `budget ÷ cost`.
+Most requests cost the default of **10 tokens**. For endpoints that cost more or less, [`GET /account/endpoint_costs`](/api-reference/account/list-non-default-endpoint-costs) is the authoritative list of non-default costs currently in effect.
 
-## Reads and writes are billed separately
+## Read and Write buckets
 
 You have two independent token budgets:
 
-| Bucket    | What it covers                                                          |
+| Bucket    | Covers                                                                  |
 | --------- | ----------------------------------------------------------------------- |
-| **Read**  | `GET` endpoints and anything not explicitly routed elsewhere.           |
+| **Read**  | `GET` endpoints and anything not routed to Write.                       |
 | **Write** | Order placement, amends, cancels, order groups, and the RFQ quote flow. |
 
-## Perps limits use separate buckets
+The split is by operation type, not by protocol. REST and FIX requests drain the same buckets.
 
-The Perps API uses the **same tiers and per-second token budgets** described here, but perps traffic is metered in its **own** Read and Write buckets. Perps calls don't draw down your event-contract budgets, and event-contract calls don't draw down your perps budgets. In effect you have up to four independent buckets: event-contract Read, event-contract Write, perps Read, and perps Write.
+## Bucket capacity and bursting
 
-Check your perps tier and limits with [`GET /account/limits/perps`](/margin-rest/account/get-perps-account-api-limits), the perps counterpart of [`GET /account/limits`](/api-reference/account/get-account-api-limits).
+Each budget is a token bucket. The bucket refills continuously at your per-second budget, up to its capacity, and a request is allowed whenever the bucket holds enough tokens to cover its cost. There are no fixed windows and no per-second resets.
 
-See the [Perps API](/margin) overview for the full perps surface.
+Write buckets above the Basic tier hold up to **two seconds of budget**. When you spend less than your budget, unspent tokens accumulate, and after two quiet seconds the bucket is full. You can then spend up to **twice your per-second budget in a single burst** before throttling back to the refill rate. This favors event-driven clients that sit idle most of the time and place a block of orders when the market moves.
+
+Read buckets and Basic-tier Write buckets hold one second of budget. You can spend a full second's budget at once, but idle time banks nothing beyond that.
+
+### Example
+
+A Premier Write bucket refills at 1,000 tokens per second and holds up to 2,000. At the default cost of 10 tokens per order, it sustains 100 orders per second.
+
+| Time      | Requests              | Bucket (capacity 2,000)                |
+| --------- | --------------------- | -------------------------------------- |
+| 2 s idle  | none                  | fills to 2,000                         |
+| 0 s       | 200 orders at once    | all accepted; 2,000 drops to 0         |
+| 0 to 1 s  | none                  | refills to 1,000                       |
+| after 1 s | 100 orders per second | holds near 1,000; spend matches refill |
+
+## When you hit the limit
+
+A rate-limited request returns `429 Too Many Requests` with the body:
+
+```json theme={null}
+{"error": "too many requests"}
+```
+
+429 responses do not currently include `Retry-After` or `X-RateLimit-*` headers. There is no penalty or cooldown. The bucket keeps refilling, and your next request succeeds once the balance covers its cost. At a 1,000 tokens-per-second refill, a 10-token order is covered again 10 ms after a 429. Apply exponential backoff on 429.
 
 ## Batch endpoints don't save tokens
 
 A batch request costs the same as making each call individually. Every item in the batch is billed separately:
 
-* [Batch Create Orders](/api-reference/orders/batch-create-orders): submitting 25 orders costs `25 × 10 = 250` tokens.
-* [Batch Cancel Orders](/api-reference/orders/batch-cancel-orders): cancelling 25 orders costs `25 × 2 = 50` tokens.
+* [Batch Create Orders](/api-reference/orders/batch-create-orders-v2): submitting 25 orders costs `25 × 10 = 250` tokens.
+* [Batch Cancel Orders](/api-reference/orders/batch-cancel-orders-v2): cancelling 25 orders costs `25 × 2 = 50` tokens.
+
+The whole batch must fit in the bucket at once. A 25-order create batch needs 250 tokens available when it arrives, or the entire batch is rejected.
+
+## Perps limits use separate buckets
+
+The Perps API uses the same tiers and the same bucket mechanics, including the two-second Write bucket above Basic, but perps traffic is metered in its own Read and Write buckets. Perps calls do not draw down your event-contract budgets, and event-contract calls do not draw down your perps budgets. In effect you have up to four independent buckets: event-contract Read, event-contract Write, perps Read, and perps Write.
+
+Perps Write budgets match the table below at every tier. Perps Read budgets are higher at the lower tiers: 400 at Basic and 600 at Advanced, versus 200 and 300 for event contracts. From Premier up they are identical.
+
+Check your perps tier and limits with [`GET /account/limits/perps`](/margin-rest/account/get-perps-account-api-limits), the perps counterpart of [`GET /account/limits`](/api-reference/account/get-account-api-limits).
+
+See the [Perps API](/margin) overview for the full perps surface.
 
 ## Tiers and budgets
 
@@ -64,6 +99,8 @@ Per-second token budgets in each bucket:
   </table>
 </div>
 
+Write bucket capacity is twice the per-second budget above the Basic tier.
+
 ## Tier qualification
 
 * **Basic**: complete account signup.
@@ -76,11 +113,11 @@ Per-second token budgets in each bucket:
 
 ## Earning higher tiers by volume
 
-Once a day, Kalshi reviews your trading volume and grants Premier, Paragon, or Prime if you qualify. Your **volume share** is your trailing 30-day volume (counting both sides of every trade you're part of, as maker and as taker) divided by twice the previous calendar month's total exchange volume:
+Once a day, Kalshi reviews your trading volume and grants Premier, Paragon, or Prime if you qualify. Your **volume share** is your trailing 30-day volume (counting both sides of every trade you are part of, as maker and as taker) divided by twice the previous calendar month's total exchange volume:
 
 `volume share = your trailing 30-day volume ÷ (previous month's exchange volume × 2)`
 
-Qualifying grants the tier for **30 days**, so a slow day never drops you right away. The daily review renews that window for as long as you keep qualifying, and each tier has two thresholds (a higher bar to **earn** it and a lower **keep** bar to hold it), so a small dip doesn't cost you the tier:
+A qualifying review grants the tier for **30 days**, and each daily review renews the window while you keep qualifying. Each tier has a higher **Earn** threshold to gain it and a lower **Keep** threshold to hold it, so a brief dip does not cost you the tier:
 
 | Tier    | Earn  | Keep  |
 | ------- | ----- | ----- |
@@ -88,11 +125,11 @@ Qualifying grants the tier for **30 days**, so a slow day never drops you right 
 | Paragon | 0.50% | 0.40% |
 | Prime   | 1.00% | 0.80% |
 
-If your volume falls below the **Keep** bar, the tier doesn't drop immediately. It lapses only when your current 30-day grant runs out.
+If your volume falls below the **Keep** threshold, the tier does not drop immediately. It lapses when your current 30-day grant runs out.
 
 ## Your grants
 
-Your tier is the highest level among your active **grants**. Each grant raises you to a level on a lane, `event_contract` (predictions) or `margined` (margin), until it expires, and records how you got it:
+Your tier is the highest level among your active **grants**. Each grant raises you to a level on one lane, `event_contract` (predictions) or `margined` (perps), until it expires, and records its source:
 
 * **`volume`**: earned automatically from your trading volume.
 * **`manual`**: assigned by Kalshi.
@@ -111,22 +148,4 @@ Fetch your grants from [`GET /account/limits`](/api-reference/account/get-accoun
 }
 ```
 
-A grant with no `expires_ts` is permanent. You keep your best grant at each level, so a longer-lived manual grant is never shortened by a volume grant. Similarly, if a manual grant is close to expiry but you're now qualifying for the tier by volume, your grant is extended to a fresh 30 days.
-
-## When you hit the limit
-
-A rate-limited request returns `429 Too Many Requests` with the body:
-
-```json theme={null}
-{"error": "too many requests"}
-```
-
-429 responses don't currently include `Retry-After` or `X-RateLimit-*` headers. Apply exponential backoff on 429 until your bucket refills.
-
-## Bursting above your per-second budget
-
-Your Write bucket holds **two seconds** of your per-second budget, so idle or below-steady traffic builds up headroom you can spend in a single burst. Useful for event-driven clients reacting quickly to market moves or price prints. Each request drains the bucket by its token cost; the bucket refills continuously at your per-second budget up to its capacity.
-
-Over-drawing returns `429 Too Many Requests`. There's no enforced cooldown; your next request is allowed as soon as the bucket has enough tokens to cover it.
-
-Basic tier is the exception: its Write bucket holds one second of budget, with no accumulated headroom.
+A grant with no `expires_ts` is permanent. You keep your best grant at each level: a longer-lived manual grant is never shortened by a volume grant, and if you qualify by volume while holding a manual grant near expiry, the grant is extended to a fresh 30 days.

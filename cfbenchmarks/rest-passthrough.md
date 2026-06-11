@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/cfbenchmarks/rest-passthrough
-lastmod: 2026-06-08T20:38:06.273Z
+lastmod: 2026-06-10T21:29:35.251Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,10 @@ Send a request to the `/cfbenchmarks` endpoint and the path and query string are
 ## Access
 
 The passthrough requires an authenticated Kalshi Trade API request, and it is available only to accounts with the appropriate entitlement. If you receive an authorization error and believe you should have access, contact Kalshi.
+
+## Rate limit
+
+Each passthrough request costs **50 tokens** from your Read bucket; the default request costs 10. At the Basic tier's 200 tokens-per-second read budget, that sustains 4 requests per second. See [Rate Limits and Tiers](/getting_started/rate_limits) for budgets and bucket behavior.
 
 ## Base URL and Path Mapping
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-09T23:50:46.141Z
+lastmod: 2026-06-10T18:49:26.659Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,6 +24,21 @@ description: "A new endpoint reports your trailing 30d volume and earn/keep volu
 }}
 >
   New endpoint: `GET /trade-api/v2/account/api_usage_level/volume_progress` reports your trailing 30d volume and the earn/keep volume goals for each volume-based API usage tier.
+</Update>
+
+<Update
+  label="June 11, 2026"
+  rss={{
+title: "Perps mark prices on margin markets",
+description: "Perps margin market responses now include mark prices and their timestamps."
+}}
+>
+  Perps margin market responses now include mark prices and their timestamps.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/margin/markets`
+  * `GET /trade-api/v2/margin/markets/{ticker}`
 </Update>
 
 <Update
