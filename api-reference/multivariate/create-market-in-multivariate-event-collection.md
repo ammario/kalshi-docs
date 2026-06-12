@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection
-lastmod: 2026-06-10T22:23:28.040Z
+lastmod: 2026-06-11T21:15:35.802Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -122,6 +122,8 @@ components:
           description: >-
             List of selected markets that act as parameters to determine which
             market is created.
+          x-oapi-codegen-extra-tags:
+            validate: required,dive
         with_market_payload:
           type: boolean
           description: Whether to include the market payload in the response.
@@ -159,6 +161,8 @@ components:
             - 'yes'
             - 'no'
           description: Side of the market (yes or no).
+          x-oapi-codegen-extra-tags:
+            validate: required,oneof=yes no
     Market:
       type: object
       required:

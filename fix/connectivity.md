@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2026-06-10T00:28:21.243Z
+lastmod: 2026-06-11T17:53:50.844Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,9 @@ lastmod: 2026-06-10T00:28:21.243Z
 
 <Tabs>
   <Tab title="Production">
-    **Host:** `mm.fix.elections.kalshi.com`
+    **Order Entry Host:** `mm.fix.elections.kalshi.com`
+
+    **Market Data Host:** `marketdata.fix.elections.kalshi.com`
 
     | Purpose                              | Port | TargetCompID | Description                                                                                                                                                                                                                                          |
     | ------------------------------------ | ---- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

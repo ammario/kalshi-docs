@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/market/get-market-orderbook
-lastmod: 2026-06-11T21:15:34.857Z
+url: https://docs.kalshi.com/api-reference/communications/accept-block-trade-proposal
+lastmod: 2026-06-11T21:15:35.452Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Market Orderbook
+# Accept Block Trade Proposal
 
->  Endpoint for getting the current order book for a specific market.  The order book shows all active bid orders for both yes and no sides of a binary market. It returns yes bids and no bids only (no asks are returned). This is because in binary markets, a bid for yes at price X is equivalent to an ask for no at price (100-X). For example, a yes bid at 7¢ is the same as a no ask at 93¢, with identical contract sizes.  Each side shows price levels with their corresponding quantities and order counts, organized from best to worst prices.
+>  Endpoint for accepting a block trade proposal.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /markets/{ticker}/orderbook
+````yaml /openapi.yaml post /communications/block-trade-proposals/{block_trade_proposal_id}/accept
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,35 +64,31 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /markets/{ticker}/orderbook:
-    get:
+  /communications/block-trade-proposals/{block_trade_proposal_id}/accept:
+    post:
       tags:
-        - market
-      summary: Get Market Orderbook
-      description: ' Endpoint for getting the current order book for a specific market.  The order book shows all active bid orders for both yes and no sides of a binary market. It returns yes bids and no bids only (no asks are returned). This is because in binary markets, a bid for yes at price X is equivalent to an ask for no at price (100-X). For example, a yes bid at 7¢ is the same as a no ask at 93¢, with identical contract sizes.  Each side shows price levels with their corresponding quantities and order counts, organized from best to worst prices.'
-      operationId: GetMarketOrderbook
+        - communications
+      summary: Accept Block Trade Proposal
+      description: ' Endpoint for accepting a block trade proposal.'
+      operationId: AcceptBlockTradeProposal
       parameters:
-        - $ref: '#/components/parameters/TickerPath'
-        - name: depth
-          in: query
-          description: >-
-            Depth of the orderbook to retrieve (0 or negative means all levels,
-            1-100 for specific depth)
-          required: false
+        - name: block_trade_proposal_id
+          in: path
+          required: true
+          description: Block trade proposal ID
           schema:
-            type: integer
-            minimum: 0
-            maximum: 100
-            default: 0
-          x-oapi-codegen-extra-tags:
-            validate: omitempty,min=0,max=100
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcceptBlockTradeProposalRequest'
       responses:
-        '200':
-          description: Orderbook retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetMarketOrderbookResponse'
+        '204':
+          description: Block trade proposal accepted successfully
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
@@ -104,40 +100,24 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    TickerPath:
-      name: ticker
-      in: path
-      required: true
-      description: Market ticker
-      schema:
-        type: string
   schemas:
-    GetMarketOrderbookResponse:
+    AcceptBlockTradeProposalRequest:
       type: object
-      required:
-        - orderbook_fp
       properties:
-        orderbook_fp:
-          $ref: '#/components/schemas/OrderbookCountFp'
-          description: Orderbook with fixed-point contract counts (fp) in all price levels.
-    OrderbookCountFp:
-      type: object
-      required:
-        - yes_dollars
-        - no_dollars
-      properties:
-        yes_dollars:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceLevelDollarsCountFp'
-        no_dollars:
-          type: array
-          items:
-            $ref: '#/components/schemas/PriceLevelDollarsCountFp'
-      description: >-
-        Orderbook with fixed-point contract counts (fp) in all dollar price
-        levels.
+        subtrader_id:
+          type: string
+          description: >-
+            Subtrader ID to accept as. Provide either this or subaccount, not
+            both.
+          x-go-type-skip-optional-pointer: true
+        subaccount:
+          type: integer
+          minimum: 0
+          maximum: 63
+          description: >-
+            User-managed subaccount number to accept as (0 for primary, 1-63 for
+            numbered subaccounts). Provide either this or subtrader_id, not
+            both.
     ErrorResponse:
       type: object
       properties:
@@ -153,21 +133,13 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
-    PriceLevelDollarsCountFp:
-      type: array
-      minItems: 2
-      maxItems: 2
-      example:
-        - '0.1500'
-        - '100.00'
-      items:
-        type: string
-      description: >-
-        Price level in dollars represented as [dollars_string, fp] where
-        dollars_string is like "0.1500" and fp is a FixedPointCount string
-        (fixed-point contract count). The second element is the contract
-        quantity (not price).
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:

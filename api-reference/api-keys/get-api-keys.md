@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/get-api-keys
-lastmod: 2026-06-10T22:23:27.798Z
+lastmod: 2026-06-11T21:15:35.587Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -121,16 +121,24 @@ components:
       enum:
         - read
         - write
+        - read::block_trade_accept
+        - read::portfolio_balance
         - write::transfer
+        - write::block_trade_accept
       x-enum-varnames:
         - ApiKeyScopeRead
         - ApiKeyScopeWrite
+        - ApiKeyScopeReadBlockTradeAccept
+        - ApiKeyScopeReadPortfolioBalance
         - ApiKeyScopeWriteTransfer
+        - ApiKeyScopeWriteBlockTradeAccept
       description: >-
         Scope granted to an API key. Parent scopes grant broad access; for
         example, `read` grants all read endpoints and `write` grants all write
-        endpoints. Child scopes such as `write::transfer` grant only their
-        specific endpoint group and can be granted without the parent scope.
+        endpoints. Child scopes such as `read::block_trade_accept`,
+        `read::portfolio_balance`, `write::transfer`, and
+        `write::block_trade_accept` grant only their specific endpoint group and
+        can be granted without the parent scope.
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-06-10T21:29:35.253Z
+lastmod: 2026-06-11T21:00:49.749Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,10 +20,10 @@ Most requests cost the default of **10 tokens**. For endpoints that cost more or
 
 You have two independent token budgets:
 
-| Bucket    | Covers                                                                  |
-| --------- | ----------------------------------------------------------------------- |
-| **Read**  | `GET` endpoints and anything not routed to Write.                       |
-| **Write** | Order placement, amends, cancels, order groups, and the RFQ quote flow. |
+| Bucket    | Covers                                                                                                |
+| --------- | ----------------------------------------------------------------------------------------------------- |
+| **Read**  | `GET` endpoints and anything not routed to Write.                                                     |
+| **Write** | Order placement, amends, cancels, order groups, the RFQ quote flow, and block trade proposal accepts. |
 
 The split is by operation type, not by protocol. REST and FIX requests drain the same buckets.
 
