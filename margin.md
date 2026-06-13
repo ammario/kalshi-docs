@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin
-lastmod: 2026-06-11T17:53:50.843Z
+lastmod: 2026-06-12T19:33:00.043Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -42,7 +42,7 @@ The margin FIX gateway uses a **separate host** from event contract FIX.
 | ----------- | ------------------------- | -------------------------------------------- |
 | Demo        | Order entry and drop copy | `margin-fix.demo.kalshi.co`                  |
 | Demo        | Market data               | `margin-marketdata.fix.demo.kalshi.co`       |
-| Production  | Order entry and drop copy | `margin-fix-api.fix.elections.kalshi.com`    |
+| Production  | Order entry and drop copy | `margin-mm.fix.elections.kalshi.com`         |
 | Production  | Market data               | `margin-marketdata.fix.elections.kalshi.com` |
 
 Available session types:

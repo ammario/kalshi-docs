@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fees/get-fee-tiers
-lastmod: 2026-06-11T21:15:36.205Z
+lastmod: 2026-06-12T23:36:36.131Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

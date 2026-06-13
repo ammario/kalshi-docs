@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/connectivity
-lastmod: 2026-06-11T17:53:50.847Z
+lastmod: 2026-06-12T19:33:00.045Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-06-11T17:53:50.847Z
 
 <Tabs>
   <Tab title="Production">
-    **Order Entry Host:** `margin-fix-api.fix.elections.kalshi.com`
+    **Order Entry Host:** `margin-mm.fix.elections.kalshi.com`
 
     **Market Data Host:** `margin-marketdata.fix.elections.kalshi.com`
 

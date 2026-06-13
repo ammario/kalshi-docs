@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-quote
-lastmod: 2026-06-11T21:15:35.555Z
+lastmod: 2026-06-12T23:36:34.843Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2026-06-11T21:15:34.941Z
+lastmod: 2026-06-12T23:36:34.232Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -137,6 +137,7 @@ paths:
               - closed
               - settled
         - $ref: '#/components/parameters/SeriesTickerQuery'
+        - $ref: '#/components/parameters/EventTickersQuery'
         - name: min_close_ts
           in: query
           required: false
@@ -177,6 +178,14 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    EventTickersQuery:
+      name: tickers
+      in: query
+      description: >-
+        Filter by specific event tickers. Comma-separated list of event tickers
+        to retrieve.
+      schema:
+        type: string
   schemas:
     GetEventsResponse:
       type: object

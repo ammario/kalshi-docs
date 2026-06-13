@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-withdrawals
-lastmod: 2026-06-11T21:15:35.377Z
+lastmod: 2026-06-12T23:36:34.671Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

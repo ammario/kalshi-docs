@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-11T21:00:49.602Z
+lastmod: 2026-06-12T23:36:45.693Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,22 @@ FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
 {/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="June 18, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Event tickers filter on GET /trade-api/v2/events",
+description: "GET /trade-api/v2/events supports a tickers query parameter to filter by a comma-separated list of event tickers."
+}}
+>
+  `GET /trade-api/v2/events` now supports a `tickers` query parameter to
+  filter the response to a comma-separated list of event tickers.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/events`
+</Update>
 
 <Update
   label="June 18, 2026"
@@ -58,6 +74,42 @@ description: "API keys can use narrow block-trade accept scopes for proposal vie
   * `GET /trade-api/v2/communications/block-trade-proposals`
   * `POST /trade-api/v2/communications/block-trade-proposals/{block_trade_proposal_id}/accept`
   * `GET /trade-api/v2/portfolio/balance`
+</Update>
+
+<Update
+  label="June 18, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Sanity limits enforced on orderbook subscriptions",
+description: "Sanity limits enforced on orderbook subscriptions."
+}}
+>
+  Sanity limits enforced on orderbook subscriptions:
+
+  * Max 500k market subscriptions per session.
+  * Max 10k/s commands per second enforced.
+
+  Additionally, an error message will be returned when attempting to subscribe to an unknown market ticker on the `orderbook_delta` channel.
+</Update>
+
+<Update
+  label="June 18, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Quote time filters and pagination fix",
+description: "GET /trade-api/v2/communications/quotes supports min_ts/max_ts filters on last update time, and cursor pagination no longer ends early on large result sets."
+}}
+>
+  `GET /trade-api/v2/communications/quotes` now supports `min_ts` and `max_ts`
+  query parameters to restrict results to quotes last updated within a time
+  window, formatted as Unix Timestamps.
+
+  Also fixes cursor pagination on this endpoint: previously, paging through a
+  large set of quotes could end early and silently drop most of the results.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/communications/quotes`
 </Update>
 
 <Update

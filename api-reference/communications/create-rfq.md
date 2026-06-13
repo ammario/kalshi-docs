@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-06-11T21:15:35.488Z
+lastmod: 2026-06-12T23:36:34.777Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

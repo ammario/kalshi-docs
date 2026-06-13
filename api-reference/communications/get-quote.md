@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quote
-lastmod: 2026-06-11T21:15:35.544Z
+lastmod: 2026-06-12T23:36:34.832Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
