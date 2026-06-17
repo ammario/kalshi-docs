@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-data
-lastmod: 2026-06-15T21:55:55.737Z
+lastmod: 2026-06-16T22:14:42.533Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -31,11 +31,11 @@ sequenceDiagram
 
 ## Market Data Request (35=V)
 
-| Tag | Name                    | Type    | Required | Description                                                                                                                            |
-| --- | ----------------------- | ------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| 263 | SubscriptionRequestType | Char    | Y        | `0`=Snapshot, `1`=Snapshot plus updates, `2`=Disable previous snapshot plus update request                                             |
-| 146 | NoRelatedSym            | Integer | C        | Required for `263=0` and `263=1`. For `263=2`, the listed symbols are unsubscribed; omit to cancel all of the session's subscriptions. |
-| 55  | Symbol                  | String  | C        | Repeating group field. The market tickers to subscribe to or cancel.                                                                   |
+| Tag | Name                    | Type    | Required | Description                                                                                                                                                                                               |
+| --- | ----------------------- | ------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 263 | SubscriptionRequestType | Char    | Y        | `0`=Snapshot, `1`=Snapshot plus updates, `2`=Disable previous snapshot plus update request                                                                                                                |
+| 146 | NoRelatedSym            | Integer | C        | Number of `55=Symbol` entries in the repeating group that follows. Required for `263=0` and `263=1`. For `263=2`, the listed symbols are unsubscribed; omit to cancel all of the session's subscriptions. |
+| 55  | Symbol                  | String  | C        | Repeating group field. The market tickers to subscribe to or cancel.                                                                                                                                      |
 
 ```fix Example snapshot request theme={null}
 8=FIXT.1.1|35=V|49=your-api-key|56=KalshiMD|263=0|146=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|

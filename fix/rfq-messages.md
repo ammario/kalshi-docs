@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-06-15T23:33:57.206Z
+lastmod: 2026-06-16T22:14:42.531Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -68,7 +68,7 @@ This message is used bidirectionally:
 | Tag   | Name                             | Type    | Required | Description                                                                                                                                                       |
 | ----- | -------------------------------- | ------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 131   | QuoteReqId                       | UUID    | Y        | Client-assigned RFQ identifier                                                                                                                                    |
-| 146   | NoRelatedSym                     | Integer | Y        | Number of symbols (must be 1)                                                                                                                                     |
+| 146   | NoRelatedSym                     | Integer | Y        | Number of symbols in the `55=Symbol` repeating group (must be 1)                                                                                                  |
 | 55    | Symbol                           | String  | C        | Market ticker. Required unless MVE legs are specified                                                                                                             |
 | 38    | OrderQty                         | Decimal | C        | Number of contracts as a fixed-point decimal. Supports `0.01`-contract increments (for example `5`, `5.00`, or `5.25`). Required unless CashOrderQty is specified |
 | 152   | CashOrderQty                     | Decimal | C        | Target cost in dollars. Required unless OrderQty is specified                                                                                                     |
@@ -93,7 +93,7 @@ This message is used bidirectionally:
 | Tag   | Name                             | Type    | Required | Description                                                                                           |
 | ----- | -------------------------------- | ------- | -------- | ----------------------------------------------------------------------------------------------------- |
 | 131   | QuoteReqId                       | UUID    | Y        | Server-assigned RFQ identifier                                                                        |
-| 146   | NoRelatedSym                     | Integer | Y        | Number of symbols (always 1)                                                                          |
+| 146   | NoRelatedSym                     | Integer | Y        | Number of symbols in the `55=Symbol` repeating group (always 1)                                       |
 | 55    | Symbol                           | String  | Y        | Market ticker                                                                                         |
 | 38    | OrderQty                         | Decimal | Y        | Number of contracts as a fixed-point decimal                                                          |
 | 152   | CashOrderQty                     | Decimal | N        | Target cost in dollars (if specified by creator)                                                      |

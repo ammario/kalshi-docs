@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/funding/get-historical-funding-rates
-lastmod: 2026-06-12T23:36:36.151Z
+lastmod: 2026-06-16T21:43:50.860Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/get-orders
-lastmod: 2026-06-12T23:36:35.915Z
+lastmod: 2026-06-16T21:43:50.600Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

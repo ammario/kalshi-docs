@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin
-lastmod: 2026-06-12T19:33:00.043Z
+lastmod: 2026-06-16T22:47:52.940Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,10 +11,6 @@ lastmod: 2026-06-12T19:33:00.043Z
 > Getting started with Kalshi's perpetual-futures (perps) trading API
 
 The **Perps API** is how you trade Kalshi's perpetual futures. **"Perps", "margin", and "perpetual futures" all refer to the same product.** The API surface uses *margin* throughout (endpoints under the `/margin` namespace, margin-prefixed fields), so these docs use *margin* for technical references. It mirrors the existing event contract API, so if you're already integrated there you're most of the way there: the margin endpoints follow the same patterns, authentication, and conventions, just under `/margin`.
-
-<Note>
-  Perps trading is rolling out to production **gradually, member by member**. The demo environment is open to everyone today; production access is enabled in phases, so your account may not have production perps access yet even after the production endpoints are live. Build and test against demo now, and call `GET /margin/enabled` to check whether perps is enabled for your account in a given environment.
-</Note>
 
 ## Connectivity
 

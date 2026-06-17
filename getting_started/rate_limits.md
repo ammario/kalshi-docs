@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-06-11T21:00:49.749Z
+lastmod: 2026-06-16T21:43:56.920Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -67,9 +67,7 @@ The whole batch must fit in the bucket at once. A 25-order create batch needs 25
 
 ## Perps limits use separate buckets
 
-The Perps API uses the same tiers and the same bucket mechanics, including the two-second Write bucket above Basic, but perps traffic is metered in its own Read and Write buckets. Perps calls do not draw down your event-contract budgets, and event-contract calls do not draw down your perps budgets. In effect you have up to four independent buckets: event-contract Read, event-contract Write, perps Read, and perps Write.
-
-Perps Write budgets match the table below at every tier. Perps Read budgets are higher at the lower tiers: 400 at Basic and 600 at Advanced, versus 200 and 300 for event contracts. From Premier up they are identical.
+The Perps API uses the same bucket mechanics, including the two-second Write bucket above Basic, but perps traffic is metered in its own Read and Write buckets. Perps calls do not draw down your event-contract budgets, and event-contract calls do not draw down your perps budgets. In effect you have up to four independent buckets: event-contract Read, event-contract Write, perps Read, and perps Write.
 
 Check your perps tier and limits with [`GET /account/limits/perps`](/margin-rest/account/get-perps-account-api-limits), the perps counterpart of [`GET /account/limits`](/api-reference/account/get-account-api-limits).
 
@@ -77,7 +75,7 @@ See the [Perps API](/margin) overview for the full perps surface.
 
 ## Tiers and budgets
 
-Per-second token budgets in each bucket:
+Per-second token budgets in each event-contract bucket:
 
 <div style={{width: '100%', overflowX: 'auto'}}>
   <table style={{width: '100%', borderCollapse: 'collapse', fontSize: '1rem'}}>
@@ -92,9 +90,11 @@ Per-second token budgets in each bucket:
     <tbody>
       <tr><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Basic</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>200</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>100</td></tr>
       <tr style={{backgroundColor: 'rgba(255, 255, 255, 0.02)'}}><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Advanced</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>300</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>300</td></tr>
-      <tr><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Premier</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>1,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>1,000</td></tr>
-      <tr style={{backgroundColor: 'rgba(255, 255, 255, 0.02)'}}><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Paragon</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>2,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>2,000</td></tr>
-      <tr><td style={{padding: '0.9rem 1.5rem'}}>Prime</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right'}}>4,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right'}}>4,000</td></tr>
+      <tr><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Expert</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>600</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>600</td></tr>
+      <tr style={{backgroundColor: 'rgba(255, 255, 255, 0.02)'}}><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Premier</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>1,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>1,000</td></tr>
+      <tr><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Paragon</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>2,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>2,000</td></tr>
+      <tr style={{backgroundColor: 'rgba(255, 255, 255, 0.02)'}}><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Prime</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>4,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>4,000</td></tr>
+      <tr><td style={{padding: '0.9rem 1.5rem'}}>Prestige</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right'}}>6,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right'}}>8,000</td></tr>
     </tbody>
   </table>
 </div>
@@ -105,7 +105,7 @@ Write bucket capacity is twice the per-second budget above the Basic tier.
 
 * **Basic**: complete account signup.
 * **Advanced**: call the [Upgrade Account API Usage Level endpoint](/api-reference/account/upgrade-account-api-usage-level).
-* **Premier, Paragon, and Prime**: earned automatically from your trading volume (see [Earning higher tiers](#earning-higher-tiers-by-volume) below), or assigned by Kalshi.
+* **Expert, Premier, Paragon, Prime, and Prestige**: earned automatically from your trading volume (see [Earning higher tiers](#earning-higher-tiers-by-volume) below), or assigned by Kalshi.
 
 <Info>
   Kalshi may, at its discretion, adjust your tier at any time, including downgrading you from higher tiers following prolonged inactivity. Members may request an upgrade by contacting support with a description of their use case.
@@ -113,17 +113,19 @@ Write bucket capacity is twice the per-second budget above the Basic tier.
 
 ## Earning higher tiers by volume
 
-Once a day, Kalshi reviews your trading volume and grants Premier, Paragon, or Prime if you qualify. Your **volume share** is your trailing 30-day volume (counting both sides of every trade you are part of, as maker and as taker) divided by twice the previous calendar month's total exchange volume:
+Once a day, Kalshi reviews your trading volume and grants Expert, Premier, Paragon, Prime, or Prestige if you qualify. Your **volume share** is your trailing 30-day volume (counting both sides of every trade you are part of, as maker and as taker) divided by twice the previous calendar month's total exchange volume:
 
 `volume share = your trailing 30-day volume ÷ (previous month's exchange volume × 2)`
 
 A qualifying review grants the tier for **30 days**, and each daily review renews the window while you keep qualifying. Each tier has a higher **Earn** threshold to gain it and a lower **Keep** threshold to hold it, so a brief dip does not cost you the tier:
 
-| Tier    | Earn  | Keep  |
-| ------- | ----- | ----- |
-| Premier | 0.25% | 0.20% |
-| Paragon | 0.50% | 0.40% |
-| Prime   | 1.00% | 0.80% |
+| Tier     | Earn  | Keep  |
+| -------- | ----- | ----- |
+| Expert   | 0.15% | 0.10% |
+| Premier  | 0.25% | 0.20% |
+| Paragon  | 0.50% | 0.40% |
+| Prime    | 1.00% | 0.80% |
+| Prestige | 2.00% | 1.60% |
 
 If your volume falls below the **Keep** threshold, the tier does not drop immediately. It lapses when your current 30-day grant runs out.
 

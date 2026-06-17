@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-cutoff-timestamps
-lastmod: 2026-06-12T23:36:35.799Z
+lastmod: 2026-06-16T21:43:50.468Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

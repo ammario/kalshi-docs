@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/account/upgrade-account-api-usage-level
-lastmod: 2026-06-12T23:36:34.945Z
+lastmod: 2026-06-16T21:43:50.204Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
