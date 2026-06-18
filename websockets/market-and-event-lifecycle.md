@@ -185,11 +185,32 @@ operations:
                       - deci_cent
                       - tapered_deci_cent
                     required: false
+                  - name: strike_type
+                    type: string
+                    description: >-
+                      Optional - This key will ONLY exist for metadata_updated
+                      events. Determines how floor_strike / cap_strike are
+                      interpreted (e.g. "between" uses both, "greater" uses
+                      floor_strike only, "less" uses cap_strike only)
+                    required: false
                   - name: floor_strike
                     type: number
                     description: >-
                       Optional - This key will ONLY exist for metadata_updated
-                      events. The updated floor strike value for the market
+                      events. The floor (lower bound) strike value for the
+                      market
+                    required: false
+                  - name: cap_strike
+                    type: number
+                    description: >-
+                      Optional - This key will ONLY exist for metadata_updated
+                      events. The cap (upper bound) strike value for the market
+                    required: false
+                  - name: custom_strike
+                    type: object
+                    description: >-
+                      Optional - This key will ONLY exist for metadata_updated
+                      events with a custom or structured strike type
                     required: false
                   - name: yes_sub_title
                     type: string
@@ -371,18 +392,38 @@ operations:
                     - deci_cent
                     - tapered_deci_cent
                   x-parser-schema-id: <anonymous-schema-131>
+                strike_type:
+                  type: string
+                  description: >-
+                    Optional - This key will ONLY exist for metadata_updated
+                    events. Determines how floor_strike / cap_strike are
+                    interpreted (e.g. "between" uses both, "greater" uses
+                    floor_strike only, "less" uses cap_strike only)
+                  x-parser-schema-id: <anonymous-schema-132>
                 floor_strike:
                   type: number
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
-                    events. The updated floor strike value for the market
-                  x-parser-schema-id: <anonymous-schema-132>
+                    events. The floor (lower bound) strike value for the market
+                  x-parser-schema-id: <anonymous-schema-133>
+                cap_strike:
+                  type: number
+                  description: >-
+                    Optional - This key will ONLY exist for metadata_updated
+                    events. The cap (upper bound) strike value for the market
+                  x-parser-schema-id: <anonymous-schema-134>
+                custom_strike:
+                  type: object
+                  description: >-
+                    Optional - This key will ONLY exist for metadata_updated
+                    events with a custom or structured strike type
+                  x-parser-schema-id: <anonymous-schema-135>
                 yes_sub_title:
                   type: string
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The updated yes subtitle for the market
-                  x-parser-schema-id: <anonymous-schema-133>
+                  x-parser-schema-id: <anonymous-schema-136>
                 additional_metadata:
                   type: object
                   description: >-
@@ -391,45 +432,45 @@ operations:
                   properties:
                     name:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-135>
+                      x-parser-schema-id: <anonymous-schema-138>
                     title:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-136>
+                      x-parser-schema-id: <anonymous-schema-139>
                     yes_sub_title:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-137>
+                      x-parser-schema-id: <anonymous-schema-140>
                     no_sub_title:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-138>
+                      x-parser-schema-id: <anonymous-schema-141>
                     rules_primary:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-139>
+                      x-parser-schema-id: <anonymous-schema-142>
                     rules_secondary:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-140>
+                      x-parser-schema-id: <anonymous-schema-143>
                     can_close_early:
                       type: boolean
-                      x-parser-schema-id: <anonymous-schema-141>
+                      x-parser-schema-id: <anonymous-schema-144>
                     event_ticker:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-142>
+                      x-parser-schema-id: <anonymous-schema-145>
                     expected_expiration_ts:
                       type: integer
                       format: int64
-                      x-parser-schema-id: <anonymous-schema-143>
+                      x-parser-schema-id: <anonymous-schema-146>
                     strike_type:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-144>
+                      x-parser-schema-id: <anonymous-schema-147>
                     floor_strike:
                       type: number
-                      x-parser-schema-id: <anonymous-schema-145>
+                      x-parser-schema-id: <anonymous-schema-148>
                     cap_strike:
                       type: number
-                      x-parser-schema-id: <anonymous-schema-146>
+                      x-parser-schema-id: <anonymous-schema-149>
                     custom_strike:
                       type: object
-                      x-parser-schema-id: <anonymous-schema-147>
-                  x-parser-schema-id: <anonymous-schema-134>
+                      x-parser-schema-id: <anonymous-schema-150>
+                  x-parser-schema-id: <anonymous-schema-137>
               x-parser-schema-id: <anonymous-schema-122>
           x-parser-schema-id: marketLifecycleV2Payload
         title: Market Lifecycle V2
@@ -548,7 +589,7 @@ operations:
             type:
               type: string
               const: event_lifecycle
-              x-parser-schema-id: <anonymous-schema-148>
+              x-parser-schema-id: <anonymous-schema-151>
             sid: *ref_1
             msg:
               type: object
@@ -562,15 +603,15 @@ operations:
                 event_ticker:
                   type: string
                   description: Unique identifier for the event being created
-                  x-parser-schema-id: <anonymous-schema-150>
+                  x-parser-schema-id: <anonymous-schema-153>
                 title:
                   type: string
                   description: Title of event
-                  x-parser-schema-id: <anonymous-schema-151>
+                  x-parser-schema-id: <anonymous-schema-154>
                 subtitle:
                   type: string
                   description: Subtitle of event
-                  x-parser-schema-id: <anonymous-schema-152>
+                  x-parser-schema-id: <anonymous-schema-155>
                 collateral_return_type:
                   type: string
                   description: >-
@@ -580,25 +621,25 @@ operations:
                     - MECNET
                     - DIRECNET
                     - ''
-                  x-parser-schema-id: <anonymous-schema-153>
+                  x-parser-schema-id: <anonymous-schema-156>
                 series_ticker:
                   type: string
                   description: Series ticker for the event
-                  x-parser-schema-id: <anonymous-schema-154>
+                  x-parser-schema-id: <anonymous-schema-157>
                 strike_date:
                   type: integer
                   description: >-
                     Optional - Unix timestamp to indicate the strike date of the
                     event if there is one
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-155>
+                  x-parser-schema-id: <anonymous-schema-158>
                 strike_period:
                   type: string
                   description: >-
                     Optional - String to indicate the strike period of the event
                     if there is one
-                  x-parser-schema-id: <anonymous-schema-156>
-              x-parser-schema-id: <anonymous-schema-149>
+                  x-parser-schema-id: <anonymous-schema-159>
+              x-parser-schema-id: <anonymous-schema-152>
           x-parser-schema-id: eventLifecyclePayload
         title: Event Lifecycle
         description: Event creation notification
@@ -679,7 +720,7 @@ operations:
             type:
               type: string
               const: event_fee_update
-              x-parser-schema-id: <anonymous-schema-157>
+              x-parser-schema-id: <anonymous-schema-160>
             sid: *ref_1
             msg:
               type: object
@@ -691,7 +732,7 @@ operations:
                 event_ticker:
                   type: string
                   description: Unique identifier for the event
-                  x-parser-schema-id: <anonymous-schema-159>
+                  x-parser-schema-id: <anonymous-schema-162>
                 fee_type_override:
                   type: string
                   nullable: true
@@ -703,15 +744,15 @@ operations:
                   description: >-
                     Event fee type override. `null` when the override has been
                     cleared.
-                  x-parser-schema-id: <anonymous-schema-160>
+                  x-parser-schema-id: <anonymous-schema-163>
                 fee_multiplier_override:
                   type: number
                   nullable: true
                   description: >-
                     Event fee multiplier override. `null` when the override has
                     been cleared.
-                  x-parser-schema-id: <anonymous-schema-161>
-              x-parser-schema-id: <anonymous-schema-158>
+                  x-parser-schema-id: <anonymous-schema-164>
+              x-parser-schema-id: <anonymous-schema-161>
           x-parser-schema-id: eventFeeUpdatePayload
         title: Event Fee Override Update
         description: Emitted when an event-level fee override is set or cleared

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/order-groups/delete-order-group
-lastmod: 2026-06-16T21:43:50.952Z
+lastmod: 2026-06-18T00:28:17.322Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

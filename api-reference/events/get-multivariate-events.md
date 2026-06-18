@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-multivariate-events
-lastmod: 2026-06-16T21:43:49.440Z
+lastmod: 2026-06-18T00:28:15.998Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -161,6 +161,7 @@ components:
         - collateral_return_type
         - mutually_exclusive
         - available_on_brokers
+        - settlement_sources
       properties:
         event_ticker:
           type: string
@@ -223,6 +224,14 @@ components:
           x-omitempty: true
           description: Additional metadata for the event.
           x-go-type-skip-optional-pointer: true
+        settlement_sources:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/SettlementSource'
+          description: >-
+            The official sources used for the determination of markets within
+            this event. Methodology is defined in the rulebook.
         last_updated_ts:
           type: string
           format: date-time
@@ -548,6 +557,17 @@ components:
         exchange_index:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'
+          x-go-type-skip-optional-pointer: true
+    SettlementSource:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the settlement source
+          x-go-type-skip-optional-pointer: true
+        url:
+          type: string
+          description: URL to the settlement source
           x-go-type-skip-optional-pointer: true
     ExchangeIndex:
       type: integer

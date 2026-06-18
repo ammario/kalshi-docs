@@ -1694,7 +1694,9 @@ components:
             msg:
               market_ticker: KXBTC-25APR30-T0915-B95000
               event_type: metadata_updated
+              strike_type: between
               floor_strike: 95000
+              cap_strike: 95250
         - name: metadataUpdatedSubtitle
           summary: Market metadata updated event (subtitle)
           payload:
@@ -3165,11 +3167,28 @@ components:
                 - linear_cent
                 - deci_cent
                 - tapered_deci_cent
+            strike_type:
+              type: string
+              description: >-
+                Optional - This key will ONLY exist for metadata_updated events.
+                Determines how floor_strike / cap_strike are interpreted (e.g.
+                "between" uses both, "greater" uses floor_strike only, "less"
+                uses cap_strike only)
             floor_strike:
               type: number
               description: >-
                 Optional - This key will ONLY exist for metadata_updated events.
-                The updated floor strike value for the market
+                The floor (lower bound) strike value for the market
+            cap_strike:
+              type: number
+              description: >-
+                Optional - This key will ONLY exist for metadata_updated events.
+                The cap (upper bound) strike value for the market
+            custom_strike:
+              type: object
+              description: >-
+                Optional - This key will ONLY exist for metadata_updated events
+                with a custom or structured strike type
             yes_sub_title:
               type: string
               description: >-

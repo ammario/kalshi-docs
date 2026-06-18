@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-15T23:33:57.257Z
+lastmod: 2026-06-18T00:28:25.854Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,45 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["Upcoming"] */}
+{/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="June 18, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "settlement_sources added to the events API",
+description: "GET /events and GET /events/{event_ticker} now include settlement_sources for each event."
+}}
+>
+  The events API now returns `settlement_sources` on each event, mirroring the
+  field already available on series. Each entry has a `name` and `url`
+  identifying an official source used to determine the event's markets.
+
+  **Affected endpoints:**
+
+  * `GET /events`
+  * `GET /events/{event_ticker}`
+</Update>
+
+<Update
+  label="June 18, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Strike type and cap strike on market_lifecycle_v2 metadata_updated",
+description: "metadata_updated events on the market_lifecycle_v2 channel now include strike_type and cap_strike alongside floor_strike."
+}}
+>
+  `metadata_updated` events on the `market_lifecycle_v2` channel now include
+  `strike_type` and `cap_strike` (plus `custom_strike` for custom/structured
+  markets) alongside `floor_strike`. Consumers can reconstruct a market's full
+  strike range directly from the push — e.g. a `between` band needs both floor
+  and cap, and `less` markets are cap-only — without a follow-up fetch against
+  the eventually-consistent read model.
+
+  `metadata_updated` is now also emitted when a market's `cap_strike` or
+  `strike_type` changes; previously only `floor_strike` and `yes_sub_title`
+  changes triggered it.
+</Update>
 
 <Update
   label="June 18, 2026"
