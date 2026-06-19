@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-18T00:28:25.854Z
+lastmod: 2026-06-18T20:42:34.118Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -89,6 +89,38 @@ description: "FIX market data incremental refreshes now include trade entries"
   label="June 18, 2026"
   tags={["REST", "Predictions"]}
   rss={{
+title: "Legacy order mutation endpoints deprecated",
+description: "Legacy /portfolio/orders mutation endpoints will be deprecated sometime between June 18 and June 25. Use the V2 /portfolio/events/orders endpoints instead."
+}}
+>
+  Legacy `/portfolio/orders` mutation endpoints will be deprecated sometime
+  between June 18 and June 25. Once deprecated, calls to these endpoints will return
+  `Please switch to the V2 endpoints` with a link to the V2 order API
+  reference.
+
+  Use the V2 event-order endpoints:
+
+  * [Create Order (V2)](/api-reference/orders/create-order-v2)
+  * [Cancel Order (V2)](/api-reference/orders/cancel-order-v2)
+  * [Decrease Order (V2)](/api-reference/orders/decrease-order-v2)
+  * [Batch Create Orders (V2)](/api-reference/orders/batch-create-orders-v2)
+  * [Batch Cancel Orders (V2)](/api-reference/orders/batch-cancel-orders-v2)
+  * [Amend Order (V2)](/api-reference/orders/amend-order-v2)
+
+  **Affected endpoints:**
+
+  * `POST /trade-api/v2/portfolio/orders`
+  * `DELETE /trade-api/v2/portfolio/orders/{order_id}`
+  * `POST /trade-api/v2/portfolio/orders/{order_id}/decrease`
+  * `POST /trade-api/v2/portfolio/orders/batched`
+  * `DELETE /trade-api/v2/portfolio/orders/batched`
+  * `POST /trade-api/v2/portfolio/orders/{order_id}/amend`
+</Update>
+
+<Update
+  label="June 18, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
 title: "Event tickers filter on GET /trade-api/v2/events",
 description: "GET /trade-api/v2/events supports a tickers query parameter to filter by a comma-separated list of event tickers."
 }}
@@ -151,8 +183,6 @@ description: "Sanity limits enforced on orderbook subscriptions."
 
   * Max 500k market subscriptions per session.
   * Max 10k/s commands per second enforced.
-
-  Additionally, an error message will be returned when attempting to subscribe to an unknown market ticker on the `orderbook_delta` channel.
 </Update>
 
 <Update

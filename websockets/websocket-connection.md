@@ -1620,9 +1620,6 @@ operations:
 
                       - 27: Too many requests - The subscription exceeded its
                       command rate limit
-
-                      - 28: Markets not found - Unknown tickers were not
-                      subscribed
                     required: true
                   - name: msg
                     type: string
@@ -1636,14 +1633,6 @@ operations:
                     type: string
                     description: Market ticker if error is market-specific (optional)
                     required: false
-                  - name: market_tickers
-                    type: array
-                    description: Market tickers if error is market-specific (optional)
-                    required: false
-                    properties:
-                      - name: item
-                        type: string
-                        required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -1733,11 +1722,8 @@ operations:
 
                     - 27: Too many requests - The subscription exceeded its
                     command rate limit
-
-                    - 28: Markets not found - Unknown tickers were not
-                    subscribed
                   minimum: 1
-                  maximum: 28
+                  maximum: 27
                   x-parser-schema-id: <anonymous-schema-49>
                 msg:
                   type: string
@@ -1751,13 +1737,6 @@ operations:
                   type: string
                   description: Market ticker if error is market-specific (optional)
                   x-parser-schema-id: <anonymous-schema-52>
-                market_tickers:
-                  type: array
-                  items:
-                    type: string
-                    x-parser-schema-id: <anonymous-schema-54>
-                  description: Market tickers if error is market-specific (optional)
-                  x-parser-schema-id: <anonymous-schema-53>
               x-parser-schema-id: <anonymous-schema-48>
           x-parser-schema-id: errorResponsePayload
         title: Error Response

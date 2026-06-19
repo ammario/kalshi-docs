@@ -81,7 +81,22 @@ info:
     | 27 | Too many requests | The subscription exceeded its command rate limit
     |
 
-    | 28 | Markets not found | Unknown tickers were not subscribed |
+
+    ## Terminal Errors
+
+
+    The following channel errors are terminal and the user must resubscribe.
+
+
+    | Code | Error |
+
+    |------|-------|
+
+    | 10 | Channel error |
+
+    | 17 | Internal error |
+
+    | 25 | Subscription buffer overflow |
   contact:
     name: Kalshi Support
     url: https://kalshi.com
@@ -1391,8 +1406,6 @@ components:
 
         | 27 | Too many requests | The subscription exceeded its command rate
         limit |
-
-        | 28 | Markets not found | Unknown tickers were not subscribed |
       contentType: application/json
       payload:
         $ref: '#/components/schemas/errorResponsePayload'
@@ -2473,10 +2486,8 @@ components:
 
                 - 27: Too many requests - The subscription exceeded its command
                 rate limit
-
-                - 28: Markets not found - Unknown tickers were not subscribed
               minimum: 1
-              maximum: 28
+              maximum: 27
             msg:
               type: string
               description: Human-readable error message
@@ -2486,11 +2497,6 @@ components:
             market_ticker:
               type: string
               description: Market ticker if error is market-specific (optional)
-            market_tickers:
-              type: array
-              items:
-                type: string
-              description: Market tickers if error is market-specific (optional)
     listSubscriptionsCommandPayload:
       type: object
       required:
@@ -4004,6 +4010,3 @@ x-error-codes:
     - code: 27
       name: Too many requests
       description: The subscription exceeded its command rate limit
-    - code: 28
-      name: Markets not found
-      description: Unknown tickers were not subscribed
