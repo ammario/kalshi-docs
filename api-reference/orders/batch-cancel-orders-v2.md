@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders-v2
-lastmod: 2026-06-20T03:31:21.614Z
+lastmod: 2026-06-22T00:39:35.324Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -144,6 +144,13 @@ components:
                 allOf:
                   - $ref: '#/components/schemas/ExchangeIndex'
                 default: 0
+                description: >-
+                  Exchange shard index. Defaults to 0. Use -1 to auto-route by
+                  market ticker.
+                x-go-type-skip-optional-pointer: true
+              market_ticker:
+                type: string
+                description: Market ticker. Required when exchange_index is -1 (auto).
                 x-go-type-skip-optional-pointer: true
     BatchCancelOrdersV2Response:
       type: object
