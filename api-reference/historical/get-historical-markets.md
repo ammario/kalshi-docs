@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-markets
-lastmod: 2026-06-22T00:39:36.162Z
+lastmod: 2026-06-22T21:17:07.599Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,7 +19,7 @@ lastmod: 2026-06-22T00:39:36.162Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.21.0
+  version: 3.22.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

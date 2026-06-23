@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exchange/get-enabled-status
-lastmod: 2026-06-22T00:39:36.389Z
+lastmod: 2026-06-22T21:17:07.806Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
