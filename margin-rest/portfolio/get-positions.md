@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-positions
-lastmod: 2026-06-22T21:17:07.784Z
+lastmod: 2026-06-23T17:59:54.716Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

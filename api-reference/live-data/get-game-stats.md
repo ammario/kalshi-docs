@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-game-stats
-lastmod: 2026-06-22T21:17:07.405Z
+lastmod: 2026-06-23T17:59:54.289Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

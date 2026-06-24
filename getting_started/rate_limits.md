@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-06-18T04:43:30.567Z
+lastmod: 2026-06-23T20:03:47.943Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -119,13 +119,13 @@ Once a day, Kalshi reviews your trading volume and grants Expert, Premier, Parag
 
 A qualifying review grants the tier for **30 days**, and each daily review renews the window while you keep qualifying. Each tier has a higher **Earn** threshold to gain it and a lower **Keep** threshold to hold it, so a brief dip does not cost you the tier:
 
-| Tier     | Earn  | Keep  |
-| -------- | ----- | ----- |
-| Expert   | 0.15% | 0.10% |
-| Premier  | 0.25% | 0.20% |
-| Paragon  | 0.50% | 0.40% |
-| Prime    | 1.00% | 0.80% |
-| Prestige | 2.00% | 1.60% |
+| Tier     | Earn   | Keep  |
+| -------- | ------ | ----- |
+| Expert   | 0.075% | 0.05% |
+| Premier  | 0.125% | 0.10% |
+| Paragon  | 0.25%  | 0.20% |
+| Prime    | 0.50%  | 0.40% |
+| Prestige | 1.00%  | 0.80% |
 
 If your volume falls below the **Keep** threshold, the tier does not drop immediately. It lapses when your current 30-day grant runs out.
 
