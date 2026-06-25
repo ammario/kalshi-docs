@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-deposits
-lastmod: 2026-06-24T22:54:24.301Z
+url: https://docs.kalshi.com/api-reference/communications/confirm-rfq-quote
+lastmod: 2026-06-24T22:54:24.441Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Deposits
+# Confirm RFQ Quote
 
-> Endpoint for getting the member's deposit history.
+>  Endpoint for confirming a quote scoped to its RFQ. This will start a timer for order execution.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/deposits
+````yaml /openapi.yaml put /communications/rfqs/{rfq_id}/quotes/{quote_id}/confirm
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,27 +64,29 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/deposits:
-    get:
+  /communications/rfqs/{rfq_id}/quotes/{quote_id}/confirm:
+    put:
       tags:
-        - portfolio
-      summary: Get Deposits
-      description: Endpoint for getting the member's deposit history.
-      operationId: GetDeposits
+        - communications
+      summary: Confirm RFQ Quote
+      description: ' Endpoint for confirming a quote scoped to its RFQ. This will start a timer for order execution.'
+      operationId: ConfirmRFQQuote
       parameters:
-        - $ref: '#/components/parameters/WithdrawalLimitQuery'
-        - $ref: '#/components/parameters/CursorQuery'
+        - $ref: '#/components/parameters/RfqIdPath'
+        - $ref: '#/components/parameters/QuoteIdPath'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyResponse'
       responses:
-        '200':
-          description: Deposits retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetDepositsResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestError'
+        '204':
+          description: Quote confirmed successfully
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -93,91 +95,24 @@ paths:
           kalshiAccessTimestamp: []
 components:
   parameters:
-    WithdrawalLimitQuery:
-      name: limit
-      in: query
-      description: Number of results per page. Defaults to 100. Maximum value is 500.
-      schema:
-        type: integer
-        format: int64
-        minimum: 1
-        maximum: 500
-        default: 100
-        x-oapi-codegen-extra-tags:
-          validate: omitempty,min=1,max=500
-    CursorQuery:
-      name: cursor
-      in: query
-      description: >-
-        Pagination cursor. Use the cursor value returned from the previous
-        response to get the next page of results. Leave empty for the first
-        page.
+    RfqIdPath:
+      name: rfq_id
+      in: path
+      required: true
+      description: RFQ ID
       schema:
         type: string
-        x-go-type-skip-optional-pointer: true
+    QuoteIdPath:
+      name: quote_id
+      in: path
+      required: true
+      description: Quote ID
+      schema:
+        type: string
   schemas:
-    GetDepositsResponse:
+    EmptyResponse:
       type: object
-      required:
-        - deposits
-      properties:
-        deposits:
-          type: array
-          items:
-            $ref: '#/components/schemas/Deposit'
-        cursor:
-          type: string
-    Deposit:
-      type: object
-      required:
-        - id
-        - status
-        - type
-        - amount_cents
-        - fee_cents
-        - created_ts
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the deposit.
-        status:
-          type: string
-          enum:
-            - pending
-            - applied
-            - failed
-            - returned
-          description: >-
-            Current status of the deposit. 'applied' means funds are reflected
-            in balance.
-        type:
-          type: string
-          enum:
-            - ach
-            - wire
-            - crypto
-            - debit
-            - apm
-          description: Payment method used for the deposit.
-        amount_cents:
-          type: integer
-          format: int64
-          description: Deposit amount in cents.
-        fee_cents:
-          type: integer
-          format: int64
-          description: Fee charged for the deposit in cents.
-        created_ts:
-          type: integer
-          format: int64
-          description: Unix timestamp of when the deposit was created.
-        finalized_ts:
-          type: integer
-          format: int64
-          nullable: true
-          description: >-
-            Unix timestamp of when the deposit was finalized (applied, failed,
-            or returned).
+      description: An empty response body
     ErrorResponse:
       type: object
       properties:
@@ -194,14 +129,14 @@ components:
           type: string
           description: The name of the service that generated the error
   responses:
-    BadRequestError:
-      description: Bad request - invalid input
+    UnauthorizedError:
+      description: Unauthorized - authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    UnauthorizedError:
-      description: Unauthorized - authentication required
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:

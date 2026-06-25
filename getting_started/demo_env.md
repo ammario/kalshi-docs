@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/demo_env
-lastmod: 2026-05-05T21:10:38.990Z
+lastmod: 2026-06-24T13:51:32.241Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,6 +11,10 @@ lastmod: 2026-05-05T21:10:38.990Z
 > Set up and test with Kalshi's demo environment
 
 For testing purposes, Kalshi offers a *demo* environment with mock funds. You can access the Demo environment at [https://demo.kalshi.co/](https://demo.kalshi.co/). For safety, credentials are not shared between this environment and production.
+
+<Warning>
+  The price and behavior of markets in the demo environment may not be reflective of those in real markets.
+</Warning>
 
 To set up a Kalshi Demo account, [follow this step-by-step tutorial](https://docs.google.com/presentation/d/e/2PACX-1vRvhUAqRBYzJmt7JCinMXmu6KVWkj-cc7ikDXGConmqjcv4mnlJacgHPcZJ20fWWnrYdubn-oczclKP/pub?start=false\&loop=false\&delayms=3000\&slide=id.p).
 

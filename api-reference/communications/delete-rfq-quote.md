@@ -1,20 +1,23 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/confirm-quote
-lastmod: 2026-06-24T22:54:24.495Z
+url: https://docs.kalshi.com/api-reference/communications/delete-rfq-quote
+lastmod: 2026-06-24T22:54:24.421Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Confirm Quote
+# Delete RFQ Quote
 
->  Endpoint for confirming a quote. This will start a timer for order execution
+>  Endpoint for deleting a quote scoped to its RFQ, which means it can no longer be accepted.
 
+<Note>
+  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml put /communications/quotes/{quote_id}/confirm
+````yaml /openapi.yaml delete /communications/rfqs/{rfq_id}/quotes/{quote_id}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,24 +67,19 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /communications/quotes/{quote_id}/confirm:
-    put:
+  /communications/rfqs/{rfq_id}/quotes/{quote_id}:
+    delete:
       tags:
         - communications
-      summary: Confirm Quote
-      description: ' Endpoint for confirming a quote. This will start a timer for order execution'
-      operationId: ConfirmQuote
+      summary: Delete RFQ Quote
+      description: ' Endpoint for deleting a quote scoped to its RFQ, which means it can no longer be accepted.'
+      operationId: DeleteRFQQuote
       parameters:
+        - $ref: '#/components/parameters/RfqIdPath'
         - $ref: '#/components/parameters/QuoteIdPath'
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmptyResponse'
       responses:
         '204':
-          description: Quote confirmed successfully
+          description: Quote deleted successfully
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
@@ -94,6 +92,13 @@ paths:
           kalshiAccessTimestamp: []
 components:
   parameters:
+    RfqIdPath:
+      name: rfq_id
+      in: path
+      required: true
+      description: RFQ ID
+      schema:
+        type: string
     QuoteIdPath:
       name: quote_id
       in: path
@@ -101,25 +106,6 @@ components:
       description: Quote ID
       schema:
         type: string
-  schemas:
-    EmptyResponse:
-      type: object
-      description: An empty response body
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Human-readable error message
-        details:
-          type: string
-          description: Additional details about the error, if available
-        service:
-          type: string
-          description: The name of the service that generated the error
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required
@@ -139,6 +125,22 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional details about the error, if available
+        service:
+          type: string
+          description: The name of the service that generated the error
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

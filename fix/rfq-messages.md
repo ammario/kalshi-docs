@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-06-16T22:14:42.531Z
+lastmod: 2026-06-24T22:33:53.721Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -198,9 +198,10 @@ A QuoteStatusReport is sent by the exchange:
 
 Market maker cancels an active quote.
 
-| Tag | Name    | Type   | Required | Description     |
-| --- | ------- | ------ | -------- | --------------- |
-| 117 | QuoteId | String | Y        | Quote to cancel |
+| Tag   | Name    | Type   | Required | Description                                                                                                           |
+| ----- | ------- | ------ | -------- | --------------------------------------------------------------------------------------------------------------------- |
+| 117   | QuoteId | String | Y        | Quote to cancel                                                                                                       |
+| 21023 | RfqId   | UUID   | N        | Server-assigned RFQ ID. If provided, the quote must belong to this RFQ. If omitted, the RFQ is resolved from QuoteId. |
 
 <Note>
   Exchange responds with QuoteStatusReport (Status=CANCELLED).
@@ -220,9 +221,10 @@ Response to QuoteCancel from exchange.
 
 Market maker confirms willingness to execute after quote acceptance.
 
-| Tag | Name    | Type   | Required | Description       |
-| --- | ------- | ------ | -------- | ----------------- |
-| 117 | QuoteId | String | Y        | Accepted quote ID |
+| Tag   | Name    | Type   | Required | Description                                                                                                           |
+| ----- | ------- | ------ | -------- | --------------------------------------------------------------------------------------------------------------------- |
+| 117   | QuoteId | String | Y        | Accepted quote ID                                                                                                     |
+| 21023 | RfqId   | UUID   | N        | Server-assigned RFQ ID. If provided, the quote must belong to this RFQ. If omitted, the RFQ is resolved from QuoteId. |
 
 <Warning>
   Quote must be confirmed within 30 seconds of acceptance or it will be voided.
@@ -245,6 +247,7 @@ RFQ creator accepts a quote from a market maker.
 | Tag   | Name              | Type    | Required | Description                                                                                                                                                                                    |
 | ----- | ----------------- | ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 117   | QuoteId           | UUID    | Y        | Quote to accept                                                                                                                                                                                |
+| 21023 | RfqId             | UUID    | N        | Server-assigned RFQ ID. If provided, the quote must belong to this RFQ. If omitted, the RFQ is resolved from QuoteId.                                                                          |
 | 54    | Side              | Char    | Y        | FIX side (1=BUY, 2=SELL). For AcceptQuote, BUY accepts the maker's NO quote and SELL accepts the maker's YES quote.                                                                            |
 | 38    | OrderQty          | Decimal | N        | Contracts to accept as a fixed-point decimal. Supports `0.01`-contract increments                                                                                                              |
 | 11    | ClOrdID           | String  | N        | Client order ID                                                                                                                                                                                |
@@ -327,7 +330,7 @@ Exchange notifies that an RFQ creation request was rejected or that a quote requ
   ```
 
   ```fix Accept Quote (Creator → Exchange) theme={null}
-  8=FIXT.1.1|35=UA|117=quote-789|54=1|38=100|11=client-accept-123|
+  8=FIXT.1.1|35=UA|117=quote-789|21023=server-rfq-456|54=1|38=100|11=client-accept-123|
   ```
 
   ```fix AcceptQuoteStatus (Exchange → Creator) theme={null}
@@ -363,7 +366,7 @@ Exchange notifies that an RFQ creation request was rejected or that a quote requ
   ```
 
   ```fix Quote Confirmation (MM → Exchange) theme={null}
-  8=FIXT.1.1|35=U7|117=quote-789|
+  8=FIXT.1.1|35=U7|117=quote-789|21023=server-rfq-456|
   ```
 
   ```fix QuoteConfirmStatus (Exchange → MM) theme={null}

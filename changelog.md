@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-23T20:03:47.951Z
+lastmod: 2026-06-24T22:54:34.169Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,25 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["Upcoming"] */}
+{/* changelog-tags: ["Breaking Change", "Upcoming"] */}
+
+<Update
+  label="July 2, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Per-index subaccount balances",
+description: "GET /trade-api/v2/portfolio/subaccounts/balances now returns a balance per exchange index, each with an exchange_index field."
+}}
+>
+  `GET /trade-api/v2/portfolio/subaccounts/balances` now returns one balance per
+  exchange index. Each entry includes an `exchange_index` field, so a subaccount
+  with funds on multiple indexes appears as multiple entries rather than a single
+  combined row.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/portfolio/subaccounts/balances`
+</Update>
 
 <Update
   label="June 25, 2026"
@@ -31,6 +49,37 @@ description: "Qualification requirements for all tiers has been halved."
 }}
 >
   Qualification requirements for all tiers has been halved.
+</Update>
+
+<Update
+  label="June 25, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "FIX exchange index routing",
+description: "FIX order entry supports ExDestination for exchange index selection, including auto-routing for new orders and cancels."
+}}
+>
+  FIX order entry now supports `ExDestination<100>` for exchange index
+  selection. `NewOrderSingle (35=D)` and `OrderCancelRequest (35=F)` may use
+  `ExDestination=-1` to auto-route by market ticker.
+
+  ExecutionReport `ExecID<17>` values for non-default exchange indexes include
+  the exchange index as `clock;event;exchange_index`.
+
+  Note: exchange index `0` is currently the only exchange index available in
+  production.
+</Update>
+
+<Update
+  label="June 24, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "RFQ quotes support post-only on FIX",
+description: "FIX RFQ Quote creation supports ExecInst=6 to request post-only behavior."
+}}
+>
+  FIX RFQ `Quote (35=S)` creation now supports `ExecInst<18>=6`
+  (ParticipantDontInitiate) to request post-only quote behavior.
 </Update>
 
 <Update
@@ -64,6 +113,24 @@ description: "GET /trade-api/v2/communications/quotes no longer supports the mar
   **Affected endpoints:**
 
   * `GET /trade-api/v2/communications/quotes`
+</Update>
+
+<Update
+  label="June 19, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Communications RFQ and quote retention window reduced",
+description: "Closed RFQs and cancelled quotes will be retained for 7 days instead of 14 days."
+}}
+>
+  Closed RFQs and cancelled quotes returned by the communications APIs will be
+  retained for 7 days after their last update, reduced from the previous
+  14-day retention window.
+
+  **Affected endpoints:**
+
+  * `GET /communications/rfqs`
+  * `GET /communications/quotes`
 </Update>
 
 <Update

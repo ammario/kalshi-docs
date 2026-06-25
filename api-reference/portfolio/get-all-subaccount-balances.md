@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-all-subaccount-balances
-lastmod: 2026-06-23T17:59:53.782Z
+lastmod: 2026-06-24T22:54:24.244Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -101,12 +101,16 @@ components:
       type: object
       required:
         - subaccount_number
+        - exchange_index
         - balance
         - updated_ts
       properties:
         subaccount_number:
           type: integer
           description: Subaccount number (0 for primary, 1-63 for subaccounts).
+        exchange_index:
+          type: integer
+          description: Exchange index the balance is held on.
         balance:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Balance in dollars.
