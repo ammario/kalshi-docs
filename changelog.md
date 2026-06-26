@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-24T22:54:34.169Z
+lastmod: 2026-06-25T22:10:47.829Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -38,6 +38,92 @@ description: "GET /trade-api/v2/portfolio/subaccounts/balances now returns a bal
   **Affected endpoints:**
 
   * `GET /trade-api/v2/portfolio/subaccounts/balances`
+</Update>
+
+<Update
+  label="July 2, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "More specific FIX rejects for cancel/replace failures",
+description: "OrderCancelReject (35=9) responses now carry the specific reason in Text<58> and CxlRejReason<102> instead of INTERNAL_ERROR."
+}}
+>
+  Previously, some `OrderCancelReplaceRequest (35=G)` and
+  `OrderCancelRequest (35=F)` failures came back as an `OrderCancelReject (35=9)`
+  with `Text<58>=INTERNAL_ERROR`, even though the exchange had cleanly rejected
+  the request for a specific reason. The most common case was replacing an order
+  with a price the market does not accept, for example a sub-tick price on a
+  market that does not support fractional prices.
+
+  These rejects now report the underlying reason in `Text<58>`, with a
+  corresponding `CxlRejReason<102>`:
+
+  * Invalid price (off-tick, out-of-band, `$0`, or `$1`): `Text<58>=INVALID_PRICE`, `CxlRejReason<102>=99` (Other)
+  * Unknown market: `Text<58>=MARKET_NOT_FOUND`, `CxlRejReason<102>=99` (Other)
+  * Duplicate client order ID: `Text<58>=ORDER_ALREADY_EXISTS`, `CxlRejReason<102>=6` (Duplicate ClOrdID)
+
+  A rejected cancel or replace does not change the original order; it continues
+  to rest unchanged. Clients that branched on `Text<58>=INTERNAL_ERROR` for these
+  cases should switch to reading the specific reason text.
+</Update>
+
+<Update
+  label="June 25, 2026"
+  tags={["REST", "FIX", "Predictions"]}
+  rss={{
+title: "RFQ quote retention and RFQ-scoped quote actions",
+description: "RFQ quotes are only durably queryable after acceptance, and quote actions now support including the RFQ ID alongside the quote ID."
+}}
+>
+  Effective immediately, RFQ quotes are no longer guaranteed to remain queryable
+  unless they have reached a post-acceptance state: `accepted`, `confirmed`, or
+  `executed`. Open quotes and cancelled quotes may still be returned on a
+  best-effort basis, but clients should not treat them as durable records. If an
+  open quote is cleared during a server roll or restart, it should be treated as
+  effectively cancelled and no longer actionable, even if there is no queryable
+  cancelled quote record. Later requests for that quote may return
+  `404 Not Found`.
+
+  Clients should store the RFQ ID returned for each RFQ and include it alongside
+  the quote ID when performing quote actions. REST now supports RFQ-scoped quote
+  action endpoints using `rfq_id` as a path parameter:
+
+  * `DELETE /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id}`
+  * `PUT /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id}/accept`
+  * `PUT /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id}/confirm`
+
+  The existing quote-ID-only endpoints remain supported for now:
+
+  * `DELETE /trade-api/v2/communications/quotes/{quote_id}`
+  * `PUT /trade-api/v2/communications/quotes/{quote_id}/accept`
+  * `PUT /trade-api/v2/communications/quotes/{quote_id}/confirm`
+
+  For FIX, quote actions now accept optional `RfqId<21023>` together with
+  `QuoteId<117>` on `QuoteCancel (35=Z)`, `QuoteConfirm (35=U7)`, and
+  `AcceptQuote (35=UA)`. When `RfqId<21023>` is provided, the quote must belong
+  to that RFQ; when it is omitted, the exchange will continue to resolve the RFQ
+  from `QuoteId<117>` on a best-effort basis.
+
+  We expect `rfq_id` / `RfqId<21023>` to become required for quote actions in a
+  future migration, but this requirement will not take effect within the next
+  7 days. Start sending the RFQ ID now to avoid future migration work.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/communications/quotes`
+  * `GET /trade-api/v2/communications/quotes/{quote_id}`
+  * `DELETE /trade-api/v2/communications/quotes/{quote_id}`
+  * `PUT /trade-api/v2/communications/quotes/{quote_id}/accept`
+  * `PUT /trade-api/v2/communications/quotes/{quote_id}/confirm`
+  * `DELETE /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id}`
+  * `PUT /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id}/accept`
+  * `PUT /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id}/confirm`
+
+  **Affected FIX messages:**
+
+  * `QuoteCancel (35=Z)`
+  * `QuoteConfirm (35=U7)`
+  * `AcceptQuote (35=UA)`
 </Update>
 
 <Update
