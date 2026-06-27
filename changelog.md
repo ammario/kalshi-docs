@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-25T22:10:47.829Z
+lastmod: 2026-06-27T00:47:21.830Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,45 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["Breaking Change", "Upcoming"] */}
+{/* changelog-tags: ["Upcoming"] */}
+
+<Update
+  label="June 26, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin risk per-market metrics limited to single-position subaccounts and gross margin markets",
+description: "Effective immediately, GET /trade-api/v2/margin/risk no longer populates per-market maintenance margin, leverage, or estimated liquidation price except for single-position subaccounts and gross margin markets."
+}}
+>
+  Effective immediately, `GET /trade-api/v2/margin/risk` no longer populates per-market maintenance
+  margin, leverage, or estimated liquidation price unless the data is for a
+  subaccount with a single position or for a gross margin market.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/margin/risk`
+</Update>
+
+<Update
+  label="July 2, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Per-index exchange status",
+description: "GET /trade-api/v2/exchange/status now returns a per-index exchange_index_statuses breakdown plus an intra_exchange_transfers_active field."
+}}
+>
+  `GET /trade-api/v2/exchange/status` now returns two additional fields:
+
+  * `intra_exchange_transfers_active` — whether intra-exchange transfers are
+    currently permitted.
+  * `exchange_index_statuses` — a per-index breakdown with one entry per exchange
+    index. Each entry carries `exchange_index`, `exchange_active`,
+    `trading_active`, and `intra_exchange_transfers_active`.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/exchange/status`
+</Update>
 
 <Update
   label="July 2, 2026"
