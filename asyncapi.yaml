@@ -414,7 +414,7 @@ channels:
       - Market specification ignored
 
       - Optional sharding for fanout control:
-        - `shard_factor` (1-100) and `shard_key` (0 <= key < shard_factor)
+        - `shard_factor` (1-100) and `shard_key` (`0 <= key < shard_factor`)
       - RFQ events (RFQCreated, RFQDeleted) always sent
 
       - Quote events (QuoteCreated, QuoteAccepted, QuoteExecuted) are only sent

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/get-api-keys
-lastmod: 2026-06-26T21:53:04.328Z
+lastmod: 2026-06-29T19:36:12.590Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -116,6 +116,15 @@ components:
           description: List of scopes granted to this API key.
           items:
             $ref: '#/components/schemas/ApiKeyScope'
+        subaccount:
+          type: integer
+          nullable: true
+          minimum: 0
+          maximum: 63
+          description: >-
+            If set, the API key is restricted to this single sub-account and may
+            only read and trade on it. Absent/null means the key is
+            unrestricted.
     ApiKeyScope:
       type: string
       enum:

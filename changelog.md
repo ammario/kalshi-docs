@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-27T00:47:21.830Z
+lastmod: 2026-06-29T19:36:21.481Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -255,6 +255,31 @@ description: "Closed RFQs and cancelled quotes will be retained for 7 days inste
 
   * `GET /communications/rfqs`
   * `GET /communications/quotes`
+</Update>
+
+<Update
+  label="July 2, 2026"
+  tags={["REST", "FIX", "Predictions"]}
+  rss={{
+title: "Sub-account-restricted API keys",
+description: "API keys can now be restricted to a single sub-account at creation; a restricted key may only read and trade on that sub-account."
+}}
+>
+  You can now restrict an API key to a single sub-account when you create it.
+  Pass `subaccount` (0-63) to `POST /api_keys` or `POST /api_keys/generate`. A
+  restricted key may only read and trade on that one sub-account: requests that
+  target another sub-account are rejected, and the key cannot transfer funds
+  between sub-accounts or create sub-accounts. Restricted keys can use supported
+  REST and FIX order-entry or market-data sessions; they cannot open WebSocket,
+  FIX listener, drop-copy, RFQ, or retransmission sessions. `GET /api_keys`
+  returns each key's `subaccount` (absent when the key is unrestricted). Omit
+  `subaccount` to create an unrestricted key; existing keys are unaffected.
+
+  **Affected endpoints:**
+
+  * `POST /api_keys`
+  * `POST /api_keys/generate`
+  * `GET /api_keys`
 </Update>
 
 <Update

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/api_environments
-lastmod: 2026-05-05T21:10:38.958Z
+lastmod: 2026-06-30T00:17:10.962Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -35,6 +35,14 @@ Use these WebSocket URLs for the Trade API:
 | ----------- | ------------------------------------------------------ | ------------------------------------------------ |
 | Production  | `wss://external-api-ws.kalshi.com/trade-api/ws/v2`     | `wss://api.elections.kalshi.com/trade-api/ws/v2` |
 | Demo        | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://demo-api.kalshi.co/trade-api/ws/v2`       |
+
+## Private Connectivity
+
+For participants requiring network-level isolation, Kalshi supports private connectivity to the REST and WebSocket APIs via [AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html). With PrivateLink, your API traffic is routed entirely within the AWS backbone and never traverses the public internet.
+
+PrivateLink is available for the production hosts `external-api.kalshi.com` (REST) and `external-api-ws.kalshi.com` (WebSocket). The two APIs are provisioned as separate interface endpoints, each reachable over TLS on port 443. Connect to the endpoint's DNS name from within your VPC and set the matching host above as the TLS server name (SNI).
+
+Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to provision PrivateLink endpoints for your AWS account.
 
 ## Request Signing
 

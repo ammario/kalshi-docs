@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/communications
-lastmod: 2026-05-06T00:22:37.290Z
+lastmod: 2026-06-29T20:53:05.774Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,7 @@ lastmod: 2026-05-06T00:22:37.290Z
 - Authentication required
 - Market specification ignored
 - Optional sharding for fanout control:
-  - `shard_factor` (1-100) and `shard_key` (0 <= key < shard_factor)
+  - `shard_factor` (1-100) and `shard_key` (`0 <= key < shard_factor`)
 - RFQ events (RFQCreated, RFQDeleted) always sent
 - Quote events (QuoteCreated, QuoteAccepted, QuoteExecuted) are only sent if you created the quote OR you created the RFQ
 
@@ -40,7 +40,7 @@ description: >
   - Market specification ignored
 
   - Optional sharding for fanout control:
-    - `shard_factor` (1-100) and `shard_key` (0 <= key < shard_factor)
+    - `shard_factor` (1-100) and `shard_key` (`0 <= key < shard_factor`)
   - RFQ events (RFQCreated, RFQDeleted) always sent
 
   - Quote events (QuoteCreated, QuoteAccepted, QuoteExecuted) are only sent if
