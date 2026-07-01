@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/account/upgrade-account-api-usage-level
-lastmod: 2026-06-29T19:36:12.641Z
+lastmod: 2026-06-30T23:08:50.193Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,7 +21,7 @@ lastmod: 2026-06-29T19:36:12.641Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.22.0
+  version: 3.23.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

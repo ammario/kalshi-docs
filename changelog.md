@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-29T19:36:21.481Z
+lastmod: 2026-06-30T21:51:55.076Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,63 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["Upcoming"] */}
+{/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="June 30, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "Trade-scoped API key permissions",
+description: "API keys can use write::trade for order, order-group, and RFQ/quote write endpoint access without granting transfer-write access."
+}}
+>
+  API keys can use `write::trade` to grant access to order, order-group, and
+  RFQ/quote write endpoints without granting transfer-write access. Parent
+  `write` keys continue to grant broad write access, including trade and transfer
+  child scopes.
+</Update>
+
+<Update
+  label="July 2, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "price_ranges added to market_lifecycle_v2 events",
+description: "The market_lifecycle_v2 channel now includes a price_ranges array alongside price_level_structure on created and price_level_structure_updated events, giving the market's valid price bands inline."
+}}
+>
+  The `market_lifecycle_v2` channel now emits an optional `price_ranges` array
+  alongside `price_level_structure` on `created` and
+  `price_level_structure_updated` events. Each entry is a `{ start, end, step }`
+  band in fixed-point dollars describing the market's valid prices — the same
+  data returned on the REST market object.
+
+  This lets consumers read a market's valid-price grid directly from the event,
+  with no follow-up REST call when a market's tick size / structure changes. The
+  field is only present on events that carry a `price_level_structure`.
+
+  **Affected channel:**
+
+  * `market_lifecycle_v2` (`created`, `price_level_structure_updated` events)
+</Update>
+
+<Update
+  label="June 29, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin positions margin_used omitted for jointly-margined portfolio positions",
+description: "GET /trade-api/v2/margin/positions now omits margin_used (and the derived roe) for a portfolio-margin position held alongside other positions in the same asset class, since margin is computed jointly for the group rather than per market."
+}}
+>
+  `GET /trade-api/v2/margin/positions` now omits `margin_used` (and the derived
+  `roe`) for a portfolio-margin position that shares its asset class with other
+  positions in the same subaccount. Margin for those positions is computed jointly
+  for the group and is not attributable to a single market. `margin_used` stays
+  populated for gross markets and for single-position (lone) portfolio markets.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/margin/positions`
+</Update>
 
 <Update
   label="June 26, 2026"
@@ -76,6 +132,26 @@ description: "GET /trade-api/v2/portfolio/subaccounts/balances now returns a bal
   **Affected endpoints:**
 
   * `GET /trade-api/v2/portfolio/subaccounts/balances`
+</Update>
+
+<Update
+  label="July 2, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "AcceptQuote rejects carry a specific reason on FIX",
+description: "AcceptQuote (35=UA) rejects now report a specific reason in Text(58), distinguishing a flushed quote (NOT_FOUND) from a cancelled or expired one (EXPIRED)."
+}}
+>
+  On `AcceptQuote (35=UA)`, when a quote can no longer be accepted the
+  `AcceptQuoteStatus (35=UC)` reject (`AcceptQuoteStatus<21025>=1`) now reports a
+  specific reason in `Text<58>` rather than a generic message — notably
+  `NOT_FOUND` when the quote was cleared by a server roll/restart (or is
+  otherwise unknown) and `EXPIRED` when it was cancelled or has expired — so RFQ
+  creators can distinguish a flushed quote from a genuine cancellation.
+
+  **Affected FIX messages:**
+
+  * `AcceptQuote (35=UA)`
 </Update>
 
 <Update

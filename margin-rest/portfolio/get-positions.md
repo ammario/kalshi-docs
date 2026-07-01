@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-positions
-lastmod: 2026-06-29T19:36:12.996Z
+lastmod: 2026-06-30T23:08:50.697Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -107,7 +107,6 @@ components:
         - position
         - entry_price
         - unrealized_pnl
-        - margin_used
         - fees
       properties:
         subaccount:
@@ -131,7 +130,12 @@ components:
           description: Mark-to-market unrealized PnL for the open position
         margin_used:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Maintenance-margin-based capital usage for the open position
+          nullable: true
+          description: >-
+            Maintenance-margin-based capital usage for the open position. Null
+            when the position shares its asset class with other portfolio-margin
+            positions in the subaccount, since margin is then computed jointly
+            for the group and cannot be attributed to a single market.
         fees:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
@@ -143,7 +147,8 @@ components:
           nullable: true
           description: >-
             Return on equity as a percentage (unrealized_pnl / margin_used *
-            100), null when margin_used is zero
+            100). Null when margin_used is zero or not attributable to this
+            market.
     ErrorResponse:
       type: object
       properties:

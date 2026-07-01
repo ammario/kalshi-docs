@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-fills
-lastmod: 2026-06-29T19:36:12.988Z
+lastmod: 2026-06-30T23:08:50.686Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

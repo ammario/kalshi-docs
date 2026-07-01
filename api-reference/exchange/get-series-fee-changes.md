@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-series-fee-changes
-lastmod: 2026-06-30T00:17:06.375Z
+lastmod: 2026-06-30T23:08:49.284Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -16,7 +16,7 @@ lastmod: 2026-06-30T00:17:06.375Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.22.0
+  version: 3.23.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
