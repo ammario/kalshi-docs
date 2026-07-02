@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/transfer-between-subaccounts
-lastmod: 2026-06-30T23:08:49.752Z
+lastmod: 2026-07-02T01:52:06.892Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-06-30T23:08:49.752Z
 
 # Transfer Between Subaccounts
 
-> Transfers funds between the authenticated user's subaccounts. Use 0 for the primary account, or 1-63 for numbered subaccounts.
+> Transfers funds between the authenticated user's subaccounts. Use 0 for the primary account, or 1-63 for numbered subaccounts. Set exchange_index to apply the transfer on a specific exchange shard (defaults to 0).
 
 
 
@@ -71,7 +71,9 @@ paths:
       summary: Transfer Between Subaccounts
       description: >-
         Transfers funds between the authenticated user's subaccounts. Use 0 for
-        the primary account, or 1-63 for numbered subaccounts.
+        the primary account, or 1-63 for numbered subaccounts. Set
+        exchange_index to apply the transfer on a specific exchange shard
+        (defaults to 0).
       operationId: ApplySubaccountTransfer
       requestBody:
         required: true
@@ -126,9 +128,22 @@ components:
           type: integer
           format: int64
           description: Amount to transfer in cents.
+        exchange_index:
+          allOf:
+            - $ref: '#/components/schemas/ExchangeIndex'
+          description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+          x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: gte=0
     ApplySubaccountTransferResponse:
       type: object
       description: Empty response indicating successful transfer.
+    ExchangeIndex:
+      type: integer
+      description: >-
+        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
+        currently only 0 supported.
+      example: 0
     ErrorResponse:
       type: object
       properties:

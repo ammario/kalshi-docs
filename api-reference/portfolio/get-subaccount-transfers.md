@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-subaccount-transfers
-lastmod: 2026-06-30T23:08:49.780Z
+lastmod: 2026-07-02T01:52:06.915Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -136,6 +136,7 @@ components:
         - to_subaccount
         - amount_cents
         - created_ts
+        - exchange_index
       properties:
         transfer_id:
           type: string
@@ -154,6 +155,9 @@ components:
           type: integer
           format: int64
           description: Unix timestamp when the transfer was created.
+        exchange_index:
+          type: integer
+          description: Exchange index the transfer was applied on.
     ErrorResponse:
       type: object
       properties:

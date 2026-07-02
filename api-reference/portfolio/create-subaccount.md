@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/create-subaccount
-lastmod: 2026-06-30T23:08:49.741Z
+lastmod: 2026-07-02T01:52:06.875Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -75,6 +75,12 @@ paths:
         are numbered sequentially starting from 1. Maximum 63 numbered
         subaccounts per user (64 including the primary account).
       operationId: CreateSubaccount
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSubaccountRequest'
       responses:
         '201':
           description: Subaccount created successfully
@@ -94,6 +100,16 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
+    CreateSubaccountRequest:
+      type: object
+      properties:
+        exchange_index:
+          allOf:
+            - $ref: '#/components/schemas/ExchangeIndex'
+          description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+          x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: gte=0
     CreateSubaccountResponse:
       type: object
       required:
@@ -102,6 +118,12 @@ components:
         subaccount_number:
           type: integer
           description: The sequential number assigned to this subaccount (1-63).
+    ExchangeIndex:
+      type: integer
+      description: >-
+        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
+        currently only 0 supported.
+      example: 0
     ErrorResponse:
       type: object
       properties:

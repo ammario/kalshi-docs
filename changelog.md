@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-06-30T21:51:55.076Z
+lastmod: 2026-07-02T00:54:30.074Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,41 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["New Feature", "Upcoming"] */}
+{/* changelog-tags: ["Deprecation", "Upcoming"] */}
+
+<Update
+  label="July 2, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Multivariate lookup history endpoints are fully deprecated",
+description: "Multivariate lookup history endpoints are fully deprecated."
+}}
+>
+  Multivariate lookup history endpoints are fully deprecated.
+</Update>
+
+<Update
+  label="July 2, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin positions now include an is_portfolio flag",
+description: "GET /trade-api/v2/margin/risk and GET /trade-api/v2/margin/positions now return an is_portfolio flag on each position. When true, the position is hedged within a portfolio, so its per-position risk metrics cannot be attributed to it individually and are not reported."
+}}
+>
+  Each position returned by `GET /trade-api/v2/margin/risk` and
+  `GET /trade-api/v2/margin/positions` now includes an `is_portfolio` flag. When it
+  is `true`, the position is hedged within a portfolio, so its per-position risk
+  metrics cannot be attributed to it individually and are not reported — on
+  `/margin/risk` that means `maintenance_margin_required`, `position_leverage`, and
+  `estimated_liquidation_price`, and on `/margin/positions` that means `margin_used`
+  and the derived `roe`. When it is `false`, those per-position values are populated
+  as before.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/margin/risk`
+  * `GET /trade-api/v2/margin/positions`
+</Update>
 
 <Update
   label="June 30, 2026"
