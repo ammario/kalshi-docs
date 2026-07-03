@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-fills
-lastmod: 2026-07-02T01:52:07.737Z
+lastmod: 2026-07-02T03:19:36.203Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -219,7 +219,7 @@ components:
         - system
       description: >-
         The source of the order. 'user' indicates a user-placed order, 'system'
-        indicates a system-generated liquidation order.
+        indicates a system-generated order.
   responses:
     BadRequestError:
       description: Bad request - invalid input

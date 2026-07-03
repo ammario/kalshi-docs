@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/get-order
-lastmod: 2026-07-02T01:52:07.650Z
+lastmod: 2026-07-02T03:19:36.138Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -160,6 +160,9 @@ components:
           description: >-
             The source of the order. Indicates whether the order was placed by
             the user or by the system on behalf of the user.
+        order_reason:
+          $ref: '#/components/schemas/OrderReason'
+          description: The reason for a system-generated order, when applicable.
     ErrorResponse:
       type: object
       properties:
@@ -229,7 +232,15 @@ components:
         - system
       description: >-
         The source of the order. 'user' indicates a user-placed order, 'system'
-        indicates a system-generated liquidation order.
+        indicates a system-generated order.
+    OrderReason:
+      type: string
+      enum:
+        - liquidation
+        - take_profit_stop_loss
+      description: >-
+        The reason for a system-generated order. Present for liquidation and
+        TP/SL orders.
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required

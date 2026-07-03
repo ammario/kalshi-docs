@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-06-24T22:33:53.721Z
+lastmod: 2026-07-02T19:43:38.268Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -142,6 +142,7 @@ If a new Quote is created when an existing quote for the same market already exi
 | 55    | Symbol        | String  | Y        | Market ticker                                                                                  |
 | 132   | BidPx         | Integer | C        | Yes price in cents (1-99)                                                                      |
 | 133   | OfferPx       | Integer | C        | No price in cents (1-99)                                                                       |
+| 18    | ExecInst      | Char    | N        | `6`=Post Only                                                                                  |
 | 79    | AllocAccount  | Integer | N        | Subaccount number (0-63). If provided, the quote will be created for the specified subaccount. |
 | 21015 | RestRemainder | Char    | N        | Y/N - Allow partial fills (default: N)                                                         |
 

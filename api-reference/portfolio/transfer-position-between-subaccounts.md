@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-withdrawals
-lastmod: 2026-07-02T03:19:35.637Z
+url: https://docs.kalshi.com/api-reference/portfolio/transfer-position-between-subaccounts
+lastmod: 2026-07-02T03:19:35.571Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Withdrawals
+# Transfer Position Between Subaccounts
 
-> Endpoint for getting the member's withdrawal history.
+> Moves an existing position between two of the authenticated user's own subaccounts. Use 0 for the primary account, or 1-63 for numbered subaccounts. The transfer is idempotent on `client_transfer_id`: retrying with the same value returns 409. `price_cents` is the per-contract transfer price — see the [Subaccounts](/getting_started/subaccounts) page for how it sets cost basis and P&L.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/withdrawals
+````yaml /openapi.yaml post /portfolio/subaccounts/positions/transfer
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,27 +64,39 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/withdrawals:
-    get:
+  /portfolio/subaccounts/positions/transfer:
+    post:
       tags:
         - portfolio
-      summary: Get Withdrawals
-      description: Endpoint for getting the member's withdrawal history.
-      operationId: GetWithdrawals
-      parameters:
-        - $ref: '#/components/parameters/WithdrawalLimitQuery'
-        - $ref: '#/components/parameters/CursorQuery'
+      summary: Transfer Position Between Subaccounts
+      description: >-
+        Moves an existing position between two of the authenticated user's own
+        subaccounts. Use 0 for the primary account, or 1-63 for numbered
+        subaccounts. The transfer is idempotent on `client_transfer_id`:
+        retrying with the same value returns 409. `price_cents` is the
+        per-contract transfer price — see the
+        [Subaccounts](/getting_started/subaccounts) page for how it sets cost
+        basis and P&L.
+      operationId: ApplySubaccountPositionTransfer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplySubaccountPositionTransferRequest'
       responses:
         '200':
-          description: Withdrawals retrieved successfully
+          description: Position transfer completed successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetWithdrawalsResponse'
+                $ref: '#/components/schemas/ApplySubaccountPositionTransferResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -92,92 +104,79 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    WithdrawalLimitQuery:
-      name: limit
-      in: query
-      description: Number of results per page. Defaults to 100. Maximum value is 500.
-      schema:
-        type: integer
-        format: int64
-        minimum: 1
-        maximum: 500
-        default: 100
-        x-oapi-codegen-extra-tags:
-          validate: omitempty,min=1,max=500
-    CursorQuery:
-      name: cursor
-      in: query
-      description: >-
-        Pagination cursor. Use the cursor value returned from the previous
-        response to get the next page of results. Leave empty for the first
-        page.
-      schema:
-        type: string
-        x-go-type-skip-optional-pointer: true
   schemas:
-    GetWithdrawalsResponse:
+    ApplySubaccountPositionTransferRequest:
       type: object
       required:
-        - withdrawals
+        - client_transfer_id
+        - from_subaccount
+        - to_subaccount
+        - market_ticker
+        - side
+        - count
+        - price_cents
       properties:
-        withdrawals:
-          type: array
-          items:
-            $ref: '#/components/schemas/Withdrawal'
-        cursor:
+        client_transfer_id:
           type: string
-    Withdrawal:
-      type: object
-      required:
-        - id
-        - status
-        - type
-        - amount_cents
-        - fee_cents
-        - created_ts
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the withdrawal.
-        status:
-          type: string
-          enum:
-            - pending
-            - applied
-            - failed
-            - returned
+          format: uuid
           description: >-
-            Current status of the withdrawal. 'applied' means funds have been
-            deducted from balance.
-        type:
-          type: string
-          enum:
-            - ach
-            - wire
-            - crypto
-            - debit
-            - apm
-          description: Payment type used for the withdrawal.
-        amount_cents:
+            Unique client-provided transfer ID for idempotency. Retrying with
+            the same value returns 409.
+          x-oapi-codegen-extra-tags:
+            validate: required
+        from_subaccount:
           type: integer
-          format: int64
-          description: Withdrawal amount in cents.
-        fee_cents:
-          type: integer
-          format: int64
-          description: Fee charged for the withdrawal in cents.
-        created_ts:
-          type: integer
-          format: int64
-          description: Unix timestamp of when the withdrawal was created.
-        finalized_ts:
-          type: integer
-          format: int64
           nullable: true
           description: >-
-            Unix timestamp of when the withdrawal was finalized (applied,
-            failed, or returned).
+            Source subaccount number (0 for primary, 1-63 for numbered
+            subaccounts).
+          x-oapi-codegen-extra-tags:
+            validate: required
+        to_subaccount:
+          type: integer
+          nullable: true
+          description: >-
+            Destination subaccount number (0 for primary, 1-63 for numbered
+            subaccounts).
+          x-oapi-codegen-extra-tags:
+            validate: required
+        market_ticker:
+          type: string
+          description: >-
+            Ticker of the market whose position is being moved. The market must
+            be on exchange shard 0; markets on any other shard are rejected.
+          x-oapi-codegen-extra-tags:
+            validate: required
+        side:
+          type: string
+          enum:
+            - 'yes'
+            - 'no'
+          description: Side of the position to move.
+          x-oapi-codegen-extra-tags:
+            validate: required
+        count:
+          type: integer
+          nullable: true
+          description: Number of contracts to move (must be greater than 0).
+          x-oapi-codegen-extra-tags:
+            validate: required
+        price_cents:
+          type: integer
+          nullable: true
+          description: >-
+            Per-contract price in cents (0-100) used to set cost basis and
+            realized P&L.
+          x-oapi-codegen-extra-tags:
+            validate: required
+    ApplySubaccountPositionTransferResponse:
+      type: object
+      required:
+        - position_transfer_id
+      properties:
+        position_transfer_id:
+          type: string
+          description: Server-generated identifier for the position transfer.
     ErrorResponse:
       type: object
       properties:
@@ -202,6 +201,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ConflictError:
+      description: Conflict - resource already exists or cannot be modified
       content:
         application/json:
           schema:
