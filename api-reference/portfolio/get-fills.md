@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-07-02T03:19:35.654Z
+lastmod: 2026-07-03T19:16:42.302Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -312,12 +312,10 @@ components:
       type: string
       description: >-
         Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
-        to as "fp" in field names). Requests accept 0–2 decimal places (e.g.,
+        to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
         "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported on markets with fractional
-        trading enabled; the minimum granularity is 0.01 contracts. Integer
-        contract count fields are legacy and will be deprecated; when both
-        integer and fp fields are provided, they must match.
+        contract values (e.g., "2.50") are supported; the minimum granularity is
+        0.01 contracts.
       example: '10.00'
     FixedPointDollars:
       type: string

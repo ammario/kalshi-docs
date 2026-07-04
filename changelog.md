@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-02T18:39:12.845Z
+lastmod: 2026-07-03T19:16:53.658Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,24 @@ FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
 {/* changelog-tags: ["Change", "Upcoming"] */}
+
+<Update
+  label="July 9, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Deprecated Predictions REST schema fields removed",
+description: "The deprecated market.response_price_units, market.fractional_trading_enabled, and market_positions.resting_orders_count fields have been removed from the Predictions REST API schema."
+}}
+>
+  The following deprecated fields have been removed from the Predictions REST API schema:
+
+  * `Market.response_price_units`
+  * `Market.fractional_trading_enabled`
+  * `MarketPosition.resting_orders_count`
+
+  `Market.price_level_structure`, `Market.price_ranges`, and the fixed-point count and dollar
+  fields remain the canonical replacements.
+</Update>
 
 <Update
   label="July 9, 2026"
