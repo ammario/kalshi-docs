@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin
-lastmod: 2026-06-16T22:47:52.940Z
+lastmod: 2026-07-04T18:38:55.987Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -79,7 +79,7 @@ The Perps API mirrors the event contract API (same auth, pagination, error forma
 * Events, series, milestones, multivariate collections, structured targets
 * RFQs and quotes
 * Historical data endpoints
-* Exchange announcements and schedule
+* Exchange schedule
 
 ### WebSocket API
 
