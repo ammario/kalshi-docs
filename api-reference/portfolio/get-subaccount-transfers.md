@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-subaccount-transfers
-lastmod: 2026-07-04T18:38:46.963Z
+lastmod: 2026-07-06T19:52:35.502Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -180,9 +180,11 @@ components:
         count:
           type: integer
           description: Number of contracts moved (position transfers only).
-        price_cents:
-          type: integer
-          description: Per-contract price in cents (position transfers only).
+        price:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            Per-contract transfer price in fixed-point dollars, always the
+            YES-side price (position transfers only).
     ErrorResponse:
       type: object
       properties:
@@ -198,6 +200,14 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with up to 6 decimal
+        places of precision. This is the maximum supported precision; valid
+        quote intervals for a given market are constrained by that market's
+        price level structure.
+      example: '0.5600'
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required

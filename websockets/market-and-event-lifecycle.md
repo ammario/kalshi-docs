@@ -184,6 +184,13 @@ operations:
                       - linear_cent
                       - deci_cent
                       - tapered_deci_cent
+                      - center_whole_edge_half_cent
+                      - center_whole_edge_quint_cent
+                      - center_half_edge_half_cent
+                      - center_half_edge_quint_cent
+                      - center_half_edge_deci_cent
+                      - center_quint_edge_quint_cent
+                      - center_quint_edge_deci_cent
                     required: false
                   - name: price_ranges
                     type: array
@@ -415,6 +422,13 @@ operations:
                     - linear_cent
                     - deci_cent
                     - tapered_deci_cent
+                    - center_whole_edge_half_cent
+                    - center_whole_edge_quint_cent
+                    - center_half_edge_half_cent
+                    - center_half_edge_quint_cent
+                    - center_half_edge_deci_cent
+                    - center_quint_edge_quint_cent
+                    - center_quint_edge_deci_cent
                   x-parser-schema-id: <anonymous-schema-129>
                 price_ranges:
                   type: array
