@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-07T01:25:51.819Z
+lastmod: 2026-07-07T23:20:19.617Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,28 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["Breaking Change", "Upcoming"] */}
+{/* changelog-tags: ["Change", "Upcoming"] */}
+
+<Update
+  label="July 9, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "RFQ-scoped quote lookup endpoint",
+description: "GET /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id} now supports looking up a quote within a specific RFQ. The quote-ID-only lookup endpoint is deprecated."
+}}
+>
+  REST now supports looking up a quote within a specific RFQ by passing both the
+  RFQ ID and quote ID in the path. The quote must belong to the requested RFQ;
+  otherwise, the endpoint returns `404 Not Found`.
+
+  The quote-ID-only lookup endpoint remains supported for now, but is
+  deprecated. Use the RFQ-scoped lookup endpoint instead.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id}`
+  * `GET /trade-api/v2/communications/quotes/{quote_id}`
+</Update>
 
 <Update
   label="July 4, 2026"
@@ -342,7 +363,8 @@ description: "RFQ quotes are only durably queryable after acceptance, and quote 
   * `PUT /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id}/accept`
   * `PUT /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id}/confirm`
 
-  The existing quote-ID-only endpoints remain supported for now:
+  The existing quote-ID-only action endpoints remain supported for now, but are
+  deprecated. Use the RFQ-scoped action endpoints instead:
 
   * `DELETE /trade-api/v2/communications/quotes/{quote_id}`
   * `PUT /trade-api/v2/communications/quotes/{quote_id}/accept`
@@ -362,6 +384,7 @@ description: "RFQ quotes are only durably queryable after acceptance, and quote 
 
   * `GET /trade-api/v2/communications/quotes`
   * `GET /trade-api/v2/communications/quotes/{quote_id}`
+  * `GET /trade-api/v2/communications/rfqs/{rfq_id}/quotes/{quote_id}`
   * `DELETE /trade-api/v2/communications/quotes/{quote_id}`
   * `PUT /trade-api/v2/communications/quotes/{quote_id}/accept`
   * `PUT /trade-api/v2/communications/quotes/{quote_id}/confirm`

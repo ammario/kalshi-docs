@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-quote
-lastmod: 2026-07-06T19:52:35.729Z
+lastmod: 2026-07-07T23:20:10.380Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,11 @@ lastmod: 2026-07-06T19:52:35.729Z
 
 # Delete Quote
 
->  Endpoint for deleting a quote, which means it can no longer be accepted.
+> DEPRECATED: Use DELETE /communications/rfqs/{rfq_id}/quotes/{quote_id} instead. Endpoint for deleting a quote, which means it can no longer be accepted.
+
+<Warning>
+  This endpoint is deprecated. Use `DELETE /communications/rfqs/{rfq_id}/quotes/{quote_id}` instead.
+</Warning>
 
 <Note>
   **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
@@ -72,7 +76,10 @@ paths:
       tags:
         - communications
       summary: Delete Quote
-      description: ' Endpoint for deleting a quote, which means it can no longer be accepted.'
+      description: >-
+        DEPRECATED: Use DELETE /communications/rfqs/{rfq_id}/quotes/{quote_id}
+        instead. Endpoint for deleting a quote, which means it can no longer be
+        accepted.
       operationId: DeleteQuote
       parameters:
         - $ref: '#/components/parameters/QuoteIdPath'
@@ -85,6 +92,7 @@ paths:
           $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      deprecated: true
       security:
         - kalshiAccessKey: []
           kalshiAccessSignature: []

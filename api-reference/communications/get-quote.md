@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quote
-lastmod: 2026-07-06T19:52:35.718Z
+lastmod: 2026-07-07T23:20:10.355Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,11 @@ lastmod: 2026-07-06T19:52:35.718Z
 
 # Get Quote
 
->  Endpoint for getting a particular quote
+> DEPRECATED: Use GET /communications/rfqs/{rfq_id}/quotes/{quote_id} instead. Endpoint for getting a particular quote.
+
+<Warning>
+  This endpoint is deprecated. Use `GET /communications/rfqs/{rfq_id}/quotes/{quote_id}` instead.
+</Warning>
 
 <Note>
   **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
@@ -72,7 +76,9 @@ paths:
       tags:
         - communications
       summary: Get Quote
-      description: ' Endpoint for getting a particular quote'
+      description: >-
+        DEPRECATED: Use GET /communications/rfqs/{rfq_id}/quotes/{quote_id}
+        instead. Endpoint for getting a particular quote.
       operationId: GetQuote
       parameters:
         - $ref: '#/components/parameters/QuoteIdPath'
@@ -89,6 +95,7 @@ paths:
           $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      deprecated: true
       security:
         - kalshiAccessKey: []
           kalshiAccessSignature: []

@@ -1,20 +1,23 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/get-rfqs
-lastmod: 2026-07-07T23:20:10.240Z
+url: https://docs.kalshi.com/api-reference/communications/get-rfq-quote
+lastmod: 2026-07-07T23:20:10.281Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get RFQs
+# Get RFQ Quote
 
->  Endpoint for getting RFQs
+>  Endpoint for getting a particular quote scoped to its RFQ.
 
+<Note>
+  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /communications/rfqs
+````yaml /openapi.yaml get /communications/rfqs/{rfq_id}/quotes/{quote_id}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,57 +67,27 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /communications/rfqs:
+  /communications/rfqs/{rfq_id}/quotes/{quote_id}:
     get:
       tags:
         - communications
-      summary: Get RFQs
-      description: ' Endpoint for getting RFQs'
-      operationId: GetRFQs
+      summary: Get RFQ Quote
+      description: ' Endpoint for getting a particular quote scoped to its RFQ.'
+      operationId: GetRFQQuote
       parameters:
-        - $ref: '#/components/parameters/CursorQuery'
-        - $ref: '#/components/parameters/SingleEventTickerQuery'
-        - $ref: '#/components/parameters/MarketTickerQuery'
-        - $ref: '#/components/parameters/SubaccountQuery'
-        - name: limit
-          in: query
-          description: >-
-            Parameter to specify the number of results per page. Defaults to
-            100.
-          schema:
-            type: integer
-            format: int32
-            minimum: 1
-            maximum: 100
-            default: 100
-        - name: status
-          in: query
-          description: Filter RFQs by status
-          schema:
-            type: string
-        - name: creator_user_id
-          in: query
-          description: Filter RFQs by creator user ID
-          deprecated: true
-          schema:
-            type: string
-        - name: user_filter
-          in: query
-          required: false
-          schema:
-            $ref: '#/components/schemas/UserFilter'
-            x-go-type-skip-optional-pointer: true
-          x-oapi-codegen-extra-tags:
-            validate: omitempty,oneof=self
+        - $ref: '#/components/parameters/RfqIdPath'
+        - $ref: '#/components/parameters/QuoteIdPath'
       responses:
         '200':
-          description: RFQs retrieved successfully
+          description: Quote retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetRFQsResponse'
+                $ref: '#/components/schemas/GetQuoteResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -123,134 +96,155 @@ paths:
           kalshiAccessTimestamp: []
 components:
   parameters:
-    CursorQuery:
-      name: cursor
-      in: query
-      description: >-
-        Pagination cursor. Use the cursor value returned from the previous
-        response to get the next page of results. Leave empty for the first
-        page.
+    RfqIdPath:
+      name: rfq_id
+      in: path
+      required: true
+      description: RFQ ID
       schema:
         type: string
-        x-go-type-skip-optional-pointer: true
-    SingleEventTickerQuery:
-      name: event_ticker
-      in: query
-      description: Event ticker to filter by. Only a single event ticker is supported.
+    QuoteIdPath:
+      name: quote_id
+      in: path
+      required: true
+      description: Quote ID
       schema:
         type: string
-        x-go-type-skip-optional-pointer: true
-    MarketTickerQuery:
-      name: market_ticker
-      in: query
-      description: Filter by market ticker
-      schema:
-        type: string
-        x-go-type-skip-optional-pointer: true
-    SubaccountQuery:
-      name: subaccount
-      in: query
-      description: >-
-        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
-        defaults to all subaccounts.
-      schema:
-        type: integer
   schemas:
-    UserFilter:
-      type: string
-      enum:
-        - self
-      x-enum-varnames:
-        - UserFilterSelf
-      description: >-
-        Omit or leave empty to return all results. Use `self` to filter by the
-        authenticated user.
-    GetRFQsResponse:
+    GetQuoteResponse:
       type: object
       required:
-        - rfqs
+        - quote
       properties:
-        rfqs:
-          type: array
-          items:
-            $ref: '#/components/schemas/RFQ'
-          description: List of RFQs matching the query criteria
-        cursor:
-          type: string
-          description: Cursor for pagination to get the next page of results
-          x-go-type-skip-optional-pointer: true
-    RFQ:
+        quote:
+          $ref: '#/components/schemas/Quote'
+          description: The details of the requested quote
+    Quote:
       type: object
       required:
         - id
+        - rfq_id
         - creator_id
-        - contracts_fp
+        - rfq_creator_id
         - market_ticker
-        - status
+        - contracts_fp
+        - yes_bid_dollars
+        - no_bid_dollars
         - created_ts
+        - updated_ts
+        - status
       properties:
         id:
           type: string
-          description: Unique identifier for the RFQ
+          description: Unique identifier for the quote
+        rfq_id:
+          type: string
+          description: ID of the RFQ this quote is responding to
         creator_id:
           type: string
-          description: Public communications ID of the RFQ creator.
+          description: Public communications ID of the quote creator
+        rfq_creator_id:
+          type: string
+          description: Public communications ID of the RFQ creator
+          x-go-type-skip-optional-pointer: true
         market_ticker:
           type: string
-          description: The ticker of the market this RFQ is for
+          description: The ticker of the market this quote is for
         contracts_fp:
           $ref: '#/components/schemas/FixedPointCount'
-          description: >-
-            String representation of the number of contracts requested in the
-            RFQ
-        target_cost_dollars:
+          description: String representation of the number of contracts in the quote
+        yes_bid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Total value of the RFQ in dollars
-        status:
-          type: string
-          description: Current status of the RFQ (open, closed)
-          enum:
-            - open
-            - closed
+          description: Bid price for YES contracts, in dollars
+        no_bid_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Bid price for NO contracts, in dollars
         created_ts:
           type: string
           format: date-time
-          description: Timestamp when the RFQ was created
-        mve_collection_ticker:
+          description: Timestamp when the quote was created
+        updated_ts:
           type: string
-          description: Ticker of the MVE collection this market belongs to
-          x-go-type-skip-optional-pointer: true
-        mve_selected_legs:
-          type: array
-          x-omitempty: true
-          items:
-            $ref: '#/components/schemas/MveSelectedLeg'
-          description: Selected legs for the MVE collection
-          x-go-type-skip-optional-pointer: true
+          format: date-time
+          description: Timestamp when the quote was last updated
+        status:
+          type: string
+          description: Current status of the quote
+          enum:
+            - open
+            - accepted
+            - confirmed
+            - executed
+            - cancelled
+        accepted_side:
+          type: string
+          description: The side that was accepted (yes or no)
+          enum:
+            - 'yes'
+            - 'no'
+        accepted_ts:
+          type: string
+          format: date-time
+          description: Timestamp when the quote was accepted
+        confirmed_ts:
+          type: string
+          format: date-time
+          description: Timestamp when the quote was confirmed
+        executed_ts:
+          type: string
+          format: date-time
+          description: Timestamp when the quote was executed
+        cancelled_ts:
+          type: string
+          format: date-time
+          description: Timestamp when the quote was cancelled
         rest_remainder:
           type: boolean
-          description: Whether to rest the remainder of the RFQ after execution
+          description: Whether to rest the remainder of the quote after execution
+        post_only:
+          type: boolean
+          description: >-
+            Whether the quote creator's order is post-only (visible when the
+            caller is the quote creator)
         cancellation_reason:
           type: string
-          description: Reason for RFQ cancellation if cancelled
+          description: Reason for quote cancellation if cancelled
           x-go-type-skip-optional-pointer: true
         creator_user_id:
           type: string
+          description: User ID of the quote creator (private field)
+          x-go-type-skip-optional-pointer: true
+        rfq_creator_user_id:
+          type: string
           description: User ID of the RFQ creator (private field)
+          x-go-type-skip-optional-pointer: true
+        rfq_target_cost_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Total value requested in the RFQ in dollars
+        rfq_creator_order_id:
+          type: string
+          description: Order ID for the RFQ creator (private field)
+          x-go-type-skip-optional-pointer: true
+        creator_order_id:
+          type: string
+          description: Order ID for the quote creator (private field)
           x-go-type-skip-optional-pointer: true
         creator_subaccount:
           type: integer
           description: >-
+            Subaccount number of the quote creator (visible when the caller is
+            the quote creator)
+        rfq_creator_subaccount:
+          type: integer
+          description: >-
             Subaccount number of the RFQ creator (visible when the caller is the
             RFQ creator)
-        cancelled_ts:
-          type: string
-          format: date-time
-          description: Timestamp when the RFQ was cancelled
-        updated_ts:
-          type: string
-          format: date-time
-          description: Timestamp when the RFQ was last updated
+        yes_contracts_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: Number of YES contracts offered in the quote (fixed-point)
+        no_contracts_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: Number of NO contracts offered in the quote (fixed-point)
     ErrorResponse:
       type: object
       properties:
@@ -283,31 +277,15 @@ components:
         quote intervals for a given market are constrained by that market's
         price level structure.
       example: '0.5600'
-    MveSelectedLeg:
-      type: object
-      properties:
-        event_ticker:
-          type: string
-          description: Unique identifier for the selected event
-          x-go-type-skip-optional-pointer: true
-        market_ticker:
-          type: string
-          description: Unique identifier for the selected market
-          x-go-type-skip-optional-pointer: true
-        side:
-          type: string
-          description: The side of the selected market
-          x-go-type-skip-optional-pointer: true
-        yes_settlement_value_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          nullable: true
-          x-omitempty: true
-          description: >-
-            The settlement value of the YES/LONG side of the contract in
-            dollars. Only filled after determination
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:
