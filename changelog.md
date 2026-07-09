@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-07T23:20:19.617Z
+lastmod: 2026-07-08T17:15:27.049Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -161,22 +161,6 @@ description: "GET /trade-api/v2/margin/risk and GET /trade-api/v2/margin/positio
 
   * `GET /trade-api/v2/margin/risk`
   * `GET /trade-api/v2/margin/positions`
-</Update>
-
-<Update
-  label="July 9, 2026"
-  tags={["REST", "Predictions"]}
-  rss={{
-title: "Subaccount position transfers",
-description: "New POST /trade-api/v2/portfolio/subaccounts/positions/transfer moves a position between your own subaccounts; GET /trade-api/v2/portfolio/subaccounts/transfers now includes a transfer_type discriminator."
-}}
->
-  Direct accounts can now move a position between their own subaccounts with the new
-  `POST /trade-api/v2/portfolio/subaccounts/positions/transfer`. The per-contract transfer
-  `price` is a fixed-point dollar string (e.g. `"0.4050"`, supporting sub-penny precision)
-  and is always the YES-side price, regardless of `side`. These transfers also appear in
-  `GET /trade-api/v2/portfolio/subaccounts/transfers`, now discriminated by a `transfer_type` field.
-  See the [Subaccounts](/getting_started/subaccounts) concept page.
 </Update>
 
 <Update
