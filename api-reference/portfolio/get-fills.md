@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-07-08T17:15:16.692Z
+lastmod: 2026-07-09T18:56:26.669Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,7 @@ Fills that occurred before the historical cutoff are only available via `GET /hi
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.23.0
+  version: 3.24.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -186,8 +186,6 @@ components:
         - order_id
         - ticker
         - market_ticker
-        - side
-        - action
         - outcome_side
         - book_side
         - count_fp
@@ -217,6 +215,7 @@ components:
             - 'yes'
             - 'no'
           deprecated: true
+          x-go-type-skip-optional-pointer: true
           description: >
             Deprecated. Use `outcome_side` (or `book_side`) instead. See [Order
             direction](/getting_started/order_direction). This field will not be
@@ -227,6 +226,7 @@ components:
             - buy
             - sell
           deprecated: true
+          x-go-type-skip-optional-pointer: true
           description: >
             Deprecated. Use `outcome_side` (or `book_side`) instead. See [Order
             direction](/getting_started/order_direction). This field will not be

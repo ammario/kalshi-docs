@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-08T17:15:27.049Z
+lastmod: 2026-07-09T23:25:59.689Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,19 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["Change", "Upcoming"] */}
+{/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="July 9, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "Support for FIX Tag 2446 on Incremental Refresh",
+description: "Support for FIX Tag 2446 on Incremental Refresh"
+}}
+>
+  FIX Tag 2446 (`AggressorSide`) is now supported on `35=X` (Incremental Refresh)
+  with `MDEntryType=2` (Trade).
+</Update>
 
 <Update
   label="July 9, 2026"

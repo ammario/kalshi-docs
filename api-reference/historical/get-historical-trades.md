@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-trades
-lastmod: 2026-07-08T17:15:17.381Z
+lastmod: 2026-07-09T18:56:27.140Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-07-08T17:15:17.381Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.23.0
+  version: 3.24.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -166,7 +166,6 @@ components:
         - count_fp
         - yes_price_dollars
         - no_price_dollars
-        - taker_side
         - taker_outcome_side
         - taker_book_side
         - created_time
@@ -198,6 +197,7 @@ components:
             - TradeTakerSideYes
             - TradeTakerSideNo
           deprecated: true
+          x-go-type-skip-optional-pointer: true
           description: >
             Deprecated. Use `taker_outcome_side` (or `taker_book_side`) instead.
             See [Order direction](/getting_started/order_direction). This field
