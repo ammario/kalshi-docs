@@ -118,7 +118,7 @@ operations:
             type:
               type: string
               const: multivariate_lookup
-              x-parser-schema-id: <anonymous-schema-170>
+              x-parser-schema-id: <anonymous-schema-178>
             sid:
               type: integer
               description: >-
@@ -136,13 +136,13 @@ operations:
               properties:
                 collection_ticker:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-172>
+                  x-parser-schema-id: <anonymous-schema-180>
                 event_ticker:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-173>
+                  x-parser-schema-id: <anonymous-schema-181>
                 market_ticker:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-174>
+                  x-parser-schema-id: <anonymous-schema-182>
                 selected_markets:
                   type: array
                   items:
@@ -154,10 +154,10 @@ operations:
                     properties:
                       event_ticker:
                         type: string
-                        x-parser-schema-id: <anonymous-schema-177>
+                        x-parser-schema-id: <anonymous-schema-185>
                       market_ticker:
                         type: string
-                        x-parser-schema-id: <anonymous-schema-178>
+                        x-parser-schema-id: <anonymous-schema-186>
                       side:
                         type: string
                         description: Market side
@@ -165,9 +165,9 @@ operations:
                           - 'yes'
                           - 'no'
                         x-parser-schema-id: marketSide
-                    x-parser-schema-id: <anonymous-schema-176>
-                  x-parser-schema-id: <anonymous-schema-175>
-              x-parser-schema-id: <anonymous-schema-171>
+                    x-parser-schema-id: <anonymous-schema-184>
+                  x-parser-schema-id: <anonymous-schema-183>
+              x-parser-schema-id: <anonymous-schema-179>
           x-parser-schema-id: multivariateLookupPayload
         title: Multivariate Lookup (Deprecated)
         description: Deprecated multivariate collection lookup notification

@@ -60,7 +60,7 @@ operations:
     description: Subscribe to one or more market data channels
     type: receive
     messages:
-      - &ref_20
+      - &ref_21
         id: subscribeCommand
         contentType: application/json
         payload:
@@ -108,6 +108,7 @@ operations:
                           - order_group_updates
                           - user_orders
                           - cfbenchmarks_value
+                          - pyth_value
                         required: false
                   - name: market_ticker
                     type: string
@@ -216,6 +217,18 @@ operations:
                       - name: item
                         type: string
                         required: false
+                  - name: underlying_tickers
+                    type: array
+                    description: >-
+                      pyth_value channel only. Underlying tickers to seed on the
+                      initial subscribe (omit to subscribe with no underlyings
+                      and add them later; use ["all"] to track every available
+                      underlying).
+                    required: false
+                    properties:
+                      - name: item
+                        type: string
+                        required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -264,6 +277,7 @@ operations:
                       - order_group_updates
                       - user_orders
                       - cfbenchmarks_value
+                      - pyth_value
                     x-parser-schema-id: <anonymous-schema-4>
                   minItems: 1
                   x-parser-schema-id: <anonymous-schema-3>
@@ -380,6 +394,18 @@ operations:
                     x-parser-schema-id: <anonymous-schema-15>
                   minItems: 1
                   x-parser-schema-id: <anonymous-schema-14>
+                underlying_tickers:
+                  type: array
+                  description: >-
+                    pyth_value channel only. Underlying tickers to seed on the
+                    initial subscribe (omit to subscribe with no underlyings and
+                    add them later; use ["all"] to track every available
+                    underlying).
+                  items:
+                    type: string
+                    x-parser-schema-id: <anonymous-schema-17>
+                  minItems: 1
+                  x-parser-schema-id: <anonymous-schema-16>
               x-parser-schema-id: <anonymous-schema-2>
           x-parser-schema-id: subscribeCommandPayload
         title: Subscribe Command
@@ -409,7 +435,7 @@ operations:
     description: Cancel one or more active subscriptions
     type: receive
     messages:
-      - &ref_21
+      - &ref_22
         id: unsubscribeCommand
         contentType: application/json
         payload:
@@ -460,7 +486,7 @@ operations:
             cmd:
               type: string
               const: unsubscribe
-              x-parser-schema-id: <anonymous-schema-16>
+              x-parser-schema-id: <anonymous-schema-18>
             params:
               type: object
               required:
@@ -477,8 +503,8 @@ operations:
                     minimum: 1
                     x-parser-schema-id: subscriptionId
                   minItems: 1
-                  x-parser-schema-id: <anonymous-schema-18>
-              x-parser-schema-id: <anonymous-schema-17>
+                  x-parser-schema-id: <anonymous-schema-20>
+              x-parser-schema-id: <anonymous-schema-19>
           x-parser-schema-id: unsubscribeCommandPayload
         title: Unsubscribe Command
         description: Cancel one or more subscriptions
@@ -505,7 +531,7 @@ operations:
     description: List all active subscriptions
     type: receive
     messages:
-      - &ref_22
+      - &ref_23
         id: listSubscriptionsCommand
         contentType: application/json
         payload:
@@ -540,7 +566,7 @@ operations:
             cmd:
               type: string
               const: list_subscriptions
-              x-parser-schema-id: <anonymous-schema-34>
+              x-parser-schema-id: <anonymous-schema-42>
           x-parser-schema-id: listSubscriptionsCommandPayload
         title: List Subscriptions Command
         description: List all active subscriptions
@@ -561,7 +587,7 @@ operations:
     description: Add markets to an existing subscription
     type: receive
     messages:
-      - &ref_23
+      - &ref_24
         id: updateSubscriptionCommand
         contentType: application/json
         payload:
@@ -660,7 +686,7 @@ operations:
             cmd:
               type: string
               const: update_subscription
-              x-parser-schema-id: <anonymous-schema-19>
+              x-parser-schema-id: <anonymous-schema-21>
             params:
               type: object
               required:
@@ -675,41 +701,41 @@ operations:
                   items: *ref_3
                   minItems: 1
                   maxItems: 1
-                  x-parser-schema-id: <anonymous-schema-21>
+                  x-parser-schema-id: <anonymous-schema-23>
                 market_ticker:
                   description: 'Add/remove a single market. Type: string'
                   type: string
-                  x-parser-schema-id: <anonymous-schema-22>
+                  x-parser-schema-id: <anonymous-schema-24>
                 market_tickers:
                   type: array
                   description: 'Add/remove multiple markets. Type: array of strings'
                   items: *ref_4
-                  x-parser-schema-id: <anonymous-schema-23>
+                  x-parser-schema-id: <anonymous-schema-25>
                 market_id:
                   type: string
                   format: uuid
                   description: Add/remove a single market by UUID (ticker only)
-                  x-parser-schema-id: <anonymous-schema-24>
+                  x-parser-schema-id: <anonymous-schema-26>
                 market_ids:
                   type: array
                   description: Add/remove multiple markets by UUID (ticker only)
                   items: *ref_5
-                  x-parser-schema-id: <anonymous-schema-25>
+                  x-parser-schema-id: <anonymous-schema-27>
                 send_initial_snapshot:
                   type: boolean
                   description: >-
                     If true, receive an initial snapshot for newly added market
                     tickers on the ticker channel
                   default: false
-                  x-parser-schema-id: <anonymous-schema-26>
+                  x-parser-schema-id: <anonymous-schema-28>
                 action:
                   type: string
                   enum:
                     - add_markets
                     - delete_markets
                     - get_snapshot
-                  x-parser-schema-id: <anonymous-schema-27>
-              x-parser-schema-id: <anonymous-schema-20>
+                  x-parser-schema-id: <anonymous-schema-29>
+              x-parser-schema-id: <anonymous-schema-22>
           x-parser-schema-id: updateSubscriptionCommandPayload
         title: Update Subscription - Add Markets
         description: Add markets to an existing subscription
@@ -740,7 +766,7 @@ operations:
     description: Remove markets from an existing subscription
     type: receive
     messages:
-      - &ref_24
+      - &ref_25
         id: updateSubscriptionDeleteCommand
         contentType: application/json
         payload:
@@ -858,7 +884,7 @@ operations:
     description: Update subscription using single sid parameter
     type: receive
     messages:
-      - &ref_25
+      - &ref_26
         id: updateSubscriptionSingleSidCommand
         contentType: application/json
         payload:
@@ -976,7 +1002,7 @@ operations:
       cfbenchmarks_value subscription
     type: receive
     messages:
-      - &ref_26
+      - &ref_27
         id: cfbenchmarksUpdateSubscriptionCommand
         contentType: application/json
         payload:
@@ -1064,7 +1090,7 @@ operations:
             cmd:
               type: string
               const: update_subscription
-              x-parser-schema-id: <anonymous-schema-28>
+              x-parser-schema-id: <anonymous-schema-30>
             params:
               type: object
               required:
@@ -1079,7 +1105,7 @@ operations:
                   items: *ref_3
                   minItems: 1
                   maxItems: 1
-                  x-parser-schema-id: <anonymous-schema-30>
+                  x-parser-schema-id: <anonymous-schema-32>
                 action:
                   type: string
                   description: >
@@ -1095,7 +1121,7 @@ operations:
                     - subscribe_indices
                     - unsubscribe_indices
                     - indexlist
-                  x-parser-schema-id: <anonymous-schema-31>
+                  x-parser-schema-id: <anonymous-schema-33>
                 index_ids:
                   type: array
                   description: >-
@@ -1104,10 +1130,10 @@ operations:
                     and unsubscribe_indices.
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-33>
+                    x-parser-schema-id: <anonymous-schema-35>
                   minItems: 1
-                  x-parser-schema-id: <anonymous-schema-32>
-              x-parser-schema-id: <anonymous-schema-29>
+                  x-parser-schema-id: <anonymous-schema-34>
+              x-parser-schema-id: <anonymous-schema-31>
           x-parser-schema-id: cfbenchmarksUpdateSubscriptionCommandPayload
         title: Update Subscription - CF Benchmarks Indices
         description: >-
@@ -1129,12 +1155,170 @@ operations:
     bindings: []
     extensions: *ref_2
   - &ref_15
+    id: sendPythUpdateSubscription
+    title: Update Subscription - Pyth Underlyings
+    description: >-
+      Add or remove underlying tickers, or list available underlyings, on a
+      pyth_value subscription
+    type: receive
+    messages:
+      - &ref_28
+        id: pythUpdateSubscriptionCommand
+        contentType: application/json
+        payload:
+          - name: Update Subscription - Pyth Underlyings
+            description: >-
+              Add or remove underlying tickers, or list available underlyings,
+              on a pyth_value subscription
+            type: object
+            properties:
+              - name: id
+                type: integer
+                description: >
+                  Unique ID of the command request. Generated by the client and
+                  should be unique within a WS session.
+
+                  The simplest way to use it would be to start from 1 and then
+                  increment the value for every new command sent to the server.
+
+                  If the id is set to 0, the server treats it the same way as if
+                  there was no id.
+                required: true
+              - name: cmd
+                type: string
+                description: update_subscription
+                required: true
+              - name: params
+                type: object
+                required: true
+                properties:
+                  - name: sid
+                    type: integer
+                    description: >-
+                      Server-generated subscription identifier (sid) used to
+                      identify the channel
+                    required: false
+                  - name: sids
+                    type: array
+                    description: >-
+                      Array containing exactly one subscription ID (alternative
+                      to sid)
+                    required: false
+                    properties:
+                      - name: item
+                        type: integer
+                        description: >-
+                          Server-generated subscription identifier (sid) used to
+                          identify the channel
+                        required: false
+                  - name: action
+                    type: string
+                    description: >
+                      - `subscribe_underlyings`: add the supplied
+                      `underlying_tickers`
+
+                      - `unsubscribe_underlyings`: remove the supplied
+                      `underlying_tickers`
+
+                      - `underlying_list`: return recently streamed underlying
+                      tickers
+                    enumValues:
+                      - subscribe_underlyings
+                      - unsubscribe_underlyings
+                      - underlying_list
+                    required: true
+                  - name: underlying_tickers
+                    type: array
+                    description: >-
+                      Pyth underlyings to add or remove. Use ["all"] to track
+                      every available underlying.
+                    required: false
+                    properties:
+                      - name: item
+                        type: string
+                        required: false
+        headers: []
+        jsonPayloadSchema:
+          type: object
+          required:
+            - id
+            - cmd
+            - params
+          properties:
+            id: *ref_1
+            cmd:
+              type: string
+              const: update_subscription
+              x-parser-schema-id: <anonymous-schema-36>
+            params:
+              type: object
+              required:
+                - action
+              properties:
+                sid: *ref_3
+                sids:
+                  type: array
+                  description: >-
+                    Array containing exactly one subscription ID (alternative to
+                    sid)
+                  items: *ref_3
+                  minItems: 1
+                  maxItems: 1
+                  x-parser-schema-id: <anonymous-schema-38>
+                action:
+                  type: string
+                  description: >
+                    - `subscribe_underlyings`: add the supplied
+                    `underlying_tickers`
+
+                    - `unsubscribe_underlyings`: remove the supplied
+                    `underlying_tickers`
+
+                    - `underlying_list`: return recently streamed underlying
+                    tickers
+                  enum:
+                    - subscribe_underlyings
+                    - unsubscribe_underlyings
+                    - underlying_list
+                  x-parser-schema-id: <anonymous-schema-39>
+                underlying_tickers:
+                  type: array
+                  description: >-
+                    Pyth underlyings to add or remove. Use ["all"] to track
+                    every available underlying.
+                  items:
+                    type: string
+                    x-parser-schema-id: <anonymous-schema-41>
+                  minItems: 1
+                  x-parser-schema-id: <anonymous-schema-40>
+              x-parser-schema-id: <anonymous-schema-37>
+          x-parser-schema-id: pythUpdateSubscriptionCommandPayload
+        title: Update Subscription - Pyth Underlyings
+        description: >-
+          Add or remove underlying tickers, or list available underlyings, on a
+          pyth_value subscription
+        example: |-
+          {
+            "id": 2,
+            "cmd": "update_subscription",
+            "params": {
+              "sid": 1,
+              "action": "underlying_list"
+            }
+          }
+        bindings: []
+        extensions:
+          - id: x-parser-unique-object-id
+            value: pythUpdateSubscriptionCommand
+    bindings: []
+    extensions: *ref_2
+  - &ref_16
     id: receiveSubscribed
     title: Subscription Confirmed
     description: Receive confirmation that subscription was successful
     type: send
     messages:
-      - &ref_27
+      - &ref_29
         id: subscribedResponse
         contentType: application/json
         payload:
@@ -1182,7 +1366,7 @@ operations:
             type:
               type: string
               const: subscribed
-              x-parser-schema-id: <anonymous-schema-35>
+              x-parser-schema-id: <anonymous-schema-43>
             msg:
               type: object
               required:
@@ -1191,9 +1375,9 @@ operations:
               properties:
                 channel:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-37>
+                  x-parser-schema-id: <anonymous-schema-45>
                 sid: *ref_3
-              x-parser-schema-id: <anonymous-schema-36>
+              x-parser-schema-id: <anonymous-schema-44>
           x-parser-schema-id: subscribedResponsePayload
         title: Subscribed Response
         description: Confirmation that subscription was successful
@@ -1212,13 +1396,13 @@ operations:
             value: subscribedResponse
     bindings: []
     extensions: *ref_2
-  - &ref_16
+  - &ref_17
     id: receiveUnsubscribed
     title: Unsubscription Confirmed
     description: Receive confirmation that unsubscription was successful
     type: send
     messages:
-      - &ref_28
+      - &ref_30
         id: unsubscribedResponse
         contentType: application/json
         payload:
@@ -1276,7 +1460,7 @@ operations:
             type:
               type: string
               const: unsubscribed
-              x-parser-schema-id: <anonymous-schema-42>
+              x-parser-schema-id: <anonymous-schema-50>
           x-parser-schema-id: unsubscribedResponsePayload
         title: Unsubscribed Response
         description: Confirmation that unsubscription was successful
@@ -1293,13 +1477,13 @@ operations:
             value: unsubscribedResponse
     bindings: []
     extensions: *ref_2
-  - &ref_17
+  - &ref_18
     id: receiveOk
     title: Update Confirmed
     description: Receive confirmation that subscription update was successful
     type: send
     messages:
-      - &ref_29
+      - &ref_31
         id: okResponse
         contentType: application/json
         payload:
@@ -1371,7 +1555,7 @@ operations:
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-43>
+              x-parser-schema-id: <anonymous-schema-51>
             msg:
               type: object
               properties:
@@ -1379,13 +1563,13 @@ operations:
                   type: array
                   description: Full list of market tickers after update
                   items: *ref_4
-                  x-parser-schema-id: <anonymous-schema-45>
+                  x-parser-schema-id: <anonymous-schema-53>
                 market_ids:
                   type: array
                   description: Full list of market IDs after update
                   items: *ref_5
-                  x-parser-schema-id: <anonymous-schema-46>
-              x-parser-schema-id: <anonymous-schema-44>
+                  x-parser-schema-id: <anonymous-schema-54>
+              x-parser-schema-id: <anonymous-schema-52>
           x-parser-schema-id: okResponsePayload
         title: OK Response
         description: Successful update operation response
@@ -1409,13 +1593,13 @@ operations:
             value: okResponse
     bindings: []
     extensions: *ref_2
-  - &ref_18
+  - &ref_19
     id: receiveListSubscriptions
     title: List Subscriptions Response
     description: Receive list of all active subscriptions
     type: send
     messages:
-      - &ref_30
+      - &ref_32
         id: listSubscriptionsResponse
         contentType: application/json
         payload:
@@ -1466,7 +1650,7 @@ operations:
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-38>
+              x-parser-schema-id: <anonymous-schema-46>
             msg:
               type: array
               description: List of active subscriptions
@@ -1479,10 +1663,10 @@ operations:
                   channel:
                     type: string
                     description: Name of the subscribed channel
-                    x-parser-schema-id: <anonymous-schema-41>
+                    x-parser-schema-id: <anonymous-schema-49>
                   sid: *ref_3
-                x-parser-schema-id: <anonymous-schema-40>
-              x-parser-schema-id: <anonymous-schema-39>
+                x-parser-schema-id: <anonymous-schema-48>
+              x-parser-schema-id: <anonymous-schema-47>
           x-parser-schema-id: listSubscriptionsResponsePayload
         title: List Subscriptions Response
         description: Response containing all active subscriptions
@@ -1511,13 +1695,13 @@ operations:
             value: listSubscriptionsResponse
     bindings: []
     extensions: *ref_2
-  - &ref_19
+  - &ref_20
     id: receiveError
     title: Error Response
     description: Receive error message when a command fails
     type: send
     messages:
-      - &ref_31
+      - &ref_33
         id: errorResponse
         contentType: application/json
         payload:
@@ -1620,6 +1804,11 @@ operations:
 
                       - 27: Too many requests - The subscription exceeded its
                       command rate limit
+
+                      - 28: Underlying tickers required - Missing
+                      underlying_tickers for
+                      subscribe_underlyings/unsubscribe_underlyings on
+                      pyth_value
                     required: true
                   - name: msg
                     type: string
@@ -1644,7 +1833,7 @@ operations:
             type:
               type: string
               const: error
-              x-parser-schema-id: <anonymous-schema-47>
+              x-parser-schema-id: <anonymous-schema-55>
             msg:
               type: object
               required:
@@ -1722,22 +1911,26 @@ operations:
 
                     - 27: Too many requests - The subscription exceeded its
                     command rate limit
+
+                    - 28: Underlying tickers required - Missing
+                    underlying_tickers for
+                    subscribe_underlyings/unsubscribe_underlyings on pyth_value
                   minimum: 1
-                  maximum: 27
-                  x-parser-schema-id: <anonymous-schema-49>
+                  maximum: 28
+                  x-parser-schema-id: <anonymous-schema-57>
                 msg:
                   type: string
                   description: Human-readable error message
-                  x-parser-schema-id: <anonymous-schema-50>
+                  x-parser-schema-id: <anonymous-schema-58>
                 market_id:
                   type: string
                   description: Market UUID if error is market-specific (optional)
-                  x-parser-schema-id: <anonymous-schema-51>
+                  x-parser-schema-id: <anonymous-schema-59>
                 market_ticker:
                   type: string
                   description: Market ticker if error is market-specific (optional)
-                  x-parser-schema-id: <anonymous-schema-52>
-              x-parser-schema-id: <anonymous-schema-48>
+                  x-parser-schema-id: <anonymous-schema-60>
+              x-parser-schema-id: <anonymous-schema-56>
           x-parser-schema-id: errorResponsePayload
         title: Error Response
         description: Error response for failed operations
@@ -1764,26 +1957,28 @@ sendOperations:
   - *ref_12
   - *ref_13
   - *ref_14
-receiveOperations:
   - *ref_15
+receiveOperations:
   - *ref_16
   - *ref_17
   - *ref_18
   - *ref_19
-sendMessages:
   - *ref_20
+sendMessages:
   - *ref_21
   - *ref_22
   - *ref_23
   - *ref_24
   - *ref_25
   - *ref_26
-receiveMessages:
   - *ref_27
   - *ref_28
+receiveMessages:
   - *ref_29
   - *ref_30
   - *ref_31
+  - *ref_32
+  - *ref_33
 extensions:
   - id: x-parser-unique-object-id
     value: root

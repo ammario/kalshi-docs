@@ -159,7 +159,7 @@ operations:
             type:
               type: string
               const: orderbook_snapshot
-              x-parser-schema-id: <anonymous-schema-57>
+              x-parser-schema-id: <anonymous-schema-65>
             sid: &ref_1
               type: integer
               description: >-
@@ -206,11 +206,11 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-61>
+                      x-parser-schema-id: <anonymous-schema-69>
                     minItems: 2
                     maxItems: 2
-                    x-parser-schema-id: <anonymous-schema-60>
-                  x-parser-schema-id: <anonymous-schema-59>
+                    x-parser-schema-id: <anonymous-schema-68>
+                  x-parser-schema-id: <anonymous-schema-67>
                 no_dollars_fp:
                   type: array
                   description: >
@@ -225,12 +225,12 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-64>
+                      x-parser-schema-id: <anonymous-schema-72>
                     minItems: 2
                     maxItems: 2
-                    x-parser-schema-id: <anonymous-schema-63>
-                  x-parser-schema-id: <anonymous-schema-62>
-              x-parser-schema-id: <anonymous-schema-58>
+                    x-parser-schema-id: <anonymous-schema-71>
+                  x-parser-schema-id: <anonymous-schema-70>
+              x-parser-schema-id: <anonymous-schema-66>
           x-parser-schema-id: orderbookSnapshotPayload
         title: Orderbook Snapshot
         description: Complete view of the order book's aggregated price levels
@@ -374,7 +374,7 @@ operations:
             type:
               type: string
               const: orderbook_delta
-              x-parser-schema-id: <anonymous-schema-65>
+              x-parser-schema-id: <anonymous-schema-73>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -391,11 +391,11 @@ operations:
                 price_dollars:
                   type: string
                   description: Price level in dollars
-                  x-parser-schema-id: <anonymous-schema-67>
+                  x-parser-schema-id: <anonymous-schema-75>
                 delta_fp:
                   type: string
                   description: Fixed-point contract delta (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-68>
+                  x-parser-schema-id: <anonymous-schema-76>
                 side:
                   type: string
                   description: Market side
@@ -411,7 +411,7 @@ operations:
 
                     Contains the client_order_id of your order that triggered
                     this delta.
-                  x-parser-schema-id: <anonymous-schema-69>
+                  x-parser-schema-id: <anonymous-schema-77>
                 subaccount:
                   type: integer
                   description: >
@@ -420,7 +420,7 @@ operations:
 
                     Contains the subaccount number of your order that triggered
                     this delta.
-                  x-parser-schema-id: <anonymous-schema-70>
+                  x-parser-schema-id: <anonymous-schema-78>
                 ts:
                   type: string
                   deprecated: true
@@ -428,15 +428,15 @@ operations:
                     Deprecated - Optional timestamp for when the orderbook
                     change was recorded (RFC3339). Use ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-71>
+                  x-parser-schema-id: <anonymous-schema-79>
                 ts_ms:
                   type: integer
                   description: >-
                     Optional - Unix timestamp for when the orderbook change was
                     recorded (in milliseconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-72>
-              x-parser-schema-id: <anonymous-schema-66>
+                  x-parser-schema-id: <anonymous-schema-80>
+              x-parser-schema-id: <anonymous-schema-74>
           x-parser-schema-id: orderbookDeltaPayload
         title: Orderbook Delta
         description: Update to be applied to the current order book view

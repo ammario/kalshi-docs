@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-09T23:25:59.689Z
+lastmod: 2026-07-13T19:43:30.209Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,20 @@ FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
 {/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="July 23, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Pyth value WebSocket channel",
+description: "Authenticated WebSocket clients can subscribe to deduplicated Pyth price updates through the new pyth_value channel."
+}}
+>
+  Authenticated WebSocket clients can subscribe to the new `pyth_value` channel
+  to receive deduplicated Pyth prices by underlying ticker. The channel supports
+  filtering, dynamic subscription updates, and discovery of recently streamed
+  underlyings.
+</Update>
 
 <Update
   label="July 9, 2026"
