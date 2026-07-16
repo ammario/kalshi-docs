@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-orders
-lastmod: 2026-07-09T18:56:26.411Z
+lastmod: 2026-07-15T15:03:19.819Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -346,6 +346,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'
           x-go-type-skip-optional-pointer: true
+          x-omitempty: false
     ErrorResponse:
       type: object
       properties:

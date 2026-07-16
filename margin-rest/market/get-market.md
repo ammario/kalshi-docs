@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market
-lastmod: 2026-07-09T18:56:27.269Z
+lastmod: 2026-07-15T15:03:20.797Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -99,6 +99,7 @@ components:
         - contract_size
         - tick_size
         - fractional_trading_enabled
+        - schedule
       properties:
         ticker:
           type: string
@@ -170,6 +171,8 @@ components:
         reference_price:
           $ref: '#/components/schemas/TickerPrice'
           description: Underlying reference price, scaled per contract.
+        schedule:
+          $ref: '#/components/schemas/MarginMarketSchedule'
     ErrorResponse:
       type: object
       properties:
@@ -222,6 +225,32 @@ components:
           type: integer
           format: int64
           description: Source timestamp in epoch milliseconds.
+    MarginMarketSchedule:
+      type: object
+      nullable: true
+      description: Current market trading schedule. Null for markets that trade 24/7.
+      required:
+        - is_open
+        - next_close_ts
+        - next_open_ts
+      properties:
+        is_open:
+          type: boolean
+          description: Whether the market is currently open for trading.
+        next_close_ts:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            Unix timestamp in seconds for the next scheduled close. Null while
+            closed.
+        next_open_ts:
+          type: integer
+          format: int64
+          nullable: true
+          description: >-
+            Unix timestamp in seconds for the next scheduled open. Null while
+            open.
   responses:
     BadRequestError:
       description: Bad request - invalid input

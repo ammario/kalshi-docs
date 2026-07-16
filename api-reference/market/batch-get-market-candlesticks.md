@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/batch-get-market-candlesticks
-lastmod: 2026-07-09T18:56:26.341Z
+lastmod: 2026-07-15T15:03:19.714Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

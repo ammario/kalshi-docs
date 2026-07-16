@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market
-lastmod: 2026-07-09T18:56:26.332Z
+lastmod: 2026-07-15T15:03:19.706Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -393,6 +393,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'
           x-go-type-skip-optional-pointer: true
+          x-omitempty: false
     FixedPointDollars:
       type: string
       description: >-
