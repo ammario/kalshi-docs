@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-orders
-lastmod: 2026-07-15T15:03:19.819Z
+lastmod: 2026-07-16T22:25:52.192Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,7 @@ Orders that have been canceled or fully executed before the historical cutoff ar
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.24.0
+  version: 3.25.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

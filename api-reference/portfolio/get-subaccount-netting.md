@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-subaccount-netting
-lastmod: 2026-07-15T15:03:20.141Z
+lastmod: 2026-07-16T22:25:52.447Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-07-15T15:03:20.141Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.24.0
+  version: 3.25.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

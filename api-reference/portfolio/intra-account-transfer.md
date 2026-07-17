@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/order-groups/get-order-group
-lastmod: 2026-07-16T22:25:52.323Z
+url: https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer
+lastmod: 2026-07-16T22:25:52.392Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Order Group
+# Intra Account Transfer
 
->  Retrieves details for a single order group including all order IDs and auto-cancel status.
+> Endpoint for transferring funds within the same account. This endpoint is currently not available.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/order_groups/{order_group_id}
+````yaml /openapi.yaml post /portfolio/intra_exchange_instance_transfer
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,27 +64,34 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/order_groups/{order_group_id}:
-    get:
+  /portfolio/intra_exchange_instance_transfer:
+    post:
       tags:
-        - order-groups
-      summary: Get Order Group
-      description: ' Retrieves details for a single order group including all order IDs and auto-cancel status.'
-      operationId: GetOrderGroup
-      parameters:
-        - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQuery'
+        - portfolio
+      summary: Intra Account Transfer
+      description: >-
+        Endpoint for transferring funds within the same account. This endpoint
+        is currently not available.
+      operationId: IntraExchangeInstanceTransfer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntraExchangeInstanceTransferRequest'
       responses:
         '200':
-          description: Order group retrieved successfully
+          description: Transfer request accepted. The transfer is processed asynchronously.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetOrderGroupResponse'
+                $ref: '#/components/schemas/IntraExchangeInstanceTransferResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -92,64 +99,48 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderGroupIdPath:
-      name: order_group_id
-      in: path
-      required: true
-      description: Order group ID
-      schema:
-        type: string
-    SubaccountQuery:
-      name: subaccount
-      in: query
-      description: >-
-        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
-        defaults to all subaccounts.
-      schema:
-        type: integer
   schemas:
-    GetOrderGroupResponse:
+    IntraExchangeInstanceTransferRequest:
       type: object
       required:
-        - is_auto_cancel_enabled
-        - orders
+        - source
+        - destination
+        - amount
       properties:
-        is_auto_cancel_enabled:
-          type: boolean
-          description: Whether auto-cancel is enabled for this order group
-        contracts_limit_fp:
-          $ref: '#/components/schemas/FixedPointCount'
-          description: >-
-            String representation of the current maximum contracts allowed over
-            a rolling 15-second window.
+        source:
+          $ref: '#/components/schemas/ExchangeInstance'
+          description: The source exchange instance
+        destination:
+          $ref: '#/components/schemas/ExchangeInstance'
+          description: The destination exchange instance
+        amount:
+          type: integer
+          format: int64
+          description: The amount to transfer in centicents
+        source_exchange_shard:
+          type: integer
+          default: 0
           x-go-type-skip-optional-pointer: true
-        orders:
-          type: array
-          items:
-            type: string
-          description: List of order IDs that belong to this order group
+          description: Source exchange shard index (default 0)
+        destination_exchange_shard:
+          type: integer
+          default: 0
           x-go-type-skip-optional-pointer: true
-        exchange_index:
-          allOf:
-            - $ref: '#/components/schemas/ExchangeIndex'
-          x-go-type-skip-optional-pointer: true
-          x-omitempty: false
-    FixedPointCount:
+          description: Destination exchange shard index (default 0)
+    IntraExchangeInstanceTransferResponse:
+      type: object
+      required:
+        - transfer_id
+      properties:
+        transfer_id:
+          type: string
+          description: The ID of the transfer that was created
+    ExchangeInstance:
       type: string
-      description: >-
-        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
-        to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported; the minimum granularity is
-        0.01 contracts.
-      example: '10.00'
-    ExchangeIndex:
-      type: integer
-      description: >-
-        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
-        currently only 0 supported.
-      example: 0
+      enum:
+        - event_contract
+        - margined
+      description: The exchange instance type
     ErrorResponse:
       type: object
       properties:
@@ -166,14 +157,20 @@ components:
           type: string
           description: The name of the service that generated the error
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:
