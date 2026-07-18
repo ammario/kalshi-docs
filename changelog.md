@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-13T19:43:30.209Z
+lastmod: 2026-07-17T17:46:27.006Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,55 @@ FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
 {/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="July 23, 2026"
+  tags={["WebSocket", "Predictions", "Margin"]}
+  rss={{
+title: "Subaccount-restricted API keys can open WebSocket sessions",
+description: "Subaccount-restricted API keys can now open WebSocket sessions. Every private channel is scoped to the key's locked subaccount, so a restricted key sees exactly what a full-account key sees, minus every sibling subaccount."
+}}
+>
+  Subaccount-restricted API keys, previously denied at session start, can now
+  open WebSocket sessions. Private channels are scoped to the key's locked
+  subaccount — `fill`, `user_orders`, `market_positions`,
+  `order_group_updates`, `communications`, and `orderbook_delta`
+  (`fill`, `user_orders`, `order_group_updates`, and `orderbook_delta` on the
+  Margin exchange) — so a restricted key sees exactly what a full-account key
+  sees, minus every sibling subaccount.
+
+  * `orderbook_delta` still delivers the full book; only the own-order
+    annotation (`subaccount`, `client_order_id`) is withheld when a resting
+    order belongs to a sibling subaccount.
+  * `communications` still broadcasts every RFQ (public by design, so makers
+    can quote them); only quotes, acceptances, and executions are scoped.
+
+  Full-account keys are unaffected. No new fields are introduced.
+</Update>
+
+<Update
+  label="July 23, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "Subaccount-restricted API keys can quote on RFQ FIX sessions",
+description: "API keys restricted to a single subaccount can now log on to RfqMode FIX sessions and run the maker quote lifecycle, with every quote pinned to the key's subaccount."
+}}
+>
+  An API key restricted to a single subaccount (created via `POST /api_keys`
+  with `subaccount`), previously rejected at logon, can now log on to an
+  `RfqMode` FIX session and run the maker quote lifecycle: `Quote (35=S)`,
+  `QuoteConfirm (35=U7)`, and `QuoteCancel (35=Z)`.
+
+  Every quote is pinned to the key's subaccount: on `Quote (35=S)`, an omitted
+  `AllocAccount<79>` defaults to it and a mismatching value is rejected;
+  `QuoteConfirm` and `QuoteCancel` act only on that subaccount's quotes; fills
+  attribute to it. You can run one restricted key per subaccount with
+  concurrent RFQ sessions — a quote acceptance routes to the session that
+  created the quote.
+
+  Creating an RFQ (`35=R`) and `AcceptQuote (35=UA)` remain unavailable to
+  restricted keys. Unrestricted keys are unchanged.
+</Update>
 
 <Update
   label="July 23, 2026"
