@@ -41,8 +41,6 @@ tags:
     description: Order group management endpoints
   - name: portfolio
     description: Portfolio and balance information endpoints
-  - name: fcm
-    description: FCM member specific endpoints
   - name: risk
     description: Margin risk metrics, parameters, and limits
   - name: funding
