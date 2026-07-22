@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-07-16T22:25:52.526Z
+lastmod: 2026-07-21T20:35:12.892Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

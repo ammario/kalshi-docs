@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/get-orders
-lastmod: 2026-07-16T22:25:52.192Z
+lastmod: 2026-07-21T20:35:12.601Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

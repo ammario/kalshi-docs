@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/search/get-filters-for-sports
-lastmod: 2026-07-16T22:25:52.849Z
+lastmod: 2026-07-21T20:35:13.168Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

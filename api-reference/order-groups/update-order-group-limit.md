@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/update-order-group-limit
-lastmod: 2026-07-16T22:25:52.368Z
+lastmod: 2026-07-21T20:35:12.772Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

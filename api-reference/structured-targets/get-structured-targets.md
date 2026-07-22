@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/structured-targets/get-structured-targets
-lastmod: 2026-07-16T22:25:52.907Z
+lastmod: 2026-07-21T20:35:13.213Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

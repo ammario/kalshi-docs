@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/account/get-perps-account-api-limits
-lastmod: 2026-07-16T22:25:53.115Z
+lastmod: 2026-07-21T20:35:13.444Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

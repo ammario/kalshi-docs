@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-subaccount-transfers
-lastmod: 2026-07-16T22:25:52.437Z
+lastmod: 2026-07-21T20:35:12.824Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -137,7 +137,6 @@ components:
         - amount_cents
         - created_ts
         - exchange_index
-        - transfer_type
       properties:
         transfer_id:
           type: string
@@ -151,7 +150,7 @@ components:
         amount_cents:
           type: integer
           format: int64
-          description: Cash transfer amount in cents. Zero for position transfers.
+          description: Cash transfer amount in cents.
         created_ts:
           type: integer
           format: int64
@@ -159,32 +158,6 @@ components:
         exchange_index:
           type: integer
           description: Exchange index the transfer was applied on.
-        transfer_type:
-          type: string
-          enum:
-            - cash
-            - position
-          x-enum-varnames:
-            - TransferTypeCash
-            - TransferTypePosition
-          description: Whether this row is a cash or position transfer.
-        market_ticker:
-          type: string
-          description: Market ticker (position transfers only).
-        side:
-          type: string
-          enum:
-            - 'yes'
-            - 'no'
-          description: Position side (position transfers only).
-        count:
-          type: integer
-          description: Number of contracts moved (position transfers only).
-        price:
-          $ref: '#/components/schemas/FixedPointDollars'
-          description: >-
-            Per-contract transfer price in fixed-point dollars, always the
-            YES-side price (position transfers only).
     ErrorResponse:
       type: object
       properties:
@@ -200,14 +173,6 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
-    FixedPointDollars:
-      type: string
-      description: >-
-        US dollar amount as a fixed-point decimal string with up to 6 decimal
-        places of precision. This is the maximum supported precision; valid
-        quote intervals for a given market are constrained by that market's
-        price level structure.
-      example: '0.5600'
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required

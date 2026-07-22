@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-metadata
-lastmod: 2026-07-16T22:25:52.169Z
+lastmod: 2026-07-21T20:35:12.584Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

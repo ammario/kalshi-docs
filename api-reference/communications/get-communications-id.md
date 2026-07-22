@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-communications-id
-lastmod: 2026-07-16T22:25:52.536Z
+lastmod: 2026-07-21T20:35:12.900Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-orders
-lastmod: 2026-07-16T22:25:53.005Z
+lastmod: 2026-07-21T20:35:13.322Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
