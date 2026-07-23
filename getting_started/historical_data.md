@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/historical_data
-lastmod: 2026-06-01T19:43:33.339Z
+lastmod: 2026-07-22T04:22:48.566Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,7 +17,7 @@ As trading activity on Kalshi grows, so does the volume of settled markets, comp
 Live endpoints return current and recent data: open and recently closed markets, active orders, and recent fills. Older data that is no longer actively referenced is made available through a separate set of historical endpoints.
 
 This separation means that if you query for data that is older than the cutoff (described below), you'll need to use the historical API instead of the standard live endpoints. The partitioning happens for **markets**, **market\_candlesticks**,
-**trades**, and **orders**. Old **Events** and **Series** will always still be available through their original endpoints.
+**trades**, **orders**, and **market\_positions**. Old **Events** and **Series** will always still be available through their original endpoints.
 
 ## How It Works
 
@@ -27,39 +27,42 @@ The cutoff timestamps will be regularly updated, advancing forward over time. Th
 
 ## Cutoff Timestamps
 
-| Field               | Partitioned By                       | Meaning                                                                                                                                               |
-| ------------------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `market_settled_ts` | Market settlement time               | Markets and their candlesticks that settled before this timestamp are only available via `GET /historical/markets`                                    |
-| `trades_created_ts` | Trade fill time                      | Trades that occurred before this timestamp are only available via `GET /historical/trades`. User fills are only available via `GET /historical/fills` |
-| `orders_updated_ts` | Order cancellation or execution time | Orders canceled or fully executed before this timestamp are only available via `GET /historical/orders`                                               |
+| Field                              | Partitioned By                       | Meaning                                                                                                                                                                                                                                                                                                                                                |
+| ---------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `market_settled_ts`                | Market settlement time               | Markets and their candlesticks that settled before this timestamp are only available via `GET /historical/markets`                                                                                                                                                                                                                                     |
+| `trades_created_ts`                | Trade fill time                      | Trades that occurred before this timestamp are only available via `GET /historical/trades`. User fills are only available via `GET /historical/fills`                                                                                                                                                                                                  |
+| `orders_updated_ts`                | Order cancellation or execution time | Orders canceled or fully executed before this timestamp are only available via `GET /historical/orders`                                                                                                                                                                                                                                                |
+| `market_positions_last_updated_ts` | Position last-update time            | Settled positions archived from the live data set before this timestamp are only available via `GET /historical/positions`. Positions are archived per whole event: an event's positions all remain live until every market in the event has settled, regardless of how old the oldest settled market is, and are never split across the two endpoints |
 
 <Note>
-  Resting (active) orders are unaffected and always appear in `GET /portfolio/orders`, regardless of the cutoff.
+  Resting (active) orders are unaffected and always appear in `GET /portfolio/orders`, regardless of the cutoff. Likewise, unsettled positions always appear in `GET /portfolio/positions`.
 </Note>
 
 ## Historical Endpoints
 
-| Endpoint                                        | Description                                    |
-| ----------------------------------------------- | ---------------------------------------------- |
-| `GET /historical/cutoff`                        | Returns the current cutoff timestamps          |
-| `GET /historical/markets`                       | Settled markets older than the cutoff          |
-| `GET /historical/markets/{ticker}`              | Single historical market by ticker             |
-| `GET /historical/markets/{ticker}/candlesticks` | Candlestick data for historical markets        |
-| `GET /historical/trades`                        | All trades older than the cutoff               |
-| `GET /historical/fills`                         | User-scoped trade fills older than the cutoff  |
-| `GET /historical/orders`                        | Canceled/executed orders older than the cutoff |
+| Endpoint                                        | Description                                                   |
+| ----------------------------------------------- | ------------------------------------------------------------- |
+| `GET /historical/cutoff`                        | Returns the current cutoff timestamps                         |
+| `GET /historical/markets`                       | Settled markets older than the cutoff                         |
+| `GET /historical/markets/{ticker}`              | Single historical market by ticker                            |
+| `GET /historical/markets/{ticker}/candlesticks` | Candlestick data for historical markets                       |
+| `GET /historical/trades`                        | All trades older than the cutoff                              |
+| `GET /historical/fills`                         | User-scoped trade fills older than the cutoff                 |
+| `GET /historical/orders`                        | Canceled/executed orders older than the cutoff                |
+| `GET /historical/positions`                     | User-scoped settled positions archived from the live data set |
 
 ## Impacted Live Endpoints
 
 The following live endpoints will no longer return data older than the corresponding cutoff:
 
-| Live Endpoint                                 | Cutoff Field        | Impact                                                                                          |
-| --------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------------------- |
-| `GET /markets`, `GET /markets/{ticker}`       | `market_settled_ts` | Settled markets and their candlesticks older than the cutoff will not appear                    |
-| `GET /events` with `with_nested_markets=true` | `market_settled_ts` | Nested markets older than the cutoff will not be included, only markets impacted                |
-| `GET /markets/trades`                         | `trades_created_ts` | Trades older than the cutoff will not appear                                                    |
-| `GET /portfolio/fills`                        | `trades_created_ts` | Fills older than the cutoff will not appear                                                     |
-| `GET /portfolio/orders`                       | `orders_updated_ts` | Completed/canceled orders older than the cutoff will not appear (resting orders are unaffected) |
+| Live Endpoint                                 | Cutoff Field                       | Impact                                                                                                 |
+| --------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `GET /markets`, `GET /markets/{ticker}`       | `market_settled_ts`                | Settled markets and their candlesticks older than the cutoff will not appear                           |
+| `GET /events` with `with_nested_markets=true` | `market_settled_ts`                | Nested markets older than the cutoff will not be included, only markets impacted                       |
+| `GET /markets/trades`                         | `trades_created_ts`                | Trades older than the cutoff will not appear                                                           |
+| `GET /portfolio/fills`                        | `trades_created_ts`                | Fills older than the cutoff will not appear                                                            |
+| `GET /portfolio/orders`                       | `orders_updated_ts`                | Completed/canceled orders older than the cutoff will not appear (resting orders are unaffected)        |
+| `GET /portfolio/positions`                    | `market_positions_last_updated_ts` | Settled positions archived from the live data set will not appear (unsettled positions are unaffected) |
 
 ## Migration Guide
 

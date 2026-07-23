@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market-candlesticks
-lastmod: 2026-07-21T20:35:13.567Z
+lastmod: 2026-07-22T14:53:04.052Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-06-08T21:06:46.343Z
+lastmod: 2026-07-22T18:45:02.057Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -16,7 +16,7 @@ lastmod: 2026-06-08T21:06:46.343Z
 | ----- | ----------------------- | ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------ |
 | 11    | ClOrderID               | String       | Y        | Client order identifier for idempotency. UUID format is preferred.                                                       |
 | 18    | ExecInst                | Char         | N        | Execution instruction flags. Supported values: `6 = Post Only`                                                           |
-| 38    | OrderQty                | Decimal      | Y        | Quantity of contracts to trade. Fractional quantities are supported.                                                     |
+| 38    | OrderQty                | Decimal      | Y        | Quantity of contracts to trade. Only whole-number quantities are supported.                                              |
 | 40    | OrdType                 | Char         | Y        | Supported values: `2 = Limit`                                                                                            |
 | 44    | Price                   | Decimal      | Y        | Price per contract in fixed-point dollars, up to 4 decimal places.                                                       |
 | 54    | Side                    | Char         | Y        | Supported values: `1 = Buy (bid)`, `2 = Sell (ask)`                                                                      |

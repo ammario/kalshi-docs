@@ -1,22 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
-lastmod: 2026-07-22T14:53:03.808Z
+url: https://docs.kalshi.com/api-reference/historical/get-historical-positions
+lastmod: 2026-07-22T14:53:03.860Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get FCM Positions
+# Get Historical Positions
 
-> Endpoint for FCM members to get market positions filtered by subtrader ID.
-This endpoint requires FCM member access level and allows filtering positions by subtrader ID.
-
+>  Endpoint for getting settled market positions that have been archived to the historical database. Positions whose markets were archived before `market_positions_last_updated_ts` on `GET /historical/cutoff` are available via this endpoint. Positions are archived per whole event: a settled event's positions move here together and are never split between this endpoint and `GET /portfolio/positions`. Unsettled positions are always available via `GET /portfolio/positions`.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /fcm/positions
+````yaml /openapi.yaml get /historical/positions
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -66,89 +64,73 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /fcm/positions:
+  /historical/positions:
     get:
       tags:
-        - fcm
-      summary: Get FCM Positions
-      description: >
-        Endpoint for FCM members to get market positions filtered by subtrader
-        ID.
-
-        This endpoint requires FCM member access level and allows filtering
-        positions by subtrader ID.
-      operationId: GetFCMPositions
+        - historical
+      summary: Get Historical Positions
+      description: ' Endpoint for getting settled market positions that have been archived to the historical database. Positions whose markets were archived before `market_positions_last_updated_ts` on `GET /historical/cutoff` are available via this endpoint. Positions are archived per whole event: a settled event''s positions move here together and are never split between this endpoint and `GET /portfolio/positions`. Unsettled positions are always available via `GET /portfolio/positions`.'
+      operationId: GetHistoricalPositions
       parameters:
-        - name: subtrader_id
-          in: query
-          required: true
-          description: >-
-            Restricts the response to positions for a specific subtrader (FCM
-            members only)
-          schema:
-            type: string
-        - name: ticker
-          in: query
-          description: Ticker of desired positions
-          schema:
-            type: string
-            x-go-type-skip-optional-pointer: true
-        - name: event_ticker
-          in: query
-          description: Event ticker of desired positions
-          schema:
-            type: string
-            x-go-type-skip-optional-pointer: true
-        - name: count_filter
-          in: query
-          description: >-
-            Restricts the positions to those with any of following fields with
-            non-zero values, as a comma separated list
-          schema:
-            type: string
-        - name: settlement_status
-          in: query
-          description: Settlement status of the markets to return. Defaults to unsettled
-          schema:
-            type: string
-            enum:
-              - all
-              - unsettled
-              - settled
-        - name: limit
-          in: query
-          description: Parameter to specify the number of results per page. Defaults to 100
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 1000
-        - name: cursor
-          in: query
-          description: >-
-            The Cursor represents a pointer to the next page of records in the
-            pagination
-          schema:
-            type: string
+        - $ref: '#/components/parameters/TickerQuery'
+        - $ref: '#/components/parameters/SingleEventTickerQuery'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/CursorQuery'
       responses:
         '200':
-          description: Positions retrieved successfully
+          description: Historical positions retrieved successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPositionsResponse'
         '400':
-          description: Bad request
+          $ref: '#/components/responses/BadRequestError'
         '401':
-          description: Unauthorized
-        '404':
-          description: Not found
+          $ref: '#/components/responses/UnauthorizedError'
         '500':
-          description: Internal server error
+          $ref: '#/components/responses/InternalServerError'
       security:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
+  parameters:
+    TickerQuery:
+      name: ticker
+      in: query
+      description: Filter by market ticker
+      schema:
+        type: string
+        x-go-type-skip-optional-pointer: true
+    SingleEventTickerQuery:
+      name: event_ticker
+      in: query
+      description: Event ticker to filter by. Only a single event ticker is supported.
+      schema:
+        type: string
+        x-go-type-skip-optional-pointer: true
+    LimitQuery:
+      name: limit
+      in: query
+      description: Number of results per page. Defaults to 100.
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+        maximum: 1000
+        default: 100
+        x-oapi-codegen-extra-tags:
+          validate: omitempty,min=1,max=1000
+    CursorQuery:
+      name: cursor
+      in: query
+      description: >-
+        Pagination cursor. Use the cursor value returned from the previous
+        response to get the next page of results. Leave empty for the first
+        page.
+      schema:
+        type: string
+        x-go-type-skip-optional-pointer: true
   schemas:
     GetPositionsResponse:
       type: object
@@ -240,6 +222,21 @@ components:
         fees_paid_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Fees paid on fill orders, in dollars
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional details about the error, if available
+        service:
+          type: string
+          description: The name of the service that generated the error
     FixedPointDollars:
       type: string
       description: >-
@@ -257,6 +254,25 @@ components:
         contract values (e.g., "2.50") are supported; the minimum granularity is
         0.01 contracts.
       example: '10.00'
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnauthorizedError:
+      description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

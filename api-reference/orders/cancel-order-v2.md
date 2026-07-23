@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order-v2
-lastmod: 2026-07-21T20:35:12.696Z
+lastmod: 2026-07-22T14:53:03.122Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,9 @@ lastmod: 2026-07-21T20:35:12.696Z
 
 > Endpoint for cancelling event-market orders using the V2 response shape. Returns `{order_id, client_order_id, reduced_by}` rather than a full order object.
 
+<Note>
+  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI
@@ -18,7 +21,7 @@ lastmod: 2026-07-21T20:35:12.696Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.25.0
+  version: 3.26.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

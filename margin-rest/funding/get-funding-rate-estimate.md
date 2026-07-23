@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/funding/get-funding-rate-estimate
-lastmod: 2026-07-21T20:35:13.684Z
+lastmod: 2026-07-22T14:53:04.164Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

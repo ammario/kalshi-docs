@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-17T17:46:27.006Z
+lastmod: 2026-07-22T17:58:52.876Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,52 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["New Feature", "Upcoming"] */}
+{/* changelog-tags: ["Change", "Upcoming"] */}
+
+<Update
+  label="July 23, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "Order groups limited to 25,000 per user",
+description: "Users can now have at most 25,000 order groups."
+}}
+>
+  Attempts to create an order group after reaching the 25,000-group limit will
+  be rejected.
+
+  Before the change window, existing order groups above the 25,000-group limit
+  will be cancelled.
+
+  **Affected endpoints:**
+
+  * `POST /trade-api/v2/portfolio/order_groups/create`
+  * `POST /trade-api/v2/margin/order_groups/create`
+</Update>
+
+<Update
+  label="July 22, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Incentive programs on hidden events excluded from listing",
+description: "GET /incentive_programs no longer returns incentive programs whose market belongs to a hidden event."
+}}
+>
+  `GET /incentive_programs` now excludes incentive programs whose market
+  belongs to a hidden event, matching the visibility of the events themselves.
+</Update>
+
+<Update
+  label="July 23, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Historical positions endpoint",
+description: "New GET /historical/positions endpoint and market_positions_last_updated_ts cutoff for settled positions archived from the live data set."
+}}
+>
+  Added `GET /historical/positions` — an authenticated endpoint for querying settled positions archived to the historical database. Supports `ticker` and `event_ticker` filtering with cursor pagination.
+
+  Positions are archived per whole event: a settled event's positions move to the historical database together and are never split between this endpoint and `GET /portfolio/positions`. Use this endpoint for positions older than the new `market_positions_last_updated_ts` cutoff returned by `GET /historical/cutoff`. See [Historical Data](/getting_started/historical_data) for details.
+</Update>
 
 <Update
   label="July 23, 2026"

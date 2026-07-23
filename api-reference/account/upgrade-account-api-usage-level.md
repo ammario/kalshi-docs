@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/account/upgrade-account-api-usage-level
-lastmod: 2026-07-21T20:35:13.127Z
+lastmod: 2026-07-22T14:53:03.607Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,9 @@ lastmod: 2026-07-21T20:35:13.127Z
 
 > Grants a permanent Advanced API usage-level grant. Currently only the Predictions exchange instance is supported. Criteria: at least 1 of the user's last 100 Predictions orders was created via API. Use Get Account API Limits to inspect the resulting usage tier and grants.
 
+<Note>
+  **Rate limit:** 30 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI
@@ -18,7 +21,7 @@ lastmod: 2026-07-21T20:35:13.127Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.25.0
+  version: 3.26.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

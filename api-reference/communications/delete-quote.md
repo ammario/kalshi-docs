@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-quote
-lastmod: 2026-07-21T20:35:13.046Z
+lastmod: 2026-07-22T14:53:03.528Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,13 @@ lastmod: 2026-07-21T20:35:13.046Z
 
 > DEPRECATED: Use DELETE /communications/rfqs/{rfq_id}/quotes/{quote_id} instead. Endpoint for deleting a quote, which means it can no longer be accepted.
 
+<Warning>
+  This endpoint is deprecated. Use `DELETE /communications/rfqs/{rfq_id}/quotes/{quote_id}` instead.
+</Warning>
+
+<Note>
+  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI
@@ -18,7 +25,7 @@ lastmod: 2026-07-21T20:35:13.046Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.25.0
+  version: 3.26.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

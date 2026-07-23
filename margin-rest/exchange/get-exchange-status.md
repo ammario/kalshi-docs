@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exchange/get-exchange-status
-lastmod: 2026-07-21T20:35:13.455Z
+lastmod: 2026-07-22T14:53:03.911Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

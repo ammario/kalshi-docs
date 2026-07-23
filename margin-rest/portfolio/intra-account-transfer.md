@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/intra-account-transfer
-lastmod: 2026-07-21T20:35:13.691Z
+lastmod: 2026-07-22T14:53:04.173Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
