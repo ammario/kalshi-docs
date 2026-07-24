@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-markets
-lastmod: 2026-07-22T14:53:04.009Z
+lastmod: 2026-07-23T20:29:14.161Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

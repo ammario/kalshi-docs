@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/accept-rfq-quote
-lastmod: 2026-07-22T14:53:03.480Z
+lastmod: 2026-07-23T20:29:13.695Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

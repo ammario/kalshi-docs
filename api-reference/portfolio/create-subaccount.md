@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/create-subaccount
-lastmod: 2026-07-22T14:53:03.241Z
+lastmod: 2026-07-23T20:29:13.500Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-07-22T14:53:03.241Z
 
 # Create Subaccount
 
-> Creates a new subaccount for the authenticated user. This endpoint is currently only available to institutions and market makers. Subaccounts are numbered sequentially starting from 1. Maximum 63 numbered subaccounts per user (64 including the primary account).
+> Creates a new subaccount for the authenticated user. This endpoint is available to all users on the Advanced API tier and above. Subaccounts are numbered sequentially starting from 1. Maximum 63 numbered subaccounts per user (64 including the primary account).
 
 
 
@@ -71,7 +71,7 @@ paths:
       summary: Create Subaccount
       description: >-
         Creates a new subaccount for the authenticated user. This endpoint is
-        currently only available to institutions and market makers. Subaccounts
+        available to all users on the Advanced API tier and above. Subaccounts
         are numbered sequentially starting from 1. Maximum 63 numbered
         subaccounts per user (64 including the primary account).
       operationId: CreateSubaccount

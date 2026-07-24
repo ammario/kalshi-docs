@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-22T17:58:52.876Z
+lastmod: 2026-07-23T20:29:22.752Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -33,8 +33,10 @@ description: "Users can now have at most 25,000 order groups."
   Attempts to create an order group after reaching the 25,000-group limit will
   be rejected.
 
-  Before the change window, existing order groups above the 25,000-group limit
-  will be cancelled.
+  Before the change window, users above the limit will have their oldest unused
+  order groups cancelled until 20,000 remain, leaving headroom below the new
+  limit. Order groups containing resting orders will not be selected for this
+  cleanup.
 
   **Affected endpoints:**
 
