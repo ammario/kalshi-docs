@@ -1,23 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/delete-rfq-quote
-lastmod: 2026-07-24T17:37:44.791Z
+url: https://docs.kalshi.com/api-reference/portfolio/unlock-subaccount-for-settlement-advance
+lastmod: 2026-07-24T17:37:44.599Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Delete RFQ Quote
+# Unlock Subaccount for Settlement Advance
 
->  Endpoint for deleting a quote scoped to its RFQ, which means it can no longer be accepted.
+> Unlocks a subaccount. Unlocking is rejected while the subaccount has an outstanding settlement advance.
 
-<Note>
-  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
-</Note>
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml delete /communications/rfqs/{rfq_id}/quotes/{quote_id}
+````yaml /openapi.yaml delete /portfolio/subaccounts/settlement-advance-lock
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -67,23 +64,35 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /communications/rfqs/{rfq_id}/quotes/{quote_id}:
+  /portfolio/subaccounts/settlement-advance-lock:
     delete:
       tags:
-        - communications
-      summary: Delete RFQ Quote
-      description: ' Endpoint for deleting a quote scoped to its RFQ, which means it can no longer be accepted.'
-      operationId: DeleteRFQQuote
-      parameters:
-        - $ref: '#/components/parameters/RfqIdPath'
-        - $ref: '#/components/parameters/QuoteIdPath'
+        - portfolio
+      summary: Unlock Subaccount for Settlement Advance
+      description: >-
+        Unlocks a subaccount. Unlocking is rejected while the subaccount has an
+        outstanding settlement advance.
+      operationId: UnlockSubaccountForSettlementAdvance
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnlockSubaccountForSettlementAdvanceRequest'
       responses:
-        '204':
-          description: Quote deleted successfully
+        '200':
+          description: Subaccount unlocked successfully
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/UnlockSubaccountForSettlementAdvanceResponse
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -91,41 +100,34 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    RfqIdPath:
-      name: rfq_id
-      in: path
-      required: true
-      description: RFQ ID
-      schema:
-        type: string
-    QuoteIdPath:
-      name: quote_id
-      in: path
-      required: true
-      description: Quote ID
-      schema:
-        type: string
-  responses:
-    UnauthorizedError:
-      description: Unauthorized - authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    UnlockSubaccountForSettlementAdvanceRequest:
+      type: object
+      required:
+        - subaccount_number
+      properties:
+        subaccount_number:
+          type: integer
+          nullable: true
+          description: Subaccount number (0 for primary, 1-63 for numbered subaccounts).
+          x-oapi-codegen-extra-tags:
+            validate: required
+        exchange_index:
+          allOf:
+            - $ref: '#/components/schemas/ExchangeIndex'
+          description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+          x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: gte=0
+    UnlockSubaccountForSettlementAdvanceResponse:
+      type: object
+      description: Empty response indicating the subaccount was unlocked successfully.
+    ExchangeIndex:
+      type: integer
+      description: >-
+        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
+        currently only 0 supported.
+      example: 0
     ErrorResponse:
       type: object
       properties:
@@ -141,6 +143,31 @@ components:
         service:
           type: string
           description: The name of the service that generated the error
+  responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnauthorizedError:
+      description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ConflictError:
+      description: Conflict - resource already exists or cannot be modified
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

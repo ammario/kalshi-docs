@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-23T20:29:22.752Z
+lastmod: 2026-07-24T18:28:16.233Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,27 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["Change", "Upcoming"] */}
+{/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "Subaccount-restricted API keys can manage order groups",
+description: "API keys restricted to one subaccount can now create and manage order groups for that subaccount through REST."
+}}
+>
+  API keys restricted to a single subaccount can now use every REST order-group
+  endpoint. The API infers the key's locked subaccount when the request omits
+  it and rejects requests that explicitly target a different subaccount.
+
+  Unrestricted API keys are unaffected.
+
+  **Affected endpoints:**
+
+  * All `/trade-api/v2/portfolio/order_groups` endpoints
+  * All `/trade-api/v2/margin/order_groups` endpoints
+</Update>
 
 <Update
   label="July 23, 2026"
