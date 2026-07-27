@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-deposits
-lastmod: 2026-07-24T17:37:44.664Z
+lastmod: 2026-07-26T20:31:56.579Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

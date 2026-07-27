@@ -123,7 +123,7 @@ operations:
             type:
               type: string
               const: order_group_updates
-              x-parser-schema-id: <anonymous-schema-249>
+              x-parser-schema-id: <anonymous-schema-254>
             sid:
               type: integer
               description: >-
@@ -155,25 +155,25 @@ operations:
                     - reset
                     - deleted
                     - limit_updated
-                  x-parser-schema-id: <anonymous-schema-251>
+                  x-parser-schema-id: <anonymous-schema-256>
                 order_group_id:
                   type: string
                   description: Order group identifier
-                  x-parser-schema-id: <anonymous-schema-252>
+                  x-parser-schema-id: <anonymous-schema-257>
                 contracts_limit_fp:
                   type: string
                   description: >-
                     Updated contracts limit in fixed-point (2 decimals). Present
                     for "created" and "limit_updated" events only.
-                  x-parser-schema-id: <anonymous-schema-253>
+                  x-parser-schema-id: <anonymous-schema-258>
                 ts_ms:
                   type: integer
                   format: int64
                   description: >-
                     Matching engine timestamp at which the event was processed,
                     as Unix epoch milliseconds.
-                  x-parser-schema-id: <anonymous-schema-254>
-              x-parser-schema-id: <anonymous-schema-250>
+                  x-parser-schema-id: <anonymous-schema-259>
+              x-parser-schema-id: <anonymous-schema-255>
           x-parser-schema-id: orderGroupUpdatesPayload
         title: Order Group Updates
         description: Order group lifecycle and limit updates for authenticated user

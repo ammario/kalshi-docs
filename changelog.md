@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-24T18:28:16.233Z
+lastmod: 2026-07-26T23:28:16.556Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,26 @@ FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
 {/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="July 30, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Subaccount on quote_created",
+description: "The quote_created message on the communications channel now includes your subaccount number, matching quote_accepted and quote_executed."
+}}
+>
+  The `quote_created` message on the `communications` channel now includes a
+  `subaccount` field when your side of the quote used a subaccount, matching
+  `quote_accepted` and `quote_executed`. Quote creators receive the subaccount
+  their quote was placed under; RFQ creators receive the subaccount their RFQ
+  was created under. Each recipient sees only their own subaccount number,
+  never the counterparty's.
+
+  This lets makers quoting from multiple subaccounts attribute a
+  `quote_created` message immediately, without waiting for the
+  `POST /trade-api/v2/communications/quotes` response.
+</Update>
 
 <Update
   label="July 30, 2026"
