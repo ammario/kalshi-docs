@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/create-order-group
-lastmod: 2026-07-26T20:31:56.425Z
+lastmod: 2026-07-28T00:23:53.247Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -104,9 +104,8 @@ components:
           minimum: 0
           description: >-
             Optional subaccount number to use for this order group (0 for
-            primary, 1-63 for subaccounts)
-          default: 0
-          x-go-type-skip-optional-pointer: true
+            primary, 1-63 for subaccounts). Subaccount-restricted API keys must
+            omit this field or pass their locked subaccount.
         contracts_limit:
           type: integer
           format: int64

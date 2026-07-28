@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order-v2
-lastmod: 2026-07-26T20:31:56.356Z
+lastmod: 2026-07-28T00:23:53.173Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -204,11 +204,10 @@ components:
         subaccount:
           type: integer
           minimum: 0
-          default: 0
           description: >-
             The subaccount number to use for this order. 0 is the primary
-            subaccount.
-          x-go-type-skip-optional-pointer: true
+            subaccount. Subaccount-restricted API keys must omit this field or
+            pass their locked subaccount.
         order_group_id:
           type: string
           description: The order group this order is part of

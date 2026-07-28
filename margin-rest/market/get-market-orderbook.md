@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market-orderbook
-lastmod: 2026-07-26T20:31:57.208Z
+lastmod: 2026-07-28T00:23:54.177Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

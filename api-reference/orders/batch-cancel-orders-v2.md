@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders-v2
-lastmod: 2026-07-26T20:31:56.378Z
+lastmod: 2026-07-28T00:23:53.194Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -135,11 +135,10 @@ components:
               subaccount:
                 type: integer
                 minimum: 0
-                default: 0
                 description: >-
                   Optional subaccount number to use for this cancellation (0 for
-                  primary, 1-63 for subaccounts).
-                x-go-type-skip-optional-pointer: true
+                  primary, 1-63 for subaccounts). Subaccount-restricted API keys
+                  must omit this field or pass their locked subaccount.
               exchange_index:
                 allOf:
                   - $ref: '#/components/schemas/ExchangeIndex'

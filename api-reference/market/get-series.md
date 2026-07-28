@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series
-lastmod: 2026-07-26T20:31:56.200Z
+lastmod: 2026-07-28T00:23:52.956Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

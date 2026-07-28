@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-subaccount-transfers
-lastmod: 2026-07-26T20:31:56.532Z
+lastmod: 2026-07-28T00:23:53.364Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

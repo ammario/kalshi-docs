@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-26T23:28:16.556Z
+lastmod: 2026-07-27T19:11:26.735Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,26 @@ FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
 {/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Subaccount-restricted API keys can use batch order endpoints",
+description: "API keys restricted to one subaccount can now batch-create and batch-cancel orders for that subaccount through REST."
+}}
+>
+  API keys restricted to a single subaccount, previously rejected with a 403
+  on the batch order endpoints, can now batch-create and batch-cancel orders.
+  The API infers the key's locked subaccount for any order in the batch that
+  omits it, and rejects the whole batch (no orders are placed or canceled) if
+  any entry explicitly targets a different subaccount.
+
+  **Affected endpoints:**
+
+  * `POST /trade-api/v2/portfolio/events/orders/batched`
+  * `DELETE /trade-api/v2/portfolio/events/orders/batched`
+</Update>
 
 <Update
   label="July 30, 2026"
