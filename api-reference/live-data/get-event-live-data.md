@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/structured-targets/get-structured-target
-lastmod: 2026-07-29T01:31:38.441Z
+url: https://docs.kalshi.com/api-reference/live-data/get-event-live-data
+lastmod: 2026-07-29T01:31:38.423Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Structured Target
+# Get Event Live Data
 
->  Endpoint for getting data about a specific structured target by its ID.
+> Get live data for an event by its event ticker. Serves event-keyed live data such as crypto price charts, commodity price timeseries, and weather observations. The `type` field in the response names the schema of the `details` object.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /structured_targets/{structured_target_id}
+````yaml /openapi.yaml get /live_data/events/{event_ticker}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,70 +64,82 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /structured_targets/{structured_target_id}:
+  /live_data/events/{event_ticker}:
     get:
       tags:
-        - structured-targets
-      summary: Get Structured Target
-      description: ' Endpoint for getting data about a specific structured target by its ID.'
-      operationId: GetStructuredTarget
+        - live-data
+      summary: Get Event Live Data
+      description: >-
+        Get live data for an event by its event ticker. Serves event-keyed live
+        data such as crypto price charts, commodity price timeseries, and
+        weather observations. The `type` field in the response names the schema
+        of the `details` object.
+      operationId: GetEventLiveData
       parameters:
-        - name: structured_target_id
+        - name: event_ticker
           in: path
           required: true
-          description: Structured target ID
+          description: Event ticker
+          schema:
+            type: string
+        - name: range
+          in: query
+          required: false
+          description: >-
+            Optional chart range hint (e.g. `15min`, `1h`, `1d`). When the
+            underlying live data type supports it, restricts the returned
+            timeseries to the requested window.
           schema:
             type: string
       responses:
         '200':
-          description: Structured target retrieved successfully
+          description: Live data retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetStructuredTargetResponse'
-        '401':
-          description: Unauthorized
+                $ref: '#/components/schemas/GetEventLiveDataResponse'
         '404':
-          description: Not found
+          description: Live data not found
         '500':
           description: Internal server error
 components:
   schemas:
-    GetStructuredTargetResponse:
+    GetEventLiveDataResponse:
       type: object
+      required:
+        - live_data
       properties:
-        structured_target:
-          $ref: '#/components/schemas/StructuredTarget'
-    StructuredTarget:
+        live_data:
+          $ref: '#/components/schemas/EventLiveData'
+    EventLiveData:
       type: object
+      required:
+        - type
+        - details
       properties:
-        id:
-          type: string
-          description: Unique identifier for the structured target.
-        name:
-          type: string
-          description: Name of the structured target.
         type:
           type: string
-          description: Type of the structured target.
+          description: Type of live data. Names the schema of the details object.
         details:
           type: object
+          additionalProperties: true
           description: >-
-            Additional details about the structured target. Contains flexible
-            JSON data specific to the target type.
-        source_id:
+            Live data details as a flexible object whose shape depends on the
+            type.
+        is_historical:
+          type: boolean
+          description: >-
+            Present for crypto live data. True when the event has matured and
+            the payload is a frozen historical snapshot.
+        default_range:
           type: string
           description: >-
-            External source identifier for the structured target, if available
-            (e.g., third-party data provider ID).
-        source_ids:
-          type: object
-          additionalProperties:
+            Chart range the client should default to (e.g. `15min`, `1h`).
+            Omitted when unset.
+        range_options:
+          type: array
+          items:
             type: string
-          description: Source ids of structured target if available.
-        last_updated_ts:
-          type: string
-          format: date-time
-          description: Timestamp when this structured target was last updated.
+          description: Chart range menu options. Omitted when unset.
 
 ````

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-27T19:11:26.735Z
+lastmod: 2026-07-29T01:31:47.939Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,131 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["New Feature", "Upcoming"] */}
+{/* changelog-tags: ["Deprecation", "Upcoming"] */}
+
+<Update
+  label="August 6, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "The service field has been removed from error responses",
+description: "The deprecated service field no longer appears on REST error response bodies. Branch on the code field instead."
+}}
+>
+  The `service` field announced as deprecated on July 28 has been removed from
+  error response bodies. It is no longer returned by any REST endpoint.
+
+  Branch on `code` instead, which is present on every error response. Clients
+  that read `service` should treat it as absent; clients that already branch on
+  `code` need no change.
+</Update>
+
+<Update
+  label="July 28, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "The service field on error responses is deprecated",
+description: "The service field on REST error responses is deprecated and will be removed in a future release. Branch on the code field instead."
+}}
+>
+  The `service` field on error response bodies is deprecated and will be removed
+  in a future release. It names the internal Kalshi service that produced the
+  error, is absent from many error responses already, and is not a stable way to
+  classify failures.
+
+  Use the `code` field instead, which is present on every error response and is
+  the intended contract for branching. No response has changed yet — `service`
+  is still returned wherever it was before.
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Lifecycle creation messages now include exchange_index",
+description: "Market and event creation messages on the lifecycle WebSocket channels now include an exchange_index field identifying the exchange shard."
+}}
+>
+  Market created messages on the `market_lifecycle_v2` and
+  `multivariate_market_lifecycle` channels now include an `exchange_index`
+  field identifying the exchange shard the market lives on. `event_lifecycle`
+  messages include the same field for the event's markets.
+
+  **Affected channels:**
+
+  * `market_lifecycle_v2`
+  * `multivariate_market_lifecycle`
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Series responses include exchange_index",
+description: "Series responses include exchange_index"
+}}
+>
+  `GET /series` now exposes `exchange_index`, identifying the target exchange instance for new events.
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "New endpoint for event-keyed live data",
+description: "GET /trade-api/v2/live_data/events/{event_ticker} returns live data keyed by event ticker, such as crypto price charts, commodity timeseries, and weather observations."
+}}
+>
+  A new endpoint, `GET /trade-api/v2/live_data/events/{event_ticker}`, returns
+  live data keyed by event ticker — previously only available on the internal
+  API. It serves event-keyed live data such as crypto price charts (e.g.
+  `KXBTC15M` events), commodity price timeseries, and weather observations.
+
+  The response's `live_data.type` field names the schema of the flexible
+  `live_data.details` object. An optional `range` query parameter (e.g.
+  `15min`, `1h`, `1d`) restricts the returned timeseries window where the
+  underlying live data type supports it.
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Subaccount-restricted API keys can read order queue positions",
+description: "API keys restricted to one subaccount can now use the order queue position endpoints for that subaccount's orders."
+}}
+>
+  API keys restricted to a single subaccount, previously rejected with a 403
+  on the order queue position endpoints, can now read queue positions for
+  orders in their locked subaccount. The queue positions listing infers the
+  key's locked subaccount when the `subaccount` parameter is omitted and
+  rejects requests that explicitly target a different subaccount. The
+  single-order endpoint returns a 404 for orders outside the locked
+  subaccount.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/portfolio/orders/queue_positions`
+  * `GET /trade-api/v2/portfolio/orders/{order_id}/queue_position`
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Event product_metadata now includes cadence",
+description: "Event responses now return a cadence value in product_metadata when the event has one set."
+}}
+>
+  Event objects returned by the REST API now include a `cadence` value inside
+  `product_metadata` when the event has one set. It tells you how often the
+  event recurs, for example `fifteen_min`. Events without a cadence set are
+  returned the same as before.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/events`
+  * `GET /trade-api/v2/events/{event_ticker}`
+</Update>
 
 <Update
   label="July 30, 2026"

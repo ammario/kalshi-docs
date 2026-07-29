@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/create-subaccount
-lastmod: 2026-07-28T00:23:53.333Z
+lastmod: 2026-07-29T01:31:37.994Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -136,9 +136,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-        service:
-          type: string
-          description: The name of the service that generated the error
   responses:
     BadRequestError:
       description: Bad request - invalid input

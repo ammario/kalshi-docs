@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/order-groups/update-order-group-limit
-lastmod: 2026-07-28T00:23:54.401Z
+lastmod: 2026-07-29T01:31:38.932Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -152,9 +152,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-        service:
-          type: string
-          description: The name of the service that generated the error
   responses:
     BadRequestError:
       description: Bad request - invalid input

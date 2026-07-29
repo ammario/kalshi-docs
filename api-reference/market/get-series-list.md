@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series-list
-lastmod: 2026-07-28T00:23:52.966Z
+lastmod: 2026-07-29T01:31:37.714Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -216,6 +216,7 @@ components:
             calculations.
         additional_prohibitions:
           type: array
+          nullable: true
           items:
             type: string
           description: >-
@@ -230,6 +231,11 @@ components:
           type: string
           format: date-time
           description: Timestamp of when this series' metadata was last updated.
+        exchange_index:
+          allOf:
+            - $ref: '#/components/schemas/ExchangeIndex'
+          x-go-type-skip-optional-pointer: true
+          x-omitempty: false
     ErrorResponse:
       type: object
       properties:
@@ -242,9 +248,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-        service:
-          type: string
-          description: The name of the service that generated the error
     SettlementSource:
       type: object
       properties:
@@ -276,6 +279,12 @@ components:
         contract values (e.g., "2.50") are supported; the minimum granularity is
         0.01 contracts.
       example: '10.00'
+    ExchangeIndex:
+      type: integer
+      description: >-
+        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
+        currently only 0 supported.
+      example: 0
   responses:
     BadRequestError:
       description: Bad request - invalid input

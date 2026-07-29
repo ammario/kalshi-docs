@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/transfer-between-subaccounts
-lastmod: 2026-07-28T00:23:53.344Z
+lastmod: 2026-07-29T01:31:38.003Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -156,9 +156,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-        service:
-          type: string
-          description: The name of the service that generated the error
   responses:
     BadRequestError:
       description: Bad request - invalid input

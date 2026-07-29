@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/intra-account-transfer
-lastmod: 2026-07-28T00:23:54.312Z
+lastmod: 2026-07-29T01:31:38.847Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-07-28T00:23:54.312Z
 
 # Intra Account Transfer
 
->  Endpoint for transferring funds within the same account. This endpoint is currently not available.
+> Endpoint for transferring funds within the same account.
 
 
 
@@ -53,7 +53,7 @@ paths:
       tags:
         - portfolio
       summary: Intra Account Transfer
-      description: ' Endpoint for transferring funds within the same account. This endpoint is currently not available.'
+      description: Endpoint for transferring funds within the same account.
       operationId: IntraExchangeInstanceTransfer
       requestBody:
         required: true
@@ -135,9 +135,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-        service:
-          type: string
-          description: The name of the service that generated the error
   responses:
     BadRequestError:
       description: Bad request - invalid input

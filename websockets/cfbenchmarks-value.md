@@ -255,7 +255,7 @@ operations:
             type:
               type: string
               const: cfbenchmarks_value
-              x-parser-schema-id: <anonymous-schema-284>
+              x-parser-schema-id: <anonymous-schema-286>
             sid: &ref_1
               type: integer
               description: >-
@@ -282,15 +282,15 @@ operations:
                 index_id:
                   type: string
                   description: CF Benchmarks index ID (for example "BRTI")
-                  x-parser-schema-id: <anonymous-schema-286>
+                  x-parser-schema-id: <anonymous-schema-288>
                 received_at:
                   type: integer
                   description: When Kalshi received the upstream frame (unix ms)
-                  x-parser-schema-id: <anonymous-schema-287>
+                  x-parser-schema-id: <anonymous-schema-289>
                 data:
                   type: string
                   description: The raw CF Benchmarks JSON frame, as a string
-                  x-parser-schema-id: <anonymous-schema-288>
+                  x-parser-schema-id: <anonymous-schema-290>
                 avg_60s_data: &ref_0
                   type: object
                   description: Windowed-average metadata for a CF Benchmarks index value.
@@ -305,23 +305,23 @@ operations:
                       description: >-
                         Average value over the window, formatted to 8 decimal
                         places
-                      x-parser-schema-id: <anonymous-schema-289>
+                      x-parser-schema-id: <anonymous-schema-291>
                     window_size:
                       type: integer
                       description: Number of ticks counted in the window
                       minimum: 0
-                      x-parser-schema-id: <anonymous-schema-290>
+                      x-parser-schema-id: <anonymous-schema-292>
                     window_start_ts_ms:
                       type: integer
                       description: Window start boundary (unix ms)
-                      x-parser-schema-id: <anonymous-schema-291>
+                      x-parser-schema-id: <anonymous-schema-293>
                     window_end_ts_exclusive:
                       type: integer
                       description: Window end boundary, exclusive (unix ms)
-                      x-parser-schema-id: <anonymous-schema-292>
+                      x-parser-schema-id: <anonymous-schema-294>
                   x-parser-schema-id: cfbenchmarksAvgData
                 last_60s_windowed_average_15min: *ref_0
-              x-parser-schema-id: <anonymous-schema-285>
+              x-parser-schema-id: <anonymous-schema-287>
           x-parser-schema-id: cfbenchmarksValuePayload
         title: CF Benchmarks Value Update
         description: >-
@@ -429,7 +429,7 @@ operations:
             type:
               type: string
               const: cfbenchmarks_value_indexlist
-              x-parser-schema-id: <anonymous-schema-293>
+              x-parser-schema-id: <anonymous-schema-295>
             id:
               type: integer
               description: >
@@ -455,9 +455,9 @@ operations:
                   description: Available CF Benchmarks index IDs
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-296>
-                  x-parser-schema-id: <anonymous-schema-295>
-              x-parser-schema-id: <anonymous-schema-294>
+                    x-parser-schema-id: <anonymous-schema-298>
+                  x-parser-schema-id: <anonymous-schema-297>
+              x-parser-schema-id: <anonymous-schema-296>
           x-parser-schema-id: cfbenchmarksIndexListPayload
         title: CF Benchmarks Index List
         description: >-
