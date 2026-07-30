@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-06-24T22:34:43.225Z
+lastmod: 2026-07-29T23:09:09.386Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -64,7 +64,7 @@ Used to modify an existing order without canceling it.
 | 44  | Price         | Integer | N        | New price in cents (1–99). Required if changing price.                                   |
 | 54  | Side          | Char    | Y        | Must match original order.                                                               |
 | 55  | Symbol        | String  | Y        | Must match original order.                                                               |
-| 100 | ExDestination | Integer | N        | Exchange index. Omit for exchange index `0`.                                             |
+| 100 | ExDestination | Integer | N        | Exchange index. Omit for exchange index `0`. Use `-1` to auto-route by `Symbol`.         |
 | 448 | PartyID       | UUID    | N        | FCM only. Must match original order.                                                     |
 | 452 | PartyRole     | Integer | N        | FCM only. `24`=Customer Account. Must match original order. Required when using PartyID. |
 | 453 | NoPartyIDs    | Integer | N        | FCM only. Must match original order (only 1 supported).                                  |

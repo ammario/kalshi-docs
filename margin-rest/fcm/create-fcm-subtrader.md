@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/margin-rest/order-groups/get-order-groups
-lastmod: 2026-07-30T02:47:57.206Z
+url: https://docs.kalshi.com/margin-rest/fcm/create-fcm-subtrader
+lastmod: 2026-07-30T02:47:56.942Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Order Groups
+# Create FCM Subtrader
 
-> Retrieves all order groups for the authenticated user on the margin exchange.
+> Endpoint for FCM members to create a subtrader.
 
 
 
 ## OpenAPI
 
-````yaml /perps_openapi.yaml get /margin/order_groups
+````yaml /perps_openapi.yaml post /fcm/subtraders
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -50,28 +50,34 @@ tags:
   - name: fees
     description: Margin fee schedule
 paths:
-  /margin/order_groups:
-    get:
+  /fcm/subtraders:
+    post:
       tags:
-        - order-groups
-      summary: Get Order Groups
-      description: >-
-        Retrieves all order groups for the authenticated user on the margin
-        exchange.
-      operationId: GetMarginOrderGroups
-      parameters:
-        - $ref: '#/components/parameters/SubaccountQuery'
+        - fcm
+      summary: Create FCM Subtrader
+      description: Endpoint for FCM members to create a subtrader.
+      operationId: CreateFCMSubtrader
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFCMSubtraderRequest'
       responses:
-        '200':
-          description: Order groups retrieved successfully
+        '201':
+          description: Subtrader created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetOrderGroupsResponse'
+                $ref: '#/components/schemas/CreateFCMSubtraderResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -79,50 +85,28 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    SubaccountQuery:
-      name: subaccount
-      in: query
-      required: false
-      description: >-
-        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
-        defaults to all subaccounts.
-      schema:
-        type: integer
-        minimum: 0
   schemas:
-    GetOrderGroupsResponse:
-      type: object
-      properties:
-        order_groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderGroup'
-          x-go-type-skip-optional-pointer: true
-    OrderGroup:
+    CreateFCMSubtraderRequest:
       type: object
       required:
-        - id
-        - is_auto_cancel_enabled
+        - subtrader_suffix
       properties:
-        id:
+        subtrader_suffix:
           type: string
-          description: Unique identifier for the order group
-          x-go-type-skip-optional-pointer: true
-        contracts_limit_fp:
-          $ref: '#/components/schemas/FixedPointCount'
+          pattern: ^[a-z0-9]{1,16}$
           description: >-
-            String representation of the current maximum contracts allowed over
-            a rolling 15-second window.
-          x-go-type-skip-optional-pointer: true
-        is_auto_cancel_enabled:
-          type: boolean
-          description: Whether auto-cancel is enabled for this order group
-          x-go-type-skip-optional-pointer: true
-        exchange_index:
-          allOf:
-            - $ref: '#/components/schemas/ExchangeIndex'
-          x-go-type-skip-optional-pointer: true
+            Suffix for the new subtrader. The full subtrader id is composed
+            server-side as {user_id}_{subtrader_suffix}.
+    CreateFCMSubtraderResponse:
+      type: object
+      required:
+        - subtrader_id
+      properties:
+        subtrader_id:
+          type: string
+          description: >-
+            The full id of the created subtrader, in the form
+            {user_id}_{subtrader_suffix}.
     ErrorResponse:
       type: object
       properties:
@@ -135,21 +119,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-    FixedPointCount:
-      type: string
-      description: >-
-        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
-        to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported; the minimum granularity is
-        0.01 contracts.
-      example: '10.00'
-    ExchangeIndex:
-      type: integer
-      description: >-
-        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
-        currently only 0 supported.
-      example: 0
   responses:
     BadRequestError:
       description: Bad request - invalid input
@@ -159,6 +128,18 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ConflictError:
+      description: Conflict - resource already exists or cannot be modified
       content:
         application/json:
           schema:

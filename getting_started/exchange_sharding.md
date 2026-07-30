@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/exchange_sharding
-lastmod: 2026-07-29T00:57:53.389Z
+lastmod: 2026-07-29T14:53:47.116Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,12 +18,12 @@ Kalshi plans to add shards incrementally to maintain a healthy balance of traffi
 
 ## Timeline
 
-Initially, Kalshi will migrate combos from the "default" exhange instance to shard 1
+Initially, Kalshi will migrate combos from the "default" exchange instance to shard 1.
 
 * August 6, 2026: intra-exchange instance transfers enabled to exchange index 1.
-* August 10, 2026: `KXMVECROSSCATEGORY-SHARD1-R` multivariate event collection created with support for crypto-related combos.
-* August 13, 2026: `KXMVECROSSCATEGORY-SHARD1-R` supports all combos.
-* August 17, 2026: support for legacy collections (`KXMVESPORTSMULTIGAMEEXTENDED-R`, `KXMVECROSSCATEGORY-R`) dropped.
+* August 10, 2026: `KXMVECROSSCATEGORY-SHARD1-R` multivariate event collection created with support for all combos.
+* August 17, 2026: combos created over legacy collections `KXMVESPORTSMULTIGAMEEXTENDED-R`, `KXMVECROSSCATEGORY-R` will be created on shard 1.
+* August 24, 2026: support for `KXMVESPORTSMULTIGAMEEXTENDED-R`, `KXMVECROSSCATEGORY-R` is dropped.
 
 ## Balance Management
 

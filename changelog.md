@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-29T01:31:47.939Z
+lastmod: 2026-07-30T02:48:05.380Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,37 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["Deprecation", "Upcoming"] */}
+{/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="August 6, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Order group limit updates support subaccounts",
+description: "Order group limit updates now accept a subaccount parameter."
+}}
+>
+  `PUT /portfolio/order_groups/{order_group_id}/limit` now supports the `subaccount` parameter.
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Richer combo-validation errors on multivariate market creation",
+description: "Invalid-combination errors from creating a market in a multivariate event collection now explain why the combination is invalid and list the offending legs."
+}}
+>
+  `POST /trade-api/v2/multivariate_event_collections/{collection_ticker}` now
+  returns richer error bodies when the selected legs form an invalid
+  combination. The `message` field explains why the combination is invalid
+  (for example, which selections conflict), and the `details` field lists the
+  offending market tickers as a comma-separated string when they are known.
+
+  The `code` field is unchanged (`conflicting_leg_outcomes`,
+  `duplicated_legs`, `invalid_market_combination`), so existing error
+  handling keeps working.
+</Update>
 
 <Update
   label="August 6, 2026"

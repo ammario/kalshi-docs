@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-07-08T21:17:31.886Z
+lastmod: 2026-07-29T19:03:53.515Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -65,24 +65,43 @@ This message is used bidirectionally:
 
 ### Creator → Exchange (Create RFQ)
 
-| Tag   | Name                             | Type    | Required | Description                                                                                                                                                       |
-| ----- | -------------------------------- | ------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 131   | QuoteReqId                       | UUID    | Y        | Client-assigned RFQ identifier                                                                                                                                    |
-| 146   | NoRelatedSym                     | Integer | Y        | Number of symbols in the `55=Symbol` repeating group (must be 1)                                                                                                  |
-| 55    | Symbol                           | String  | C        | Market ticker. Required unless MVE legs are specified                                                                                                             |
-| 38    | OrderQty                         | Decimal | C        | Number of contracts as a fixed-point decimal. Supports `0.01`-contract increments (for example `5`, `5.00`, or `5.25`). Required unless CashOrderQty is specified |
-| 152   | CashOrderQty                     | Decimal | C        | Target cost in dollars. Required unless OrderQty is specified                                                                                                     |
-| 79    | AllocAccount                     | Integer | N        | Subaccount number (0-63) for direct members. Alternative to NoPartyIDs; omit or set to 0 for the primary account                                                  |
-| 453   | NoPartyIDs                       | Integer | N        | Number of parties (only 1 supported)                                                                                                                              |
-| 448   | PartyId                          | String  | N        | FCM SubtraderId for the customer on whose behalf the RFQ is submitted                                                                                             |
-| 452   | PartyRole                        | Integer | N        | 24 (CustomerAccount) - required when using PartyId                                                                                                                |
-| 21015 | RestRemainder                    | Char    | N        | Y/N - Rest the quote remainder after execution (default: N)                                                                                                       |
-| 21016 | ReplaceExisting                  | Char    | N        | Y/N - Whether to delete existing RFQs as part of this RFQ's creation (default: N)                                                                                 |
-| 20180 | MultivariateCollectionTicker     | String  | C        | Collection ticker for parlay/MVE markets. Use instead of Symbol                                                                                                   |
-| 20181 | NoMultivariateSelectedLegs       | Integer | C        | Number of MVE legs (repeating group). Required with 20180                                                                                                         |
-| 20182 | MultivariateSelectedEventTicker  | String  | Y        | Event ticker for the leg                                                                                                                                          |
-| 20183 | MultivariateSelectedMarketTicker | String  | Y        | Market ticker for the leg                                                                                                                                         |
-| 20184 | MultivariateSelectedSide         | String  | Y        | Side for the leg ("yes" or "no")                                                                                                                                  |
+**Message body**
+
+| Tag   | Name                             | Type    | Required | Description                                                                                                      |
+| ----- | -------------------------------- | ------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
+| 131   | QuoteReqId                       | UUID    | Y        | Client-assigned RFQ identifier                                                                                   |
+| 146   | NoRelatedSym                     | Integer | Y        | Number of entries in the repeating group below. Must be 1                                                        |
+| 79    | AllocAccount                     | Integer | N        | Subaccount number (0-63) for direct members. Alternative to NoPartyIDs; omit or set to 0 for the primary account |
+| 20180 | MultivariateCollectionTicker     | String  | C        | Collection ticker for parlay/MVE markets. Use instead of Symbol                                                  |
+| 20181 | NoMultivariateSelectedLegs       | Integer | C        | Number of MVE legs (repeating group). Required with 20180                                                        |
+| 20182 | MultivariateSelectedEventTicker  | String  | Y        | Event ticker for the leg                                                                                         |
+| 20183 | MultivariateSelectedMarketTicker | String  | Y        | Market ticker for the leg                                                                                        |
+| 20184 | MultivariateSelectedSide         | String  | Y        | Side for the leg ("yes" or "no")                                                                                 |
+
+**Inside the `146=NoRelatedSym` group**
+
+| Tag   | Name            | Type    | Required | Description                                                                                                                                                                                                               |
+| ----- | --------------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 55    | Symbol          | String  | C        | Market ticker. Group delimiter — send it immediately after `146`. Required unless MVE legs are specified                                                                                                                  |
+| 38    | OrderQty        | Decimal | C        | Number of contracts as a fixed-point decimal. Supports `0.01`-contract increments (for example `5`, `5.00`, or `5.25`). Required unless CashOrderQty is specified. Acts as the delimiter on MVE requests, which omit `55` |
+| 152   | CashOrderQty    | Decimal | C        | Target cost in dollars. Required unless OrderQty is specified. Acts as the delimiter on MVE requests that size by cost                                                                                                    |
+| 21015 | RestRemainder   | Char    | N        | Y/N - Rest the quote remainder after execution (default: N)                                                                                                                                                               |
+| 21016 | ReplaceExisting | Char    | N        | Y/N - Cancel all of the submitting subtrader's existing RFQs as part of this RFQ's creation (default: N). Use this instead of sending an explicit RFQCancel before re-pricing                                             |
+| 453   | NoPartyIDs      | Integer | N        | Nested repeating group. Number of parties (only 1 supported)                                                                                                                                                              |
+| 448   | PartyId         | String  | N        | FCM SubtraderId for the customer on whose behalf the RFQ is submitted                                                                                                                                                     |
+| 452   | PartyRole       | Integer | N        | 24 (CustomerAccount) - required when using PartyId                                                                                                                                                                        |
+
+<Note>
+  The delimiter is the first tag of a group entry: send `146`, then `55` for a symbol RFQ
+  or `38`/`152` for an MVE RFQ (which omits `55`). Note that `21015` and `21016` are
+  dropped without a reject if they land outside the group — a misplaced `21016` surfaces
+  later as `RFQ already exists` on the next request rather than as an error on this one.
+
+  The published [FIX dictionary](https://assets.kalshi.com/fix/kalshi-fix-dictionary.xml)
+  lists `55` first, since a dictionary can only declare one delimiter per group. MVE
+  requests legitimately omit `55`, so a strict dictionary-driven validator may flag them —
+  relax the delimiter for the MVE case rather than adding an empty `55`.
+</Note>
 
 <Info>
   **MVE/Parlay Support**: Instead of specifying a Symbol, you can submit MVE legs directly. The server will automatically resolve or create the parlay market and return the resolved market ticker in the QuoteRequestAck.
@@ -90,20 +109,31 @@ This message is used bidirectionally:
 
 ### Exchange → Market Maker (RFQ Notification)
 
-| Tag   | Name                             | Type    | Required | Description                                                                                           |
-| ----- | -------------------------------- | ------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| 131   | QuoteReqId                       | UUID    | Y        | Server-assigned RFQ identifier                                                                        |
-| 146   | NoRelatedSym                     | Integer | Y        | Number of symbols in the `55=Symbol` repeating group (always 1)                                       |
-| 55    | Symbol                           | String  | Y        | Market ticker                                                                                         |
-| 38    | OrderQty                         | Decimal | Y        | Number of contracts as a fixed-point decimal                                                          |
-| 152   | CashOrderQty                     | Decimal | N        | Target cost in dollars (if specified by creator)                                                      |
-| 453   | NoPartyIDs                       | Integer | N        | Number of parties (always 1)                                                                          |
-| 448   | PartyId                          | String  | N        | Requester public communications ID. This value is pseudonymous and is not the requester's SubtraderId |
-| 20180 | MultivariateCollectionTicker     | String  | N        | Collection ticker for multivariate markets                                                            |
-| 20181 | NoMultivariateSelectedLegs       | Integer | N        | Number of MVE legs (repeating group)                                                                  |
-| 20182 | MultivariateSelectedEventTicker  | String  | N        | Event ticker for the leg                                                                              |
-| 20183 | MultivariateSelectedMarketTicker | String  | N        | Market ticker for the leg                                                                             |
-| 20184 | MultivariateSelectedSide         | String  | N        | Side for the leg ("yes" or "no")                                                                      |
+The exchange builds this message with the same structure market makers must parse:
+`55`, `38`, `152` and the nested `453=NoPartyIDs` group are members of the
+`146=NoRelatedSym` group, and the MVE tags sit in the message body.
+
+**Message body**
+
+| Tag   | Name                             | Type    | Required | Description                                               |
+| ----- | -------------------------------- | ------- | -------- | --------------------------------------------------------- |
+| 131   | QuoteReqId                       | UUID    | Y        | Server-assigned RFQ identifier                            |
+| 146   | NoRelatedSym                     | Integer | Y        | Number of entries in the repeating group below (always 1) |
+| 20180 | MultivariateCollectionTicker     | String  | N        | Collection ticker for multivariate markets                |
+| 20181 | NoMultivariateSelectedLegs       | Integer | N        | Number of MVE legs (repeating group)                      |
+| 20182 | MultivariateSelectedEventTicker  | String  | N        | Event ticker for the leg                                  |
+| 20183 | MultivariateSelectedMarketTicker | String  | N        | Market ticker for the leg                                 |
+| 20184 | MultivariateSelectedSide         | String  | N        | Side for the leg ("yes" or "no")                          |
+
+**Inside the `146=NoRelatedSym` group**
+
+| Tag | Name         | Type    | Required | Description                                                                                           |
+| --- | ------------ | ------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| 55  | Symbol       | String  | Y        | Market ticker. Group delimiter                                                                        |
+| 38  | OrderQty     | Decimal | Y        | Number of contracts as a fixed-point decimal                                                          |
+| 152 | CashOrderQty | Decimal | N        | Target cost in dollars (if specified by creator)                                                      |
+| 453 | NoPartyIDs   | Integer | N        | Nested repeating group. Number of parties (always 1)                                                  |
+| 448 | PartyId      | String  | N        | Requester public communications ID. This value is pseudonymous and is not the requester's SubtraderId |
 
 ## QuoteRequestAck (35=b)
 
@@ -317,6 +347,14 @@ Exchange notifies that an RFQ creation request was rejected or that a quote requ
 
   ```fix Create RFQ with MVE Legs (Creator → Exchange) theme={null}
   8=FIXT.1.1|35=R|131=client-req-456|146=1|38=100|20180=PARLAY-COLLECTION|20181=2|20182=EVENT1|20183=MKT1|20184=yes|20182=EVENT2|20183=MKT2|20184=no|
+  ```
+
+  ```fix Replace an Existing RFQ (Creator → Exchange) theme={null}
+  8=FIXT.1.1|35=R|131=client-req-124|146=1|55=HIGHNY-23DEC31|38=100|21016=Y|
+  ```
+
+  ```fix Replace on Behalf of an FCM Subtrader (Creator → Exchange) theme={null}
+  8=FIXT.1.1|35=R|131=client-req-457|146=1|38=100|21016=Y|453=1|448=subtrader-uuid|452=24|20180=PARLAY-COLLECTION|20181=2|20182=EVENT1|20183=MKT1|20184=yes|20182=EVENT2|20183=MKT2|20184=no|
   ```
 
   ```fix QuoteRequestAck (Exchange → Creator) theme={null}

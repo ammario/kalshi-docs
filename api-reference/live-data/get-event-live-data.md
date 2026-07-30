@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-event-live-data
-lastmod: 2026-07-29T01:31:38.423Z
+lastmod: 2026-07-30T02:47:56.762Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

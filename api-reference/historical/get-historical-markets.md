@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-markets
-lastmod: 2026-07-29T01:31:38.591Z
+lastmod: 2026-07-30T02:47:56.924Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -523,9 +523,7 @@ components:
           description: Price step/tick size for this range in dollars
     ExchangeIndex:
       type: integer
-      description: >-
-        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
-        currently only 0 supported.
+      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
       example: 0
   responses:
     BadRequestError:
