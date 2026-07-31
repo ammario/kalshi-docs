@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/margin-rest/portfolio/transfer-between-subaccounts
-lastmod: 2026-07-30T17:51:12.122Z
+url: https://docs.kalshi.com/margin-rest/fcm/create-margin-fcm-subtrader
+lastmod: 2026-07-30T23:03:59.172Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Transfer Between Subaccounts
+# Create Margin FCM Subtrader
 
-> Transfers funds between the authenticated user's margin subaccounts. Use 0 for the primary account, or 1-63 for numbered subaccounts.
+> Endpoint for FCM members to create a margin subtrader.
 
 
 
 ## OpenAPI
 
-````yaml /perps_openapi.yaml post /portfolio/margin/subaccounts/transfer
+````yaml /perps_openapi.yaml post /margin/fcm/subtraders
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -50,32 +50,34 @@ tags:
   - name: fees
     description: Margin fee schedule
 paths:
-  /portfolio/margin/subaccounts/transfer:
+  /margin/fcm/subtraders:
     post:
       tags:
-        - portfolio
-      summary: Transfer Between Subaccounts
-      description: >-
-        Transfers funds between the authenticated user's margin subaccounts. Use
-        0 for the primary account, or 1-63 for numbered subaccounts.
-      operationId: ApplyMarginSubaccountTransfer
+        - fcm
+      summary: Create Margin FCM Subtrader
+      description: Endpoint for FCM members to create a margin subtrader.
+      operationId: CreateMarginFCMSubtrader
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ApplySubaccountTransferRequest'
+              $ref: '#/components/schemas/CreateMarginFCMSubtraderRequest'
       responses:
-        '200':
-          description: Transfer completed successfully
+        '201':
+          description: Subtrader created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplySubaccountTransferResponse'
+                $ref: '#/components/schemas/CreateMarginFCMSubtraderResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -84,37 +86,27 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
-    ApplySubaccountTransferRequest:
+    CreateMarginFCMSubtraderRequest:
       type: object
       required:
-        - client_transfer_id
-        - from_subaccount
-        - to_subaccount
-        - amount_cents
+        - subtrader_suffix
       properties:
-        client_transfer_id:
+        subtrader_suffix:
           type: string
-          format: uuid
-          description: Unique client-provided transfer ID for idempotency.
-          x-oapi-codegen-extra-tags:
-            validate: required
-        from_subaccount:
-          type: integer
+          pattern: ^[a-z0-9]{1,16}$
           description: >-
-            Source subaccount number (0 for primary, 1-63 for numbered
-            subaccounts).
-        to_subaccount:
-          type: integer
-          description: >-
-            Destination subaccount number (0 for primary, 1-63 for numbered
-            subaccounts).
-        amount_cents:
-          type: integer
-          format: int64
-          description: Amount to transfer in cents.
-    ApplySubaccountTransferResponse:
+            Suffix for the new subtrader. The full subtrader id is composed
+            server-side as {user_id}_{subtrader_suffix}.
+    CreateMarginFCMSubtraderResponse:
       type: object
-      description: Empty response indicating successful transfer.
+      required:
+        - subtrader_id
+      properties:
+        subtrader_id:
+          type: string
+          description: >-
+            The full id of the created subtrader, in the form
+            {user_id}_{subtrader_suffix}.
     ErrorResponse:
       type: object
       properties:
@@ -136,6 +128,18 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ConflictError:
+      description: Conflict - resource already exists or cannot be modified
       content:
         application/json:
           schema:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/create-subaccount
-lastmod: 2026-07-30T02:47:57.188Z
+lastmod: 2026-07-30T17:51:12.113Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
