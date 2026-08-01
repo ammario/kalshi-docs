@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/cfbenchmarks/rest-passthrough
-lastmod: 2026-06-10T21:29:35.251Z
+lastmod: 2026-08-01T01:59:53.826Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -70,7 +70,7 @@ The raw CF Benchmarks payload is returned under the `data` field:
 
 ## Available Endpoints
 
-The passthrough forwards any path and query parameters supported by CF Benchmarks. For the list of available endpoints, supported parameters, and index identifiers (such as `BRTI`), refer to the official [CF Benchmarks API documentation](https://docs.cfbenchmarks.com).
+The passthrough forwards any path and query parameters supported by CF Benchmarks. For the list of available endpoints, supported parameters, and index identifiers (such as `BRTI`), refer to the official [CF Benchmarks API documentation](https://docs.cfbenchmarks.com/api/category/rest/).
 
 ## Error Handling
 
