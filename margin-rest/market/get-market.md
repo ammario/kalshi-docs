@@ -133,6 +133,22 @@ components:
             in dollars ("1000", "10000", "100000", "1000000"). Leverage
             decreases at larger notionals as the liquidation margin rate grows
             with size. Null when margin config or price data is unavailable.
+        long_leverage_estimates:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+          description: >
+            Leverage estimates for a long position, keyed by the same notional
+            position sizes as leverage_estimates. 
+        short_leverage_estimates:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+          description: >
+            Leverage estimates for a short position, keyed by the same notional
+            position sizes as long_leverage_estimates.
         price:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Last trade price in dollars.

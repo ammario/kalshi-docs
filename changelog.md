@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-07-31T15:37:25.935Z
+lastmod: 2026-08-03T02:34:44.804Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,19 @@ FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
 {/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="August 6, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Sided leverage estimates on margin markets",
+description: "Margin market responses now carry separate long and short leverage estimates."
+}}
+>
+  `GET /trade-api/v2/margin/markets` and `GET /trade-api/v2/margin/markets/{ticker}`
+  now return `long_leverage_estimates` and `short_leverage_estimates`, keyed by the
+  same notional sizes as `leverage_estimates`.
+</Update>
 
 <Update
   label="August 6, 2026"
