@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-03T02:34:44.804Z
+lastmod: 2026-08-04T00:52:32.830Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,29 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["New Feature", "Upcoming"] */}
+<Update
+  label="August 17, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "Centicent pricing on multivariate (combo) markets",
+description: "Combo markets are moving from $0.001 to $0.0001 ticks via a new price_level_structure."
+}}
+>
+  Multivariate (combo) markets are moving from `deci_cent` (\$0.001 ticks) to
+  a new `price_level_structure`, `center_centi_edge_centi_cent`: a uniform
+  \$0.0001 (0.01¢) tick across the full range. Other markets are unchanged.
+
+  No API fields or message formats change. Prices on these markets use all
+  four decimal places of the existing `*_dollars` fields — read prices from
+  those fields (integer-cent fields cannot represent sub-cent prices) and
+  snap order and RFQ quote prices to the `step` in the market's
+  `price_ranges` array rather than keying off the structure name.
+
+  Existing combo markets migrate in place with resting orders preserved, each
+  emitting the existing `price_level_structure_updated` event with its new
+  `price_ranges`. See [Fixed-Point Representation](/getting_started/fixed_point_migration)
+  for the full structure reference.
+</Update>
 
 <Update
   label="August 6, 2026"

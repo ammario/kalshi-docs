@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/orderbook_responses
-lastmod: 2026-06-01T19:43:33.337Z
+lastmod: 2026-08-04T00:52:32.775Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -58,7 +58,7 @@ The orderbook response is wrapped in an `orderbook_fp` object containing two arr
 * **`price_dollars`**: Price as a dollar string (e.g., `"0.4200"` = \$0.42)
 * **`count_fp`**: Number of contracts as a fixed-point string (e.g., `"13.00"` = 13 contracts)
 
-Both values are strings to support subpenny pricing and fractional contract sizes. See [Fixed-Point Migration](/getting_started/fixed_point_migration) for details.
+Both values are strings to support subpenny pricing and fractional contract sizes. See [Fixed-Point Representation](/getting_started/fixed_point_migration) for details.
 
 ### Example Response
 
