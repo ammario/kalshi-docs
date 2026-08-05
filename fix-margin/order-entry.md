@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-07-22T18:45:02.057Z
+lastmod: 2026-08-04T23:47:01.493Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -87,6 +87,7 @@ This message is sent by the exchange to reflect changes to an order's state.
 | 11  | ClOrderID    | String       | Y        | ClOrderID from the last change-making request                                                                  |
 | 14  | CumQty       | Decimal      | Y        | Total quantity filled so far                                                                                   |
 | 17  | ExecID       | String       | Y        | Unique sequenced identifier for this report message                                                            |
+| 30  | LastMkt      | String       | C        | Exchange index that produced the report.                                                                       |
 | 31  | LastPx       | Decimal      | C        | Price of the last fill in fixed-point dollars                                                                  |
 | 32  | LastQty      | Decimal      | C        | Quantity of the last fill                                                                                      |
 | 37  | OrderID      | String       | Y        | Exchange order identifier                                                                                      |

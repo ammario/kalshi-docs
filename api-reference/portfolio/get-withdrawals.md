@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-withdrawals
-lastmod: 2026-07-30T17:51:11.247Z
+lastmod: 2026-08-05T00:55:30.141Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -147,6 +147,11 @@ components:
             - applied
             - failed
             - returned
+          x-enum-varnames:
+            - WithdrawalStatusPending
+            - WithdrawalStatusApplied
+            - WithdrawalStatusFailed
+            - WithdrawalStatusReturned
           description: >-
             Current status of the withdrawal. 'applied' means funds have been
             deducted from balance.

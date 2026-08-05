@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fcm/create-margin-fcm-subtrader
-lastmod: 2026-07-30T23:03:59.172Z
+lastmod: 2026-08-05T00:55:30.693Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

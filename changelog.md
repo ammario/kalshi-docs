@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-04T00:52:32.830Z
+lastmod: 2026-08-05T00:06:06.644Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,20 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 6, 2026"
+  tags={["REST", "WebSocket", "Predictions"]}
+  rss={{
+title: "Multivariate lookup endpoint and channel removed",
+description: "The deprecated multivariate lookup REST endpoint and multivariate WebSocket channel have been removed."
+}}
+>
+  The deprecated multivariate lookup surface has been removed:
+
+  * `PUT /trade-api/v2/multivariate_event_collections/{collection_ticker}/lookup` no longer exists. This endpoint predated RFQs and had been marked deprecated; use `POST /trade-api/v2/multivariate_event_collections/{collection_ticker}` to create or resolve a combo market, or the communications (RFQ) APIs for quoting workflows.
+  * The `multivariate` WebSocket channel (message type `multivariate_lookup`) no longer exists. Subscriptions to it now return an unknown-channel error. For multivariate market state changes, use the `multivariate_market_lifecycle` channel.
+</Update>
 
 <Update
   label="August 17, 2026"
@@ -46,6 +60,17 @@ description: "Combo markets are moving from $0.001 to $0.0001 ticks via a new pr
 
 <Update
   label="August 6, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "FIX execution reports identify the source exchange index",
+description: "Order and trade execution reports now include LastMkt with the source exchange index."
+}}
+>
+  Exchange-generated order and trade `ExecutionReport (35=8)` messages now include `LastMkt<30>` with the source exchange index.
+</Update>
+
+<Update
+  label="August 6, 2026"
   tags={["REST", "Margin"]}
   rss={{
 title: "Sided leverage estimates on margin markets",
@@ -66,6 +91,22 @@ description: "Order group limit updates now accept a subaccount parameter."
 }}
 >
   `PUT /portfolio/order_groups/{order_group_id}/limit` now supports the `subaccount` parameter.
+</Update>
+
+<Update
+  label="August 6, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Multivariate event collections include exchange_index",
+description: "Multivariate event collection responses include exchange_index"
+}}
+>
+  Multivariate event collection responses now include `exchange_index`.
+
+  **Affected endpoints:**
+
+  * `GET /multivariate_event_collections`
+  * `GET /multivariate_event_collections/{collection_ticker}`
 </Update>
 
 <Update

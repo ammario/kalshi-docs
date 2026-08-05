@@ -103,7 +103,6 @@ operations:
                           - market_positions
                           - market_lifecycle_v2
                           - multivariate_market_lifecycle
-                          - multivariate
                           - communications
                           - order_group_updates
                           - user_orders
@@ -272,7 +271,6 @@ operations:
                       - market_positions
                       - market_lifecycle_v2
                       - multivariate_market_lifecycle
-                      - multivariate
                       - communications
                       - order_group_updates
                       - user_orders

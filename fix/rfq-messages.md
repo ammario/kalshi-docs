@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-07-29T19:03:53.515Z
+lastmod: 2026-08-04T13:05:35.436Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -86,7 +86,7 @@ This message is used bidirectionally:
 | 38    | OrderQty        | Decimal | C        | Number of contracts as a fixed-point decimal. Supports `0.01`-contract increments (for example `5`, `5.00`, or `5.25`). Required unless CashOrderQty is specified. Acts as the delimiter on MVE requests, which omit `55` |
 | 152   | CashOrderQty    | Decimal | C        | Target cost in dollars. Required unless OrderQty is specified. Acts as the delimiter on MVE requests that size by cost                                                                                                    |
 | 21015 | RestRemainder   | Char    | N        | Y/N - Rest the quote remainder after execution (default: N)                                                                                                                                                               |
-| 21016 | ReplaceExisting | Char    | N        | Y/N - Cancel all of the submitting subtrader's existing RFQs as part of this RFQ's creation (default: N). Use this instead of sending an explicit RFQCancel before re-pricing                                             |
+| 21016 | ReplaceExisting | Char    | N        | Y/N - Close older RFQs while retaining the submitting subtrader's newest existing RFQ, keeping at most two open RFQs including this one (default: N)                                                                      |
 | 453   | NoPartyIDs      | Integer | N        | Nested repeating group. Number of parties (only 1 supported)                                                                                                                                                              |
 | 448   | PartyId         | String  | N        | FCM SubtraderId for the customer on whose behalf the RFQ is submitted                                                                                                                                                     |
 | 452   | PartyRole       | Integer | N        | 24 (CustomerAccount) - required when using PartyId                                                                                                                                                                        |

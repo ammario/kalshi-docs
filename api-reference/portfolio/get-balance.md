@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2026-07-30T17:51:11.140Z
+lastmod: 2026-08-05T00:55:29.839Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-07-30T17:51:11.140Z
 
 # Get Balance
 
-> Endpoint for getting the balance and portfolio value of a member. Both values are returned in cents. This endpoint also accepts API keys with the 'read::portfolio_balance' scope.
+> Endpoint for getting the balance and portfolio value of a member. By default the returned balance is the primary account's available balance. Pass a non-zero `subaccount` to fetch that subaccount's balance on a specific exchange index instead (`exchange_index`, defaulting to 0). When `subaccount` is omitted or 0, `exchange_index` has no effect. This endpoint also accepts API keys with the 'read::portfolio_balance' scope.
 
 
 
@@ -70,13 +70,24 @@ paths:
         - portfolio
       summary: Get Balance
       description: >-
-        Endpoint for getting the balance and portfolio value of a member. Both
-        values are returned in cents. This endpoint also accepts API keys with
-        the 'read::portfolio_balance' scope.
+        Endpoint for getting the balance and portfolio value of a member. By
+        default the returned balance is the primary account's available balance.
+        Pass a non-zero `subaccount` to fetch that subaccount's balance on a
+        specific exchange index instead (`exchange_index`, defaulting to 0).
+        When `subaccount` is omitted or 0, `exchange_index` has no effect. This
+        endpoint also accepts API keys with the 'read::portfolio_balance' scope.
       operationId: GetBalance
       parameters:
         - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
-        - $ref: '#/components/parameters/ExchangeIndexQuery'
+        - name: exchange_index
+          in: query
+          schema:
+            $ref: '#/components/schemas/ExchangeIndex'
+          x-go-type-skip-optional-pointer: true
+          description: >-
+            Exchange index to read the subaccount balance from, paired with a
+            non-zero `subaccount`. Defaults to 0. Ignored when `subaccount` is
+            omitted or 0.
       responses:
         '200':
           description: Balance retrieved successfully
@@ -100,13 +111,11 @@ components:
       description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
       schema:
         type: integer
-    ExchangeIndexQuery:
-      name: exchange_index
-      in: query
-      schema:
-        $ref: '#/components/schemas/ExchangeIndex'
-      x-go-type-skip-optional-pointer: true
   schemas:
+    ExchangeIndex:
+      type: integer
+      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      example: 0
     GetBalanceResponse:
       type: object
       required:
@@ -140,11 +149,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/IndexedBalance'
-          description: Balance broken down per exchange index.
-    ExchangeIndex:
-      type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
-      example: 0
+          description: >-
+            User balance breakdown per exchange instance, omitted only when
+            using a subaccount-restricted API key.
     FixedPointDollars:
       type: string
       description: >-

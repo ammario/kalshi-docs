@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-07-29T23:09:09.386Z
+lastmod: 2026-08-04T23:47:01.494Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -97,6 +97,7 @@ Sent by the exchange to reflect order state changes.
 | 11  | ClOrdID      | String       | Y        | ClOrdID from the last message that changed the order.                                                                                                                                                             |
 | 14  | CumQty       | Decimal      | Y        | Total quantity filled so far.                                                                                                                                                                                     |
 | 17  | ExecID       | String       | Y        | Unique report ID, sequenced within an exchange index. Format: `clock;event` for exchange index `0` (e.g. `4;7`) and `clock;event;exchange_index` for other indexes (e.g. `4;7;1`). `"-1;-1"` for PENDING reports. |
+| 30  | LastMkt      | String       | C        | Exchange index that produced the report.                                                                                                                                                                          |
 | 31  | LastPx       | Integer      | C        | Fill price in cents. Present only for ExecType=Trade.                                                                                                                                                             |
 | 32  | LastQty      | Decimal      | C        | Fill quantity. Present only for ExecType=Trade.                                                                                                                                                                   |
 | 37  | OrderID      | String       | Y        | Exchange-assigned order identifier.                                                                                                                                                                               |

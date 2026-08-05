@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-rfq-quote
-lastmod: 2026-07-30T17:51:11.362Z
+lastmod: 2026-08-05T00:55:30.264Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
