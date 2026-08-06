@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/demo_env
-lastmod: 2026-06-24T13:51:32.241Z
+lastmod: 2026-08-05T16:32:15.609Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -16,7 +16,7 @@ For testing purposes, Kalshi offers a *demo* environment with mock funds. You ca
   The price and behavior of markets in the demo environment may not be reflective of those in real markets.
 </Warning>
 
-To set up a Kalshi Demo account, [follow this step-by-step tutorial](https://docs.google.com/presentation/d/e/2PACX-1vRvhUAqRBYzJmt7JCinMXmu6KVWkj-cc7ikDXGConmqjcv4mnlJacgHPcZJ20fWWnrYdubn-oczclKP/pub?start=false\&loop=false\&delayms=3000\&slide=id.p).
+To set up a Kalshi Demo account, [follow this step-by-step tutorial](https://help.kalshi.com/en/articles/13823775-creating-and-using-a-demo-account).
 
 Demo's recommended Trade API root is `https://external-api.demo.kalshi.co/trade-api/v2`.
 

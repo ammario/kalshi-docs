@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-all-subaccount-balances
-lastmod: 2026-08-05T18:38:08.684Z
+url: https://docs.kalshi.com/api-reference/portfolio/get-intra-account-transfer
+lastmod: 2026-08-05T18:38:08.658Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get All Subaccount Balances
+# Get Intra Account Transfer
 
-> Gets balances for all subaccounts including the primary account.
+> Endpoint for getting a single intra-account transfer by id.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/subaccounts/balances
+````yaml /openapi.yaml get /portfolio/intra_exchange_instance_transfers/{transfer_id}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,22 +64,31 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/subaccounts/balances:
+  /portfolio/intra_exchange_instance_transfers/{transfer_id}:
     get:
       tags:
         - portfolio
-      summary: Get All Subaccount Balances
-      description: Gets balances for all subaccounts including the primary account.
-      operationId: GetSubaccountBalances
+      summary: Get Intra Account Transfer
+      description: Endpoint for getting a single intra-account transfer by id.
+      operationId: GetIntraExchangeInstanceTransfer
+      parameters:
+        - name: transfer_id
+          in: path
+          required: true
+          description: Transfer id returned by creation endpoint
+          schema:
+            type: string
       responses:
         '200':
-          description: Balances retrieved successfully
+          description: The requested transfer
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetSubaccountBalancesResponse'
+                $ref: '#/components/schemas/GetIntraExchangeInstanceTransferResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -88,36 +97,49 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
-    GetSubaccountBalancesResponse:
+    GetIntraExchangeInstanceTransferResponse:
       type: object
       required:
-        - subaccount_balances
+        - transfer
       properties:
-        subaccount_balances:
-          type: array
-          items:
-            $ref: '#/components/schemas/SubaccountBalance'
-    SubaccountBalance:
+        transfer:
+          $ref: '#/components/schemas/IntraExchangeInstanceTransfer'
+    IntraExchangeInstanceTransfer:
       type: object
       required:
-        - subaccount_number
-        - exchange_index
-        - balance
-        - updated_ts
+        - transfer_id
+        - source
+        - destination
+        - source_exchange_shard
+        - destination_exchange_shard
+        - amount
+        - status
+        - created_ts
       properties:
-        subaccount_number:
+        transfer_id:
+          type: string
+          description: Unique transfer id
+        source:
+          $ref: '#/components/schemas/ExchangeInstance'
+          description: Source exchange instance
+        destination:
+          $ref: '#/components/schemas/ExchangeInstance'
+          description: Destination exchange instance
+        source_exchange_shard:
           type: integer
-          description: Subaccount number (0 for primary, 1-63 for subaccounts).
-        exchange_index:
+          description: Source exchange shard index
+        destination_exchange_shard:
           type: integer
-          description: Exchange index the balance is held on.
-        balance:
+          description: Destination exchange shard index
+        amount:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Balance in dollars.
-        updated_ts:
+          description: Transfer amount in dollars
+        status:
+          $ref: '#/components/schemas/IntraExchangeInstanceTransferStatus'
+        created_ts:
           type: integer
           format: int64
-          description: Unix timestamp of last balance update.
+          description: Unix timestamp when the transfer was created
     ErrorResponse:
       type: object
       properties:
@@ -130,6 +152,12 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    ExchangeInstance:
+      type: string
+      enum:
+        - event_contract
+        - margined
+      description: The exchange instance type
     FixedPointDollars:
       type: string
       description: >-
@@ -138,9 +166,24 @@ components:
         quote intervals for a given market are constrained by that market's
         price level structure.
       example: '0.5600'
+    IntraExchangeInstanceTransferStatus:
+      type: string
+      enum:
+        - pending
+        - complete
+      x-enum-varnames:
+        - IntraExchangeInstanceTransferStatusPending
+        - IntraExchangeInstanceTransferStatusComplete
+      description: Transfer status.
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-05T00:06:06.644Z
+lastmod: 2026-08-05T21:55:18.010Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -56,6 +56,46 @@ description: "Combo markets are moving from $0.001 to $0.0001 ticks via a new pr
   emitting the existing `price_level_structure_updated` event with its new
   `price_ranges`. See [Fixed-Point Representation](/getting_started/fixed_point_migration)
   for the full structure reference.
+</Update>
+
+<Update
+  label="August 13, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "Richer combo-validation errors on FIX RFQ creation",
+description: "QuoteRequestReject for an invalid multivariate combo now carries a stable reason code, a human-readable explanation, and the offending market tickers."
+}}
+>
+  When an RFQ (`35=R`) selects legs that form an invalid multivariate
+  combination, the `QuoteRequestReject` (`35=AG`) now carries three new
+  pieces of information:
+
+  * `MVEValidationReasonCode` (20187): a stable reason code —
+    `conflicting_leg_outcomes`, `duplicated_legs`, or
+    `invalid_market_combination` — matching the `code` field of the REST
+    error body. Branch on this.
+  * `Text` (58): a human-readable explanation of why the combination is
+    invalid.
+  * `NoMVEOffendingLegs` (20185): a repeating group of the offending market
+    tickers, each entry carrying `MVEOffendingMarketTicker` (20186).
+
+  `QuoteRequestRejectReason` (658) is unchanged (`99` = OTHER), so existing
+  handling keeps working. This mirrors the richer REST error bodies on
+  `POST /trade-api/v2/multivariate_event_collections/{collection_ticker}`.
+</Update>
+
+<Update
+  label="August 13, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Intra-account transfer history endpoints",
+description: "New endpoints to track intra-exchange transfers."
+}}
+>
+  Adding APIs to track intra-exchange account transfers:
+
+  * `GET /portfolio/intra_exchange_instance_transfers` (paginated history)
+  * `GET /portfolio/intra_exchange_instance_transfers/{transfer_id}`
 </Update>
 
 <Update

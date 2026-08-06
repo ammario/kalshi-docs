@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-08-05T18:38:08.730Z
+url: https://docs.kalshi.com/api-reference/portfolio/get-intra-account-transfers
+lastmod: 2026-08-05T18:38:08.650Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Settlements
+# Get Intra Account Transfers
 
->  Endpoint for getting the member's settlements historical track.
+> Endpoint for fetching intra-exchange account transfer history.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/settlements
+````yaml /openapi.yaml get /portfolio/intra_exchange_instance_transfers
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,28 +64,23 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/settlements:
+  /portfolio/intra_exchange_instance_transfers:
     get:
       tags:
         - portfolio
-      summary: Get Settlements
-      description: ' Endpoint for getting the member''s settlements historical track.'
-      operationId: GetSettlements
+      summary: Get Intra Account Transfers
+      description: Endpoint for fetching intra-exchange account transfer history.
+      operationId: GetIntraExchangeInstanceTransfers
       parameters:
-        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/TransfersLimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
-        - $ref: '#/components/parameters/TickerQuery'
-        - $ref: '#/components/parameters/SingleEventTickerQuery'
-        - $ref: '#/components/parameters/MinTsQuery'
-        - $ref: '#/components/parameters/MaxTsQuery'
-        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
-          description: Settlements retrieved successfully
+          description: Transfers retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetSettlementsResponse'
+                $ref: '#/components/schemas/GetIntraExchangeInstanceTransfersResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
@@ -98,18 +93,19 @@ paths:
           kalshiAccessTimestamp: []
 components:
   parameters:
-    LimitQuery:
+    TransfersLimitQuery:
       name: limit
       in: query
-      description: Number of results per page. Defaults to 100.
+      description: Number of results per page. Defaults to 100. Maximum value is 500.
       schema:
         type: integer
         format: int64
         minimum: 1
-        maximum: 1000
+        maximum: 500
         default: 100
+        x-go-type-skip-optional-pointer: true
         x-oapi-codegen-extra-tags:
-          validate: omitempty,min=1,max=1000
+          validate: omitempty,min=1,max=500
     CursorQuery:
       name: cursor
       in: query
@@ -120,117 +116,57 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
-    TickerQuery:
-      name: ticker
-      in: query
-      description: Filter by market ticker
-      schema:
-        type: string
-        x-go-type-skip-optional-pointer: true
-    SingleEventTickerQuery:
-      name: event_ticker
-      in: query
-      description: Event ticker to filter by. Only a single event ticker is supported.
-      schema:
-        type: string
-        x-go-type-skip-optional-pointer: true
-    MinTsQuery:
-      name: min_ts
-      in: query
-      description: Filter items after this Unix timestamp
-      schema:
-        type: integer
-        format: int64
-    MaxTsQuery:
-      name: max_ts
-      in: query
-      description: Filter items before this Unix timestamp
-      schema:
-        type: integer
-        format: int64
-    SubaccountQuery:
-      name: subaccount
-      in: query
-      description: >-
-        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
-        defaults to all subaccounts.
-      schema:
-        type: integer
   schemas:
-    GetSettlementsResponse:
+    GetIntraExchangeInstanceTransfersResponse:
       type: object
       required:
-        - settlements
+        - transfers
       properties:
-        settlements:
+        transfers:
           type: array
           items:
-            $ref: '#/components/schemas/Settlement'
+            $ref: '#/components/schemas/IntraExchangeInstanceTransfer'
         cursor:
           type: string
-    Settlement:
+          description: >-
+            Cursor for the next page of results. Omitted when there are no
+            further pages.
+    IntraExchangeInstanceTransfer:
       type: object
       required:
-        - ticker
-        - event_ticker
-        - market_result
-        - yes_count_fp
-        - yes_total_cost_dollars
-        - no_count_fp
-        - no_total_cost_dollars
-        - revenue
-        - settled_time
-        - fee_cost
+        - transfer_id
+        - source
+        - destination
+        - source_exchange_shard
+        - destination_exchange_shard
+        - amount
+        - status
+        - created_ts
       properties:
-        ticker:
+        transfer_id:
           type: string
-          description: The ticker symbol of the market that was settled.
-        event_ticker:
-          type: string
-          description: The event ticker symbol of the market that was settled.
-        market_result:
-          type: string
-          enum:
-            - 'yes'
-            - 'no'
-            - scalar
-          description: >-
-            The outcome of the market settlement. 'yes' = market resolved to
-            YES, 'no' = market resolved to NO, 'scalar' = scalar market settled
-            at a specific value.
-        yes_count_fp:
-          $ref: '#/components/schemas/FixedPointCount'
-          description: >-
-            String representation of the number of YES contracts owned at the
-            time of settlement.
-        yes_total_cost_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          description: Total cost basis of all YES contracts in fixed-point dollars.
-        no_count_fp:
-          $ref: '#/components/schemas/FixedPointCount'
-          description: >-
-            String representation of the number of NO contracts owned at the
-            time of settlement.
-        no_total_cost_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          description: Total cost basis of all NO contracts in fixed-point dollars.
-        revenue:
+          description: Unique transfer id
+        source:
+          $ref: '#/components/schemas/ExchangeInstance'
+          description: Source exchange instance
+        destination:
+          $ref: '#/components/schemas/ExchangeInstance'
+          description: Destination exchange instance
+        source_exchange_shard:
           type: integer
-          description: >-
-            Total revenue earned from this settlement in cents (winning
-            contracts pay out 100 cents each).
-        settled_time:
-          type: string
-          format: date-time
-          description: Timestamp when the market was settled and payouts were processed.
-        fee_cost:
-          $ref: '#/components/schemas/FixedPointDollars'
-          example: '0.3400'
-          description: Total fees paid in fixed point dollars.
-        value:
+          description: Source exchange shard index
+        destination_exchange_shard:
           type: integer
-          nullable: true
-          description: Payout of a single yes contract in cents.
+          description: Destination exchange shard index
+        amount:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Transfer amount in dollars
+        status:
+          $ref: '#/components/schemas/IntraExchangeInstanceTransferStatus'
+        created_ts:
+          type: integer
+          format: int64
+          description: Unix timestamp when the transfer was created
     ErrorResponse:
       type: object
       properties:
@@ -243,15 +179,12 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-    FixedPointCount:
+    ExchangeInstance:
       type: string
-      description: >-
-        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
-        to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported; the minimum granularity is
-        0.01 contracts.
-      example: '10.00'
+      enum:
+        - event_contract
+        - margined
+      description: The exchange instance type
     FixedPointDollars:
       type: string
       description: >-
@@ -260,6 +193,15 @@ components:
         quote intervals for a given market are constrained by that market's
         price level structure.
       example: '0.5600'
+    IntraExchangeInstanceTransferStatus:
+      type: string
+      enum:
+        - pending
+        - complete
+      x-enum-varnames:
+        - IntraExchangeInstanceTransferStatusPending
+        - IntraExchangeInstanceTransferStatusComplete
+      description: Transfer status.
   responses:
     BadRequestError:
       description: Bad request - invalid input

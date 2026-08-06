@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/intra-account-transfer
-lastmod: 2026-08-05T00:55:30.952Z
+lastmod: 2026-08-05T18:38:09.493Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -103,14 +103,22 @@ components:
           description: The amount to transfer in centicents
         source_exchange_shard:
           type: integer
+          minimum: 0
+          maximum: 100
           default: 0
           x-go-type-skip-optional-pointer: true
           description: Source exchange shard index (default 0)
+          x-oapi-codegen-extra-tags:
+            validate: gte=0,lte=100
         destination_exchange_shard:
           type: integer
+          minimum: 0
+          maximum: 100
           default: 0
           x-go-type-skip-optional-pointer: true
           description: Destination exchange shard index (default 0)
+          x-oapi-codegen-extra-tags:
+            validate: gte=0,lte=100
     IntraExchangeInstanceTransferResponse:
       type: object
       required:

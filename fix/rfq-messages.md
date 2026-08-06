@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-08-04T13:05:35.436Z
+lastmod: 2026-08-05T21:55:18.003Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -326,11 +326,14 @@ Exchange response to RFQCancel.
 
 Exchange notifies that an RFQ creation request was rejected or that a quote request was cancelled.
 
-| Tag | Name                     | Type    | Required | Description                                                                                   |
-| --- | ------------------------ | ------- | -------- | --------------------------------------------------------------------------------------------- |
-| 58  | Text                     | String  | Y        | Reason the RFQ creation was rejected or the quote request was cancelled                       |
-| 131 | QuoteReqId               | String  | Y        | Request identifier                                                                            |
-| 658 | QuoteRequestRejectReason | Integer | Y        | UNKNOWN\_SYMBOL(1), QUOTE\_REQUEST\_EXCEEDS\_LIMIT(3), INSUFFICIENT\_CREDIT(11), or OTHER(99) |
+| Tag   | Name                     | Type    | Required | Description                                                                                                                                                                        |
+| ----- | ------------------------ | ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 58    | Text                     | String  | Y        | Reason the RFQ creation was rejected or the quote request was cancelled                                                                                                            |
+| 131   | QuoteReqId               | String  | Y        | Request identifier                                                                                                                                                                 |
+| 658   | QuoteRequestRejectReason | Integer | Y        | UNKNOWN\_SYMBOL(1), QUOTE\_REQUEST\_EXCEEDS\_LIMIT(3), INSUFFICIENT\_CREDIT(11), or OTHER(99). Invalid-combination rejects use OTHER(99)                                           |
+| 20187 | MVEValidationReasonCode  | String  | C        | Stable combo-validation reason code on invalid-combination rejects: `conflicting_leg_outcomes`, `duplicated_legs`, or `invalid_market_combination` (mirrors the REST error `code`) |
+| 20185 | NoMVEOffendingLegs       | Integer | C        | Number of offending MVE legs (repeating group). Present on invalid-combination rejects when the tickers are known                                                                  |
+| 20186 | MVEOffendingMarketTicker | String  | C        | Market ticker of an offending leg; one entry per `NoMVEOffendingLegs`                                                                                                              |
 
 <Info>
   Market makers do not send QuoteRequestReject when ignoring a request.
