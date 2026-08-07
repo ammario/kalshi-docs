@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-06-23T20:03:47.943Z
+lastmod: 2026-08-06T21:28:22.301Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -94,7 +94,7 @@ Per-second token budgets in each event-contract bucket:
       <tr style={{backgroundColor: 'rgba(255, 255, 255, 0.02)'}}><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Premier</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>1,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>1,000</td></tr>
       <tr><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Paragon</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>2,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>2,000</td></tr>
       <tr style={{backgroundColor: 'rgba(255, 255, 255, 0.02)'}}><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Prime</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>4,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>4,000</td></tr>
-      <tr><td style={{padding: '0.9rem 1.5rem'}}>Prestige</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right'}}>6,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right'}}>8,000</td></tr>
+      <tr><td style={{padding: '0.9rem 1.5rem'}}>Prestige</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right'}}>10,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right'}}>8,000</td></tr>
     </tbody>
   </table>
 </div>

@@ -119,6 +119,10 @@ components:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'
           default: 0
+          description: >-
+            The market group this order group is bound to (default 0). All
+            orders placed into this order group must be for markets whose
+            exchange_index matches this value.
           x-go-type-skip-optional-pointer: true
     CreateOrderGroupResponse:
       type: object
@@ -151,9 +155,7 @@ components:
       example: '10.00'
     ExchangeIndex:
       type: integer
-      description: >-
-        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
-        currently only 0 supported.
+      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
       example: 0
     ErrorResponse:
       type: object

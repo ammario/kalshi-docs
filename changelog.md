@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-05T21:55:18.010Z
+lastmod: 2026-08-06T21:28:22.342Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,26 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 13, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin order groups bind to single exchange_index",
+description: "Margin order groups bind to single exchange_index"
+}}
+>
+  Margin order groups are now bound to a single `exchange_index`.
+  Order groups may only reference markets belonging to their respective `exchange_index`.
+
+  Affected endpoints:
+
+  * `GET /trade-api/v2/margin/markets`
+  * `GET /trade-api/v2/margin/markets/{ticker}`
+  * `POST /trade-api/v2/margin/order_groups/create`
+
+  For now, all margin markets are `exchange_index=0`.
+</Update>
 
 <Update
   label="August 6, 2026"

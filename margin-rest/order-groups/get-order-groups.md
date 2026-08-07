@@ -146,9 +146,7 @@ components:
       example: '10.00'
     ExchangeIndex:
       type: integer
-      description: >-
-        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
-        currently only 0 supported.
+      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
       example: 0
   responses:
     BadRequestError:
