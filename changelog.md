@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-06T21:28:22.342Z
+lastmod: 2026-08-07T22:08:51.077Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,6 +22,29 @@ the `FIX` tag.
 
 <Update
   label="August 13, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Block trade indicator for WebSocket trades",
+description: "Trade messages now identify block trades."
+}}
+>
+  Predictions trade WebSocket messages now include `is_block_trade`, indicating
+  whether the trade was matched off book.
+</Update>
+
+<Update
+  label="August 13, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Exchange shard descriptions",
+description: "Per-index exchange status now includes a shard description."
+}}
+>
+  Each `exchange_index_statuses` entry now includes its shard `description`.
+</Update>
+
+<Update
+  label="August 13, 2026"
   tags={["REST", "Margin"]}
   rss={{
 title: "Margin order groups bind to single exchange_index",
@@ -38,6 +61,20 @@ description: "Margin order groups bind to single exchange_index"
   * `POST /trade-api/v2/margin/order_groups/create`
 
   For now, all margin markets are `exchange_index=0`.
+</Update>
+
+<Update
+  label="August 13, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Order group maximum increased to 100,000 per user",
+description: "Users can now have up to 100,000 order groups."
+}}
+>
+  The maximum number of order groups a user can have at a time is increasing
+  from 25,000 to 100,000.
+
+  **Affected endpoint:** `POST /trade-api/v2/portfolio/order_groups/create`
 </Update>
 
 <Update

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-exchange-status
-lastmod: 2026-08-05T18:38:08.274Z
+lastmod: 2026-08-07T20:21:30.418Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -140,12 +140,16 @@ components:
       type: object
       required:
         - exchange_index
+        - description
         - exchange_active
         - trading_active
         - intra_exchange_transfers_active
       properties:
         exchange_index:
           $ref: '#/components/schemas/ExchangeIndex'
+        description:
+          type: string
+          description: Description of this exchange shard.
         exchange_active:
           type: boolean
           description: >-
