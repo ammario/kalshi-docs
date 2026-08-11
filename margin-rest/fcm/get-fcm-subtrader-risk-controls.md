@@ -1,20 +1,23 @@
 ---
-url: https://docs.kalshi.com/margin-rest/portfolio/intra-account-transfer
-lastmod: 2026-08-10T18:48:02.432Z
+url: https://docs.kalshi.com/margin-rest/fcm/get-fcm-subtrader-risk-controls
+lastmod: 2026-08-11T00:07:49.747Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Intra Account Transfer
+# Get FCM Subtrader Risk Controls
 
-> Endpoint for transferring funds within the same account.
+> Returns the initial margin caps configured for an FCM member's subtrader on the margined
+exchange. A cap with no market_ticker applies across all markets; the remaining caps are
+scoped to a single market each. Markets without a cap are omitted.
+
 
 
 
 ## OpenAPI
 
-````yaml /perps_openapi.yaml post /portfolio/intra_exchange_instance_transfer
+````yaml /perps_openapi.yaml get /margin/fcm/subtraders/risk_controls
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -50,89 +53,93 @@ tags:
   - name: fees
     description: Margin fee schedule
 paths:
-  /portfolio/intra_exchange_instance_transfer:
-    post:
+  /margin/fcm/subtraders/risk_controls:
+    get:
       tags:
-        - portfolio
-      summary: Intra Account Transfer
-      description: Endpoint for transferring funds within the same account.
-      operationId: IntraExchangeInstanceTransfer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/IntraExchangeInstanceTransferRequest'
+        - fcm
+      summary: Get FCM Subtrader Risk Controls
+      description: >
+        Returns the initial margin caps configured for an FCM member's subtrader
+        on the margined
+
+        exchange. A cap with no market_ticker applies across all markets; the
+        remaining caps are
+
+        scoped to a single market each. Markets without a cap are omitted.
+      operationId: GetFCMSubtraderRiskControls
+      parameters:
+        - name: subtrader_id
+          in: query
+          required: true
+          description: >-
+            The subtrader whose initial margin caps should be returned. Must
+            belong to the requesting FCM.
+          schema:
+            type: string
+        - name: market_ticker
+          in: query
+          required: false
+          description: >-
+            Restricts the response to the cap scoped to this market when
+            supplied.
+          schema:
+            type: string
+            x-go-type-skip-optional-pointer: true
       responses:
         '200':
-          description: Transfer request accepted. The transfer is processed asynchronously.
+          description: Risk controls retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IntraExchangeInstanceTransferResponse'
+                $ref: '#/components/schemas/GetFCMSubtraderRiskControlsResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '403':
           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
         - kalshiAccessKey: []
-        - kalshiAccessSignature: []
-        - kalshiAccessTimestamp: []
+          kalshiAccessSignature: []
+          kalshiAccessTimestamp: []
 components:
   schemas:
-    IntraExchangeInstanceTransferRequest:
+    GetFCMSubtraderRiskControlsResponse:
       type: object
       required:
-        - source
-        - destination
-        - amount
+        - risk_controls
       properties:
-        source:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: The source exchange instance
-        destination:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: The destination exchange instance
-        amount:
-          type: integer
-          format: int64
-          description: The amount to transfer in centicents
-        source_exchange_shard:
-          type: integer
-          minimum: 0
-          maximum: 100
-          default: 0
-          x-go-type-skip-optional-pointer: true
-          description: Source exchange shard index (default 0)
-          x-oapi-codegen-extra-tags:
-            validate: gte=0,lte=100
-        destination_exchange_shard:
-          type: integer
-          minimum: 0
-          maximum: 100
-          default: 0
-          x-go-type-skip-optional-pointer: true
-          description: Destination exchange shard index (default 0)
-          x-oapi-codegen-extra-tags:
-            validate: gte=0,lte=100
-    IntraExchangeInstanceTransferResponse:
+        risk_controls:
+          type: array
+          description: One entry per configured initial margin cap.
+          items:
+            $ref: '#/components/schemas/FCMSubtraderRiskControls'
+    FCMSubtraderRiskControls:
       type: object
       required:
-        - transfer_id
+        - subtrader_id
+        - im_cap
       properties:
-        transfer_id:
+        subtrader_id:
           type: string
-          description: The ID of the transfer that was created
-    ExchangeInstance:
-      type: string
-      enum:
-        - event_contract
-        - margined
-      description: The exchange instance type
+          description: The subtrader the initial margin cap applies to.
+        market_ticker:
+          type: string
+          description: >-
+            The market the cap is scoped to. Absent when the cap applies across
+            all markets.
+          x-go-type-skip-optional-pointer: true
+        im_cap:
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            A non-negative fixed-point US dollar amount with up to 4 decimal
+            places.
+          example: '100.0000'
     ErrorResponse:
       type: object
       properties:
@@ -145,6 +152,14 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with up to 6 decimal
+        places of precision. This is the maximum supported precision; valid
+        quote intervals for a given market are constrained by that market's
+        price level structure.
+      example: '0.5600'
   responses:
     BadRequestError:
       description: Bad request - invalid input
@@ -160,6 +175,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     ForbiddenError:
       description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:

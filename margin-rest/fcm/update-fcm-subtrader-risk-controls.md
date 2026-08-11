@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/margin-rest/orders/cancel-order
-lastmod: 2026-08-10T18:48:02.232Z
+url: https://docs.kalshi.com/margin-rest/fcm/update-fcm-subtrader-risk-controls
+lastmod: 2026-08-10T19:24:33.352Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Cancel Order
+# Update FCM Subtrader Risk Controls
 
-> Endpoint for canceling an order. Cancels all remaining resting contracts and returns the canceled order details.
+> Sets the initial margin cap for an FCM member's subtrader on the margined exchange.
 
 
 
 ## OpenAPI
 
-````yaml /perps_openapi.yaml delete /margin/orders/{order_id}
+````yaml /perps_openapi.yaml put /margin/fcm/subtraders/risk_controls
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -50,27 +50,34 @@ tags:
   - name: fees
     description: Margin fee schedule
 paths:
-  /margin/orders/{order_id}:
-    delete:
+  /margin/fcm/subtraders/risk_controls:
+    put:
       tags:
-        - orders
-      summary: Cancel Order
+        - fcm
+      summary: Update FCM Subtrader Risk Controls
       description: >-
-        Endpoint for canceling an order. Cancels all remaining resting contracts
-        and returns the canceled order details.
-      operationId: CancelMarginOrder
-      parameters:
-        - $ref: '#/components/parameters/OrderIdPath'
-        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
+        Sets the initial margin cap for an FCM member's subtrader on the
+        margined exchange.
+      operationId: UpdateFCMSubtraderRiskControls
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFCMSubtraderRiskControlsRequest'
       responses:
         '200':
-          description: Order cancelled successfully
+          description: Risk controls updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CancelMarginOrderResponse'
+                $ref: '#/components/schemas/EmptyResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '404':
           $ref: '#/components/responses/NotFoundError'
         '500':
@@ -80,48 +87,42 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderIdPath:
-      name: order_id
-      in: path
-      required: true
-      description: Order ID
-      schema:
-        type: string
-    SubaccountQueryDefaultPrimary:
-      name: subaccount
-      in: query
-      required: false
-      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
   schemas:
-    CancelMarginOrderResponse:
+    UpdateFCMSubtraderRiskControlsRequest:
       type: object
       required:
-        - order_id
-        - reduced_by
+        - subtrader_id
+        - im_cap
       properties:
-        order_id:
+        subtrader_id:
           type: string
-        client_order_id:
-          type: string
-        reduced_by:
-          $ref: '#/components/schemas/FixedPointCount'
           description: >-
-            Number of contracts that were canceled (i.e. the remaining count at
-            time of cancellation).
-    FixedPointCount:
+            The subtrader whose initial margin cap should be updated. Must
+            belong to the requesting FCM.
+        market_ticker:
+          type: string
+          description: Scopes the initial margin cap to this market when supplied.
+          x-go-type-skip-optional-pointer: true
+        im_cap:
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            A non-negative fixed-point US dollar amount with up to 4 decimal
+            places.
+          pattern: ^[0-9]+(\.[0-9]{1,4})?$
+          maxLength: 20
+          example: '100.0000'
+    EmptyResponse:
+      type: object
+      description: An empty response body
+    FixedPointDollars:
       type: string
       description: >-
-        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
-        to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported; the minimum granularity is
-        0.01 contracts.
-      example: '10.00'
+        US dollar amount as a fixed-point decimal string with up to 6 decimal
+        places of precision. This is the maximum supported precision; valid
+        quote intervals for a given market are constrained by that market's
+        price level structure.
+      example: '0.5600'
     ErrorResponse:
       type: object
       properties:
@@ -135,8 +136,20 @@ components:
           type: string
           description: Additional details about the error, if available
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:

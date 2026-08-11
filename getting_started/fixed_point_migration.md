@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fixed_point_migration
-lastmod: 2026-08-04T00:52:32.777Z
+lastmod: 2026-08-10T23:18:50.930Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -67,8 +67,11 @@ Each market's valid prices form a fixed grid, described by two fields on Market 
 |                                | \$0.10 – \$0.90 | \$0.002   |
 |                                | \$0.90 – \$1.00 | \$0.001   |
 | `center_centi_edge_centi_cent` | \$0.00 – \$1.00 | \$0.0001  |
+| `center_deci_edge_centi_cent`  | \$0.00 – \$0.01 | \$0.0001  |
+|                                | \$0.01 – \$0.99 | \$0.001   |
+|                                | \$0.99 – \$1.00 | \$0.0001  |
 
-Newer structures follow the naming convention `center_{center}_edge_{edge}_cent`, where the shorthands are `whole` = \$0.01, `half` = \$0.005, `quint` = \$0.002, `deci` = \$0.001, and `centi` = \$0.0001. Tapered structures apply the finer edge tick below \$0.10 and above \$0.90 — where small absolute price differences represent large relative changes in implied probability — and the center tick in between; when the center and edge ticks are equal, the grid is uniform. The older names (`linear_cent`, `tapered_deci_cent`, `deci_cent`) predate this convention.
+Newer structures follow the naming convention `center_{center}_edge_{edge}_cent`, where the shorthands are `whole` = \$0.01, `half` = \$0.005, `quint` = \$0.002, `deci` = \$0.001, and `centi` = \$0.0001. Tapered structures apply the finer edge tick near the boundaries of the price range — where small absolute price differences represent large relative changes in implied probability — and the center tick in between; most taper below \$0.10 and above \$0.90, while `center_deci_edge_centi_cent` tapers below \$0.01 and above \$0.99. When the center and edge ticks are equal, the grid is uniform. The older names (`linear_cent`, `tapered_deci_cent`, `deci_cent`) predate this convention.
 
 Whole-cent prices are valid in every structure. Structures are assigned per market — for example, multivariate (combo) markets use `center_centi_edge_centi_cent`. When a market's structure changes, the `price_level_structure_updated` event on the market lifecycle WebSocket channels carries the new `price_ranges`.
 

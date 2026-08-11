@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/transfer-between-subaccounts
-lastmod: 2026-08-07T20:21:32.142Z
+lastmod: 2026-08-10T18:48:02.454Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

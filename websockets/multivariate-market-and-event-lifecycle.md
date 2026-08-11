@@ -213,6 +213,7 @@ operations:
                           - center_quint_edge_quint_cent
                           - center_quint_edge_deci_cent
                           - center_centi_edge_centi_cent
+                          - center_deci_edge_centi_cent
                         x-parser-schema-id: <anonymous-schema-139>
                       price_ranges:
                         type: array

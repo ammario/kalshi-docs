@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-07T22:08:51.077Z
+lastmod: 2026-08-10T23:18:50.976Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,40 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 13, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "New center_deci_edge_centi_cent price level structure",
+description: "A tapered structure with $0.0001 ticks below $0.01 and above $0.99, and $0.001 ticks in between."
+}}
+>
+  A new `price_level_structure`, `center_deci_edge_centi_cent`, is available:
+  \$0.0001 (0.01¢) ticks below \$0.01 and above \$0.99, with \$0.001 (0.1¢)
+  ticks in between. No API fields or message formats change. As with other
+  structures, snap order and RFQ quote prices to the `step` of the band
+  containing the price in the market's `price_ranges` array rather than
+  keying off the structure name. See
+  [Fixed-Point Representation](/getting_started/fixed_point_migration) for the
+  full structure reference.
+</Update>
+
+<Update
+  label="August 13, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Balance reads scoped by exchange_index",
+description: "GetBalance scopes portfolio_value to the requested exchange_index and supports scoped primary balance reads via subaccount=0."
+}}
+>
+  `GET /trade-api/v2/portfolio/balance` now scopes `portfolio_value` to the
+  requested `exchange_index` (defaulting to 0); it previously covered
+  positions across all exchange indexes. Passing `subaccount` explicitly
+  (including 0, previously treated as omitted) returns that subaccount's
+  `balance` on the requested exchange index. Omitting `subaccount` keeps
+  the primary account's aggregate `balance`.
+</Update>
 
 <Update
   label="August 13, 2026"
