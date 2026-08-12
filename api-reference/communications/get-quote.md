@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quote
-lastmod: 2026-08-10T18:48:01.725Z
+lastmod: 2026-08-11T23:12:17.249Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -25,7 +25,7 @@ lastmod: 2026-08-10T18:48:01.725Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.27.0
+  version: 3.28.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
