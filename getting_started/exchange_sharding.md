@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/exchange_sharding
-lastmod: 2026-08-13T01:52:56.345Z
+lastmod: 2026-08-13T19:31:15.200Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -46,7 +46,8 @@ Kalshi's collateralization checks will continue to run within the matching engin
 
 ### Market Data
 
-`exchange_index` is provided on [`GET /markets`](/api-reference/market/get-markets), [`GET /events`](/api-reference/events/get-events), and via the [market and event lifecycle WebSocket streams](/websockets/market-and-event-lifecycle) for newly created events and markets.
+* A new field `exchange_index` is provided on [`GET /markets`](/api-reference/market/get-markets), [`GET /events`](/api-reference/events/get-events), and via the [market and event lifecycle WebSocket streams](/websockets/market-and-event-lifecycle) for newly created events and markets.
+* Market ticker formats are unaffected by exchange sharding. The `exchange_index` field is the authoritative source of truth.
 
 ### REST
 
