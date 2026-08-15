@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-total-resting-order-value
-lastmod: 2026-08-11T23:12:17.046Z
+lastmod: 2026-08-14T19:24:04.510Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -93,10 +93,28 @@ components:
       type: object
       required:
         - total_resting_order_value
+        - resting_order_value_breakdown
       properties:
         total_resting_order_value:
           type: integer
           description: Total value of resting orders in cents
+        resting_order_value_breakdown:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndexedBalance'
+          description: >-
+            Total value of resting orders broken down by exchange index, with
+            each balance expressed as a fixed-point dollar string.
+    IndexedBalance:
+      type: object
+      required:
+        - exchange_index
+        - balance
+      properties:
+        exchange_index:
+          $ref: '#/components/schemas/ExchangeIndex'
+        balance:
+          $ref: '#/components/schemas/FixedPointDollars'
     ErrorResponse:
       type: object
       properties:
@@ -109,6 +127,18 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    ExchangeIndex:
+      type: integer
+      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      example: 0
+    FixedPointDollars:
+      type: string
+      description: >-
+        Fixed-point US dollar string. Most request fields accept 2-4 decimal
+        places (e.g., "0.56", "0.5600"); responses emit up to 6. Valid quote
+        intervals for a given market are constrained by that market's price
+        level structure.
+      example: '0.5600'
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required

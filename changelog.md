@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-10T23:18:50.976Z
+lastmod: 2026-08-15T01:50:15.681Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,59 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 24, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "Upcoming exchange sharding",
+description: "Crypto, Tennis, and Baseball moving to dedicated exchange instances"
+}}
+>
+  Upcoming exchange sharding: Crypto, Tennis, and Baseball will be provisioned
+  on dedicated exchange instances. Please see
+  [Exchange Sharding](/getting_started/exchange_sharding) for changes to trading.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "Combo RFQ fee assignment for briefly resting orders",
+description: "Combo RFQ quoters pay maker fees when executing against orders that have rested for less than five seconds."
+}}
+>
+  For combo trades, if a quoter executes against an order that has rested on
+  the book for less than five seconds, both parties' fees will be adjusted: the
+  quoter will pay the maker fee, and the resting counterparty will pay the
+  taker fee. See the [Kalshi Fee Schedule](https://kalshi.com/docs/kalshi-fee-schedule.pdf)
+  for details.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Resting order value breakdown by exchange index",
+description: "Get Total Resting Order Value now returns a per-exchange-index breakdown."
+}}
+>
+  `GET /trade-api/v2/portfolio/summary/total_resting_order_value` now returns
+  `resting_order_value_breakdown`, with a fixed-point dollar `balance` for each
+  exchange index.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Exchange index filters for portfolio lists",
+description: "Orders, positions, and fills can be filtered by exchange_index."
+}}
+>
+  `GET /portfolio/orders`, `GET /portfolio/positions`, and `GET /portfolio/fills` now accept an optional `exchange_index` filter.
+  Omitting it returns results from all exchange indexes.
+</Update>
 
 <Update
   label="August 13, 2026"
