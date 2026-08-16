@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-15T01:50:15.681Z
+lastmod: 2026-08-15T12:00:18.341Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -34,13 +34,19 @@ description: "Crypto, Tennis, and Baseball moving to dedicated exchange instance
 </Update>
 
 <Update
-  label="August 20, 2026"
+  label="August 22, 2026"
   tags={["REST", "WebSocket", "FIX", "Predictions"]}
   rss={{
 title: "Combo RFQ fee assignment for briefly resting orders",
-description: "Combo RFQ quoters pay maker fees when executing against orders that have rested for less than five seconds."
+description: "Maker fees will be enabled Wednesday night; post-only mode will be disabled and the combo RFQ quoter fee swap enabled Friday night."
 }}
 >
+  **Rollout timing:**
+
+  * Maker fees will be enabled at 11:59 PM on Wednesday, August 19.
+  * Post-only mode will be disabled and the quoter fee swap will be enabled at
+    11:59 PM on Friday, August 21.
+
   For combo trades, if a quoter executes against an order that has rested on
   the book for less than five seconds, both parties' fees will be adjusted: the
   quoter will pay the maker fee, and the resting counterparty will pay the
