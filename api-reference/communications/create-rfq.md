@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-08-14T19:24:04.576Z
+lastmod: 2026-08-16T23:46:13.907Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -149,7 +149,6 @@ components:
           description: >-
             The subaccount number to create the RFQ for (direct members only; 0
             for primary, 1-63 for subaccounts)
-          x-go-type-skip-optional-pointer: true
     CreateRFQResponse:
       type: object
       required:

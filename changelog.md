@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-15T12:00:18.341Z
+lastmod: 2026-08-16T23:46:21.499Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -77,6 +77,42 @@ description: "Orders, positions, and fills can be filtered by exchange_index."
 >
   `GET /portfolio/orders`, `GET /portfolio/positions`, and `GET /portfolio/fills` now accept an optional `exchange_index` filter.
   Omitting it returns results from all exchange indexes.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "RFQs and combo-market creation for sub-account-restricted API keys",
+description: "Restricted keys can run the full REST RFQ lifecycle scoped to their sub-account"
+}}
+>
+  Sub-account-restricted API keys can now use the
+  [communications endpoints](/api-reference/communications) and create combo
+  markets, scoped to the key's locked sub-account: omitting `subaccount` acts
+  on the locked sub-account, any other sub-account is rejected, and a
+  different sub-account's RFQs and quotes cannot be read in detail or acted
+  on. Scoping matches rows created through the API; web-created RFQs are not
+  addressable per sub-account. The `write::trade` scope is now sufficient for
+  `POST /multivariate_event_collections/{collection_ticker}` (parent `write`
+  keys are unaffected). On FIX, restricted sessions still support the maker
+  quote lifecycle only; block-trade endpoints also remain unavailable to
+  restricted keys.
+</Update>
+
+<Update
+  label="August 16, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "API key location attestation expiry",
+description: "Get API Keys now returns api_key_region_expiration_ts."
+}}
+>
+  `GET /trade-api/v2/api_keys` now returns `api_key_region_expiration_ts`, the
+  unix timestamp (seconds) when your location attestation for API key requests
+  expires. Once this date has passed, API keys are not valid for trading
+  Sports, Elections, and Entertainment markets. The field is absent when the
+  account has never attested.
 </Update>
 
 <Update
