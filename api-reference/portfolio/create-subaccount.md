@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/create-subaccount
-lastmod: 2026-08-16T23:46:13.751Z
+lastmod: 2026-08-17T23:23:10.192Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -120,7 +120,7 @@ components:
           description: The sequential number assigned to this subaccount (1-63).
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: Identifier for an exchange shard.
       example: 0
     ErrorResponse:
       type: object

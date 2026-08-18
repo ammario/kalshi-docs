@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/common-components
-lastmod: 2026-07-15T15:52:04.414Z
+lastmod: 2026-08-17T16:54:50.401Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-07-15T15:52:04.414Z
 
 > Standard header, trailer, and shared components across all FIX messages
 
-Kalshi's FIX implementation uses **FIXT.1.1** with application version **FIX50SP2**. Members on the Premier tier or above have FIX access by default. For all other tiers, contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to inquire about access.
+Kalshi's FIX implementation uses **FIXT.1.1** with application version **FIX50SP2**. Members on the Premier tier or above have FIX access by default.
 
 ## FIX Dictionary
 

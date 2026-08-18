@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2026-08-16T23:46:13.535Z
+lastmod: 2026-08-17T23:23:09.934Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -546,7 +546,7 @@ components:
           x-go-type-skip-optional-pointer: true
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: Identifier for an exchange shard.
       example: 0
     FixedPointDollars:
       type: string

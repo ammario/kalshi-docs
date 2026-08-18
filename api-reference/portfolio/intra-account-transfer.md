@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer
-lastmod: 2026-08-16T23:46:13.724Z
+lastmod: 2026-08-17T23:23:10.164Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,10 @@ lastmod: 2026-08-16T23:46:13.724Z
 
 # Intra Account Transfer
 
-> Endpoint for transferring funds within the same account.
+> Transfers funds within the same account.
+
+Cross-exchange-index subaccount transfers run in up to three non-atomic steps. If a later step fails, completed steps are not undone, so funds may remain in the primary account on the source or destination exchange index.
+
 
 
 
@@ -69,7 +72,14 @@ paths:
       tags:
         - portfolio
       summary: Intra Account Transfer
-      description: Endpoint for transferring funds within the same account.
+      description: >
+        Transfers funds within the same account.
+
+
+        Cross-exchange-index subaccount transfers run in up to three non-atomic
+        steps. If a later step fails, completed steps are not undone, so funds
+        may remain in the primary account on the source or destination exchange
+        index.
       operationId: IntraExchangeInstanceTransfer
       requestBody:
         required: true
@@ -133,6 +143,24 @@ components:
           description: Destination exchange shard index (default 0)
           x-oapi-codegen-extra-tags:
             validate: gte=0,lte=100
+        source_subaccount:
+          type: integer
+          default: 0
+          x-go-type-skip-optional-pointer: true
+          description: >-
+            Source subaccount number (default 0 for the primary account). Only
+            supported for event contract to event contract transfers.
+          x-oapi-codegen-extra-tags:
+            validate: gte=0
+        destination_subaccount:
+          type: integer
+          default: 0
+          x-go-type-skip-optional-pointer: true
+          description: >-
+            Destination subaccount number (default 0 for the primary account).
+            Only supported for event contract to event contract transfers.
+          x-oapi-codegen-extra-tags:
+            validate: gte=0
     IntraExchangeInstanceTransferResponse:
       type: object
       required:
