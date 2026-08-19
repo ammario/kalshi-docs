@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-weather-index
-lastmod: 2026-08-17T23:23:10.600Z
+lastmod: 2026-08-18T14:45:57.108Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -156,9 +156,7 @@ components:
       type: object
       required:
         - t
-        - v
         - status
-        - contributors
       properties:
         t:
           type: integer
@@ -167,17 +165,25 @@ components:
         v:
           type: number
           format: double
-          description: Published index value, Fahrenheit rounded to 0.01.
+          description: >-
+            Published index value, Fahrenheit rounded to 0.01. Absent on
+            `incomplete` points, which have no canonical value yet.
         status:
           type: string
           description: >-
             `normal` (every member contributed its exact-minute primary
             observation) or `degraded` (a member was absent, fallback-fed, or
             substituted by quality control; the value is equally
-            settlement-eligible).
+            settlement-eligible). With `detailed=true`, trailing minutes still
+            inside their receipt deadline are additionally served as
+            `incomplete`: no value, and stations carrying the raw readings
+            recorded so far (code `pending`, not yet quality-controlled — more
+            readings may still arrive, and the canonical value may differ).
         contributors:
           type: integer
-          description: Number of accepted member stations backing the point.
+          description: >-
+            Number of accepted member stations backing the point. Absent on
+            `incomplete` points.
         stations:
           type: array
           description: >-
@@ -199,8 +205,9 @@ components:
           type: string
           description: >-
             Disposition: `ok` (accepted), `missing` (no eligible observation),
-            `late` (received after the deadline; diagnostic only), or a QC
-            rejection (`range`, `rate_spatial`, `extreme`).
+            `late` (received after the deadline; diagnostic only), a QC
+            rejection (`range`, `rate_spatial`, `extreme`), or `pending` (raw
+            reading on an `incomplete` minute, not yet quality-controlled).
         source:
           type: string
           description: >-

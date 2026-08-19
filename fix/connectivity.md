@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2026-07-16T20:06:31.786Z
+lastmod: 2026-08-19T00:30:10.719Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -85,6 +85,7 @@ Members on the Premier tier or above can contact [institutional@kalshi.com](mail
 * **Excluded**: Logout (35=5), Heartbeat (35=0), TestRequest (35=1)
 * Logon (35=A) **is** rate-limited.
 * Order-entry and RFQ messages use the Write bucket. See [Rate Limits and Tiers](/getting_started/rate_limits) for tier budgets and token-cost behavior.
+* Order-entry messages (35=D, 35=F, 35=G) carrying `ExDestination` (tag 100) with a value `>= 1` are billed to a [per-shard Write budget](/getting_started/rate_limits#sharded-exchanges-have-per-shard-write-budgets). RFQ quote accepts (35=D carrying `QuoteID`) always bill the unscoped Write budget.
 * Mass Cancel Request (35=q) is limited to 1 request/second.
 
 ## Maintenance Window

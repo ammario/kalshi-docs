@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2026-08-17T23:23:10.241Z
+lastmod: 2026-08-18T14:45:56.756Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -190,6 +190,7 @@ components:
       type: object
       required:
         - ticker
+        - exchange_index
         - total_traded_dollars
         - position_fp
         - market_exposure_dollars
@@ -201,6 +202,8 @@ components:
           type: string
           description: Unique identifier for the market
           x-go-type-skip-optional-pointer: true
+        exchange_index:
+          $ref: '#/components/schemas/ExchangeIndex'
         total_traded_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total spent on this market in dollars
@@ -264,6 +267,10 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    ExchangeIndex:
+      type: integer
+      description: Identifier for an exchange shard.
+      example: 0
     FixedPointDollars:
       type: string
       description: >-

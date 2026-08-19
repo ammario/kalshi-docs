@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-08-16T19:30:29.803Z
+lastmod: 2026-08-19T00:30:10.718Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -26,6 +26,16 @@ You have two independent token budgets:
 | **Write** | Order placement, amends, cancels, order groups, the RFQ quote flow, and block trade proposal accepts. |
 
 The split is by operation type, not by protocol. REST and FIX requests drain the same buckets.
+
+## Sharded exchanges have per-shard Write budgets
+
+A single order write that explicitly targets an [exchange shard](/getting_started/exchange_sharding) draws from a Write bucket scoped to that shard, and each shard's bucket carries your full tier budget:
+
+* **Single REST** order creates, cancels, decreases, and amends: `exchange_index >= 1` is billed to that shard's Write bucket. Shard 0 traffic (`exchange_index` omitted or `0`) and auto-routed traffic (`exchange_index: -1`) bill your unscoped Write bucket.
+* **FIX** New Order Single (35=D), Order Cancel Request (35=F), and Order Cancel/Replace Request (35=G): `ExDestination` (tag 100) with a value `>= 1` is billed to that shard's Write bucket. Messages without tag 100, or with `0` or `-1`, are billed to your unscoped Write bucket. RFQ quote accepts (35=D carrying `QuoteID`) always bill the unscoped Write bucket.
+* **Batch REST** creates and cancels always bill their total per-order cost to your unscoped Write bucket, regardless of `exchange_index`.
+
+Read budgets are not shard-scoped.
 
 ## Bucket capacity and bursting
 

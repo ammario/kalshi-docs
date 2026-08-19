@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fcm/delete-fcm-subtrader-risk-controls
-lastmod: 2026-08-17T23:23:10.807Z
+lastmod: 2026-08-18T14:45:57.319Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -77,6 +77,25 @@ paths:
           schema:
             type: string
             x-go-type-skip-optional-pointer: true
+        - name: asset_class
+          in: query
+          required: false
+          description: >-
+            Scopes the initial margin cap removal to this asset class when
+            supplied. Mutually exclusive with market_ticker.
+          schema:
+            type: string
+            x-go-type-skip-optional-pointer: true
+            enum:
+              - Crypto
+              - Equities
+              - Metals
+              - FX
+              - Energy
+              - Indices
+              - Rates
+              - Compute
+              - GPU
       responses:
         '200':
           description: Risk controls deleted successfully

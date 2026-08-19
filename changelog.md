@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-17T23:23:17.932Z
+lastmod: 2026-08-18T23:26:02.075Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -35,7 +35,11 @@ description: "GET /trade-api/v2/live_data/weather/{city} serves the minute-resol
   omitted, so gaps are real gaps. Window via `from`/`to` (unix ms) or
   `last_sec`, defaulting to the trailing 24 hours. With `detailed=true`,
   each point carries every member station's reported reading and
-  quality-control disposition before incorporation into the index.
+  quality-control disposition before incorporation into the index, and
+  trailing minutes still inside the receipt deadline are additionally
+  served as `incomplete` points: no index value (`v` is absent, not `0`),
+  with the raw, not-yet-quality-controlled station readings recorded so
+  far (station code `pending`).
 </Update>
 
 <Update
@@ -100,6 +104,21 @@ description: "Maker fees will be enabled Wednesday night; post-only mode will be
 
 <Update
   label="August 20, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "Entry timestamps for FIX market data",
+description: "FIX market data snapshots and incremental refreshes now include MDEntryDate<272> and MDEntryTime<273>."
+}}
+>
+  `MarketDataSnapshotFullRefresh<35=W>` and
+  `MarketDataIncrementalRefresh<35=X>` entries now include
+  `MDEntryDate<272>` and `MDEntryTime<273>`. Snapshot values identify when the
+  snapshot was captured. Incremental values identify the exchange event that
+  produced the update.
+</Update>
+
+<Update
+  label="August 20, 2026"
   tags={["REST", "Predictions"]}
   rss={{
 title: "Cross-shard subaccount transfers",
@@ -141,6 +160,17 @@ description: "Get Total Resting Order Value now returns a per-exchange-index bre
   `GET /trade-api/v2/portfolio/summary/total_resting_order_value` now returns
   `resting_order_value_breakdown`, with a fixed-point dollar `balance` for each
   exchange index.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Exchange index on portfolio records",
+description: "Exchange index provided on fill, settlement, and market position responses."
+}}
+>
+  Exchange index provided on fill, settlement, and market position responses.
 </Update>
 
 <Update
