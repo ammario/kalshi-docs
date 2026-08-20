@@ -100,6 +100,10 @@ operations:
                       - FED-23DEC-T3.00
                       - HIGHNY-22DEC23-B53.5
                     required: true
+                  - name: exchange_index
+                    type: integer
+                    description: Identifier for the exchange shard where the fill occurred
+                    required: true
                   - name: is_taker
                     type: boolean
                     description: If you were a taker on this fill
@@ -204,6 +208,7 @@ operations:
                 - trade_id
                 - order_id
                 - market_ticker
+                - exchange_index
                 - is_taker
                 - side
                 - yes_price_dollars
@@ -237,10 +242,14 @@ operations:
                   pattern: ^[A-Z0-9-]+$
                   examples: *ref_0
                   x-parser-schema-id: marketTicker
+                exchange_index:
+                  type: integer
+                  description: Identifier for the exchange shard where the fill occurred
+                  x-parser-schema-id: <anonymous-schema-109>
                 is_taker:
                   type: boolean
                   description: If you were a taker on this fill
-                  x-parser-schema-id: <anonymous-schema-109>
+                  x-parser-schema-id: <anonymous-schema-110>
                 side: &ref_1
                   type: string
                   description: Market side
@@ -251,15 +260,15 @@ operations:
                 yes_price_dollars:
                   type: string
                   description: Price for the yes side of the fill in dollars
-                  x-parser-schema-id: <anonymous-schema-110>
+                  x-parser-schema-id: <anonymous-schema-111>
                 count_fp:
                   type: string
                   description: Fixed-point contracts filled (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-111>
+                  x-parser-schema-id: <anonymous-schema-112>
                 fee_cost:
                   type: string
                   description: Exchange fee paid for this fill in fixed-point dollars
-                  x-parser-schema-id: <anonymous-schema-112>
+                  x-parser-schema-id: <anonymous-schema-113>
                 action:
                   type: string
                   description: Order action type
@@ -274,22 +283,22 @@ operations:
                     Deprecated - Unix timestamp for when the update happened (in
                     seconds). Use ts_ms instead.
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-113>
+                  x-parser-schema-id: <anonymous-schema-114>
                 ts_ms:
                   type: integer
                   description: >-
                     Unix timestamp for when the update happened (in
                     milliseconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-114>
+                  x-parser-schema-id: <anonymous-schema-115>
                 client_order_id:
                   type: string
                   description: Optional client-provided order ID
-                  x-parser-schema-id: <anonymous-schema-115>
+                  x-parser-schema-id: <anonymous-schema-116>
                 post_position_fp:
                   type: string
                   description: Fixed-point position after the fill (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-116>
+                  x-parser-schema-id: <anonymous-schema-117>
                 purchased_side: *ref_1
                 outcome_side: *ref_1
                 book_side:
@@ -305,7 +314,7 @@ operations:
                 subaccount:
                   type: integer
                   description: Optional subaccount number for the fill
-                  x-parser-schema-id: <anonymous-schema-117>
+                  x-parser-schema-id: <anonymous-schema-118>
               x-parser-schema-id: <anonymous-schema-106>
           x-parser-schema-id: fillPayload
         title: Fill Update
@@ -318,6 +327,7 @@ operations:
               "trade_id": "d91bc706-ee49-470d-82d8-11418bda6fed",
               "order_id": "ee587a1c-8b87-4dcf-b721-9f6f790619fa",
               "market_ticker": "HIGHNY-22DEC23-B53.5",
+              "exchange_index": 2,
               "is_taker": true,
               "side": "yes",
               "yes_price_dollars": "0.750",

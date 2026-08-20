@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-18T23:26:02.075Z
+lastmod: 2026-08-20T01:25:20.743Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -98,8 +98,25 @@ description: "Maker fees will be enabled Wednesday night; post-only mode will be
   For combo trades, if a quoter executes against an order that has rested on
   the book for less than five seconds, both parties' fees will be adjusted: the
   quoter will pay the maker fee, and the resting counterparty will pay the
-  taker fee. See the [Kalshi Fee Schedule](https://kalshi.com/docs/kalshi-fee-schedule.pdf)
-  for details.
+  taker fee. The maker fee uses a fee multiplier of `0.5`, rather than the
+  standard `0.25`. See the
+  [Kalshi Fee Schedule](https://kalshi.com/fee-schedule) for details.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "Maker fee exemption for independent NFL combo markets",
+description: "Independent, NFL-only combo markets created after 11:59 PM ET on August 19, 2026 will have no maker fee."
+}}
+>
+  Combo markets created after 11:59 PM ET on August 19, 2026 that are composed
+  entirely of independent NFL components will have no maker fee. The Exchange
+  will consider a market to be composed of independent components if every
+  component ties to a different milestone (NFL game) and the market consists
+  exclusively of NFL components. Markets that meet these conditions will be
+  created under the `KXMVECROSSCATEGORY0-SHARD1` series.
 </Update>
 
 <Update
@@ -164,13 +181,13 @@ description: "Get Total Resting Order Value now returns a per-exchange-index bre
 
 <Update
   label="August 20, 2026"
-  tags={["REST", "Predictions"]}
+  tags={["REST", "WebSocket", "Predictions"]}
   rss={{
-title: "Exchange index on portfolio records",
-description: "Exchange index provided on fill, settlement, and market position responses."
+title: "Exchange index on portfolio and WebSocket fill records",
+description: "Exchange index provided on REST fill, settlement, and market position responses and WebSocket fill messages."
 }}
 >
-  Exchange index provided on fill, settlement, and market position responses.
+  Exchange index provided on REST fill, settlement, and market position responses and WebSocket fill messages.
 </Update>
 
 <Update
@@ -2026,7 +2043,7 @@ description: "REST and WebSocket Order, Fill, and Trade responses now include ou
   * `Fill` (GetFills, GetFillsHistorical)
   * `Trade` (public) — fields are named `taker_outcome_side` and `taker_book_side` to match the existing `taker_side`
 
-  Affected WebSocket channels (`svc-apiexternal-ws`):
+  Affected WebSocket channels (`apiexternal-ws`):
 
   * `user_orders`
   * `fill`

@@ -1524,6 +1524,7 @@ components:
               trade_id: "d91bc706-ee49-470d-82d8-11418bda6fed"
               order_id: "ee587a1c-8b87-4dcf-b721-9f6f790619fa"
               market_ticker: "HIGHNY-22DEC23-B53.5"
+              exchange_index: 2
               is_taker: true
               side: "yes"
               yes_price_dollars: "0.750"
@@ -2666,7 +2667,7 @@ components:
           $ref: '#/components/schemas/subscriptionId'
         msg:
           type: object
-          required: ["trade_id", "order_id", "market_ticker", "is_taker", "side", "yes_price_dollars", "count_fp", "fee_cost", "action", "outcome_side", "book_side", "ts", "ts_ms", "post_position_fp", "purchased_side"]
+          required: ["trade_id", "order_id", "market_ticker", "exchange_index", "is_taker", "side", "yes_price_dollars", "count_fp", "fee_cost", "action", "outcome_side", "book_side", "ts", "ts_ms", "post_position_fp", "purchased_side"]
           properties:
             trade_id:
               type: string
@@ -2679,6 +2680,9 @@ components:
             market_ticker:
               $ref: '#/components/schemas/marketTicker'
               description: Unique identifier for markets. This is what you use to differentiate fills for different markets
+            exchange_index:
+              type: integer
+              description: Identifier for the exchange shard where the fill occurred
             is_taker:
               type: boolean
               description: If you were a taker on this fill

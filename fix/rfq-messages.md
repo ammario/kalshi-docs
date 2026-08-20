@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-08-05T21:55:18.003Z
+lastmod: 2026-08-19T20:15:03.629Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -314,12 +314,13 @@ RFQ creator cancels/deletes an active RFQ.
 
 ## RFQCancelStatus (35=UB)
 
-Exchange response to RFQCancel.
+Exchange response to RFQCancel, or unsolicited with EXPIRED(2) when the exchange closes the RFQ itself.
 
 | Tag   | Name            | Type    | Required | Description                                                |
 | ----- | --------------- | ------- | -------- | ---------------------------------------------------------- |
 | 131   | QuoteReqId      | String  | Y        | RFQ identifier (echoes back the ID from RFQCancel request) |
-| 21013 | RFQCancelStatus | Integer | Y        | CANCELED(0) or REJECTED(1)                                 |
+| 21013 | RFQCancelStatus | Integer | Y        | CANCELED(0), REJECTED(1) or EXPIRED(2)                     |
+| 21023 | RfqId           | UUID    | C        | Server-assigned RFQ ID. Always present on EXPIRED(2)       |
 | 58    | Text            | String  | C        | Rejection reason if REJECTED                               |
 
 ## QuoteRequestReject (35=AG)
