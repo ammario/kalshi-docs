@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series-list
-lastmod: 2026-08-18T14:45:56.004Z
+lastmod: 2026-08-20T21:09:48.261Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -206,8 +206,10 @@ components:
             https://kalshi.com/docs/kalshi-fee-schedule.pdf. 'quadratic' is
             described by the General Trading Fees Table,
             'quadratic_with_maker_fees' is described by the General Trading Fees
-            Table with maker fees described in the Maker Fees section, 'flat' is
-            described by the Specific Trading Fees Table.
+            Table with maker fees described in the Maker Fees section,
+            'quadratic_with_combo_maker_fees' is the same maker-fee structure
+            with a 0.5 maker multiplier instead of 0.25, 'flat' is described by
+            the Specific Trading Fees Table.
         fee_multiplier:
           type: number
           format: double
@@ -264,10 +266,12 @@ components:
       enum:
         - quadratic
         - quadratic_with_maker_fees
+        - quadratic_with_combo_maker_fees
         - flat
       x-enum-varnames:
         - FeeTypeQuadratic
         - FeeTypeQuadraticWithMakerFees
+        - FeeTypeQuadraticWithComboMakerFees
         - FeeTypeFlat
       description: Fee type for a series or scheduled fee override.
     FixedPointCount:

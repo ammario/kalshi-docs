@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order-v2
-lastmod: 2026-08-18T14:45:56.207Z
+lastmod: 2026-08-20T21:09:48.437Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -171,11 +171,10 @@ components:
         exchange_index:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'
-          default: 0
           description: >-
-            Exchange shard index. Defaults to 0. Use -1 to auto-route by market
+            Exchange shard index. If omitted, auto-routes when ticker is
+            provided; otherwise defaults to 0. Use -1 to require auto-routing by
             ticker.
-          x-go-type-skip-optional-pointer: true
     AmendOrderV2Response:
       type: object
       required:

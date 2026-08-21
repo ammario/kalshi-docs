@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-20T01:25:20.743Z
+lastmod: 2026-08-20T21:09:56.401Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,49 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 27, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "The available_on_brokers field on event responses is deprecated",
+description: "The available_on_brokers field on event responses is deprecated, is no longer populated, and always returns false. It will be removed in a future release."
+}}
+>
+  The `available_on_brokers` field on the individual and batch `GET` events
+  endpoints is deprecated. It is no longer populated and always returns
+  `false`. The field will be removed in a future release.
+</Update>
+
+<Update
+  label="August 27, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Exchange auto-routing enabled by default",
+description: "Exchange auto-routing enabled by default"
+}}
+>
+  Exchange auto-routing enabled by default when providing `market_ticker` and excluding `exchange_index` parameter.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["WebSocket", "FIX", "Predictions", "Margin"]}
+  rss={{
+title: "VPC peering for Prime members",
+description: "Prime-tier members can contact Kalshi to discuss VPC peering for production WebSocket and FIX connectivity."
+}}
+>
+  Members on the Prime tier or above can contact
+  [institutional@kalshi.com](mailto:institutional@kalshi.com) to discuss VPC
+  peering for production WebSocket and FIX connectivity from their AWS VPC.
+  Existing AWS PrivateLink connectivity remains available to members on the
+  Premier tier or above.
+
+  See [API Environments and Endpoints](/getting_started/api_environments#private-connectivity),
+  [FIX Connectivity](/fix/connectivity#private-connectivity), and
+  [Margin FIX Connectivity](/fix-margin/connectivity#private-connectivity).
+</Update>
 
 <Update
   label="August 20, 2026"
@@ -86,12 +129,13 @@ description: "Crypto, Tennis, and Baseball moving to dedicated exchange instance
   tags={["REST", "WebSocket", "FIX", "Predictions"]}
   rss={{
 title: "Combo RFQ fee assignment for briefly resting orders",
-description: "Maker fees will be enabled Wednesday night; post-only mode will be disabled and the combo RFQ quoter fee swap enabled Friday night."
+description: "Maker fees will be enabled at 5:00 AM ET on Thursday, August 20, after the maintenance window; post-only mode will be disabled and the combo RFQ quoter fee swap enabled Friday night."
 }}
 >
   **Rollout timing:**
 
-  * Maker fees will be enabled at 11:59 PM on Wednesday, August 19.
+  * Maker fees will be enabled at 5:00 AM ET on Thursday, August 20, after the
+    maintenance window.
   * Post-only mode will be disabled and the quoter fee swap will be enabled at
     11:59 PM on Friday, August 21.
 

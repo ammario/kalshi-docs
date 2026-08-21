@@ -803,6 +803,7 @@ operations:
                     enumValues:
                       - quadratic
                       - quadratic_with_maker_fees
+                      - quadratic_with_combo_maker_fees
                       - flat
                     required: true
                   - name: fee_multiplier_override
@@ -841,6 +842,7 @@ operations:
                   enum:
                     - quadratic
                     - quadratic_with_maker_fees
+                    - quadratic_with_combo_maker_fees
                     - flat
                     - null
                   description: >-

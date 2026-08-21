@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2026-08-19T00:30:10.719Z
+lastmod: 2026-08-20T15:18:43.536Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -77,6 +77,8 @@ openssl s_client -showcerts -connect fix.demo.kalshi.co:8228 < /dev/null | opens
 For participants requiring network-level isolation, Kalshi supports private connectivity via [AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html). With PrivateLink, FIX traffic is routed entirely within the AWS backbone and never traverses the public internet.
 
 Members on the Premier tier or above can contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to provision a PrivateLink endpoint for their AWS account.
+
+Members on the Prime tier or above can also contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to discuss VPC peering for production connectivity from their AWS VPC.
 
 ## Rate Limits
 

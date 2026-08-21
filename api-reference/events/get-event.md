@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2026-08-18T14:45:56.085Z
+lastmod: 2026-08-20T21:09:48.341Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -203,7 +203,10 @@ components:
           x-go-type-skip-optional-pointer: true
         available_on_brokers:
           type: boolean
-          description: Whether this event is available to trade on brokers.
+          description: >-
+            Deprecated. No longer populated and always returns false; it will be
+            removed in a future release.
+          deprecated: true
         product_metadata:
           type: object
           nullable: true

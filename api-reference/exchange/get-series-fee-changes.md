@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-series-fee-changes
-lastmod: 2026-08-20T01:25:15.631Z
+lastmod: 2026-08-20T21:09:48.187Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -148,10 +148,12 @@ components:
       enum:
         - quadratic
         - quadratic_with_maker_fees
+        - quadratic_with_combo_maker_fees
         - flat
       x-enum-varnames:
         - FeeTypeQuadratic
         - FeeTypeQuadraticWithMakerFees
+        - FeeTypeQuadraticWithComboMakerFees
         - FeeTypeFlat
       description: Fee type for a series or scheduled fee override.
   responses:

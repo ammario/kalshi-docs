@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fcm/get-fcm-subtrader-risk-controls
-lastmod: 2026-08-18T18:41:54.043Z
+lastmod: 2026-08-20T21:09:49.184Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
