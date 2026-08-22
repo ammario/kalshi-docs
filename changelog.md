@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-20T21:09:56.401Z
+lastmod: 2026-08-21T22:07:09.589Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,23 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 27, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Historical CF Benchmarks values via the REST passthrough",
+description: "Documented how to retrieve historical CF Benchmarks index values, including intra-second granularity on some indices, through the existing REST passthrough."
+}}
+>
+  The [CF Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough) page
+  now documents retrieving historical index values through the existing
+  `GET /trade-api/v2/cfbenchmarks/*` endpoint, and the
+  [CF Benchmarks Value Feed](/websockets/cfbenchmarks-value) websocket page
+  links to it. Some indices publish at intra-second granularity on the
+  history endpoint; refer to the official CF Benchmarks API documentation
+  for supported indices and granularities.
+</Update>
 
 <Update
   label="August 27, 2026"
@@ -61,6 +78,20 @@ description: "Prime-tier members can contact Kalshi to discuss VPC peering for p
   See [API Environments and Endpoints](/getting_started/api_environments#private-connectivity),
   [FIX Connectivity](/fix/connectivity#private-connectivity), and
   [Margin FIX Connectivity](/fix-margin/connectivity#private-connectivity).
+</Update>
+
+<Update
+  label="August 27, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin maker-volume incentive programs",
+description: "GET /trade-api/v2/incentive_programs supports margin_maker_volume programs and their optional per-account reward cap."
+}}
+>
+  `GET /trade-api/v2/incentive_programs` now accepts
+  `type=margin_maker_volume`. These programs include the optional
+  `max_reward_per_account` field; event-only fields are omitted when they do
+  not apply.
 </Update>
 
 <Update
@@ -128,16 +159,37 @@ description: "Crypto, Tennis, and Baseball moving to dedicated exchange instance
   label="August 22, 2026"
   tags={["REST", "WebSocket", "FIX", "Predictions"]}
   rss={{
+title: "Post-only quotes preserved; crossing rate limits may apply",
+description: "The planned removal of post-only on quotes is cancelled. Quoters using post-only may be temporarily rate limited if they cross the book several times in short succession. The previously announced fee change will proceed at 11:59 PM ET on August 21."
+}}
+>
+  As a result of trader feedback, the formerly announced planned change to
+  remove `post-only` on quotes is cancelled. This flag will be preserved.
+
+  However, to protect against "locked" markets which can occur if a quoter
+  with post-only repeatedly crosses the book, quoters with post-only set to
+  true may be temporarily rate limited if they cross several times in short
+  succession.
+
+  The formerly announced change adjusting maker and taker fees in the event a
+  quoter matches against a recently placed resting order will proceed as
+  scheduled at 11:59 PM ET on August 21.
+</Update>
+
+<Update
+  label="August 22, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
 title: "Combo RFQ fee assignment for briefly resting orders",
-description: "Maker fees will be enabled at 5:00 AM ET on Thursday, August 20, after the maintenance window; post-only mode will be disabled and the combo RFQ quoter fee swap enabled Friday night."
+description: "Maker fees were enabled at 5:00 AM ET on Thursday, August 20, after the maintenance window; the formerly planned post-only disablement is cancelled and the combo RFQ quoter fee swap remains scheduled for Friday night."
 }}
 >
   **Rollout timing:**
 
   * Maker fees will be enabled at 5:00 AM ET on Thursday, August 20, after the
     maintenance window.
-  * Post-only mode will be disabled and the quoter fee swap will be enabled at
-    11:59 PM on Friday, August 21.
+  * <del>Post-only mode will be disabled and</del> the quoter fee swap will be
+    enabled at 11:59 PM on Friday, August 21.
 
   For combo trades, if a quoter executes against an order that has rested on
   the book for less than five seconds, both parties' fees will be adjusted: the

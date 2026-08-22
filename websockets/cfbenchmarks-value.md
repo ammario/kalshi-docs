@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/cfbenchmarks-value
-lastmod: 2026-06-06T21:40:59.119Z
+lastmod: 2026-08-21T17:09:23.547Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -44,6 +44,7 @@ lastmod: 2026-06-06T21:40:59.119Z
 - If you subscribe without any `index_ids`, no value events flow until you add indices or switch to `["all"]`
 - `sid` identifies the subscription stream; use it for `update_subscription` and `unsubscribe`
 - Missing `index_ids` for `subscribe_indices`/`unsubscribe_indices` returns an `error` with `code: 24` ("Index IDs required"); unsupported actions return a standard websocket `error`
+- This channel is real-time only. Historical index values — including intra-second granularity on some indices — are available over REST via the [CF Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough)
 
 
 
@@ -138,6 +139,10 @@ description: >
   - Missing `index_ids` for `subscribe_indices`/`unsubscribe_indices` returns an
   `error` with `code: 24` ("Index IDs required"); unsupported actions return a
   standard websocket `error`
+
+  - This channel is real-time only. Historical index values — including
+  intra-second granularity on some indices — are available over REST via the [CF
+  Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough)
 servers:
   - id: production
     protocol: wss

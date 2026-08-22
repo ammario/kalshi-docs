@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/funding/get-funding-history
-lastmod: 2026-08-20T21:09:49.392Z
+lastmod: 2026-08-21T22:07:02.359Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

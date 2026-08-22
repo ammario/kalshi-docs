@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/incentive-programs/get-incentives
-lastmod: 2026-08-20T21:09:49.041Z
+lastmod: 2026-08-21T22:07:01.920Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -90,14 +90,15 @@ paths:
           in: query
           required: false
           description: >-
-            Type filter. Can be "all", "liquidity", or "volume". Default is
-            "all".
+            Type filter. Can be "all", "liquidity", "volume", or
+            "margin_maker_volume". Default is "all".
           schema:
             type: string
             enum:
               - all
               - liquidity
               - volume
+              - margin_maker_volume
         - name: incentive_description
           in: query
           required: false
@@ -194,6 +195,7 @@ components:
           enum:
             - liquidity
             - volume
+            - margin_maker_volume
           description: Type of incentive program
         incentive_description:
           type: string
@@ -224,6 +226,11 @@ components:
           description: >-
             String representation of the target size for the incentive program
             (optional)
+        max_reward_per_account:
+          type: integer
+          format: int64
+          nullable: true
+          description: Maximum reward per account in centi-cents (optional)
     FixedPointCount:
       type: string
       description: >-
