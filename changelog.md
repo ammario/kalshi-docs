@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-21T22:07:09.589Z
+lastmod: 2026-08-24T22:23:32.610Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,18 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 27, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Exchange index on user order messages",
+description: "The user_orders WebSocket channel now includes exchange_index on each order update."
+}}
+>
+  The `user_orders` WebSocket channel now includes `exchange_index` on each
+  order update, identifying the exchange shard where the order resides.
+</Update>
 
 <Update
   label="August 27, 2026"

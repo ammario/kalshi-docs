@@ -1741,6 +1741,7 @@ components:
               order_id: "ee587a1c-8b87-4dcf-b721-9f6f790619fa"
               user_id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
               ticker: "FED-23DEC-T3.00"
+              exchange_index: 2
               status: "resting"
               side: "yes"
               is_yes: true
@@ -3028,7 +3029,7 @@ components:
           $ref: '#/components/schemas/subscriptionId'
         msg:
           type: object
-          required: ["order_id", "user_id", "ticker", "status", "side", "is_yes", "outcome_side", "book_side", "yes_price_dollars", "fill_count_fp", "remaining_count_fp", "initial_count_fp", "taker_fill_cost_dollars", "maker_fill_cost_dollars", "taker_fees_dollars", "maker_fees_dollars", "client_order_id", "created_time", "created_ts_ms"]
+          required: ["order_id", "user_id", "ticker", "exchange_index", "status", "side", "is_yes", "outcome_side", "book_side", "yes_price_dollars", "fill_count_fp", "remaining_count_fp", "initial_count_fp", "taker_fill_cost_dollars", "maker_fill_cost_dollars", "taker_fees_dollars", "maker_fees_dollars", "client_order_id", "created_time", "created_ts_ms"]
           properties:
             order_id:
               type: string
@@ -3041,6 +3042,9 @@ components:
             ticker:
               $ref: '#/components/schemas/marketTicker'
               description: Market ticker for the order
+            exchange_index:
+              type: integer
+              description: Identifier for the exchange shard where the order resides
             status:
               type: string
               description: Current order status

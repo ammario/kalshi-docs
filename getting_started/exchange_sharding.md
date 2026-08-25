@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/exchange_sharding
-lastmod: 2026-08-21T19:02:50.331Z
+lastmod: 2026-08-24T20:52:19.880Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -45,9 +45,9 @@ Kalshi's collateralization checks will continue to run within the matching engin
 **Auto-Rebalancing**
 
 * Institutional clients may opt in to automatic rebalancing between exchange shards.
-* The customer supplies a target balance allocation as a percentage of free capital per exchange shard. For example, `{Default: 80, Combos: 20}`.
-* Every 10 seconds, Kalshi computes the customer's free margin on each exchange shard as its balance minus the value of its resting orders.
-* If free margin has drifted from the target allocation, Kalshi executes an intra-exchange account transfer on the customer's behalf to restore the target allocation.
+* The customer supplies a target balance allocation as a percentage of their balance across exchange shards. For example, `{Default: 80, Combos: 20}`.
+* Every 10 seconds, Kalshi computes the customer's balance on each exchange shard as its account balance minus the value of its resting orders.
+* If the balance has drifted from the target allocation, Kalshi executes an intra-exchange account transfer on the customer's behalf to restore the target allocation.
 * Target balance allocations can be configured through the [REST API](/api-reference/portfolio/set-target-balance-allocation) and the clearing portal.
 
 ## Order routing
