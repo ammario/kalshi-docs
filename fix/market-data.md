@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-data
-lastmod: 2026-08-18T23:26:02.064Z
+lastmod: 2026-08-25T15:59:53.480Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -75,17 +75,18 @@ Sent in response to a snapshot request and immediately after a snapshot-plus-upd
 
 Sent after a subscribed market's aggregated book levels change or a trade occurs. Correlate by `Symbol<55>` on each entry.
 
-| Tag  | Name           | Type     | Required | Description                                                            |
-| ---- | -------------- | -------- | -------- | ---------------------------------------------------------------------- |
-| 268  | NoMDEntries    | Integer  | Y        | Number of market data entries.                                         |
-| 279  | MDUpdateAction | Char     | Y        | Repeating group field. `0`=New, `1`=Change, `2`=Delete.                |
-| 55   | Symbol         | String   | Y        | Repeating group field. Market ticker.                                  |
-| 269  | MDEntryType    | Char     | Y        | Repeating group field. `0`=Bid, `1`=Offer, `2`=Trade                   |
-| 270  | MDEntryPx      | Price    | Y        | Price in dollars.                                                      |
-| 271  | MDEntrySize    | Quantity | Y        | Size in contracts.                                                     |
-| 272  | MDEntryDate    | UTC Date | Y        | Repeating group field. UTC source-event date in `YYYYMMDD` format.     |
-| 273  | MDEntryTime    | UTC Time | Y        | Repeating group field. UTC source-event time in `HH:MM:SS.sss` format. |
-| 2446 | AggressorSide  | Char     | C        | Trade entries only. `1`=Buy, `2`=Sell.                                 |
+| Tag  | Name           | Type     | Required | Description                                                               |
+| ---- | -------------- | -------- | -------- | ------------------------------------------------------------------------- |
+| 268  | NoMDEntries    | Integer  | Y        | Number of market data entries.                                            |
+| 279  | MDUpdateAction | Char     | Y        | Repeating group field. `0`=New, `1`=Change, `2`=Delete.                   |
+| 55   | Symbol         | String   | Y        | Repeating group field. Market ticker.                                     |
+| 269  | MDEntryType    | Char     | Y        | Repeating group field. `0`=Bid, `1`=Offer, `2`=Trade                      |
+| 270  | MDEntryPx      | Price    | Y        | Price in dollars.                                                         |
+| 271  | MDEntrySize    | Quantity | Y        | Size in contracts.                                                        |
+| 272  | MDEntryDate    | UTC Date | Y        | Repeating group field. UTC source-event date in `YYYYMMDD` format.        |
+| 273  | MDEntryTime    | UTC Time | Y        | Repeating group field. UTC source-event time in `HH:MM:SS.sss` format.    |
+| 2446 | AggressorSide  | Char     | C        | Trade entries only. `1`=Buy, `2`=Sell.                                    |
+| 828  | TrdType        | Int      | C        | Trade entries only. `1`=Block trade. Absent on regular order book trades. |
 
 ```fix Example incremental update theme={null}
 8=FIXT.1.1|35=X|49=KalshiMD|56=your-api-key|268=1|279=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|269=0|270=0.3500|271=15.00|272=20260817|273=16:00:00.456|
