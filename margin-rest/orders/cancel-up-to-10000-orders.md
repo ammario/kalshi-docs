@@ -1,20 +1,23 @@
 ---
-url: https://docs.kalshi.com/margin-rest/order-groups/delete-order-group
-lastmod: 2026-08-27T00:02:22.280Z
+url: https://docs.kalshi.com/margin-rest/orders/cancel-up-to-10000-orders
+lastmod: 2026-08-27T00:02:22.015Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Delete Order Group
+# Cancel Up to 10,000 Orders
 
-> Deletes an order group on the margin exchange and cancels all orders within it.
+> Cancels up to 10,000 resting margin orders for the authenticated Direct member. If `subaccount` is omitted, matching orders may come from any subaccount. If it is provided, only orders for that subaccount are eligible. When more than 10,000 orders match, the orders selected for cancellation are arbitrary and no ordering guarantees should be relied upon.
 
+<Note>
+  **Rate limit:** A request consumes the same number of write tokens as a batch cancel containing the maximum number of orders allowed for the caller's margin API tier.
+</Note>
 
 
 ## OpenAPI
 
-````yaml /perps_openapi.yaml delete /margin/order_groups/{order_group_id}
+````yaml /perps_openapi.yaml delete /margin/orders
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -52,29 +55,28 @@ tags:
   - name: exit-triggers
     description: Stop-loss, take-profit, and trailing-stop triggers on margin positions
 paths:
-  /margin/order_groups/{order_group_id}:
+  /margin/orders:
     delete:
       tags:
-        - order-groups
-      summary: Delete Order Group
+        - orders
+      summary: Cancel Up to 10,000 Orders
       description: >-
-        Deletes an order group on the margin exchange and cancels all orders
-        within it.
-      operationId: DeleteMarginOrderGroup
+        Cancels up to 10,000 resting margin orders for the authenticated Direct
+        member. If `subaccount` is omitted, matching orders may come from any
+        subaccount. If it is provided, only orders for that subaccount are
+        eligible. When more than 10,000 orders match, the orders selected for
+        cancellation are arbitrary and no ordering guarantees should be relied
+        upon.
+      operationId: CancelAllMarginOrders
       parameters:
-        - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
-        '200':
-          description: Order group deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmptyResponse'
+        '204':
+          description: Up to 10,000 matching resting margin orders were cancelled
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -83,26 +85,38 @@ paths:
           kalshiAccessTimestamp: []
 components:
   parameters:
-    OrderGroupIdPath:
-      name: order_group_id
-      in: path
-      required: true
-      description: Order group ID
-      schema:
-        type: string
-    SubaccountQueryDefaultPrimary:
+    SubaccountQuery:
       name: subaccount
       in: query
       required: false
-      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
+      description: >-
+        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
+        defaults to all subaccounts.
       schema:
         type: integer
         minimum: 0
-        default: 0
+  responses:
+    UnauthorizedError:
+      description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimitError:
+      description: >-
+        Rate limit exceeded. The default cost is 10 tokens per request. Use GET
+        /trade-api/v2/account/endpoint_costs to list non-default endpoint costs.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    EmptyResponse:
-      type: object
-      description: An empty response body
     ErrorResponse:
       type: object
       properties:
@@ -115,25 +129,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-  responses:
-    UnauthorizedError:
-      description: Unauthorized - authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

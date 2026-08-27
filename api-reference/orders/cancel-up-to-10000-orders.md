@@ -1,20 +1,23 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-total-resting-order-value
-lastmod: 2026-08-27T00:02:21.384Z
+url: https://docs.kalshi.com/api-reference/orders/cancel-up-to-10000-orders
+lastmod: 2026-08-27T00:02:21.126Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Total Resting Order Value
+# Cancel Up to 10,000 Orders
 
->  Endpoint for getting the total value, in cents, of resting orders. This endpoint is only intended for use by FCM members (rare). Note: If you're uncertain about this endpoint, it likely does not apply to you.
+> Cancels up to 10,000 resting event-market orders for the authenticated Direct member across every exchange shard. If `subaccount` is omitted, matching orders may come from any subaccount. If it is provided, only orders for that subaccount are eligible. When more than 10,000 orders match, the orders selected for cancellation are arbitrary and no ordering guarantees should be relied upon.
 
+<Note>
+  **Rate limit:** A request consumes the same number of write tokens as a batch cancel containing the maximum number of orders allowed for the caller's API tier.
+</Note>
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/summary/total_resting_order_value
+````yaml /openapi.yaml delete /portfolio/events/orders
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,23 +67,28 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/summary/total_resting_order_value:
-    get:
+  /portfolio/events/orders:
+    delete:
       tags:
-        - portfolio
-      summary: Get Total Resting Order Value
-      description: ' Endpoint for getting the total value, in cents, of resting orders. This endpoint is only intended for use by FCM members (rare). Note: If you''re uncertain about this endpoint, it likely does not apply to you.'
-      operationId: GetPortfolioRestingOrderTotalValue
+        - orders
+      summary: Cancel Up to 10,000 Orders
+      description: >-
+        Cancels up to 10,000 resting event-market orders for the authenticated
+        Direct member across every exchange shard. If `subaccount` is omitted,
+        matching orders may come from any subaccount. If it is provided, only
+        orders for that subaccount are eligible. When more than 10,000 orders
+        match, the orders selected for cancellation are arbitrary and no
+        ordering guarantees should be relied upon.
+      operationId: CancelAllOrders
+      parameters:
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
-        '200':
-          description: Total resting order value retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: >-
-                  #/components/schemas/GetPortfolioRestingOrderTotalValueResponse
+        '204':
+          description: Up to 10,000 matching resting orders were cancelled
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -88,33 +96,37 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
+  parameters:
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: >-
+        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
+        defaults to all subaccounts.
+      schema:
+        type: integer
+  responses:
+    UnauthorizedError:
+      description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimitError:
+      description: >-
+        Rate limit exceeded. The default cost is 10 tokens per request. Use GET
+        /trade-api/v2/account/endpoint_costs to list non-default endpoint costs.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    GetPortfolioRestingOrderTotalValueResponse:
-      type: object
-      required:
-        - total_resting_order_value
-        - resting_order_value_breakdown
-      properties:
-        total_resting_order_value:
-          type: integer
-          description: Total value of resting orders in cents
-        resting_order_value_breakdown:
-          type: array
-          items:
-            $ref: '#/components/schemas/IndexedBalance'
-          description: >-
-            Total value of resting orders broken down by exchange index, with
-            each balance expressed as a fixed-point dollar string.
-    IndexedBalance:
-      type: object
-      required:
-        - exchange_index
-        - balance
-      properties:
-        exchange_index:
-          $ref: '#/components/schemas/ExchangeIndex'
-        balance:
-          $ref: '#/components/schemas/FixedPointDollars'
     ErrorResponse:
       type: object
       properties:
@@ -127,31 +139,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-    ExchangeIndex:
-      type: integer
-      description: Identifier for an exchange shard.
-      example: 0
-    FixedPointDollars:
-      type: string
-      description: >-
-        Fixed-point US dollar string. Most request fields accept 2-4 decimal
-        places (e.g., "0.56", "0.5600"); responses emit up to 6. Valid quote
-        intervals for a given market are constrained by that market's price
-        level structure.
-      example: '0.5600'
-  responses:
-    UnauthorizedError:
-      description: Unauthorized - authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     kalshiAccessKey:
       type: apiKey
