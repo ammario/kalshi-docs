@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-26T23:31:54.495Z
+lastmod: 2026-08-27T20:32:40.902Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,20 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 27, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Localized market content in REST responses",
+description: "Trade API v2 market responses can now return available Spanish or Portuguese translations when requested with Accept-Language."
+}}
+>
+  Trade API v2 market responses can now return available Spanish or Portuguese
+  translations, including localized market rules, when requested with the
+  `Accept-Language` header. Regional variants such as `es-MX` and `pt-BR` are
+  supported. Requests without a supported language continue to receive English.
+</Update>
 
 <Update
   label="August 27, 2026"
