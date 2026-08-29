@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-27T20:32:40.902Z
+lastmod: 2026-08-28T19:37:51.683Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -63,19 +63,13 @@ description: "The user_orders WebSocket channel now includes exchange_index on e
   label="August 27, 2026"
   tags={["REST", "Predictions", "Margin"]}
   rss={{
-title: "Bulk order cancellation endpoints",
-description: "New endpoints cancel up to 10,000 arbitrarily selected resting Predictions or margin orders across all subaccounts or one selected subaccount."
+title: "Cancel-all-orders endpoints",
+description: "New endpoints cancel all resting Predictions or margin orders across all subaccounts or one selected subaccount."
 }}
 >
-  New endpoints: `DELETE /trade-api/v2/portfolio/events/orders` cancels up to
-  10,000 resting Predictions orders across every exchange shard, and
-  `DELETE /trade-api/v2/margin/orders` cancels up to 10,000 resting margin
-  orders. Omit `subaccount` to select matching orders from any subaccount, or
-  pass a subaccount number to restrict cancellation to its orders. If more than
-  10,000 orders match, the orders selected are arbitrary; callers must not rely
-  on any ordering guarantee. Each request consumes the same number of write
-  tokens as a batch cancel containing the maximum number of orders allowed for
-  the caller's API tier.
+  New endpoints cancel all resting Predictions or margin orders across every
+  subaccount or one selected subaccount. Newly placed orders may also be
+  cancelled during the minute after the request.
 </Update>
 
 <Update

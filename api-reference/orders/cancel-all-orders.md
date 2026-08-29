@@ -1,20 +1,23 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/accept-rfq-quote
-lastmod: 2026-08-28T19:37:44.503Z
+url: https://docs.kalshi.com/api-reference/orders/cancel-all-orders
+lastmod: 2026-08-28T19:37:44.104Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Accept RFQ Quote
+# Cancel All Orders
 
->  Endpoint for accepting a quote scoped to its RFQ. This will require the quoter to confirm.
+> Cancels all resting event-market orders for the authenticated Direct member across every exchange shard. If `subaccount` is omitted, matching orders may come from any subaccount. If it is provided, only orders for that subaccount are eligible. Newly placed orders may also be cancelled during the minute after the request.
 
+<Note>
+  **Rate limit:** A request consumes the same number of write tokens as a batch cancel containing the maximum number of orders allowed for the caller's API tier.
+</Note>
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml put /communications/rfqs/{rfq_id}/quotes/{quote_id}/accept
+````yaml /openapi.yaml delete /portfolio/events/orders
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,31 +67,27 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /communications/rfqs/{rfq_id}/quotes/{quote_id}/accept:
-    put:
+  /portfolio/events/orders:
+    delete:
       tags:
-        - communications
-      summary: Accept RFQ Quote
-      description: ' Endpoint for accepting a quote scoped to its RFQ. This will require the quoter to confirm.'
-      operationId: AcceptRFQQuote
+        - orders
+      summary: Cancel All Orders
+      description: >-
+        Cancels all resting event-market orders for the authenticated Direct
+        member across every exchange shard. If `subaccount` is omitted, matching
+        orders may come from any subaccount. If it is provided, only orders for
+        that subaccount are eligible. Newly placed orders may also be cancelled
+        during the minute after the request.
+      operationId: CancelAllOrders
       parameters:
-        - $ref: '#/components/parameters/RfqIdPath'
-        - $ref: '#/components/parameters/QuoteIdPath'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AcceptQuoteRequest'
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '204':
-          description: Quote accepted successfully
-        '400':
-          $ref: '#/components/responses/BadRequestError'
+          description: All matching resting orders were cancelled
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -97,32 +96,36 @@ paths:
           kalshiAccessTimestamp: []
 components:
   parameters:
-    RfqIdPath:
-      name: rfq_id
-      in: path
-      required: true
-      description: RFQ ID
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: >-
+        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
+        defaults to all subaccounts.
       schema:
-        type: string
-    QuoteIdPath:
-      name: quote_id
-      in: path
-      required: true
-      description: Quote ID
-      schema:
-        type: string
+        type: integer
+  responses:
+    UnauthorizedError:
+      description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimitError:
+      description: >-
+        Rate limit exceeded. The default cost is 10 tokens per request. Use GET
+        /trade-api/v2/account/endpoint_costs to list non-default endpoint costs.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    AcceptQuoteRequest:
-      type: object
-      required:
-        - accepted_side
-      properties:
-        accepted_side:
-          type: string
-          description: The side of the quote to accept (yes or no)
-          enum:
-            - 'yes'
-            - 'no'
     ErrorResponse:
       type: object
       properties:
@@ -135,31 +138,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-  responses:
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    UnauthorizedError:
-      description: Unauthorized - authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     kalshiAccessKey:
       type: apiKey
