@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-settlement
-lastmod: 2026-05-12T23:42:08.191Z
+lastmod: 2026-08-31T19:20:29.350Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-05-12T23:42:08.191Z
 
 > Settlement reports for market outcomes and position resolution
 
-See [Market Settlement](/getting_started/market_settlement) for an overview. Settlement reports are available on **KalshiPT** sessions by default, unless `ReceiveSettlementReports=N` (tag 20127) is set during Logon, and on **KalshiRT** sessions with `ReceiveSettlementReports=Y`.
+See [Market Settlement](/getting_started/market_settlement) for an overview. Settlement reports are available on **KalshiPT** sessions by default, unless `ReceiveSettlementReports=N` (tag 20127) is set during Logon, and on **KalshiNR** and **KalshiRT** sessions with `ReceiveSettlementReports=Y`.
 
 ## Market Settlement Report (35=UMS)
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/get-api-keys
-lastmod: 2026-08-28T19:37:44.589Z
+lastmod: 2026-08-31T22:53:31.965Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -71,6 +71,16 @@ paths:
       summary: Get API Keys
       description: ' Endpoint for retrieving all API keys associated with the authenticated user.  API keys allow programmatic access to the platform without requiring username/password authentication. Each key has a unique identifier and name.'
       operationId: GetApiKeys
+      parameters:
+        - name: fcm_subtrader_id
+          in: query
+          required: false
+          description: >-
+            Return only API keys bound to this FCM subtrader. Spelled
+            {your_user_id}_{suffix}; only FCM members hold bound keys. Omit to
+            return every key.
+          schema:
+            type: string
       responses:
         '200':
           description: List of API keys retrieved successfully
@@ -133,6 +143,15 @@ components:
             If set, the API key is restricted to this single sub-account and may
             only read and trade on it. Absent/null means the key is
             unrestricted.
+        fcm_subtrader_id:
+          type: string
+          nullable: true
+          description: >-
+            If set, the API key is bound to this single FCM subtrader
+            ({fcm_user_id}_{suffix}) and is usable only as that institution's
+            trading credential - FIX sessions and subtrader-scoped margin
+            WebSocket sessions; every REST endpoint is denied. Absent/null means
+            the key carries no subtrader binding.
     ApiKeyScope:
       type: string
       enum:

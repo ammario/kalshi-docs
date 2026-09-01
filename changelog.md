@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-08-28T19:37:51.683Z
+lastmod: 2026-08-31T22:53:39.257Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,92 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="September 3, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "Correct remaining counts after crossing order amendments",
+description: "V2 amend responses now report the post-match remaining count after an amended price crosses the order book."
+}}
+>
+  `POST /trade-api/v2/portfolio/events/orders/{order_id}/amend` and
+  `POST /trade-api/v2/margin/orders/{order_id}/amend` now return
+  `remaining_count` after any immediate fills caused by the amendment.
+  Previously, a crossing price-only amendment could report zero, while an
+  amendment that changed both price and quantity could report the pre-match
+  remainder. The amendment itself executed correctly; only the response field
+  was affected. `fill_count` continues to report fills caused by this amendment.
+</Update>
+
+<Update
+  label="September 3, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "Lower rate-limit cost for cancel all orders",
+description: "Cancel-all requests now consume the same write-token cost as cancelling one order."
+}}
+>
+  Cancel-all requests now consume the same number of write tokens as cancelling
+  one order on the corresponding exchange.
+</Update>
+
+<Update
+  label="September 3, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Shard rebalance margin reservation",
+description: "POST /portfolio/target_balance_allocation now accepts max or sum for resting_margin_reservation."
+}}
+>
+  `POST /portfolio/target_balance_allocation` now accepts
+  `resting_margin_reservation`. `max` reserves the largest single market-side
+  commitment. `sum` is the default and reserves all resting-order margin.
+</Update>
+
+<Update
+  label="September 3, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "ClearingBusinessDate on FIX trade execution reports",
+description: "Predictions FIX Execution Reports with ExecType=Trade now carry ClearingBusinessDate (tag 715), using the Eastern calendar date of TransactTime."
+}}
+>
+  Predictions FIX Execution Reports with `ExecType=Trade` now include
+  `ClearingBusinessDate` (tag `715`) in `YYYYMMDD` form, using the Eastern
+  calendar date of the report's `TransactTime`. See [Order Entry](/fix/order-entry).
+</Update>
+
+<Update
+  label="August 31, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Weather index calibration history",
+description: "New GET /live_data/weather/{city}/calibrations returns the published weather-index configuration timeline: station weights, offsets, and the city reference for every configuration version."
+}}
+>
+  New endpoint `GET /live_data/weather/{city}/calibrations` returns the
+  published weather-index configuration timeline — the launch configuration
+  plus every weekly offset calibration and methodology update, ascending by
+  effective time. Each record carries the station weights, station offsets
+  (Celsius), the city reference, and the calibration window and per-station
+  disposition notes, so index values can be reproduced under the
+  configuration version that computed them. Weather index points already
+  report that version in `config_version`.
+</Update>
+
+<Update
+  label="August 29, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Structured target images in Trade API v2",
+description: "Trade API v2 structured target responses now include the public image URL in details.image_url."
+}}
+>
+  Trade API v2 structured target responses now include the target's public
+  image URL in `details.image_url`, removing the need to fetch the v1
+  `product_details.image_url` fallback separately.
+</Update>
 
 <Update
   label="August 27, 2026"
@@ -169,7 +255,7 @@ description: "GET /trade-api/v2/live_data/weather/{city} serves the minute-resol
 </Update>
 
 <Update
-  label="August 27, 2026"
+  label="September 3, 2026"
   tags={["REST", "WebSocket", "FIX", "Predictions"]}
   rss={{
 title: "Tapered sub-cent pricing on multivariate (combo) markets",
