@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-08-04T23:47:01.493Z
+lastmod: 2026-09-01T15:58:52.990Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -122,7 +122,7 @@ This message is sent by the exchange to reflect changes to an order's state.
 * **Pending Replace\<E>**: Modification pending
 
 <Note>
-  With default settings, expiry-style system cancellations are reported as `Canceled&lt;4&gt;`. If `21012 (UseExpiredOrdStatus)=Y`, expiry-style system cancellations emit `Expired&lt;C&gt;`.
+  With default settings, expiry-style system cancellations are reported as `Canceled<4>`. If `21012 (UseExpiredOrdStatus)=Y`, expiry-style system cancellations emit `Expired<C>`.
 </Note>
 
 ### Order Rejection Reasons (103)
@@ -185,17 +185,17 @@ Exchange-returned amend and cancel failures are returned as OrderCancelReject (3
 
 When `ExecType = Trade`:
 
-| Tag  | Name               | Description                           |
-| ---- | ------------------ | ------------------------------------- |
-| 704  | LongQty            | Net long position after trade         |
-| 705  | ShortQty           | Net short position after trade        |
-| 136  | NoMiscFees         | Number of fees                        |
-| 137  | MiscFeeAmt         | Total fees in dollars                 |
-| 138  | MiscFeeCurr        | Currency (USD)                        |
-| 139  | MiscFeeType        | Exchange fees                         |
-| 891  | MiscFeeBasis       | Fee unit (always `ABSOLUTE&lt;0&gt;`) |
-| 880  | TrdMatchID         | Trade identifier                      |
-| 1057 | AggressorIndicator | Taker/maker flag                      |
+| Tag  | Name               | Description                     |
+| ---- | ------------------ | ------------------------------- |
+| 704  | LongQty            | Net long position after trade   |
+| 705  | ShortQty           | Net short position after trade  |
+| 136  | NoMiscFees         | Number of fees                  |
+| 137  | MiscFeeAmt         | Total fees in dollars           |
+| 138  | MiscFeeCurr        | Currency (USD)                  |
+| 139  | MiscFeeType        | Exchange fees                   |
+| 891  | MiscFeeBasis       | Fee unit (always `ABSOLUTE<0>`) |
+| 880  | TrdMatchID         | Trade identifier                |
+| 1057 | AggressorIndicator | Taker/maker flag                |
 
 ### Collateral Changes
 

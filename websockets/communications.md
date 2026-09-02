@@ -120,27 +120,37 @@ operations:
                     required: true
                   - name: mve_collection_ticker
                     type: string
-                    description: Multivariate event collection ticker (optional)
+                    description: >-
+                      Multivariate event collection ticker. Omitted for non-MVE
+                      RFQs.
                     required: false
                   - name: mve_selected_legs
                     type: array
-                    description: Selected legs for multivariate events (optional)
+                    description: >-
+                      Selected legs for an MVE RFQ. Omitted when the array is
+                      empty.
                     required: false
                     properties:
                       - name: event_ticker
                         type: string
-                        required: false
+                        description: Event ticker for the selected leg
+                        required: true
                       - name: market_ticker
                         type: string
-                        required: false
+                        description: Market ticker for the selected leg
+                        required: true
                       - name: side
                         type: string
-                        required: false
+                        description: Side selected for the leg
+                        enumValues:
+                          - 'yes'
+                          - 'no'
+                        required: true
                       - name: yes_settlement_value_dollars
                         type: string
                         description: >-
-                          Yes settlement value in dollars for the selected leg
-                          (optional)
+                          Yes settlement value in dollars for the selected leg.
+                          Omitted when unavailable.
                         required: false
         headers: []
         jsonPayloadSchema:
@@ -202,28 +212,43 @@ operations:
                   x-parser-schema-id: <anonymous-schema-190>
                 mve_collection_ticker:
                   type: string
-                  description: Multivariate event collection ticker (optional)
+                  description: >-
+                    Multivariate event collection ticker. Omitted for non-MVE
+                    RFQs.
                   x-parser-schema-id: <anonymous-schema-191>
                 mve_selected_legs:
                   type: array
-                  description: Selected legs for multivariate events (optional)
+                  minItems: 1
+                  description: >-
+                    Selected legs for an MVE RFQ. Omitted when the array is
+                    empty.
                   items:
                     type: object
+                    required:
+                      - event_ticker
+                      - market_ticker
+                      - side
                     properties:
                       event_ticker:
                         type: string
+                        description: Event ticker for the selected leg
                         x-parser-schema-id: <anonymous-schema-194>
                       market_ticker:
                         type: string
+                        description: Market ticker for the selected leg
                         x-parser-schema-id: <anonymous-schema-195>
                       side:
                         type: string
+                        enum:
+                          - 'yes'
+                          - 'no'
+                        description: Side selected for the leg
                         x-parser-schema-id: <anonymous-schema-196>
                       yes_settlement_value_dollars:
                         type: string
                         description: >-
-                          Yes settlement value in dollars for the selected leg
-                          (optional)
+                          Yes settlement value in dollars for the selected leg.
+                          Omitted when unavailable.
                         x-parser-schema-id: <anonymous-schema-197>
                     x-parser-schema-id: <anonymous-schema-193>
                   x-parser-schema-id: <anonymous-schema-192>
@@ -241,7 +266,6 @@ operations:
               "market_ticker": "FED-23DEC-T3.00",
               "event_ticker": "FED-23DEC",
               "contracts_fp": "100.00",
-              "target_cost_dollars": "0.35",
               "created_ts": "2024-12-01T10:00:00Z"
             }
           }

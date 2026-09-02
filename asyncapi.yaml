@@ -1779,8 +1779,28 @@ components:
               market_ticker: "FED-23DEC-T3.00"
               event_ticker: "FED-23DEC"
               contracts_fp: "100.00"
-              target_cost_dollars: "0.35"
               created_ts: "2024-12-01T10:00:00Z"
+        - name: mveRfqCreatedNotification
+          summary: MVE RFQ created notification
+          payload:
+            type: rfq_created
+            sid: 15
+            msg:
+              id: "rfq_456"
+              creator_id: ""
+              market_ticker: "KXMVE-24DEC-COMBO"
+              event_ticker: "KXMVE-24DEC-EVENT"
+              target_cost_dollars: "100.0000"
+              created_ts: "2024-12-01T10:00:00Z"
+              mve_collection_ticker: "KXMVE-24DEC"
+              mve_selected_legs:
+                - event_ticker: "KXEVENTA-24DEC"
+                  market_ticker: "KXEVENTA-24DEC-YES"
+                  side: "yes"
+                  yes_settlement_value_dollars: "1.0000"
+                - event_ticker: "KXEVENTB-24DEC"
+                  market_ticker: "KXEVENTB-24DEC-YES"
+                  side: "no"
 
     rfqDeleted:
       name: rfq_deleted
@@ -3175,22 +3195,28 @@ components:
               format: date-time
             mve_collection_ticker:
               type: string
-              description: Multivariate event collection ticker (optional)
+              description: Multivariate event collection ticker. Omitted for non-MVE RFQs.
             mve_selected_legs:
               type: array
-              description: Selected legs for multivariate events (optional)
+              minItems: 1
+              description: Selected legs for an MVE RFQ. Omitted when the array is empty.
               items:
                 type: object
+                required: ["event_ticker", "market_ticker", "side"]
                 properties:
                   event_ticker:
                     type: string
+                    description: Event ticker for the selected leg
                   market_ticker:
                     type: string
+                    description: Market ticker for the selected leg
                   side:
                     type: string
+                    enum: ["yes", "no"]
+                    description: Side selected for the leg
                   yes_settlement_value_dollars:
                     type: string
-                    description: Yes settlement value in dollars for the selected leg (optional)
+                    description: Yes settlement value in dollars for the selected leg. Omitted when unavailable.
 
     rfqDeletedPayload:
       type: object

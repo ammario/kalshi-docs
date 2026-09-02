@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-08-31T20:57:22.306Z
+lastmod: 2026-09-01T19:38:56.595Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,28 +14,28 @@ lastmod: 2026-08-31T20:57:22.306Z
 
 Used to submit a new order to the Exchange.
 
-| Tag   | Name                    | Type         | Required | Description                                                                                                                               |
-| ----- | ----------------------- | ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| 11    | ClOrdID                 | String       | Y        | Client order ID for idempotency. UUID preferred, max 64 chars. Must not match any open order.                                             |
-| 18    | ExecInst                | Char         | N        | `6`=Post Only                                                                                                                             |
-| 38    | OrderQty                | Decimal      | Y        | Quantity of contracts. Fractional quantities supported.                                                                                   |
-| 40    | OrdType                 | Char         | Y        | `2`=Limit                                                                                                                                 |
-| 44    | Price                   | Integer      | Y        | Price per contract in cents (1–99).                                                                                                       |
-| 54    | Side                    | Char         | Y        | `1`=Buy (Yes), `2`=Sell (No)                                                                                                              |
-| 55    | Symbol                  | String       | Y        | Market ticker (e.g. `EURUSD-23JUN2618-B1.087`)                                                                                            |
-| 100   | ExDestination           | Integer      | N        | Exchange index. On event-contract sessions, omit or use `-1` to auto-route by market ticker. Margined sessions always route to index `0`. |
-| 59    | TimeInForce             | Char         | N        | `0`=Day (expires 11:59:59.999pm ET), `1`=GTC, `3`=IOC, `4`=FOK, `6`=GTD. Past GTD dates are treated as IOC.                               |
-| 126   | ExpireTime              | UTCTimestamp | C        | Required when TimeInForce=GTD.                                                                                                            |
-| 117   | QuoteId                 | UUID         | N        | Quote to accept when using NewOrderSingle for an RFQ quote acceptance.                                                                    |
-| 448   | PartyID                 | UUID         | N        | FCM only. Sub-account identifier.                                                                                                         |
-| 452   | PartyRole               | Integer      | N        | FCM only. `24`=Customer Account. Required when using PartyID.                                                                             |
-| 453   | NoPartyIDs              | Integer      | N        | FCM only. Number of parties (only 1 supported).                                                                                           |
-| 79    | AllocAccount            | Integer      | N        | Subaccount number (0–63). Alternative to NoPartyIDs.                                                                                      |
-| 526   | SecondaryClOrdID        | UUID         | N        | [Order group](/fix/order-groups) identifier.                                                                                              |
-| 2964  | SelfTradePreventionType | Integer      | N        | `1`=Taker At Cross (default), `2`=Maker                                                                                                   |
-| 21006 | CancelOrderOnPause      | Boolean      | N        | Cancel order if trading is paused.                                                                                                        |
-| 21009 | MaxExecutionCost        | Decimal      | N        | Max execution cost in dollars. Order canceled if unable to fill within cost.                                                              |
-| 21023 | RfqId                   | UUID         | N        | Server-assigned RFQ ID when using NewOrderSingle to accept an RFQ quote. If provided, the quote must belong to this RFQ.                  |
+| Tag   | Name                    | Type         | Required | Description                                                                                                                                                                                     |
+| ----- | ----------------------- | ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 11    | ClOrdID                 | String       | Y        | Client order ID for idempotency. UUID preferred, max 64 chars. Must not match any open order.                                                                                                   |
+| 18    | ExecInst                | Char         | N        | `6`=Post Only                                                                                                                                                                                   |
+| 38    | OrderQty                | Decimal      | Y        | Quantity of contracts. Fractional quantities supported.                                                                                                                                         |
+| 40    | OrdType                 | Char         | Y        | `2`=Limit                                                                                                                                                                                       |
+| 44    | Price                   | Integer      | Y        | Price per contract in cents (1–99).                                                                                                                                                             |
+| 54    | Side                    | Char         | Y        | `1`=Buy (Yes), `2`=Sell (No)                                                                                                                                                                    |
+| 55    | Symbol                  | String       | Y        | Market ticker (e.g. `EURUSD-23JUN2618-B1.087`)                                                                                                                                                  |
+| 100   | ExDestination           | Integer      | N        | Exchange index. On event-contract sessions, omit or use `-1` to auto-route by market ticker. Margined sessions always route to index `0`. `UseCapReservation` (21032) sessions must auto-route. |
+| 59    | TimeInForce             | Char         | N        | `0`=Day (expires 11:59:59.999pm ET), `1`=GTC, `3`=IOC, `4`=FOK, `6`=GTD. Past GTD dates are treated as IOC.                                                                                     |
+| 126   | ExpireTime              | UTCTimestamp | C        | Required when TimeInForce=GTD.                                                                                                                                                                  |
+| 117   | QuoteId                 | UUID         | N        | Quote to accept when using NewOrderSingle for an RFQ quote acceptance.                                                                                                                          |
+| 448   | PartyID                 | UUID         | N        | FCM only. Sub-account identifier.                                                                                                                                                               |
+| 452   | PartyRole               | Integer      | N        | FCM only. `24`=Customer Account. Required when using PartyID.                                                                                                                                   |
+| 453   | NoPartyIDs              | Integer      | N        | FCM only. Number of parties (only 1 supported).                                                                                                                                                 |
+| 79    | AllocAccount            | Integer      | N        | Subaccount number (0–63). Alternative to NoPartyIDs.                                                                                                                                            |
+| 526   | SecondaryClOrdID        | UUID         | N        | [Order group](/fix/order-groups) identifier.                                                                                                                                                    |
+| 2964  | SelfTradePreventionType | Integer      | N        | `1`=Taker At Cross (default), `2`=Maker                                                                                                                                                         |
+| 21006 | CancelOrderOnPause      | Boolean      | N        | Cancel order if trading is paused.                                                                                                                                                              |
+| 21009 | MaxExecutionCost        | Decimal      | N        | Max execution cost in dollars. Order canceled if unable to fill within cost.                                                                                                                    |
+| 21023 | RfqId                   | UUID         | N        | Server-assigned RFQ ID when using NewOrderSingle to accept an RFQ quote. If provided, the quote must belong to this RFQ.                                                                        |
 
 <CodeGroup>
   ```fix Example New Order theme={null}
@@ -54,21 +54,21 @@ Used to modify an existing order without canceling it.
 * **OrderQty**: Increases or decreases the quantity of your order, note that increasing the quantity for the same point means forfeiting your queue position
 * **Price**: Changes the limit price of your order
 
-| Tag | Name          | Type    | Required | Description                                                                                                                          |
-| --- | ------------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| 11  | ClOrdID       | String  | Y        | Unique modification request ID. UUID preferred, max 64 chars.                                                                        |
-| 37  | OrderID       | String  | N        | Exchange-assigned order identifier.                                                                                                  |
-| 38  | OrderQty      | Decimal | Y        | New total quantity. If equal to filled qty, order is canceled. If less, rejected.                                                    |
-| 40  | OrdType       | Char    | Y        | `2`=Limit                                                                                                                            |
-| 41  | OrigClOrdID   | String  | Y        | ClOrdID of the order to modify.                                                                                                      |
-| 44  | Price         | Integer | N        | New price in cents (1–99). Required if changing price.                                                                               |
-| 54  | Side          | Char    | Y        | Must match original order.                                                                                                           |
-| 55  | Symbol        | String  | Y        | Must match original order.                                                                                                           |
-| 100 | ExDestination | Integer | N        | Exchange index. On event-contract sessions, omit or use `-1` to auto-route by `Symbol`. Margined sessions always route to index `0`. |
-| 448 | PartyID       | UUID    | N        | FCM only. Must match original order.                                                                                                 |
-| 452 | PartyRole     | Integer | N        | FCM only. `24`=Customer Account. Must match original order. Required when using PartyID.                                             |
-| 453 | NoPartyIDs    | Integer | N        | FCM only. Must match original order (only 1 supported).                                                                              |
-| 79  | AllocAccount  | Integer | N        | Subaccount number (0–63). Must match original order.                                                                                 |
+| Tag | Name          | Type    | Required | Description                                                                                                                                                                                |
+| --- | ------------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 11  | ClOrdID       | String  | Y        | Unique modification request ID. UUID preferred, max 64 chars.                                                                                                                              |
+| 37  | OrderID       | String  | N        | Exchange-assigned order identifier. Required on `UseCapReservation` (21032) sessions.                                                                                                      |
+| 38  | OrderQty      | Decimal | Y        | New total quantity. If equal to filled qty, order is canceled. If less, rejected.                                                                                                          |
+| 40  | OrdType       | Char    | Y        | `2`=Limit                                                                                                                                                                                  |
+| 41  | OrigClOrdID   | String  | Y        | ClOrdID of the order to modify.                                                                                                                                                            |
+| 44  | Price         | Integer | N        | New price in cents (1–99). Required if changing price.                                                                                                                                     |
+| 54  | Side          | Char    | Y        | Must match original order.                                                                                                                                                                 |
+| 55  | Symbol        | String  | Y        | Must match original order.                                                                                                                                                                 |
+| 100 | ExDestination | Integer | N        | Exchange index. On event-contract sessions, omit or use `-1` to auto-route by `Symbol`. Margined sessions always route to index `0`. `UseCapReservation` (21032) sessions must auto-route. |
+| 448 | PartyID       | UUID    | N        | FCM only. Must match original order.                                                                                                                                                       |
+| 452 | PartyRole     | Integer | N        | FCM only. `24`=Customer Account. Must match original order. Required when using PartyID.                                                                                                   |
+| 453 | NoPartyIDs    | Integer | N        | FCM only. Must match original order (only 1 supported).                                                                                                                                    |
+| 79  | AllocAccount  | Integer | N        | Subaccount number (0–63). Must match original order.                                                                                                                                       |
 
 ## Order Cancel Request (35=F)
 
@@ -182,6 +182,10 @@ Common values for the Text field in Execution Reports:
 * **ORDER\_GROUP\_NOT\_FOUND** - maps to OrdRejReason "Unsupported order characteristic"
 * **EXCEEDED\_PER\_MARKET\_RISK\_LIMIT** - maps to OrdRejReason "Order exceeds limit"
 * **EXCEEDED\_SELL\_POSITION\_FLOOR** - maps to OrdRejReason "Order exceeds limit"
+* **EVENT\_CONTRACT\_DAILY\_CAP\_EXCEEDED** - the customer account's remaining event contract daily cap cannot cover this order. `UseCapReservation` (21032) sessions only. Maps to OrdRejReason "Order exceeds limit"
+* **EVENT\_CONTRACT\_DAILY\_CAP\_NOT\_FOUND** - the customer account has no daily cap configured, so the cap lane cannot accept orders for it. `UseCapReservation` (21032) sessions only. Maps to OrdRejReason "Unknown account"
+* **ORDER\_AMEND\_IN\_PROGRESS** - a previous amend for this order has not settled yet. `UseCapReservation` (21032) sessions only. Maps to CxlRejReason "Broker"
+* **ORDER\_ATTRIBUTES\_MISMATCH** - Symbol or Side does not match the resting order. `UseCapReservation` (21032) sessions only. Maps to CxlRejReason "Unknown order"
 * **CUSTOMER\_ACCOUNT\_NOT\_FOUND** - maps to OrdRejReason "Unknown account"
 * **PERMISSION\_DENIED\_FOR\_CUSTOMER\_ACCOUNT** - maps to OrdRejReason "Unknown account"
 * **FOK\_INSUFFICIENT\_VOLUME** - maps to ExecutionType "Canceled"
@@ -196,11 +200,14 @@ Common values for the Text field in Execution Reports:
 
 Exchange-side amend and cancel failures are returned as OrderCancelReject (35=9), not ExecutionReport.
 
-| Text (58)                     | CxlRejReason (102)      |
-| ----------------------------- | ----------------------- |
-| `INVALID_AMEND_QTY_FOR_ORDER` | Broker                  |
-| `CANNOT_UPDATE_FILLED_ORDER`  | Broker                  |
-| `SELF_CROSS_ATTEMPT`          | Invalid price increment |
+| Text (58)                           | CxlRejReason (102)      |
+| ----------------------------------- | ----------------------- |
+| `INVALID_AMEND_QTY_FOR_ORDER`       | Broker                  |
+| `CANNOT_UPDATE_FILLED_ORDER`        | Broker                  |
+| `SELF_CROSS_ATTEMPT`                | Invalid price increment |
+| `ORDER_AMEND_IN_PROGRESS`           | Broker                  |
+| `ORDER_ATTRIBUTES_MISMATCH`         | Unknown order           |
+| `EVENT_CONTRACT_DAILY_CAP_EXCEEDED` | Broker                  |
 
 ### Position and Fee Information
 

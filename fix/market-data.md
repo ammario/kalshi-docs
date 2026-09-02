@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-data
-lastmod: 2026-08-25T15:59:53.480Z
+lastmod: 2026-09-01T20:13:11.061Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -36,6 +36,8 @@ sequenceDiagram
 | 263 | SubscriptionRequestType | Char    | Y        | `0`=Snapshot, `1`=Snapshot plus updates, `2`=Disable previous snapshot plus update request                                                                                                                |
 | 146 | NoRelatedSym            | Integer | C        | Number of `55=Symbol` entries in the repeating group that follows. Required for `263=0` and `263=1`. For `263=2`, the listed symbols are unsubscribed; omit to cancel all of the session's subscriptions. |
 | 55  | Symbol                  | String  | C        | Repeating group field. The market tickers to subscribe to or cancel.                                                                                                                                      |
+
+Snapshot and snapshot-plus-updates requests can contain up to 1,000 unique symbols. A session can hold up to 100,000 active market data subscriptions.
 
 ```fix Example snapshot request theme={null}
 8=FIXT.1.1|35=V|49=your-api-key|56=KalshiMD|263=0|146=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|
@@ -75,21 +77,23 @@ Sent in response to a snapshot request and immediately after a snapshot-plus-upd
 
 Sent after a subscribed market's aggregated book levels change or a trade occurs. Correlate by `Symbol<55>` on each entry.
 
-| Tag  | Name           | Type     | Required | Description                                                               |
-| ---- | -------------- | -------- | -------- | ------------------------------------------------------------------------- |
-| 268  | NoMDEntries    | Integer  | Y        | Number of market data entries.                                            |
-| 279  | MDUpdateAction | Char     | Y        | Repeating group field. `0`=New, `1`=Change, `2`=Delete.                   |
-| 55   | Symbol         | String   | Y        | Repeating group field. Market ticker.                                     |
-| 269  | MDEntryType    | Char     | Y        | Repeating group field. `0`=Bid, `1`=Offer, `2`=Trade                      |
-| 270  | MDEntryPx      | Price    | Y        | Price in dollars.                                                         |
-| 271  | MDEntrySize    | Quantity | Y        | Size in contracts.                                                        |
-| 272  | MDEntryDate    | UTC Date | Y        | Repeating group field. UTC source-event date in `YYYYMMDD` format.        |
-| 273  | MDEntryTime    | UTC Time | Y        | Repeating group field. UTC source-event time in `HH:MM:SS.sss` format.    |
-| 2446 | AggressorSide  | Char     | C        | Trade entries only. `1`=Buy, `2`=Sell.                                    |
-| 828  | TrdType        | Int      | C        | Trade entries only. `1`=Block trade. Absent on regular order book trades. |
+| Tag  | Name           | Type     | Required | Description                                                                                                 |
+| ---- | -------------- | -------- | -------- | ----------------------------------------------------------------------------------------------------------- |
+| 268  | NoMDEntries    | Integer  | Y        | Number of market data entries.                                                                              |
+| 279  | MDUpdateAction | Char     | Y        | Repeating group field. `0`=New, `1`=Change, `2`=Delete.                                                     |
+| 55   | Symbol         | String   | Y        | Repeating group field. Market ticker.                                                                       |
+| 269  | MDEntryType    | Char     | Y        | Repeating group field. `0`=Bid, `1`=Offer, `2`=Trade                                                        |
+| 270  | MDEntryPx      | Price    | Y        | Price in dollars.                                                                                           |
+| 271  | MDEntrySize    | Quantity | Y        | Size in contracts.                                                                                          |
+| 272  | MDEntryDate    | UTC Date | Y        | Repeating group field. UTC source-event date in `YYYYMMDD` format.                                          |
+| 273  | MDEntryTime    | UTC Time | Y        | Repeating group field. UTC source-event time in `HH:MM:SS.sss` format.                                      |
+| 2446 | AggressorSide  | Char     | C        | Trade entries only. `1`=Buy, `2`=Sell.                                                                      |
+| 828  | TrdType        | Int      | C        | Trade entries only. `1`=Block trade. Absent on regular order book trades.                                   |
+| 11   | ClOrdID        | String   | C        | Book entries only. Present when your order caused the level change and the order has a client-specified ID. |
+| 79   | AllocAccount   | Integer  | C        | Book entries only. Subaccount number of your order. `0` identifies a primary or non-numeric account.        |
 
 ```fix Example incremental update theme={null}
-8=FIXT.1.1|35=X|49=KalshiMD|56=your-api-key|268=1|279=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|269=0|270=0.3500|271=15.00|272=20260817|273=16:00:00.456|
+8=FIXT.1.1|35=X|49=KalshiMD|56=your-api-key|268=1|279=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|269=0|270=0.3500|271=15.00|272=20260817|273=16:00:00.456|11=my-order-123|79=3|
 ```
 
 ```fix Example trade update theme={null}

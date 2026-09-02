@@ -1,20 +1,20 @@
 ---
-url: https://docs.kalshi.com/margin-rest/fees/get-fee-tiers
-lastmod: 2026-09-01T13:58:54.430Z
+url: https://docs.kalshi.com/margin-rest/fees/get-fee-tier-rates
+lastmod: 2026-09-02T01:16:06.991Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Fee Tiers
+# Get Fee Tier Rates
 
-> Endpoint for retrieving the margin fee tiers for the authenticated direct margin user. Returns a map of margin market tickers to their fee tier strings.
+> Returns the maker and taker fee rates for the Self Clearing Members and Kalshi Prime fee schedules. The Kalshi Prime schedule also applies to FCM subtraders.
 
 
 
 ## OpenAPI
 
-````yaml /perps_openapi.yaml get /margin/fee_tiers
+````yaml /perps_openapi.yaml get /margin/fee_tier_rates
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -52,57 +52,69 @@ tags:
   - name: exit-triggers
     description: Stop-loss, take-profit, and trailing-stop triggers on margin positions
 paths:
-  /margin/fee_tiers:
+  /margin/fee_tier_rates:
     get:
       tags:
         - fees
-      summary: Get Fee Tiers
+      summary: Get Fee Tier Rates
       description: >-
-        Endpoint for retrieving the margin fee tiers for the authenticated
-        direct margin user. Returns a map of margin market tickers to their fee
-        tier strings.
-      operationId: GetMarginFeeTiers
+        Returns the maker and taker fee rates for the Self Clearing Members and
+        Kalshi Prime fee schedules. The Kalshi Prime schedule also applies to
+        FCM subtraders.
+      operationId: GetMarginFeeTierRates
       responses:
         '200':
-          description: Fee tiers retrieved successfully
+          description: Fee tier rates retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetMarginFeeTiersResponse'
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+                $ref: '#/components/schemas/GetMarginFeeTierRatesResponse'
         '500':
           $ref: '#/components/responses/InternalServerError'
-      security:
-        - kalshiAccessKey: []
-          kalshiAccessSignature: []
-          kalshiAccessTimestamp: []
 components:
   schemas:
-    GetMarginFeeTiersResponse:
+    GetMarginFeeTierRatesResponse:
       type: object
       required:
-        - maker_fee_rates
-        - taker_fee_rates
+        - fee_tier_rates
       properties:
-        maker_fee_rates:
-          type: object
-          additionalProperties:
-            type: number
-            format: double
+        fee_tier_rates:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarginFeeTierRate'
+    MarginFeeTierRate:
+      type: object
+      required:
+        - fee_schedule
+        - tier
+        - maker_fee_rate
+        - taker_fee_rate
+      properties:
+        fee_schedule:
+          type: string
+          enum:
+            - self_clearing_members
+            - kalshi_prime
           description: >-
-            A map of margin market ticker to the maker-side fee rate as a
-            decimal fraction of notional (e.g. 0.0005 = 0.05% = 5 bps). Multiply
-            notional by this value to compute the fee.
-        taker_fee_rates:
-          type: object
-          additionalProperties:
-            type: number
-            format: double
+            Fee schedule containing this tier. The Kalshi Prime schedule also
+            applies to FCM subtraders.
+        tier:
+          type: integer
+          format: int32
+          minimum: 0
+          description: Fee tier number within the indicated fee schedule.
+        maker_fee_rate:
+          type: number
+          format: double
           description: >-
-            A map of margin market ticker to the taker-side fee rate as a
-            decimal fraction of notional (e.g. 0.0012 = 0.12% = 12 bps).
-            Multiply notional by this value to compute the fee.
+            Maker fee rate as a decimal fraction of notional (e.g. 0.0005 =
+            0.05% = 5 bps).
+        taker_fee_rate:
+          type: number
+          format: double
+          description: >-
+            Taker fee rate as a decimal fraction of notional (e.g. 0.0012 =
+            0.12% = 12 bps).
     ErrorResponse:
       type: object
       properties:
@@ -116,33 +128,11 @@ components:
           type: string
           description: Additional details about the error, if available
   responses:
-    UnauthorizedError:
-      description: Unauthorized - authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     InternalServerError:
       description: Internal server error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-  securitySchemes:
-    kalshiAccessKey:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-KEY
-      description: Your API key ID
-    kalshiAccessSignature:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-SIGNATURE
-      description: RSA-PSS signature of the request
-    kalshiAccessTimestamp:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-TIMESTAMP
-      description: Request timestamp in milliseconds
 
 ````
