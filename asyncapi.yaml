@@ -347,7 +347,7 @@ channels:
       - Use `index_ids: ["all"]` to receive every available index
       - Supports `update_subscription` with `subscribe_indices` / `unsubscribe_indices` / `indexlist` actions
       - `indexlist` returns the available index IDs (as a `cfbenchmarks_value_indexlist` message) without modifying the subscription
-      - Ticks are emitted roughly once per second; duplicate or out-of-order upstream source timestamps are ignored
+      - Ticks are emitted roughly once per second; duplicate or out-of-order upstream source timestamps are ignored. For up to 5 updates per second on supported indices, see the [CF Benchmarks 5Hz Value Feed](/websockets/cfbenchmarks-value-5hz) sibling channel
 
       **Use case:** Consuming CF Benchmarks reference index values and their short-window averages
 
@@ -373,12 +373,48 @@ channels:
       - If you subscribe without any `index_ids`, no value events flow until you add indices or switch to `["all"]`
       - `sid` identifies the subscription stream; use it for `update_subscription` and `unsubscribe`
       - Missing `index_ids` for `subscribe_indices`/`unsubscribe_indices` returns an `error` with `code: 24` ("Index IDs required"); unsupported actions return a standard websocket `error`
-      - This channel is real-time only. Historical index values — including intra-second granularity on some indices — are available over REST via the [CF Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough)
+      - This channel is real-time only. Historical index values — including intra-second granularity on some indices — are available over REST via the [CF Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough); live intra-second updates are available on the [`cfbenchmarks_value_5hz`](/websockets/cfbenchmarks-value-5hz) channel
     messages:
       cfbenchmarksValue:
         $ref: '#/components/messages/cfbenchmarksValue'
       cfbenchmarksIndexList:
         $ref: '#/components/messages/cfbenchmarksIndexList'
+
+  cfbenchmarks_value_5hz:
+    address: cfbenchmarks_value_5hz
+    title: CF Benchmarks 5Hz Value Feed
+    description: |
+      Real-time CF Benchmarks index value updates at up to 5 updates per second, each carrying the raw upstream frame plus parsed value fields. Requires authentication.
+
+      This is the high-frequency sibling of the once-per-second [`cfbenchmarks_value`](/websockets/cfbenchmarks-value) channel. It carries the indices CF Benchmarks publishes at 200ms granularity (currently `BRTI`, `ETHUSD_RTI`, `SOLUSD_RTI`, `XRPUSD_RTI`, and `DOGEUSD_RTI`); all other indices remain available on `cfbenchmarks_value` only. Messages are lean raw ticks — they do not include the 60-second or quarter-hour averages, which stay on the per-second channel.
+
+      **Requirements:**
+      - Authentication required
+      - Index specification via `index_ids` (array of CF Benchmarks index IDs, for example `["BRTI", "ETHUSD_RTI"]`)
+      - `market_ticker`/`market_tickers`/`market_id`/`market_ids` are not supported for this channel
+      - You can seed `index_ids` in the initial subscribe, or subscribe first and add indices later
+      - Use `index_ids: ["all"]` to receive every index available on this channel
+      - Supports `update_subscription` with `subscribe_indices` / `unsubscribe_indices` / `indexlist` actions
+      - `indexlist` returns the index IDs recently observed on this channel's stream (as a `cfbenchmarks_value_5hz_indexlist` message) without modifying the subscription
+      - Up to 5 ticks per second per index; duplicate or out-of-order upstream source timestamps are ignored
+
+      **Use case:** Consuming CF Benchmarks reference index values at the vendor's full publication rate
+
+      **Subscription workflow:**
+      1. Subscribe to `cfbenchmarks_value_5hz` (optionally seeding `index_ids`). A successful subscribe returns a `subscribed` response with the assigned `sid`.
+      2. Discover the streaming index IDs with the `indexlist` action; the server replies with a `cfbenchmarks_value_5hz_indexlist` message.
+      3. Add or remove tracked index IDs with `subscribe_indices` / `unsubscribe_indices`, or use `index_ids: ["all"]` to track everything on this channel.
+
+      **Integration notes:**
+      - If you subscribe without any `index_ids`, no value events flow until you add indices or switch to `["all"]`
+      - `sid` identifies the subscription stream; use it for `update_subscription` and `unsubscribe`
+      - Missing `index_ids` for `subscribe_indices`/`unsubscribe_indices` returns an `error` with `code: 24` ("Index IDs required"); unsupported actions return a standard websocket `error`
+      - Historical index values — including intra-second granularity — are available over REST via the [CF Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough)
+    messages:
+      cfbenchmarksValue5Hz:
+        $ref: '#/components/messages/cfbenchmarksValue5Hz'
+      cfbenchmarks5HzIndexList:
+        $ref: '#/components/messages/cfbenchmarks5HzIndexList'
 
   pyth_value:
     address: pyth_value
@@ -493,7 +529,7 @@ operations:
   sendCFBenchmarksUpdateSubscription:
     action: receive
     title: Update Subscription - CF Benchmarks Indices
-    summary: Add or remove tracked index IDs, or list available indices, on a cfbenchmarks_value subscription
+    summary: Add or remove tracked index IDs, or list available indices, on a cfbenchmarks_value or cfbenchmarks_value_5hz subscription
     channel:
       $ref: '#/channels/root'
     messages:
@@ -815,6 +851,28 @@ operations:
     tags:
       - name: market-data
 
+  receiveCFBenchmarksValue5Hz:
+    action: send
+    title: CF Benchmarks 5Hz Value Update
+    summary: Receive real-time CF Benchmarks index values at up to 5 updates per second
+    channel:
+      $ref: '#/channels/cfbenchmarks_value_5hz'
+    messages:
+      - $ref: '#/channels/cfbenchmarks_value_5hz/messages/cfbenchmarksValue5Hz'
+    tags:
+      - name: market-data
+
+  receiveCFBenchmarks5HzIndexList:
+    action: send
+    title: CF Benchmarks 5Hz Index List
+    summary: Receive the index IDs streaming on the 5Hz channel in response to an indexlist action
+    channel:
+      $ref: '#/channels/cfbenchmarks_value_5hz'
+    messages:
+      - $ref: '#/channels/cfbenchmarks_value_5hz/messages/cfbenchmarks5HzIndexList'
+    tags:
+      - name: market-data
+
   receivePythValue:
     action: send
     title: Pyth Value Update
@@ -952,6 +1010,14 @@ components:
             params:
               channels: ["cfbenchmarks_value"]
               index_ids: ["BRTI", "ETHUSD_RTI"]
+        - name: subscribeCFBenchmarksValue5Hz
+          summary: Subscribe to the 5Hz CF Benchmarks feed, seeding index IDs
+          payload:
+            id: 11
+            cmd: subscribe
+            params:
+              channels: ["cfbenchmarks_value_5hz"]
+              index_ids: ["BRTI"]
         - name: subscribePythValue
           summary: Subscribe to pyth_value, seeding underlying tickers
           payload:
@@ -1066,7 +1132,7 @@ components:
     cfbenchmarksUpdateSubscriptionCommand:
       name: cfbenchmarks_update_subscription
       title: Update Subscription - CF Benchmarks Indices
-      summary: Add or remove tracked index IDs, or list available indices, on a cfbenchmarks_value subscription
+      summary: Add or remove tracked index IDs, or list available indices, on a cfbenchmarks_value or cfbenchmarks_value_5hz subscription
       contentType: application/json
       payload:
         $ref: '#/components/schemas/cfbenchmarksUpdateSubscriptionCommandPayload'
@@ -1249,7 +1315,7 @@ components:
         | 21 | shard_key must be >= 0 and < shard_factor | Invalid shard_key |
         | 22 | shard_factor must be <= 100 | shard_factor too large |
         | 23 | Match IDs required | Missing match_ids for the channel/action |
-        | 24 | Index IDs required | Missing index_ids for subscribe_indices/unsubscribe_indices on cfbenchmarks_value |
+        | 24 | Index IDs required | Missing index_ids for subscribe_indices/unsubscribe_indices on cfbenchmarks_value / cfbenchmarks_value_5hz |
         | 25 | Subscription buffer overflow | The subscription's outbound buffer was exceeded |
         | 26 | Subscription market limit exceeded | Adding markets would exceed the per-subscription market limit |
         | 27 | Too many requests | The subscription exceeded its command rate limit |
@@ -1412,6 +1478,45 @@ components:
           summary: Available index IDs
           payload:
             type: cfbenchmarks_value_indexlist
+            id: 2
+            sid: 1
+            seq: 1
+            msg:
+              index_ids: ["BRTI", "ETHUSD_RTI"]
+
+    cfbenchmarksValue5Hz:
+      name: cfbenchmarks_value_5hz
+      title: CF Benchmarks 5Hz Value Update
+      summary: Real-time CF Benchmarks index value at up to 5 updates per second
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/cfbenchmarksValue5HzPayload'
+      examples:
+        - name: cfbenchmarksValue5HzUpdate
+          summary: CF Benchmarks 5Hz value update (raw tick, no averages)
+          payload:
+            type: cfbenchmarks_value_5hz
+            sid: 1
+            seq: 42
+            msg:
+              index_id: "BRTI"
+              value_usd: "68000.12000000"
+              source_ts_ms: 1710000000323
+              received_at: 1710000000341
+              data: "{\"type\":\"value\",\"id\":\"BRTI\",\"time\":1710000000323,\"value\":\"68000.12\"}"
+
+    cfbenchmarks5HzIndexList:
+      name: cfbenchmarks_value_5hz_indexlist
+      title: CF Benchmarks 5Hz Index List
+      summary: The index IDs recently observed on the 5Hz stream, sent in response to an indexlist action
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/cfbenchmarks5HzIndexListPayload'
+      examples:
+        - name: indexListResponse
+          summary: Index IDs streaming on the 5Hz channel
+          payload:
+            type: cfbenchmarks_value_5hz_indexlist
             id: 2
             sid: 1
             seq: 1
@@ -1976,7 +2081,7 @@ components:
               description: List of channels to subscribe to
               items:
                 type: string
-                enum: ["orderbook_delta", "ticker", "trade", "fill", "market_positions", "market_lifecycle_v2", "multivariate_market_lifecycle", "communications", "order_group_updates", "user_orders", "cfbenchmarks_value", "pyth_value"]
+                enum: ["orderbook_delta", "ticker", "trade", "fill", "market_positions", "market_lifecycle_v2", "multivariate_market_lifecycle", "communications", "order_group_updates", "user_orders", "cfbenchmarks_value", "cfbenchmarks_value_5hz", "pyth_value"]
               minItems: 1
             market_ticker:
               description: 'Subscribe to a single market. Type: string. Example: "KXBTCD-25AUG0517-T114999.99" (mutually exclusive with market_tickers)'
@@ -2029,7 +2134,7 @@ components:
               minimum: 0
             index_ids:
               type: array
-              description: 'cfbenchmarks_value channel only. CF Benchmarks index IDs to seed on the initial subscribe (omit to subscribe with no indices and add them later via update_subscription; use ["all"] to track every available index).'
+              description: 'cfbenchmarks_value and cfbenchmarks_value_5hz channels only. CF Benchmarks index IDs to seed on the initial subscribe (omit to subscribe with no indices and add them later via update_subscription; use ["all"] to track every index available on the channel).'
               items:
                 type: string
               minItems: 1
@@ -2282,7 +2387,7 @@ components:
                 - 21: shard_key must be >= 0 and < shard_factor - Invalid shard_key
                 - 22: shard_factor must be <= 100 - shard_factor too large
                 - 23: Match IDs required - Missing match_ids for the channel/action
-                - 24: Index IDs required - Missing index_ids for subscribe_indices/unsubscribe_indices on cfbenchmarks_value
+                - 24: Index IDs required - Missing index_ids for subscribe_indices/unsubscribe_indices on cfbenchmarks_value / cfbenchmarks_value_5hz
                 - 25: Subscription buffer overflow - The subscription's outbound buffer was exceeded
                 - 26: Subscription market limit exceeded - Adding markets would exceed the per-subscription market limit
                 - 27: Too many requests - The subscription exceeded its command rate limit
@@ -2409,6 +2514,60 @@ components:
             index_ids:
               type: array
               description: Available CF Benchmarks index IDs
+              items:
+                type: string
+
+    cfbenchmarksValue5HzPayload:
+      type: object
+      required: ["type", "sid", "seq", "msg"]
+      properties:
+        type:
+          type: string
+          const: "cfbenchmarks_value_5hz"
+        sid:
+          $ref: '#/components/schemas/subscriptionId'
+        seq:
+          $ref: '#/components/schemas/sequenceNumber'
+        msg:
+          type: object
+          required: ["index_id", "value_usd", "source_ts_ms", "received_at", "data"]
+          properties:
+            index_id:
+              type: string
+              description: CF Benchmarks index ID (for example "BRTI")
+            value_usd:
+              type: string
+              description: Index value in USD, formatted with exactly 8 decimal places
+            source_ts_ms:
+              type: integer
+              description: Upstream publication timestamp of the tick (unix ms)
+            received_at:
+              type: integer
+              description: When Kalshi received the upstream frame (unix ms)
+            data:
+              type: string
+              description: The raw CF Benchmarks JSON frame, as a string
+
+    cfbenchmarks5HzIndexListPayload:
+      type: object
+      required: ["type", "sid", "seq", "msg"]
+      properties:
+        type:
+          type: string
+          const: "cfbenchmarks_value_5hz_indexlist"
+        id:
+          $ref: '#/components/schemas/commandId'
+        sid:
+          $ref: '#/components/schemas/subscriptionId'
+        seq:
+          $ref: '#/components/schemas/sequenceNumber'
+        msg:
+          type: object
+          required: ["index_ids"]
+          properties:
+            index_ids:
+              type: array
+              description: Index IDs recently observed on the 5Hz stream
               items:
                 type: string
 
@@ -3497,7 +3656,7 @@ x-error-codes:
       description: Missing match_ids for the channel/action
     - code: 24
       name: Index IDs required
-      description: Missing index_ids for subscribe_indices/unsubscribe_indices on cfbenchmarks_value
+      description: Missing index_ids for subscribe_indices/unsubscribe_indices on cfbenchmarks_value / cfbenchmarks_value_5hz
     - code: 25
       name: Subscription buffer overflow
       description: The subscription's outbound buffer was exceeded

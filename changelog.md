@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-02T01:16:13.176Z
+lastmod: 2026-09-02T22:09:47.542Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,37 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="September 10, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "Upcoming exchange sharding for commodities and basketball",
+description: "Upcoming exchange sharding for commodities and basketball"
+}}
+>
+  Starting at 12:00 PM ET on September 10, 2026, new commodities markets will
+  be created on shard 2 and new basketball markets will be created on shard 3.
+  See [Exchange Sharding](/getting_started/exchange_sharding) for changes to
+  trading.
+</Update>
+
+<Update
+  label="September 3, 2026"
+  tags={["WebSocket", "Predictions", "Margin"]}
+  rss={{
+title: "CF Benchmarks 5Hz value websocket channel",
+description: "The new cfbenchmarks_value_5hz channel streams CF Benchmarks index values at up to 5 updates per second on supported indices."
+}}
+>
+  The new `cfbenchmarks_value_5hz` websocket channel streams CF Benchmarks
+  index values at up to 5 updates per second on indices the vendor publishes
+  at 200ms granularity (currently BRTI, ETHUSD\_RTI, SOLUSD\_RTI, XRPUSD\_RTI,
+  and DOGEUSD\_RTI). Messages carry the raw vendor frame plus parsed value
+  fields. The existing once-per-second
+  [`cfbenchmarks_value`](/websockets/cfbenchmarks-value) channel and its
+  rolling averages are unchanged.
+</Update>
 
 <Update
   label="September 3, 2026"
@@ -61,6 +92,24 @@ description: "New public GET /trade-api/v2/margin/fee_tier_rates returns Self Cl
   tier in the Self Clearing Members and Kalshi Prime schedules with its
   corresponding maker and taker fee rates. The Kalshi Prime schedule also
   applies to FCM subtraders.
+</Update>
+
+<Update
+  label="September 3, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Filter FCM orders by client order IDs",
+description: "GET /fcm/orders now accepts a comma-separated client_order_ids filter."
+}}
+>
+  `GET /fcm/orders` now accepts the `client_order_ids` query parameter, a
+  comma-separated list of up to 100 client order IDs. At least one of
+  `subtrader_id` or `client_order_ids` is required; supplying both returns only
+  the orders matching both filters. A `client_order_ids` lookup searches only
+  orders created within the last 24 hours, and a `min_ts` earlier than that is
+  raised to 24 hours ago. Client order IDs are only unique within a subtrader
+  among live and recent orders, so a single ID can match orders across
+  subtraders or across time.
 </Update>
 
 <Update

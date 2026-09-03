@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/cfbenchmarks-value
-lastmod: 2026-08-21T17:09:23.547Z
+lastmod: 2026-09-02T16:22:58.450Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-08-21T17:09:23.547Z
 - Use `index_ids: ["all"]` to receive every available index
 - Supports `update_subscription` with `subscribe_indices` / `unsubscribe_indices` / `indexlist` actions
 - `indexlist` returns the available index IDs (as a `cfbenchmarks_value_indexlist` message) without modifying the subscription
-- Ticks are emitted roughly once per second; duplicate or out-of-order upstream source timestamps are ignored
+- Ticks are emitted roughly once per second; duplicate or out-of-order upstream source timestamps are ignored. For up to 5 updates per second on supported indices, see the [CF Benchmarks 5Hz Value Feed](/websockets/cfbenchmarks-value-5hz) sibling channel
 
 **Use case:** Consuming CF Benchmarks reference index values and their short-window averages
 
@@ -44,7 +44,7 @@ lastmod: 2026-08-21T17:09:23.547Z
 - If you subscribe without any `index_ids`, no value events flow until you add indices or switch to `["all"]`
 - `sid` identifies the subscription stream; use it for `update_subscription` and `unsubscribe`
 - Missing `index_ids` for `subscribe_indices`/`unsubscribe_indices` returns an `error` with `code: 24` ("Index IDs required"); unsupported actions return a standard websocket `error`
-- This channel is real-time only. Historical index values — including intra-second granularity on some indices — are available over REST via the [CF Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough)
+- This channel is real-time only. Historical index values — including intra-second granularity on some indices — are available over REST via the [CF Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough); live intra-second updates are available on the [`cfbenchmarks_value_5hz`](/websockets/cfbenchmarks-value-5hz) channel
 
 
 
@@ -82,7 +82,9 @@ description: >
   `cfbenchmarks_value_indexlist` message) without modifying the subscription
 
   - Ticks are emitted roughly once per second; duplicate or out-of-order
-  upstream source timestamps are ignored
+  upstream source timestamps are ignored. For up to 5 updates per second on
+  supported indices, see the [CF Benchmarks 5Hz Value
+  Feed](/websockets/cfbenchmarks-value-5hz) sibling channel
 
 
   **Use case:** Consuming CF Benchmarks reference index values and their
@@ -142,7 +144,9 @@ description: >
 
   - This channel is real-time only. Historical index values — including
   intra-second granularity on some indices — are available over REST via the [CF
-  Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough)
+  Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough); live
+  intra-second updates are available on the
+  [`cfbenchmarks_value_5hz`](/websockets/cfbenchmarks-value-5hz) channel
 servers:
   - id: production
     protocol: wss

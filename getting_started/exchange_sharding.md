@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/exchange_sharding
-lastmod: 2026-08-27T14:11:44.940Z
+lastmod: 2026-09-02T22:09:47.480Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,12 +18,13 @@ Kalshi plans to add shards incrementally to maintain a healthy balance of traffi
 
 ## Timeline
 
-Kalshi will migrate combos from the "default" exchange instance to shard 1, followed by crypto and selected sports series.
+Kalshi will migrate combos from the "default" exchange instance to shard 1, followed by crypto, commodities, and selected sports series.
 
 * August 6, 2026: intra-exchange instance transfers enabled to exchange index 1.
 * August 10, 2026: `KXMVECROSSCATEGORY-SHARD1-R` multivariate event collection created with support for all combos.
 * August 17, 2026: combos created over legacy collections `KXMVESPORTSMULTIGAMEEXTENDED-R`, `KXMVECROSSCATEGORY-R` will be created on shard 1.
 * August 24, 2026 at 12:00 PM ET: new crypto events will be created on shard 2, and new tennis and baseball events will be created on shard 3.
+* September 10, 2026 at 12:00 PM ET: new commodities markets will be created on shard 2, and new basketball markets will be created on shard 3.
 
 ## Balance Management
 
@@ -78,12 +79,13 @@ The [`ExDestination` parameter](/fix/order-entry) (FIX Tag 100) is available on 
 
 The following assignments determine the shard where new events will be created. Shard 0 is the catch-all for all categories and tags not listed below.
 
-| Shard index | Category               | Tags             | Series list                                                                                                                                        |
-| ----------- | ---------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0           | *All other categories* | *All other tags* | —                                                                                                                                                  |
-| 1           | Exotics (Combos)       | —                | [`GET /series?category=Exotics`](https://api.elections.kalshi.com/trade-api/v2/series?category=Exotics)                                            |
-| 2           | Crypto                 | —                | [`GET /series?category=Crypto`](https://api.elections.kalshi.com/trade-api/v2/series?category=Crypto)                                              |
-| 3           | Sports                 | Tennis, Baseball | [`GET /series?category=Sports&tags=Tennis,Baseball`](https://api.elections.kalshi.com/trade-api/v2/series?category=Sports\&tags=Tennis%2CBaseball) |
+| Shard index | Category               | Tags                         | Series list                                                                                                                                                                |
+| ----------- | ---------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0           | *All other categories* | *All other tags*             | —                                                                                                                                                                          |
+| 1           | Exotics (Combos)       | —                            | [`GET /series?category=Exotics`](https://api.elections.kalshi.com/trade-api/v2/series?category=Exotics)                                                                    |
+| 2           | Crypto                 | —                            | [`GET /series?category=Crypto`](https://api.elections.kalshi.com/trade-api/v2/series?category=Crypto)                                                                      |
+| 2           | Commodities            | —                            | [`GET /series?category=Commodities`](https://api.elections.kalshi.com/trade-api/v2/series?category=Commodities)                                                            |
+| 3           | Sports                 | Tennis, Baseball, Basketball | [`GET /series?category=Sports&tags=Tennis,Baseball,Basketball`](https://api.elections.kalshi.com/trade-api/v2/series?category=Sports\&tags=Tennis%2CBaseball%2CBasketball) |
 
 ## FAQ
 

@@ -107,6 +107,7 @@ operations:
                           - order_group_updates
                           - user_orders
                           - cfbenchmarks_value
+                          - cfbenchmarks_value_5hz
                           - pyth_value
                         required: false
                   - name: market_ticker
@@ -207,10 +208,11 @@ operations:
                   - name: index_ids
                     type: array
                     description: >-
-                      cfbenchmarks_value channel only. CF Benchmarks index IDs
-                      to seed on the initial subscribe (omit to subscribe with
-                      no indices and add them later via update_subscription; use
-                      ["all"] to track every available index).
+                      cfbenchmarks_value and cfbenchmarks_value_5hz channels
+                      only. CF Benchmarks index IDs to seed on the initial
+                      subscribe (omit to subscribe with no indices and add them
+                      later via update_subscription; use ["all"] to track every
+                      index available on the channel).
                     required: false
                     properties:
                       - name: item
@@ -275,6 +277,7 @@ operations:
                       - order_group_updates
                       - user_orders
                       - cfbenchmarks_value
+                      - cfbenchmarks_value_5hz
                       - pyth_value
                     x-parser-schema-id: <anonymous-schema-4>
                   minItems: 1
@@ -383,10 +386,11 @@ operations:
                 index_ids:
                   type: array
                   description: >-
-                    cfbenchmarks_value channel only. CF Benchmarks index IDs to
-                    seed on the initial subscribe (omit to subscribe with no
-                    indices and add them later via update_subscription; use
-                    ["all"] to track every available index).
+                    cfbenchmarks_value and cfbenchmarks_value_5hz channels only.
+                    CF Benchmarks index IDs to seed on the initial subscribe
+                    (omit to subscribe with no indices and add them later via
+                    update_subscription; use ["all"] to track every index
+                    available on the channel).
                   items:
                     type: string
                     x-parser-schema-id: <anonymous-schema-15>
@@ -997,7 +1001,7 @@ operations:
     title: Update Subscription - CF Benchmarks Indices
     description: >-
       Add or remove tracked index IDs, or list available indices, on a
-      cfbenchmarks_value subscription
+      cfbenchmarks_value or cfbenchmarks_value_5hz subscription
     type: receive
     messages:
       - &ref_27
@@ -1007,7 +1011,7 @@ operations:
           - name: Update Subscription - CF Benchmarks Indices
             description: >-
               Add or remove tracked index IDs, or list available indices, on a
-              cfbenchmarks_value subscription
+              cfbenchmarks_value or cfbenchmarks_value_5hz subscription
             type: object
             properties:
               - name: id
@@ -1136,7 +1140,7 @@ operations:
         title: Update Subscription - CF Benchmarks Indices
         description: >-
           Add or remove tracked index IDs, or list available indices, on a
-          cfbenchmarks_value subscription
+          cfbenchmarks_value or cfbenchmarks_value_5hz subscription
         example: |-
           {
             "id": 2,
@@ -1792,7 +1796,7 @@ operations:
 
                       - 24: Index IDs required - Missing index_ids for
                       subscribe_indices/unsubscribe_indices on
-                      cfbenchmarks_value
+                      cfbenchmarks_value / cfbenchmarks_value_5hz
 
                       - 25: Subscription buffer overflow - The subscription's
                       outbound buffer was exceeded
@@ -1900,6 +1904,7 @@ operations:
 
                     - 24: Index IDs required - Missing index_ids for
                     subscribe_indices/unsubscribe_indices on cfbenchmarks_value
+                    / cfbenchmarks_value_5hz
 
                     - 25: Subscription buffer overflow - The subscription's
                     outbound buffer was exceeded

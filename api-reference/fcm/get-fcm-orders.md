@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-orders
-lastmod: 2026-09-01T13:58:54.061Z
+lastmod: 2026-09-02T22:09:40.358Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,8 +8,9 @@ lastmod: 2026-09-01T13:58:54.061Z
 
 # Get FCM Orders
 
-> Endpoint for FCM members to get orders filtered by subtrader ID.
-This endpoint requires FCM member access level and allows filtering orders by subtrader ID.
+> Endpoint for FCM members to get orders for their subtraders.
+This endpoint requires FCM member access level. At least one of `subtrader_id` or
+`client_order_ids` is required; supplying both returns only the orders matching both filters.
 
 
 
@@ -72,20 +73,35 @@ paths:
         - fcm
       summary: Get FCM Orders
       description: >
-        Endpoint for FCM members to get orders filtered by subtrader ID.
+        Endpoint for FCM members to get orders for their subtraders.
 
-        This endpoint requires FCM member access level and allows filtering
-        orders by subtrader ID.
+        This endpoint requires FCM member access level. At least one of
+        `subtrader_id` or
+
+        `client_order_ids` is required; supplying both returns only the orders
+        matching both filters.
       operationId: GetFCMOrders
       parameters:
         - name: subtrader_id
           in: query
-          required: true
           description: >-
             Restricts the response to orders for a specific subtrader (FCM
-            members only)
+            members only). Required unless client_order_ids is supplied.
           schema:
             type: string
+            x-go-type-skip-optional-pointer: true
+        - name: client_order_ids
+          in: query
+          description: >-
+            Client order IDs to filter by, as a comma-separated list (maximum
+            100). Only orders created within the last 24 hours are searched, and
+            a min_ts earlier than that is raised to 24 hours ago. Client order
+            IDs are only unique within a subtrader among live and recent orders,
+            so a single ID can match orders across subtraders or across time.
+            Required unless subtrader_id is supplied.
+          schema:
+            type: string
+            x-go-type-skip-optional-pointer: true
         - $ref: '#/components/parameters/CursorQuery'
         - $ref: '#/components/parameters/SingleEventTickerQuery'
         - $ref: '#/components/parameters/TickerQuery'
