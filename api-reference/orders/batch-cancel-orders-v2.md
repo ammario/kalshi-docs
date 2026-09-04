@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders-v2
-lastmod: 2026-09-02T22:09:38.974Z
+lastmod: 2026-09-03T23:31:13.199Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,11 @@ lastmod: 2026-09-02T22:09:38.974Z
 
 # Batch Cancel Orders (V2)
 
-> Endpoint for cancelling a batch of event-market orders using the V2 response shape. The maximum batch size scales with your tier's write budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
+> Endpoint for cancelling a batch of event-market orders using the V2 response shape. To auto-route a cancellation, provide its `market_ticker` and omit `exchange_index` or set it to `-1`. The maximum batch size scales with your tier's write budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
+
+<Warning>
+  For auto-routing, each order must include `market_ticker`. An `order_id` alone cannot identify the exchange shard.
+</Warning>
 
 <Note>
   **Rate limit:** 2 tokens per order in the batch — billed per item, so total cost for a batch of N cancels is N × 2. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
@@ -74,8 +78,10 @@ paths:
       summary: Batch Cancel Orders (V2)
       description: >-
         Endpoint for cancelling a batch of event-market orders using the V2
-        response shape. The maximum batch size scales with your tier's write
-        budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
+        response shape. To auto-route a cancellation, provide its
+        `market_ticker` and omit `exchange_index` or set it to `-1`. The maximum
+        batch size scales with your tier's write budget — see [Rate Limits and
+        Tiers](/getting_started/rate_limits).
       operationId: BatchCancelOrdersV2
       requestBody:
         required: true
@@ -145,12 +151,13 @@ components:
                 description: >-
                   Exchange shard index. If omitted, auto-routes when
                   market_ticker is provided; otherwise defaults to 0. Use -1 to
-                  require auto-routing by market ticker.
+                  require auto-routing. The market_ticker field is required for
+                  auto-routing.
               market_ticker:
                 type: string
                 description: >-
-                  Market ticker used for auto-routing when exchange_index is
-                  omitted or -1.
+                  Market ticker. Required for auto-routing when exchange_index
+                  is omitted or -1.
                 x-go-type-skip-optional-pointer: true
     BatchCancelOrdersV2Response:
       type: object

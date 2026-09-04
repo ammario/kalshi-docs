@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/authentication
-lastmod: 2026-05-31T16:40:12.230Z
+lastmod: 2026-09-03T15:39:16.823Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,6 +22,10 @@ openssl rsa -in kalshi-fix.key -pubout -out kalshi-fix.pub
 ## Logon (35=A)
 
 The initiator sends a Logon message. The acceptor responds with either a Logon (success) or Logout (failure).
+
+<Warning>
+  Do not send `SenderSubID<50>` on Logon. Kalshi rejects it with a Logout; send operator identity per message instead — on NewOrderSingle, OrderCancelRequest, or OrderCancelReplaceRequest.
+</Warning>
 
 ### Required Fields
 

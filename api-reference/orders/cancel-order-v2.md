@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order-v2
-lastmod: 2026-09-02T22:09:38.983Z
+lastmod: 2026-09-03T23:31:13.207Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,11 @@ lastmod: 2026-09-02T22:09:38.983Z
 
 # Cancel Order (V2)
 
-> Endpoint for cancelling event-market orders using the V2 response shape. Returns `{order_id, client_order_id, reduced_by}` rather than a full order object.
+> Endpoint for cancelling event-market orders using the V2 response shape. To auto-route the cancellation, provide `market_ticker` and omit `exchange_index` or set it to `-1`. Returns `{order_id, client_order_id, reduced_by}` rather than a full order object.
+
+<Warning>
+  Auto-routing requires `market_ticker`. An `order_id` alone cannot identify the exchange shard.
+</Warning>
 
 <Note>
   **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
@@ -74,8 +78,9 @@ paths:
       summary: Cancel Order (V2)
       description: >-
         Endpoint for cancelling event-market orders using the V2 response shape.
-        Returns `{order_id, client_order_id, reduced_by}` rather than a full
-        order object.
+        To auto-route the cancellation, provide `market_ticker` and omit
+        `exchange_index` or set it to `-1`. Returns `{order_id, client_order_id,
+        reduced_by}` rather than a full order object.
       operationId: CancelOrderV2
       parameters:
         - $ref: '#/components/parameters/OrderIdPath'
@@ -84,15 +89,15 @@ paths:
           in: query
           description: >-
             Exchange shard index. If omitted, auto-routes when market_ticker is
-            provided; otherwise defaults to 0. Use -1 to require auto-routing by
-            market ticker.
+            provided; otherwise defaults to 0. Use -1 to require auto-routing.
+            The market_ticker parameter is required for auto-routing.
           schema:
             $ref: '#/components/schemas/ExchangeIndex'
         - name: market_ticker
           in: query
           description: >-
-            Market ticker used for auto-routing when exchange_index is omitted
-            or -1.
+            Market ticker. Required for auto-routing when exchange_index is
+            omitted or -1.
           schema:
             type: string
             x-go-type-skip-optional-pointer: true

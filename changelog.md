@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-02T22:09:47.542Z
+lastmod: 2026-09-03T23:31:20.283Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -84,14 +84,12 @@ description: "Owned FIX market data book updates now include the client order ID
   label="September 3, 2026"
   tags={["REST", "Margin"]}
   rss={{
-title: "Public margin fee tier rates",
-description: "New public GET /trade-api/v2/margin/fee_tier_rates returns Self Clearing Members and Kalshi Prime maker and taker fee rates."
+title: "Margin fee tier rates",
+description: "New authenticated GET /trade-api/v2/margin/fee_tier_rates returns the fee schedule that applies to your margin account."
 }}
 >
-  New public endpoint `GET /trade-api/v2/margin/fee_tier_rates` returns each fee
-  tier in the Self Clearing Members and Kalshi Prime schedules with its
-  corresponding maker and taker fee rates. The Kalshi Prime schedule also
-  applies to FCM subtraders.
+  New authenticated endpoint `GET /trade-api/v2/margin/fee_tier_rates` returns
+  the fee schedule that applies to your margin-enabled account.
 </Update>
 
 <Update

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/cancel-all-orders
-lastmod: 2026-09-02T22:09:40.622Z
+lastmod: 2026-09-03T23:31:13.645Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

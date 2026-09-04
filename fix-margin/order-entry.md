@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-09-01T15:58:52.990Z
+lastmod: 2026-09-03T18:01:09.325Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,24 +12,29 @@ lastmod: 2026-09-01T15:58:52.990Z
 
 ## New Order Single (35=D)
 
-| Tag   | Name                    | Type         | Required | Description                                                                                                              |
-| ----- | ----------------------- | ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------ |
-| 11    | ClOrderID               | String       | Y        | Client order identifier for idempotency. UUID format is preferred.                                                       |
-| 18    | ExecInst                | Char         | N        | Execution instruction flags. Supported values: `6 = Post Only`                                                           |
-| 38    | OrderQty                | Decimal      | Y        | Quantity of contracts to trade. Only whole-number quantities are supported.                                              |
-| 40    | OrdType                 | Char         | Y        | Supported values: `2 = Limit`                                                                                            |
-| 44    | Price                   | Decimal      | Y        | Price per contract in fixed-point dollars, up to 4 decimal places.                                                       |
-| 54    | Side                    | Char         | Y        | Supported values: `1 = Buy (bid)`, `2 = Sell (ask)`                                                                      |
-| 55    | Symbol                  | String       | Y        | Market ticker                                                                                                            |
-| 59    | TimeInForce             | Char         | N        | Supported values: `0 = Day`, `1 = Good Till Cancel`, `3 = Immediate Or Cancel`, `4 = Fill Or Kill`, `6 = Good Till Date` |
-| 126   | ExpireTime              | UTCTimestamp | C        | Required when `TimeInForce = GTD`                                                                                        |
-| 448   | PartyID                 | String       | N        | Only applicable for FCM entities. Customer-account or subaccount identifier.                                             |
-| 452   | PartyRole               | Integer      | N        | Only applicable for FCM entities. Supported value: `24 = Customer Account`                                               |
-| 453   | NoPartyIDs              | Integer      | N        | Only applicable for FCM entities. Currently only `1` is supported.                                                       |
-| 79    | AllocAccount            | Integer      | N        | Subaccount number (0-63). Alternative to NoPartyIDs.                                                                     |
-| 526   | SecondaryClOrdID        | UUID         | N        | [Order group](/getting_started/order_groups) identifier.                                                                 |
-| 2964  | SelfTradePreventionType | Integer      | N        | Supported values: `1 = Taker At Cross`, `2 = Maker`                                                                      |
-| 21006 | CancelOrderOnPause      | Boolean      | N        | Cancel the order if trading pauses                                                                                       |
+| Tag   | Name                    | Type         | Required | Description                                                                                                                   |
+| ----- | ----------------------- | ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| 11    | ClOrderID               | String       | Y        | Client order identifier for idempotency. UUID format is preferred.                                                            |
+| 18    | ExecInst                | Char         | N        | Execution instruction flags. Supported values: `6 = Post Only`                                                                |
+| 38    | OrderQty                | Decimal      | Y        | Quantity of contracts to trade. Only whole-number quantities are supported.                                                   |
+| 40    | OrdType                 | Char         | Y        | Supported values: `2 = Limit`                                                                                                 |
+| 44    | Price                   | Decimal      | Y        | Price per contract in fixed-point dollars, up to 4 decimal places.                                                            |
+| 50    | SenderSubID             | String       | N        | Clearing FCM sponsored access only. Header field identifying the operator for this order; printable ASCII, max 16 characters. |
+| 54    | Side                    | Char         | Y        | Supported values: `1 = Buy (bid)`, `2 = Sell (ask)`                                                                           |
+| 55    | Symbol                  | String       | Y        | Market ticker                                                                                                                 |
+| 59    | TimeInForce             | Char         | N        | Supported values: `0 = Day`, `1 = Good Till Cancel`, `3 = Immediate Or Cancel`, `4 = Fill Or Kill`, `6 = Good Till Date`      |
+| 126   | ExpireTime              | UTCTimestamp | C        | Required when `TimeInForce = GTD`                                                                                             |
+| 448   | PartyID                 | String       | N        | Only applicable for FCM entities. Customer-account or subaccount identifier.                                                  |
+| 452   | PartyRole               | Integer      | N        | Only applicable for FCM entities. Supported value: `24 = Customer Account`                                                    |
+| 453   | NoPartyIDs              | Integer      | N        | Only applicable for FCM entities. Currently only `1` is supported.                                                            |
+| 79    | AllocAccount            | Integer      | N        | Subaccount number (0-63). Alternative to NoPartyIDs.                                                                          |
+| 526   | SecondaryClOrdID        | UUID         | N        | [Order group](/getting_started/order_groups) identifier.                                                                      |
+| 2964  | SelfTradePreventionType | Integer      | N        | Supported values: `1 = Taker At Cross`, `2 = Maker`                                                                           |
+| 21006 | CancelOrderOnPause      | Boolean      | N        | Cancel the order if trading pauses                                                                                            |
+
+<Note>
+  `SenderSubID<50>` is captured on an ordinary NewOrderSingle and, per action, on OrderCancelRequest and OrderCancelReplaceRequest; it is ignored on RFQ quote acceptance. The operator on a NewOrderSingle sticks to the order: fills and other lifecycle reports emit it as the PartyRole=12 party. Cancel and Cancel/Replace acknowledgements instead emit the operator sent on that request — the operator who performed the action — falling back to the order's creating operator when the request carried none. Do not send tag 50 on Logon: Kalshi rejects that Logon.
+</Note>
 
 ```fix Example New Margin Order theme={null}
 8=FIXT.1.1|9=200|35=D|34=5|52=20230809-12:34:56.789|49=your-api-key|56=KalshiNR|
@@ -46,36 +51,38 @@ Used to modify an existing order without canceling it.
 * **OrderQty**: Increase or decrease the quantity. Increasing quantity forfeits queue priority.
 * **Price**: Change the limit price.
 
-| Tag | Name         | Type    | Required | Description                                   |
-| --- | ------------ | ------- | -------- | --------------------------------------------- |
-| 11  | ClOrderID    | String  | Y        | Unique modification request identifier        |
-| 37  | OrderID      | String  | N        | Kalshi exchange order identifier              |
-| 38  | OrderQty     | Decimal | Y        | New total quantity for the order              |
-| 40  | OrdType      | Char    | Y        | Supported value: `2 = Limit`                  |
-| 41  | OrigClOrdID  | String  | Y        | ClOrderID of the order to modify              |
-| 44  | Price        | Decimal | N        | New fixed-point dollar price                  |
-| 54  | Side         | Char    | Y        | Must match the original order side            |
-| 55  | Symbol       | String  | Y        | Must match the original margin market ticker  |
-| 448 | PartyID      | String  | N        | FCM customer-account or subaccount identifier |
-| 452 | PartyRole    | Integer | N        | FCM party role                                |
-| 453 | NoPartyIDs   | Integer | N        | FCM party count                               |
-| 79  | AllocAccount | Integer | N        | Subaccount number                             |
+| Tag | Name         | Type    | Required | Description                                                                                                                                 |
+| --- | ------------ | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| 11  | ClOrderID    | String  | Y        | Unique modification request identifier                                                                                                      |
+| 37  | OrderID      | String  | N        | Kalshi exchange order identifier                                                                                                            |
+| 38  | OrderQty     | Decimal | Y        | New total quantity for the order                                                                                                            |
+| 40  | OrdType      | Char    | Y        | Supported value: `2 = Limit`                                                                                                                |
+| 41  | OrigClOrdID  | String  | Y        | ClOrderID of the order to modify                                                                                                            |
+| 44  | Price        | Decimal | N        | New fixed-point dollar price                                                                                                                |
+| 50  | SenderSubID  | String  | N        | Clearing FCM sponsored access only. Header field identifying the operator performing this modification; printable ASCII, max 16 characters. |
+| 54  | Side         | Char    | Y        | Must match the original order side                                                                                                          |
+| 55  | Symbol       | String  | Y        | Must match the original margin market ticker                                                                                                |
+| 448 | PartyID      | String  | N        | FCM customer-account or subaccount identifier                                                                                               |
+| 452 | PartyRole    | Integer | N        | FCM party role                                                                                                                              |
+| 453 | NoPartyIDs   | Integer | N        | FCM party count                                                                                                                             |
+| 79  | AllocAccount | Integer | N        | Subaccount number                                                                                                                           |
 
 ## Order Cancel Request (35=F)
 
 Cancel all remaining quantity of an existing order.
 
-| Tag | Name         | Type    | Required | Description                                   |
-| --- | ------------ | ------- | -------- | --------------------------------------------- |
-| 11  | ClOrderID    | String  | Y        | Unique cancel request identifier              |
-| 37  | OrderID      | String  | N        | Kalshi exchange order identifier              |
-| 41  | OrigClOrdID  | String  | Y        | ClOrderID of the order to cancel              |
-| 54  | Side         | Char    | Y        | Must match the original order side            |
-| 55  | Symbol       | String  | Y        | Must match the original margin market ticker  |
-| 448 | PartyID      | String  | N        | FCM customer-account or subaccount identifier |
-| 452 | PartyRole    | Integer | N        | FCM party role                                |
-| 453 | NoPartyIDs   | Integer | N        | FCM party count                               |
-| 79  | AllocAccount | Integer | N        | Subaccount number                             |
+| Tag | Name         | Type    | Required | Description                                                                                                                           |
+| --- | ------------ | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| 11  | ClOrderID    | String  | Y        | Unique cancel request identifier                                                                                                      |
+| 37  | OrderID      | String  | N        | Kalshi exchange order identifier                                                                                                      |
+| 41  | OrigClOrdID  | String  | Y        | ClOrderID of the order to cancel                                                                                                      |
+| 50  | SenderSubID  | String  | N        | Clearing FCM sponsored access only. Header field identifying the operator performing this cancel; printable ASCII, max 16 characters. |
+| 54  | Side         | Char    | Y        | Must match the original order side                                                                                                    |
+| 55  | Symbol       | String  | Y        | Must match the original margin market ticker                                                                                          |
+| 448 | PartyID      | String  | N        | FCM customer-account or subaccount identifier                                                                                         |
+| 452 | PartyRole    | Integer | N        | FCM party role                                                                                                                        |
+| 453 | NoPartyIDs   | Integer | N        | FCM party count                                                                                                                       |
+| 79  | AllocAccount | Integer | N        | Subaccount number                                                                                                                     |
 
 ## Execution Report (35=8)
 
@@ -103,9 +110,9 @@ This message is sent by the exchange to reflect changes to an order's state.
 | 126 | ExpireTime   | UTCTimestamp | C        | Expiration timestamp                                                                                           |
 | 150 | ExecType     | Char         | Y        | Why this execution report was sent                                                                             |
 | 151 | LeavesQty    | Decimal      | Y        | Remaining quantity open for execution                                                                          |
-| 448 | PartyID      | String       | N        | FCM customer-account or subaccount identifier                                                                  |
-| 452 | PartyRole    | Integer      | N        | FCM party role                                                                                                 |
-| 453 | NoPartyIDs   | Integer      | N        | FCM party count                                                                                                |
+| 448 | PartyID      | String       | N        | FCM customer-account identifier or the operator captured from SenderSubID                                      |
+| 452 | PartyRole    | Integer      | N        | FCM party role: `24 = Customer Account`, `12 = Executing Trader`                                               |
+| 453 | NoPartyIDs   | Integer      | N        | FCM party count. Up to 2 when both customer account and operator are present.                                  |
 | 79  | AllocAccount | Integer      | C        | Subaccount number                                                                                              |
 
 ### Order Status (39)
@@ -207,7 +214,14 @@ When `ExecType = Trade`:
 
 ### Party Information
 
-Party fields from the original request are echoed in execution reports when a sub-account is involved.
+Execution reports independently include the customer account when applicable and at most one operator entry (Executing Trader\<12>). Which operator appears depends on the report type: fills and other order-lifecycle reports (expiration, IOC cancellation, and similar) carry the operator captured at order creation, while Cancel and Cancel/Replace acknowledgements carry the operator sent on the acting request, falling back to the creation operator when that request carried none. When both a customer-account entry and an operator entry are present, the customer-account entry comes first.
+
+| Tag | Name         | Description                                    |
+| --- | ------------ | ---------------------------------------------- |
+| 453 | NoPartyIDs   | Number of parties: one or two                  |
+| 448 | PartyID      | Customer-account or operator identifier        |
+| 452 | PartyRole    | Customer Account\<24> or Executing Trader\<12> |
+| 79  | AllocAccount | Subaccount number (0-63)                       |
 
 ### Rejection Reasons (102)
 

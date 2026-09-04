@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/exchange_sharding
-lastmod: 2026-09-02T22:09:47.480Z
+lastmod: 2026-09-03T13:47:21.157Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -58,22 +58,28 @@ Kalshi's collateralization checks will continue to run within the matching engin
 * A new field `exchange_index` is provided on [`GET /markets`](/api-reference/market/get-markets), [`GET /events`](/api-reference/events/get-events), and via the [market and event lifecycle WebSocket streams](/websockets/market-and-event-lifecycle) for newly created events and markets.
 * Market ticker formats are unaffected by exchange sharding. The `exchange_index` field is the authoritative source of truth.
 
-### REST
+<Warning>
+  Auto-routing requires the market ticker: provide `market_ticker` for API2 or `Symbol<55>` for FIX. An order ID alone cannot identify the exchange shard.
+</Warning>
 
-The `exchange_index` parameter is available on a per-endpoint basis.
+### API2
 
-* If `>= 0`: routes directly to the target exchange.
-* Else if `-1`: auto-routes to the target exchange for the provided market ticker.
-* Else if omitted and a market ticker is provided: auto-routes to the target exchange for the market ticker.
-* Else: defaults to exchange index `0`.
+The `exchange_index` query parameter is available on a per-endpoint basis.
+
+* If `exchange_index >= 0`, routes directly to the target exchange.
+* If `exchange_index` is `-1`, auto-routes using the required `market_ticker`.
+* If `exchange_index` is omitted and `market_ticker` is provided, auto-routes using `market_ticker`.
+* Otherwise, defaults to exchange index `0`.
 
 ### FIX
 
-The [`ExDestination` parameter](/fix/order-entry) (FIX Tag 100) is available on a per-message basis.
+[`ExDestination<100>`](/fix/order-entry) is available on a per-message basis for event-contract sessions.
 
-* On event-contract sessions, if omitted: routes to the target exchange for the provided `Symbol` (FIX Tag 55).
-* Else if `-1`: routes to the target exchange for the provided `Symbol` (FIX Tag 55).
-* Else if `>= 0`: routes directly to the target exchange.
+* If `ExDestination<100> >= 0`, routes directly to the target exchange.
+* If `ExDestination<100>` is `-1`, auto-routes using the required market ticker in `Symbol<55>`.
+* If `ExDestination<100>` is omitted and `Symbol<55>` is provided, auto-routes using `Symbol<55>`.
+
+Margined FIX sessions always route to exchange index `0`.
 
 ## Upcoming Series Shard Assignments
 
