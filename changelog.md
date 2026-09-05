@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-03T23:31:20.283Z
+lastmod: 2026-09-04T22:37:10.107Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,6 +22,55 @@ the `FIX` tag.
 
 <Update
   label="September 10, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "The deprecated available_on_brokers field is removed from event responses",
+description: "The deprecated available_on_brokers field is removed from event responses in the September 10, 2026 release."
+}}
+>
+  Breaking Change: the deprecated `available_on_brokers` field is removed
+  from event responses. The field stopped being populated in August 2026 and
+  has always returned `false` since then.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/events`
+  * `GET /trade-api/v2/events/multivariate`
+  * `GET /trade-api/v2/events/{event_ticker}`
+</Update>
+
+<Update
+  label="September 10, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Weather index points expose receipt_basis",
+description: "GetWeatherIndex points carry receipt_basis when they come from the labelled historical backfill rather than canonical live computation."
+}}
+>
+  `GetWeatherIndex` points now include an optional `receipt_basis` field.
+  It is absent on canonical points. It is `synoptic_latency` on points
+  written by the historical backfill that seeds a newly listed city's series
+  for the period before it went live: those minutes judged the receipt
+  deadline against `observation_time + Synoptic ingest latency` instead of
+  Kalshi's local receipt clock, and are not settlement-eligible.
+</Update>
+
+<Update
+  label="September 10, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin markets expose asset_class",
+description: "GetMarginMarkets and GetMarginMarket responses now include each market's asset_class."
+}}
+>
+  `GetMarginMarkets` and `GetMarginMarket` responses now include an
+  `asset_class` field with the market's asset class grouping (for example
+  `Crypto` or `Metals`). The field is omitted for markets without an assigned
+  class. New asset classes may be added over time.
+</Update>
+
+<Update
+  label="September 10, 2026"
   tags={["REST", "WebSocket", "FIX", "Predictions"]}
   rss={{
 title: "Upcoming exchange sharding for commodities and basketball",
@@ -32,6 +81,49 @@ description: "Upcoming exchange sharding for commodities and basketball"
   be created on shard 2 and new basketball markets will be created on shard 3.
   See [Exchange Sharding](/getting_started/exchange_sharding) for changes to
   trading.
+</Update>
+
+<Update
+  label="September 10, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "The center_deci_edge_centi_cent price level structure is emitted again",
+description: "Market lifecycle messages report the center_deci_edge_centi_cent price level structure and its price ranges instead of an empty string."
+}}
+>
+  Market lifecycle messages now report the `center_deci_edge_centi_cent` price
+  level structure and its price ranges. That value previously serialized as an
+  empty string.
+</Update>
+
+<Update
+  label="September 10, 2026"
+  tags={["WebSocket", "Predictions", "Margin"]}
+  rss={{
+title: "WebSocket schemas corrected to match the messages the service sends",
+description: "The AsyncAPI specs now document the seq envelope field, order_source, and the sid and seq fields on subscription errors, and no longer list three error codes that are never emitted."
+}}
+>
+  The AsyncAPI specs described some messages inaccurately. The corrections below
+  document behavior the service already has. No message contents change.
+
+  * `seq` is documented on the Predictions trade, market lifecycle, multivariate
+    market lifecycle, event lifecycle, event fee update, and RFQ and quote
+    messages, and on the Margin trade message. These channels have always been
+    sequenced.
+  * `order_source` is documented on Margin fill and user order messages.
+  * `sid` and `seq` are documented on error messages scoped to a subscription.
+  * Error codes 6, 16, and 17 are retired. The service does not emit them and
+    their numbers stay reserved. Error codes are now an explicit list on both
+    exchanges; the Margin list includes codes 23, 24 and 28, which are
+    reachable on channels outside the documented margin surface.
+  * The multivariate market lifecycle schema lists only the events and fields
+    that channel sends.
+  * `market_id` and `market_ticker` are removed from the error schema. The
+    service never sent either.
+
+  If you generate a client from the specs, regenerate it to pick up the
+  corrected schemas.
 </Update>
 
 <Update

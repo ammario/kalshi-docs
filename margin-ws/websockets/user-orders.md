@@ -131,6 +131,15 @@ operations:
                   - name: subaccount_number
                     type: integer
                     required: false
+                  - name: order_source
+                    type: string
+                    description: |
+                      `system` for liquidations and margin exit or trailing-stop
+                      triggers. `user` for every other order.
+                    enumValues:
+                      - user
+                      - system
+                    required: true
         headers: []
         jsonPayloadSchema:
           type: object
@@ -160,6 +169,7 @@ operations:
                 - fill_count
                 - remaining_count
                 - created_ts_ms
+                - order_source
               properties:
                 order_id:
                   type: string
@@ -222,6 +232,15 @@ operations:
                 subaccount_number:
                   type: integer
                   x-parser-schema-id: <anonymous-schema-103>
+                order_source:
+                  type: string
+                  enum:
+                    - user
+                    - system
+                  description: |
+                    `system` for liquidations and margin exit or trailing-stop
+                    triggers. `user` for every other order.
+                  x-parser-schema-id: <anonymous-schema-104>
               x-parser-schema-id: <anonymous-schema-92>
           x-parser-schema-id: marginUserOrderPayload
         title: User Order Update
@@ -244,7 +263,8 @@ operations:
               "expiration_ts_ms": 123,
               "created_ts_ms": 123,
               "last_updated_ts_ms": 123,
-              "subaccount_number": 123
+              "subaccount_number": 123,
+              "order_source": "<string>"
             }
           }
         bindings: []

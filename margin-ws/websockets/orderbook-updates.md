@@ -114,7 +114,7 @@ operations:
             type:
               type: string
               const: orderbook_snapshot
-              x-parser-schema-id: <anonymous-schema-40>
+              x-parser-schema-id: <anonymous-schema-39>
             sid: &ref_1
               type: integer
               minimum: 1
@@ -140,17 +140,17 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-43>
+                      x-parser-schema-id: <anonymous-schema-42>
                     minItems: 2
                     maxItems: 2
                     description: '[price_in_dollars, contract_count_fp]'
                     x-parser-schema-id: priceLevelDollarsCountFp
-                  x-parser-schema-id: <anonymous-schema-42>
+                  x-parser-schema-id: <anonymous-schema-41>
                 ask:
                   type: array
                   items: *ref_0
-                  x-parser-schema-id: <anonymous-schema-44>
-              x-parser-schema-id: <anonymous-schema-41>
+                  x-parser-schema-id: <anonymous-schema-43>
+              x-parser-schema-id: <anonymous-schema-40>
           x-parser-schema-id: marginOrderbookSnapshotPayload
         title: Orderbook Snapshot
         description: Complete view of the margin order book's aggregated price levels
@@ -245,7 +245,7 @@ operations:
             type:
               type: string
               const: orderbook_delta
-              x-parser-schema-id: <anonymous-schema-45>
+              x-parser-schema-id: <anonymous-schema-44>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -259,10 +259,10 @@ operations:
                 market_ticker: *ref_3
                 price:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-47>
+                  x-parser-schema-id: <anonymous-schema-46>
                 delta:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-48>
+                  x-parser-schema-id: <anonymous-schema-47>
                 side:
                   type: string
                   enum:
@@ -286,16 +286,16 @@ operations:
                   x-parser-schema-id: lastUpdateReason
                 client_order_id:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-49>
+                  x-parser-schema-id: <anonymous-schema-48>
                 subaccount:
                   type: integer
-                  x-parser-schema-id: <anonymous-schema-50>
+                  x-parser-schema-id: <anonymous-schema-49>
                 ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-51>
-              x-parser-schema-id: <anonymous-schema-46>
+                  x-parser-schema-id: <anonymous-schema-50>
+              x-parser-schema-id: <anonymous-schema-45>
           x-parser-schema-id: marginOrderbookDeltaPayload
         title: Orderbook Delta
         description: Update to be applied to the current margin order book view

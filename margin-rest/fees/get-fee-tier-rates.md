@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fees/get-fee-tier-rates
-lastmod: 2026-09-03T23:31:13.724Z
+lastmod: 2026-09-04T22:37:03.459Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -103,6 +103,7 @@ components:
           enum:
             - self_clearing_members
             - kalshi_prime
+            - fcm
           description: Fee schedule containing this tier.
         tier:
           type: integer

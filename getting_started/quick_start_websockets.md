@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_websockets
-lastmod: 2026-05-31T19:51:47.171Z
+lastmod: 2026-09-04T20:51:41.328Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -265,7 +265,7 @@ The server sends error messages in this format:
 | 3    | Channels required                                | The `subscribe` command must include at least one channel.                                                                                                             | Y           |
 | 4    | Subscription IDs required                        | The `unsubscribe` command must include at least one subscription ID in `sids`.                                                                                         | Y           |
 | 5    | Unknown command                                  | The `cmd` value is not supported.                                                                                                                                      | Y           |
-| 6    | Already subscribed                               | A subscription to the same channel is already active in this session.                                                                                                  | Y           |
+| 6    | Retired                                          | Not emitted. The number stays reserved.                                                                                                                                | -           |
 | 7    | Unknown subscription ID                          | The command references a subscription ID that is not active in the session.                                                                                            | Y           |
 | 8    | Unknown channel name                             | The requested channel is not supported by this endpoint.                                                                                                               | Y           |
 | 9    | Authentication required                          | The requested channel or action requires authentication or channel access that was not granted.                                                                        | Y           |
@@ -275,8 +275,8 @@ The server sends error messages in this format:
 | 13   | Unsupported action                               | The subscription does not support the requested `action`.                                                                                                              | Y           |
 | 14   | Market Ticker required                           | The command requires a market filter such as `market_ticker` or `market_tickers`.                                                                                      | Y           |
 | 15   | Action required                                  | The `update_subscription` command must include `params.action`.                                                                                                        | Y           |
-| 16   | Market not found                                 | The specified `market_ticker` or `market_id` does not match any known market.                                                                                          | Y           |
-| 17   | Internal error                                   | An unexpected server-side error occurred. If it persists, contact [support@kalshi.com](mailto:support@kalshi.com).                                                     | N           |
+| 16   | Retired                                          | Not emitted. The number stays reserved.                                                                                                                                | -           |
+| 17   | Retired                                          | Not emitted. The number stays reserved.                                                                                                                                | -           |
 | 18   | Command timeout                                  | The server timed out while routing a command to an existing subscription.                                                                                              | N           |
 | 19   | shard\_factor must be > 0                        | The supplied `communications` `shard_factor` value is invalid.                                                                                                         | Y           |
 | 20   | shard\_factor is required when shard\_key is set | `communications` set `shard_key` without a valid shard factor.                                                                                                         | Y           |

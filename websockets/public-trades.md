@@ -74,6 +74,13 @@ operations:
                   Server-generated subscription identifier (sid) used to
                   identify the channel
                 required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
+                required: true
               - name: msg
                 type: object
                 required: true
@@ -144,12 +151,13 @@ operations:
           required:
             - type
             - sid
+            - seq
             - msg
           properties:
             type:
               type: string
               const: trade
-              x-parser-schema-id: <anonymous-schema-96>
+              x-parser-schema-id: <anonymous-schema-94>
             sid:
               type: integer
               description: >-
@@ -157,6 +165,14 @@ operations:
                 the channel
               minimum: 1
               x-parser-schema-id: subscriptionId
+            seq:
+              type: integer
+              description: >-
+                Sequential number that should be checked if you want to
+                guarantee you received all the messages. Used for snapshot/delta
+                consistency
+              minimum: 1
+              x-parser-schema-id: sequenceNumber
             msg:
               type: object
               required:
@@ -176,7 +192,7 @@ operations:
                   type: string
                   description: Unique identifier for the trade
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-98>
+                  x-parser-schema-id: <anonymous-schema-96>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -186,15 +202,15 @@ operations:
                 yes_price_dollars:
                   type: string
                   description: Yes side price in dollars
-                  x-parser-schema-id: <anonymous-schema-99>
+                  x-parser-schema-id: <anonymous-schema-97>
                 no_price_dollars:
                   type: string
                   description: No side price in dollars
-                  x-parser-schema-id: <anonymous-schema-100>
+                  x-parser-schema-id: <anonymous-schema-98>
                 count_fp:
                   type: string
                   description: Fixed-point contracts traded (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-101>
+                  x-parser-schema-id: <anonymous-schema-99>
                 taker_side: &ref_1
                   type: string
                   description: Market side
@@ -216,19 +232,19 @@ operations:
                 is_block_trade:
                   type: boolean
                   description: True if the trade was matched off book as a block trade
-                  x-parser-schema-id: <anonymous-schema-102>
+                  x-parser-schema-id: <anonymous-schema-100>
                 ts:
                   type: integer
                   deprecated: true
                   description: Deprecated - Unix timestamp in seconds. Use ts_ms instead.
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-103>
+                  x-parser-schema-id: <anonymous-schema-101>
                 ts_ms:
                   type: integer
                   description: Unix timestamp in milliseconds
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-104>
-              x-parser-schema-id: <anonymous-schema-97>
+                  x-parser-schema-id: <anonymous-schema-102>
+              x-parser-schema-id: <anonymous-schema-95>
           x-parser-schema-id: tradePayload
         title: Trade Update
         description: Public trade information
@@ -236,13 +252,16 @@ operations:
           {
             "type": "trade",
             "sid": 11,
+            "seq": 2,
             "msg": {
               "trade_id": "d91bc706-ee49-470d-82d8-11418bda6fed",
               "market_ticker": "HIGHNY-22DEC23-B53.5",
-              "yes_price_dollars": "0.360",
-              "no_price_dollars": "0.640",
+              "yes_price_dollars": "0.3600",
+              "no_price_dollars": "0.6400",
               "count_fp": "136.00",
               "taker_side": "no",
+              "taker_outcome_side": "no",
+              "taker_book_side": "ask",
               "is_block_trade": false,
               "ts": 1669149841,
               "ts_ms": 1669149841000

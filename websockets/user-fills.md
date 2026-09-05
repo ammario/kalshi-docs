@@ -194,7 +194,7 @@ operations:
             type:
               type: string
               const: fill
-              x-parser-schema-id: <anonymous-schema-105>
+              x-parser-schema-id: <anonymous-schema-103>
             sid:
               type: integer
               description: >-
@@ -228,14 +228,14 @@ operations:
                     Unique identifier for fills. This is what you use to
                     differentiate fills
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-107>
+                  x-parser-schema-id: <anonymous-schema-105>
                 order_id:
                   type: string
                   description: >-
                     Unique identifier for orders. This is what you use to
                     differentiate fills for different orders
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-108>
+                  x-parser-schema-id: <anonymous-schema-106>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -245,11 +245,11 @@ operations:
                 exchange_index:
                   type: integer
                   description: Identifier for the exchange shard where the fill occurred
-                  x-parser-schema-id: <anonymous-schema-109>
+                  x-parser-schema-id: <anonymous-schema-107>
                 is_taker:
                   type: boolean
                   description: If you were a taker on this fill
-                  x-parser-schema-id: <anonymous-schema-110>
+                  x-parser-schema-id: <anonymous-schema-108>
                 side: &ref_1
                   type: string
                   description: Market side
@@ -260,15 +260,15 @@ operations:
                 yes_price_dollars:
                   type: string
                   description: Price for the yes side of the fill in dollars
-                  x-parser-schema-id: <anonymous-schema-111>
+                  x-parser-schema-id: <anonymous-schema-109>
                 count_fp:
                   type: string
                   description: Fixed-point contracts filled (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-112>
+                  x-parser-schema-id: <anonymous-schema-110>
                 fee_cost:
                   type: string
                   description: Exchange fee paid for this fill in fixed-point dollars
-                  x-parser-schema-id: <anonymous-schema-113>
+                  x-parser-schema-id: <anonymous-schema-111>
                 action:
                   type: string
                   description: Order action type
@@ -283,22 +283,22 @@ operations:
                     Deprecated - Unix timestamp for when the update happened (in
                     seconds). Use ts_ms instead.
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-114>
+                  x-parser-schema-id: <anonymous-schema-112>
                 ts_ms:
                   type: integer
                   description: >-
                     Unix timestamp for when the update happened (in
                     milliseconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-115>
+                  x-parser-schema-id: <anonymous-schema-113>
                 client_order_id:
                   type: string
                   description: Optional client-provided order ID
-                  x-parser-schema-id: <anonymous-schema-116>
+                  x-parser-schema-id: <anonymous-schema-114>
                 post_position_fp:
                   type: string
                   description: Fixed-point position after the fill (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-117>
+                  x-parser-schema-id: <anonymous-schema-115>
                 purchased_side: *ref_1
                 outcome_side: *ref_1
                 book_side:
@@ -314,8 +314,8 @@ operations:
                 subaccount:
                   type: integer
                   description: Optional subaccount number for the fill
-                  x-parser-schema-id: <anonymous-schema-118>
-              x-parser-schema-id: <anonymous-schema-106>
+                  x-parser-schema-id: <anonymous-schema-116>
+              x-parser-schema-id: <anonymous-schema-104>
           x-parser-schema-id: fillPayload
         title: Fill Update
         description: Private fill information for authenticated user
@@ -330,13 +330,16 @@ operations:
               "exchange_index": 2,
               "is_taker": true,
               "side": "yes",
-              "yes_price_dollars": "0.750",
+              "yes_price_dollars": "0.7500",
               "count_fp": "278.00",
+              "fee_cost": "0.010000",
               "action": "buy",
               "ts": 1671899397,
               "ts_ms": 1671899397000,
               "post_position_fp": "500.00",
               "purchased_side": "yes",
+              "outcome_side": "yes",
+              "book_side": "bid",
               "subaccount": 3
             }
           }

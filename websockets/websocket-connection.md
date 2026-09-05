@@ -1723,6 +1723,19 @@ operations:
                   If the id is set to 0, the server treats it the same way as if
                   there was no id.
                 required: false
+              - name: sid
+                type: integer
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
+                required: false
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
+                required: false
               - name: type
                 type: string
                 description: error
@@ -1748,8 +1761,6 @@ operations:
 
                       - 5: Unknown command - Invalid command name
 
-                      - 6: Already subscribed - Duplicate subscription attempt
-
                       - 7: Unknown subscription ID - Subscription ID not found
 
                       - 8: Unknown channel name - Invalid channel in subscribe
@@ -1772,11 +1783,6 @@ operations:
 
                       - 15: Action required - Missing action in
                       update_subscription
-
-                      - 16: Market not found - Invalid market_ticker or
-                      market_id
-
-                      - 17: Internal error - Server-side processing error
 
                       - 18: Command timeout - Server timed out while processing
                       command
@@ -1811,19 +1817,43 @@ operations:
                       underlying_tickers for
                       subscribe_underlyings/unsubscribe_underlyings on
                       pyth_value
+
+
+                      Codes 6, 16, and 17 are retired. The service no longer
+                      emits
+
+                      them and their numbers stay reserved.
+                    enumValues:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                      - 13
+                      - 14
+                      - 15
+                      - 18
+                      - 19
+                      - 20
+                      - 21
+                      - 22
+                      - 23
+                      - 24
+                      - 25
+                      - 26
+                      - 27
+                      - 28
                     required: true
                   - name: msg
                     type: string
                     description: Human-readable error message
                     required: true
-                  - name: market_id
-                    type: string
-                    description: Market UUID if error is market-specific (optional)
-                    required: false
-                  - name: market_ticker
-                    type: string
-                    description: Market ticker if error is market-specific (optional)
-                    required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -1832,6 +1862,8 @@ operations:
             - msg
           properties:
             id: *ref_1
+            sid: *ref_3
+            seq: *ref_7
             type:
               type: string
               const: error
@@ -1857,8 +1889,6 @@ operations:
 
                     - 5: Unknown command - Invalid command name
 
-                    - 6: Already subscribed - Duplicate subscription attempt
-
                     - 7: Unknown subscription ID - Subscription ID not found
 
                     - 8: Unknown channel name - Invalid channel in subscribe
@@ -1881,10 +1911,6 @@ operations:
 
                     - 15: Action required - Missing action in
                     update_subscription
-
-                    - 16: Market not found - Invalid market_ticker or market_id
-
-                    - 17: Internal error - Server-side processing error
 
                     - 18: Command timeout - Server timed out while processing
                     command
@@ -1918,21 +1944,42 @@ operations:
                     - 28: Underlying tickers required - Missing
                     underlying_tickers for
                     subscribe_underlyings/unsubscribe_underlyings on pyth_value
-                  minimum: 1
-                  maximum: 28
+
+
+                    Codes 6, 16, and 17 are retired. The service no longer emits
+
+                    them and their numbers stay reserved.
+                  enum:
+                    - 1
+                    - 2
+                    - 3
+                    - 4
+                    - 5
+                    - 7
+                    - 8
+                    - 9
+                    - 10
+                    - 11
+                    - 12
+                    - 13
+                    - 14
+                    - 15
+                    - 18
+                    - 19
+                    - 20
+                    - 21
+                    - 22
+                    - 23
+                    - 24
+                    - 25
+                    - 26
+                    - 27
+                    - 28
                   x-parser-schema-id: <anonymous-schema-57>
                 msg:
                   type: string
                   description: Human-readable error message
                   x-parser-schema-id: <anonymous-schema-58>
-                market_id:
-                  type: string
-                  description: Market UUID if error is market-specific (optional)
-                  x-parser-schema-id: <anonymous-schema-59>
-                market_ticker:
-                  type: string
-                  description: Market ticker if error is market-specific (optional)
-                  x-parser-schema-id: <anonymous-schema-60>
               x-parser-schema-id: <anonymous-schema-56>
           x-parser-schema-id: errorResponsePayload
         title: Error Response
@@ -1942,8 +1989,8 @@ operations:
             "id": 123,
             "type": "error",
             "msg": {
-              "code": 6,
-              "msg": "Already subscribed"
+              "code": 7,
+              "msg": "Unknown subscription ID"
             }
           }
         bindings: []

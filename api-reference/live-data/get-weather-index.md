@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-weather-index
-lastmod: 2026-09-03T13:47:14.162Z
+lastmod: 2026-09-04T22:37:03.061Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -184,6 +184,15 @@ components:
           description: >-
             Number of accepted member stations backing the point. Absent on
             `incomplete` points.
+        receipt_basis:
+          type: string
+          description: >-
+            Present only on points produced by the labelled historical backfill
+            that seeds a city's series for the period before it went live.
+            `synoptic_latency` means the receipt-deadline test used
+            `observation_time + Synoptic ingest latency` in place of Kalshi's
+            local receipt clock. Absent on canonical points, which are the only
+            settlement-eligible ones.
         stations:
           type: array
           description: >-

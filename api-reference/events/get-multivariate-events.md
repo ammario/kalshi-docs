@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-multivariate-events
-lastmod: 2026-09-03T13:47:13.497Z
+lastmod: 2026-09-04T22:37:02.464Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -160,7 +160,6 @@ components:
         - title
         - collateral_return_type
         - mutually_exclusive
-        - available_on_brokers
         - settlement_sources
       properties:
         event_ticker:
@@ -215,12 +214,6 @@ components:
           items:
             $ref: '#/components/schemas/Market'
           x-go-type-skip-optional-pointer: true
-        available_on_brokers:
-          type: boolean
-          description: >-
-            Deprecated. No longer populated and always returns false; it will be
-            removed in a future release.
-          deprecated: true
         product_metadata:
           type: object
           nullable: true

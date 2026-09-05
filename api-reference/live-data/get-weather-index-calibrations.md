@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-weather-index-calibrations
-lastmod: 2026-09-03T13:47:14.170Z
+lastmod: 2026-09-04T22:37:03.069Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
