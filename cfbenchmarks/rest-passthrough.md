@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/cfbenchmarks/rest-passthrough
-lastmod: 2026-08-21T17:09:23.579Z
+lastmod: 2026-09-05T04:16:29.215Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,9 @@ lastmod: 2026-08-21T17:09:23.579Z
 
 The CF Benchmarks REST passthrough lets you query the [CF Benchmarks](https://www.cfbenchmarks.com) REST API using your existing Kalshi API credentials. Requests are authenticated the same way as any other Kalshi Trade API call, so you do not need a separate CF Benchmarks API key.
 
-Send a request to the `/cfbenchmarks` endpoint and the path and query string are forwarded to CF Benchmarks. The upstream response is returned wrapped in a standard Kalshi `data` envelope.
+Send a request to the `/cfbenchmarks` endpoint and the path and supported query parameters are forwarded to CF Benchmarks. The upstream response is returned wrapped in a standard Kalshi `data` envelope.
+
+The passthrough ignores `includeVerification`, regardless of its value, to avoid upstream verification timeouts. Optional on-chain verification data is not available through this endpoint. Other parameters, including `id` and `maxResolution`, are forwarded unchanged.
 
 ## Access
 
@@ -32,7 +34,7 @@ Use the production Trade API base URL (see [API Environments](/getting_started/a
 https://external-api.kalshi.com/trade-api/v2
 ```
 
-Everything after `/cfbenchmarks/`, including the query string, is forwarded to the CF Benchmarks REST API at `https://www.cfbenchmarks.com/api/v1/`.
+Everything after `/cfbenchmarks/`, including query parameters other than `includeVerification`, is forwarded to the CF Benchmarks REST API at `https://www.cfbenchmarks.com/api/v1/`.
 
 | Kalshi request                                  | Forwarded to                                         |
 | ----------------------------------------------- | ---------------------------------------------------- |
@@ -79,7 +81,7 @@ curl "https://external-api.kalshi.com/trade-api/v2/cfbenchmarks/history/values?i
   -H "KALSHI-ACCESS-TIMESTAMP: <timestamp-ms>"
 ```
 
-This forwards to `https://www.cfbenchmarks.com/api/v1/history/values` with the same query string. As with all passthrough requests, sign the path without the query string:
+This forwards to `https://www.cfbenchmarks.com/api/v1/history/values` with the same query parameters, except for `includeVerification`. As with all passthrough requests, sign the path without the query string:
 
 ```text theme={null}
 /trade-api/v2/cfbenchmarks/history/values
@@ -89,7 +91,7 @@ The history endpoint returns tick-level values, and some indices publish at intr
 
 ## Available Endpoints
 
-The passthrough forwards any path and query parameters supported by CF Benchmarks. For the list of available endpoints, supported parameters, and index identifiers (such as `BRTI`), refer to the official [CF Benchmarks API documentation](https://docs.cfbenchmarks.com/api/category/rest/).
+The passthrough forwards any path and query parameters supported by CF Benchmarks, except for `includeVerification`. For the list of available endpoints, supported parameters, and index identifiers (such as `BRTI`), refer to the official [CF Benchmarks API documentation](https://docs.cfbenchmarks.com/api/category/rest/).
 
 ## Error Handling
 
