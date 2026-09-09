@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-09-04T22:37:02.825Z
+lastmod: 2026-09-09T00:27:33.841Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-09-04T22:37:02.825Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.29.0
+  version: 3.30.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -131,6 +131,15 @@ components:
         target_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: The target cost for the RFQ in dollars
+          x-go-type-skip-optional-pointer: true
+        target_cost_excludes_fees:
+          type: boolean
+          description: >-
+            Sizes quotes against the target cost as principal only (contracts =
+            target cost / price), with your taker fees charged on top of the
+            target cost. By default (false) the target cost caps principal plus
+            Kalshi fees, and quote sizes are reduced to make room for the fees.
+            Only valid together with a target cost.
           x-go-type-skip-optional-pointer: true
         rest_remainder:
           type: boolean

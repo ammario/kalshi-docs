@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-08-19T20:15:03.629Z
+lastmod: 2026-09-08T18:23:50.573Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -80,22 +80,24 @@ This message is used bidirectionally:
 
 **Inside the `146=NoRelatedSym` group**
 
-| Tag   | Name            | Type    | Required | Description                                                                                                                                                                                                               |
-| ----- | --------------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 55    | Symbol          | String  | C        | Market ticker. Group delimiter — send it immediately after `146`. Required unless MVE legs are specified                                                                                                                  |
-| 38    | OrderQty        | Decimal | C        | Number of contracts as a fixed-point decimal. Supports `0.01`-contract increments (for example `5`, `5.00`, or `5.25`). Required unless CashOrderQty is specified. Acts as the delimiter on MVE requests, which omit `55` |
-| 152   | CashOrderQty    | Decimal | C        | Target cost in dollars. Required unless OrderQty is specified. Acts as the delimiter on MVE requests that size by cost                                                                                                    |
-| 21015 | RestRemainder   | Char    | N        | Y/N - Rest the quote remainder after execution (default: N)                                                                                                                                                               |
-| 21016 | ReplaceExisting | Char    | N        | Y/N - Close older RFQs while retaining the submitting subtrader's newest existing RFQ, keeping at most two open RFQs including this one (default: N)                                                                      |
-| 453   | NoPartyIDs      | Integer | N        | Nested repeating group. Number of parties (only 1 supported)                                                                                                                                                              |
-| 448   | PartyId         | String  | N        | FCM SubtraderId for the customer on whose behalf the RFQ is submitted                                                                                                                                                     |
-| 452   | PartyRole       | Integer | N        | 24 (CustomerAccount) - required when using PartyId                                                                                                                                                                        |
+| Tag   | Name                   | Type    | Required | Description                                                                                                                                                                                                                                                          |
+| ----- | ---------------------- | ------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 55    | Symbol                 | String  | C        | Market ticker. Group delimiter — send it immediately after `146`. Required unless MVE legs are specified                                                                                                                                                             |
+| 38    | OrderQty               | Decimal | C        | Number of contracts as a fixed-point decimal. Supports `0.01`-contract increments (for example `5`, `5.00`, or `5.25`). Required unless CashOrderQty is specified. Acts as the delimiter on MVE requests, which omit `55`                                            |
+| 152   | CashOrderQty           | Decimal | C        | Target cost in dollars. Required unless OrderQty is specified. Acts as the delimiter on MVE requests that size by cost                                                                                                                                               |
+| 21033 | TargetCostExcludesFees | Char    | N        | Y/N - Size quotes against CashOrderQty as principal only (contracts = cash / price), with your taker fees charged on top of the cash amount. Default (N) reserves fees inside the cash amount. Only `Y` enables the mode; `21033=Y` without CashOrderQty is rejected |
+| 21015 | RestRemainder          | Char    | N        | Y/N - Rest the quote remainder after execution (default: N)                                                                                                                                                                                                          |
+| 21016 | ReplaceExisting        | Char    | N        | Y/N - Close older RFQs while retaining the submitting subtrader's newest existing RFQ, keeping at most two open RFQs including this one (default: N)                                                                                                                 |
+| 453   | NoPartyIDs             | Integer | N        | Nested repeating group. Number of parties (only 1 supported)                                                                                                                                                                                                         |
+| 448   | PartyId                | String  | N        | FCM SubtraderId for the customer on whose behalf the RFQ is submitted                                                                                                                                                                                                |
+| 452   | PartyRole              | Integer | N        | 24 (CustomerAccount) - required when using PartyId                                                                                                                                                                                                                   |
 
 <Note>
   The delimiter is the first tag of a group entry: send `146`, then `55` for a symbol RFQ
-  or `38`/`152` for an MVE RFQ (which omits `55`). Note that `21015` and `21016` are
-  dropped without a reject if they land outside the group — a misplaced `21016` surfaces
-  later as `RFQ already exists` on the next request rather than as an error on this one.
+  or `38`/`152` for an MVE RFQ (which omits `55`). Note that `21015`, `21016`, and `21033`
+  are dropped without a reject if they land outside the group — a misplaced `21016` surfaces
+  later as `RFQ already exists` on the next request rather than as an error on this one, and
+  a misplaced `21033` silently produces default fee-inclusive sizing.
 
   The published [FIX dictionary](https://assets.kalshi.com/fix/kalshi-fix-dictionary.xml)
   lists `55` first, since a dictionary can only declare one delimiter per group. MVE
@@ -105,6 +107,15 @@ This message is used bidirectionally:
 
 <Info>
   **MVE/Parlay Support**: Instead of specifying a Symbol, you can submit MVE legs directly. The server will automatically resolve or create the parlay market and return the resolved market ticker in the QuoteRequestAck.
+</Info>
+
+<Info>
+  **CashOrderQty sizing**: By default the cash amount caps principal *plus* Kalshi
+  fees — quote sizes (BidSize/OfferSize) are the maximum contracts whose total
+  cost including your taker fee fits inside the cash amount, so your debit can
+  never exceed it. With `21033=Y` the cash amount is principal only: sizes are
+  `cash / price` and your taker fee is charged on top of the cash amount.
+  OrderQty-sized RFQs are never reduced for fees under either mode.
 </Info>
 
 ### Exchange → Market Maker (RFQ Notification)

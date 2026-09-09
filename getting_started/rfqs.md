@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-08-16T23:46:21.442Z
+lastmod: 2026-09-08T18:23:50.519Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -33,6 +33,13 @@ When creating an RFQ, the requester specifies size in exactly one of:
 
 * `contracts_fp`: number of contracts, including partial contracts in `0.01`-contract increments.
 * `target_cost_dollars`: dollar amount to spend. The exchange derives a contract count from the quote price, returned as `yes_contracts_fp` / `no_contracts_fp` on the quote.
+
+By default the target cost caps principal *plus* Kalshi fees: the derived
+contract count is the maximum whose total cost including your taker fee fits
+inside `target_cost_dollars`, so your debit can never exceed it. Set
+`target_cost_excludes_fees: true` to size as principal only — the count becomes
+`target_cost / price` and your taker fee is charged on top of the target cost.
+`contracts_fp`-sized RFQs are never reduced for fees under either mode.
 
 ## Quotes
 

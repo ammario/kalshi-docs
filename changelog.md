@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-04T22:37:10.107Z
+lastmod: 2026-09-08T18:23:50.576Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -37,6 +37,25 @@ description: "The deprecated available_on_brokers field is removed from event re
   * `GET /trade-api/v2/events`
   * `GET /trade-api/v2/events/multivariate`
   * `GET /trade-api/v2/events/{event_ticker}`
+</Update>
+
+<Update
+  label="September 10, 2026"
+  tags={["REST", "FIX", "Predictions"]}
+  rss={{
+title: "Principal-only sizing for target-cost RFQs",
+description: "CreateRFQ accepts target_cost_excludes_fees (FIX tag 21033) to size quotes as target cost divided by price, with taker fees charged on top instead of reserved inside the cash amount."
+}}
+>
+  Target-cost RFQs can now opt out of fee-inclusive sizing. By default the
+  target cost caps principal *plus* Kalshi fees, so derived quote sizes
+  (`yes_contracts_fp` / `no_contracts_fp`, FIX `BidSize`/`OfferSize`) are
+  reduced to keep your total debit inside the cash amount. Setting
+  `target_cost_excludes_fees: true` on `CreateRFQ` (or
+  `TargetCostExcludesFees(21033)=Y` inside the `NoRelatedSym` group on a FIX
+  QuoteRequest with `CashOrderQty(152)`) sizes quotes as principal only —
+  contracts = target cost / price — with your taker fee charged on top of
+  the target cost. The flag is rejected without a target cost.
 </Update>
 
 <Update

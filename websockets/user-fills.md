@@ -326,6 +326,7 @@ operations:
             "msg": {
               "trade_id": "d91bc706-ee49-470d-82d8-11418bda6fed",
               "order_id": "ee587a1c-8b87-4dcf-b721-9f6f790619fa",
+              "client_order_id": "my-order-1",
               "market_ticker": "HIGHNY-22DEC23-B53.5",
               "exchange_index": 2,
               "is_taker": true,
