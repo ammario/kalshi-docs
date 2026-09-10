@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/cfbenchmarks/rest-passthrough
-lastmod: 2026-09-05T04:16:29.215Z
+lastmod: 2026-09-09T16:10:57.365Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,20 @@ The passthrough ignores `includeVerification`, regardless of its value, to avoid
 ## Access
 
 The passthrough requires an authenticated Kalshi Trade API request, and it is available only to accounts with the appropriate entitlement. If you receive an authorization error and believe you should have access, contact Kalshi.
+
+## Coins and Index IDs
+
+Use CF Benchmarks index IDs in the `id` query parameter. The [coin and index ID table](/websockets/cfbenchmarks-value#coins-and-index-ids) includes BNB, HYPE, NEAR, ZEC, SUI, BCH, LTC, LINK, SHIB/kSHIB, ADA, WLD, AAVE, and VVV, as well as BTC, ETH, and other coins.
+
+For example, request BNB's latest value with:
+
+```text theme={null}
+GET /trade-api/v2/cfbenchmarks/values?id=BNBUSD_RTI
+```
+
+For kSHIB, use `id=SHIBUSD_RTI`. The response contains the raw USD price per SHIB; the passthrough does not scale it to kSHIB or a perpetual contract size.
+
+The REST passthrough forwards index IDs to CF Benchmarks without a Kalshi coin allowlist. Data availability depends on CF Benchmarks coverage and the access enabled for Kalshi's REST integration. The table is a reference for coin symbols, not an exhaustive list of REST indices. WebSocket `indexlist` results describe the corresponding WebSocket channel; they do not limit which indices you can request over REST.
 
 ## Rate limit
 

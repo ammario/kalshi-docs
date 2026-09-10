@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-08T18:23:50.576Z
+lastmod: 2026-09-09T02:53:05.794Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -56,6 +56,19 @@ description: "CreateRFQ accepts target_cost_excludes_fees (FIX tag 21033) to siz
   QuoteRequest with `CashOrderQty(152)`) sizes quotes as principal only —
   contracts = target cost / price — with your taker fee charged on top of
   the target cost. The flag is rejected without a target cost.
+</Update>
+
+<Update
+  label="September 10, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin taker-volume incentive programs",
+description: "GET /trade-api/v2/incentive_programs supports margin_taker_volume programs and their optional per-account reward cap."
+}}
+>
+  `GET /trade-api/v2/incentive_programs` now accepts
+  `type=margin_taker_volume`. These programs reward taker notional on Margin
+  markets and include the optional `max_reward_per_account` field.
 </Update>
 
 <Update

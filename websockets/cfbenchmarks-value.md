@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/cfbenchmarks-value
-lastmod: 2026-09-02T16:22:58.450Z
+lastmod: 2026-09-09T16:10:57.303Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,42 @@ lastmod: 2026-09-02T16:22:58.450Z
 
 > Real-time CF Benchmarks index value updates, each carrying the raw upstream frame plus trailing 60-second and quarter-hour final-minute averages. Requires authentication.
 
-**Requirements:**
+## Coins and index IDs
+
+Use the following CF Benchmarks index IDs to request coin data on this channel or through the [REST passthrough](/cfbenchmarks/rest-passthrough). The BTC and ETH examples on this page are illustrative; they are not the full list of coins.
+
+| Coin | CF Benchmarks index ID |
+|------|------------------------|
+| AAVE | `AAVEUSD_RTI` |
+| ADA | `ADAUSD_RTI` |
+| BCH | `BCHUSD_RTI` |
+| BNB | `BNBUSD_RTI` |
+| BTC | `BRTI` |
+| DOGE | `DOGEUSD_RTI` |
+| DOT | `DOTUSD_RTI` |
+| ETH | `ETHUSD_RTI` |
+| HBAR | `HBARUSD_RTI` |
+| HYPE | `HYPEUSD_RTI` |
+| LINK | `LINKUSD_RTI` |
+| LTC | `LTCUSD_RTI` |
+| NEAR | `NEARUSD_RTI` |
+| SHIB / kSHIB | `SHIBUSD_RTI` |
+| SOL | `SOLUSD_RTI` |
+| SUI | `SUIUSD_RTI` |
+| VVV | `VVVUSD_RTI` |
+| WLD | `WLDUSD_RTI` |
+| XLM | `XLMUSD_RTI` |
+| XRP | `XRPUSD_RTI` |
+| ZEC | `ZECUSD_RTI` |
+
+Pass the index ID exactly as shown, rather than a coin symbol or Kalshi market ticker. For kSHIB, request `SHIBUSD_RTI`: values are USD per SHIB and are not scaled to kSHIB or a perpetual contract size.
+
+Use the `indexlist` action below to check the index IDs available on your WebSocket connection. Availability can change; this table is a coin-to-index reference, not a guarantee that every index is streaming in every environment.
+
+The [5Hz feed](/websockets/cfbenchmarks-value-5hz) has a smaller coin set: BTC, ETH, SOL, XRP, and DOGE. Use `cfbenchmarks_value` for the other coins above.
+
+## Requirements
+
 - Authentication required
 - Index specification via `index_ids` (array of CF Benchmarks index IDs, for example `["BRTI", "ETHUSD_RTI"]`)
 - `market_ticker`/`market_tickers`/`market_id`/`market_ids` are not supported for this channel
@@ -22,12 +57,41 @@ lastmod: 2026-09-02T16:22:58.450Z
 
 **Use case:** Consuming CF Benchmarks reference index values and their short-window averages
 
-**Subscription workflow:**
+## Subscription workflow
+
 1. Subscribe to `cfbenchmarks_value` (optionally seeding `index_ids`). A successful subscribe returns a `subscribed` response with the assigned `sid`.
 2. Discover available index IDs with the `indexlist` action; the server replies with a `cfbenchmarks_value_indexlist` message.
 3. Add or remove tracked index IDs with `subscribe_indices` / `unsubscribe_indices`, or use `index_ids: ["all"]` to track everything.
 
-**Averaging semantics:**
+For example, subscribe to BNB, HYPE, and SHIB values:
+
+```json
+{
+  "id": 1,
+  "cmd": "subscribe",
+  "params": {
+    "channels": ["cfbenchmarks_value"],
+    "index_ids": ["BNBUSD_RTI", "HYPEUSD_RTI", "SHIBUSD_RTI"]
+  }
+}
+```
+
+To discover the available indices, send the following after the `subscribed` response. Replace `sid: 1` with the subscription ID returned by the server:
+
+```json
+{
+  "id": 2,
+  "cmd": "update_subscription",
+  "params": {
+    "sid": 1,
+    "action": "indexlist"
+  }
+}
+```
+
+Read the available IDs from `msg.index_ids` in the `cfbenchmarks_value_indexlist` response. This lists the channel's available indices without changing which ones you subscribe to. A successful `subscribe` response alone does not confirm that a requested index is available.
+
+## Averaging semantics
 
 `avg_60s_data` (always present):
 - Window is trailing and per tick: `[source_ts_ms - 60000, source_ts_ms)`
@@ -40,7 +104,8 @@ lastmod: 2026-09-02T16:22:58.450Z
 - This produces second-indexed counts: `:01 -> 1`, `:14 -> 14`, `:59 -> 59`, close tick (`:00/:15/:30/:45`) -> `60`
 - The field is omitted outside that final-minute window
 
-**Integration notes:**
+## Integration notes
+
 - If you subscribe without any `index_ids`, no value events flow until you add indices or switch to `["all"]`
 - `sid` identifies the subscription stream; use it for `update_subscription` and `unsubscribe`
 - Missing `index_ids` for `subscribe_indices`/`unsubscribe_indices` returns an `error` with `code: 24` ("Index IDs required"); unsupported actions return a standard websocket `error`
@@ -60,7 +125,79 @@ description: >
   authentication.
 
 
-  **Requirements:**
+  ## Coins and index IDs
+
+
+  Use the following CF Benchmarks index IDs to request coin data on this channel
+  or through the [REST passthrough](/cfbenchmarks/rest-passthrough). The BTC and
+  ETH examples on this page are illustrative; they are not the full list of
+  coins.
+
+
+  | Coin | CF Benchmarks index ID |
+
+  |------|------------------------|
+
+  | AAVE | `AAVEUSD_RTI` |
+
+  | ADA | `ADAUSD_RTI` |
+
+  | BCH | `BCHUSD_RTI` |
+
+  | BNB | `BNBUSD_RTI` |
+
+  | BTC | `BRTI` |
+
+  | DOGE | `DOGEUSD_RTI` |
+
+  | DOT | `DOTUSD_RTI` |
+
+  | ETH | `ETHUSD_RTI` |
+
+  | HBAR | `HBARUSD_RTI` |
+
+  | HYPE | `HYPEUSD_RTI` |
+
+  | LINK | `LINKUSD_RTI` |
+
+  | LTC | `LTCUSD_RTI` |
+
+  | NEAR | `NEARUSD_RTI` |
+
+  | SHIB / kSHIB | `SHIBUSD_RTI` |
+
+  | SOL | `SOLUSD_RTI` |
+
+  | SUI | `SUIUSD_RTI` |
+
+  | VVV | `VVVUSD_RTI` |
+
+  | WLD | `WLDUSD_RTI` |
+
+  | XLM | `XLMUSD_RTI` |
+
+  | XRP | `XRPUSD_RTI` |
+
+  | ZEC | `ZECUSD_RTI` |
+
+
+  Pass the index ID exactly as shown, rather than a coin symbol or Kalshi market
+  ticker. For kSHIB, request `SHIBUSD_RTI`: values are USD per SHIB and are not
+  scaled to kSHIB or a perpetual contract size.
+
+
+  Use the `indexlist` action below to check the index IDs available on your
+  WebSocket connection. Availability can change; this table is a coin-to-index
+  reference, not a guarantee that every index is streaming in every environment.
+
+
+  The [5Hz feed](/websockets/cfbenchmarks-value-5hz) has a smaller coin set:
+  BTC, ETH, SOL, XRP, and DOGE. Use `cfbenchmarks_value` for the other coins
+  above.
+
+
+  ## Requirements
+
 
   - Authentication required
 
@@ -91,7 +228,8 @@ description: >
   short-window averages
 
 
-  **Subscription workflow:**
+  ## Subscription workflow
+
 
   1. Subscribe to `cfbenchmarks_value` (optionally seeding `index_ids`). A
   successful subscribe returns a `subscribed` response with the assigned `sid`.
@@ -103,7 +241,48 @@ description: >
   `unsubscribe_indices`, or use `index_ids: ["all"]` to track everything.
 
 
-  **Averaging semantics:**
+  For example, subscribe to BNB, HYPE, and SHIB values:
+
+
+  ```json
+
+  {
+    "id": 1,
+    "cmd": "subscribe",
+    "params": {
+      "channels": ["cfbenchmarks_value"],
+      "index_ids": ["BNBUSD_RTI", "HYPEUSD_RTI", "SHIBUSD_RTI"]
+    }
+  }
+
+  ```
+
+
+  To discover the available indices, send the following after the `subscribed`
+  response. Replace `sid: 1` with the subscription ID returned by the server:
+
+
+  ```json
+
+  {
+    "id": 2,
+    "cmd": "update_subscription",
+    "params": {
+      "sid": 1,
+      "action": "indexlist"
+    }
+  }
+
+  ```
+
+
+  Read the available IDs from `msg.index_ids` in the
+  `cfbenchmarks_value_indexlist` response. This lists the channel's available
+  indices without changing which ones you subscribe to. A successful `subscribe`
+  response alone does not confirm that a requested index is available.
+
+
+  ## Averaging semantics
 
 
   `avg_60s_data` (always present):
@@ -130,7 +309,8 @@ description: >
   - The field is omitted outside that final-minute window
 
 
-  **Integration notes:**
+  ## Integration notes
+
 
   - If you subscribe without any `index_ids`, no value events flow until you add
   indices or switch to `["all"]`

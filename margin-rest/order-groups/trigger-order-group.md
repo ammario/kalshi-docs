@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/order-groups/trigger-order-group
-lastmod: 2026-09-09T00:27:34.466Z
+lastmod: 2026-09-09T02:52:58.968Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
