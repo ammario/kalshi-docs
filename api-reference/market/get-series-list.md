@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-series-list
-lastmod: 2026-09-09T02:52:57.847Z
+lastmod: 2026-09-11T01:40:52.853Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -75,6 +75,11 @@ paths:
         - name: category
           in: query
           required: false
+          description: >-
+            Return series whose `categories` list contains this value. A series
+            can have more than one discovery category, so the `category` field
+            of a returned series (its primary category) may differ from the
+            filter value. Matching is exact and case-sensitive.
           schema:
             type: string
           x-go-type-skip-optional-pointer: true
@@ -139,6 +144,7 @@ components:
         - frequency
         - title
         - category
+        - categories
         - tags
         - settlement_sources
         - contract_url
@@ -164,7 +170,15 @@ components:
             series.
         category:
           type: string
-          description: Category specifies the category which this series belongs to.
+          description: Category is the primary category of this series.
+        categories:
+          type: array
+          items:
+            type: string
+          description: >-
+            Categories is the list of discovery categories for this series. The
+            `category` filter on Get Series List matches any entry in this list.
+            May be empty.
         tags:
           type: array
           nullable: true

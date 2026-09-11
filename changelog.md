@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-09T02:53:05.794Z
+lastmod: 2026-09-11T01:41:01.323Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,71 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="September 17, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Series responses include a categories list",
+description: "GET /trade-api/v2/series and GET /trade-api/v2/series/{series_ticker} now return a categories list; the category filter matches any entry in that list."
+}}
+>
+  Series objects now include `categories`, the list of discovery categories
+  for a series. The existing `category` field is the series' primary
+  category. The `category` filter on `GET /trade-api/v2/series` matches any
+  entry in `categories`, so a series returned for `category=Commodities` can
+  show a different primary `category`.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/series`
+  * `GET /trade-api/v2/series/{series_ticker}`
+</Update>
+
+<Update
+  label="September 17, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "Returning to idiomatic MVE series",
+description: "As of the September 17th maintenance window, new combos will be created on KXMVECROSSCATEGORY, and Football combos on KXMVECROSSCATEGORY0."
+}}
+>
+  As of the September 17th maintenance window, new combos will be created on the
+  `KXMVECROSSCATEGORY` series, and Football combos on the
+  `KXMVECROSSCATEGORY0` series.
+
+  **Notes**
+
+  * The exchange shard (1) is staying the same.
+  * No existing tickers are changed.
+</Update>
+
+<Update
+  label="September 17, 2026"
+  tags={["WebSocket", "Predictions", "Margin"]}
+  rss={{
+title: "WebSocket subscriptions are ready when acknowledged",
+description: "Fixes a race that could skip the first event after a subscription acknowledgement."
+}}
+>
+  Fixed a race that could skip events arriving immediately after a `subscribed`
+  response, including on the `cfbenchmarks_value_5hz` channel. The acknowledgement
+  continues to precede subscription data.
+</Update>
+
+<Update
+  label="September 17, 2026"
+  tags={["REST", "FIX", "Predictions"]}
+  rss={{
+title: "RFQ and quote writes share the shard 1 rate-limit budget",
+description: "RFQ and quote mutations across REST and FIX consume the shard 1 Write budget instead of the unscoped Write budget."
+}}
+>
+  RFQ and quote creation/cancellation, quote acceptance/confirmation, and
+  FIX New Order Single (`35=D`) carrying `QuoteID` now consume the shard 1
+  Write budget, shared with shard 1 order writes. Endpoint costs and Read
+  budgets are unchanged. No `exchange_index` or `ExDestination` is required.
+</Update>
 
 <Update
   label="September 10, 2026"

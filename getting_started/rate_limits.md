@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-08-24T22:53:10.586Z
+lastmod: 2026-09-10T18:00:08.543Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -32,7 +32,8 @@ The split is by operation type, not by protocol. REST and FIX requests drain the
 A single order write that explicitly targets an [exchange shard](/getting_started/exchange_sharding) draws from a Write bucket scoped to that shard, and each shard's bucket carries your full tier budget:
 
 * **Single REST** order creates, cancels, decreases, and amends: `exchange_index >= 1` is billed to that shard's Write bucket. Shard 0 traffic (`exchange_index: 0`) bills your unscoped Write bucket. Auto-routed traffic (`exchange_index: -1`, or omitted when `market_ticker` is provided) is billed to every shard's Write bucket.
-* **FIX** New Order Single (35=D), Order Cancel Request (35=F), and Order Cancel/Replace Request (35=G): `ExDestination` (tag 100) with a value `>= 1` is billed to that shard's Write bucket. Messages without tag 100, or with `0` or `-1`, are billed to your unscoped Write bucket. RFQ quote accepts (35=D carrying `QuoteID`) always bill the unscoped Write bucket.
+* **FIX** New Order Single (35=D), Order Cancel Request (35=F), and Order Cancel/Replace Request (35=G): `ExDestination` (tag 100) with a value `>= 1` is billed to that shard's Write bucket. Messages without tag 100, or with `0` or `-1`, are billed to your unscoped Write bucket.
+* **RFQ and quote writes** across REST and FIX bill the shard 1 Write bucket, sharing its budget with shard 1 order writes. This includes RFQ and quote creation/cancellation, quote acceptance/confirmation, and FIX New Order Single (`35=D`) carrying `QuoteID`. No `exchange_index` or `ExDestination` is required.
 * **Batch REST** creates and cancels always bill their total per-order cost to your unscoped Write bucket, regardless of `exchange_index`.
 
 Read budgets are not shard-scoped.

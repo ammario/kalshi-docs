@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/set-target-balance-allocation
-lastmod: 2026-09-09T02:52:58.582Z
+lastmod: 2026-09-11T01:40:53.645Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
