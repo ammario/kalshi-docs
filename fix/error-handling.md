@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/error-handling
-lastmod: 2026-06-03T22:14:14.117Z
+lastmod: 2026-09-11T14:25:28.103Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -16,6 +16,8 @@ Kalshi FIX API uses standard FIX error messages with additional detail in the Te
 
 * **Session-level errors**: Protocol violations, handled with Reject (35=3)
 * **Business-level errors**: Application logic issues, handled with BusinessMessageReject (35=j) or specific rejection messages
+
+A rejected Logon is returned as Logout (`35=5`). See [Reconnecting](/fix/authentication#reconnecting) for retry guidance.
 
 ## Error Message Types
 

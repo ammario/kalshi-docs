@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exit-triggers/get-isolated-exit-triggers
-lastmod: 2026-09-11T01:40:54.084Z
+lastmod: 2026-09-11T16:39:45.273Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

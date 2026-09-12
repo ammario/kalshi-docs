@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-11T01:41:01.323Z
+lastmod: 2026-09-11T16:39:52.324Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,20 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="September 17, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Target balance allocations include their reservation policy",
+description: "GET /trade-api/v2/portfolio/target_balance_allocation now returns resting_margin_reservation."
+}}
+>
+  `GET /trade-api/v2/portfolio/target_balance_allocation` now returns
+  `resting_margin_reservation` (`max` or `sum`), including when allocations are empty.
+  Clients can preserve the current resting-order collateral reservation policy when
+  updating target allocations or stopping automatic rebalancing.
+</Update>
 
 <Update
   label="September 17, 2026"
@@ -83,6 +97,20 @@ description: "RFQ and quote mutations across REST and FIX consume the shard 1 Wr
   FIX New Order Single (`35=D`) carrying `QuoteID` now consume the shard 1
   Write budget, shared with shard 1 order writes. Endpoint costs and Read
   budgets are unchanged. No `exchange_index` or `ExDestination` is required.
+</Update>
+
+<Update
+  label="September 10, 2026"
+  tags={["REST", "FIX", "Margin"]}
+  rss={{
+title: "Per-shard margin order rate limits",
+description: "Margin creates and amends use ticker-selected shard budgets."
+}}
+>
+  Margin creates and amends now use per-shard Write budgets, shared across the API
+  and FIX and selected automatically from `ticker` or `Symbol` (tag 55).
+  If the ticker's shard cannot be resolved, the request uses the default margin
+  Write budget.
 </Update>
 
 <Update
