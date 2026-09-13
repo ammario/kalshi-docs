@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exit-triggers/update-cross-exit-trigger
-lastmod: 2026-09-11T16:39:45.343Z
+lastmod: 2026-09-12T21:39:31.610Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

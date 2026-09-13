@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/create-api-key
-lastmod: 2026-09-11T16:39:44.370Z
+lastmod: 2026-09-12T21:39:31.070Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -161,9 +161,11 @@ components:
           nullable: true
           description: >-
             Present only when the minted key is bound to an FCM subtrader that
-            has no initial-margin cap at any scope. The mint still succeeds;
-            once SMA enforcement is enabled, the subtrader's orders will be
-            rejected until a cap is set.
+            is missing a per-subtrader risk control - the initial-margin cap
+            (margin lane) or the event-contract daily cap. The mint still
+            succeeds; the warning names each missing control and the rejection
+            the subtrader's orders will receive on that lane once its
+            enforcement applies.
     ApiKeyScope:
       type: string
       enum:

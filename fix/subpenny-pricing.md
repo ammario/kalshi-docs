@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/subpenny-pricing
-lastmod: 2026-08-04T00:52:32.818Z
+lastmod: 2026-09-13T00:51:17.166Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,8 +22,12 @@ To enable subpenny precision, include tag **21005** in your Logon message:
 
 Overview:
 
-* **Legacy Format (Cents)**: Prices given in whole cents. E.g. 72 cents = `72`.
+* **Legacy Format (Cents)**: Used when `UseDollars(21005)` is omitted or `N`. Prices given in whole cents. E.g. 72 cents = `72`.
 * **New Format (Dollars)**: Prices normalized to dollars with fixed precision (up to 4 decimal places).
+
+<Note>
+  In legacy cents mode, fractional `Price(44)` input is currently truncated when parsing the order. For example, `44=50.5` submits a 50-cent limit price. To submit 50.5 cents, set `21005=Y` at Logon and send `44=0.5050`.
+</Note>
 
 Examples:
 
