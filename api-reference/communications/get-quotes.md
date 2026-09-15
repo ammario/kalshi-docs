@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2026-09-12T21:39:31.008Z
+lastmod: 2026-09-14T19:37:19.358Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-09-12T21:39:31.008Z
 
 # Get Quotes
 
->  Endpoint for getting quotes
+> List quotes. The rfq_id filter requires an RFQ UUID. Pass pagination cursors back unchanged; malformed RFQ IDs or cursors return HTTP 400.
 
 
 
@@ -69,7 +69,9 @@ paths:
       tags:
         - communications
       summary: Get Quotes
-      description: ' Endpoint for getting quotes'
+      description: >-
+        List quotes. The rfq_id filter requires an RFQ UUID. Pass pagination
+        cursors back unchanged; malformed RFQ IDs or cursors return HTTP 400.
       operationId: GetQuotes
       parameters:
         - $ref: '#/components/parameters/CursorQuery'
@@ -148,7 +150,9 @@ paths:
             x-go-type-skip-optional-pointer: true
         - name: rfq_id
           in: query
-          description: Filter quotes by RFQ ID
+          description: >-
+            Filter quotes by RFQ UUID. Pass the RFQ ID unchanged; malformed IDs
+            return HTTP 400.
           schema:
             type: string
             x-go-type-skip-optional-pointer: true
@@ -159,6 +163,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetQuotesResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '500':
@@ -220,10 +226,10 @@ components:
       properties:
         id:
           type: string
-          description: Unique identifier for the quote
+          description: UUID of the quote. Preserve the exact returned string.
         rfq_id:
           type: string
-          description: ID of the RFQ this quote is responding to
+          description: UUID of the RFQ this quote is responding to.
         creator_id:
           type: string
           description: Public communications ID of the quote creator
@@ -366,6 +372,12 @@ components:
         level structure.
       example: '0.5600'
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:

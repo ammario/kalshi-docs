@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/accept-quote
-lastmod: 2026-09-12T21:39:31.050Z
+lastmod: 2026-09-14T19:37:19.394Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -107,7 +107,9 @@ components:
       name: quote_id
       in: path
       required: true
-      description: Quote ID
+      description: >-
+        Quote UUID. Pass the ID exactly as received when the quote was created;
+        malformed IDs return HTTP 400.
       schema:
         type: string
   schemas:

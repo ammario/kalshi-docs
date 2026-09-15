@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfqs
-lastmod: 2026-09-12T21:39:30.956Z
+lastmod: 2026-09-14T19:37:19.291Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-09-12T21:39:30.956Z
 
 # Get RFQs
 
->  Endpoint for getting RFQs
+> List RFQs. Pass pagination cursors back unchanged. A malformed cursor or invalid creator_user_id UUID returns HTTP 400. Use user_filter=self to filter by the authenticated user.
 
 
 
@@ -69,7 +69,10 @@ paths:
       tags:
         - communications
       summary: Get RFQs
-      description: ' Endpoint for getting RFQs'
+      description: >-
+        List RFQs. Pass pagination cursors back unchanged. A malformed cursor or
+        invalid creator_user_id UUID returns HTTP 400. Use user_filter=self to
+        filter by the authenticated user.
       operationId: GetRFQs
       parameters:
         - $ref: '#/components/parameters/CursorQuery'
@@ -94,7 +97,9 @@ paths:
             type: string
         - name: creator_user_id
           in: query
-          description: Filter RFQs by creator user ID
+          description: >-
+            Filter RFQs by creator user UUID. Use user_filter=self for the
+            authenticated user.
           deprecated: true
           schema:
             type: string
@@ -113,6 +118,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetRFQsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '500':
@@ -191,7 +198,7 @@ components:
       properties:
         id:
           type: string
-          description: Unique identifier for the RFQ
+          description: UUID of the RFQ. Preserve the exact returned string.
         creator_id:
           type: string
           description: Public communications ID of the RFQ creator.
@@ -309,6 +316,12 @@ components:
             The settlement value of the YES/LONG side of the contract in
             dollars. Only filled after determination
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:

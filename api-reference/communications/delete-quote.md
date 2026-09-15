@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-quote
-lastmod: 2026-09-12T21:39:31.027Z
+lastmod: 2026-09-14T19:37:19.385Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -86,6 +86,8 @@ paths:
       responses:
         '204':
           description: Quote deleted successfully
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
@@ -103,10 +105,18 @@ components:
       name: quote_id
       in: path
       required: true
-      description: Quote ID
+      description: >-
+        Quote UUID. Pass the ID exactly as received when the quote was created;
+        malformed IDs return HTTP 400.
       schema:
         type: string
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:

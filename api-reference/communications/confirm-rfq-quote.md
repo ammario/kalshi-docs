@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/confirm-rfq-quote
-lastmod: 2026-09-12T21:39:31.002Z
+lastmod: 2026-09-14T19:37:19.350Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,9 @@ lastmod: 2026-09-12T21:39:31.002Z
 
 >  Endpoint for confirming a quote scoped to its RFQ. This will start a timer for order execution.
 
+<Note>
+  Rate limits are more favorable when providing the RFQ ID.
+</Note>
 
 
 ## OpenAPI
@@ -83,6 +86,8 @@ paths:
       responses:
         '204':
           description: Quote confirmed successfully
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
@@ -99,14 +104,18 @@ components:
       name: rfq_id
       in: path
       required: true
-      description: RFQ ID
+      description: >-
+        RFQ UUID returned when the RFQ was created. Pass it unchanged; malformed
+        IDs return HTTP 400.
       schema:
         type: string
     QuoteIdPath:
       name: quote_id
       in: path
       required: true
-      description: Quote ID
+      description: >-
+        Quote UUID. Pass the ID exactly as received when the quote was created;
+        malformed IDs return HTTP 400.
       schema:
         type: string
   schemas:
@@ -126,6 +135,12 @@ components:
           type: string
           description: Additional details about the error, if available
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:

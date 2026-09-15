@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/common-components
-lastmod: 2026-08-17T16:54:50.401Z
+lastmod: 2026-09-14T18:17:55.109Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -85,11 +85,13 @@ Every FIX message ends with:
 
 #### Drop Copy
 
-| MsgType | Name                | Sessions | Direction        |
-| ------- | ------------------- | -------- | ---------------- |
-| U1      | EventResendRequest  | KalshiDC | Client -> Server |
-| U2      | EventResendComplete | KalshiDC | Server -> Client |
-| U3      | EventResendReject   | KalshiDC | Server -> Client |
+| MsgType | Name                | Sessions           | Direction        |
+| ------- | ------------------- | ------------------ | ---------------- |
+| U1      | EventResendRequest  | KalshiNR, KalshiDC | Client -> Server |
+| U2      | EventResendComplete | KalshiNR, KalshiDC | Server -> Client |
+| U3      | EventResendReject   | KalshiNR, KalshiDC | Server -> Client |
+
+Historical replay on both `KalshiNR` and `KalshiDC` requires [allowlisting](/fix/drop-copy) for your user account. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to request access.
 
 After an EventResendRequest, the server replays the matching historical order updates as ExecutionReport (35=8) messages and then sends EventResendComplete (35=U2) or EventResendReject (35=U3).
 

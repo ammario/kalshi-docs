@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-09-14T03:27:12.817Z
+lastmod: 2026-09-14T17:18:24.856Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -28,7 +28,7 @@ Used to submit a new order to the Exchange.
 | 59    | TimeInForce             | Char         | N        | `0`=Day (expires 11:59:59.999pm ET), `1`=GTC, `3`=IOC, `4`=FOK, `6`=GTD. Past GTD dates are treated as IOC.                                                                                     |
 | 126   | ExpireTime              | UTCTimestamp | C        | Required when TimeInForce=GTD.                                                                                                                                                                  |
 | 117   | QuoteId                 | UUID         | N        | Quote to accept when using NewOrderSingle for an RFQ quote acceptance.                                                                                                                          |
-| 448   | PartyID                 | UUID         | N        | FCM only. Sub-account identifier.                                                                                                                                                               |
+| 448   | PartyID                 | String       | N        | FCM only. Full customer-account identifier in `<fcm_user_id>_<suffix>` format. See [FCM customer-account identifiers](#fcm-customer-account-identifiers).                                       |
 | 452   | PartyRole               | Integer      | N        | FCM only. `24`=Customer Account. Required when using PartyID.                                                                                                                                   |
 | 453   | NoPartyIDs              | Integer      | N        | FCM only. Number of parties (only 1 supported).                                                                                                                                                 |
 | 79    | AllocAccount            | Integer      | N        | Subaccount number (0–63). Alternative to NoPartyIDs.                                                                                                                                            |
@@ -37,6 +37,14 @@ Used to submit a new order to the Exchange.
 | 21006 | CancelOrderOnPause      | Boolean      | N        | Cancel order if trading is paused.                                                                                                                                                              |
 | 21009 | MaxExecutionCost        | Decimal      | N        | Max execution cost in dollars. Order canceled if unable to fill within cost.                                                                                                                    |
 | 21023 | RfqId                   | UUID         | N        | Server-assigned RFQ ID when using NewOrderSingle to accept an RFQ quote. If provided, the quote must belong to this RFQ.                                                                        |
+
+### FCM customer-account identifiers
+
+For FCM customer accounts (`PartyRole<452>=24`), send the full subtrader identifier in `PartyID<448>`: `<fcm_user_id>_<suffix>`. The prefix is the FCM's 36-character UUID, followed by an underscore (`_`) delimiter and a suffix of 1–16 lowercase alphanumeric characters (`a-z`, `0-9`). The full identifier is at most 53 characters, including the delimiter.
+
+For example: `550e8400-e29b-41d4-a716-446655440000_customer1`.
+
+Order Cancel and Order Cancel/Replace requests must use the same full identifier as the original order. Execution Reports return the full customer-account identifier unchanged in the `PartyRole=24` entry, including the UUID prefix, underscore, and suffix. A `PartyRole=12` entry instead contains the operator identifier captured from `SenderSubID<50>`.
 
 <Note>
   `SenderSubID<50>` is captured on an ordinary NewOrderSingle and, per action, on OrderCancelRequest and OrderCancelReplaceRequest; it is ignored on RFQ quote acceptance. The operator on a NewOrderSingle sticks to the order: fills and other lifecycle reports emit it as the PartyRole=12 party. Cancel and Cancel/Replace acknowledgements instead emit the operator sent on that request — the operator who performed the action — falling back to the order's creating operator when the request carried none. Do not send tag 50 on Logon: Kalshi rejects that Logon.
@@ -71,7 +79,7 @@ Used to modify an existing order without canceling it.
 | 54  | Side          | Char    | Y        | Must match original order.                                                                                                                                                                 |
 | 55  | Symbol        | String  | Y        | Must match original order.                                                                                                                                                                 |
 | 100 | ExDestination | Integer | N        | Exchange index. On event-contract sessions, omit or use `-1` to auto-route by `Symbol`. Margined sessions always route to index `0`. `UseCapReservation` (21032) sessions must auto-route. |
-| 448 | PartyID       | UUID    | N        | FCM only. Must match original order.                                                                                                                                                       |
+| 448 | PartyID       | String  | N        | FCM only. Full [customer-account identifier](#fcm-customer-account-identifiers); must match the original order.                                                                            |
 | 452 | PartyRole     | Integer | N        | FCM only. `24`=Customer Account. Must match original order. Required when using PartyID.                                                                                                   |
 | 453 | NoPartyIDs    | Integer | N        | FCM only. Must match original order (only 1 supported).                                                                                                                                    |
 | 79  | AllocAccount  | Integer | N        | Subaccount number (0–63). Must match original order.                                                                                                                                       |
@@ -89,7 +97,7 @@ Cancel all remaining quantity of an existing order.
 | 54  | Side          | Char    | Y        | Must match original order.                                                                                                                                                   |
 | 55  | Symbol        | String  | Y        | Must match the original order. Required for auto-routing.                                                                                                                    |
 | 100 | ExDestination | Integer | N        | Exchange index. On event-contract sessions, omit or use `-1` to auto-route by `Symbol<55>`, which is required for auto-routing. Margined sessions always route to index `0`. |
-| 448 | PartyID       | UUID    | N        | FCM only. Must match original order.                                                                                                                                         |
+| 448 | PartyID       | String  | N        | FCM only. Full [customer-account identifier](#fcm-customer-account-identifiers); must match the original order.                                                              |
 | 452 | PartyRole     | Integer | N        | FCM only. `24`=Customer Account. Must match original order. Required when using PartyID.                                                                                     |
 | 453 | NoPartyIDs    | Integer | N        | FCM only. Must match original order (only 1 supported).                                                                                                                      |
 | 79  | AllocAccount  | Integer | N        | Subaccount number (0–63). Must match original order.                                                                                                                         |
@@ -120,7 +128,7 @@ Sent by the exchange to reflect order state changes.
 | 126 | ExpireTime           | UTCTimestamp | C        | Expiration timestamp. 11:59pm ET for Day orders.                                                                                                                                                                                                                                                                          |
 | 150 | ExecType             | Char         | Y        | Report reason. See Execution Types below.                                                                                                                                                                                                                                                                                 |
 | 151 | LeavesQty            | Decimal      | Y        | Remaining quantity open for execution.                                                                                                                                                                                                                                                                                    |
-| 448 | PartyID              | String       | N        | FCM only. Customer-account identifier or the operator captured from SenderSubID.                                                                                                                                                                                                                                          |
+| 448 | PartyID              | String       | N        | FCM only. For `PartyRole=24`, the full customer-account identifier is returned unchanged, including the UUID prefix, underscore, and suffix. For `PartyRole=12`, the operator identifier captured from SenderSubID (50).                                                                                                  |
 | 452 | PartyRole            | Integer      | N        | FCM only. `24`=Customer Account, `12`=Executing Trader. Present when PartyID is present.                                                                                                                                                                                                                                  |
 | 453 | NoPartyIDs           | Integer      | N        | FCM only. Number of parties. Up to 2 when both customer account and operator are present.                                                                                                                                                                                                                                 |
 | 79  | AllocAccount         | Integer      | C        | Subaccount number (0–63). Present if order was placed for a subaccount.                                                                                                                                                                                                                                                   |

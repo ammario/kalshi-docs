@@ -349,6 +349,7 @@ operations:
                     enumValues:
                       - add_markets
                       - delete_markets
+                      - get_snapshot
                     required: true
         headers: []
         jsonPayloadSchema: &ref_4
@@ -395,6 +396,7 @@ operations:
                   enum:
                     - add_markets
                     - delete_markets
+                    - get_snapshot
                   x-parser-schema-id: <anonymous-schema-18>
               x-parser-schema-id: <anonymous-schema-13>
           x-parser-schema-id: updateSubscriptionCommandPayload
@@ -466,6 +468,7 @@ operations:
                     enumValues:
                       - add_markets
                       - delete_markets
+                      - get_snapshot
                     required: true
         headers: []
         jsonPayloadSchema: *ref_4
@@ -537,6 +540,7 @@ operations:
                     enumValues:
                       - add_markets
                       - delete_markets
+                      - get_snapshot
                     required: true
         headers: []
         jsonPayloadSchema: *ref_4
@@ -562,14 +566,14 @@ operations:
             description: Confirmation that subscription was successful
             type: object
             properties:
-              - name: id
-                type: integer
-                description: Unique ID of a command within a WebSocket session
-                required: false
               - name: type
                 type: string
                 description: subscribed
                 required: true
+              - name: id
+                type: integer
+                description: Unique ID of a command within a WebSocket session
+                required: false
               - name: msg
                 type: object
                 required: true
@@ -588,11 +592,11 @@ operations:
             - type
             - msg
           properties:
-            id: *ref_0
             type:
               type: string
               const: subscribed
               x-parser-schema-id: <anonymous-schema-20>
+            id: *ref_0
             msg:
               type: object
               required:
@@ -609,8 +613,8 @@ operations:
         description: Confirmation that subscription was successful
         example: |-
           {
-            "id": 123,
             "type": "<string>",
+            "id": 123,
             "msg": {
               "channel": "<string>",
               "sid": 123
@@ -635,6 +639,10 @@ operations:
             description: Confirmation that unsubscription was successful
             type: object
             properties:
+              - name: type
+                type: string
+                description: unsubscribed
+                required: true
               - name: id
                 type: integer
                 description: Unique ID of a command within a WebSocket session
@@ -647,10 +655,6 @@ operations:
                 type: integer
                 description: Sequence number used for snapshot/delta consistency
                 required: true
-              - name: type
-                type: string
-                description: unsubscribed
-                required: true
         headers: []
         jsonPayloadSchema:
           type: object
@@ -659,6 +663,10 @@ operations:
             - seq
             - type
           properties:
+            type:
+              type: string
+              const: unsubscribed
+              x-parser-schema-id: <anonymous-schema-23>
             id: *ref_0
             sid: *ref_2
             seq: &ref_5
@@ -666,19 +674,15 @@ operations:
               minimum: 1
               description: Sequence number used for snapshot/delta consistency
               x-parser-schema-id: sequenceNumber
-            type:
-              type: string
-              const: unsubscribed
-              x-parser-schema-id: <anonymous-schema-23>
           x-parser-schema-id: unsubscribedResponsePayload
         title: Unsubscribed Response
         description: Confirmation that unsubscription was successful
         example: |-
           {
+            "type": "<string>",
             "id": 123,
             "sid": 123,
-            "seq": 123,
-            "type": "<string>"
+            "seq": 123
           }
         bindings: []
         extensions:
@@ -699,6 +703,10 @@ operations:
             description: Successful update operation response
             type: object
             properties:
+              - name: type
+                type: string
+                description: ok
+                required: true
               - name: id
                 type: integer
                 description: Unique ID of a command within a WebSocket session
@@ -711,10 +719,6 @@ operations:
                 type: integer
                 description: Sequence number used for snapshot/delta consistency
                 required: false
-              - name: type
-                type: string
-                description: ok
-                required: true
               - name: msg
                 type: object
                 required: false
@@ -727,19 +731,27 @@ operations:
                         type: string
                         description: Unique market identifier
                         required: false
+                  - name: market_ids
+                    type: array
+                    description: Full list of market IDs after update
+                    required: false
+                    properties:
+                      - name: item
+                        type: string
+                        required: false
         headers: []
         jsonPayloadSchema:
           type: object
           required:
             - type
           properties:
-            id: *ref_0
-            sid: *ref_2
-            seq: *ref_5
             type:
               type: string
               const: ok
               x-parser-schema-id: <anonymous-schema-24>
+            id: *ref_0
+            sid: *ref_2
+            seq: *ref_5
             msg:
               type: object
               properties:
@@ -747,6 +759,14 @@ operations:
                   type: array
                   items: *ref_3
                   x-parser-schema-id: <anonymous-schema-26>
+                market_ids:
+                  type: array
+                  description: Full list of market IDs after update
+                  items:
+                    type: string
+                    format: uuid
+                    x-parser-schema-id: <anonymous-schema-28>
+                  x-parser-schema-id: <anonymous-schema-27>
               x-parser-schema-id: <anonymous-schema-25>
           x-parser-schema-id: okResponsePayload
         title: OK Response
@@ -771,14 +791,14 @@ operations:
             description: Response containing all active subscriptions
             type: object
             properties:
-              - name: id
-                type: integer
-                description: Unique ID of a command within a WebSocket session
-                required: true
               - name: type
                 type: string
                 description: ok
                 required: true
+              - name: id
+                type: integer
+                description: Unique ID of a command within a WebSocket session
+                required: false
               - name: msg
                 type: array
                 required: true
@@ -794,15 +814,14 @@ operations:
         jsonPayloadSchema:
           type: object
           required:
-            - id
             - type
             - msg
           properties:
-            id: *ref_0
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-27>
+              x-parser-schema-id: <anonymous-schema-29>
+            id: *ref_0
             msg:
               type: array
               items:
@@ -813,17 +832,17 @@ operations:
                 properties:
                   channel:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-30>
+                    x-parser-schema-id: <anonymous-schema-32>
                   sid: *ref_2
-                x-parser-schema-id: <anonymous-schema-29>
-              x-parser-schema-id: <anonymous-schema-28>
+                x-parser-schema-id: <anonymous-schema-31>
+              x-parser-schema-id: <anonymous-schema-30>
           x-parser-schema-id: listSubscriptionsResponsePayload
         title: List Subscriptions Response
         description: Response containing all active subscriptions
         example: |-
           {
-            "id": 123,
             "type": "<string>",
+            "id": 123,
             "msg": {
               "channel": "<string>",
               "sid": 123
@@ -848,6 +867,10 @@ operations:
             description: Error response for failed operations
             type: object
             properties:
+              - name: type
+                type: string
+                description: error
+                required: true
               - name: id
                 type: integer
                 description: Unique ID of a command within a WebSocket session
@@ -860,10 +883,6 @@ operations:
                 type: integer
                 description: Sequence number used for snapshot/delta consistency
                 required: false
-              - name: type
-                type: string
-                description: error
-                required: true
               - name: msg
                 type: object
                 required: true
@@ -911,6 +930,18 @@ operations:
                   - name: msg
                     type: string
                     required: true
+                  - name: market_ticker
+                    type: string
+                    description: Optional market ticker associated with the error
+                    required: false
+                  - name: market_tickers
+                    type: array
+                    description: Optional market tickers associated with the error
+                    required: false
+                    properties:
+                      - name: item
+                        type: string
+                        required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -918,13 +949,13 @@ operations:
             - type
             - msg
           properties:
-            id: *ref_0
-            sid: *ref_2
-            seq: *ref_5
             type:
               type: string
               const: error
-              x-parser-schema-id: <anonymous-schema-31>
+              x-parser-schema-id: <anonymous-schema-33>
+            id: *ref_0
+            sid: *ref_2
+            seq: *ref_5
             msg:
               type: object
               required:
@@ -969,25 +1000,26 @@ operations:
                     - 26
                     - 27
                     - 28
-                  x-parser-schema-id: <anonymous-schema-33>
+                  x-parser-schema-id: <anonymous-schema-35>
                 msg:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-34>
-              x-parser-schema-id: <anonymous-schema-32>
+                  x-parser-schema-id: <anonymous-schema-36>
+                market_ticker:
+                  type: string
+                  description: Optional market ticker associated with the error
+                  x-parser-schema-id: <anonymous-schema-37>
+                market_tickers:
+                  type: array
+                  description: Optional market tickers associated with the error
+                  items:
+                    type: string
+                    x-parser-schema-id: <anonymous-schema-39>
+                  x-parser-schema-id: <anonymous-schema-38>
+              x-parser-schema-id: <anonymous-schema-34>
           x-parser-schema-id: errorResponsePayload
         title: Error Response
         description: Error response for failed operations
-        example: |-
-          {
-            "id": 123,
-            "sid": 123,
-            "seq": 123,
-            "type": "<string>",
-            "msg": {
-              "code": 123,
-              "msg": "<string>"
-            }
-          }
+        example: No examples found
         bindings: []
         extensions:
           - id: x-parser-unique-object-id

@@ -157,7 +157,7 @@ operations:
             type:
               type: string
               const: trade
-              x-parser-schema-id: <anonymous-schema-94>
+              x-parser-schema-id: <anonymous-schema-105>
             sid:
               type: integer
               description: >-
@@ -192,7 +192,7 @@ operations:
                   type: string
                   description: Unique identifier for the trade
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-96>
+                  x-parser-schema-id: <anonymous-schema-107>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -202,15 +202,15 @@ operations:
                 yes_price_dollars:
                   type: string
                   description: Yes side price in dollars
-                  x-parser-schema-id: <anonymous-schema-97>
+                  x-parser-schema-id: <anonymous-schema-108>
                 no_price_dollars:
                   type: string
                   description: No side price in dollars
-                  x-parser-schema-id: <anonymous-schema-98>
+                  x-parser-schema-id: <anonymous-schema-109>
                 count_fp:
                   type: string
                   description: Fixed-point contracts traded (2 decimals)
-                  x-parser-schema-id: <anonymous-schema-99>
+                  x-parser-schema-id: <anonymous-schema-110>
                 taker_side: &ref_1
                   type: string
                   description: Market side
@@ -232,19 +232,19 @@ operations:
                 is_block_trade:
                   type: boolean
                   description: True if the trade was matched off book as a block trade
-                  x-parser-schema-id: <anonymous-schema-100>
+                  x-parser-schema-id: <anonymous-schema-111>
                 ts:
                   type: integer
                   deprecated: true
                   description: Deprecated - Unix timestamp in seconds. Use ts_ms instead.
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-101>
+                  x-parser-schema-id: <anonymous-schema-112>
                 ts_ms:
                   type: integer
                   description: Unix timestamp in milliseconds
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-102>
-              x-parser-schema-id: <anonymous-schema-95>
+                  x-parser-schema-id: <anonymous-schema-113>
+              x-parser-schema-id: <anonymous-schema-106>
           x-parser-schema-id: tradePayload
         title: Trade Update
         description: Public trade information

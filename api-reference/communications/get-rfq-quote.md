@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfq-quote
-lastmod: 2026-09-12T21:39:30.982Z
+lastmod: 2026-09-14T19:37:19.325Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -84,6 +84,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetQuoteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
@@ -100,14 +102,18 @@ components:
       name: rfq_id
       in: path
       required: true
-      description: RFQ ID
+      description: >-
+        RFQ UUID returned when the RFQ was created. Pass it unchanged; malformed
+        IDs return HTTP 400.
       schema:
         type: string
     QuoteIdPath:
       name: quote_id
       in: path
       required: true
-      description: Quote ID
+      description: >-
+        Quote UUID. Pass the ID exactly as received when the quote was created;
+        malformed IDs return HTTP 400.
       schema:
         type: string
   schemas:
@@ -136,10 +142,10 @@ components:
       properties:
         id:
           type: string
-          description: Unique identifier for the quote
+          description: UUID of the quote. Preserve the exact returned string.
         rfq_id:
           type: string
-          description: ID of the RFQ this quote is responding to
+          description: UUID of the RFQ this quote is responding to.
         creator_id:
           type: string
           description: Public communications ID of the quote creator
@@ -282,6 +288,12 @@ components:
         level structure.
       example: '0.5600'
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:

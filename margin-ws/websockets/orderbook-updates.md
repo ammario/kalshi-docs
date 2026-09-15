@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-ws/websockets/orderbook-updates
-lastmod: 2026-05-31T16:40:03.916Z
+lastmod: 2026-09-14T21:53:17.020Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,6 +14,7 @@ Requirements:
 - authenticated connection
 - market specification required via `market_ticker` or `market_tickers`
 - sends `orderbook_snapshot` first, then incremental `orderbook_delta` updates
+- supports `get_snapshot` on `update_subscription` to request a fresh snapshot without changing the subscription
 
 
 
@@ -23,13 +24,20 @@ Requirements:
 ````yaml perps_asyncapi.yaml orderbook_delta
 id: orderbook_delta
 title: Orderbook Updates
-description: |
+description: >
   Real-time margin orderbook price-level changes.
 
+
   Requirements:
+
   - authenticated connection
+
   - market specification required via `market_ticker` or `market_tickers`
+
   - sends `orderbook_snapshot` first, then incremental `orderbook_delta` updates
+
+  - supports `get_snapshot` on `update_subscription` to request a fresh snapshot
+  without changing the subscription
 servers:
   - id: production
     protocol: wss
@@ -62,6 +70,10 @@ operations:
                 type: string
                 description: orderbook_snapshot
                 required: true
+              - name: id
+                type: integer
+                description: Unique ID of a command within a WebSocket session
+                required: false
               - name: sid
                 type: integer
                 description: Server-generated subscription identifier
@@ -114,7 +126,12 @@ operations:
             type:
               type: string
               const: orderbook_snapshot
-              x-parser-schema-id: <anonymous-schema-39>
+              x-parser-schema-id: <anonymous-schema-44>
+            id:
+              type: integer
+              minimum: 0
+              description: Unique ID of a command within a WebSocket session
+              x-parser-schema-id: commandId
             sid: &ref_1
               type: integer
               minimum: 1
@@ -140,17 +157,17 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-42>
+                      x-parser-schema-id: <anonymous-schema-47>
                     minItems: 2
                     maxItems: 2
                     description: '[price_in_dollars, contract_count_fp]'
                     x-parser-schema-id: priceLevelDollarsCountFp
-                  x-parser-schema-id: <anonymous-schema-41>
+                  x-parser-schema-id: <anonymous-schema-46>
                 ask:
                   type: array
                   items: *ref_0
-                  x-parser-schema-id: <anonymous-schema-43>
-              x-parser-schema-id: <anonymous-schema-40>
+                  x-parser-schema-id: <anonymous-schema-48>
+              x-parser-schema-id: <anonymous-schema-45>
           x-parser-schema-id: marginOrderbookSnapshotPayload
         title: Orderbook Snapshot
         description: Complete view of the margin order book's aggregated price levels
@@ -212,26 +229,30 @@ operations:
                     type: string
                     description: >-
                       Margin order update reason when the delta corresponds to
-                      the authenticated user's order.
+                      the authenticated user's order. CloseCancel and HaltCancel
+                      are reserved; the current orderbook stream filters out
+                      these operations. The field is omitted when no reason
+                      applies.
                     enumValues:
-                      - ''
                       - Decrease
                       - Amend
                       - MarginCancel
                       - SelfTradeCancel
                       - ExpiryCancel
+                      - CloseCancel
+                      - HaltCancel
                       - Trade
                       - PostOnlyCrossCancel
                     required: false
                   - name: client_order_id
                     type: string
                     required: false
-                  - name: subaccount
-                    type: integer
-                    required: false
                   - name: ts_ms
                     type: integer
                     description: Unix timestamp in milliseconds.
+                    required: false
+                  - name: subaccount
+                    type: integer
                     required: false
         headers: []
         jsonPayloadSchema:
@@ -245,7 +266,7 @@ operations:
             type:
               type: string
               const: orderbook_delta
-              x-parser-schema-id: <anonymous-schema-44>
+              x-parser-schema-id: <anonymous-schema-49>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -259,10 +280,10 @@ operations:
                 market_ticker: *ref_3
                 price:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-46>
+                  x-parser-schema-id: <anonymous-schema-51>
                 delta:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-47>
+                  x-parser-schema-id: <anonymous-schema-52>
                 side:
                   type: string
                   enum:
@@ -272,30 +293,33 @@ operations:
                 last_update_reason:
                   type: string
                   enum:
-                    - ''
                     - Decrease
                     - Amend
                     - MarginCancel
                     - SelfTradeCancel
                     - ExpiryCancel
+                    - CloseCancel
+                    - HaltCancel
                     - Trade
                     - PostOnlyCrossCancel
                   description: >-
                     Margin order update reason when the delta corresponds to the
-                    authenticated user's order.
+                    authenticated user's order. CloseCancel and HaltCancel are
+                    reserved; the current orderbook stream filters out these
+                    operations. The field is omitted when no reason applies.
                   x-parser-schema-id: lastUpdateReason
                 client_order_id:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-48>
-                subaccount:
-                  type: integer
-                  x-parser-schema-id: <anonymous-schema-49>
+                  x-parser-schema-id: <anonymous-schema-53>
                 ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-50>
-              x-parser-schema-id: <anonymous-schema-45>
+                  x-parser-schema-id: <anonymous-schema-54>
+                subaccount:
+                  type: integer
+                  x-parser-schema-id: <anonymous-schema-55>
+              x-parser-schema-id: <anonymous-schema-50>
           x-parser-schema-id: marginOrderbookDeltaPayload
         title: Orderbook Delta
         description: Update to be applied to the current margin order book view
@@ -311,8 +335,8 @@ operations:
               "side": "<string>",
               "last_update_reason": "<string>",
               "client_order_id": "<string>",
-              "subaccount": 123,
-              "ts_ms": 123
+              "ts_ms": 123,
+              "subaccount": 123
             }
           }
         bindings: []

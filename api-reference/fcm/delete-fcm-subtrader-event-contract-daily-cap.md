@@ -1,20 +1,24 @@
 ---
-url: https://docs.kalshi.com/api-reference/order-groups/trigger-order-group
-lastmod: 2026-09-14T19:37:19.105Z
+url: https://docs.kalshi.com/api-reference/fcm/delete-fcm-subtrader-event-contract-daily-cap
+lastmod: 2026-09-14T19:37:19.906Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Trigger Order Group
+# Delete FCM Subtrader Event Contract Daily Cap
 
->  Triggers the order group, canceling all orders in the group and preventing new orders until the group is reset.
+> Removes the event-contract daily premium cap for an FCM member's subtrader. Removal
+closes the subtrader to new orders on cap-reservation sessions — every subtrader-bound
+API key — until a cap is set again. It does not stop orders your own unbound sessions
+submit on the subtrader's behalf; to stop the account entirely, block subtrader trading.
+
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml put /portfolio/order_groups/{order_group_id}/trigger
+````yaml /openapi.yaml delete /fcm/subtraders/event_contract_daily_cap
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,32 +68,46 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/order_groups/{order_group_id}/trigger:
-    put:
+  /fcm/subtraders/event_contract_daily_cap:
+    delete:
       tags:
-        - order-groups
-      summary: Trigger Order Group
-      description: ' Triggers the order group, canceling all orders in the group and preventing new orders until the group is reset.'
-      operationId: TriggerOrderGroup
+        - fcm
+      summary: Delete FCM Subtrader Event Contract Daily Cap
+      description: >
+        Removes the event-contract daily premium cap for an FCM member's
+        subtrader. Removal
+
+        closes the subtrader to new orders on cap-reservation sessions — every
+        subtrader-bound
+
+        API key — until a cap is set again. It does not stop orders your own
+        unbound sessions
+
+        submit on the subtrader's behalf; to stop the account entirely, block
+        subtrader trading.
+      operationId: DeleteFCMEventContractDailyCap
       parameters:
-        - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
-        - $ref: '#/components/parameters/ExchangeIndexQuery'
-      requestBody:
-        required: false
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmptyResponse'
+        - name: subtrader_id
+          in: query
+          required: true
+          description: >-
+            The subtrader whose daily cap should be removed. Must belong to the
+            requesting FCM.
+          schema:
+            type: string
       responses:
         '200':
-          description: Order group triggered successfully
+          description: Daily cap deleted successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '404':
           $ref: '#/components/responses/NotFoundError'
         '500':
@@ -99,35 +117,10 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderGroupIdPath:
-      name: order_group_id
-      in: path
-      required: true
-      description: Order group ID
-      schema:
-        type: string
-    SubaccountQueryDefaultPrimary:
-      name: subaccount
-      in: query
-      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
-      schema:
-        type: integer
-    ExchangeIndexQuery:
-      name: exchange_index
-      in: query
-      description: Identifier for an exchange shard. Defaults to 0.
-      schema:
-        $ref: '#/components/schemas/ExchangeIndex'
-      x-go-type-skip-optional-pointer: true
   schemas:
     EmptyResponse:
       type: object
       description: An empty response body
-    ExchangeIndex:
-      type: integer
-      description: Identifier for an exchange shard.
-      example: 0
     ErrorResponse:
       type: object
       properties:
@@ -141,8 +134,20 @@ components:
           type: string
           description: Additional details about the error, if available
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-fills
-lastmod: 2026-09-12T21:39:31.283Z
+lastmod: 2026-09-14T19:37:20.214Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -73,6 +73,7 @@ paths:
       operationId: GetFillsHistorical
       parameters:
         - $ref: '#/components/parameters/TickerQuery'
+        - $ref: '#/components/parameters/MinTsQuery'
         - $ref: '#/components/parameters/MaxTsQuery'
         - $ref: '#/components/parameters/LimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
@@ -104,6 +105,13 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    MinTsQuery:
+      name: min_ts
+      in: query
+      description: Filter items after this Unix timestamp
+      schema:
+        type: integer
+        format: int64
     MaxTsQuery:
       name: max_ts
       in: query

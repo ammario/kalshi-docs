@@ -53,13 +53,13 @@ address: market_lifecycle_v2
 parameters: []
 bindings: []
 operations:
-  - &ref_4
+  - &ref_7
     id: receiveMarketLifecycleV2
     title: Market Lifecycle Event
     description: Receive market lifecycle updates (open, close, determination, etc.)
     type: send
     messages:
-      - &ref_7
+      - &ref_10
         id: marketLifecycleV2
         contentType: application/json
         payload:
@@ -67,7 +67,7 @@ operations:
             description: >-
               Market lifecycle events (created, activated, deactivated,
               close_date_updated, determined, settled,
-              price_level_structure_updated, metadata_updated)
+              price_level_structure_updated)
             type: object
             properties:
               - name: type
@@ -91,39 +91,6 @@ operations:
                 type: object
                 required: true
                 properties:
-                  - name: event_type
-                    type: string
-                    description: >
-                      Field to annotate which of the event type this event is
-                      for:
-
-                      - `created` - Market created
-
-                      - `activated` - Market activated
-
-                      - `deactivated` - Market deactivated
-
-                      - `close_date_updated` - Market close date updated
-
-                      - `determined` - Market determined
-
-                      - `settled` - Market settled
-
-                      - `price_level_structure_updated` - Market price level
-                      structure changed
-
-                      - `metadata_updated` - Market metadata updated (e.g. floor
-                      strike, yes_sub_title)
-                    enumValues:
-                      - created
-                      - deactivated
-                      - activated
-                      - close_date_updated
-                      - determined
-                      - settled
-                      - price_level_structure_updated
-                      - metadata_updated
-                    required: true
                   - name: market_ticker
                     type: string
                     description: Unique market identifier
@@ -153,12 +120,6 @@ operations:
                       for when the market is scheduled to close (in seconds).
                       Will be updated in case of early determination markets
                     required: false
-                  - name: result
-                    type: string
-                    description: >-
-                      Optional - This key will ONLY exist when the market is
-                      determined. Result of the market
-                    required: false
                   - name: determination_ts
                     type: integer
                     description: >-
@@ -166,19 +127,25 @@ operations:
                       determined. Unix timestamp for when the market is
                       determined (in seconds)
                     required: false
-                  - name: settlement_value
-                    type: string
-                    description: >-
-                      Optional - This key will ONLY exist when the market is
-                      determined. Settlement value of the market in fixed-point
-                      dollars (e.g. "0.5000")
-                    required: false
                   - name: settled_ts
                     type: integer
                     description: >-
                       Optional - This key will ONLY exist when the market is
                       settled. Unix timestamp for when the market is settled (in
                       seconds)
+                    required: false
+                  - name: result
+                    type: string
+                    description: >-
+                      Optional - This key will ONLY exist when the market is
+                      determined. Result of the market
+                    required: false
+                  - name: settlement_value
+                    type: string
+                    description: >-
+                      Optional - This key will ONLY exist when the market is
+                      determined. Settlement value of the market in fixed-point
+                      dollars (e.g. "0.5000")
                     required: false
                   - name: is_deactivated
                     type: boolean
@@ -188,13 +155,86 @@ operations:
                       paused on an open market. This should only be interpreted
                       for an open market
                     required: false
+                  - name: additional_metadata
+                    type: object
+                    required: false
+                    properties:
+                      - name: name
+                        type: string
+                        required: true
+                      - name: title
+                        type: string
+                        required: true
+                      - name: yes_sub_title
+                        type: string
+                        required: true
+                      - name: no_sub_title
+                        type: string
+                        required: true
+                      - name: rules_primary
+                        type: string
+                        required: true
+                      - name: rules_secondary
+                        type: string
+                        required: true
+                      - name: can_close_early
+                        type: boolean
+                        required: true
+                      - name: event_ticker
+                        type: string
+                        required: true
+                      - name: expected_expiration_ts
+                        type: integer
+                        required: true
+                      - name: strike_type
+                        type: string
+                        required: false
+                      - name: floor_strike
+                        type: number
+                        required: false
+                      - name: cap_strike
+                        type: number
+                        required: false
+                      - name: custom_strike
+                        type: object
+                        required: false
+                  - name: event_type
+                    type: string
+                    description: >
+                      Field to annotate which of the event type this event is
+                      for:
+
+                      - `created` - Market created
+
+                      - `activated` - Market activated
+
+                      - `deactivated` - Market deactivated
+
+                      - `close_date_updated` - Market close date updated
+
+                      - `determined` - Market determined
+
+                      - `settled` - Market settled
+
+                      - `price_level_structure_updated` - Market price level
+                      structure changed
+                    enumValues:
+                      - created
+                      - deactivated
+                      - activated
+                      - close_date_updated
+                      - determined
+                      - settled
+                      - price_level_structure_updated
+                    required: true
                   - name: price_level_structure
                     type: string
                     description: >-
-                      Optional - This key will exist when the market is created
-                      or when the price level structure is updated. The price
-                      level structure of the market
+                      The market price structure. An empty string represents an
+                      unknown structure.
                     enumValues:
+                      - banded_centi_cent
+                      - ''
                       - linear_cent
                       - deci_cent
                       - tapered_deci_cent
@@ -232,6 +272,317 @@ operations:
                           Tick size (minimum price increment) within this band,
                           in dollars
                         required: true
+        headers: []
+        jsonPayloadSchema:
+          type: object
+          required:
+            - type
+            - sid
+            - seq
+            - msg
+          properties:
+            type:
+              type: string
+              const: market_lifecycle_v2
+              x-parser-schema-id: <anonymous-schema-138>
+            sid: &ref_1
+              type: integer
+              description: >-
+                Server-generated subscription identifier (sid) used to identify
+                the channel
+              minimum: 1
+              x-parser-schema-id: subscriptionId
+            seq: &ref_2
+              type: integer
+              description: >-
+                Sequential number that should be checked if you want to
+                guarantee you received all the messages. Used for snapshot/delta
+                consistency
+              minimum: 1
+              x-parser-schema-id: sequenceNumber
+            msg:
+              type: object
+              required:
+                - market_ticker
+                - event_type
+              properties:
+                market_ticker: &ref_3
+                  type: string
+                  description: Unique market identifier
+                  pattern: ^[A-Z0-9-]+$
+                  examples: *ref_0
+                  x-parser-schema-id: marketTicker
+                exchange_index:
+                  type: integer
+                  description: >-
+                    Optional - This key will ONLY exist when the market is
+                    created. Identifier for the exchange shard the market lives
+                    on
+                  x-parser-schema-id: <anonymous-schema-140>
+                open_ts:
+                  type: integer
+                  description: >-
+                    Optional - This key will ONLY exist when the market is
+                    created. Unix timestamp for when the market opened (in
+                    seconds)
+                  format: int64
+                  x-parser-schema-id: <anonymous-schema-141>
+                close_ts:
+                  type: integer
+                  description: >-
+                    Optional - This key will ONLY exist when the market is
+                    created OR when the close date is updated. Unix timestamp
+                    for when the market is scheduled to close (in seconds). Will
+                    be updated in case of early determination markets
+                  format: int64
+                  x-parser-schema-id: <anonymous-schema-142>
+                determination_ts:
+                  type: integer
+                  description: >-
+                    Optional - This key will ONLY exist when the market is
+                    determined. Unix timestamp for when the market is determined
+                    (in seconds)
+                  format: int64
+                  x-parser-schema-id: <anonymous-schema-143>
+                settled_ts:
+                  type: integer
+                  description: >-
+                    Optional - This key will ONLY exist when the market is
+                    settled. Unix timestamp for when the market is settled (in
+                    seconds)
+                  format: int64
+                  x-parser-schema-id: <anonymous-schema-144>
+                result:
+                  type: string
+                  description: >-
+                    Optional - This key will ONLY exist when the market is
+                    determined. Result of the market
+                  x-parser-schema-id: <anonymous-schema-145>
+                settlement_value:
+                  type: string
+                  description: >-
+                    Optional - This key will ONLY exist when the market is
+                    determined. Settlement value of the market in fixed-point
+                    dollars (e.g. "0.5000")
+                  x-parser-schema-id: <anonymous-schema-146>
+                is_deactivated:
+                  type: boolean
+                  description: >-
+                    Optional - This key will ONLY exist when the market is
+                    paused/unpaused. Boolean flag to indicate if trading is
+                    paused on an open market. This should only be interpreted
+                    for an open market
+                  x-parser-schema-id: <anonymous-schema-147>
+                additional_metadata:
+                  type: object
+                  required:
+                    - name
+                    - title
+                    - yes_sub_title
+                    - no_sub_title
+                    - rules_primary
+                    - rules_secondary
+                    - can_close_early
+                    - event_ticker
+                    - expected_expiration_ts
+                  properties:
+                    name:
+                      type: string
+                      x-parser-schema-id: <anonymous-schema-148>
+                    title:
+                      type: string
+                      x-parser-schema-id: <anonymous-schema-149>
+                    yes_sub_title:
+                      type: string
+                      x-parser-schema-id: <anonymous-schema-150>
+                    no_sub_title:
+                      type: string
+                      x-parser-schema-id: <anonymous-schema-151>
+                    rules_primary:
+                      type: string
+                      x-parser-schema-id: <anonymous-schema-152>
+                    rules_secondary:
+                      type: string
+                      x-parser-schema-id: <anonymous-schema-153>
+                    can_close_early:
+                      type: boolean
+                      x-parser-schema-id: <anonymous-schema-154>
+                    event_ticker:
+                      type: string
+                      x-parser-schema-id: <anonymous-schema-155>
+                    expected_expiration_ts:
+                      type: integer
+                      format: int64
+                      x-parser-schema-id: <anonymous-schema-156>
+                    strike_type:
+                      type: string
+                      x-parser-schema-id: <anonymous-schema-157>
+                    floor_strike:
+                      type: number
+                      x-parser-schema-id: <anonymous-schema-158>
+                    cap_strike:
+                      type: number
+                      x-parser-schema-id: <anonymous-schema-159>
+                    custom_strike:
+                      type: object
+                      x-parser-schema-id: <anonymous-schema-160>
+                  x-parser-schema-id: lifecycleAdditionalMetadata
+                event_type:
+                  type: string
+                  description: >
+                    Field to annotate which of the event type this event is for:
+
+                    - `created` - Market created
+
+                    - `activated` - Market activated
+
+                    - `deactivated` - Market deactivated
+
+                    - `close_date_updated` - Market close date updated
+
+                    - `determined` - Market determined
+
+                    - `settled` - Market settled
+
+                    - `price_level_structure_updated` - Market price level
+                    structure changed
+                  enum:
+                    - created
+                    - deactivated
+                    - activated
+                    - close_date_updated
+                    - determined
+                    - settled
+                    - price_level_structure_updated
+                  x-parser-schema-id: <anonymous-schema-161>
+                price_level_structure:
+                  type: string
+                  description: >-
+                    The market price structure. An empty string represents an
+                    unknown structure.
+                  enum:
+                    - banded_centi_cent
+                    - ''
+                    - linear_cent
+                    - deci_cent
+                    - tapered_deci_cent
+                    - center_whole_edge_half_cent
+                    - center_whole_edge_quint_cent
+                    - center_half_edge_half_cent
+                    - center_half_edge_quint_cent
+                    - center_half_edge_deci_cent
+                    - center_quint_edge_quint_cent
+                    - center_quint_edge_deci_cent
+                    - center_centi_edge_centi_cent
+                    - center_deci_edge_centi_cent
+                  x-parser-schema-id: lifecyclePriceLevelStructure
+                price_ranges:
+                  type: array
+                  description: >-
+                    Optional - Emitted alongside price_level_structure (on
+                    market creation and price_level_structure_updated events).
+                    The valid price bands for the market, in fixed-point
+                    dollars. Use this to determine valid order prices rather
+                    than hardcoding a tick size.
+                  items:
+                    type: object
+                    required:
+                      - start
+                      - end
+                      - step
+                    properties:
+                      start:
+                        type: string
+                        description: Starting price for this band, in dollars
+                        x-parser-schema-id: <anonymous-schema-164>
+                      end:
+                        type: string
+                        description: Ending price for this band, in dollars
+                        x-parser-schema-id: <anonymous-schema-165>
+                      step:
+                        type: string
+                        description: >-
+                          Tick size (minimum price increment) within this band,
+                          in dollars
+                        x-parser-schema-id: <anonymous-schema-166>
+                    x-parser-schema-id: <anonymous-schema-163>
+                  x-parser-schema-id: <anonymous-schema-162>
+              x-parser-schema-id: <anonymous-schema-139>
+          x-parser-schema-id: marketLifecycleV2Payload
+        title: Market Lifecycle V2
+        description: >-
+          Market lifecycle events (created, activated, deactivated,
+          close_date_updated, determined, settled,
+          price_level_structure_updated)
+        example: |-
+          {
+            "type": "market_lifecycle_v2",
+            "sid": 13,
+            "seq": 3,
+            "msg": {
+              "market_ticker": "INXD-23SEP14-B4487",
+              "exchange_index": 0,
+              "open_ts": 1694635200,
+              "close_ts": 1694721600,
+              "additional_metadata": {
+                "name": "S&P 500 daily return on Sep 14",
+                "title": "S&P 500 closes up by 0.02% or more",
+                "yes_sub_title": "S&P 500 closes up 0.02%+",
+                "no_sub_title": "S&P 500 closes up <0.02%",
+                "rules_primary": "The S&P 500 index level at 4:00 PM ET...",
+                "rules_secondary": "",
+                "can_close_early": true,
+                "event_ticker": "INXD-23SEP14",
+                "expected_expiration_ts": 1694721600,
+                "strike_type": "greater",
+                "floor_strike": 4487
+              },
+              "event_type": "created",
+              "price_level_structure": "linear_cent"
+            }
+          }
+        bindings: []
+        extensions:
+          - id: x-parser-unique-object-id
+            value: marketLifecycleV2
+      - &ref_11
+        id: marketMetadataUpdated
+        contentType: application/json
+        payload:
+          - name: Market Metadata Updated
+            description: Updated strike information or yes subtitle
+            type: object
+            properties:
+              - name: type
+                type: string
+                description: market_lifecycle_v2
+                required: true
+              - name: sid
+                type: integer
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
+                required: true
+              - name: msg
+                type: object
+                required: true
+                properties:
+                  - name: event_type
+                    type: string
+                    description: metadata_updated
+                    required: true
+                  - name: market_ticker
+                    type: string
+                    description: Unique market identifier
+                    examples: *ref_0
+                    required: true
                   - name: strike_type
                     type: string
                     description: >-
@@ -265,52 +616,6 @@ operations:
                       Optional - This key will ONLY exist for metadata_updated
                       events. The updated yes subtitle for the market
                     required: false
-                  - name: additional_metadata
-                    type: object
-                    description: >-
-                      Optional - This key will be emitted when the market is
-                      created
-                    required: false
-                    properties:
-                      - name: name
-                        type: string
-                        required: false
-                      - name: title
-                        type: string
-                        required: false
-                      - name: yes_sub_title
-                        type: string
-                        required: false
-                      - name: no_sub_title
-                        type: string
-                        required: false
-                      - name: rules_primary
-                        type: string
-                        required: false
-                      - name: rules_secondary
-                        type: string
-                        required: false
-                      - name: can_close_early
-                        type: boolean
-                        required: false
-                      - name: event_ticker
-                        type: string
-                        required: false
-                      - name: expected_expiration_ts
-                        type: integer
-                        required: false
-                      - name: strike_type
-                        type: string
-                        required: false
-                      - name: floor_strike
-                        type: number
-                        required: false
-                      - name: cap_strike
-                        type: number
-                        required: false
-                      - name: custom_strike
-                        type: object
-                        required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -323,22 +628,9 @@ operations:
             type:
               type: string
               const: market_lifecycle_v2
-              x-parser-schema-id: <anonymous-schema-127>
-            sid: &ref_1
-              type: integer
-              description: >-
-                Server-generated subscription identifier (sid) used to identify
-                the channel
-              minimum: 1
-              x-parser-schema-id: subscriptionId
-            seq: &ref_2
-              type: integer
-              description: >-
-                Sequential number that should be checked if you want to
-                guarantee you received all the messages. Used for snapshot/delta
-                consistency
-              minimum: 1
-              x-parser-schema-id: sequenceNumber
+              x-parser-schema-id: <anonymous-schema-167>
+            sid: *ref_1
+            seq: *ref_2
             msg:
               type: object
               required:
@@ -347,154 +639,9 @@ operations:
               properties:
                 event_type:
                   type: string
-                  description: >
-                    Field to annotate which of the event type this event is for:
-
-                    - `created` - Market created
-
-                    - `activated` - Market activated
-
-                    - `deactivated` - Market deactivated
-
-                    - `close_date_updated` - Market close date updated
-
-                    - `determined` - Market determined
-
-                    - `settled` - Market settled
-
-                    - `price_level_structure_updated` - Market price level
-                    structure changed
-
-                    - `metadata_updated` - Market metadata updated (e.g. floor
-                    strike, yes_sub_title)
-                  enum:
-                    - created
-                    - deactivated
-                    - activated
-                    - close_date_updated
-                    - determined
-                    - settled
-                    - price_level_structure_updated
-                    - metadata_updated
-                  x-parser-schema-id: <anonymous-schema-129>
-                market_ticker:
-                  type: string
-                  description: Unique market identifier
-                  pattern: ^[A-Z0-9-]+$
-                  examples: *ref_0
-                  x-parser-schema-id: marketTicker
-                exchange_index:
-                  type: integer
-                  description: >-
-                    Optional - This key will ONLY exist when the market is
-                    created. Identifier for the exchange shard the market lives
-                    on
-                  x-parser-schema-id: <anonymous-schema-130>
-                open_ts:
-                  type: integer
-                  description: >-
-                    Optional - This key will ONLY exist when the market is
-                    created. Unix timestamp for when the market opened (in
-                    seconds)
-                  format: int64
-                  x-parser-schema-id: <anonymous-schema-131>
-                close_ts:
-                  type: integer
-                  description: >-
-                    Optional - This key will ONLY exist when the market is
-                    created OR when the close date is updated. Unix timestamp
-                    for when the market is scheduled to close (in seconds). Will
-                    be updated in case of early determination markets
-                  format: int64
-                  x-parser-schema-id: <anonymous-schema-132>
-                result:
-                  type: string
-                  description: >-
-                    Optional - This key will ONLY exist when the market is
-                    determined. Result of the market
-                  x-parser-schema-id: <anonymous-schema-133>
-                determination_ts:
-                  type: integer
-                  description: >-
-                    Optional - This key will ONLY exist when the market is
-                    determined. Unix timestamp for when the market is determined
-                    (in seconds)
-                  format: int64
-                  x-parser-schema-id: <anonymous-schema-134>
-                settlement_value:
-                  type: string
-                  description: >-
-                    Optional - This key will ONLY exist when the market is
-                    determined. Settlement value of the market in fixed-point
-                    dollars (e.g. "0.5000")
-                  x-parser-schema-id: <anonymous-schema-135>
-                settled_ts:
-                  type: integer
-                  description: >-
-                    Optional - This key will ONLY exist when the market is
-                    settled. Unix timestamp for when the market is settled (in
-                    seconds)
-                  format: int64
-                  x-parser-schema-id: <anonymous-schema-136>
-                is_deactivated:
-                  type: boolean
-                  description: >-
-                    Optional - This key will ONLY exist when the market is
-                    paused/unpaused. Boolean flag to indicate if trading is
-                    paused on an open market. This should only be interpreted
-                    for an open market
-                  x-parser-schema-id: <anonymous-schema-137>
-                price_level_structure:
-                  type: string
-                  description: >-
-                    Optional - This key will exist when the market is created or
-                    when the price level structure is updated. The price level
-                    structure of the market
-                  enum:
-                    - linear_cent
-                    - deci_cent
-                    - tapered_deci_cent
-                    - center_whole_edge_half_cent
-                    - center_whole_edge_quint_cent
-                    - center_half_edge_half_cent
-                    - center_half_edge_quint_cent
-                    - center_half_edge_deci_cent
-                    - center_quint_edge_quint_cent
-                    - center_quint_edge_deci_cent
-                    - center_centi_edge_centi_cent
-                    - center_deci_edge_centi_cent
-                  x-parser-schema-id: <anonymous-schema-138>
-                price_ranges:
-                  type: array
-                  description: >-
-                    Optional - Emitted alongside price_level_structure (on
-                    market creation and price_level_structure_updated events).
-                    The valid price bands for the market, in fixed-point
-                    dollars. Use this to determine valid order prices rather
-                    than hardcoding a tick size.
-                  items:
-                    type: object
-                    required:
-                      - start
-                      - end
-                      - step
-                    properties:
-                      start:
-                        type: string
-                        description: Starting price for this band, in dollars
-                        x-parser-schema-id: <anonymous-schema-141>
-                      end:
-                        type: string
-                        description: Ending price for this band, in dollars
-                        x-parser-schema-id: <anonymous-schema-142>
-                      step:
-                        type: string
-                        description: >-
-                          Tick size (minimum price increment) within this band,
-                          in dollars
-                        x-parser-schema-id: <anonymous-schema-143>
-                    x-parser-schema-id: <anonymous-schema-140>
-                  x-parser-schema-id: <anonymous-schema-139>
+                  const: metadata_updated
+                  x-parser-schema-id: <anonymous-schema-169>
+                market_ticker: *ref_3
                 strike_type:
                   type: string
                   description: >-
@@ -502,127 +649,63 @@ operations:
                     events. Determines how floor_strike / cap_strike are
                     interpreted (e.g. "between" uses both, "greater" uses
                     floor_strike only, "less" uses cap_strike only)
-                  x-parser-schema-id: <anonymous-schema-144>
+                  x-parser-schema-id: <anonymous-schema-170>
                 floor_strike:
                   type: number
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The floor (lower bound) strike value for the market
-                  x-parser-schema-id: <anonymous-schema-145>
+                  x-parser-schema-id: <anonymous-schema-171>
                 cap_strike:
                   type: number
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The cap (upper bound) strike value for the market
-                  x-parser-schema-id: <anonymous-schema-146>
+                  x-parser-schema-id: <anonymous-schema-172>
                 custom_strike:
                   type: object
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events with a custom or structured strike type
-                  x-parser-schema-id: <anonymous-schema-147>
+                  x-parser-schema-id: <anonymous-schema-173>
                 yes_sub_title:
                   type: string
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The updated yes subtitle for the market
-                  x-parser-schema-id: <anonymous-schema-148>
-                additional_metadata:
-                  type: object
-                  description: >-
-                    Optional - This key will be emitted when the market is
-                    created
-                  properties:
-                    name:
-                      type: string
-                      x-parser-schema-id: <anonymous-schema-150>
-                    title:
-                      type: string
-                      x-parser-schema-id: <anonymous-schema-151>
-                    yes_sub_title:
-                      type: string
-                      x-parser-schema-id: <anonymous-schema-152>
-                    no_sub_title:
-                      type: string
-                      x-parser-schema-id: <anonymous-schema-153>
-                    rules_primary:
-                      type: string
-                      x-parser-schema-id: <anonymous-schema-154>
-                    rules_secondary:
-                      type: string
-                      x-parser-schema-id: <anonymous-schema-155>
-                    can_close_early:
-                      type: boolean
-                      x-parser-schema-id: <anonymous-schema-156>
-                    event_ticker:
-                      type: string
-                      x-parser-schema-id: <anonymous-schema-157>
-                    expected_expiration_ts:
-                      type: integer
-                      format: int64
-                      x-parser-schema-id: <anonymous-schema-158>
-                    strike_type:
-                      type: string
-                      x-parser-schema-id: <anonymous-schema-159>
-                    floor_strike:
-                      type: number
-                      x-parser-schema-id: <anonymous-schema-160>
-                    cap_strike:
-                      type: number
-                      x-parser-schema-id: <anonymous-schema-161>
-                    custom_strike:
-                      type: object
-                      x-parser-schema-id: <anonymous-schema-162>
-                  x-parser-schema-id: <anonymous-schema-149>
-              x-parser-schema-id: <anonymous-schema-128>
-          x-parser-schema-id: marketLifecycleV2Payload
-        title: Market Lifecycle V2
-        description: >-
-          Market lifecycle events (created, activated, deactivated,
-          close_date_updated, determined, settled,
-          price_level_structure_updated, metadata_updated)
+                  x-parser-schema-id: <anonymous-schema-174>
+              x-parser-schema-id: <anonymous-schema-168>
+          x-parser-schema-id: marketMetadataUpdatedPayload
+        title: Market Metadata Updated
+        description: Updated strike information or yes subtitle
         example: |-
           {
             "type": "market_lifecycle_v2",
             "sid": 13,
-            "seq": 3,
+            "seq": 5,
             "msg": {
-              "market_ticker": "INXD-23SEP14-B4487",
-              "event_type": "created",
-              "exchange_index": 0,
-              "open_ts": 1694635200,
-              "close_ts": 1694721600,
-              "price_level_structure": "linear_cent",
-              "additional_metadata": {
-                "name": "S&P 500 daily return on Sep 14",
-                "title": "S&P 500 closes up by 0.02% or more",
-                "yes_sub_title": "S&P 500 closes up 0.02%+",
-                "no_sub_title": "S&P 500 closes up <0.02%",
-                "rules_primary": "The S&P 500 index level at 4:00 PM ET...",
-                "rules_secondary": "",
-                "can_close_early": true,
-                "event_ticker": "INXD-23SEP14",
-                "expected_expiration_ts": 1694721600,
-                "strike_type": "greater",
-                "floor_strike": 4487
-              }
+              "event_type": "metadata_updated",
+              "market_ticker": "KXBTC-25APR30-T0915-B95000",
+              "strike_type": "between",
+              "floor_strike": 95000,
+              "cap_strike": 95250
             }
           }
         bindings: []
         extensions:
           - id: x-parser-unique-object-id
-            value: marketLifecycleV2
+            value: marketMetadataUpdated
     bindings: []
-    extensions: &ref_3
+    extensions: &ref_4
       - id: x-parser-unique-object-id
         value: market_lifecycle_v2
-  - &ref_5
+  - &ref_8
     id: receiveEventLifecycle
     title: Event Lifecycle
     description: Receive event creation notifications
     type: send
     messages:
-      - &ref_8
+      - &ref_12
         id: eventLifecycle
         contentType: application/json
         payload:
@@ -708,7 +791,7 @@ operations:
             type:
               type: string
               const: event_lifecycle
-              x-parser-schema-id: <anonymous-schema-163>
+              x-parser-schema-id: <anonymous-schema-175>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -724,21 +807,21 @@ operations:
                 event_ticker:
                   type: string
                   description: Unique identifier for the event being created
-                  x-parser-schema-id: <anonymous-schema-165>
+                  x-parser-schema-id: <anonymous-schema-177>
                 exchange_index:
                   type: integer
                   description: >-
                     Identifier for the exchange shard the event's markets live
                     on
-                  x-parser-schema-id: <anonymous-schema-166>
+                  x-parser-schema-id: <anonymous-schema-178>
                 title:
                   type: string
                   description: Title of event
-                  x-parser-schema-id: <anonymous-schema-167>
+                  x-parser-schema-id: <anonymous-schema-179>
                 subtitle:
                   type: string
                   description: Subtitle of event
-                  x-parser-schema-id: <anonymous-schema-168>
+                  x-parser-schema-id: <anonymous-schema-180>
                 collateral_return_type:
                   type: string
                   description: >-
@@ -748,25 +831,25 @@ operations:
                     - MECNET
                     - DIRECNET
                     - ''
-                  x-parser-schema-id: <anonymous-schema-169>
+                  x-parser-schema-id: <anonymous-schema-181>
                 series_ticker:
                   type: string
                   description: Series ticker for the event
-                  x-parser-schema-id: <anonymous-schema-170>
+                  x-parser-schema-id: <anonymous-schema-182>
                 strike_date:
                   type: integer
                   description: >-
                     Optional - Unix timestamp to indicate the strike date of the
                     event if there is one
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-171>
+                  x-parser-schema-id: <anonymous-schema-183>
                 strike_period:
                   type: string
                   description: >-
                     Optional - String to indicate the strike period of the event
                     if there is one
-                  x-parser-schema-id: <anonymous-schema-172>
-              x-parser-schema-id: <anonymous-schema-164>
+                  x-parser-schema-id: <anonymous-schema-184>
+              x-parser-schema-id: <anonymous-schema-176>
           x-parser-schema-id: eventLifecyclePayload
         title: Event Lifecycle
         description: Event creation notification
@@ -789,14 +872,14 @@ operations:
           - id: x-parser-unique-object-id
             value: eventLifecycle
     bindings: []
-    extensions: *ref_3
-  - &ref_6
+    extensions: *ref_4
+  - &ref_9
     id: receiveEventFeeUpdate
     title: Event Fee Override Update
     description: Receive notifications when an event-level fee override is set or cleared
     type: send
     messages:
-      - &ref_9
+      - &ref_13
         id: eventFeeUpdate
         contentType: application/json
         payload:
@@ -830,7 +913,9 @@ operations:
                     description: Unique identifier for the event
                     required: true
                   - name: fee_type_override
-                    type: string
+                    type: &ref_5
+                      - string
+                      - 'null'
                     description: >-
                       Event fee type override. `null` when the override has been
                       cleared.
@@ -839,9 +924,12 @@ operations:
                       - quadratic_with_maker_fees
                       - quadratic_with_combo_maker_fees
                       - flat
+                      - margin_market_maker_program_fees
                     required: true
                   - name: fee_multiplier_override
-                    type: number
+                    type: &ref_6
+                      - number
+                      - 'null'
                     description: >-
                       Event fee multiplier override. `null` when the override
                       has been cleared.
@@ -858,7 +946,7 @@ operations:
             type:
               type: string
               const: event_fee_update
-              x-parser-schema-id: <anonymous-schema-173>
+              x-parser-schema-id: <anonymous-schema-185>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -871,28 +959,27 @@ operations:
                 event_ticker:
                   type: string
                   description: Unique identifier for the event
-                  x-parser-schema-id: <anonymous-schema-175>
+                  x-parser-schema-id: <anonymous-schema-187>
                 fee_type_override:
-                  type: string
-                  nullable: true
+                  type: *ref_5
                   enum:
                     - quadratic
                     - quadratic_with_maker_fees
                     - quadratic_with_combo_maker_fees
                     - flat
+                    - margin_market_maker_program_fees
                     - null
                   description: >-
                     Event fee type override. `null` when the override has been
                     cleared.
-                  x-parser-schema-id: <anonymous-schema-176>
+                  x-parser-schema-id: <anonymous-schema-188>
                 fee_multiplier_override:
-                  type: number
-                  nullable: true
+                  type: *ref_6
                   description: >-
                     Event fee multiplier override. `null` when the override has
                     been cleared.
-                  x-parser-schema-id: <anonymous-schema-177>
-              x-parser-schema-id: <anonymous-schema-174>
+                  x-parser-schema-id: <anonymous-schema-189>
+              x-parser-schema-id: <anonymous-schema-186>
           x-parser-schema-id: eventFeeUpdatePayload
         title: Event Fee Override Update
         description: Emitted when an event-level fee override is set or cleared
@@ -912,17 +999,18 @@ operations:
           - id: x-parser-unique-object-id
             value: eventFeeUpdate
     bindings: []
-    extensions: *ref_3
+    extensions: *ref_4
 sendOperations: []
 receiveOperations:
-  - *ref_4
-  - *ref_5
-  - *ref_6
-sendMessages: []
-receiveMessages:
   - *ref_7
   - *ref_8
   - *ref_9
+sendMessages: []
+receiveMessages:
+  - *ref_10
+  - *ref_11
+  - *ref_12
+  - *ref_13
 extensions:
   - id: x-parser-unique-object-id
     value: market_lifecycle_v2

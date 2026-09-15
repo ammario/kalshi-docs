@@ -1,20 +1,28 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-09-14T19:37:19.299Z
+url: https://docs.kalshi.com/api-reference/fcm/get-fcm-subtrader-event-contract-daily-cap
+lastmod: 2026-09-14T19:37:19.717Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Create RFQ
+# Get FCM Subtrader Event Contract Daily Cap
 
->  Endpoint for creating a new RFQ. You can have a maximum of 100 open RFQs at a time.
+> Returns the event-contract daily premium cap configured for an FCM member's subtrader,
+together with its live utilization. Executed utilization is the net premium deployed by
+fills today (sells and settlements credit back); resting and pending utilization reserve
+open and in-flight orders at their full worst-case cost plus fees. Executed utilization
+resets at midnight New York time on the returned cap date; resting and pending
+reservations persist for as long as their orders remain open, including across the reset.
+Returns 404 when the subtrader has no cap configured — in that state every order placed
+through the subtrader's bound API keys is rejected.
+
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml post /communications/rfqs
+````yaml /openapi.yaml get /fcm/subtraders/event_contract_daily_cap
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,32 +72,59 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /communications/rfqs:
-    post:
+  /fcm/subtraders/event_contract_daily_cap:
+    get:
       tags:
-        - communications
-      summary: Create RFQ
-      description: ' Endpoint for creating a new RFQ. You can have a maximum of 100 open RFQs at a time.'
-      operationId: CreateRFQ
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateRFQRequest'
+        - fcm
+      summary: Get FCM Subtrader Event Contract Daily Cap
+      description: >
+        Returns the event-contract daily premium cap configured for an FCM
+        member's subtrader,
+
+        together with its live utilization. Executed utilization is the net
+        premium deployed by
+
+        fills today (sells and settlements credit back); resting and pending
+        utilization reserve
+
+        open and in-flight orders at their full worst-case cost plus fees.
+        Executed utilization
+
+        resets at midnight New York time on the returned cap date; resting and
+        pending
+
+        reservations persist for as long as their orders remain open, including
+        across the reset.
+
+        Returns 404 when the subtrader has no cap configured — in that state
+        every order placed
+
+        through the subtrader's bound API keys is rejected.
+      operationId: GetFCMEventContractDailyCap
+      parameters:
+        - name: subtrader_id
+          in: query
+          required: true
+          description: >-
+            The subtrader whose daily cap should be returned. Must belong to the
+            requesting FCM.
+          schema:
+            type: string
       responses:
-        '201':
-          description: RFQ created successfully
+        '200':
+          description: Daily cap retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateRFQResponse'
+                $ref: '#/components/schemas/GetFCMEventContractDailyCapResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '409':
-          $ref: '#/components/responses/ConflictError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -98,85 +133,32 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
-    CreateRFQRequest:
+    GetFCMEventContractDailyCapResponse:
       type: object
       required:
-        - market_ticker
-        - rest_remainder
+        - subtrader_id
+        - limit
+        - executed_utilization
+        - resting_order_utilization
+        - pending_order_utilization
+        - cap_date
       properties:
-        market_ticker:
-          type: string
-          description: The ticker of the market for which to create an RFQ
-        contracts:
-          type: integer
-          description: >-
-            Whole-contract count for the RFQ. Use contracts_fp for partial
-            contract values; if both are provided, they must match.
-          x-go-type-skip-optional-pointer: true
-        contracts_fp:
-          $ref: '#/components/schemas/FixedPointCount'
-          nullable: true
-          description: >-
-            Fixed-point number of contracts for the RFQ. Supports partial
-            contracts in 0.01-contract increments; if contracts is also
-            provided, both values must match.
-        target_cost_centi_cents:
-          type: integer
-          format: int64
-          description: >-
-            DEPRECATED: The target cost for the RFQ in centi-cents. Use
-            target_cost_dollars instead.
-          deprecated: true
-          x-go-type-skip-optional-pointer: true
-        target_cost_dollars:
-          $ref: '#/components/schemas/FixedPointDollars'
-          description: The target cost for the RFQ in dollars
-          x-go-type-skip-optional-pointer: true
-        target_cost_excludes_fees:
-          type: boolean
-          description: >-
-            Sizes quotes against the target cost as principal only (contracts =
-            target cost / price), with your taker fees charged on top of the
-            target cost. By default (false) the target cost caps principal plus
-            Kalshi fees, and quote sizes are reduced to make room for the fees.
-            Only valid together with a target cost.
-          x-go-type-skip-optional-pointer: true
-        rest_remainder:
-          type: boolean
-          description: Whether to rest the remainder of the RFQ after execution
-        replace_existing:
-          type: boolean
-          description: Whether to delete existing RFQs as part of this RFQ's creation
-          default: false
-          x-go-type-skip-optional-pointer: true
         subtrader_id:
           type: string
-          description: The subtrader to create the RFQ for (FCM members only)
-          x-go-type-skip-optional-pointer: true
-        subaccount:
-          type: integer
-          description: >-
-            The subaccount number to create the RFQ for (direct members only; 0
-            for primary, 1-63 for subaccounts)
-    CreateRFQResponse:
-      type: object
-      required:
-        - id
-      properties:
-        id:
+        limit:
+          $ref: '#/components/schemas/FixedPointDollars'
+        executed_utilization:
+          $ref: '#/components/schemas/FixedPointDollars'
+        resting_order_utilization:
+          $ref: '#/components/schemas/FixedPointDollars'
+        pending_order_utilization:
+          $ref: '#/components/schemas/FixedPointDollars'
+        cap_date:
           type: string
           description: >-
-            UUID of the newly created RFQ. Pass it unchanged in subsequent
-            requests.
-    FixedPointCount:
-      type: string
-      description: >-
-        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
-        to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported; the minimum granularity is
-        0.01 contracts.
-      example: '10.00'
+            The New York calendar date the executed utilization applies to.
+            Executed utilization resets at midnight New York time; resting and
+            pending reservations persist while their orders remain open.
     FixedPointDollars:
       type: string
       description: >-
@@ -210,8 +192,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    ConflictError:
-      description: Conflict - resource already exists or cannot be modified
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:

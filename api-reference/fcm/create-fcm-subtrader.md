@@ -1,20 +1,24 @@
 ---
-url: https://docs.kalshi.com/api-reference/order-groups/trigger-order-group
-lastmod: 2026-09-14T19:37:19.105Z
+url: https://docs.kalshi.com/api-reference/fcm/create-fcm-subtrader
+lastmod: 2026-09-14T19:37:19.698Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Trigger Order Group
+# Create FCM Subtrader
 
->  Triggers the order group, canceling all orders in the group and preventing new orders until the group is reset.
+> Endpoint for FCM members to create a subtrader on the event-contract exchange. The
+subtrader is registered on every exchange shard that knows the FCM; a shard provisioned
+later registers it lazily on the subtrader's first order there. Re-creating an existing
+subtrader returns 409.
+
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml put /portfolio/order_groups/{order_group_id}/trigger
+````yaml /openapi.yaml post /fcm/subtraders
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,34 +68,44 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/order_groups/{order_group_id}/trigger:
-    put:
+  /fcm/subtraders:
+    post:
       tags:
-        - order-groups
-      summary: Trigger Order Group
-      description: ' Triggers the order group, canceling all orders in the group and preventing new orders until the group is reset.'
-      operationId: TriggerOrderGroup
-      parameters:
-        - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
-        - $ref: '#/components/parameters/ExchangeIndexQuery'
+        - fcm
+      summary: Create FCM Subtrader
+      description: >
+        Endpoint for FCM members to create a subtrader on the event-contract
+        exchange. The
+
+        subtrader is registered on every exchange shard that knows the FCM; a
+        shard provisioned
+
+        later registers it lazily on the subtrader's first order there.
+        Re-creating an existing
+
+        subtrader returns 409.
+      operationId: CreateFCMSubtrader
       requestBody:
-        required: false
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EmptyResponse'
+              $ref: '#/components/schemas/CreateFCMSubtraderRequest'
       responses:
-        '200':
-          description: Order group triggered successfully
+        '201':
+          description: Subtrader created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmptyResponse'
+                $ref: '#/components/schemas/CreateFCMSubtraderResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '409':
+          $ref: '#/components/responses/ConflictError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -99,35 +113,26 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderGroupIdPath:
-      name: order_group_id
-      in: path
-      required: true
-      description: Order group ID
-      schema:
-        type: string
-    SubaccountQueryDefaultPrimary:
-      name: subaccount
-      in: query
-      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
-      schema:
-        type: integer
-    ExchangeIndexQuery:
-      name: exchange_index
-      in: query
-      description: Identifier for an exchange shard. Defaults to 0.
-      schema:
-        $ref: '#/components/schemas/ExchangeIndex'
-      x-go-type-skip-optional-pointer: true
   schemas:
-    EmptyResponse:
+    CreateFCMSubtraderRequest:
       type: object
-      description: An empty response body
-    ExchangeIndex:
-      type: integer
-      description: Identifier for an exchange shard.
-      example: 0
+      required:
+        - subtrader_suffix
+      properties:
+        subtrader_suffix:
+          type: string
+          description: >-
+            Suffix for the new subtrader, 1-16 lowercase alphanumeric characters
+            ([a-z0-9]). The full subtrader id becomes
+            {your_account_id}_{suffix}.
+    CreateFCMSubtraderResponse:
+      type: object
+      required:
+        - subtrader_id
+      properties:
+        subtrader_id:
+          type: string
+          description: The full id of the created subtrader.
     ErrorResponse:
       type: object
       properties:
@@ -141,14 +146,26 @@ components:
           type: string
           description: Additional details about the error, if available
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ConflictError:
+      description: Conflict - resource already exists or cannot be modified
       content:
         application/json:
           schema:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/listener-sessions
-lastmod: 2026-04-30T03:43:38.545Z
+lastmod: 2026-09-14T18:17:55.114Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,7 +12,7 @@ lastmod: 2026-04-30T03:43:38.545Z
 
 ## Overview
 
-A listener session provides a **real-time, read-only stream** of execution reports from your margin trading session. This is what most exchanges refer to as a "drop copy": a live shadow feed of all fills and order state changes. Kalshi's [Drop Copy session](/fix-margin/drop-copy) (KalshiDC) is a separate request-response tool for querying historical execution reports, not a live feed.
+A listener session provides a **real-time, read-only stream** of execution reports from your margin trading session. This is what most exchanges refer to as a "drop copy": a live shadow feed of all fills and order state changes. Kalshi's [Drop Copy session](/fix-margin/drop-copy) (KalshiDC) is a separate, gated request-response tool for querying historical execution reports, not a live feed.
 
 ## How It Works
 

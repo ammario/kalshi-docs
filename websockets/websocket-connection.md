@@ -1328,6 +1328,10 @@ operations:
             description: Confirmation that subscription was successful
             type: object
             properties:
+              - name: type
+                type: string
+                description: subscribed
+                required: true
               - name: id
                 type: integer
                 description: >
@@ -1340,10 +1344,6 @@ operations:
                   If the id is set to 0, the server treats it the same way as if
                   there was no id.
                 required: false
-              - name: type
-                type: string
-                description: subscribed
-                required: true
               - name: msg
                 type: object
                 required: true
@@ -1364,11 +1364,11 @@ operations:
             - type
             - msg
           properties:
-            id: *ref_1
             type:
               type: string
               const: subscribed
               x-parser-schema-id: <anonymous-schema-43>
+            id: *ref_1
             msg:
               type: object
               required:
@@ -1412,6 +1412,10 @@ operations:
             description: Confirmation that unsubscription was successful
             type: object
             properties:
+              - name: type
+                type: string
+                description: unsubscribed
+                required: true
               - name: id
                 type: integer
                 description: >
@@ -1437,10 +1441,6 @@ operations:
                   guarantee you received all the messages. Used for
                   snapshot/delta consistency
                 required: true
-              - name: type
-                type: string
-                description: unsubscribed
-                required: true
         headers: []
         jsonPayloadSchema:
           type: object
@@ -1449,6 +1449,10 @@ operations:
             - seq
             - type
           properties:
+            type:
+              type: string
+              const: unsubscribed
+              x-parser-schema-id: <anonymous-schema-50>
             id: *ref_1
             sid: *ref_3
             seq: &ref_7
@@ -1459,10 +1463,6 @@ operations:
                 consistency
               minimum: 1
               x-parser-schema-id: sequenceNumber
-            type:
-              type: string
-              const: unsubscribed
-              x-parser-schema-id: <anonymous-schema-50>
           x-parser-schema-id: unsubscribedResponsePayload
         title: Unsubscribed Response
         description: Confirmation that unsubscription was successful
@@ -1493,6 +1493,10 @@ operations:
             description: Successful update operation response
             type: object
             properties:
+              - name: type
+                type: string
+                description: ok
+                required: true
               - name: id
                 type: integer
                 description: >
@@ -1518,10 +1522,6 @@ operations:
                   guarantee you received all the messages. Used for
                   snapshot/delta consistency
                 required: false
-              - name: type
-                type: string
-                description: ok
-                required: true
               - name: msg
                 type: object
                 required: false
@@ -1551,13 +1551,13 @@ operations:
           required:
             - type
           properties:
-            id: *ref_1
-            sid: *ref_3
-            seq: *ref_7
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-51>
+              x-parser-schema-id: <anonymous-schema-59>
+            id: *ref_1
+            sid: *ref_3
+            seq: *ref_7
             msg:
               type: object
               properties:
@@ -1565,13 +1565,13 @@ operations:
                   type: array
                   description: Full list of market tickers after update
                   items: *ref_4
-                  x-parser-schema-id: <anonymous-schema-53>
+                  x-parser-schema-id: <anonymous-schema-61>
                 market_ids:
                   type: array
                   description: Full list of market IDs after update
                   items: *ref_5
-                  x-parser-schema-id: <anonymous-schema-54>
-              x-parser-schema-id: <anonymous-schema-52>
+                  x-parser-schema-id: <anonymous-schema-62>
+              x-parser-schema-id: <anonymous-schema-60>
           x-parser-schema-id: okResponsePayload
         title: OK Response
         description: Successful update operation response
@@ -1593,22 +1593,20 @@ operations:
         extensions:
           - id: x-parser-unique-object-id
             value: okResponse
-    bindings: []
-    extensions: *ref_2
-  - &ref_19
-    id: receiveListSubscriptions
-    title: List Subscriptions Response
-    description: Receive list of all active subscriptions
-    type: send
-    messages:
       - &ref_32
-        id: listSubscriptionsResponse
+        id: subscribedUnderlyingsResponse
         contentType: application/json
         payload:
-          - name: List Subscriptions Response
-            description: Response containing all active subscriptions
+          - name: Subscribed Underlyings
+            description: >-
+              Current Pyth underlying ticker filter after an update; all-mode is
+              ["all"]
             type: object
             properties:
+              - name: type
+                type: string
+                description: ok
+                required: true
               - name: id
                 type: integer
                 description: >
@@ -1620,11 +1618,201 @@ operations:
 
                   If the id is set to 0, the server treats it the same way as if
                   there was no id.
+                required: false
+              - name: sid
+                type: integer
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
                 required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
+                required: true
+              - name: msg
+                type: object
+                required: true
+                properties:
+                  - name: underlying_tickers
+                    type: array
+                    description: >-
+                      Current Pyth underlying ticker filter after an update;
+                      all-mode is ["all"]
+                    required: true
+                    properties:
+                      - name: item
+                        type: string
+                        required: false
+        headers: []
+        jsonPayloadSchema:
+          type: object
+          required:
+            - type
+            - sid
+            - seq
+            - msg
+          properties:
+            type:
+              type: string
+              const: ok
+              x-parser-schema-id: <anonymous-schema-55>
+            id: *ref_1
+            sid: *ref_3
+            seq: *ref_7
+            msg:
+              type: object
+              required:
+                - underlying_tickers
+              properties:
+                underlying_tickers:
+                  type: array
+                  description: >-
+                    Current Pyth underlying ticker filter after an update;
+                    all-mode is ["all"]
+                  items:
+                    type: string
+                    x-parser-schema-id: <anonymous-schema-58>
+                  x-parser-schema-id: <anonymous-schema-57>
+              x-parser-schema-id: <anonymous-schema-56>
+          x-parser-schema-id: subscribedUnderlyingsResponsePayload
+        title: Subscribed Underlyings
+        description: >-
+          Current Pyth underlying ticker filter after an update; all-mode is
+          ["all"]
+        example: No examples found
+        bindings: []
+        extensions:
+          - id: x-parser-unique-object-id
+            value: subscribedUnderlyingsResponse
+      - &ref_33
+        id: subscribedIndicesResponse
+        contentType: application/json
+        payload:
+          - name: Subscribed Indices
+            description: >-
+              Current CF Benchmarks index filter after an update; all-mode is
+              ["all"]
+            type: object
+            properties:
               - name: type
                 type: string
                 description: ok
                 required: true
+              - name: id
+                type: integer
+                description: >
+                  Unique ID of the command request. Generated by the client and
+                  should be unique within a WS session.
+
+                  The simplest way to use it would be to start from 1 and then
+                  increment the value for every new command sent to the server.
+
+                  If the id is set to 0, the server treats it the same way as if
+                  there was no id.
+                required: false
+              - name: sid
+                type: integer
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
+                required: true
+              - name: msg
+                type: object
+                required: true
+                properties:
+                  - name: index_ids
+                    type: array
+                    description: >-
+                      Current CF Benchmarks index filter after an update;
+                      all-mode is ["all"]
+                    required: true
+                    properties:
+                      - name: item
+                        type: string
+                        required: false
+        headers: []
+        jsonPayloadSchema:
+          type: object
+          required:
+            - type
+            - sid
+            - seq
+            - msg
+          properties:
+            type:
+              type: string
+              const: ok
+              x-parser-schema-id: <anonymous-schema-51>
+            id: *ref_1
+            sid: *ref_3
+            seq: *ref_7
+            msg:
+              type: object
+              required:
+                - index_ids
+              properties:
+                index_ids:
+                  type: array
+                  description: >-
+                    Current CF Benchmarks index filter after an update; all-mode
+                    is ["all"]
+                  items:
+                    type: string
+                    x-parser-schema-id: <anonymous-schema-54>
+                  x-parser-schema-id: <anonymous-schema-53>
+              x-parser-schema-id: <anonymous-schema-52>
+          x-parser-schema-id: subscribedIndicesResponsePayload
+        title: Subscribed Indices
+        description: >-
+          Current CF Benchmarks index filter after an update; all-mode is
+          ["all"]
+        example: No examples found
+        bindings: []
+        extensions:
+          - id: x-parser-unique-object-id
+            value: subscribedIndicesResponse
+    bindings: []
+    extensions: *ref_2
+  - &ref_19
+    id: receiveListSubscriptions
+    title: List Subscriptions Response
+    description: Receive list of all active subscriptions
+    type: send
+    messages:
+      - &ref_34
+        id: listSubscriptionsResponse
+        contentType: application/json
+        payload:
+          - name: List Subscriptions Response
+            description: Response containing all active subscriptions
+            type: object
+            properties:
+              - name: type
+                type: string
+                description: ok
+                required: true
+              - name: id
+                type: integer
+                description: >
+                  Unique ID of the command request. Generated by the client and
+                  should be unique within a WS session.
+
+                  The simplest way to use it would be to start from 1 and then
+                  increment the value for every new command sent to the server.
+
+                  If the id is set to 0, the server treats it the same way as if
+                  there was no id.
+                required: false
               - name: msg
                 type: array
                 description: List of active subscriptions
@@ -1644,15 +1832,14 @@ operations:
         jsonPayloadSchema:
           type: object
           required:
-            - id
             - type
             - msg
           properties:
-            id: *ref_1
             type:
               type: string
               const: ok
               x-parser-schema-id: <anonymous-schema-46>
+            id: *ref_1
             msg:
               type: array
               description: List of active subscriptions
@@ -1703,7 +1890,7 @@ operations:
     description: Receive error message when a command fails
     type: send
     messages:
-      - &ref_33
+      - &ref_35
         id: errorResponse
         contentType: application/json
         payload:
@@ -1711,6 +1898,10 @@ operations:
             description: Error response for failed operations
             type: object
             properties:
+              - name: type
+                type: string
+                description: error
+                required: true
               - name: id
                 type: integer
                 description: >
@@ -1736,10 +1927,6 @@ operations:
                   guarantee you received all the messages. Used for
                   snapshot/delta consistency
                 required: false
-              - name: type
-                type: string
-                description: error
-                required: true
               - name: msg
                 type: object
                 required: true
@@ -1854,6 +2041,18 @@ operations:
                     type: string
                     description: Human-readable error message
                     required: true
+                  - name: market_ticker
+                    type: string
+                    description: Optional market ticker associated with the error
+                    required: false
+                  - name: market_tickers
+                    type: array
+                    description: Optional market tickers associated with the error
+                    required: false
+                    properties:
+                      - name: item
+                        type: string
+                        required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -1861,13 +2060,13 @@ operations:
             - type
             - msg
           properties:
-            id: *ref_1
-            sid: *ref_3
-            seq: *ref_7
             type:
               type: string
               const: error
-              x-parser-schema-id: <anonymous-schema-55>
+              x-parser-schema-id: <anonymous-schema-63>
+            id: *ref_1
+            sid: *ref_3
+            seq: *ref_7
             msg:
               type: object
               required:
@@ -1975,12 +2174,23 @@ operations:
                     - 26
                     - 27
                     - 28
-                  x-parser-schema-id: <anonymous-schema-57>
+                  x-parser-schema-id: <anonymous-schema-65>
                 msg:
                   type: string
                   description: Human-readable error message
-                  x-parser-schema-id: <anonymous-schema-58>
-              x-parser-schema-id: <anonymous-schema-56>
+                  x-parser-schema-id: <anonymous-schema-66>
+                market_ticker:
+                  type: string
+                  description: Optional market ticker associated with the error
+                  x-parser-schema-id: <anonymous-schema-67>
+                market_tickers:
+                  type: array
+                  description: Optional market tickers associated with the error
+                  items:
+                    type: string
+                    x-parser-schema-id: <anonymous-schema-69>
+                  x-parser-schema-id: <anonymous-schema-68>
+              x-parser-schema-id: <anonymous-schema-64>
           x-parser-schema-id: errorResponsePayload
         title: Error Response
         description: Error response for failed operations
@@ -2029,6 +2239,8 @@ receiveMessages:
   - *ref_31
   - *ref_32
   - *ref_33
+  - *ref_34
+  - *ref_35
 extensions:
   - id: x-parser-unique-object-id
     value: root

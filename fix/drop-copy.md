@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/drop-copy
-lastmod: 2026-06-24T22:34:43.219Z
+lastmod: 2026-09-14T18:17:55.108Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -13,6 +13,10 @@ lastmod: 2026-06-24T22:34:43.219Z
 <Warning>
   **This is not a traditional drop copy session.** Kalshi's Drop Copy uses a request-response pattern for querying historical execution reports. For a real-time streaming feed, use a [Listener Session](/fix/listener-sessions) on KalshiRT instead.
 </Warning>
+
+<Note>
+  Historical execution-report replay through EventResendRequest (35=U1) requires allowlisting for your user account on both `KalshiNR` and `KalshiDC` sessions. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to request access. Requests from accounts that are not allowlisted are rejected with EventResendReject (35=U3), reason `5` (NOT\_ENABLED). Allowlisting does not backfill earlier events.
+</Note>
 
 Lookback window is limited to the last 3 hours. Only ExecutionReport (35=8) messages are returned. Rejects and pending orders (ExecID `"-1;-1"`) are excluded.
 
@@ -50,7 +54,7 @@ Sent after all requested events have been resent.
 
 Sent when a resend request cannot be fulfilled.
 
-| Tag   | Name                    | Description                                                                                                                         | Required |
-| ----- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| 45    | RefSeqNum               | MsgSeqNum of the EventResendRequest                                                                                                 | Yes      |
-| 21004 | EventResendRejectReason | Rejection code: `1`=Too many resend requests, `2`=Server error, `3`=BeginExecID too small (outside window), `4`=EndExecID too large | Yes      |
+| Tag   | Name                    | Description                                                                                                                                                                         | Required |
+| ----- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| 45    | RefSeqNum               | MsgSeqNum of the EventResendRequest                                                                                                                                                 | Yes      |
+| 21004 | EventResendRejectReason | Rejection code: `1`=Too many resend requests, `2`=Server error, `3`=BeginExecID too small (outside window), `4`=EndExecID too large, `5`=User not allowlisted for historical replay | Yes      |

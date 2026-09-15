@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-rfq
-lastmod: 2026-09-12T21:39:30.975Z
+lastmod: 2026-09-14T19:37:19.316Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -76,6 +76,8 @@ paths:
       responses:
         '204':
           description: RFQ deleted successfully
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '404':
@@ -92,10 +94,18 @@ components:
       name: rfq_id
       in: path
       required: true
-      description: RFQ ID
+      description: >-
+        RFQ UUID returned when the RFQ was created. Pass it unchanged; malformed
+        IDs return HTTP 400.
       schema:
         type: string
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:

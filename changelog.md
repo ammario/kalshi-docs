@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-11T16:39:52.324Z
+lastmod: 2026-09-15T00:33:26.756Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,57 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="September 17, 2026"
+  tags={["WebSocket", "Predictions", "Margin"]}
+  rss={{
+title: "WebSocket schema corrections",
+description: "Updated AsyncAPI specifications describe existing nullable fields, enum values, and response fields."
+}}
+>
+  Updated the [Predictions](/asyncapi.yaml) and [Margin](/perps_asyncapi.yaml)
+  WebSocket AsyncAPI specifications to accurately describe existing nullable
+  fields, enum values, and response fields. If you generate client types or
+  validate messages against these specifications, refresh your schemas.
+  These schema corrections describe existing message formats.
+</Update>
+
+<Update
+  label="September 17, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "FIX EventResendRequest (35=U1) Gated",
+description: "FIX EventResendRequest (35=U1) Gated"
+}}
+>
+  `EventResendRequest` (`35=U1`) on `KalshiNR` and `KalshiDC` will require account
+  allowlisting for Predictions and Margin. Contact
+  [institutional@kalshi.com](mailto:institutional@kalshi.com) to request access.
+</Update>
+
+<Update
+  label="September 17, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Historical fills and orders support min_ts",
+description: "Historical fills and orders support min_ts"
+}}
+>
+  `GET /trade-api/v2/historical/fills` and
+  `GET /trade-api/v2/historical/orders` now accept `min_ts`.
+</Update>
+
+<Update
+  label="September 17, 2026"
+  tags={["REST", "FIX", "Predictions"]}
+  rss={{
+title: "Reduced rate limit cost for QuoteConfirm when providing the RFQ ID.",
+description: "Reduced rate limit cost for QuoteConfirm when providing the RFQ ID."
+}}
+>
+  Reduced rate limit cost for QuoteConfirm when providing the RFQ ID.
+</Update>
 
 <Update
   label="September 17, 2026"

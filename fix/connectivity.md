@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2026-09-11T14:25:28.103Z
+lastmod: 2026-09-14T18:17:55.107Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,7 +22,7 @@ lastmod: 2026-09-11T14:25:28.103Z
     | ------------------------------------ | ---- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
     | Order Entry (without retransmission) | 8228 | KalshiNR     | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix/listener-sessions) for read-only streaming                                                                                            |
     | Order Entry (with retransmission)    | 8230 | KalshiRT     | Order entry with message retransmission, RFQ creation, and optional settlement reports. Supports [Listener Sessions](/fix/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
-    | Drop Copy                            | 8229 | KalshiDC     | Request-response queries for historical execution reports                                                                                                                                                                                            |
+    | Drop Copy                            | 8229 | KalshiDC     | Request-response queries for historical execution reports; [gated access](/fix/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com)                                                                                       |
     | Post Trade                           | 8231 | KalshiPT     | Read-only stream for market settlement reports and position resolution. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access                                                                                               |
     | RFQ                                  | 8232 | KalshiRFQ    | Market maker session for receiving RFQ broadcasts, submitting quotes, and managing quote lifecycle                                                                                                                                                   |
     | Market Data                          | 8233 | KalshiMD     | Order book snapshots and incremental updates. Available only on market data host                                                                                                                                                                     |
@@ -37,12 +37,14 @@ lastmod: 2026-09-11T14:25:28.103Z
     | ------------------------------------ | ---- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
     | Order Entry (without retransmission) | 8228 | KalshiNR     | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix/listener-sessions) for read-only streaming                                                                                            |
     | Order Entry (with retransmission)    | 8230 | KalshiRT     | Order entry with message retransmission, RFQ creation, and optional settlement reports. Supports [Listener Sessions](/fix/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
-    | Drop Copy                            | 8229 | KalshiDC     | Request-response queries for historical execution reports                                                                                                                                                                                            |
+    | Drop Copy                            | 8229 | KalshiDC     | Request-response queries for historical execution reports; [gated access](/fix/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com)                                                                                       |
     | Post Trade                           | 8231 | KalshiPT     | Read-only stream for market settlement reports and position resolution. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access                                                                                               |
     | RFQ                                  | 8232 | KalshiRFQ    | Market maker session for receiving RFQ broadcasts, submitting quotes, and managing quote lifecycle                                                                                                                                                   |
     | Market Data                          | 8233 | KalshiMD     | Order book snapshots and incremental updates. Available only on market data host                                                                                                                                                                     |
   </Tab>
 </Tabs>
+
+Historical replay through `EventResendRequest` (`35=U1`) on both `KalshiNR` and `KalshiDC` requires [account allowlisting](/fix/drop-copy). NR users can log in and trade without replay access.
 
 ## Session Configuration
 

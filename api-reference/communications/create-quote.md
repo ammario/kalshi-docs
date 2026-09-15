@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-quote
-lastmod: 2026-09-12T21:39:31.014Z
+lastmod: 2026-09-14T19:37:19.367Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -109,7 +109,9 @@ components:
       properties:
         rfq_id:
           type: string
-          description: The ID of the RFQ to quote on
+          description: >-
+            The UUID of the RFQ to quote on. Pass the RFQ ID unchanged;
+            malformed IDs return HTTP 400.
         yes_bid:
           $ref: '#/components/schemas/FixedPointDollars'
           type: string
@@ -138,7 +140,9 @@ components:
       properties:
         id:
           type: string
-          description: The ID of the newly created quote
+          description: >-
+            UUID of the newly created quote. Pass it unchanged in subsequent
+            requests.
     FixedPointDollars:
       type: string
       description: >-

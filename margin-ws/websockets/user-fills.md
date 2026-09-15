@@ -131,7 +131,7 @@ operations:
             type:
               type: string
               const: fill
-              x-parser-schema-id: <anonymous-schema-78>
+              x-parser-schema-id: <anonymous-schema-83>
             sid:
               type: integer
               minimum: 1
@@ -155,21 +155,21 @@ operations:
                 trade_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-80>
+                  x-parser-schema-id: <anonymous-schema-85>
                 order_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-81>
+                  x-parser-schema-id: <anonymous-schema-86>
                 client_order_id:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-82>
+                  x-parser-schema-id: <anonymous-schema-87>
                 market_ticker:
                   type: string
                   description: Unique market identifier
                   x-parser-schema-id: marketTicker
                 is_taker:
                   type: boolean
-                  x-parser-schema-id: <anonymous-schema-83>
+                  x-parser-schema-id: <anonymous-schema-88>
                 side:
                   type: string
                   enum:
@@ -180,22 +180,22 @@ operations:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-84>
+                  x-parser-schema-id: <anonymous-schema-89>
                 price:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-85>
+                  x-parser-schema-id: <anonymous-schema-90>
                 count:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-86>
+                  x-parser-schema-id: <anonymous-schema-91>
                 fee_cost:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-87>
+                  x-parser-schema-id: <anonymous-schema-92>
                 post_position:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-88>
+                  x-parser-schema-id: <anonymous-schema-93>
                 subaccount:
                   type: integer
-                  x-parser-schema-id: <anonymous-schema-89>
+                  x-parser-schema-id: <anonymous-schema-94>
                 order_source:
                   type: string
                   enum:
@@ -204,8 +204,8 @@ operations:
                   description: |
                     `system` for liquidations and margin exit or trailing-stop
                     triggers. `user` for every other order.
-                  x-parser-schema-id: <anonymous-schema-90>
-              x-parser-schema-id: <anonymous-schema-79>
+                  x-parser-schema-id: <anonymous-schema-95>
+              x-parser-schema-id: <anonymous-schema-84>
           x-parser-schema-id: marginFillPayload
         title: Fill Update
         description: Private margin fill information for the authenticated user

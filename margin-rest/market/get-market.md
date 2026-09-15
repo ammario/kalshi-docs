@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market
-lastmod: 2026-09-12T21:39:31.420Z
+lastmod: 2026-09-14T19:37:20.384Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -99,6 +99,7 @@ components:
         - status
         - title
         - contract_size
+        - underlying_multiplier
         - tick_size
         - fractional_trading_enabled
         - schedule
@@ -117,6 +118,9 @@ components:
         contract_size:
           type: string
           description: Fixed-point number with 6 decimal places
+        underlying_multiplier:
+          type: string
+          description: Underlying units per contract-size unit.
         tick_size:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Minimum price increment in dollars.
