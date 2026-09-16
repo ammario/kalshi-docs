@@ -2927,12 +2927,10 @@ components:
               description: Fixed-point open interest (2 decimals)
             dollar_volume:
               type: integer
-              description: Number of dollars traded in the market so far
-              minimum: 0
+              description: Signed whole-dollar cumulative traded notional
             dollar_open_interest:
               type: integer
-              description: Number of dollars positioned in the market currently
-              minimum: 0
+              description: Signed whole-dollar open-interest notional
             yes_bid_size_fp:
               type: string
               description: Fixed-point contracts at best bid (2 decimals)

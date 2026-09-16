@@ -1,20 +1,24 @@
 ---
-url: https://docs.kalshi.com/api-reference/communications/accept-rfq-quote
-lastmod: 2026-09-15T21:44:02.987Z
+url: https://docs.kalshi.com/api-reference/fcm/list-fcm-subtraders
+lastmod: 2026-09-15T21:44:03.314Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Accept RFQ Quote
+# List FCM Subtraders
 
->  Endpoint for accepting a quote scoped to its RFQ. This will require the quoter to confirm.
+> Lists the authenticated FCM's event-contract subtraders, including accounts with
+no trades. Exchange metadata is asynchronous, so newly created accounts may not
+appear immediately. Trading block status includes firm-wide and Kalshi restrictions;
+fcm_trading_blocked identifies the FCM's own per-subtrader restriction.
+
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml put /communications/rfqs/{rfq_id}/quotes/{quote_id}/accept
+````yaml /openapi.yaml get /fcm/subtraders
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,31 +68,34 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /communications/rfqs/{rfq_id}/quotes/{quote_id}/accept:
-    put:
+  /fcm/subtraders:
+    get:
       tags:
-        - communications
-      summary: Accept RFQ Quote
-      description: ' Endpoint for accepting a quote scoped to its RFQ. This will require the quoter to confirm.'
-      operationId: AcceptRFQQuote
-      parameters:
-        - $ref: '#/components/parameters/RfqIdPath'
-        - $ref: '#/components/parameters/QuoteIdPath'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AcceptQuoteRequest'
+        - fcm
+      summary: List FCM Subtraders
+      description: >
+        Lists the authenticated FCM's event-contract subtraders, including
+        accounts with
+
+        no trades. Exchange metadata is asynchronous, so newly created accounts
+        may not
+
+        appear immediately. Trading block status includes firm-wide and Kalshi
+        restrictions;
+
+        fcm_trading_blocked identifies the FCM's own per-subtrader restriction.
+      operationId: ListFCMSubtraders
       responses:
-        '204':
-          description: Quote accepted successfully
-        '400':
-          $ref: '#/components/responses/BadRequestError'
+        '200':
+          description: Event-contract subtraders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListFCMSubtradersResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -96,37 +103,47 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    RfqIdPath:
-      name: rfq_id
-      in: path
-      required: true
-      description: >-
-        RFQ UUID returned when the RFQ was created. Pass it unchanged; malformed
-        IDs return HTTP 400.
-      schema:
-        type: string
-    QuoteIdPath:
-      name: quote_id
-      in: path
-      required: true
-      description: >-
-        Quote UUID. Pass the ID exactly as received when the quote was created;
-        malformed IDs return HTTP 400.
-      schema:
-        type: string
   schemas:
-    AcceptQuoteRequest:
+    ListFCMSubtradersResponse:
       type: object
       required:
-        - accepted_side
+        - subtraders
       properties:
-        accepted_side:
+        subtraders:
+          type: array
+          items:
+            $ref: '#/components/schemas/FCMSubtrader'
+    FCMSubtrader:
+      type: object
+      required:
+        - subtrader_id
+        - exchange_indices
+        - trading_blocked
+        - fcm_trading_blocked
+        - propagation_pending
+      properties:
+        subtrader_id:
           type: string
-          description: The side of the quote to accept (yes or no)
-          enum:
-            - 'yes'
-            - 'no'
+          description: Full subtrader identifier owned by the authenticated FCM.
+        exchange_indices:
+          type: array
+          description: Exchange indices where this subtrader has been observed.
+          items:
+            type: integer
+            format: int32
+        trading_blocked:
+          type: boolean
+          description: >-
+            Effective trading block, including firm-wide and Kalshi
+            restrictions.
+        fcm_trading_blocked:
+          type: boolean
+          description: Whether an FCM-owned per-subtrader trading block is configured.
+        propagation_pending:
+          type: boolean
+          description: >-
+            Whether a configured per-subtrader block is awaiting engine
+            application.
     ErrorResponse:
       type: object
       properties:
@@ -140,20 +157,14 @@ components:
           type: string
           description: Additional details about the error, if available
   responses:
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:

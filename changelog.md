@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-15T00:33:26.756Z
+lastmod: 2026-09-16T01:11:34.632Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,6 +22,44 @@ the `FIX` tag.
 
 <Update
   label="September 17, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin market important information",
+description: "Margin market responses expose important-information notices in product_metadata."
+}}
+>
+  `GET /trade-api/v2/margin/markets` and `GET /trade-api/v2/margin/markets/{ticker}`
+  include optional `product_metadata.important_info.markdown` for market notices.
+</Update>
+
+<Update
+  label="September 17, 2026"
+  tags={["REST", "WebSocket", "FIX", "Margin"]}
+  rss={{
+title: "KXSILVERPERP tick size increases to 5 centicents",
+description: "During scheduled maintenance, the KXSILVERPERP tick size will increase from 1 centicent to 5 centicents, and all resting orders will be canceled. When trading resumes, orders at invalid ticks will be rejected."
+}}
+>
+  During the scheduled maintenance window, the tick size for `KXSILVERPERP`
+  will increase from 1 centicent to 5 centicents. All resting orders in the
+  market will be canceled. When trading resumes, orders with prices that are
+  not multiples of 5 centicents will be rejected.
+</Update>
+
+<Update
+  label="September 17, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin market responses return the configured tick size",
+description: "The tick_size field reflects each margin market's configured price increment."
+}}
+>
+  Margin market GET responses now return the market's configured price increment in
+  `tick_size`, including after a tick-size update.
+</Update>
+
+<Update
+  label="September 17, 2026"
   tags={["WebSocket", "Predictions", "Margin"]}
   rss={{
 title: "WebSocket schema corrections",
@@ -30,8 +68,10 @@ description: "Updated AsyncAPI specifications describe existing nullable fields,
 >
   Updated the [Predictions](/asyncapi.yaml) and [Margin](/perps_asyncapi.yaml)
   WebSocket AsyncAPI specifications to accurately describe existing nullable
-  fields, enum values, and response fields. If you generate client types or
-  validate messages against these specifications, refresh your schemas.
+  fields, enum values, and response fields. The Predictions ticker schema also
+  permits signed integers for `dollar_volume` and `dollar_open_interest`.
+  If you generate client types or validate messages against these specifications,
+  refresh your schemas.
   These schema corrections describe existing message formats.
 </Update>
 

@@ -114,11 +114,11 @@ operations:
                     required: true
                   - name: dollar_volume
                     type: integer
-                    description: Number of dollars traded in the market so far
+                    description: Signed whole-dollar cumulative traded notional
                     required: true
                   - name: dollar_open_interest
                     type: integer
-                    description: Number of dollars positioned in the market currently
+                    description: Signed whole-dollar open-interest notional
                     required: true
                   - name: yes_bid_size_fp
                     type: string
@@ -223,13 +223,11 @@ operations:
                   x-parser-schema-id: <anonymous-schema-96>
                 dollar_volume:
                   type: integer
-                  description: Number of dollars traded in the market so far
-                  minimum: 0
+                  description: Signed whole-dollar cumulative traded notional
                   x-parser-schema-id: <anonymous-schema-97>
                 dollar_open_interest:
                   type: integer
-                  description: Number of dollars positioned in the market currently
-                  minimum: 0
+                  description: Signed whole-dollar open-interest notional
                   x-parser-schema-id: <anonymous-schema-98>
                 yes_bid_size_fp:
                   type: string

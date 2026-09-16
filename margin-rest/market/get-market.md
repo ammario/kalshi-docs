@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market
-lastmod: 2026-09-14T19:37:20.384Z
+lastmod: 2026-09-15T21:44:03.610Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -205,6 +205,17 @@ components:
           description: >
             Asset class grouping for this market. New asset classes may be added
             over time. Omitted when the market has no assigned class.
+        product_metadata:
+          type: object
+          additionalProperties: true
+          x-omitempty: true
+          x-go-type-skip-optional-pointer: true
+          description: Public metadata for this market.
+          example:
+            important_info:
+              markdown: >-
+                **Important information:** Review this market's trading
+                schedule.
         schedule:
           $ref: '#/components/schemas/MarginMarketSchedule'
     ErrorResponse:
