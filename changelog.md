@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-16T01:11:34.632Z
+lastmod: 2026-09-16T19:38:16.797Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -30,20 +30,6 @@ description: "Margin market responses expose important-information notices in pr
 >
   `GET /trade-api/v2/margin/markets` and `GET /trade-api/v2/margin/markets/{ticker}`
   include optional `product_metadata.important_info.markdown` for market notices.
-</Update>
-
-<Update
-  label="September 17, 2026"
-  tags={["REST", "WebSocket", "FIX", "Margin"]}
-  rss={{
-title: "KXSILVERPERP tick size increases to 5 centicents",
-description: "During scheduled maintenance, the KXSILVERPERP tick size will increase from 1 centicent to 5 centicents, and all resting orders will be canceled. When trading resumes, orders at invalid ticks will be rejected."
-}}
->
-  During the scheduled maintenance window, the tick size for `KXSILVERPERP`
-  will increase from 1 centicent to 5 centicents. All resting orders in the
-  market will be canceled. When trading resumes, orders with prices that are
-  not multiples of 5 centicents will be rejected.
 </Update>
 
 <Update

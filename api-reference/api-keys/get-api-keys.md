@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/get-api-keys
-lastmod: 2026-09-15T21:44:03.069Z
+lastmod: 2026-09-17T05:04:56.903Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -161,6 +161,7 @@ components:
         - read::portfolio_balance
         - write::trade
         - write::transfer
+        - write::fcm_risk
         - write::block_trade_accept
       x-enum-varnames:
         - ApiKeyScopeRead
@@ -169,14 +170,16 @@ components:
         - ApiKeyScopeReadPortfolioBalance
         - ApiKeyScopeWriteTrade
         - ApiKeyScopeWriteTransfer
+        - ApiKeyScopeWriteFCMRisk
         - ApiKeyScopeWriteBlockTradeAccept
       description: >-
         Scope granted to an API key. Parent scopes grant broad access; for
         example, `read` grants all read endpoints and `write` grants all write
         endpoints. Child scopes such as `read::block_trade_accept`,
-        `read::portfolio_balance`, `write::trade`, `write::transfer`, and
-        `write::block_trade_accept` grant only their specific endpoint group and
-        can be granted without the parent scope.
+        `read::portfolio_balance`, `write::trade`, `write::transfer`,
+        `write::fcm_risk` (FCM subtrader creation, trading blocks, daily premium
+        caps, and margin caps), and `write::block_trade_accept` grant only their
+        specific endpoint group and can be granted without the parent scope.
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

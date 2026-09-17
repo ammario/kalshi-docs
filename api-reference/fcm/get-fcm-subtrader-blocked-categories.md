@@ -1,20 +1,23 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-intra-account-transfer
-lastmod: 2026-09-17T05:04:56.556Z
+url: https://docs.kalshi.com/api-reference/fcm/get-fcm-subtrader-blocked-categories
+lastmod: 2026-09-17T05:04:57.258Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Intra Account Transfer
+# Get FCM Subtrader Blocked Categories
 
-> Endpoint for getting a single intra-account transfer by id.
+> Returns the event categories an FCM member has blocked for one of its
+subtraders. The subtrader must belong to the requesting FCM. A subtrader
+with no blocks returns an empty list.
+
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/intra_exchange_instance_transfers/{transfer_id}
+````yaml /openapi.yaml get /fcm/subtraders/blocked_categories
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,31 +67,38 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/intra_exchange_instance_transfers/{transfer_id}:
+  /fcm/subtraders/blocked_categories:
     get:
       tags:
-        - portfolio
-      summary: Get Intra Account Transfer
-      description: Endpoint for getting a single intra-account transfer by id.
-      operationId: GetIntraExchangeInstanceTransfer
+        - fcm
+      summary: Get FCM Subtrader Blocked Categories
+      description: |
+        Returns the event categories an FCM member has blocked for one of its
+        subtraders. The subtrader must belong to the requesting FCM. A subtrader
+        with no blocks returns an empty list.
+      operationId: GetFCMSubtraderBlockedCategories
       parameters:
-        - name: transfer_id
-          in: path
+        - name: subtrader_id
+          in: query
           required: true
-          description: Transfer id returned by creation endpoint
+          description: >-
+            The subtrader whose blocked categories should be returned. Must
+            belong to the requesting FCM.
           schema:
             type: string
       responses:
         '200':
-          description: The requested transfer
+          description: Blocked categories retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetIntraExchangeInstanceTransferResponse'
+                $ref: '#/components/schemas/GetFCMSubtraderBlockedCategoriesResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -97,49 +107,18 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
-    GetIntraExchangeInstanceTransferResponse:
+    GetFCMSubtraderBlockedCategoriesResponse:
       type: object
       required:
-        - transfer
+        - categories
       properties:
-        transfer:
-          $ref: '#/components/schemas/IntraExchangeInstanceTransfer'
-    IntraExchangeInstanceTransfer:
-      type: object
-      required:
-        - transfer_id
-        - source
-        - destination
-        - source_exchange_shard
-        - destination_exchange_shard
-        - amount
-        - status
-        - created_ts
-      properties:
-        transfer_id:
-          type: string
-          description: Unique transfer id
-        source:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: Source exchange instance
-        destination:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: Destination exchange instance
-        source_exchange_shard:
-          type: integer
-          description: Source exchange shard index
-        destination_exchange_shard:
-          type: integer
-          description: Destination exchange shard index
-        amount:
-          $ref: '#/components/schemas/FixedPointDollars'
-          description: Transfer amount in dollars
-        status:
-          $ref: '#/components/schemas/IntraExchangeInstanceTransferStatus'
-        created_ts:
-          type: integer
-          format: int64
-          description: Unix timestamp when the transfer was created
+        categories:
+          type: array
+          description: >-
+            The event categories blocked for the subtrader, sorted ascending.
+            Empty when no categories are blocked.
+          items:
+            type: string
     ErrorResponse:
       type: object
       properties:
@@ -152,38 +131,21 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-    ExchangeInstance:
-      type: string
-      enum:
-        - event_contract
-        - margined
-      description: The exchange instance type
-    FixedPointDollars:
-      type: string
-      description: >-
-        Fixed-point US dollar string. Most request fields accept 2-4 decimal
-        places (e.g., "0.56", "0.5600"); responses emit up to 6. Valid quote
-        intervals for a given market are constrained by that market's price
-        level structure.
-      example: '0.5600'
-    IntraExchangeInstanceTransferStatus:
-      type: string
-      enum:
-        - pending
-        - complete
-      x-enum-varnames:
-        - IntraExchangeInstanceTransferStatusPending
-        - IntraExchangeInstanceTransferStatusComplete
-      description: Transfer status.
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/create-fcm-subtrader
-lastmod: 2026-09-15T21:44:03.323Z
+lastmod: 2026-09-17T05:04:57.209Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -122,8 +122,8 @@ components:
         subtrader_suffix:
           type: string
           description: >-
-            Suffix for the new subtrader, 1-16 lowercase alphanumeric characters
-            ([a-z0-9]). The full subtrader id becomes
+            Suffix for the new subtrader, 1-16 case-sensitive ASCII alphanumeric
+            characters ([A-Za-z0-9]). The full subtrader id becomes
             {your_account_id}_{suffix}.
     CreateFCMSubtraderResponse:
       type: object

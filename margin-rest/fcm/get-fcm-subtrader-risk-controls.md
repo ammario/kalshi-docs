@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fcm/get-fcm-subtrader-risk-controls
-lastmod: 2026-09-15T21:44:03.484Z
+lastmod: 2026-09-17T05:04:57.415Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,6 +12,9 @@ lastmod: 2026-09-15T21:44:03.484Z
 exchange. A cap with neither market_ticker nor asset_class applies across all markets; the
 remaining caps are scoped to a single market or a single asset class each. Every cap in
 scope for an order is enforced independently. Markets without a cap are omitted.
+API keys bound to a single FCM subtrader may also call this endpoint: `subtrader_id` may be
+omitted and defaults to the key's bound subtrader, and if supplied it must equal the bound
+subtrader or the request is rejected.
 
 
 
@@ -73,16 +76,27 @@ paths:
 
         scope for an order is enforced independently. Markets without a cap are
         omitted.
+
+        API keys bound to a single FCM subtrader may also call this endpoint:
+        `subtrader_id` may be
+
+        omitted and defaults to the key's bound subtrader, and if supplied it
+        must equal the bound
+
+        subtrader or the request is rejected.
       operationId: GetFCMSubtraderRiskControls
       parameters:
         - name: subtrader_id
           in: query
-          required: true
+          required: false
           description: >-
             The subtrader whose initial margin caps should be returned. Must
-            belong to the requesting FCM.
+            belong to the requesting FCM. Required unless the API key is bound
+            to a subtrader, in which case it defaults to the bound subtrader
+            when omitted and must equal it when supplied.
           schema:
             type: string
+            x-go-type-skip-optional-pointer: true
         - name: market_ticker
           in: query
           required: false

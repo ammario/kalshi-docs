@@ -1,20 +1,26 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-intra-account-transfer
-lastmod: 2026-09-17T05:04:56.556Z
+url: https://docs.kalshi.com/api-reference/fcm/update-fcm-subtrader-blocked-categories
+lastmod: 2026-09-17T05:04:57.275Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Intra Account Transfer
+# Update FCM Subtrader Blocked Categories
 
-> Endpoint for getting a single intra-account transfer by id.
+> Adds one event category to, or removes one from, the set an FCM member
+has blocked for one of its subtraders. The subtrader must belong to the
+requesting FCM. Blocks apply prospectively: new orders the subtrader
+places through its bound API credentials are rejected in markets whose
+event belongs to a blocked category, while orders already resting are
+not cancelled. Returns the subtrader's full resulting blocked set.
+
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/intra_exchange_instance_transfers/{transfer_id}
+````yaml /openapi.yaml put /fcm/subtraders/blocked_categories
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,29 +70,39 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/intra_exchange_instance_transfers/{transfer_id}:
-    get:
+  /fcm/subtraders/blocked_categories:
+    put:
       tags:
-        - portfolio
-      summary: Get Intra Account Transfer
-      description: Endpoint for getting a single intra-account transfer by id.
-      operationId: GetIntraExchangeInstanceTransfer
-      parameters:
-        - name: transfer_id
-          in: path
-          required: true
-          description: Transfer id returned by creation endpoint
-          schema:
-            type: string
+        - fcm
+      summary: Update FCM Subtrader Blocked Categories
+      description: |
+        Adds one event category to, or removes one from, the set an FCM member
+        has blocked for one of its subtraders. The subtrader must belong to the
+        requesting FCM. Blocks apply prospectively: new orders the subtrader
+        places through its bound API credentials are rejected in markets whose
+        event belongs to a blocked category, while orders already resting are
+        not cancelled. Returns the subtrader's full resulting blocked set.
+      operationId: UpdateFCMSubtraderBlockedCategories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFCMSubtraderBlockedCategoriesRequest'
       responses:
         '200':
-          description: The requested transfer
+          description: Blocked categories updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetIntraExchangeInstanceTransferResponse'
+                $ref: >-
+                  #/components/schemas/UpdateFCMSubtraderBlockedCategoriesResponse
+        '400':
+          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '404':
           $ref: '#/components/responses/NotFoundError'
         '500':
@@ -97,49 +113,38 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
-    GetIntraExchangeInstanceTransferResponse:
+    UpdateFCMSubtraderBlockedCategoriesRequest:
       type: object
       required:
-        - transfer
+        - subtrader_id
+        - category
+        - blocked
       properties:
-        transfer:
-          $ref: '#/components/schemas/IntraExchangeInstanceTransfer'
-    IntraExchangeInstanceTransfer:
-      type: object
-      required:
-        - transfer_id
-        - source
-        - destination
-        - source_exchange_shard
-        - destination_exchange_shard
-        - amount
-        - status
-        - created_ts
-      properties:
-        transfer_id:
+        subtrader_id:
           type: string
-          description: Unique transfer id
-        source:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: Source exchange instance
-        destination:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: Destination exchange instance
-        source_exchange_shard:
-          type: integer
-          description: Source exchange shard index
-        destination_exchange_shard:
-          type: integer
-          description: Destination exchange shard index
-        amount:
-          $ref: '#/components/schemas/FixedPointDollars'
-          description: Transfer amount in dollars
-        status:
-          $ref: '#/components/schemas/IntraExchangeInstanceTransferStatus'
-        created_ts:
-          type: integer
-          format: int64
-          description: Unix timestamp when the transfer was created
+          description: >-
+            The subtrader whose blocked categories should be updated. Must
+            belong to the requesting FCM.
+        category:
+          type: string
+          description: >-
+            A single event category to add to or remove from the blocked set,
+            1-100 characters (e.g. "Politics").
+        blocked:
+          type: boolean
+          description: >-
+            True adds the category to the blocked set; false removes it.
+            Removing a category that is not blocked is a no-op.
+    UpdateFCMSubtraderBlockedCategoriesResponse:
+      type: object
+      required:
+        - categories
+      properties:
+        categories:
+          type: array
+          description: The subtrader's full resulting blocked set, sorted ascending.
+          items:
+            type: string
     ErrorResponse:
       type: object
       properties:
@@ -152,32 +157,21 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-    ExchangeInstance:
-      type: string
-      enum:
-        - event_contract
-        - margined
-      description: The exchange instance type
-    FixedPointDollars:
-      type: string
-      description: >-
-        Fixed-point US dollar string. Most request fields accept 2-4 decimal
-        places (e.g., "0.56", "0.5600"); responses emit up to 6. Valid quote
-        intervals for a given market are constrained by that market's price
-        level structure.
-      example: '0.5600'
-    IntraExchangeInstanceTransferStatus:
-      type: string
-      enum:
-        - pending
-        - complete
-      x-enum-varnames:
-        - IntraExchangeInstanceTransferStatusPending
-        - IntraExchangeInstanceTransferStatusComplete
-      description: Transfer status.
   responses:
+    BadRequestError:
+      description: Bad request - invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:

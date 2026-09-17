@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-positions
-lastmod: 2026-09-15T21:44:03.391Z
+lastmod: 2026-09-17T05:04:57.306Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,9 @@ lastmod: 2026-09-15T21:44:03.391Z
 
 > Endpoint for FCM members to get market positions filtered by subtrader ID.
 This endpoint requires FCM member access level and allows filtering positions by subtrader ID.
+API keys bound to a single FCM subtrader may also call this endpoint: `subtrader_id` may be
+omitted and defaults to the key's bound subtrader, and if supplied it must equal the bound
+subtrader or the request is rejected.
 
 
 
@@ -77,16 +80,26 @@ paths:
 
         This endpoint requires FCM member access level and allows filtering
         positions by subtrader ID.
+
+        API keys bound to a single FCM subtrader may also call this endpoint:
+        `subtrader_id` may be
+
+        omitted and defaults to the key's bound subtrader, and if supplied it
+        must equal the bound
+
+        subtrader or the request is rejected.
       operationId: GetFCMPositions
       parameters:
         - name: subtrader_id
           in: query
-          required: true
           description: >-
             Restricts the response to positions for a specific subtrader (FCM
-            members only)
+            members only). Required unless the API key is bound to a subtrader,
+            in which case it defaults to the bound subtrader when omitted and
+            must equal it when supplied.
           schema:
             type: string
+            x-go-type-skip-optional-pointer: true
         - name: ticker
           in: query
           description: Ticker of desired positions
@@ -140,6 +153,8 @@ paths:
           description: Bad request
         '401':
           description: Unauthorized
+        '403':
+          description: Forbidden - the API key is bound to a different FCM subtrader
         '404':
           description: Not found
         '500':

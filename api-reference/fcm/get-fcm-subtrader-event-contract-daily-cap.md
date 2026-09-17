@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-subtrader-event-contract-daily-cap
-lastmod: 2026-09-15T21:44:03.333Z
+lastmod: 2026-09-17T05:04:57.220Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -16,6 +16,9 @@ resets at midnight New York time on the returned cap date; resting and pending
 reservations persist for as long as their orders remain open, including across the reset.
 Returns 404 when the subtrader has no cap configured — in that state every order placed
 through the subtrader's bound API keys is rejected.
+API keys bound to a single FCM subtrader may also call this endpoint: `subtrader_id` may be
+omitted and defaults to the key's bound subtrader, and if supplied it must equal the bound
+subtrader or the request is rejected.
 
 
 
@@ -100,16 +103,26 @@ paths:
         every order placed
 
         through the subtrader's bound API keys is rejected.
+
+        API keys bound to a single FCM subtrader may also call this endpoint:
+        `subtrader_id` may be
+
+        omitted and defaults to the key's bound subtrader, and if supplied it
+        must equal the bound
+
+        subtrader or the request is rejected.
       operationId: GetFCMEventContractDailyCap
       parameters:
         - name: subtrader_id
           in: query
-          required: true
           description: >-
             The subtrader whose daily cap should be returned. Must belong to the
-            requesting FCM.
+            requesting FCM. Required unless the API key is bound to a subtrader,
+            in which case it defaults to the bound subtrader when omitted and
+            must equal it when supplied.
           schema:
             type: string
+            x-go-type-skip-optional-pointer: true
       responses:
         '200':
           description: Daily cap retrieved successfully

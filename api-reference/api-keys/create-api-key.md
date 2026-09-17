@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/create-api-key
-lastmod: 2026-09-15T21:44:03.078Z
+lastmod: 2026-09-17T05:04:56.915Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -142,12 +142,12 @@ components:
           description: >-
             FCM members only. If set, binds the API key to a single FCM
             subtrader that you own, spelled {your_user_id}_{suffix} with a
-            suffix of 1-16 lowercase alphanumeric characters. The subtrader must
-            already exist. A bound key is the institution's trading credential
-            for that subtrader - FIX order-entry and market-data sessions, plus
-            margin WebSocket sessions scoped to the subtrader's own data - and
-            is denied on every REST endpoint, including key management. Mutually
-            exclusive with subaccount.
+            suffix of 1-16 case-sensitive ASCII alphanumeric characters. The
+            subtrader must already exist. A bound key is the institution's
+            trading credential for that subtrader - FIX order-entry and
+            market-data sessions, plus margin WebSocket sessions scoped to the
+            subtrader's own data - and is denied on every REST endpoint,
+            including key management. Mutually exclusive with subaccount.
     CreateApiKeyResponse:
       type: object
       required:
@@ -176,6 +176,7 @@ components:
         - read::portfolio_balance
         - write::trade
         - write::transfer
+        - write::fcm_risk
         - write::block_trade_accept
       x-enum-varnames:
         - ApiKeyScopeRead
@@ -184,14 +185,16 @@ components:
         - ApiKeyScopeReadPortfolioBalance
         - ApiKeyScopeWriteTrade
         - ApiKeyScopeWriteTransfer
+        - ApiKeyScopeWriteFCMRisk
         - ApiKeyScopeWriteBlockTradeAccept
       description: >-
         Scope granted to an API key. Parent scopes grant broad access; for
         example, `read` grants all read endpoints and `write` grants all write
         endpoints. Child scopes such as `read::block_trade_accept`,
-        `read::portfolio_balance`, `write::trade`, `write::transfer`, and
-        `write::block_trade_accept` grant only their specific endpoint group and
-        can be granted without the parent scope.
+        `read::portfolio_balance`, `write::trade`, `write::transfer`,
+        `write::fcm_risk` (FCM subtrader creation, trading blocks, daily premium
+        caps, and margin caps), and `write::block_trade_accept` grant only their
+        specific endpoint group and can be granted without the parent scope.
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

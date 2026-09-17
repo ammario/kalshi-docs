@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-orders
-lastmod: 2026-09-15T21:44:03.298Z
+lastmod: 2026-09-17T05:04:57.189Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -11,6 +11,9 @@ lastmod: 2026-09-15T21:44:03.298Z
 > Endpoint for FCM members to get orders for their subtraders.
 This endpoint requires FCM member access level. At least one of `subtrader_id` or
 `client_order_ids` is required; supplying both returns only the orders matching both filters.
+API keys bound to a single FCM subtrader may also call this endpoint: `subtrader_id` may be
+omitted and defaults to the key's bound subtrader, and if supplied it must equal the bound
+subtrader or the request is rejected.
 
 
 
@@ -80,13 +83,23 @@ paths:
 
         `client_order_ids` is required; supplying both returns only the orders
         matching both filters.
+
+        API keys bound to a single FCM subtrader may also call this endpoint:
+        `subtrader_id` may be
+
+        omitted and defaults to the key's bound subtrader, and if supplied it
+        must equal the bound
+
+        subtrader or the request is rejected.
       operationId: GetFCMOrders
       parameters:
         - name: subtrader_id
           in: query
           description: >-
             Restricts the response to orders for a specific subtrader (FCM
-            members only). Required unless client_order_ids is supplied.
+            members only). Required unless client_order_ids is supplied. For an
+            API key bound to a subtrader, defaults to the bound subtrader when
+            omitted and must equal it when supplied.
           schema:
             type: string
             x-go-type-skip-optional-pointer: true
@@ -148,6 +161,8 @@ paths:
           description: Bad request
         '401':
           description: Unauthorized
+        '403':
+          description: Forbidden - the API key is bound to a different FCM subtrader
         '404':
           description: Not found
         '500':

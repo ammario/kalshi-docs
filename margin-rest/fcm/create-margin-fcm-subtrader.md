@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fcm/create-margin-fcm-subtrader
-lastmod: 2026-09-15T21:44:03.474Z
+lastmod: 2026-09-17T05:04:57.404Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -95,7 +95,7 @@ components:
       properties:
         subtrader_suffix:
           type: string
-          pattern: ^[a-z0-9]{1,16}$
+          pattern: ^[A-Za-z0-9]{1,16}$
           description: >-
             Suffix for the new subtrader. The full subtrader id is composed
             server-side as {user_id}_{subtrader_suffix}.
