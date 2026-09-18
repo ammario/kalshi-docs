@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-fills
-lastmod: 2026-09-17T05:04:57.593Z
+lastmod: 2026-09-17T15:33:17.487Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,8 @@ lastmod: 2026-09-17T05:04:57.593Z
 # Get Fills
 
 > Endpoint for retrieving the authenticated user's margin fills.
+Registered partners may also use a user OAuth access token with the explicitly granted read::compliance_partner scope.
+
 
 
 
@@ -57,7 +59,11 @@ paths:
       tags:
         - portfolio
       summary: Get Fills
-      description: Endpoint for retrieving the authenticated user's margin fills.
+      description: >
+        Endpoint for retrieving the authenticated user's margin fills.
+
+        Registered partners may also use a user OAuth access token with the
+        explicitly granted read::compliance_partner scope.
       operationId: GetMarginFills
       parameters:
         - name: subaccount
@@ -115,6 +121,7 @@ paths:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
+        - kalshiOauthAccessToken: []
 components:
   schemas:
     GetMarginFillsResponse:
@@ -252,5 +259,13 @@ components:
       in: header
       name: KALSHI-ACCESS-TIMESTAMP
       description: Request timestamp in milliseconds
+    kalshiOauthAccessToken:
+      type: http
+      scheme: bearer
+      description: >-
+        User OAuth access token with read::compliance_partner, issued to an
+        explicitly authorized partner. Accepted only on margin fills and margin
+        positions in this lane; generic read and partner client-credentials
+        tokens do not grant access.
 
 ````

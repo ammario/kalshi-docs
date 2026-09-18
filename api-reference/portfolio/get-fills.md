@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-09-17T05:04:56.699Z
+lastmod: 2026-09-17T15:33:16.511Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,7 @@ lastmod: 2026-09-17T05:04:56.699Z
 # Get Fills
 
 > Endpoint for getting all fills for the member. A fill is when a trade you have is matched.
+Registered partners may also use a user OAuth access token with the explicitly granted read::compliance_partner scope.
 Fills that occurred before the historical cutoff are only available via `GET /historical/fills`. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
 
 
@@ -75,6 +76,9 @@ paths:
         Endpoint for getting all fills for the member. A fill is when a trade
         you have is matched.
 
+        Registered partners may also use a user OAuth access token with the
+        explicitly granted read::compliance_partner scope.
+
         Fills that occurred before the historical cutoff are only available via
         `GET /historical/fills`. See [Historical
         Data](https://docs.kalshi.com/getting_started/historical_data) for
@@ -106,6 +110,7 @@ paths:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
+        - kalshiOauthAccessToken: []
 components:
   parameters:
     TickerQuery:
@@ -361,5 +366,13 @@ components:
       in: header
       name: KALSHI-ACCESS-TIMESTAMP
       description: Request timestamp in milliseconds
+    kalshiOauthAccessToken:
+      type: http
+      scheme: bearer
+      description: >-
+        User OAuth access token with read::compliance_partner, issued to an
+        explicitly authorized partner. Accepted only on current and historical
+        fills and current portfolio positions endpoints; generic read and
+        partner client-credentials tokens do not grant access.
 
 ````

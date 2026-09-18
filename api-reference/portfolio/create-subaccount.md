@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/create-subaccount
-lastmod: 2026-09-17T05:04:56.565Z
+lastmod: 2026-09-17T15:33:16.365Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2026-09-17T05:04:56.640Z
+lastmod: 2026-09-17T15:33:16.451Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,9 @@ lastmod: 2026-09-17T05:04:56.640Z
 
 # Get Positions
 
-> Restricts the positions to those with any of following fields with non-zero values, as a comma separated list. The following values are accepted: position, total_traded
+> Restricts the positions to those with any of following fields with non-zero values, as a comma separated list. The following values are accepted: position, total_traded.
+Registered partners may also use a user OAuth access token with the explicitly granted read::compliance_partner scope.
+
 
 
 
@@ -69,10 +71,13 @@ paths:
       tags:
         - portfolio
       summary: Get Positions
-      description: >-
+      description: >
         Restricts the positions to those with any of following fields with
         non-zero values, as a comma separated list. The following values are
-        accepted: position, total_traded
+        accepted: position, total_traded.
+
+        Registered partners may also use a user OAuth access token with the
+        explicitly granted read::compliance_partner scope.
       operationId: GetPositions
       parameters:
         - $ref: '#/components/parameters/PositionsCursorQuery'
@@ -99,6 +104,7 @@ paths:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
+        - kalshiOauthAccessToken: []
 components:
   parameters:
     PositionsCursorQuery:
@@ -323,5 +329,13 @@ components:
       in: header
       name: KALSHI-ACCESS-TIMESTAMP
       description: Request timestamp in milliseconds
+    kalshiOauthAccessToken:
+      type: http
+      scheme: bearer
+      description: >-
+        User OAuth access token with read::compliance_partner, issued to an
+        explicitly authorized partner. Accepted only on current and historical
+        fills and current portfolio positions endpoints; generic read and
+        partner client-credentials tokens do not grant access.
 
 ````

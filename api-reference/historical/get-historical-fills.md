@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-fills
-lastmod: 2026-09-17T05:04:57.338Z
+lastmod: 2026-09-17T15:33:17.188Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,9 @@ lastmod: 2026-09-17T05:04:57.338Z
 
 # Get Historical Fills
 
->  Endpoint for getting all historical fills for the member. A fill is when a trade you have is matched.
+> Endpoint for getting all historical fills for the member. A fill is when a trade you have is matched.
+Registered partners may also use a user OAuth access token with the explicitly granted read::compliance_partner scope.
+
 
 
 
@@ -69,7 +71,12 @@ paths:
       tags:
         - historical
       summary: Get Historical Fills
-      description: ' Endpoint for getting all historical fills for the member. A fill is when a trade you have is matched.'
+      description: >
+        Endpoint for getting all historical fills for the member. A fill is when
+        a trade you have is matched.
+
+        Registered partners may also use a user OAuth access token with the
+        explicitly granted read::compliance_partner scope.
       operationId: GetFillsHistorical
       parameters:
         - $ref: '#/components/parameters/TickerQuery'
@@ -96,6 +103,7 @@ paths:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
+        - kalshiOauthAccessToken: []
 components:
   parameters:
     TickerQuery:
@@ -343,5 +351,13 @@ components:
       in: header
       name: KALSHI-ACCESS-TIMESTAMP
       description: Request timestamp in milliseconds
+    kalshiOauthAccessToken:
+      type: http
+      scheme: bearer
+      description: >-
+        User OAuth access token with read::compliance_partner, issued to an
+        explicitly authorized partner. Accepted only on current and historical
+        fills and current portfolio positions endpoints; generic read and
+        partner client-credentials tokens do not grant access.
 
 ````

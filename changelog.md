@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-16T19:38:16.797Z
+lastmod: 2026-09-17T22:01:49.175Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,19 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="September 24, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Orders historical cutoff advances independently",
+description: "orders_updated_ts in GET /historical/cutoff now advances independently of the other cutoffs and sits two weeks before the present."
+}}
+>
+  `orders_updated_ts` in `GET /trade-api/v2/historical/cutoff` now advances
+  independently of the other cutoffs and sits two weeks before the present.
+  Read it before querying orders.
+</Update>
 
 <Update
   label="September 17, 2026"

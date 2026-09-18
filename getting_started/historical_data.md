@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/historical_data
-lastmod: 2026-07-22T04:22:48.566Z
+lastmod: 2026-09-17T22:01:49.160Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -23,7 +23,7 @@ This separation means that if you query for data that is older than the cutoff (
 
 The boundary between live and historical data is defined by a set of **cutoff timestamps**, which you can retrieve at any time via `GET /historical/cutoff`. Any record older than the relevant cutoff must be queried through the corresponding historical endpoint.
 
-The cutoff timestamps will be regularly updated, advancing forward over time. The target window for live data is **3 months**.
+The cutoff timestamps will be regularly updated, advancing forward over time. Each data type has its own cutoff and the windows differ, so read the field for the data you need rather than assuming one shared window.
 
 ## Cutoff Timestamps
 

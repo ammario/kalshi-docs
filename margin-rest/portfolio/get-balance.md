@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-balance
-lastmod: 2026-09-17T05:04:57.658Z
+lastmod: 2026-09-17T15:33:17.553Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
