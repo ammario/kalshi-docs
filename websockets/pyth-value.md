@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/pyth-value
-lastmod: 2026-07-13T19:43:31.394Z
+lastmod: 2026-09-18T14:24:29.982Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,144 @@ lastmod: 2026-07-13T19:43:31.394Z
 
 # Pyth Value Feed
 
-> Real-time Pyth price updates for configured underlying tickers
+> Real-time Pyth price updates for configured underlying tickers. Requires authentication.
+
+## Access and pricing
+
+The Pyth data feed costs **$1,000/month**, with the **first seven days free**. [Subscribe to the Pyth data feed](https://buy.stripe.com/eVqaEXfmu9eN2ZB8gr4ZG0a).
+
+Connect using an authenticated Kalshi WebSocket session. See [Quick Start: WebSockets](/getting_started/quick_start_websockets#authentication) for API key authentication and request signing.
+
+## Commodities and underlying tickers
+
+The reference table below includes spot metals, commodity futures, and indices. The gold and silver examples are only a subset of the feed coverage.
+
+| Pyth feed ID | Pyth symbol | Description |
+|--------------|-------------|-------------|
+| 345 | `Metal.XAG/USD` | Silver price in USD |
+| 346 | `Metal.XAU/USD` | Gold price in USD |
+| 2937 | `Commodities.CCU6/USD` | Cocoa futures (Sept 2026) in USD |
+| 3052 | `Commodities.COU6/USD` | Crude Oil futures (Sept 2026) in USD |
+| 3053 | `Commodities.COZ6/USD` | Crude Oil futures (Dec 2026) in USD |
+| 3080 | `Commodities.WHU6/USD` | Wheat futures (Sept 2026) in USD |
+| 3081 | `Commodities.WHZ6/USD` | Wheat futures (Dec 2026) in USD |
+| 3085 | `Commodities.SOU6/USD` | Soybeans futures (Sept 2026) in USD |
+| 3086 | `Commodities.SOX6/USD` | Soybeans futures (Nov 2026) in USD |
+| 3063 | `Commodities.Index.PYTHOIL/USD` | Blended Oil Index in USD |
+| 3153 | `Metal.Index.GOLD/USD` | Blended Gold Index in USD |
+| 3154 | `Metal.Index.SILVER/USD` | Blended Silver Index in USD |
+| 3045 | `Commodities.BRENTX6/USD` | Brent Crude futures (Nov 2026) in USD |
+| 3525 | `Commodities.Index.CU/USD` | Copper Index in USD |
+| 3265 | `Commodities.Index.NATGAS/USD` | Natural Gas Index in USD |
+| 3446 | `Commodities.Index.BRENT/USD` | Blended Brent Crude Index in USD |
+| 1781 | `Metal.XPT/USD` | Platinum price in USD |
+| 1780 | `Metal.XPD/USD` | Palladium price in USD |
+
+Pass the exact **Pyth symbol** in `underlying_tickers`. The numeric Pyth feed IDs are reference information and are not subscription parameters for this channel. Kalshi market tickers are not Pyth underlying tickers.
+
+Use `underlying_list` to discover recently streamed tickers on your connection. Availability can change, including as futures contracts expire; the table does not guarantee that every feed is streaming in every environment.
+
+## Requirements
+
+- Authentication required
+- Seed `underlying_tickers` in the initial subscribe, or add them later
+- Use `underlying_tickers: ["all"]` to receive every available underlying
+- Supports `update_subscription` with `subscribe_underlyings`, `unsubscribe_underlyings`, and `underlying_list` actions
+- Duplicate and out-of-order source timestamps are ignored independently per underlying ticker
+
+## Subscription workflow
+
+Subscribe to `pyth_value` with the underlying tickers you want to receive. For example, request gold, oil, and natural gas prices:
+
+```json
+{
+  "id": 1,
+  "cmd": "subscribe",
+  "params": {
+    "channels": ["pyth_value"],
+    "underlying_tickers": [
+      "Metal.XAU/USD",
+      "Commodities.Index.PYTHOIL/USD",
+      "Commodities.Index.NATGAS/USD"
+    ]
+  }
+}
+```
+
+A successful subscribe returns a `subscribed` response with the assigned `sid`. Use that subscription ID in subsequent commands; replace `sid: 1` in the examples below with the returned ID.
+
+You can also omit `underlying_tickers` to create an empty subscription, discover tickers, and add them later. An empty subscription sends no price updates until you add tickers or switch to `["all"]`.
+
+### Discover recently streamed tickers
+
+```json
+{
+  "id": 2,
+  "cmd": "update_subscription",
+  "params": {
+    "sid": 1,
+    "action": "underlying_list"
+  }
+}
+```
+
+Read `msg.underlying_tickers` in the `pyth_value_underlying_list` response. This lists tickers observed on the stream within the last two hours without changing your subscription. It is not a complete catalog: inactive feeds can be absent. A successful subscribe response alone does not confirm that a requested ticker is streaming.
+
+### Add or remove tickers
+
+Add platinum to the existing subscription:
+
+```json
+{
+  "id": 3,
+  "cmd": "update_subscription",
+  "params": {
+    "sid": 1,
+    "action": "subscribe_underlyings",
+    "underlying_tickers": ["Metal.XPT/USD"]
+  }
+}
+```
+
+Remove platinum from the subscription:
+
+```json
+{
+  "id": 4,
+  "cmd": "update_subscription",
+  "params": {
+    "sid": 1,
+    "action": "unsubscribe_underlyings",
+    "underlying_tickers": ["Metal.XPT/USD"]
+  }
+}
+```
+
+### Receive all available underlyings
+
+Set `underlying_tickers` to `["all"]` in the initial subscribe, or enable it on an existing subscription:
+
+```json
+{
+  "id": 5,
+  "cmd": "update_subscription",
+  "params": {
+    "sid": 1,
+    "action": "subscribe_underlyings",
+    "underlying_tickers": ["all"]
+  }
+}
+```
+
+While all-mode is enabled, removing an individual ticker does not exclude it. Send `unsubscribe_underlyings` with `["all"]` to disable all-mode; any explicitly subscribed tickers remain selected.
+
+## Integration notes
+
+- `sid` identifies the subscription stream; use it for `update_subscription` and `unsubscribe`.
+- Missing or empty `underlying_tickers` for `subscribe_underlyings` or `unsubscribe_underlyings` returns an `error` with `code: 28` ("Underlying tickers required").
+- `value_usd` is a USD price string formatted to eight decimal places.
+- `source_ts_ms` is the source timestamp in Unix milliseconds; `received_at` is when Kalshi received the update, also in Unix milliseconds.
+
 
 
 
@@ -22,7 +159,80 @@ description: >
   authentication.
 
 
-  **Requirements:**
+  ## Access and pricing
+
+
+  The Pyth data feed costs **$1,000/month**, with the **first seven days free**.
+  [Subscribe to the Pyth data
+  feed](https://buy.stripe.com/eVqaEXfmu9eN2ZB8gr4ZG0a).
+
+
+  Connect using an authenticated Kalshi WebSocket session. See [Quick Start:
+  WebSockets](/getting_started/quick_start_websockets#authentication) for API
+  key authentication and request signing.
+
+
+  ## Commodities and underlying tickers
+
+
+  The reference table below includes spot metals, commodity futures, and
+  indices. The gold and silver examples are only a subset of the feed coverage.
+
+
+  | Pyth feed ID | Pyth symbol | Description |
+
+  |--------------|-------------|-------------|
+
+  | 345 | `Metal.XAG/USD` | Silver price in USD |
+
+  | 346 | `Metal.XAU/USD` | Gold price in USD |
+
+  | 2937 | `Commodities.CCU6/USD` | Cocoa futures (Sept 2026) in USD |
+
+  | 3052 | `Commodities.COU6/USD` | Crude Oil futures (Sept 2026) in USD |
+
+  | 3053 | `Commodities.COZ6/USD` | Crude Oil futures (Dec 2026) in USD |
+
+  | 3080 | `Commodities.WHU6/USD` | Wheat futures (Sept 2026) in USD |
+
+  | 3081 | `Commodities.WHZ6/USD` | Wheat futures (Dec 2026) in USD |
+
+  | 3085 | `Commodities.SOU6/USD` | Soybeans futures (Sept 2026) in USD |
+
+  | 3086 | `Commodities.SOX6/USD` | Soybeans futures (Nov 2026) in USD |
+
+  | 3063 | `Commodities.Index.PYTHOIL/USD` | Blended Oil Index in USD |
+
+  | 3153 | `Metal.Index.GOLD/USD` | Blended Gold Index in USD |
+
+  | 3154 | `Metal.Index.SILVER/USD` | Blended Silver Index in USD |
+
+  | 3045 | `Commodities.BRENTX6/USD` | Brent Crude futures (Nov 2026) in USD |
+
+  | 3525 | `Commodities.Index.CU/USD` | Copper Index in USD |
+
+  | 3265 | `Commodities.Index.NATGAS/USD` | Natural Gas Index in USD |
+
+  | 3446 | `Commodities.Index.BRENT/USD` | Blended Brent Crude Index in USD |
+
+  | 1781 | `Metal.XPT/USD` | Platinum price in USD |
+
+  | 1780 | `Metal.XPD/USD` | Palladium price in USD |
+
+
+  Pass the exact **Pyth symbol** in `underlying_tickers`. The numeric Pyth feed
+  IDs are reference information and are not subscription parameters for this
+  channel. Kalshi market tickers are not Pyth underlying tickers.
+
+
+  Use `underlying_list` to discover recently streamed tickers on your
+  connection. Availability can change, including as futures contracts expire;
+  the table does not guarantee that every feed is streaming in every
+  environment.
+
+
+  ## Requirements
+
 
   - Authentication required
 
@@ -37,11 +247,145 @@ description: >
   underlying ticker
 
 
-  Subscribe without `underlying_tickers` to create an empty subscription, then
-  use `underlying_list`
+  ## Subscription workflow
 
-  to discover recently streamed underlyings and `subscribe_underlyings` to
-  receive prices.
+
+  Subscribe to `pyth_value` with the underlying tickers you want to receive. For
+  example, request gold, oil, and natural gas prices:
+
+
+  ```json
+
+  {
+    "id": 1,
+    "cmd": "subscribe",
+    "params": {
+      "channels": ["pyth_value"],
+      "underlying_tickers": [
+        "Metal.XAU/USD",
+        "Commodities.Index.PYTHOIL/USD",
+        "Commodities.Index.NATGAS/USD"
+      ]
+    }
+  }
+
+  ```
+
+
+  A successful subscribe returns a `subscribed` response with the assigned
+  `sid`. Use that subscription ID in subsequent commands; replace `sid: 1` in
+  the examples below with the returned ID.
+
+
+  You can also omit `underlying_tickers` to create an empty subscription,
+  discover tickers, and add them later. An empty subscription sends no price
+  updates until you add tickers or switch to `["all"]`.
+
+
+  ### Discover recently streamed tickers
+
+
+  ```json
+
+  {
+    "id": 2,
+    "cmd": "update_subscription",
+    "params": {
+      "sid": 1,
+      "action": "underlying_list"
+    }
+  }
+
+  ```
+
+
+  Read `msg.underlying_tickers` in the `pyth_value_underlying_list` response.
+  This lists tickers observed on the stream within the last two hours without
+  changing your subscription. It is not a complete catalog: inactive feeds can
+  be absent. A successful subscribe response alone does not confirm that a
+  requested ticker is streaming.
+
+
+  ### Add or remove tickers
+
+
+  Add platinum to the existing subscription:
+
+
+  ```json
+
+  {
+    "id": 3,
+    "cmd": "update_subscription",
+    "params": {
+      "sid": 1,
+      "action": "subscribe_underlyings",
+      "underlying_tickers": ["Metal.XPT/USD"]
+    }
+  }
+
+  ```
+
+
+  Remove platinum from the subscription:
+
+
+  ```json
+
+  {
+    "id": 4,
+    "cmd": "update_subscription",
+    "params": {
+      "sid": 1,
+      "action": "unsubscribe_underlyings",
+      "underlying_tickers": ["Metal.XPT/USD"]
+    }
+  }
+
+  ```
+
+
+  ### Receive all available underlyings
+
+
+  Set `underlying_tickers` to `["all"]` in the initial subscribe, or enable it
+  on an existing subscription:
+
+
+  ```json
+
+  {
+    "id": 5,
+    "cmd": "update_subscription",
+    "params": {
+      "sid": 1,
+      "action": "subscribe_underlyings",
+      "underlying_tickers": ["all"]
+    }
+  }
+
+  ```
+
+
+  While all-mode is enabled, removing an individual ticker does not exclude it.
+  Send `unsubscribe_underlyings` with `["all"]` to disable all-mode; any
+  explicitly subscribed tickers remain selected.
+
+
+  ## Integration notes
+
+
+  - `sid` identifies the subscription stream; use it for `update_subscription`
+  and `unsubscribe`.
+
+  - Missing or empty `underlying_tickers` for `subscribe_underlyings` or
+  `unsubscribe_underlyings` returns an `error` with `code: 28` ("Underlying
+  tickers required").
+
+  - `value_usd` is a USD price string formatted to eight decimal places.
+
+  - `source_ts_ms` is the source timestamp in Unix milliseconds; `received_at`
+  is when Kalshi received the update, also in Unix milliseconds.
 servers:
   - id: production
     protocol: wss
@@ -165,8 +509,8 @@ operations:
             "sid": 1,
             "seq": 42,
             "msg": {
-              "underlying_ticker": "Metal.XAU/USD",
-              "value_usd": "2365.12345000",
+              "underlying_ticker": "Commodities.Index.PYTHOIL/USD",
+              "value_usd": "82.12345000",
               "source_ts_ms": 1710000000100,
               "received_at": 1710000000123
             }
@@ -290,6 +634,8 @@ operations:
             "seq": 1,
             "msg": {
               "underlying_tickers": [
+                "Commodities.Index.NATGAS/USD",
+                "Commodities.Index.PYTHOIL/USD",
                 "Metal.XAG/USD",
                 "Metal.XAU/USD"
               ]
