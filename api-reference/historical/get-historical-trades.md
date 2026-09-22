@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-trades
-lastmod: 2026-09-17T15:33:17.225Z
+lastmod: 2026-09-21T16:21:20.517Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

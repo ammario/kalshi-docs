@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-target-balance-allocation
-lastmod: 2026-09-17T15:33:17.121Z
+lastmod: 2026-09-21T16:21:20.411Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -123,14 +123,18 @@ components:
     RestingMarginReservation:
       type: string
       enum:
+        - none
         - max
         - sum
       x-enum-varnames:
+        - RestingMarginReservationNone
         - RestingMarginReservationMax
         - RestingMarginReservationSum
       description: >
         Collateral an automatic rebalance leaves behind for resting orders.
-        `max` reserves the
+        `none` reserves no
+
+        collateral for resting orders. `max` reserves the
 
         largest single market-side commitment. `sum` reserves the summed margin
         of every resting order.

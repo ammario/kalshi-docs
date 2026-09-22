@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order-v2
-lastmod: 2026-09-17T15:33:16.205Z
+lastmod: 2026-09-21T16:21:19.134Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

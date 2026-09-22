@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/trigger-order-group
-lastmod: 2026-09-17T15:33:16.281Z
+lastmod: 2026-09-21T16:21:19.214Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

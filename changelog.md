@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-17T22:01:49.175Z
+lastmod: 2026-09-21T17:07:19.617Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,53 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="September 24, 2026"
+  tags={["WebSocket", "Predictions", "Margin"]}
+  rss={{
+title: "Optional WebSocket compression",
+description: "Public WebSocket connections can negotiate permessage-deflate, while clients can choose to remain uncompressed."
+}}
+>
+  Public WebSocket connections support RFC 7692 `permessage-deflate`
+  compression when the client offers it during the opening handshake.
+  Clients can choose to remain uncompressed by omitting `permessage-deflate`
+  from the opening handshake. Message formats and the 64 MiB message limit are
+  unchanged.
+
+  Fragmented messages remain intact when Ping or Pong frames arrive between
+  fragments, whether compressed or uncompressed.
+</Update>
+
+<Update
+  label="September 24, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Rebalancing without resting-order reservation",
+description: "Target balance allocations support resting_margin_reservation: none. The default remains sum."
+}}
+>
+  `POST /trade-api/v2/portfolio/target_balance_allocation` now accepts
+  `resting_margin_reservation: "none"` to reserve no collateral for resting orders
+  during automatic rebalancing.
+  Omitting the setting continues to default to `sum`.
+</Update>
+
+<Update
+  label="September 24, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Subaccount-scoped historical fills and orders",
+description: "Historical fills and orders accept subaccount-restricted API keys and an optional subaccount filter."
+}}
+>
+  `GET /trade-api/v2/historical/fills` and `GET /trade-api/v2/historical/orders`
+  now support subaccount-restricted API keys and the optional `subaccount`
+  query parameter. Restricted keys return only their assigned subaccount's
+  data and reject requests for a different subaccount. Unrestricted keys
+  continue to return all subaccounts when the parameter is omitted.
+</Update>
 
 <Update
   label="September 24, 2026"

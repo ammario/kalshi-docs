@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-multiple-market-orderbooks
-lastmod: 2026-09-17T15:33:15.970Z
+lastmod: 2026-09-21T16:21:18.867Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

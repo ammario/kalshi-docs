@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-orders
-lastmod: 2026-09-17T15:33:17.197Z
+lastmod: 2026-09-21T16:21:20.495Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,9 @@ lastmod: 2026-09-17T15:33:17.197Z
 
 # Get Historical Orders
 
->  Endpoint for getting orders that have been archived to the historical database.
+> Endpoint for getting orders that have been archived to the historical database.
+API keys restricted to a subaccount return only that subaccount's orders. If supplied, `subaccount` must match the key's restriction.
+
 
 
 
@@ -69,7 +71,12 @@ paths:
       tags:
         - historical
       summary: Get Historical Orders
-      description: ' Endpoint for getting orders that have been archived to the historical database.'
+      description: >
+        Endpoint for getting orders that have been archived to the historical
+        database.
+
+        API keys restricted to a subaccount return only that subaccount's
+        orders. If supplied, `subaccount` must match the key's restriction.
       operationId: GetHistoricalOrders
       parameters:
         - $ref: '#/components/parameters/TickerQuery'
@@ -77,6 +84,7 @@ paths:
         - $ref: '#/components/parameters/MaxTsQuery'
         - $ref: '#/components/parameters/LimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
           description: Historical orders retrieved successfully
@@ -139,6 +147,14 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: >-
+        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
+        defaults to all subaccounts.
+      schema:
+        type: integer
   schemas:
     GetOrdersResponse:
       type: object

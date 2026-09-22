@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-fills
-lastmod: 2026-09-17T15:33:17.188Z
+lastmod: 2026-09-21T16:21:20.476Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,7 @@ lastmod: 2026-09-17T15:33:17.188Z
 # Get Historical Fills
 
 > Endpoint for getting all historical fills for the member. A fill is when a trade you have is matched.
+API keys restricted to a subaccount return only that subaccount's fills. If supplied, `subaccount` must match the key's restriction.
 Registered partners may also use a user OAuth access token with the explicitly granted read::compliance_partner scope.
 
 
@@ -75,6 +76,9 @@ paths:
         Endpoint for getting all historical fills for the member. A fill is when
         a trade you have is matched.
 
+        API keys restricted to a subaccount return only that subaccount's fills.
+        If supplied, `subaccount` must match the key's restriction.
+
         Registered partners may also use a user OAuth access token with the
         explicitly granted read::compliance_partner scope.
       operationId: GetFillsHistorical
@@ -84,6 +88,7 @@ paths:
         - $ref: '#/components/parameters/MaxTsQuery'
         - $ref: '#/components/parameters/LimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
+        - $ref: '#/components/parameters/SubaccountQuery'
       responses:
         '200':
           description: Fills retrieved successfully
@@ -149,6 +154,14 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    SubaccountQuery:
+      name: subaccount
+      in: query
+      description: >-
+        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
+        defaults to all subaccounts.
+      schema:
+        type: integer
   schemas:
     GetFillsResponse:
       type: object
