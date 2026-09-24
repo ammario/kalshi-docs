@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2026-09-21T16:21:18.955Z
+lastmod: 2026-09-23T20:45:17.244Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,7 +21,7 @@ All events are accessible through this endpoint, even if their associated market
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.30.0
+  version: 3.31.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -233,14 +233,26 @@ components:
           description: Full title of the event.
         collateral_return_type:
           type: string
-          description: >-
-            Specifies how collateral is returned when markets settle (e.g.,
-            'binary' for standard yes/no markets).
+          description: >
+            Collateral-return netting type for this event: `MECNET` for mutually
+            exclusive markets, `DIRECNET` for directional netting, or an empty
+            string for no collateral-return netting.
+
+            Netting applies within this event, not across all events in its
+            series, and also requires netting to be enabled for the trading
+            account or subtrader.
+
+            Use `with_nested_markets=true` to retrieve the markets associated
+            with each event.
         mutually_exclusive:
           type: boolean
-          description: >-
-            If true, only one market in this event can resolve to 'yes'. If
-            false, multiple markets can resolve to 'yes'.
+          description: >
+            True when `collateral_return_type` is `MECNET`: at most one market
+            in this event can resolve to 'yes'.
+
+            False for both `DIRECNET` and an empty collateral-return type. A
+            false value does not mean collateral-return netting is unavailable.
+            Use `collateral_return_type` to distinguish these cases.
         category:
           type: string
           description: Event category (deprecated, use series-level category instead).

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/generate-api-key
-lastmod: 2026-09-21T16:21:19.664Z
+lastmod: 2026-09-23T20:45:17.916Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-09-21T16:21:19.664Z
 
 # Generate API Key
 
->  Endpoint for generating a new API key with an automatically created key pair.  This endpoint generates both a public and private RSA key pair. The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.
+>  Endpoint for generating a new API key with an automatically created key pair.  This endpoint generates a key pair of the requested key_type (RSA when omitted). The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.
 
 
 
@@ -18,7 +18,7 @@ lastmod: 2026-09-21T16:21:19.664Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.30.0
+  version: 3.31.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -69,7 +69,7 @@ paths:
       tags:
         - api-keys
       summary: Generate API Key
-      description: ' Endpoint for generating a new API key with an automatically created key pair.  This endpoint generates both a public and private RSA key pair. The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.'
+      description: ' Endpoint for generating a new API key with an automatically created key pair.  This endpoint generates a key pair of the requested key_type (RSA when omitted). The public key is stored on the platform, while the private key is returned to the user and must be stored securely. The private key cannot be retrieved again.'
       operationId: GenerateApiKey
       requestBody:
         required: true
@@ -110,6 +110,8 @@ components:
         name:
           type: string
           description: Name for the API key. This helps identify the key's purpose
+        key_type:
+          $ref: '#/components/schemas/ApiKeyType'
         scopes:
           type: array
           description: >-
@@ -149,11 +151,15 @@ components:
         api_key_id:
           type: string
           description: Unique identifier for the newly generated API key
+        key_type:
+          $ref: '#/components/schemas/ApiKeyType'
         private_key:
           type: string
           description: >-
-            RSA private key in PEM format. This must be stored securely and
-            cannot be retrieved again after this response
+            Private key in PEM format - PKCS#1 (`-----BEGIN RSA PRIVATE
+            KEY-----`) for `rsa`, PKCS#8 (`-----BEGIN PRIVATE KEY-----`) for
+            `ed25519`. This must be stored securely and cannot be retrieved
+            again after this response
         warning:
           type: string
           nullable: true
@@ -165,6 +171,20 @@ components:
             subtrader without a daily cap has its event-contract orders rejected
             until one is set, while a margin subtrader without an initial-margin
             cap is bounded only by firm-level risk limits.
+    ApiKeyType:
+      type: string
+      enum:
+        - rsa
+        - ed25519
+      x-enum-varnames:
+        - ApiKeyTypeRsa
+        - ApiKeyTypeEd25519
+      description: >-
+        Signature algorithm of an API key pair. `rsa` - 2048-bit RSA; requests
+        are signed with RSA-PSS SHA-256. `ed25519` - Ed25519 (RFC 8032)
+        signatures over the same pre-sign text, with lower client-side signing
+        cost. Defaults to `rsa` when omitted from a generate request, for
+        compatibility with existing clients.
     ApiKeyScope:
       type: string
       enum:
@@ -203,7 +223,10 @@ components:
       type: apiKey
       in: header
       name: KALSHI-ACCESS-SIGNATURE
-      description: RSA-PSS signature of the request
+      description: >-
+        Base64 signature of the pre-sign text (timestamp + method + path) made
+        with the API key's algorithm - RSA-PSS with SHA-256 for RSA keys,
+        Ed25519 for Ed25519 keys
     kalshiAccessTimestamp:
       type: apiKey
       in: header

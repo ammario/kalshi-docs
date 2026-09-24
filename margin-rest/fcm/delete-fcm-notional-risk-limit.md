@@ -1,20 +1,24 @@
 ---
-url: https://docs.kalshi.com/margin-rest/order-groups/update-order-group-limit
-lastmod: 2026-09-23T20:45:19.129Z
+url: https://docs.kalshi.com/margin-rest/fcm/delete-fcm-notional-risk-limit
+lastmod: 2026-09-23T20:45:18.606Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Update Order Group Limit
+# Delete FCM Notional Risk Limit
 
-> Updates the order group contracts limit on the margin exchange. If the updated limit would immediately trigger the group, all orders in the group are canceled and the group is triggered.
+> Clears the calling FCM member's own account-level notional value risk limit on the
+margined exchange. Any limit Kalshi administration has set on the account remains in
+force; clearing the member-set value never cancels resting orders, since it can only
+raise the effective limit.
+
 
 
 
 ## OpenAPI
 
-````yaml /perps_openapi.yaml put /margin/order_groups/{order_group_id}/limit
+````yaml /perps_openapi.yaml delete /margin/fcm/notional_risk_limit
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -52,38 +56,34 @@ tags:
   - name: exit-triggers
     description: Stop-loss, take-profit, and trailing-stop triggers on margin positions
 paths:
-  /margin/order_groups/{order_group_id}/limit:
-    put:
+  /margin/fcm/notional_risk_limit:
+    delete:
       tags:
-        - order-groups
-      summary: Update Order Group Limit
-      description: >-
-        Updates the order group contracts limit on the margin exchange. If the
-        updated limit would immediately trigger the group, all orders in the
-        group are canceled and the group is triggered.
-      operationId: UpdateMarginOrderGroupLimit
-      parameters:
-        - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateOrderGroupLimitRequest'
+        - fcm
+      summary: Delete FCM Notional Risk Limit
+      description: >
+        Clears the calling FCM member's own account-level notional value risk
+        limit on the
+
+        margined exchange. Any limit Kalshi administration has set on the
+        account remains in
+
+        force; clearing the member-set value never cancels resting orders, since
+        it can only
+
+        raise the effective limit.
+      operationId: DeleteFCMNotionalRiskLimit
       responses:
         '200':
-          description: Order group limit updated successfully
+          description: Notional risk limit deleted successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmptyResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -91,59 +91,10 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderGroupIdPath:
-      name: order_group_id
-      in: path
-      required: true
-      description: Order group ID
-      schema:
-        type: string
-    SubaccountQueryDefaultPrimary:
-      name: subaccount
-      in: query
-      required: false
-      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
   schemas:
-    UpdateOrderGroupLimitRequest:
-      type: object
-      properties:
-        contracts_limit:
-          type: integer
-          format: int64
-          minimum: 1
-          description: >-
-            New maximum number of contracts that can be matched within this
-            group over a rolling 15-second window. Whole contracts only. Provide
-            contracts_limit or contracts_limit_fp; if both provided they must
-            match.
-          x-go-type-skip-optional-pointer: true
-          x-oapi-codegen-extra-tags:
-            validate: omitempty,gte=1
-        contracts_limit_fp:
-          $ref: '#/components/schemas/FixedPointCount'
-          nullable: true
-          description: >-
-            String representation of the new maximum number of contracts that
-            can be matched within this group over a rolling 15-second window.
-            Provide contracts_limit or contracts_limit_fp; if both provided they
-            must match.
     EmptyResponse:
       type: object
       description: An empty response body
-    FixedPointCount:
-      type: string
-      description: >-
-        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
-        to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported; the minimum granularity is
-        0.01 contracts.
-      example: '10.00'
     ErrorResponse:
       type: object
       properties:
@@ -157,20 +108,14 @@ components:
           type: string
           description: Additional details about the error, if available
   responses:
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:

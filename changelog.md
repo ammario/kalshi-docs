@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-21T17:07:19.617Z
+lastmod: 2026-09-23T21:01:57.457Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,66 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="October 1, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "RFQ and quote creation timestamps over FIX",
+description: "RFQ and quote creation timestamps over FIX"
+}}
+>
+  FIX [RFQ and quote messages](/fix/rfq-messages) now include the creation time in `TransactTime` (tag `60`), matching WebSocket `created_ts`.
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["WebSocket", "Margin"]}
+  rss={{
+title: "Ticker reference_price for Pyth-indexed perps",
+description: "The perps ticker channel carries reference_price for metals, commodities, and other Pyth-indexed perps, matching GET /margin/markets."
+}}
+>
+  The Margin `ticker` WebSocket channel now includes `reference_price` for
+  perps whose underlying index comes from Pyth, such as gold and silver.
+  Previously only CF Benchmarks-indexed crypto perps carried it on the
+  channel, while `GET /trade-api/v2/margin/markets` returned it for both. The
+  value is the underlying index scaled to one contract, and `ts_ms` is the
+  index source timestamp.
+</Update>
+
+<Update
+  label="September 24, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions", "Margin"]}
+  rss={{
+title: "Ed25519 API keys",
+description: "API keys may be Ed25519 or RSA; the same headers and pre-sign text apply, and generate requests accept key_type."
+}}
+>
+  API keys may now be Ed25519 or RSA. Register an Ed25519 public key with
+  `POST /trade-api/v2/api_keys`, or pass `key_type: "ed25519"` to
+  `POST /trade-api/v2/api_keys/generate` to receive a PKCS#8 Ed25519 private
+  key; the generate response includes `key_type`. Ed25519 requests use the
+  same `KALSHI-ACCESS-*` headers and pre-sign text as RSA, with an Ed25519
+  signature in place of RSA-PSS, on REST, WebSocket and FIX (`RawData`).
+  `key_type` defaults to `rsa`; existing RSA keys are unchanged. In the web app,
+  register an Ed25519 key by pasting its public key; web-generated keys remain
+  RSA for now. See [API Keys](/getting_started/api_keys).
+</Update>
+
+<Update
+  label="September 24, 2026"
+  tags={["REST", "FIX", "Predictions"]}
+  rss={{
+title: "20% higher read and write rate limits",
+description: "20% higher read and write rate limits"
+}}
+>
+  Predictions read and write rate limits are increasing 20% for Premier,
+  Paragon, Prime, and Prestige.
+  See [Rate Limits and Tiers](/getting_started/rate_limits#tiers-and-budgets)
+  for the latest values.
+</Update>
 
 <Update
   label="September 24, 2026"

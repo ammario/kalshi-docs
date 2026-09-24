@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_websockets
-lastmod: 2026-09-04T20:51:41.328Z
+lastmod: 2026-09-23T16:58:22.250Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -324,6 +324,7 @@ import time
 import websockets
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 # Configuration
 KEY_ID = "your_api_key_id"
@@ -331,24 +332,27 @@ PRIVATE_KEY_PATH = "path/to/private_key.pem"
 MARKET_TICKER = "KXHARRIS24-LSV"  # Replace with any open market
 WS_URL = "wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2"
 
-def sign_pss_text(private_key, text: str) -> str:
-    """Sign message using RSA-PSS"""
+def sign_text(private_key, text: str) -> str:
+    """Sign message with the key's algorithm: Ed25519, or RSA-PSS for RSA keys"""
     message = text.encode('utf-8')
-    signature = private_key.sign(
-        message,
-        padding.PSS(
-            mgf=padding.MGF1(hashes.SHA256()),
-            salt_length=padding.PSS.DIGEST_LENGTH
-        ),
-        hashes.SHA256()
-    )
+    if isinstance(private_key, Ed25519PrivateKey):
+        signature = private_key.sign(message)
+    else:
+        signature = private_key.sign(
+            message,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.DIGEST_LENGTH
+            ),
+            hashes.SHA256()
+        )
     return base64.b64encode(signature).decode('utf-8')
 
 def create_headers(private_key, method: str, path: str) -> dict:
     """Create authentication headers"""
     timestamp = str(int(time.time() * 1000))
     msg_string = timestamp + method + path.split('?')[0]
-    signature = sign_pss_text(private_key, msg_string)
+    signature = sign_text(private_key, msg_string)
 
     return {
         "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_authenticated_requests
-lastmod: 2026-05-05T21:10:39.098Z
+lastmod: 2026-09-23T21:55:39.789Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ This guide shows you how to make authenticated requests to the Kalshi API in thr
 2. Navigate to **Account & security** → **API Keys**
 3. Click **Create Key**
 4. Save both:
-   * **Private Key**: Downloaded as a `.key` file
+   * **Private Key**: Downloaded as a PEM text file
    * **API Key ID**: Displayed on screen (looks like `a952bcbe-ec3b-4b5b-b8f9-11dae589608c`)
 
 <Warning>
@@ -43,16 +43,17 @@ The signature proves you own the private key. Here's how it works:
    * Example: `1703123456789GET/trade-api/v2/portfolio/balance`
    * **Important**: Sign the full URL path from the API root, without query parameters. For `https://external-api.demo.kalshi.co/trade-api/v2/portfolio/orders?limit=5`, sign `/trade-api/v2/portfolio/orders`.
 
-2. **Sign with your private key**: Use RSA-PSS with SHA256
+2. **Sign with your private key**: RSA keys use RSA-PSS with SHA-256; Ed25519 keys sign the message directly.
 
 3. **Encode as base64**: Convert the signature to base64 string
 
-Here's the signing process in Python:
+The signing process in Python, for either key type:
 
 ```python theme={null}
 import base64
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 def sign_request(private_key, timestamp, method, path):
     # Strip query parameters from path before signing
@@ -61,15 +62,19 @@ def sign_request(private_key, timestamp, method, path):
     # Create the message to sign
     message = f"{timestamp}{method}{path_without_query}".encode('utf-8')
 
-    # Sign with RSA-PSS
-    signature = private_key.sign(
-        message,
-        padding.PSS(
-            mgf=padding.MGF1(hashes.SHA256()),
-            salt_length=padding.PSS.DIGEST_LENGTH
-        ),
-        hashes.SHA256()
-    )
+    if isinstance(private_key, Ed25519PrivateKey):
+        # Ed25519 signs the message itself
+        signature = private_key.sign(message)
+    else:
+        # RSA signs with RSA-PSS over SHA-256
+        signature = private_key.sign(
+            message,
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.DIGEST_LENGTH
+            ),
+            hashes.SHA256()
+        )
 
     # Return base64 encoded
     return base64.b64encode(signature).decode('utf-8')
@@ -116,6 +121,7 @@ from urllib.parse import urlparse
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 # Configuration
 API_KEY_ID = 'your-api-key-id-here'
@@ -127,15 +133,18 @@ def load_private_key(key_path):
         return serialization.load_pem_private_key(f.read(), password=None, backend=default_backend())
 
 def create_signature(private_key, timestamp, method, path):
-    """Create the request signature."""
+    """Create the request signature with the key's algorithm."""
     # Strip query parameters before signing
     path_without_query = path.split('?')[0]
     message = f"{timestamp}{method}{path_without_query}".encode('utf-8')
-    signature = private_key.sign(
-        message,
-        padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.DIGEST_LENGTH),
-        hashes.SHA256()
-    )
+    if isinstance(private_key, Ed25519PrivateKey):
+        signature = private_key.sign(message)
+    else:
+        signature = private_key.sign(
+            message,
+            padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.DIGEST_LENGTH),
+            hashes.SHA256()
+        )
     return base64.b64encode(signature).decode('utf-8')
 
 def get(private_key, api_key_id, path, base_url=BASE_URL):
@@ -165,7 +174,7 @@ print(f"Your balance: ${response.json()['balance'] / 100:.2f}")
 
 | Problem                           | Solution                                                                                                                                                                                                     |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 401 Unauthorized                  | Check your API Key ID and private key file path                                                                                                                                                              |
+| 401 Unauthorized                  | Check the API Key ID and private key path, and sign with the algorithm of the parsed key (the PEM header alone does not tell you which)                                                                      |
 | Signature error                   | Ensure timestamp is in milliseconds (not seconds)                                                                                                                                                            |
 | Path not found                    | If your `BASE_URL` already ends with `/trade-api/v2`, pass only the endpoint path to the helper (e.g. `/portfolio/balance`, not `/trade-api/v2/portfolio/balance`) so the request URL is not double-prefixed |
 | Signature error with query params | Sign the request path without query parameters. The examples do this with `path.split('?')[0]` after building the full URL path                                                                              |

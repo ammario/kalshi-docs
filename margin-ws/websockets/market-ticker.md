@@ -145,7 +145,11 @@ operations:
                     required: true
                   - name: reference_price
                     type: object
-                    description: Reference price of underlying asset, when available.
+                    description: >-
+                      Underlying reference index value scaled to one contract,
+                      when available (CF Benchmarks for crypto perps; Pyth for
+                      metals, commodities, and other Pyth-indexed perps). ts_ms
+                      is the index source timestamp.
                     required: false
                     properties:
                       - name: price
@@ -293,7 +297,11 @@ operations:
                   description: Total notional value of one sided open interest in dollars.
                   x-parser-schema-id: <anonymous-schema-69>
                 reference_price:
-                  description: Reference price of underlying asset, when available.
+                  description: >-
+                    Underlying reference index value scaled to one contract,
+                    when available (CF Benchmarks for crypto perps; Pyth for
+                    metals, commodities, and other Pyth-indexed perps). ts_ms is
+                    the index source timestamp.
                   allOf:
                     - &ref_0
                       type: object

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin
-lastmod: 2026-07-04T18:38:55.987Z
+lastmod: 2026-09-23T17:22:25.673Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -107,7 +107,7 @@ The Perps API mirrors the event contract API (same auth, pagination, error forma
   API keys **should not be shared** between the event contract and margin FIX gateways.
 </Warning>
 
-**What's the same:** FIXT.1.1 / FIX50SP2 protocol, RSA key authentication, order lifecycle messages (NewOrderSingle, OrderCancelRequest, etc.), order groups, drop copy, and listener sessions all work the same way.
+**What's the same:** FIXT.1.1 / FIX50SP2 protocol, API key authentication (RSA or Ed25519), order lifecycle messages (NewOrderSingle, OrderCancelRequest, etc.), order groups, drop copy, and listener sessions all work the same way.
 
 **Key differences:**
 

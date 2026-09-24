@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fcm/get-fcm-subtrader-risk-controls
-lastmod: 2026-09-21T16:21:20.560Z
+lastmod: 2026-09-23T20:45:18.523Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,10 +8,14 @@ lastmod: 2026-09-21T16:21:20.560Z
 
 # Get FCM Subtrader Risk Controls
 
-> Returns the initial margin caps configured for an FCM member's subtrader on the margined
-exchange. A cap with neither market_ticker nor asset_class applies across all markets; the
-remaining caps are scoped to a single market or a single asset class each. Every cap in
-scope for an order is enforced independently. Markets without a cap are omitted.
+> Returns the risk controls configured for an FCM member's subtrader on the margined
+exchange: the FCM-set initial margin caps in `risk_controls`, and the admin-set notional
+value risk limits in `notional_limits` — one call returns the subtrader's complete limit
+picture. A cap with neither market_ticker nor asset_class applies across all markets; the
+remaining caps are scoped to a single market or a single asset class each. A
+notional_limits entry without a market_ticker is the whole-subtrader (all-markets) limit;
+the rest are per-market. Every cap or limit in scope for an order is enforced
+independently. Markets without a cap are omitted.
 API keys bound to a single FCM subtrader may also call this endpoint: `subtrader_id` may be
 omitted and defaults to the key's bound subtrader, and if supplied it must equal the bound
 subtrader or the request is rejected.
@@ -65,17 +69,28 @@ paths:
         - fcm
       summary: Get FCM Subtrader Risk Controls
       description: >
-        Returns the initial margin caps configured for an FCM member's subtrader
-        on the margined
+        Returns the risk controls configured for an FCM member's subtrader on
+        the margined
 
-        exchange. A cap with neither market_ticker nor asset_class applies
-        across all markets; the
+        exchange: the FCM-set initial margin caps in `risk_controls`, and the
+        admin-set notional
+
+        value risk limits in `notional_limits` — one call returns the
+        subtrader's complete limit
+
+        picture. A cap with neither market_ticker nor asset_class applies across
+        all markets; the
 
         remaining caps are scoped to a single market or a single asset class
-        each. Every cap in
+        each. A
 
-        scope for an order is enforced independently. Markets without a cap are
-        omitted.
+        notional_limits entry without a market_ticker is the whole-subtrader
+        (all-markets) limit;
+
+        the rest are per-market. Every cap or limit in scope for an order is
+        enforced
+
+        independently. Markets without a cap are omitted.
 
         API keys bound to a single FCM subtrader may also call this endpoint:
         `subtrader_id` may be
@@ -90,10 +105,13 @@ paths:
           in: query
           required: false
           description: >-
-            The subtrader whose initial margin caps should be returned. Must
-            belong to the requesting FCM. Required unless the API key is bound
-            to a subtrader, in which case it defaults to the bound subtrader
-            when omitted and must equal it when supplied.
+            The subtrader whose risk controls and notional value risk limits
+            should be returned. Must belong to the requesting FCM; newly created
+            subtrader IDs take the form {your_account_id}_{suffix}, and any
+            subtrader ID of yours (including legacy UUID-form IDs) is accepted.
+            Required unless the API key is bound to a subtrader, in which case
+            it defaults to the bound subtrader when omitted and must equal it
+            when supplied.
           schema:
             type: string
             x-go-type-skip-optional-pointer: true
@@ -119,12 +137,6 @@ paths:
               - Crypto
               - Equities
               - Metals
-              - FX
-              - Energy
-              - Indices
-              - Rates
-              - Compute
-              - GPU
       responses:
         '200':
           description: Risk controls retrieved successfully
@@ -152,17 +164,33 @@ components:
       type: object
       required:
         - risk_controls
+        - notional_limits
       properties:
         risk_controls:
           type: array
           description: One entry per configured initial margin cap.
           items:
             $ref: '#/components/schemas/FCMSubtraderRiskControls'
+        notional_limits:
+          type: array
+          description: >-
+            The admin-set notional value risk limits for the same subtrader as
+            the rest of the response, sorted by market_ticker. An entry without
+            a market_ticker is the whole-subtrader (all-markets) limit and sorts
+            first; the rest are per-market. Set by exchange administration and
+            read-only through this API; markets without a configured limit are
+            omitted, and the market_ticker/asset_class filters apply only to
+            risk_controls. Newly created subtrader IDs take the form
+            {your_account_id}_{suffix}; legacy UUID-form subtraders are included
+            as well.
+          items:
+            $ref: '#/components/schemas/FCMSubtraderNotionalRiskLimit'
     FCMSubtraderRiskControls:
       type: object
       required:
         - subtrader_id
         - im_cap
+        - current_im
       properties:
         subtrader_id:
           type: string
@@ -181,12 +209,6 @@ components:
             - Crypto
             - Equities
             - Metals
-            - FX
-            - Energy
-            - Indices
-            - Rates
-            - Compute
-            - GPU
         im_cap:
           allOf:
             - $ref: '#/components/schemas/FixedPointDollars'
@@ -194,6 +216,58 @@ components:
             A non-negative fixed-point US dollar amount with up to 4 decimal
             places.
           example: '100.0000'
+        current_im:
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            The initial margin currently attributable to this cap's scope, in
+            fixed-point US dollars — the value the exchange compares against
+            im_cap when admitting an order. Computed from the exchange's read
+            model (positions plus resting orders), so it excludes orders still
+            in flight and may slightly trail the engine. A market-scoped cap
+            prices that market standalone; an asset-class cap prices the
+            class-filtered portfolio, so hedged positions within the class
+            margin jointly rather than summing per-market.
+          example: '42.0000'
+    FCMSubtraderNotionalRiskLimit:
+      type: object
+      required:
+        - subtrader_id
+        - notional_value_risk_limit
+        - current_notional
+      properties:
+        subtrader_id:
+          type: string
+          description: The subtrader the notional value risk limit applies to.
+        market_ticker:
+          type: string
+          description: >-
+            The market the notional value risk limit applies to. Absent on the
+            whole-subtrader (all-markets) limit.
+          x-go-type-skip-optional-pointer: true
+        notional_value_risk_limit:
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            The notional value risk limit as a fixed-point US dollar string with
+            4 decimal places.
+          example: '5000.0000'
+        current_notional:
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
+          description: >-
+            The notional currently consumed against this limit, in fixed-point
+            US dollars. Per market it is the larger of the subtrader's long side
+            (position plus resting bids) and short side (position minus resting
+            asks), over the signed net position; a whole-subtrader entry carries
+            that value summed across every market the subtrader touches. Every
+            term is priced through the market's risk-notional model, the same
+            pricing the exchange's limit check uses: the cached mark for
+            positions and the limit price for resting orders on mark-model asset
+            classes, quantity times the fixed DV01 base on Rates. Computed from
+            the exchange's read model, so it excludes orders still in flight and
+            may slightly trail the engine.
+          example: '1250.0000'
     ErrorResponse:
       type: object
       properties:
@@ -255,7 +329,10 @@ components:
       type: apiKey
       in: header
       name: KALSHI-ACCESS-SIGNATURE
-      description: RSA-PSS signature of the request
+      description: >-
+        Base64 signature of the pre-sign text (timestamp + method + path) made
+        with the API key's algorithm - RSA-PSS with SHA-256 for RSA keys,
+        Ed25519 for Ed25519 keys
     kalshiAccessTimestamp:
       type: apiKey
       in: header

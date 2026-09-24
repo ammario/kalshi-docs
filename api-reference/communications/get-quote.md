@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quote
-lastmod: 2026-09-21T16:21:19.580Z
+lastmod: 2026-09-23T20:45:17.850Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -25,7 +25,7 @@ lastmod: 2026-09-21T16:21:19.580Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.30.0
+  version: 3.31.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -319,7 +319,10 @@ components:
       type: apiKey
       in: header
       name: KALSHI-ACCESS-SIGNATURE
-      description: RSA-PSS signature of the request
+      description: >-
+        Base64 signature of the pre-sign text (timestamp + method + path) made
+        with the API key's algorithm - RSA-PSS with SHA-256 for RSA keys,
+        Ed25519 for Ed25519 keys
     kalshiAccessTimestamp:
       type: apiKey
       in: header

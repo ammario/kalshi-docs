@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fees/get-fee-tiers
-lastmod: 2026-09-21T16:21:20.832Z
+lastmod: 2026-09-23T20:45:18.860Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -139,7 +139,10 @@ components:
       type: apiKey
       in: header
       name: KALSHI-ACCESS-SIGNATURE
-      description: RSA-PSS signature of the request
+      description: >-
+        Base64 signature of the pre-sign text (timestamp + method + path) made
+        with the API key's algorithm - RSA-PSS with SHA-256 for RSA keys,
+        Ed25519 for Ed25519 keys
     kalshiAccessTimestamp:
       type: apiKey
       in: header

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-09-08T18:23:50.573Z
+lastmod: 2026-09-23T21:01:57.443Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -121,7 +121,7 @@ This message is used bidirectionally:
 ### Exchange → Market Maker (RFQ Notification)
 
 The exchange builds this message with the same structure market makers must parse:
-`55`, `38`, `152` and the nested `453=NoPartyIDs` group are members of the
+`55`, `38`, `152`, `60` and the nested `453=NoPartyIDs` group are members of the
 `146=NoRelatedSym` group, and the MVE tags sit in the message body.
 
 **Message body**
@@ -138,13 +138,14 @@ The exchange builds this message with the same structure market makers must pars
 
 **Inside the `146=NoRelatedSym` group**
 
-| Tag | Name         | Type    | Required | Description                                                                                           |
-| --- | ------------ | ------- | -------- | ----------------------------------------------------------------------------------------------------- |
-| 55  | Symbol       | String  | Y        | Market ticker. Group delimiter                                                                        |
-| 38  | OrderQty     | Decimal | Y        | Number of contracts as a fixed-point decimal                                                          |
-| 152 | CashOrderQty | Decimal | N        | Target cost in dollars (if specified by creator)                                                      |
-| 453 | NoPartyIDs   | Integer | N        | Nested repeating group. Number of parties (always 1)                                                  |
-| 448 | PartyId      | String  | N        | Requester public communications ID. This value is pseudonymous and is not the requester's SubtraderId |
+| Tag | Name         | Type         | Required | Description                                                                                                 |
+| --- | ------------ | ------------ | -------- | ----------------------------------------------------------------------------------------------------------- |
+| 55  | Symbol       | String       | Y        | Market ticker. Group delimiter                                                                              |
+| 38  | OrderQty     | Decimal      | Y        | Number of contracts as a fixed-point decimal                                                                |
+| 152 | CashOrderQty | Decimal      | N        | Target cost in dollars (if specified by creator)                                                            |
+| 60  | TransactTime | UTCTimestamp | Y        | Original RFQ creation time in UTC, matching WebSocket `rfq_created.msg.created_ts` at millisecond precision |
+| 453 | NoPartyIDs   | Integer      | N        | Nested repeating group. Number of parties (always 1)                                                        |
+| 448 | PartyId      | String       | N        | Requester public communications ID. This value is pseudonymous and is not the requester's SubtraderId       |
 
 ## QuoteRequestAck (35=b)
 
@@ -190,19 +191,20 @@ If a new Quote is created when an existing quote for the same market already exi
 
 ### Exchange → Creator (Quote Notification)
 
-| Tag | Name       | Type    | Required | Description                                                                                     |
-| --- | ---------- | ------- | -------- | ----------------------------------------------------------------------------------------------- |
-| 117 | QuoteId    | UUID    | Y        | Quote identifier (use this to accept)                                                           |
-| 131 | QuoteReqId | UUID    | Y        | Server-assigned RFQ ID                                                                          |
-| 55  | Symbol     | String  | Y        | Market ticker                                                                                   |
-| 132 | BidPx      | Decimal | C        | Yes price in dollars (e.g. 0.4500). Not present when zero                                       |
-| 133 | OfferPx    | Decimal | C        | No price in dollars (e.g. 0.5500). Not present when zero                                        |
-| 38  | OrderQty   | Decimal | N        | Number of contracts as a fixed-point decimal                                                    |
-| 134 | BidSize    | Decimal | N        | Quantity offered on the Yes side                                                                |
-| 135 | OfferSize  | Decimal | N        | Quantity offered on the No side                                                                 |
-| 453 | NoPartyIDs | Integer | N        | Number of parties (always 1)                                                                    |
-| 448 | PartyId    | String  | N        | Quoter public communications ID. This value is pseudonymous and is not the quoter's SubtraderId |
-| 452 | PartyRole  | Integer | N        | 35 (Liquidity Provider)                                                                         |
+| Tag | Name         | Type         | Required | Description                                                                                            |
+| --- | ------------ | ------------ | -------- | ------------------------------------------------------------------------------------------------------ |
+| 117 | QuoteId      | UUID         | Y        | Quote identifier (use this to accept)                                                                  |
+| 131 | QuoteReqId   | UUID         | Y        | Server-assigned RFQ ID                                                                                 |
+| 55  | Symbol       | String       | Y        | Market ticker                                                                                          |
+| 132 | BidPx        | Decimal      | C        | Yes price in dollars (e.g. 0.4500). Not present when zero                                              |
+| 133 | OfferPx      | Decimal      | C        | No price in dollars (e.g. 0.5500). Not present when zero                                               |
+| 38  | OrderQty     | Decimal      | N        | Number of contracts as a fixed-point decimal                                                           |
+| 134 | BidSize      | Decimal      | N        | Quantity offered on the Yes side                                                                       |
+| 135 | OfferSize    | Decimal      | N        | Quantity offered on the No side                                                                        |
+| 60  | TransactTime | UTCTimestamp | Y        | Quote creation time in UTC, matching WebSocket `quote_created.msg.created_ts` at millisecond precision |
+| 453 | NoPartyIDs   | Integer      | N        | Number of parties (always 1)                                                                           |
+| 448 | PartyId      | String       | N        | Quoter public communications ID. This value is pseudonymous and is not the quoter's SubtraderId        |
+| 452 | PartyRole    | Integer      | N        | 35 (Liquidity Provider)                                                                                |
 
 <Warning>
   Either BidPx or OfferPx can be zero, but not both. Zero indicates no quote for that side.
@@ -216,19 +218,20 @@ A QuoteStatusReport is sent by the exchange:
 2. When the requester accepts the quote. Status will be ACCEPTED
 3. In response to a QuoteCancel. Status will be CANCELLED
 
-| Tag | Name         | Type    | Required | Description                                                                 |
-| --- | ------------ | ------- | -------- | --------------------------------------------------------------------------- |
-| 117 | QuoteId      | String  | Y        | Quote identifier (empty if rejected)                                        |
-| 131 | QuoteReqId   | String  | Y        | Request reference                                                           |
-| 79  | AllocAccount | Integer | C        | Subaccount number (0-63). Present if the quote was created for a subaccount |
-| 297 | QuoteStatus  | Integer | Y        | Current status                                                              |
-| 38  | OrderQty     | Decimal | C        | Original RFQ contract size if specified.                                    |
-| 132 | BidPx        | Integer | C        | Yes price in cents. Only integer part considered. Not present if REJECTED   |
-| 133 | OfferPx      | Integer | C        | No price in cents. Only integer part considered. Not present if REJECTED    |
-| 134 | BidSize      | Decimal | C        | Yes contract size offered by the quote.                                     |
-| 135 | OfferSize    | Decimal | C        | No contract size offered by the quote.                                      |
-| 54  | AcceptedSide | Char    | C        | Side accepted (1=Yes, 2=No). Only present if ACCEPTED                       |
-| 58  | Text         | String  | C        | Rejection reason. Only present if REJECTED                                  |
+| Tag | Name         | Type         | Required | Description                                                                                                                     |
+| --- | ------------ | ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| 117 | QuoteId      | String       | Y        | Quote identifier (empty if rejected)                                                                                            |
+| 131 | QuoteReqId   | String       | Y        | Request reference                                                                                                               |
+| 79  | AllocAccount | Integer      | C        | Subaccount number (0-63). Present if the quote was created for a subaccount                                                     |
+| 297 | QuoteStatus  | Integer      | Y        | Current status                                                                                                                  |
+| 38  | OrderQty     | Decimal      | C        | Original RFQ contract size if specified.                                                                                        |
+| 132 | BidPx        | Integer      | C        | Yes price in cents. Only integer part considered. Not present if REJECTED                                                       |
+| 133 | OfferPx      | Integer      | C        | No price in cents. Only integer part considered. Not present if REJECTED                                                        |
+| 134 | BidSize      | Decimal      | C        | Yes contract size offered by the quote.                                                                                         |
+| 135 | OfferSize    | Decimal      | C        | No contract size offered by the quote.                                                                                          |
+| 54  | AcceptedSide | Char         | C        | Side accepted (1=Yes, 2=No). Only present if ACCEPTED                                                                           |
+| 60  | TransactTime | UTCTimestamp | C        | Quote creation time in UTC, matching WebSocket `quote_created.msg.created_ts` at millisecond precision. Only present if PENDING |
+| 58  | Text         | String       | C        | Rejection reason. Only present if REJECTED                                                                                      |
 
 ### Quote Status Values (297)
 
@@ -381,7 +384,7 @@ Exchange notifies that an RFQ creation request was rejected or that a quote requ
   ```
 
   ```fix Quote Notification (Exchange → Creator) theme={null}
-  8=FIXT.1.1|35=S|117=quote-789|131=server-rfq-456|55=HIGHNY-23DEC31|132=0.7500|133=0.2500|38=100|453=1|448=quoter-public-id|452=35|
+  8=FIXT.1.1|35=S|117=quote-789|131=server-rfq-456|55=HIGHNY-23DEC31|132=0.7500|133=0.2500|38=100|60=20260924-14:30:05.123|453=1|448=quoter-public-id|452=35|
   ```
 
   ```fix Accept Quote (Creator → Exchange) theme={null}
@@ -413,7 +416,7 @@ Exchange notifies that an RFQ creation request was rejected or that a quote requ
   ```
 
   ```fix Quote Status Pending (Exchange → MM) theme={null}
-  8=FIXT.1.1|35=AI|117=quote-789|131=server-rfq-456|297=10|38=100|132=75|133=25|
+  8=FIXT.1.1|35=AI|117=quote-789|131=server-rfq-456|297=10|38=100|132=75|133=25|60=20260924-14:30:05.123|
   ```
 
   ```fix Quote Accepted (Exchange → MM) theme={null}

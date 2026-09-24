@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/create-api-key
-lastmod: 2026-09-21T16:21:19.653Z
+lastmod: 2026-09-23T20:45:17.905Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-09-21T16:21:19.653Z
 
 # Create API Key
 
->  Endpoint for creating a new API key with a user-provided public key.  This endpoint allows users with Premier or Market Maker API usage levels to create API keys by providing their own RSA public key. The platform will use this public key to verify signatures on API requests.
+>  Endpoint for creating a new API key with a user-provided public key.  This endpoint allows users with Premier or Market Maker API usage levels to create API keys by providing their own RSA or Ed25519 public key in PEM format. The platform will use this public key to verify signatures on API requests: RSA-PSS with SHA-256 for RSA keys, Ed25519 for Ed25519 keys.
 
 
 
@@ -18,7 +18,7 @@ lastmod: 2026-09-21T16:21:19.653Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.30.0
+  version: 3.31.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -69,7 +69,7 @@ paths:
       tags:
         - api-keys
       summary: Create API Key
-      description: ' Endpoint for creating a new API key with a user-provided public key.  This endpoint allows users with Premier or Market Maker API usage levels to create API keys by providing their own RSA public key. The platform will use this public key to verify signatures on API requests.'
+      description: ' Endpoint for creating a new API key with a user-provided public key.  This endpoint allows users with Premier or Market Maker API usage levels to create API keys by providing their own RSA or Ed25519 public key in PEM format. The platform will use this public key to verify signatures on API requests: RSA-PSS with SHA-256 for RSA keys, Ed25519 for Ed25519 keys.'
       operationId: CreateApiKey
       requestBody:
         required: true
@@ -116,8 +116,9 @@ components:
         public_key:
           type: string
           description: >-
-            RSA public key in PEM format. This will be used to verify signatures
-            on API requests
+            RSA or Ed25519 public key in PEM format (`-----BEGIN PUBLIC
+            KEY-----`). This will be used to verify signatures on API requests -
+            RSA-PSS with SHA-256 for RSA keys, Ed25519 for Ed25519 keys
         scopes:
           type: array
           description: >-
@@ -205,7 +206,10 @@ components:
       type: apiKey
       in: header
       name: KALSHI-ACCESS-SIGNATURE
-      description: RSA-PSS signature of the request
+      description: >-
+        Base64 signature of the pre-sign text (timestamp + method + path) made
+        with the API key's algorithm - RSA-PSS with SHA-256 for RSA keys,
+        Ed25519 for Ed25519 keys
     kalshiAccessTimestamp:
       type: apiKey
       in: header

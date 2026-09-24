@@ -1,20 +1,27 @@
 ---
-url: https://docs.kalshi.com/margin-rest/order-groups/update-order-group-limit
-lastmod: 2026-09-23T20:45:19.129Z
+url: https://docs.kalshi.com/margin-rest/fcm/update-fcm-notional-risk-limit
+lastmod: 2026-09-23T20:45:18.594Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Update Order Group Limit
+# Update FCM Notional Risk Limit
 
-> Updates the order group contracts limit on the margin exchange. If the updated limit would immediately trigger the group, all orders in the group are canceled and the group is triggered.
+> Sets the calling FCM member's own account-level notional value risk limit on the margined
+exchange. The limit is stored separately from the limit Kalshi administration sets on the
+same account; the exchange accepts any value and always enforces the smaller of the two,
+so this value can tighten but never raise the effective limit. As a courtesy, a value
+above the current Kalshi-set limit is rejected with a 400 naming that ceiling — a larger
+value would never govern. Lowering the limit cancels resting orders until the account is
+back within it, exactly like an administrative lowering.
+
 
 
 
 ## OpenAPI
 
-````yaml /perps_openapi.yaml put /margin/order_groups/{order_group_id}/limit
+````yaml /perps_openapi.yaml put /margin/fcm/notional_risk_limit
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -52,28 +59,41 @@ tags:
   - name: exit-triggers
     description: Stop-loss, take-profit, and trailing-stop triggers on margin positions
 paths:
-  /margin/order_groups/{order_group_id}/limit:
+  /margin/fcm/notional_risk_limit:
     put:
       tags:
-        - order-groups
-      summary: Update Order Group Limit
-      description: >-
-        Updates the order group contracts limit on the margin exchange. If the
-        updated limit would immediately trigger the group, all orders in the
-        group are canceled and the group is triggered.
-      operationId: UpdateMarginOrderGroupLimit
-      parameters:
-        - $ref: '#/components/parameters/OrderGroupIdPath'
-        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
+        - fcm
+      summary: Update FCM Notional Risk Limit
+      description: >
+        Sets the calling FCM member's own account-level notional value risk
+        limit on the margined
+
+        exchange. The limit is stored separately from the limit Kalshi
+        administration sets on the
+
+        same account; the exchange accepts any value and always enforces the
+        smaller of the two,
+
+        so this value can tighten but never raise the effective limit. As a
+        courtesy, a value
+
+        above the current Kalshi-set limit is rejected with a 400 naming that
+        ceiling — a larger
+
+        value would never govern. Lowering the limit cancels resting orders
+        until the account is
+
+        back within it, exactly like an administrative lowering.
+      operationId: UpdateFCMNotionalRiskLimit
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateOrderGroupLimitRequest'
+              $ref: '#/components/schemas/UpdateFCMNotionalRiskLimitRequest'
       responses:
         '200':
-          description: Order group limit updated successfully
+          description: Notional risk limit updated successfully
           content:
             application/json:
               schema:
@@ -82,8 +102,8 @@ paths:
           $ref: '#/components/responses/BadRequestError'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -91,59 +111,33 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    OrderGroupIdPath:
-      name: order_group_id
-      in: path
-      required: true
-      description: Order group ID
-      schema:
-        type: string
-    SubaccountQueryDefaultPrimary:
-      name: subaccount
-      in: query
-      required: false
-      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
   schemas:
-    UpdateOrderGroupLimitRequest:
+    UpdateFCMNotionalRiskLimitRequest:
       type: object
+      required:
+        - notional_value_risk_limit
       properties:
-        contracts_limit:
-          type: integer
-          format: int64
-          minimum: 1
+        notional_value_risk_limit:
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
           description: >-
-            New maximum number of contracts that can be matched within this
-            group over a rolling 15-second window. Whole contracts only. Provide
-            contracts_limit or contracts_limit_fp; if both provided they must
-            match.
-          x-go-type-skip-optional-pointer: true
-          x-oapi-codegen-extra-tags:
-            validate: omitempty,gte=1
-        contracts_limit_fp:
-          $ref: '#/components/schemas/FixedPointCount'
-          nullable: true
-          description: >-
-            String representation of the new maximum number of contracts that
-            can be matched within this group over a rolling 15-second window.
-            Provide contracts_limit or contracts_limit_fp; if both provided they
-            must match.
+            A non-negative fixed-point US dollar amount with up to 4 decimal
+            places. A value above the current Kalshi-set limit on the account
+            gets a courtesy 400, since it would never govern.
+          pattern: ^[0-9]+(\.[0-9]{1,4})?$
+          maxLength: 20
+          example: '5000.0000'
     EmptyResponse:
       type: object
       description: An empty response body
-    FixedPointCount:
+    FixedPointDollars:
       type: string
       description: >-
-        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
-        to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported; the minimum granularity is
-        0.01 contracts.
-      example: '10.00'
+        Fixed-point US dollar string. Most request fields accept 2-4 decimal
+        places (e.g., "0.56", "0.5600"); responses emit up to 6. Valid quote
+        intervals for a given market are constrained by that market's price
+        level structure.
+      example: '0.5600'
     ErrorResponse:
       type: object
       properties:
@@ -169,8 +163,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFoundError:
-      description: Resource not found
+    ForbiddenError:
+      description: Forbidden - insufficient permissions
       content:
         application/json:
           schema:

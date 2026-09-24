@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-09-21T18:49:19.719Z
+lastmod: 2026-09-22T20:13:35.165Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -42,20 +42,20 @@ Read budgets are not shard-scoped.
 
 Each budget is a token bucket. The bucket refills continuously at your per-second budget, up to its capacity, and a request is allowed whenever the bucket holds enough tokens to cover its cost. There are no fixed windows and no per-second resets.
 
-Basic and Advanced Predictions Read buckets, and Write buckets above the Basic tier, hold up to **two seconds of budget**. When you spend less than your budget, unspent tokens accumulate, and after two quiet seconds the bucket is full. You can then spend up to **twice your per-second budget in a single burst** before throttling back to the refill rate. This favors event-driven clients that sit idle most of the time and place a block of orders when the market moves.
+Basic and Advanced Predictions Read buckets, and Write buckets above the Basic tier, hold up to **three seconds of budget**. When you spend less than your budget, unspent tokens accumulate, and after three quiet seconds the bucket is full. You can then spend up to **three times your per-second budget in a single burst** before throttling back to the refill rate. This favors event-driven clients that sit idle most of the time and place a block of orders when the market moves.
 
 Predictions Read buckets above Advanced, Perps Read buckets, and Basic-tier Write buckets hold one second of budget. You can spend a full second's budget at once, but idle time banks nothing beyond that.
 
 ### Example
 
-A Premier Write bucket refills at 1,000 tokens per second and holds up to 2,000. At the default cost of 10 tokens per order, it sustains 100 orders per second.
+A Premier Predictions Write bucket refills at 1,200 tokens per second and holds up to 3,600. At the default cost of 10 tokens per order, it sustains 120 orders per second.
 
-| Time      | Requests              | Bucket (capacity 2,000)                |
+| Time      | Requests              | Bucket (capacity 3,600)                |
 | --------- | --------------------- | -------------------------------------- |
-| 2 s idle  | none                  | fills to 2,000                         |
-| 0 s       | 200 orders at once    | all accepted; 2,000 drops to 0         |
-| 0 to 1 s  | none                  | refills to 1,000                       |
-| after 1 s | 100 orders per second | holds near 1,000; spend matches refill |
+| 3 s idle  | none                  | fills to 3,600                         |
+| 0 s       | 360 orders at once    | all accepted; 3,600 drops to 0         |
+| 0 to 1 s  | none                  | refills to 1,200                       |
+| after 1 s | 120 orders per second | holds near 1,200; spend matches refill |
 
 ## When you hit the limit
 
@@ -65,7 +65,7 @@ A rate-limited request returns `429 Too Many Requests` with the body:
 {"error": "too many requests"}
 ```
 
-429 responses do not currently include `Retry-After` or `X-RateLimit-*` headers. There is no penalty or cooldown. The bucket keeps refilling, and your next request succeeds once the balance covers its cost. At a 1,000 tokens-per-second refill, a 10-token order is covered again 10 ms after a 429. Apply exponential backoff on 429.
+429 responses do not currently include `Retry-After` or `X-RateLimit-*` headers. There is no penalty or cooldown. The bucket keeps refilling, and your next request succeeds once the balance covers its cost. At a 1,200 tokens-per-second refill, an empty bucket replenishes the 10 tokens for an order in about 8.3 ms. Apply exponential backoff on 429.
 
 ## Batch endpoints don't save tokens
 
@@ -78,7 +78,7 @@ The whole batch must fit in the bucket at once. A 25-order create batch needs 25
 
 ## Perps limits use separate buckets
 
-The Perps API uses the same bucket mechanics, including the two-second Write bucket above Basic, but perps traffic is metered in its own Read and Write buckets. Perps calls do not draw down your event-contract budgets, and event-contract calls do not draw down your perps budgets. Each exchange has its own Read budget and Write budgets.
+Perps traffic is metered in its own Read and Write buckets. Above Basic, Perps Write buckets hold three seconds of budget across REST and FIX. Perps calls do not draw down your event-contract budgets, and event-contract calls do not draw down your perps budgets. Each exchange has its own Read budget and Write budgets.
 
 Single-order Perps creates and amends use a Write budget per margin shard, with your full perps tier budget on each shard. The API and FIX share these budgets.
 
@@ -120,7 +120,7 @@ Per-second token budgets in each event-contract bucket:
   </table>
 </div>
 
-Write bucket capacity is twice the per-second budget above the Basic tier.
+Write bucket capacity is three times the per-second budget above the Basic tier.
 
 ## Tier qualification
 
@@ -159,7 +159,7 @@ Fetch your grants from [`GET /account/limits`](/api-reference/account/get-accoun
 {
   "usage_tier": "premier",
   "read":  { "refill_rate": 1200, "bucket_capacity": 1200 },
-  "write": { "refill_rate": 1000, "bucket_capacity": 2000 },
+  "write": { "refill_rate": 1200, "bucket_capacity": 3600 },
   "grants": [
     { "exchange_instance": "event_contract", "level": "premier", "expires_ts": 1751558400, "source": "volume" },
     { "exchange_instance": "event_contract", "level": "advanced", "source": "manual" }

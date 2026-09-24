@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/authentication
-lastmod: 2026-09-03T15:39:16.823Z
+lastmod: 2026-09-23T21:55:39.782Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,9 +12,14 @@ lastmod: 2026-09-03T15:39:16.823Z
 
 ## API Key Setup
 
-FIX API keys use the same RSA key pair as the [REST API](/getting_started/api_keys). Generate a 2048-bit RSA key pair and register the public key in your [account profile](https://kalshi.com/account/profile). The resulting API Key ID (UUID) is your `SenderCompID`.
+FIX API keys use the same key pair as the [REST API](/getting_started/api_keys): Ed25519 (recommended) or 2048-bit RSA. Generate a key pair and register the public key in your [account profile](https://kalshi.com/account/profile), or generate one there. The API Key ID (UUID) is your `SenderCompID`.
 
 ```bash theme={null}
+# Ed25519
+openssl genpkey -algorithm ed25519 -out kalshi-fix.key
+openssl pkey -in kalshi-fix.key -pubout -out kalshi-fix.pub
+
+# RSA
 openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out kalshi-fix.key
 openssl rsa -in kalshi-fix.key -pubout -out kalshi-fix.pub
 ```
@@ -52,7 +57,7 @@ The initiator sends a Logon message. The acceptor responds with either a Logon (
 
 ### Signature Generation
 
-The RawData field must contain a PSS RSA signature of the pre-hash string:
+The RawData field must contain a base64-encoded signature of the pre-hash string: Ed25519 for Ed25519 keys, RSA-PSS with SHA-256 for RSA keys.
 
 ```
 PreHashString = SendingTime + SOH + MsgType + SOH + MsgSeqNum + SOH + SenderCompID + SOH + TargetCompID
@@ -63,7 +68,20 @@ PreHashString = SendingTime + SOH + MsgType + SOH + MsgSeqNum + SOH + SenderComp
 </Warning>
 
 <CodeGroup>
-  ```python Python theme={null}
+  ```python Python (Ed25519) theme={null}
+  from base64 import b64encode
+  from cryptography.hazmat.primitives import serialization
+
+  private_key = serialization.load_pem_private_key(open('kalshi-fix.key', 'rb').read(), password=None)
+  sending_time, msg_type, msg_seq_num = "20230809-05:28:18.035", "A", "1"
+  sender_comp_id = "your-fix-api-key-uuid"
+  target_comp_id = "KalshiNR"
+
+  msg_string = chr(1).join([sending_time, msg_type, msg_seq_num, sender_comp_id, target_comp_id])
+  raw_data_value = b64encode(private_key.sign(msg_string.encode('utf-8'))).decode('utf-8')
+  ```
+
+  ```python Python (RSA) theme={null}
   from base64 import b64encode
   from Cryptodome.Signature import pss
   from Cryptodome.Hash import SHA256

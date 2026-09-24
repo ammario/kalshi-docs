@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2026-09-21T16:21:18.903Z
+lastmod: 2026-09-23T20:45:17.192Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,7 +17,7 @@ lastmod: 2026-09-21T16:21:18.903Z
  | min_created_ts, max_created_ts | `unopened`, `open`, *empty* | |
  | min_close_ts, max_close_ts | `closed`, *empty* | |
  | min_settled_ts, max_settled_ts | `settled`, *empty* | |
- | min_updated_ts | *empty* | Incompatible with all filters besides `mve_filter=exclude`. May be combined with `series_ticker`, which requires `mve_filter=exclude` |
+ | min_updated_ts, max_updated_ts | *empty* | Incompatible with all filters besides `mve_filter=exclude`. May be combined with `series_ticker`, which requires `mve_filter=exclude` |
 
  Markets that settled before the historical cutoff are only available via `GET /historical/markets`. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
 
@@ -30,7 +30,7 @@ lastmod: 2026-09-21T16:21:18.903Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.30.0
+  version: 3.31.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -92,7 +92,7 @@ paths:
          | min_created_ts, max_created_ts | `unopened`, `open`, *empty* | |
          | min_close_ts, max_close_ts | `closed`, *empty* | |
          | min_settled_ts, max_settled_ts | `settled`, *empty* | |
-         | min_updated_ts | *empty* | Incompatible with all filters besides `mve_filter=exclude`. May be combined with `series_ticker`, which requires `mve_filter=exclude` |
+         | min_updated_ts, max_updated_ts | *empty* | Incompatible with all filters besides `mve_filter=exclude`. May be combined with `series_ticker`, which requires `mve_filter=exclude` |
 
          Markets that settled before the historical cutoff are only available via `GET /historical/markets`. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
       operationId: GetMarkets
@@ -104,6 +104,7 @@ paths:
         - $ref: '#/components/parameters/MinCreatedTsQuery'
         - $ref: '#/components/parameters/MaxCreatedTsQuery'
         - $ref: '#/components/parameters/MinUpdatedTsQuery'
+        - $ref: '#/components/parameters/MaxUpdatedTsQuery'
         - $ref: '#/components/parameters/MaxCloseTsQuery'
         - $ref: '#/components/parameters/MinCloseTsQuery'
         - $ref: '#/components/parameters/MinSettledTsQuery'
@@ -180,10 +181,23 @@ components:
       name: min_updated_ts
       in: query
       description: >-
-        Return markets with metadata updated later than this Unix timestamp.
-        Tracks non-trading changes only. Incompatible with any other filters
-        except mve_filter=exclude. May be combined with series_ticker, which
-        requires mve_filter=exclude.
+        Return markets with metadata updated later than this Unix timestamp (in
+        seconds). Tracks non-trading changes only. May be combined with
+        max_updated_ts and mve_filter=exclude. May also be combined with
+        series_ticker, which requires mve_filter=exclude. Incompatible with
+        other filters.
+      schema:
+        type: integer
+        format: int64
+    MaxUpdatedTsQuery:
+      name: max_updated_ts
+      in: query
+      description: >-
+        Return markets with metadata updated at or before this Unix timestamp
+        (in seconds). Tracks non-trading changes only. May be combined with
+        min_updated_ts and mve_filter=exclude. May also be combined with
+        series_ticker, which requires mve_filter=exclude. Incompatible with
+        other filters.
       schema:
         type: integer
         format: int64
