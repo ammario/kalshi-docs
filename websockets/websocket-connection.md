@@ -193,6 +193,17 @@ operations:
                       the default flip; concrete dates will be announced before
                       each step.
                     required: false
+                  - name: user_filter
+                    type: string
+                    description: >-
+                      Communications channel only. Set to "self" to receive RFQ
+                      created/deleted events only for RFQs you created. Omitted
+                      or empty receives RFQs from all users. Quote notifications
+                      are unchanged.
+                    enumValues:
+                      - ''
+                      - self
+                    required: false
                   - name: shard_factor
                     type: integer
                     description: >-
@@ -369,20 +380,32 @@ operations:
                     each step.
                   default: false
                   x-parser-schema-id: <anonymous-schema-11>
+                user_filter:
+                  type: string
+                  enum:
+                    - ''
+                    - self
+                  default: ''
+                  description: >-
+                    Communications channel only. Set to "self" to receive RFQ
+                    created/deleted events only for RFQs you created. Omitted or
+                    empty receives RFQs from all users. Quote notifications are
+                    unchanged.
+                  x-parser-schema-id: <anonymous-schema-12>
                 shard_factor:
                   type: integer
                   description: >-
                     Number of shards for communications channel fanout
                     (optional)
                   minimum: 1
-                  x-parser-schema-id: <anonymous-schema-12>
+                  x-parser-schema-id: <anonymous-schema-13>
                 shard_key:
                   type: integer
                   description: >-
                     Shard key for communications channel fanout (requires
                     shard_factor)
                   minimum: 0
-                  x-parser-schema-id: <anonymous-schema-13>
+                  x-parser-schema-id: <anonymous-schema-14>
                 index_ids:
                   type: array
                   description: >-
@@ -393,9 +416,9 @@ operations:
                     available on the channel).
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-15>
+                    x-parser-schema-id: <anonymous-schema-16>
                   minItems: 1
-                  x-parser-schema-id: <anonymous-schema-14>
+                  x-parser-schema-id: <anonymous-schema-15>
                 underlying_tickers:
                   type: array
                   description: >-
@@ -405,9 +428,9 @@ operations:
                     underlying).
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-17>
+                    x-parser-schema-id: <anonymous-schema-18>
                   minItems: 1
-                  x-parser-schema-id: <anonymous-schema-16>
+                  x-parser-schema-id: <anonymous-schema-17>
               x-parser-schema-id: <anonymous-schema-2>
           x-parser-schema-id: subscribeCommandPayload
         title: Subscribe Command
@@ -488,7 +511,7 @@ operations:
             cmd:
               type: string
               const: unsubscribe
-              x-parser-schema-id: <anonymous-schema-18>
+              x-parser-schema-id: <anonymous-schema-19>
             params:
               type: object
               required:
@@ -505,8 +528,8 @@ operations:
                     minimum: 1
                     x-parser-schema-id: subscriptionId
                   minItems: 1
-                  x-parser-schema-id: <anonymous-schema-20>
-              x-parser-schema-id: <anonymous-schema-19>
+                  x-parser-schema-id: <anonymous-schema-21>
+              x-parser-schema-id: <anonymous-schema-20>
           x-parser-schema-id: unsubscribeCommandPayload
         title: Unsubscribe Command
         description: Cancel one or more subscriptions
@@ -568,7 +591,7 @@ operations:
             cmd:
               type: string
               const: list_subscriptions
-              x-parser-schema-id: <anonymous-schema-42>
+              x-parser-schema-id: <anonymous-schema-43>
           x-parser-schema-id: listSubscriptionsCommandPayload
         title: List Subscriptions Command
         description: List all active subscriptions
@@ -688,7 +711,7 @@ operations:
             cmd:
               type: string
               const: update_subscription
-              x-parser-schema-id: <anonymous-schema-21>
+              x-parser-schema-id: <anonymous-schema-22>
             params:
               type: object
               required:
@@ -703,41 +726,41 @@ operations:
                   items: *ref_3
                   minItems: 1
                   maxItems: 1
-                  x-parser-schema-id: <anonymous-schema-23>
+                  x-parser-schema-id: <anonymous-schema-24>
                 market_ticker:
                   description: 'Add/remove a single market. Type: string'
                   type: string
-                  x-parser-schema-id: <anonymous-schema-24>
+                  x-parser-schema-id: <anonymous-schema-25>
                 market_tickers:
                   type: array
                   description: 'Add/remove multiple markets. Type: array of strings'
                   items: *ref_4
-                  x-parser-schema-id: <anonymous-schema-25>
+                  x-parser-schema-id: <anonymous-schema-26>
                 market_id:
                   type: string
                   format: uuid
                   description: Add/remove a single market by UUID (ticker only)
-                  x-parser-schema-id: <anonymous-schema-26>
+                  x-parser-schema-id: <anonymous-schema-27>
                 market_ids:
                   type: array
                   description: Add/remove multiple markets by UUID (ticker only)
                   items: *ref_5
-                  x-parser-schema-id: <anonymous-schema-27>
+                  x-parser-schema-id: <anonymous-schema-28>
                 send_initial_snapshot:
                   type: boolean
                   description: >-
                     If true, receive an initial snapshot for newly added market
                     tickers on the ticker channel
                   default: false
-                  x-parser-schema-id: <anonymous-schema-28>
+                  x-parser-schema-id: <anonymous-schema-29>
                 action:
                   type: string
                   enum:
                     - add_markets
                     - delete_markets
                     - get_snapshot
-                  x-parser-schema-id: <anonymous-schema-29>
-              x-parser-schema-id: <anonymous-schema-22>
+                  x-parser-schema-id: <anonymous-schema-30>
+              x-parser-schema-id: <anonymous-schema-23>
           x-parser-schema-id: updateSubscriptionCommandPayload
         title: Update Subscription - Add Markets
         description: Add markets to an existing subscription
@@ -1092,7 +1115,7 @@ operations:
             cmd:
               type: string
               const: update_subscription
-              x-parser-schema-id: <anonymous-schema-30>
+              x-parser-schema-id: <anonymous-schema-31>
             params:
               type: object
               required:
@@ -1107,7 +1130,7 @@ operations:
                   items: *ref_3
                   minItems: 1
                   maxItems: 1
-                  x-parser-schema-id: <anonymous-schema-32>
+                  x-parser-schema-id: <anonymous-schema-33>
                 action:
                   type: string
                   description: >
@@ -1123,7 +1146,7 @@ operations:
                     - subscribe_indices
                     - unsubscribe_indices
                     - indexlist
-                  x-parser-schema-id: <anonymous-schema-33>
+                  x-parser-schema-id: <anonymous-schema-34>
                 index_ids:
                   type: array
                   description: >-
@@ -1132,10 +1155,10 @@ operations:
                     and unsubscribe_indices.
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-35>
+                    x-parser-schema-id: <anonymous-schema-36>
                   minItems: 1
-                  x-parser-schema-id: <anonymous-schema-34>
-              x-parser-schema-id: <anonymous-schema-31>
+                  x-parser-schema-id: <anonymous-schema-35>
+              x-parser-schema-id: <anonymous-schema-32>
           x-parser-schema-id: cfbenchmarksUpdateSubscriptionCommandPayload
         title: Update Subscription - CF Benchmarks Indices
         description: >-
@@ -1251,7 +1274,7 @@ operations:
             cmd:
               type: string
               const: update_subscription
-              x-parser-schema-id: <anonymous-schema-36>
+              x-parser-schema-id: <anonymous-schema-37>
             params:
               type: object
               required:
@@ -1266,7 +1289,7 @@ operations:
                   items: *ref_3
                   minItems: 1
                   maxItems: 1
-                  x-parser-schema-id: <anonymous-schema-38>
+                  x-parser-schema-id: <anonymous-schema-39>
                 action:
                   type: string
                   description: >
@@ -1282,7 +1305,7 @@ operations:
                     - subscribe_underlyings
                     - unsubscribe_underlyings
                     - underlying_list
-                  x-parser-schema-id: <anonymous-schema-39>
+                  x-parser-schema-id: <anonymous-schema-40>
                 underlying_tickers:
                   type: array
                   description: >-
@@ -1290,10 +1313,10 @@ operations:
                     every available underlying.
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-41>
+                    x-parser-schema-id: <anonymous-schema-42>
                   minItems: 1
-                  x-parser-schema-id: <anonymous-schema-40>
-              x-parser-schema-id: <anonymous-schema-37>
+                  x-parser-schema-id: <anonymous-schema-41>
+              x-parser-schema-id: <anonymous-schema-38>
           x-parser-schema-id: pythUpdateSubscriptionCommandPayload
         title: Update Subscription - Pyth Underlyings
         description: >-
@@ -1367,7 +1390,7 @@ operations:
             type:
               type: string
               const: subscribed
-              x-parser-schema-id: <anonymous-schema-43>
+              x-parser-schema-id: <anonymous-schema-44>
             id: *ref_1
             msg:
               type: object
@@ -1377,9 +1400,9 @@ operations:
               properties:
                 channel:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-45>
+                  x-parser-schema-id: <anonymous-schema-46>
                 sid: *ref_3
-              x-parser-schema-id: <anonymous-schema-44>
+              x-parser-schema-id: <anonymous-schema-45>
           x-parser-schema-id: subscribedResponsePayload
         title: Subscribed Response
         description: Confirmation that subscription was successful
@@ -1452,7 +1475,7 @@ operations:
             type:
               type: string
               const: unsubscribed
-              x-parser-schema-id: <anonymous-schema-50>
+              x-parser-schema-id: <anonymous-schema-51>
             id: *ref_1
             sid: *ref_3
             seq: &ref_7
@@ -1554,7 +1577,7 @@ operations:
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-59>
+              x-parser-schema-id: <anonymous-schema-60>
             id: *ref_1
             sid: *ref_3
             seq: *ref_7
@@ -1565,13 +1588,13 @@ operations:
                   type: array
                   description: Full list of market tickers after update
                   items: *ref_4
-                  x-parser-schema-id: <anonymous-schema-61>
+                  x-parser-schema-id: <anonymous-schema-62>
                 market_ids:
                   type: array
                   description: Full list of market IDs after update
                   items: *ref_5
-                  x-parser-schema-id: <anonymous-schema-62>
-              x-parser-schema-id: <anonymous-schema-60>
+                  x-parser-schema-id: <anonymous-schema-63>
+              x-parser-schema-id: <anonymous-schema-61>
           x-parser-schema-id: okResponsePayload
         title: OK Response
         description: Successful update operation response
@@ -1658,7 +1681,7 @@ operations:
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-55>
+              x-parser-schema-id: <anonymous-schema-56>
             id: *ref_1
             sid: *ref_3
             seq: *ref_7
@@ -1674,9 +1697,9 @@ operations:
                     all-mode is ["all"]
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-58>
-                  x-parser-schema-id: <anonymous-schema-57>
-              x-parser-schema-id: <anonymous-schema-56>
+                    x-parser-schema-id: <anonymous-schema-59>
+                  x-parser-schema-id: <anonymous-schema-58>
+              x-parser-schema-id: <anonymous-schema-57>
           x-parser-schema-id: subscribedUnderlyingsResponsePayload
         title: Subscribed Underlyings
         description: >-
@@ -1752,7 +1775,7 @@ operations:
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-51>
+              x-parser-schema-id: <anonymous-schema-52>
             id: *ref_1
             sid: *ref_3
             seq: *ref_7
@@ -1768,9 +1791,9 @@ operations:
                     is ["all"]
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-54>
-                  x-parser-schema-id: <anonymous-schema-53>
-              x-parser-schema-id: <anonymous-schema-52>
+                    x-parser-schema-id: <anonymous-schema-55>
+                  x-parser-schema-id: <anonymous-schema-54>
+              x-parser-schema-id: <anonymous-schema-53>
           x-parser-schema-id: subscribedIndicesResponsePayload
         title: Subscribed Indices
         description: >-
@@ -1838,7 +1861,7 @@ operations:
             type:
               type: string
               const: ok
-              x-parser-schema-id: <anonymous-schema-46>
+              x-parser-schema-id: <anonymous-schema-47>
             id: *ref_1
             msg:
               type: array
@@ -1852,10 +1875,10 @@ operations:
                   channel:
                     type: string
                     description: Name of the subscribed channel
-                    x-parser-schema-id: <anonymous-schema-49>
+                    x-parser-schema-id: <anonymous-schema-50>
                   sid: *ref_3
-                x-parser-schema-id: <anonymous-schema-48>
-              x-parser-schema-id: <anonymous-schema-47>
+                x-parser-schema-id: <anonymous-schema-49>
+              x-parser-schema-id: <anonymous-schema-48>
           x-parser-schema-id: listSubscriptionsResponsePayload
         title: List Subscriptions Response
         description: Response containing all active subscriptions
@@ -2063,7 +2086,7 @@ operations:
             type:
               type: string
               const: error
-              x-parser-schema-id: <anonymous-schema-63>
+              x-parser-schema-id: <anonymous-schema-64>
             id: *ref_1
             sid: *ref_3
             seq: *ref_7
@@ -2174,23 +2197,23 @@ operations:
                     - 26
                     - 27
                     - 28
-                  x-parser-schema-id: <anonymous-schema-65>
+                  x-parser-schema-id: <anonymous-schema-66>
                 msg:
                   type: string
                   description: Human-readable error message
-                  x-parser-schema-id: <anonymous-schema-66>
+                  x-parser-schema-id: <anonymous-schema-67>
                 market_ticker:
                   type: string
                   description: Optional market ticker associated with the error
-                  x-parser-schema-id: <anonymous-schema-67>
+                  x-parser-schema-id: <anonymous-schema-68>
                 market_tickers:
                   type: array
                   description: Optional market tickers associated with the error
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-69>
-                  x-parser-schema-id: <anonymous-schema-68>
-              x-parser-schema-id: <anonymous-schema-64>
+                    x-parser-schema-id: <anonymous-schema-70>
+                  x-parser-schema-id: <anonymous-schema-69>
+              x-parser-schema-id: <anonymous-schema-65>
           x-parser-schema-id: errorResponsePayload
         title: Error Response
         description: Error response for failed operations

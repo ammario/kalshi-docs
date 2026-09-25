@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-09-03T18:01:09.325Z
+lastmod: 2026-09-24T23:36:39.817Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -88,32 +88,33 @@ Cancel all remaining quantity of an existing order.
 
 This message is sent by the exchange to reflect changes to an order's state.
 
-| Tag | Name         | Type         | Required | Description                                                                                                    |
-| --- | ------------ | ------------ | -------- | -------------------------------------------------------------------------------------------------------------- |
-| 6   | AvgPx        | Decimal      | Y        | Average fill price in fixed-point dollars                                                                      |
-| 11  | ClOrderID    | String       | Y        | ClOrderID from the last change-making request                                                                  |
-| 14  | CumQty       | Decimal      | Y        | Total quantity filled so far                                                                                   |
-| 17  | ExecID       | String       | Y        | Unique sequenced identifier for this report message                                                            |
-| 30  | LastMkt      | String       | C        | Exchange index that produced the report.                                                                       |
-| 31  | LastPx       | Decimal      | C        | Price of the last fill in fixed-point dollars                                                                  |
-| 32  | LastQty      | Decimal      | C        | Quantity of the last fill                                                                                      |
-| 37  | OrderID      | String       | Y        | Exchange order identifier                                                                                      |
-| 38  | OrderQty     | Decimal      | Y        | Order quantity. By default this is `LeavesQty + CumQty`; if `21008=Y`, it remains the original order quantity. |
-| 39  | OrdStatus    | Char         | Y        | Current status of the order after this event                                                                   |
-| 41  | OrigClOrdID  | String       | C        | Previous ClOrderID for replaced/canceled orders                                                                |
-| 44  | Price        | Decimal      | C        | Limit price in fixed-point dollars                                                                             |
-| 54  | Side         | Char         | Y        | Original order side                                                                                            |
-| 55  | Symbol       | String       | Y        | Margin market ticker                                                                                           |
-| 58  | Text         | String       | N        | Human-readable result description                                                                              |
-| 60  | TransactTime | UTCTimestamp | Y        | Timestamp for the triggering event                                                                             |
-| 103 | OrdRejReason | Integer      | C        | Rejection reason when `ExecType = Rejected`                                                                    |
-| 126 | ExpireTime   | UTCTimestamp | C        | Expiration timestamp                                                                                           |
-| 150 | ExecType     | Char         | Y        | Why this execution report was sent                                                                             |
-| 151 | LeavesQty    | Decimal      | Y        | Remaining quantity open for execution                                                                          |
-| 448 | PartyID      | String       | N        | FCM customer-account identifier or the operator captured from SenderSubID                                      |
-| 452 | PartyRole    | Integer      | N        | FCM party role: `24 = Customer Account`, `12 = Executing Trader`                                               |
-| 453 | NoPartyIDs   | Integer      | N        | FCM party count. Up to 2 when both customer account and operator are present.                                  |
-| 79  | AllocAccount | Integer      | C        | Subaccount number                                                                                              |
+| Tag | Name                 | Type         | Required | Description                                                                                                                                                                                                                      |
+| --- | -------------------- | ------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 6   | AvgPx                | Decimal      | Y        | Average fill price in fixed-point dollars                                                                                                                                                                                        |
+| 11  | ClOrderID            | String       | Y        | ClOrderID from the last change-making request                                                                                                                                                                                    |
+| 14  | CumQty               | Decimal      | Y        | Total quantity filled so far                                                                                                                                                                                                     |
+| 17  | ExecID               | String       | Y        | Unique sequenced identifier for this report message                                                                                                                                                                              |
+| 30  | LastMkt              | String       | C        | Exchange index that produced the report.                                                                                                                                                                                         |
+| 31  | LastPx               | Decimal      | C        | Price of the last fill in fixed-point dollars                                                                                                                                                                                    |
+| 32  | LastQty              | Decimal      | C        | Quantity of the last fill                                                                                                                                                                                                        |
+| 37  | OrderID              | String       | Y        | Exchange order identifier                                                                                                                                                                                                        |
+| 38  | OrderQty             | Decimal      | Y        | Order quantity. By default this is `LeavesQty + CumQty`; if `21008=Y`, it remains the original order quantity.                                                                                                                   |
+| 39  | OrdStatus            | Char         | Y        | Current status of the order after this event                                                                                                                                                                                     |
+| 41  | OrigClOrdID          | String       | C        | Previous ClOrderID for replaced/canceled orders                                                                                                                                                                                  |
+| 44  | Price                | Decimal      | C        | Limit price in fixed-point dollars                                                                                                                                                                                               |
+| 54  | Side                 | Char         | Y        | Original order side                                                                                                                                                                                                              |
+| 55  | Symbol               | String       | Y        | Margin market ticker                                                                                                                                                                                                             |
+| 58  | Text                 | String       | N        | Human-readable result description                                                                                                                                                                                                |
+| 60  | TransactTime         | UTCTimestamp | Y        | Timestamp for the triggering event                                                                                                                                                                                               |
+| 103 | OrdRejReason         | Integer      | C        | Rejection reason when `ExecType = Rejected`                                                                                                                                                                                      |
+| 126 | ExpireTime           | UTCTimestamp | C        | Expiration timestamp                                                                                                                                                                                                             |
+| 150 | ExecType             | Char         | Y        | Why this execution report was sent                                                                                                                                                                                               |
+| 151 | LeavesQty            | Decimal      | Y        | Remaining quantity open for execution                                                                                                                                                                                            |
+| 448 | PartyID              | String       | N        | FCM customer-account identifier or the operator captured from SenderSubID                                                                                                                                                        |
+| 452 | PartyRole            | Integer      | N        | FCM party role: `24 = Customer Account`, `12 = Executing Trader`                                                                                                                                                                 |
+| 453 | NoPartyIDs           | Integer      | N        | FCM party count. Up to 2 when both customer account and operator are present.                                                                                                                                                    |
+| 79  | AllocAccount         | Integer      | C        | Subaccount number                                                                                                                                                                                                                |
+| 715 | ClearingBusinessDate | LocalMktDate | C        | Clearing date (`YYYYMMDD`). Each date covers the interval from 4:00 p.m. ET on the prior calendar day (inclusive) to 4:00 p.m. ET on that date (exclusive), including weekends and holidays. Present only for `ExecType = Trade` |
 
 ### Order Status (39)
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/list-fcm-subtraders
-lastmod: 2026-09-23T20:45:18.251Z
+lastmod: 2026-09-24T19:34:00.832Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

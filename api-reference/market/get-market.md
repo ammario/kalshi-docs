@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market
-lastmod: 2026-09-23T20:45:17.202Z
+lastmod: 2026-09-24T19:33:59.097Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -270,14 +270,6 @@ components:
           description: >-
             Price for the last traded YES contract on this market a day ago in
             dollars
-        liquidity_dollars:
-          allOf:
-            - $ref: '#/components/schemas/FixedPointDollars'
-          deprecated: true
-          x-go-type-skip-optional-pointer: true
-          description: >-
-            DEPRECATED: This field is deprecated and will always return
-            "0.0000".
         settlement_value_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           nullable: true

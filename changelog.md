@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-23T21:01:57.457Z
+lastmod: 2026-09-25T01:05:40.789Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,59 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="October 1, 2026"
+  tags={["FIX", "Margin"]}
+  rss={{
+title: "ClearingBusinessDate on Margin FIX trade execution reports",
+description: "Margin FIX Execution Reports with ExecType=Trade now carry ClearingBusinessDate (tag 715), which rolls to the next day for trades at or after 4:00 p.m. ET."
+}}
+>
+  Margin FIX Execution Reports with `ExecType=Trade` now include
+  `ClearingBusinessDate` (tag `715`) in `YYYYMMDD` form. Trades at or after
+  4:00 p.m. ET carry the next calendar day's date, including on weekends and
+  holidays. See [Order Entry](/fix-margin/order-entry).
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Filter communications RFQs to your own user",
+description: "The communications channel supports user_filter to receive only your own RFQ events."
+}}
+>
+  Subscribe to [communications](/websockets/communications) with
+  `user_filter: "self"` to receive `rfq_created` and `rfq_deleted` only for
+  RFQs you created. Omit `user_filter` or set it to `""` to continue receiving
+  RFQs from all users. Quote notifications are unchanged.
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "The deprecated liquidity_dollars field is removed from market responses",
+description: "The deprecated liquidity_dollars field is removed from market responses in the October 1, 2026 release."
+}}
+>
+  Breaking Change: the deprecated `liquidity_dollars` field is removed from
+  market responses. The field was deprecated in February 2026 and has always
+  returned `"0.0000"` since then. For top-of-book size, use `yes_bid_size_fp`
+  and `yes_ask_size_fp` on the market object.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/markets`
+  * `GET /trade-api/v2/markets/{ticker}`
+  * `GET /trade-api/v2/historical/markets`
+  * `GET /trade-api/v2/historical/markets/{ticker}`
+  * `GET /trade-api/v2/events`
+  * `GET /trade-api/v2/events/{event_ticker}`
+  * `GET /trade-api/v2/events/multivariate`
+  * `POST /trade-api/v2/multivariate_event_collections/{collection_ticker}`
+</Update>
 
 <Update
   label="October 1, 2026"

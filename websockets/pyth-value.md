@@ -459,7 +459,7 @@ operations:
             type:
               type: string
               const: pyth_value
-              x-parser-schema-id: <anonymous-schema-323>
+              x-parser-schema-id: <anonymous-schema-324>
             sid: &ref_0
               type: integer
               description: >-
@@ -486,20 +486,20 @@ operations:
                 underlying_ticker:
                   type: string
                   description: Qualified Pyth underlying ticker
-                  x-parser-schema-id: <anonymous-schema-325>
+                  x-parser-schema-id: <anonymous-schema-326>
                 value_usd:
                   type: string
                   description: USD value formatted to 8 decimal places
-                  x-parser-schema-id: <anonymous-schema-326>
+                  x-parser-schema-id: <anonymous-schema-327>
                 source_ts_ms:
                   type: integer
                   description: Pyth source timestamp (unix ms)
-                  x-parser-schema-id: <anonymous-schema-327>
+                  x-parser-schema-id: <anonymous-schema-328>
                 received_at:
                   type: integer
                   description: When Kalshi received the Pyth update (unix ms)
-                  x-parser-schema-id: <anonymous-schema-328>
-              x-parser-schema-id: <anonymous-schema-324>
+                  x-parser-schema-id: <anonymous-schema-329>
+              x-parser-schema-id: <anonymous-schema-325>
           x-parser-schema-id: pythValuePayload
         title: Pyth Value Update
         description: Deduplicated real-time Pyth price for an underlying ticker
@@ -592,7 +592,7 @@ operations:
             type:
               type: string
               const: pyth_value_underlying_list
-              x-parser-schema-id: <anonymous-schema-329>
+              x-parser-schema-id: <anonymous-schema-330>
             id:
               type: integer
               description: >
@@ -620,9 +620,9 @@ operations:
                     two hours
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-332>
-                  x-parser-schema-id: <anonymous-schema-331>
-              x-parser-schema-id: <anonymous-schema-330>
+                    x-parser-schema-id: <anonymous-schema-333>
+                  x-parser-schema-id: <anonymous-schema-332>
+              x-parser-schema-id: <anonymous-schema-331>
           x-parser-schema-id: pythUnderlyingListPayload
         title: Pyth Underlying List
         description: Recently streamed Pyth underlying tickers

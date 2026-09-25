@@ -1,20 +1,21 @@
 ---
-url: https://docs.kalshi.com/api-reference/portfolio/get-intra-account-transfers
-lastmod: 2026-09-24T19:33:59.448Z
+url: https://docs.kalshi.com/api-reference/fcm/get-fcm-fills
+lastmod: 2026-09-24T19:34:00.807Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Intra Account Transfers
+# Get FCM Fills
 
-> Endpoint for fetching intra-exchange account transfer history.
+> Returns fills across the authenticated FCM's subtraders. Requires FCM member access.
+
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/intra_exchange_instance_transfers
+````yaml /openapi.yaml get /fcm/fills
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -64,48 +65,54 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/intra_exchange_instance_transfers:
+  /fcm/fills:
     get:
       tags:
-        - portfolio
-      summary: Get Intra Account Transfers
-      description: Endpoint for fetching intra-exchange account transfer history.
-      operationId: GetIntraExchangeInstanceTransfers
+        - fcm
+      summary: Get FCM Fills
+      description: >
+        Returns fills across the authenticated FCM's subtraders. Requires FCM
+        member access.
+      operationId: GetFCMFills
       parameters:
-        - $ref: '#/components/parameters/TransfersLimitQuery'
+        - $ref: '#/components/parameters/MinTsQuery'
+        - $ref: '#/components/parameters/MaxTsQuery'
         - $ref: '#/components/parameters/CursorQuery'
       responses:
         '200':
-          description: Transfers retrieved successfully
+          description: Fills retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetIntraExchangeInstanceTransfersResponse'
+                $ref: '#/components/schemas/GetFcmFillsResponse'
         '400':
-          $ref: '#/components/responses/BadRequestError'
+          description: Bad request
         '401':
-          $ref: '#/components/responses/UnauthorizedError'
+          description: Unauthorized
+        '403':
+          description: Forbidden - requires an unrestricted FCM member API key
         '500':
-          $ref: '#/components/responses/InternalServerError'
+          description: Internal server error
       security:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
   parameters:
-    TransfersLimitQuery:
-      name: limit
+    MinTsQuery:
+      name: min_ts
       in: query
-      description: Number of results per page. Defaults to 100. Maximum value is 500.
+      description: Filter items after this Unix timestamp
       schema:
         type: integer
         format: int64
-        minimum: 1
-        maximum: 500
-        default: 100
-        x-go-type-skip-optional-pointer: true
-        x-oapi-codegen-extra-tags:
-          validate: omitempty,min=1,max=500
+    MaxTsQuery:
+      name: max_ts
+      in: query
+      description: Filter items before this Unix timestamp
+      schema:
+        type: integer
+        format: int64
     CursorQuery:
       name: cursor
       in: query
@@ -117,74 +124,89 @@ components:
         type: string
         x-go-type-skip-optional-pointer: true
   schemas:
-    GetIntraExchangeInstanceTransfersResponse:
+    GetFcmFillsResponse:
       type: object
       required:
-        - transfers
+        - fills
+        - cursor
       properties:
-        transfers:
+        fills:
           type: array
           items:
-            $ref: '#/components/schemas/IntraExchangeInstanceTransfer'
+            $ref: '#/components/schemas/FcmFill'
         cursor:
           type: string
-          description: >-
-            Cursor for the next page of results. Omitted when there are no
-            further pages.
-    IntraExchangeInstanceTransfer:
+    FcmFill:
       type: object
       required:
-        - transfer_id
-        - source
-        - destination
-        - source_exchange_shard
-        - destination_exchange_shard
-        - amount
-        - status
-        - created_ts
+        - fill_id
+        - exchange_index
+        - ticker
+        - taker_outcome_side
+        - count_fp
+        - yes_price_dollars
       properties:
-        transfer_id:
+        fill_id:
           type: string
-          description: Unique transfer id
-        source:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: Source exchange instance
-        destination:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: Destination exchange instance
-        source_exchange_shard:
-          type: integer
-          description: Source exchange shard index
-        destination_exchange_shard:
-          type: integer
-          description: Destination exchange shard index
-        amount:
+          description: Fill ID.
+        exchange_index:
+          $ref: '#/components/schemas/ExchangeIndex'
+        ticker:
+          type: string
+          description: Market ticker.
+        taker_outcome_side:
+          $ref: '#/components/schemas/OutcomeSide'
+          description: Taker outcome side. The maker has the opposite outcome.
+        count_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: Filled contract count.
+        yes_price_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Transfer amount in dollars
-        status:
-          $ref: '#/components/schemas/IntraExchangeInstanceTransferStatus'
-        created_ts:
-          type: integer
-          format: int64
-          description: Unix timestamp when the transfer was created
-    ErrorResponse:
-      type: object
-      properties:
-        code:
+          description: YES price in dollars.
+        created_time:
           type: string
-          description: Error code
-        message:
+          format: date-time
+          description: Fill execution time.
+        maker_order_id:
           type: string
-          description: Human-readable error message
-        details:
+          description: Maker order ID when owned by the FCM.
+        maker_subtrader_id:
           type: string
-          description: Additional details about the error, if available
-    ExchangeInstance:
+          description: Maker subtrader ID when owned by the FCM.
+        maker_fee_cost:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Maker fee in dollars when owned by the FCM.
+        taker_order_id:
+          type: string
+          description: Taker order ID when owned by the FCM.
+        taker_subtrader_id:
+          type: string
+          description: Taker subtrader ID when owned by the FCM.
+        taker_fee_cost:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Taker fee in dollars when owned by the FCM.
+    ExchangeIndex:
+      type: integer
+      description: Identifier for an exchange shard.
+      example: 0
+    OutcomeSide:
       type: string
       enum:
-        - event_contract
-        - margined
-      description: The exchange instance type
+        - 'yes'
+        - 'no'
+      x-enum-varnames:
+        - OutcomeSideYes
+        - OutcomeSideNo
+      description: Outcome side.
+    FixedPointCount:
+      type: string
+      description: >-
+        Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
+        to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
+        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
+        contract values (e.g., "2.50") are supported; the minimum granularity is
+        0.01 contracts.
+      example: '10.00'
     FixedPointDollars:
       type: string
       description: >-
@@ -193,34 +215,6 @@ components:
         intervals for a given market are constrained by that market's price
         level structure.
       example: '0.5600'
-    IntraExchangeInstanceTransferStatus:
-      type: string
-      enum:
-        - pending
-        - complete
-      x-enum-varnames:
-        - IntraExchangeInstanceTransferStatusPending
-        - IntraExchangeInstanceTransferStatusComplete
-      description: Transfer status.
-  responses:
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    UnauthorizedError:
-      description: Unauthorized - authentication required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     kalshiAccessKey:
       type: apiKey

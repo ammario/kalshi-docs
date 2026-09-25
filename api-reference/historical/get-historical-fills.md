@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-fills
-lastmod: 2026-09-23T20:45:18.419Z
+lastmod: 2026-09-24T19:34:00.977Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -232,10 +232,7 @@ components:
             direction](/getting_started/order_direction). This field will not be
             removed before May 14, 2026.
         outcome_side:
-          type: string
-          enum:
-            - 'yes'
-            - 'no'
+          $ref: '#/components/schemas/OutcomeSide'
           description: >
             The outcome side this fill positioned the user for. buy-yes and
             sell-no produce 'yes'; buy-no and sell-yes produce 'no'.
@@ -314,6 +311,15 @@ components:
       type: integer
       description: Identifier for an exchange shard.
       example: 0
+    OutcomeSide:
+      type: string
+      enum:
+        - 'yes'
+        - 'no'
+      x-enum-varnames:
+        - OutcomeSideYes
+        - OutcomeSideNo
+      description: Outcome side.
     BookSide:
       type: string
       enum:
