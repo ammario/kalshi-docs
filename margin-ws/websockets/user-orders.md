@@ -130,6 +130,26 @@ operations:
                     type: integer
                     description: Unix timestamp in milliseconds.
                     required: false
+                  - name: last_update_reason
+                    type: string
+                    description: >-
+                      Margin order update reason when the delta corresponds to
+                      the authenticated user's order. CloseCancel and HaltCancel
+                      are reserved; the current orderbook stream filters out
+                      these operations. The field is omitted when no reason
+                      applies.
+                    enumValues:
+                      - Decrease
+                      - Amend
+                      - MarginCancel
+                      - SelfTradeCancel
+                      - ExpiryCancel
+                      - CloseCancel
+                      - HaltCancel
+                      - Trade
+                      - PostOnlyCrossCancel
+                      - ReduceOnlyCancel
+                    required: false
                   - name: subaccount_number
                     type: integer
                     required: false
@@ -231,6 +251,25 @@ operations:
                   format: int64
                   description: Unix timestamp in milliseconds.
                   x-parser-schema-id: <anonymous-schema-107>
+                last_update_reason:
+                  type: string
+                  enum:
+                    - Decrease
+                    - Amend
+                    - MarginCancel
+                    - SelfTradeCancel
+                    - ExpiryCancel
+                    - CloseCancel
+                    - HaltCancel
+                    - Trade
+                    - PostOnlyCrossCancel
+                    - ReduceOnlyCancel
+                  description: >-
+                    Margin order update reason when the delta corresponds to the
+                    authenticated user's order. CloseCancel and HaltCancel are
+                    reserved; the current orderbook stream filters out these
+                    operations. The field is omitted when no reason applies.
+                  x-parser-schema-id: lastUpdateReason
                 subaccount_number:
                   type: integer
                   x-parser-schema-id: <anonymous-schema-108>
@@ -264,6 +303,7 @@ operations:
               "order_group_id": "<string>",
               "expiration_ts_ms": 123,
               "last_updated_ts_ms": 123,
+              "last_update_reason": "<string>",
               "subaccount_number": 123,
               "order_source": "<string>"
             }

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-09-24T23:36:39.817Z
+lastmod: 2026-09-25T20:13:14.113Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,7 +15,7 @@ lastmod: 2026-09-24T23:36:39.817Z
 | Tag   | Name                    | Type         | Required | Description                                                                                                                   |
 | ----- | ----------------------- | ------------ | -------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | 11    | ClOrderID               | String       | Y        | Client order identifier for idempotency. UUID format is preferred.                                                            |
-| 18    | ExecInst                | Char         | N        | Execution instruction flags. Supported values: `6 = Post Only`                                                                |
+| 18    | ExecInst                | Char         | N        | Execution instruction flags. Supported values: `6 = Post Only`, `E = Reduce Only` (IOC or FOK only)                           |
 | 38    | OrderQty                | Decimal      | Y        | Quantity of contracts to trade. Only whole-number quantities are supported.                                                   |
 | 40    | OrdType                 | Char         | Y        | Supported values: `2 = Limit`                                                                                                 |
 | 44    | Price                   | Decimal      | Y        | Price per contract in fixed-point dollars, up to 4 decimal places.                                                            |
@@ -178,6 +178,7 @@ Common values include:
 * `TAKER_CANCEL_FOR_SELF_TRADE_PREVENTION`
 * `MAKER_CANCEL_FOR_SELF_TRADE_PREVENTION`
 * `IMMEDIATE_OR_CANCELLED`
+* `REDUCE_ONLY`
 
 ### OrderCancelReject (35=9)
 

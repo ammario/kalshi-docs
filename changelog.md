@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-25T01:05:40.789Z
+lastmod: 2026-09-25T20:13:14.140Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,6 +22,20 @@ the `FIX` tag.
 
 <Update
   label="October 1, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "Reduce-only orders over FIX",
+description: "NewOrderSingle accepts ExecInst (18) E for reduce-only orders."
+}}
+>
+  `NewOrderSingle` (`35=D`) accepts `ExecInst` (`18`) `E` for reduce-only orders
+  with IOC, or IOC or FOK on Margin; it is not supported when accepting a quote.
+  A reduce-only order canceled because there was no position to reduce reports
+  `Text` (`58`) `REDUCE_ONLY`.
+</Update>
+
+<Update
+  label="October 1, 2026"
   tags={["FIX", "Margin"]}
   rss={{
 title: "ClearingBusinessDate on Margin FIX trade execution reports",
@@ -32,6 +46,18 @@ description: "Margin FIX Execution Reports with ExecType=Trade now carry Clearin
   `ClearingBusinessDate` (tag `715`) in `YYYYMMDD` form. Trades at or after
   4:00 p.m. ET carry the next calendar day's date, including on weekends and
   holidays. See [Order Entry](/fix-margin/order-entry).
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["REST", "WebSocket", "Predictions", "Margin"]}
+  rss={{
+title: "user_orders messages include last_update_reason",
+description: "user_orders messages include last_update_reason"
+}}
+>
+  `user_orders` messages now include `last_update_reason`. Reduce-only orders with
+  no position to reduce report `ReduceOnlyCancel` (previously `Decrease` on Margin).
 </Update>
 
 <Update

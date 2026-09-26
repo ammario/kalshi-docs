@@ -227,6 +227,23 @@ operations:
                     type: integer
                     description: Last update time as a Unix timestamp in milliseconds
                     required: false
+                  - name: last_update_reason
+                    type: string
+                    description: >-
+                      Order update reason. ReduceOnlyCancel means reduce_only
+                      capped the order at placement.
+                    enumValues:
+                      - Decrease
+                      - Amend
+                      - MarginCancel
+                      - SelfTradeCancel
+                      - ExpiryCancel
+                      - CloseCancel
+                      - HaltCancel
+                      - Trade
+                      - PostOnlyCrossCancel
+                      - ReduceOnlyCancel
+                    required: false
                   - name: subaccount_number
                     type: integer
                     description: Subaccount number (0 for primary, 1-63 for subaccounts)
@@ -415,6 +432,23 @@ operations:
                   description: Last update time as a Unix timestamp in milliseconds
                   format: int64
                   x-parser-schema-id: <anonymous-schema-298>
+                last_update_reason:
+                  type: string
+                  description: >-
+                    Order update reason. ReduceOnlyCancel means reduce_only
+                    capped the order at placement.
+                  enum:
+                    - Decrease
+                    - Amend
+                    - MarginCancel
+                    - SelfTradeCancel
+                    - ExpiryCancel
+                    - CloseCancel
+                    - HaltCancel
+                    - Trade
+                    - PostOnlyCrossCancel
+                    - ReduceOnlyCancel
+                  x-parser-schema-id: lastUpdateReason
                 subaccount_number:
                   type: integer
                   description: Subaccount number (0 for primary, 1-63 for subaccounts)

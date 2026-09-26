@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-positions
-lastmod: 2026-09-24T19:34:00.999Z
+lastmod: 2026-09-25T20:13:09.948Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

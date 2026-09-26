@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event-fee-changes
-lastmod: 2026-09-24T19:33:59.168Z
+lastmod: 2026-09-25T20:13:08.908Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-live-data-with-type
-lastmod: 2026-09-24T19:34:00.627Z
+lastmod: 2026-09-25T20:13:09.599Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

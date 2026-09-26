@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order-v2
-lastmod: 2026-09-24T19:33:59.262Z
+lastmod: 2026-09-25T20:13:08.984Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -204,7 +204,8 @@ components:
           type: boolean
           description: >-
             Specifies whether the order place count should be capped by the
-            member's current position.
+            member's current position. Orders with reduce_only set to true will
+            be rejected unless time_in_force is immediate_or_cancel.
         subaccount:
           type: integer
           minimum: 0

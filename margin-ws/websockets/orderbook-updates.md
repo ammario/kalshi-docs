@@ -243,6 +243,7 @@ operations:
                       - HaltCancel
                       - Trade
                       - PostOnlyCrossCancel
+                      - ReduceOnlyCancel
                     required: false
                   - name: client_order_id
                     type: string
@@ -302,6 +303,7 @@ operations:
                     - HaltCancel
                     - Trade
                     - PostOnlyCrossCancel
+                    - ReduceOnlyCancel
                   description: >-
                     Margin order update reason when the delta corresponds to the
                     authenticated user's order. CloseCancel and HaltCancel are

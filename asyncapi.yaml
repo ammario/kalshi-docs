@@ -2316,6 +2316,11 @@ components:
       description: 'Side of the book for an order or trade. ''bid'' is equivalent to outcome_side ''yes''; ''ask'' is equivalent to outcome_side ''no''.'
       enum: ["bid", "ask"]
 
+    lastUpdateReason:
+      type: string
+      description: Order update reason. ReduceOnlyCancel means reduce_only capped the order at placement.
+      enum: ["Decrease", "Amend", "MarginCancel", "SelfTradeCancel", "ExpiryCancel", "CloseCancel", "HaltCancel", "Trade", "PostOnlyCrossCancel", "ReduceOnlyCancel"]
+
     orderAction:
       type: string
       description: Legacy order action; an unknown action is emitted as an empty string.
@@ -3721,6 +3726,9 @@ components:
               type: integer
               description: Last update time as a Unix timestamp in milliseconds
               format: int64
+            last_update_reason:
+              $ref: '#/components/schemas/lastUpdateReason'
+              description: Reason for the most recent update, if applicable
             subaccount_number:
               type: integer
               description: Subaccount number (0 for primary, 1-63 for subaccounts)

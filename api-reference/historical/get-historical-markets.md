@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-markets
-lastmod: 2026-09-24T19:34:01.057Z
+lastmod: 2026-09-25T20:13:09.973Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

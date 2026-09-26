@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/confirm-quote
-lastmod: 2026-09-24T19:34:00.484Z
+lastmod: 2026-09-25T20:13:09.483Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
