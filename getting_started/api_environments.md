@@ -16,10 +16,10 @@ Kalshi provides separate production and demo environments. Credentials are not s
 
 Use these base URLs for the Trade API:
 
-| Environment | Recommended base URL                               | Also supported                                  |
-| ----------- | -------------------------------------------------- | ----------------------------------------------- |
-| Production  | `https://external-api.kalshi.com/trade-api/v2`     | `https://api.elections.kalshi.com/trade-api/v2` |
-| Demo        | `https://external-api.demo.kalshi.co/trade-api/v2` | `https://demo-api.kalshi.co/trade-api/v2`       |
+| Environment | Recommended base URL | Also supported |
+| - | - | - |
+| Production | `https://external-api.kalshi.com/trade-api/v2` | `https://api.elections.kalshi.com/trade-api/v2` |
+| Demo | `https://external-api.demo.kalshi.co/trade-api/v2` | `https://demo-api.kalshi.co/trade-api/v2` |
 
 The `external-api` hosts are dedicated to the external Trade API and are the recommended hosts for API traders. The existing shared hosts remain supported for compatibility with existing clients.
 
@@ -31,10 +31,10 @@ The `external-api` hosts are dedicated to the external Trade API and are the rec
 
 Use these WebSocket URLs for the Trade API:
 
-| Environment | Recommended URL                                        | Also supported                                   |
-| ----------- | ------------------------------------------------------ | ------------------------------------------------ |
-| Production  | `wss://external-api-ws.kalshi.com/trade-api/ws/v2`     | `wss://api.elections.kalshi.com/trade-api/ws/v2` |
-| Demo        | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://demo-api.kalshi.co/trade-api/ws/v2`       |
+| Environment | Recommended URL | Also supported |
+| - | - | - |
+| Production | `wss://external-api-ws.kalshi.com/trade-api/ws/v2` | `wss://api.elections.kalshi.com/trade-api/ws/v2` |
+| Demo | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://demo-api.kalshi.co/trade-api/ws/v2` |
 
 ## Private Connectivity
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order-v2
-lastmod: 2026-09-25T20:13:09.038Z
+lastmod: 2026-09-30T04:02:54.780Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -25,7 +25,7 @@ lastmod: 2026-09-25T20:13:09.038Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

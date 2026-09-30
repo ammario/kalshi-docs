@@ -337,13 +337,13 @@ address: cfbenchmarks_value
 parameters: []
 bindings: []
 operations:
-  - &ref_4
+  - &ref_5
     id: receiveCFBenchmarksValue
     title: CF Benchmarks Value Update
     description: Receive real-time CF Benchmarks index values with trailing averages
     type: send
     messages:
-      - &ref_6
+      - &ref_7
         id: cfbenchmarksValue
         contentType: application/json
         payload:
@@ -432,6 +432,12 @@ operations:
                         type: integer
                         description: Window end boundary, exclusive (unix ms)
                         required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -511,6 +517,13 @@ operations:
                   x-parser-schema-id: cfbenchmarksAvgData
                 last_60s_windowed_average_15min: *ref_0
               x-parser-schema-id: <anonymous-schema-301>
+            sending_ts_ms: &ref_3
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: cfbenchmarksValuePayload
         title: CF Benchmarks Value Update
         description: >-
@@ -519,6 +532,7 @@ operations:
         example: |-
           {
             "type": "cfbenchmarks_value",
+            "sending_ts_ms": 1669149841234,
             "sid": 1,
             "seq": 42,
             "msg": {
@@ -544,10 +558,10 @@ operations:
           - id: x-parser-unique-object-id
             value: cfbenchmarksValue
     bindings: []
-    extensions: &ref_3
+    extensions: &ref_4
       - id: x-parser-unique-object-id
         value: cfbenchmarks_value
-  - &ref_5
+  - &ref_6
     id: receiveCFBenchmarksIndexList
     title: CF Benchmarks Index List
     description: >-
@@ -555,7 +569,7 @@ operations:
       indexlist action
     type: send
     messages:
-      - &ref_7
+      - &ref_8
         id: cfbenchmarksIndexList
         contentType: application/json
         payload:
@@ -606,6 +620,12 @@ operations:
                       - name: item
                         type: string
                         required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -647,6 +667,7 @@ operations:
                     x-parser-schema-id: <anonymous-schema-312>
                   x-parser-schema-id: <anonymous-schema-311>
               x-parser-schema-id: <anonymous-schema-310>
+            sending_ts_ms: *ref_3
           x-parser-schema-id: cfbenchmarksIndexListPayload
         title: CF Benchmarks Index List
         description: >-
@@ -655,6 +676,7 @@ operations:
         example: |-
           {
             "type": "cfbenchmarks_value_indexlist",
+            "sending_ts_ms": 1669149841234,
             "id": 2,
             "sid": 1,
             "seq": 1,
@@ -670,15 +692,15 @@ operations:
           - id: x-parser-unique-object-id
             value: cfbenchmarksIndexList
     bindings: []
-    extensions: *ref_3
+    extensions: *ref_4
 sendOperations: []
 receiveOperations:
-  - *ref_4
   - *ref_5
+  - *ref_6
 sendMessages: []
 receiveMessages:
-  - *ref_6
   - *ref_7
+  - *ref_8
 extensions:
   - id: x-parser-unique-object-id
     value: cfbenchmarks_value

@@ -85,13 +85,13 @@ Margined FIX sessions always route to exchange index `0`.
 
 The following assignments determine the shard where new events will be created. Shard 0 is the catch-all for all categories and tags not listed below.
 
-| Shard index | Category               | Tags                         | Series list                                                                                                                                                                |
-| ----------- | ---------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0           | *All other categories* | *All other tags*             | —                                                                                                                                                                          |
-| 1           | Exotics (Combos)       | —                            | [`GET /series?category=Exotics`](https://api.elections.kalshi.com/trade-api/v2/series?category=Exotics)                                                                    |
-| 2           | Crypto                 | —                            | [`GET /series?category=Crypto`](https://api.elections.kalshi.com/trade-api/v2/series?category=Crypto)                                                                      |
-| 2           | Commodities            | —                            | [`GET /series?category=Commodities`](https://api.elections.kalshi.com/trade-api/v2/series?category=Commodities)                                                            |
-| 3           | Sports                 | Tennis, Baseball, Basketball | [`GET /series?category=Sports&tags=Tennis,Baseball,Basketball`](https://api.elections.kalshi.com/trade-api/v2/series?category=Sports\&tags=Tennis%2CBaseball%2CBasketball) |
+| Shard index | Category | Tags | Series list |
+| - | - | - | - |
+| 0 | *All other categories* | *All other tags* | — |
+| 1 | Exotics (Combos) | — | [`GET /series?category=Exotics`](https://api.elections.kalshi.com/trade-api/v2/series?category=Exotics) |
+| 2 | Crypto | — | [`GET /series?category=Crypto`](https://api.elections.kalshi.com/trade-api/v2/series?category=Crypto) |
+| 2 | Commodities | — | [`GET /series?category=Commodities`](https://api.elections.kalshi.com/trade-api/v2/series?category=Commodities) |
+| 3 | Sports | Tennis, Baseball, Basketball | [`GET /series?category=Sports&tags=Tennis,Baseball,Basketball`](https://api.elections.kalshi.com/trade-api/v2/series?category=Sports\&tags=Tennis%2CBaseball%2CBasketball) |
 
 ## FAQ
 

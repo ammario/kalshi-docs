@@ -162,6 +162,12 @@ operations:
                       - user
                       - system
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -283,6 +289,13 @@ operations:
                     triggers. `user` for every other order.
                   x-parser-schema-id: <anonymous-schema-109>
               x-parser-schema-id: <anonymous-schema-97>
+            sending_ts_ms:
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: marginUserOrderPayload
         title: User Order Update
         description: Private margin order create/update notifications
@@ -306,7 +319,8 @@ operations:
               "last_update_reason": "<string>",
               "subaccount_number": 123,
               "order_source": "<string>"
-            }
+            },
+            "sending_ts_ms": 123
           }
         bindings: []
         extensions:

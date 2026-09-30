@@ -16,9 +16,9 @@ For the general overview of fixed-point pricing and contract quantities across R
 
 To enable subpenny precision, include tag **21005** in your Logon message:
 
-| Tag   | Name       | Description                      | Value |
-| ----- | ---------- | -------------------------------- | ----- |
-| 21005 | UseDollars | Enable dollar-based price format | Y     |
+| Tag | Name | Description | Value |
+| - | - | - | - |
+| 21005 | UseDollars | Enable dollar-based price format | Y |
 
 Overview:
 
@@ -31,21 +31,21 @@ Overview:
 
 Examples:
 
-| Cents | FIX Decimal       | String Representation |
-| ----- | ----------------- | --------------------- |
-| 1.23¢ | Decimal(123, -4)  | 0.0123                |
-| 72.5¢ | Decimal(7250, -4) | 0.725                 |
-| 99¢   | Decimal(9900, -4) | 0.99                  |
+| Cents | FIX Decimal | String Representation |
+| - | - | - |
+| 1.23¢ | Decimal(123, -4) | 0.0123 |
+| 72.5¢ | Decimal(7250, -4) | 0.725 |
+| 99¢ | Decimal(9900, -4) | 0.99 |
 
 Affected Tags:
 
-| Tag | Field Name | Description            |
-| --- | ---------- | ---------------------- |
-| 6   | AvgPx      | Average price of fills |
-| 31  | LastPx     | Price of last fill     |
-| 44  | Price      | Order limit price      |
-| 132 | BidPx      | Quote bid price        |
-| 133 | OfferPx    | Quote ask price        |
+| Tag | Field Name | Description |
+| - | - | - |
+| 6 | AvgPx | Average price of fills |
+| 31 | LastPx | Price of last fill |
+| 44 | Price | Order limit price |
+| 132 | BidPx | Quote bid price |
+| 133 | OfferPx | Quote ask price |
 
 ## Sample Messages
 

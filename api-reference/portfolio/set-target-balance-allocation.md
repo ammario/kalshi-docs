@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/set-target-balance-allocation
-lastmod: 2026-09-25T20:13:09.882Z
+lastmod: 2026-09-30T04:02:55.716Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,7 +20,7 @@ Percentages must total 100. Passing an empty allocations array disables automati
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

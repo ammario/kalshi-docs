@@ -117,10 +117,10 @@ In binary prediction markets, every position has a complementary opposite:
 
 Since binary markets must sum to \$1.00, these relationships always hold:
 
-| Action            | Equivalent To     | Why                                                                |
-| ----------------- | ----------------- | ------------------------------------------------------------------ |
-| YES BID at \$0.60 | NO ASK at \$0.40  | Willing to pay $0.60 for YES = Willing to receive $0.40 to take NO |
-| NO BID at \$0.30  | YES ASK at \$0.70 | Willing to pay $0.30 for NO = Willing to receive $0.70 to take YES |
+| Action | Equivalent To | Why |
+| - | - | - |
+| YES BID at \$0.60 | NO ASK at \$0.40 | Willing to pay $0.60 for YES = Willing to receive $0.40 to take NO |
+| NO BID at \$0.30 | YES ASK at \$0.70 | Willing to pay $0.30 for NO = Willing to receive $0.70 to take YES |
 
 This reciprocal nature means that by showing only bids, the orderbook provides complete market information while avoiding redundancy.
 

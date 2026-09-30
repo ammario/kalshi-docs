@@ -28,10 +28,10 @@ Lookback window is limited to the last 3 hours. Only ExecutionReport (35=8) mess
 
 Request execution reports within a specified ExecID range.
 
-| Tag   | Name        | Description                                                      | Required |
-| ----- | ----------- | ---------------------------------------------------------------- | -------- |
-| 21001 | BeginExecID | Starting ExecID (inclusive)                                      | Yes      |
-| 21002 | EndExecID   | Ending ExecID (inclusive). Defaults to latest ExecID if omitted. | No       |
+| Tag | Name | Description | Required |
+| - | - | - | - |
+| 21001 | BeginExecID | Starting ExecID (inclusive) | Yes |
+| 21002 | EndExecID | Ending ExecID (inclusive). Defaults to latest ExecID if omitted. | No |
 
 **Example:**
 
@@ -43,16 +43,16 @@ Request execution reports within a specified ExecID range.
 
 Sent after all requested events have been resent.
 
-| Tag   | Name             | Description                         | Required |
-| ----- | ---------------- | ----------------------------------- | -------- |
-| 45    | RefSeqNum        | MsgSeqNum of the EventResendRequest | Yes      |
-| 21003 | ResendEventCount | Total number of events resent       | Yes      |
+| Tag | Name | Description | Required |
+| - | - | - | - |
+| 45 | RefSeqNum | MsgSeqNum of the EventResendRequest | Yes |
+| 21003 | ResendEventCount | Total number of events resent | Yes |
 
 ## EventResendReject (35=U3)
 
 Sent when a resend request cannot be fulfilled.
 
-| Tag   | Name                    | Description                                                                                                                                                                         | Required |
-| ----- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| 45    | RefSeqNum               | MsgSeqNum of the EventResendRequest                                                                                                                                                 | Yes      |
-| 21004 | EventResendRejectReason | Rejection code: `1`=Too many resend requests, `2`=Server error, `3`=BeginExecID too small (outside window), `4`=EndExecID too large, `5`=User not allowlisted for historical replay | Yes      |
+| Tag | Name | Description | Required |
+| - | - | - | - |
+| 45 | RefSeqNum | MsgSeqNum of the EventResendRequest | Yes |
+| 21004 | EventResendRejectReason | Rejection code: `1`=Too many resend requests, `2`=Server error, `3`=BeginExecID too small (outside window), `4`=EndExecID too large, `5`=User not allowlisted for historical replay | Yes |

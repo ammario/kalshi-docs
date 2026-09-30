@@ -99,6 +99,12 @@ operations:
                     type: integer
                     description: Unix timestamp in milliseconds.
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -158,6 +164,13 @@ operations:
                   description: Unix timestamp in milliseconds.
                   x-parser-schema-id: <anonymous-schema-82>
               x-parser-schema-id: <anonymous-schema-78>
+            sending_ts_ms:
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: marginTradePayload
         title: Trade Update
         description: Public margin trade information
@@ -173,7 +186,8 @@ operations:
               "count": "<string>",
               "taker_side": "<string>",
               "ts_ms": 123
-            }
+            },
+            "sending_ts_ms": 123
           }
         bindings: []
         extensions:

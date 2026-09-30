@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/create-fcm-subtrader
-lastmod: 2026-09-25T20:13:09.762Z
+lastmod: 2026-09-30T04:02:55.633Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,7 +22,7 @@ subtrader returns 409.
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

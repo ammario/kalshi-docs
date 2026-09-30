@@ -12,10 +12,10 @@ lastmod: 2026-07-13T19:43:31.361Z
 
 Use the dedicated Trade API WebSocket hosts for new integrations:
 
-| Environment | WebSocket URL                                          | Shared host, also supported                      |
-| ----------- | ------------------------------------------------------ | ------------------------------------------------ |
-| Production  | `wss://external-api-ws.kalshi.com/trade-api/ws/v2`     | `wss://api.elections.kalshi.com/trade-api/ws/v2` |
-| Demo        | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://demo-api.kalshi.co/trade-api/ws/v2`       |
+| Environment | WebSocket URL | Shared host, also supported |
+| - | - | - |
+| Production | `wss://external-api-ws.kalshi.com/trade-api/ws/v2` | `wss://api.elections.kalshi.com/trade-api/ws/v2` |
+| Demo | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://demo-api.kalshi.co/trade-api/ws/v2` |
 
 WebSocket connections use the same API key authentication and signing path as before. Only the hostname changes for the dedicated Trade API path.
 

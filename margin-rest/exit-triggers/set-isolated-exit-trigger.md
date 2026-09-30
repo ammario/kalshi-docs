@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exit-triggers/set-isolated-exit-trigger
-lastmod: 2026-09-25T20:13:10.449Z
+lastmod: 2026-09-30T04:02:56.332Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -120,10 +120,14 @@ components:
           description: Which trigger family this write targets. Defaults to `bracket`.
         stop_loss_price:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Mark price at which the stop-loss leg fires. Bracket only.
+          description: >-
+            Mark price at which the stop-loss leg fires. Bracket only; must be
+            strictly positive when supplied.
         take_profit_price:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Mark price at which the take-profit leg fires. Bracket only.
+          description: >-
+            Mark price at which the take-profit leg fires. Bracket only; must be
+            strictly positive when supplied.
         trail_amount:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-

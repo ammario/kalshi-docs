@@ -55,10 +55,10 @@ A new quote on the same RFQ replaces the maker's previous quote.
 
 The exchange designates certain markets as High Volatility Markets (HVM). All combo markets are HVMs. HVMs use shorter confirmation and execution windows.
 
-|                         | Standard | HVM |
-| ----------------------- | -------- | --- |
-| **Confirmation window** | 30 s     | 3 s |
-| **Execution timer**     | 15 s     | 1 s |
+| | Standard | HVM |
+| - | - | - |
+| **Confirmation window** | 30 s | 3 s |
+| **Execution timer** | 15 s | 1 s |
 
 After acceptance, the maker has the confirmation window to confirm. Upon confirmation, the platform begins the execution timer. At the end of the timer, orders are entered into the book. Fills appear in `GET /portfolio/fills`; match on `creator_order_id` (maker) or `rfq_creator_order_id` (requester).
 
@@ -84,9 +84,9 @@ maker quote lifecycle only.
 
 ## Common errors
 
-| Error                  | What's going on                                  |
-| ---------------------- | ------------------------------------------------ |
-| `invalid_parameters`   | Price not on a valid step, or RFQ already closed |
-| `RFQ_CLOSED`           | RFQ was deleted, expired, or already executed    |
-| `INSUFFICIENT_BALANCE` | Not enough funds for the trade                   |
-| `409 Conflict`         | Open RFQ already exists on this market ticker    |
+| Error | What's going on |
+| - | - |
+| `invalid_parameters` | Price not on a valid step, or RFQ already closed |
+| `RFQ_CLOSED` | RFQ was deleted, expired, or already executed |
+| `INSUFFICIENT_BALANCE` | Not enough funds for the trade |
+| `409 Conflict` | Open RFQ already exists on this market ticker |

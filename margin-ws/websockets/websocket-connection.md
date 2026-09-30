@@ -46,12 +46,12 @@ bindings:
         description: GET
         required: false
 operations:
-  - &ref_6
+  - &ref_7
     id: sendSubscribe
     title: Subscribe to Channels
     type: receive
     messages:
-      - &ref_17
+      - &ref_18
         id: subscribeCommand
         contentType: application/json
         payload:
@@ -172,12 +172,12 @@ operations:
     extensions: &ref_1
       - id: x-parser-unique-object-id
         value: root
-  - &ref_7
+  - &ref_8
     id: sendUnsubscribe
     title: Unsubscribe from Channels
     type: receive
     messages:
-      - &ref_18
+      - &ref_19
         id: unsubscribeCommand
         contentType: application/json
         payload:
@@ -243,12 +243,12 @@ operations:
             value: unsubscribeCommand
     bindings: []
     extensions: *ref_1
-  - &ref_8
+  - &ref_9
     id: sendListSubscriptions
     title: List Subscriptions
     type: receive
     messages:
-      - &ref_19
+      - &ref_20
         id: listSubscriptionsCommand
         contentType: application/json
         payload:
@@ -290,12 +290,12 @@ operations:
             value: listSubscriptionsCommand
     bindings: []
     extensions: *ref_1
-  - &ref_9
+  - &ref_10
     id: sendUpdateSubscription
     title: Update Subscription - Add Markets
     type: receive
     messages:
-      - &ref_20
+      - &ref_21
         id: updateSubscriptionCommand
         contentType: application/json
         payload:
@@ -409,12 +409,12 @@ operations:
             value: updateSubscriptionCommand
     bindings: []
     extensions: *ref_1
-  - &ref_10
+  - &ref_11
     id: sendUpdateSubscriptionDelete
     title: Update Subscription - Delete Markets
     type: receive
     messages:
-      - &ref_21
+      - &ref_22
         id: updateSubscriptionDeleteCommand
         contentType: application/json
         payload:
@@ -481,12 +481,12 @@ operations:
             value: updateSubscriptionDeleteCommand
     bindings: []
     extensions: *ref_1
-  - &ref_11
+  - &ref_12
     id: sendUpdateSubscriptionSingleSid
     title: Update Subscription - Single SID
     type: receive
     messages:
-      - &ref_22
+      - &ref_23
         id: updateSubscriptionSingleSidCommand
         contentType: application/json
         payload:
@@ -553,12 +553,12 @@ operations:
             value: updateSubscriptionSingleSidCommand
     bindings: []
     extensions: *ref_1
-  - &ref_12
+  - &ref_13
     id: receiveSubscribed
     title: Subscription Confirmed
     type: send
     messages:
-      - &ref_23
+      - &ref_24
         id: subscribedResponse
         contentType: application/json
         payload:
@@ -585,6 +585,12 @@ operations:
                     type: integer
                     description: Server-generated subscription identifier
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -608,6 +614,13 @@ operations:
                   x-parser-schema-id: <anonymous-schema-22>
                 sid: *ref_2
               x-parser-schema-id: <anonymous-schema-21>
+            sending_ts_ms: &ref_5
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: subscribedResponsePayload
         title: Subscribed Response
         description: Confirmation that subscription was successful
@@ -618,7 +631,8 @@ operations:
             "msg": {
               "channel": "<string>",
               "sid": 123
-            }
+            },
+            "sending_ts_ms": 123
           }
         bindings: []
         extensions:
@@ -626,12 +640,12 @@ operations:
             value: subscribedResponse
     bindings: []
     extensions: *ref_1
-  - &ref_13
+  - &ref_14
     id: receiveUnsubscribed
     title: Unsubscription Confirmed
     type: send
     messages:
-      - &ref_24
+      - &ref_25
         id: unsubscribedResponse
         contentType: application/json
         payload:
@@ -655,6 +669,12 @@ operations:
                 type: integer
                 description: Sequence number used for snapshot/delta consistency
                 required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -669,11 +689,12 @@ operations:
               x-parser-schema-id: <anonymous-schema-23>
             id: *ref_0
             sid: *ref_2
-            seq: &ref_5
+            seq: &ref_6
               type: integer
               minimum: 1
               description: Sequence number used for snapshot/delta consistency
               x-parser-schema-id: sequenceNumber
+            sending_ts_ms: *ref_5
           x-parser-schema-id: unsubscribedResponsePayload
         title: Unsubscribed Response
         description: Confirmation that unsubscription was successful
@@ -682,7 +703,8 @@ operations:
             "type": "<string>",
             "id": 123,
             "sid": 123,
-            "seq": 123
+            "seq": 123,
+            "sending_ts_ms": 123
           }
         bindings: []
         extensions:
@@ -690,12 +712,12 @@ operations:
             value: unsubscribedResponse
     bindings: []
     extensions: *ref_1
-  - &ref_14
+  - &ref_15
     id: receiveOk
     title: Update Confirmed
     type: send
     messages:
-      - &ref_25
+      - &ref_26
         id: okResponse
         contentType: application/json
         payload:
@@ -739,6 +761,12 @@ operations:
                       - name: item
                         type: string
                         required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -751,7 +779,7 @@ operations:
               x-parser-schema-id: <anonymous-schema-24>
             id: *ref_0
             sid: *ref_2
-            seq: *ref_5
+            seq: *ref_6
             msg:
               type: object
               properties:
@@ -768,6 +796,7 @@ operations:
                     x-parser-schema-id: <anonymous-schema-28>
                   x-parser-schema-id: <anonymous-schema-27>
               x-parser-schema-id: <anonymous-schema-25>
+            sending_ts_ms: *ref_5
           x-parser-schema-id: okResponsePayload
         title: OK Response
         description: Successful update operation response
@@ -778,12 +807,12 @@ operations:
             value: okResponse
     bindings: []
     extensions: *ref_1
-  - &ref_15
+  - &ref_16
     id: receiveListSubscriptions
     title: List Subscriptions Response
     type: send
     messages:
-      - &ref_26
+      - &ref_27
         id: listSubscriptionsResponse
         contentType: application/json
         payload:
@@ -810,6 +839,12 @@ operations:
                     type: integer
                     description: Server-generated subscription identifier
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -836,6 +871,7 @@ operations:
                   sid: *ref_2
                 x-parser-schema-id: <anonymous-schema-31>
               x-parser-schema-id: <anonymous-schema-30>
+            sending_ts_ms: *ref_5
           x-parser-schema-id: listSubscriptionsResponsePayload
         title: List Subscriptions Response
         description: Response containing all active subscriptions
@@ -846,7 +882,8 @@ operations:
             "msg": {
               "channel": "<string>",
               "sid": 123
-            }
+            },
+            "sending_ts_ms": 123
           }
         bindings: []
         extensions:
@@ -854,12 +891,12 @@ operations:
             value: listSubscriptionsResponse
     bindings: []
     extensions: *ref_1
-  - &ref_16
+  - &ref_17
     id: receiveError
     title: Error Response
     type: send
     messages:
-      - &ref_27
+      - &ref_28
         id: errorResponse
         contentType: application/json
         payload:
@@ -942,6 +979,12 @@ operations:
                       - name: item
                         type: string
                         required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -955,7 +998,7 @@ operations:
               x-parser-schema-id: <anonymous-schema-33>
             id: *ref_0
             sid: *ref_2
-            seq: *ref_5
+            seq: *ref_6
             msg:
               type: object
               required:
@@ -1016,6 +1059,7 @@ operations:
                     x-parser-schema-id: <anonymous-schema-39>
                   x-parser-schema-id: <anonymous-schema-38>
               x-parser-schema-id: <anonymous-schema-34>
+            sending_ts_ms: *ref_5
           x-parser-schema-id: errorResponsePayload
         title: Error Response
         description: Error response for failed operations
@@ -1027,31 +1071,31 @@ operations:
     bindings: []
     extensions: *ref_1
 sendOperations:
-  - *ref_6
   - *ref_7
   - *ref_8
   - *ref_9
   - *ref_10
   - *ref_11
-receiveOperations:
   - *ref_12
+receiveOperations:
   - *ref_13
   - *ref_14
   - *ref_15
   - *ref_16
-sendMessages:
   - *ref_17
+sendMessages:
   - *ref_18
   - *ref_19
   - *ref_20
   - *ref_21
   - *ref_22
-receiveMessages:
   - *ref_23
+receiveMessages:
   - *ref_24
   - *ref_25
   - *ref_26
   - *ref_27
+  - *ref_28
 extensions:
   - id: x-parser-unique-object-id
     value: root

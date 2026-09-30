@@ -21,11 +21,11 @@ When a trade produces a balance change that is more precise than the user's targ
 
 Fees are six-decimal dollar amounts (`$0.000001` granularity) — the finest precision a fill's revenue (price × quantity) can occupy. Every fill produces three fee components:
 
-| Component        | Description                                                                                  |
-| ---------------- | -------------------------------------------------------------------------------------------- |
-| **Trade fee**    | Fee from the fee model, rounded up to the nearest `$0.000001`                                |
-| **Rounding fee** | Adjustment that restores the user's target balance precision                                 |
-| **Rebate**       | Refund from accumulated rounding overpayment, aligned to the user's target balance precision |
+| Component | Description |
+| - | - |
+| **Trade fee** | Fee from the fee model, rounded up to the nearest `$0.000001` |
+| **Rounding fee** | Adjustment that restores the user's target balance precision |
+| **Rebate** | Refund from accumulated rounding overpayment, aligned to the user's target balance precision |
 
 **Net fee** = trade fee + rounding fee - rebate (always >= \$0.00)
 
@@ -67,11 +67,11 @@ The fee accumulator carries rounding overpayment across an order's fills. Rebate
   <Accordion title="Accumulator across fills">
     If three fills each add `$0.004` of rounding overpayment, the accumulator carries it forward. Assuming the third fill has enough total fee to cover a `$0.01` rebate:
 
-    | Fill |    Added | Before Rebate |   Rebate | Carried Forward |
-    | ---: | -------: | ------------: | -------: | --------------: |
-    |    1 | `$0.004` |      `$0.004` |        — |        `$0.004` |
-    |    2 | `$0.004` |      `$0.008` |        — |        `$0.008` |
-    |    3 | `$0.004` |      `$0.012` | `$0.010` |        `$0.002` |
+    | Fill | Added | Before Rebate | Rebate | Carried Forward |
+    | -: | -: | -: | -: | -: |
+    | 1 | `$0.004` | `$0.004` | — | `$0.004` |
+    | 2 | `$0.004` | `$0.008` | — | `$0.008` |
+    | 3 | `$0.004` | `$0.012` | `$0.010` | `$0.002` |
 
     This table uses a non-direct member's `$0.01` precision. Direct-member rebates follow the same mechanics in `$0.0001` increments. In either case, the rebate is capped so that the fill's net fee cannot become negative.
   </Accordion>

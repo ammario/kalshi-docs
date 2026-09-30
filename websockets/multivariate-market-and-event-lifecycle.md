@@ -56,7 +56,7 @@ address: multivariate_market_lifecycle
 parameters: []
 bindings: []
 operations:
-  - &ref_4
+  - &ref_5
     id: receiveMultivariateMarketLifecycle
     title: Multivariate Market Lifecycle Event
     description: >-
@@ -64,7 +64,7 @@ operations:
       etc.)
     type: send
     messages:
-      - &ref_6
+      - &ref_7
         id: multivariateMarketLifecycle
         contentType: application/json
         payload:
@@ -248,6 +248,12 @@ operations:
                       - center_centi_edge_centi_cent
                       - center_deci_edge_centi_cent
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -443,6 +449,13 @@ operations:
                     - center_deci_edge_centi_cent
                   x-parser-schema-id: lifecyclePriceLevelStructure
               x-parser-schema-id: <anonymous-schema-192>
+            sending_ts_ms: &ref_3
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: multivariateMarketLifecyclePayload
         title: Multivariate Market Lifecycle
         description: >-
@@ -451,6 +464,7 @@ operations:
         example: |-
           {
             "type": "multivariate_market_lifecycle",
+            "sending_ts_ms": 1669149841234,
             "sid": 14,
             "seq": 7,
             "msg": {
@@ -477,16 +491,16 @@ operations:
           - id: x-parser-unique-object-id
             value: multivariateMarketLifecycle
     bindings: []
-    extensions: &ref_3
+    extensions: &ref_4
       - id: x-parser-unique-object-id
         value: multivariate_market_lifecycle
-  - &ref_5
+  - &ref_6
     id: receiveMultivariateEventLifecycle
     title: Multivariate Event Lifecycle
     description: Receive multivariate event creation notifications
     type: send
     messages:
-      - &ref_7
+      - &ref_8
         id: eventLifecycle
         contentType: application/json
         payload:
@@ -560,6 +574,12 @@ operations:
                       Optional - String to indicate the strike period of the
                       event if there is one
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -631,12 +651,14 @@ operations:
                     if there is one
                   x-parser-schema-id: <anonymous-schema-185>
               x-parser-schema-id: <anonymous-schema-177>
+            sending_ts_ms: *ref_3
           x-parser-schema-id: eventLifecyclePayload
         title: Event Lifecycle
         description: Event creation notification
         example: |-
           {
             "type": "event_lifecycle",
+            "sending_ts_ms": 1669149841234,
             "sid": 5,
             "seq": 8,
             "msg": {
@@ -653,15 +675,15 @@ operations:
           - id: x-parser-unique-object-id
             value: eventLifecycle
     bindings: []
-    extensions: *ref_3
+    extensions: *ref_4
 sendOperations: []
 receiveOperations:
-  - *ref_4
   - *ref_5
+  - *ref_6
 sendMessages: []
 receiveMessages:
-  - *ref_6
   - *ref_7
+  - *ref_8
 extensions:
   - id: x-parser-unique-object-id
     value: multivariate_market_lifecycle

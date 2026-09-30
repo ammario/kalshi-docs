@@ -40,11 +40,11 @@ buy-no and sell-yes both produce long no. The new fields make this
 collapse explicit:
 
 | Legacy `action` | Legacy `side` | `outcome_side` | `book_side` |
-| --------------- | ------------- | -------------- | ----------- |
-| buy             | yes           | yes            | bid         |
-| sell            | no            | yes            | bid         |
-| buy             | no            | no             | ask         |
-| sell            | yes           | no             | ask         |
+| - | - | - | - |
+| buy | yes | yes | bid |
+| sell | no | yes | bid |
+| buy | no | no | ask |
+| sell | yes | no | ask |
 
 ## Migration
 
@@ -52,13 +52,13 @@ collapse explicit:
 direction going forward. The legacy fields below are marked
 deprecated and **will not be removed before May 28, 2026**.
 
-| Legacy field     | Surface           | Replacement                              |
-| ---------------- | ----------------- | ---------------------------------------- |
-| `action`         | Order, Fill       | `outcome_side` / `book_side`             |
-| `side`           | Order, Fill       | `outcome_side` / `book_side`             |
-| `is_yes`         | Order (WS)        | `outcome_side` / `book_side`             |
-| `purchased_side` | Fill (WS)         | `outcome_side` / `book_side`             |
-| `taker_side`     | Trade (REST + WS) | `taker_outcome_side` / `taker_book_side` |
+| Legacy field | Surface | Replacement |
+| - | - | - |
+| `action` | Order, Fill | `outcome_side` / `book_side` |
+| `side` | Order, Fill | `outcome_side` / `book_side` |
+| `is_yes` | Order (WS) | `outcome_side` / `book_side` |
+| `purchased_side` | Fill (WS) | `outcome_side` / `book_side` |
+| `taker_side` | Trade (REST + WS) | `taker_outcome_side` / `taker_book_side` |
 
 Existing integrations continue to receive the legacy fields until the
 removal date. New integrations should read only `outcome_side` and

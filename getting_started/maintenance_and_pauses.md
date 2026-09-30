@@ -18,12 +18,12 @@ Clients should be prepared for session disconnections during this window and rec
 
 ## Trading Pause vs Exchange Pause
 
-|                          | Trading Pause                                         | Exchange Pause                                                                                                  |
-| ------------------------ | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| **When**                 | Every Thursday 3:00–5:00 AM ET                        | Rare; during scheduled maintenance if intensive work is needed, or unscheduled if Kalshi has a temporary outage |
-| **Place / amend orders** | No                                                    | No                                                                                                              |
-| **Cancel orders**        | Yes                                                   | No                                                                                                              |
-| **Resting orders**       | Remain on the book (unless CancelOrderOnPause is set) | Remain on the book (unless CancelOrderOnPause is set)                                                           |
+| | Trading Pause | Exchange Pause |
+| - | - | - |
+| **When** | Every Thursday 3:00–5:00 AM ET | Rare; during scheduled maintenance if intensive work is needed, or unscheduled if Kalshi has a temporary outage |
+| **Place / amend orders** | No | No |
+| **Cancel orders** | Yes | No |
+| **Resting orders** | Remain on the book (unless CancelOrderOnPause is set) | Remain on the book (unless CancelOrderOnPause is set) |
 
 If an exchange pause occurs outside the scheduled Thursday window, it indicates a temporary Kalshi Exchange outage.
 
@@ -31,10 +31,10 @@ If an exchange pause occurs outside the scheduled Thursday window, it indicates 
 
 When placing an order, you can set `CancelOrderOnPause` to control whether the order is automatically cancelled during either type of pause.
 
-| Value               | Behavior                                                                 |
-| ------------------- | ------------------------------------------------------------------------ |
-| true / Y            | Order is automatically cancelled when a trading or exchange pause begins |
-| false / N (default) | Order remains resting on the book and resumes when activity reopens      |
+| Value | Behavior |
+| - | - |
+| true / Y | Order is automatically cancelled when a trading or exchange pause begins |
+| false / N (default) | Order remains resting on the book and resumes when activity reopens |
 
 Set this field on order creation:
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-25T20:13:14.140Z
+lastmod: 2026-09-30T04:03:00.935Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,6 +22,103 @@ the `FIX` tag.
 
 <Update
   label="October 1, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Read settled positions before archival",
+description: "GET /portfolio/positions adds a settlement_status filter for settled and all live positions."
+}}
+>
+  `GET /portfolio/positions` now accepts `settlement_status=unsettled|settled|all`.
+  The default remains `unsettled`. Use `settled` for positions that have settled
+  but have not yet moved to `GET /historical/positions`; use `all` for both live
+  states. For complete position history, page through live positions first,
+  then `GET /historical/positions`, using the same `subaccount` and deduplicating
+  by ticker. See [Historical Data](/getting_started/historical_data).
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["WebSocket", "Predictions", "Margin"]}
+  rss={{
+title: "Web Sockets Sending Ts",
+description: "Web Sockets Sending Ts"
+}}
+>
+  WebSocket messages now include `sending_ts_ms`. See the [WebSocket docs](/websockets/websocket-connection) for more info.
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["REST", "FIX", "Predictions", "Margin"]}
+  rss={{
+title: "Amend order expiry",
+description: "Resting order expiry can be changed without losing queue priority."
+}}
+>
+  Predictions and Margin REST amend requests accept `expiration_time`.
+  Omit it to preserve expiry, use `0` to clear it,
+  or supply a future Unix timestamp in seconds. Send the current price and total
+  quantity for an expiry-only amendment; queue priority is preserved.
+
+  FIX replace (`35=G`) requires GTD (`59=6`) with a future `ExpireTime` (`126`)
+  to set a custom expiry; Day (`59=0`) without `126` sets the end-of-day ET
+  deadline, and GTC (`59=1`) without `126` clears it. `126` alone and expired
+  deadlines, including the Unix epoch, are rejected. As a Kalshi-specific
+  convention, omitting both tags preserves expiry. Kalshi guarantees FIFO
+  preservation for expiry-only amendments. Price changes and size increases
+  retain their existing queue-priority rules. Replaced reports confirm the accepted
+  deadline with GTD and `126` (including normalized Day deadlines), or GTC without
+  `126` when expiry is cleared.
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Exit trigger prices must be positive",
+description: "Zero stop-loss and take-profit prices now return HTTP 400."
+}}
+>
+  Creating or updating a bracket exit trigger now requires every supplied
+  `stop_loss_price` and `take_profit_price` to be strictly positive. Zero prices
+  return HTTP `400`. Omitted legs and cancellation behavior are unchanged;
+  use `DELETE` to cancel an exit trigger.
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Settlement bounds on markets",
+description: "Markets now include settlement_bounds_type and, for floor markets, settlement_floor_dollars."
+}}
+>
+  Markets now include `settlement_bounds_type`, which is `default` or `floor`.
+  Markets of type `floor` also include `settlement_floor_dollars`: the lowest
+  value the YES side can settle at.
+
+  **Affected endpoints:**
+
+  * `GET /markets` and `GET /markets/{ticker}`
+  * `GET /historical/markets` and `GET /historical/markets/{ticker}`
+  * `GET /events`, `GET /events/multivariate` and `GET /events/{event_ticker}` (nested markets)
+  * `POST /multivariate_event_collections/{collection_ticker}`
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "SETTLEMENT_BOUNDS_CANCEL cancel reason on ExecutionReports",
+description: "ExecutionReports for resting orders canceled because a market's settlement bounds changed now carry a Text (58) reason of SETTLEMENT_BOUNDS_CANCEL."
+}}
+>
+  * ExecutionReports (35=8) for resting orders canceled because a market's settlement bounds changed now carry a Text (58) reason of `SETTLEMENT_BOUNDS_CANCEL`
+  * A raised settlement floor cancels every resting order priced at or below the new floor
+</Update>
+
+<Update
+  label="October 1, 2026"
   tags={["FIX", "Predictions", "Margin"]}
   rss={{
 title: "Reduce-only orders over FIX",
@@ -32,6 +129,21 @@ description: "NewOrderSingle accepts ExecInst (18) E for reduce-only orders."
   with IOC, or IOC or FOK on Margin; it is not supported when accepting a quote.
   A reduce-only order canceled because there was no position to reduce reports
   `Text` (`58`) `REDUCE_ONLY`.
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "RFQ creators may obscure pre-trade id",
+description: "RFQ creators may obscure pre-trade id"
+}}
+>
+  Affected endpoints:
+
+  * REST: `POST /communications/rfqs`, `GET /communications/rfqs`, `GET /communications/rfqs/{rfq_id}`, `GET /communications/quotes`, and `GET /communications/quotes/{quote_id}`.
+  * WebSocket: `rfq_created`, `rfq_deleted`, `quote_created`, and `quote_accepted`.
+  * FIX: `ObscureCreatorId` (`21034`), `NoPartyIDs` (`453`), `PartyID` (`448`), and `AllocAccount` (`79`).
 </Update>
 
 <Update
@@ -4804,11 +4916,11 @@ description: "Restrictions to GetMarkets Filters"
   Breaking changes planned to `GET /markets` endpoint for performance reasons:
   Timestamp filters will be mutually exclusive from other timestamp filters and certain status filters.
 
-  | Compatible Timestamp Filters       | Additional Status Filters   |
-  | ---------------------------------- | --------------------------- |
+  | Compatible Timestamp Filters | Additional Status Filters |
+  | - | - |
   | min\_created\_ts, max\_created\_ts | `unopened`, `open`, *empty* |
-  | min\_close\_ts, max\_close\_ts     | `closed`, *empty*           |
-  | min\_settled\_ts, max\_settled\_ts | `settled`, *empty*          |
+  | min\_close\_ts, max\_close\_ts | `closed`, *empty* |
+  | min\_settled\_ts, max\_settled\_ts | `settled`, *empty* |
 </Update>
 
 <Update

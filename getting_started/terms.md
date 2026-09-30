@@ -57,11 +57,11 @@ flowchart TD
     class P primary
 ```
 
-| Object | Example                  | Parent field     | How to list it                                                                                               |
-| ------ | ------------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------ |
-| Series | `KXAAAGASM`              | None (top level) | [Get Series List](/api-reference/market/get-series-list) with `category=Economics` or `category=Commodities` |
-| Event  | `KXAAAGASM-26SEP30`      | `series_ticker`  | [Get Events](/api-reference/events/get-events) with `series_ticker=KXAAAGASM`                                |
-| Market | `KXAAAGASM-26SEP30-3.00` | `event_ticker`   | [Get Markets](/api-reference/market/get-markets) with `event_ticker=KXAAAGASM-26SEP30`                       |
+| Object | Example | Parent field | How to list it |
+| - | - | - | - |
+| Series | `KXAAAGASM` | None (top level) | [Get Series List](/api-reference/market/get-series-list) with `category=Economics` or `category=Commodities` |
+| Event | `KXAAAGASM-26SEP30` | `series_ticker` | [Get Events](/api-reference/events/get-events) with `series_ticker=KXAAAGASM` |
+| Market | `KXAAAGASM-26SEP30-3.00` | `event_ticker` | [Get Markets](/api-reference/market/get-markets) with `event_ticker=KXAAAGASM-26SEP30` |
 
 ## Ticker Conventions
 

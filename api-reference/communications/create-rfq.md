@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-09-25T20:13:09.342Z
+lastmod: 2026-09-30T04:02:55.147Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-09-25T20:13:09.342Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -140,6 +140,13 @@ components:
             target cost. By default (false) the target cost caps principal plus
             Kalshi fees, and quote sizes are reduced to make room for the fees.
             Only valid together with a target cost.
+          x-go-type-skip-optional-pointer: true
+        obscure_creator_id:
+          type: boolean
+          description: >-
+            Hide the RFQ creator ID from other users until successful execution.
+            The creator always sees their own ID.
+          default: false
           x-go-type-skip-optional-pointer: true
         rest_remainder:
           type: boolean

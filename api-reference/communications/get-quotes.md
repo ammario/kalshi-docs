@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quotes
-lastmod: 2026-09-25T20:13:09.426Z
+lastmod: 2026-09-30T04:02:55.223Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-09-25T20:13:09.426Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -235,7 +235,9 @@ components:
           description: Public communications ID of the quote creator
         rfq_creator_id:
           type: string
-          description: Public communications ID of the RFQ creator
+          description: >-
+            Public communications ID of the RFQ creator (anonymized). Set to "0"
+            for other users when obscure_creator_id is enabled.
           x-go-type-skip-optional-pointer: true
         market_ticker:
           type: string

@@ -396,13 +396,13 @@ address: pyth_value
 parameters: []
 bindings: []
 operations:
-  - &ref_3
+  - &ref_4
     id: receivePythValue
     title: Pyth Value Update
     description: Receive deduplicated real-time Pyth prices
     type: send
     messages:
-      - &ref_5
+      - &ref_6
         id: pythValue
         contentType: application/json
         payload:
@@ -447,6 +447,12 @@ operations:
                     type: integer
                     description: When Kalshi received the Pyth update (unix ms)
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -500,12 +506,20 @@ operations:
                   description: When Kalshi received the Pyth update (unix ms)
                   x-parser-schema-id: <anonymous-schema-329>
               x-parser-schema-id: <anonymous-schema-325>
+            sending_ts_ms: &ref_2
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: pythValuePayload
         title: Pyth Value Update
         description: Deduplicated real-time Pyth price for an underlying ticker
         example: |-
           {
             "type": "pyth_value",
+            "sending_ts_ms": 1669149841234,
             "sid": 1,
             "seq": 42,
             "msg": {
@@ -520,16 +534,16 @@ operations:
           - id: x-parser-unique-object-id
             value: pythValue
     bindings: []
-    extensions: &ref_2
+    extensions: &ref_3
       - id: x-parser-unique-object-id
         value: pyth_value
-  - &ref_4
+  - &ref_5
     id: receivePythUnderlyingList
     title: Pyth Underlying List
     description: Receive recently streamed Pyth underlying tickers
     type: send
     messages:
-      - &ref_6
+      - &ref_7
         id: pythUnderlyingList
         contentType: application/json
         payload:
@@ -580,6 +594,12 @@ operations:
                       - name: item
                         type: string
                         required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -623,12 +643,14 @@ operations:
                     x-parser-schema-id: <anonymous-schema-333>
                   x-parser-schema-id: <anonymous-schema-332>
               x-parser-schema-id: <anonymous-schema-331>
+            sending_ts_ms: *ref_2
           x-parser-schema-id: pythUnderlyingListPayload
         title: Pyth Underlying List
         description: Recently streamed Pyth underlying tickers
         example: |-
           {
             "type": "pyth_value_underlying_list",
+            "sending_ts_ms": 1669149841234,
             "id": 2,
             "sid": 1,
             "seq": 1,
@@ -646,15 +668,15 @@ operations:
           - id: x-parser-unique-object-id
             value: pythUnderlyingList
     bindings: []
-    extensions: *ref_2
+    extensions: *ref_3
 sendOperations: []
 receiveOperations:
-  - *ref_3
   - *ref_4
+  - *ref_5
 sendMessages: []
 receiveMessages:
-  - *ref_5
   - *ref_6
+  - *ref_7
 extensions:
   - id: x-parser-unique-object-id
     value: pyth_value

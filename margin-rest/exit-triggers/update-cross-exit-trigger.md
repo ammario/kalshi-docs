@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exit-triggers/update-cross-exit-trigger
-lastmod: 2026-09-25T20:13:10.509Z
+lastmod: 2026-09-30T04:02:56.390Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -130,10 +130,14 @@ components:
       properties:
         stop_loss_price:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Mark price at which the stop-loss leg fires.
+          description: >-
+            Mark price at which the stop-loss leg fires. Must be strictly
+            positive when supplied.
         take_profit_price:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Mark price at which the take-profit leg fires.
+          description: >-
+            Mark price at which the take-profit leg fires. Must be strictly
+            positive when supplied.
     ExitTrigger:
       type: object
       required:

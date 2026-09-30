@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/list-fcm-subtraders
-lastmod: 2026-09-25T20:13:09.752Z
+lastmod: 2026-09-30T04:02:55.621Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,7 +22,7 @@ fcm_trading_blocked identifies the FCM's own per-subtrader restriction.
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

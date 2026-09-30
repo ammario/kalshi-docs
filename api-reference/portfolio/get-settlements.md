@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-09-25T20:13:09.245Z
+lastmod: 2026-09-30T04:02:55.038Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-09-25T20:13:09.245Z
 
 # Get Settlements
 
->  Endpoint for getting the member's settlements historical track.
+> Returns settlement records still in the live data set. Archived positions are available via `GET /historical/positions`, which has different fields; this endpoint does not return archived settlement records.
 
 
 
@@ -18,7 +18,7 @@ lastmod: 2026-09-25T20:13:09.245Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -69,7 +69,11 @@ paths:
       tags:
         - portfolio
       summary: Get Settlements
-      description: ' Endpoint for getting the member''s settlements historical track.'
+      description: >-
+        Returns settlement records still in the live data set. Archived
+        positions are available via `GET /historical/positions`, which has
+        different fields; this endpoint does not return archived settlement
+        records.
       operationId: GetSettlements
       parameters:
         - $ref: '#/components/parameters/LimitQuery'

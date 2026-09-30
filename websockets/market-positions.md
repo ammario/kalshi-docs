@@ -131,6 +131,12 @@ operations:
                     type: integer
                     description: Optional subaccount number for the position
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -203,12 +209,20 @@ operations:
                   description: Optional subaccount number for the position
                   x-parser-schema-id: <anonymous-schema-138>
               x-parser-schema-id: <anonymous-schema-130>
+            sending_ts_ms:
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: marketPositionPayload
         title: Market Position Update
         description: Real-time position updates for authenticated user
         example: |-
           {
             "type": "market_position",
+            "sending_ts_ms": 1669149841234,
             "sid": 14,
             "msg": {
               "user_id": "user123",

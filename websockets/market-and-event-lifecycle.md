@@ -53,13 +53,13 @@ address: market_lifecycle_v2
 parameters: []
 bindings: []
 operations:
-  - &ref_7
+  - &ref_8
     id: receiveMarketLifecycleV2
     title: Market Lifecycle Event
     description: Receive market lifecycle updates (open, close, determination, etc.)
     type: send
     messages:
-      - &ref_10
+      - &ref_11
         id: marketLifecycleV2
         contentType: application/json
         payload:
@@ -272,6 +272,12 @@ operations:
                           Tick size (minimum price increment) within this band,
                           in dollars
                         required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -508,6 +514,13 @@ operations:
                     x-parser-schema-id: <anonymous-schema-164>
                   x-parser-schema-id: <anonymous-schema-163>
               x-parser-schema-id: <anonymous-schema-140>
+            sending_ts_ms: &ref_4
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: marketLifecycleV2Payload
         title: Market Lifecycle V2
         description: >-
@@ -517,6 +530,7 @@ operations:
         example: |-
           {
             "type": "market_lifecycle_v2",
+            "sending_ts_ms": 1669149841234,
             "sid": 13,
             "seq": 3,
             "msg": {
@@ -545,7 +559,7 @@ operations:
         extensions:
           - id: x-parser-unique-object-id
             value: marketLifecycleV2
-      - &ref_11
+      - &ref_12
         id: marketMetadataUpdated
         contentType: application/json
         payload:
@@ -616,6 +630,12 @@ operations:
                       Optional - This key will ONLY exist for metadata_updated
                       events. The updated yes subtitle for the market
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -675,12 +695,14 @@ operations:
                     events. The updated yes subtitle for the market
                   x-parser-schema-id: <anonymous-schema-175>
               x-parser-schema-id: <anonymous-schema-169>
+            sending_ts_ms: *ref_4
           x-parser-schema-id: marketMetadataUpdatedPayload
         title: Market Metadata Updated
         description: Updated strike information or yes subtitle
         example: |-
           {
             "type": "market_lifecycle_v2",
+            "sending_ts_ms": 1669149841234,
             "sid": 13,
             "seq": 5,
             "msg": {
@@ -696,16 +718,16 @@ operations:
           - id: x-parser-unique-object-id
             value: marketMetadataUpdated
     bindings: []
-    extensions: &ref_4
+    extensions: &ref_5
       - id: x-parser-unique-object-id
         value: market_lifecycle_v2
-  - &ref_8
+  - &ref_9
     id: receiveEventLifecycle
     title: Event Lifecycle
     description: Receive event creation notifications
     type: send
     messages:
-      - &ref_12
+      - &ref_13
         id: eventLifecycle
         contentType: application/json
         payload:
@@ -779,6 +801,12 @@ operations:
                       Optional - String to indicate the strike period of the
                       event if there is one
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -850,12 +878,14 @@ operations:
                     if there is one
                   x-parser-schema-id: <anonymous-schema-185>
               x-parser-schema-id: <anonymous-schema-177>
+            sending_ts_ms: *ref_4
           x-parser-schema-id: eventLifecyclePayload
         title: Event Lifecycle
         description: Event creation notification
         example: |-
           {
             "type": "event_lifecycle",
+            "sending_ts_ms": 1669149841234,
             "sid": 5,
             "seq": 8,
             "msg": {
@@ -872,14 +902,14 @@ operations:
           - id: x-parser-unique-object-id
             value: eventLifecycle
     bindings: []
-    extensions: *ref_4
-  - &ref_9
+    extensions: *ref_5
+  - &ref_10
     id: receiveEventFeeUpdate
     title: Event Fee Override Update
     description: Receive notifications when an event-level fee override is set or cleared
     type: send
     messages:
-      - &ref_13
+      - &ref_14
         id: eventFeeUpdate
         contentType: application/json
         payload:
@@ -913,7 +943,7 @@ operations:
                     description: Unique identifier for the event
                     required: true
                   - name: fee_type_override
-                    type: &ref_5
+                    type: &ref_6
                       - string
                       - 'null'
                     description: >-
@@ -927,13 +957,19 @@ operations:
                       - margin_market_maker_program_fees
                     required: true
                   - name: fee_multiplier_override
-                    type: &ref_6
+                    type: &ref_7
                       - number
                       - 'null'
                     description: >-
                       Event fee multiplier override. `null` when the override
                       has been cleared.
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -961,7 +997,7 @@ operations:
                   description: Unique identifier for the event
                   x-parser-schema-id: <anonymous-schema-188>
                 fee_type_override:
-                  type: *ref_5
+                  type: *ref_6
                   enum:
                     - quadratic
                     - quadratic_with_maker_fees
@@ -974,18 +1010,20 @@ operations:
                     cleared.
                   x-parser-schema-id: <anonymous-schema-189>
                 fee_multiplier_override:
-                  type: *ref_6
+                  type: *ref_7
                   description: >-
                     Event fee multiplier override. `null` when the override has
                     been cleared.
                   x-parser-schema-id: <anonymous-schema-190>
               x-parser-schema-id: <anonymous-schema-187>
+            sending_ts_ms: *ref_4
           x-parser-schema-id: eventFeeUpdatePayload
         title: Event Fee Override Update
         description: Emitted when an event-level fee override is set or cleared
         example: |-
           {
             "type": "event_fee_update",
+            "sending_ts_ms": 1669149841234,
             "sid": 5,
             "seq": 9,
             "msg": {
@@ -999,18 +1037,18 @@ operations:
           - id: x-parser-unique-object-id
             value: eventFeeUpdate
     bindings: []
-    extensions: *ref_4
+    extensions: *ref_5
 sendOperations: []
 receiveOperations:
-  - *ref_7
   - *ref_8
   - *ref_9
+  - *ref_10
 sendMessages: []
 receiveMessages:
-  - *ref_10
   - *ref_11
   - *ref_12
   - *ref_13
+  - *ref_14
 extensions:
   - id: x-parser-unique-object-id
     value: market_lifecycle_v2

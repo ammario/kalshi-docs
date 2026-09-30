@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2026-09-25T20:13:09.236Z
+lastmod: 2026-09-30T04:02:55.012Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,9 @@ lastmod: 2026-09-25T20:13:09.236Z
 
 # Get Positions
 
-> Restricts the positions to those with any of following fields with non-zero values, as a comma separated list. The following values are accepted: position, total_traded.
+> Returns unsettled positions by default. Set `settlement_status=settled` to page through settled positions that are still in the live data set, or `settlement_status=all` for both live states. Positions already archived are available via `GET /historical/positions`.
+Settled and all-state positions are paginated by event ticker to keep large histories bounded. Cursors are specific to the selected settlement status.
+`count_filter` restricts positions to those with a non-zero position or total traded count.
 Registered partners may also use a user OAuth access token with the explicitly granted read::compliance_partner scope.
 
 
@@ -20,7 +22,7 @@ Registered partners may also use a user OAuth access token with the explicitly g
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -72,9 +74,17 @@ paths:
         - portfolio
       summary: Get Positions
       description: >
-        Restricts the positions to those with any of following fields with
-        non-zero values, as a comma separated list. The following values are
-        accepted: position, total_traded.
+        Returns unsettled positions by default. Set `settlement_status=settled`
+        to page through settled positions that are still in the live data set,
+        or `settlement_status=all` for both live states. Positions already
+        archived are available via `GET /historical/positions`.
+
+        Settled and all-state positions are paginated by event ticker to keep
+        large histories bounded. Cursors are specific to the selected settlement
+        status.
+
+        `count_filter` restricts positions to those with a non-zero position or
+        total traded count.
 
         Registered partners may also use a user OAuth access token with the
         explicitly granted read::compliance_partner scope.
@@ -83,6 +93,7 @@ paths:
         - $ref: '#/components/parameters/PositionsCursorQuery'
         - $ref: '#/components/parameters/PositionsLimitQuery'
         - $ref: '#/components/parameters/CountFilterQuery'
+        - $ref: '#/components/parameters/PositionSettlementStatusQuery'
         - $ref: '#/components/parameters/TickerQuery'
         - $ref: '#/components/parameters/SingleEventTickerQuery'
         - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
@@ -135,6 +146,19 @@ components:
         accepted - position, total_traded
       schema:
         type: string
+    PositionSettlementStatusQuery:
+      name: settlement_status
+      in: query
+      description: >-
+        Return unsettled positions by default, settled positions that have not
+        yet been archived, or all positions in the live data set.
+      schema:
+        type: string
+        enum:
+          - unsettled
+          - settled
+          - all
+        default: unsettled
     TickerQuery:
       name: ticker
       in: query

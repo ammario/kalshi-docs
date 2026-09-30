@@ -111,6 +111,12 @@ operations:
                       Matching engine timestamp at which the event was
                       processed, as Unix epoch milliseconds.
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -174,12 +180,20 @@ operations:
                     as Unix epoch milliseconds.
                   x-parser-schema-id: <anonymous-schema-274>
               x-parser-schema-id: <anonymous-schema-270>
+            sending_ts_ms:
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: orderGroupUpdatesPayload
         title: Order Group Updates
         description: Order group lifecycle and limit updates for authenticated user
         example: |-
           {
             "type": "order_group_updates",
+            "sending_ts_ms": 1733047200123,
             "sid": 21,
             "seq": 7,
             "msg": {

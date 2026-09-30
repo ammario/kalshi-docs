@@ -50,8 +50,8 @@ https://external-api.kalshi.com/trade-api/v2
 
 Everything after `/cfbenchmarks/`, including query parameters other than `includeVerification`, is forwarded to the CF Benchmarks REST API at `https://www.cfbenchmarks.com/api/v1/`.
 
-| Kalshi request                                  | Forwarded to                                         |
-| ----------------------------------------------- | ---------------------------------------------------- |
+| Kalshi request | Forwarded to |
+| - | - |
 | `GET /trade-api/v2/cfbenchmarks/values?id=BRTI` | `https://www.cfbenchmarks.com/api/v1/values?id=BRTI` |
 
 ## Authentication
@@ -111,9 +111,9 @@ The passthrough forwards any path and query parameters supported by CF Benchmark
 
 The passthrough maps upstream conditions to standard Kalshi error responses:
 
-| Condition                                                | Kalshi response                          |
-| -------------------------------------------------------- | ---------------------------------------- |
-| Resource not found upstream                              | `404 not_found`                          |
-| Upstream rate limit exceeded                             | `429 too_many_requests`                  |
-| Upstream authorization failure, server error, or timeout | `503 service_unavailable`                |
-| Other upstream client errors                             | `400 bad_request` (with upstream detail) |
+| Condition | Kalshi response |
+| - | - |
+| Resource not found upstream | `404 not_found` |
+| Upstream rate limit exceeded | `429 too_many_requests` |
+| Upstream authorization failure, server error, or timeout | `503 service_unavailable` |
+| Other upstream client errors | `400 bad_request` (with upstream detail) |

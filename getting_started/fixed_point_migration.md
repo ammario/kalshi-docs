@@ -42,34 +42,34 @@ Each market's valid prices form a fixed grid, described by two fields on Market 
 * `price_ranges` — an array of `{ start, end, step }` bands in fixed-point dollars. This is the source of truth for valid prices: any price on the grid is valid, and any off-grid price is rejected. Consume it dynamically per market and snap order and quote prices to the relevant band's `step`.
 * `price_level_structure` — a human-readable label for the grid. Do not key pricing logic off this name; new structures are introduced over time, and a client that reads `price_ranges` is automatically compatible with all of them.
 
-| Structure                      | Ranges          | Tick Size |
-| ------------------------------ | --------------- | --------- |
-| `linear_cent`                  | \$0.00 – \$1.00 | \$0.01    |
-| `deci_cent`                    | \$0.00 – \$1.00 | \$0.001   |
-| `tapered_deci_cent`            | \$0.00 – \$0.10 | \$0.001   |
-|                                | \$0.10 – \$0.90 | \$0.01    |
-|                                | \$0.90 – \$1.00 | \$0.001   |
-| `center_whole_edge_half_cent`  | \$0.00 – \$0.10 | \$0.005   |
-|                                | \$0.10 – \$0.90 | \$0.01    |
-|                                | \$0.90 – \$1.00 | \$0.005   |
-| `center_whole_edge_quint_cent` | \$0.00 – \$0.10 | \$0.002   |
-|                                | \$0.10 – \$0.90 | \$0.01    |
-|                                | \$0.90 – \$1.00 | \$0.002   |
-| `center_half_edge_half_cent`   | \$0.00 – \$1.00 | \$0.005   |
-| `center_half_edge_quint_cent`  | \$0.00 – \$0.10 | \$0.002   |
-|                                | \$0.10 – \$0.90 | \$0.005   |
-|                                | \$0.90 – \$1.00 | \$0.002   |
-| `center_half_edge_deci_cent`   | \$0.00 – \$0.10 | \$0.001   |
-|                                | \$0.10 – \$0.90 | \$0.005   |
-|                                | \$0.90 – \$1.00 | \$0.001   |
-| `center_quint_edge_quint_cent` | \$0.00 – \$1.00 | \$0.002   |
-| `center_quint_edge_deci_cent`  | \$0.00 – \$0.10 | \$0.001   |
-|                                | \$0.10 – \$0.90 | \$0.002   |
-|                                | \$0.90 – \$1.00 | \$0.001   |
-| `center_centi_edge_centi_cent` | \$0.00 – \$1.00 | \$0.0001  |
-| `center_deci_edge_centi_cent`  | \$0.00 – \$0.01 | \$0.0001  |
-|                                | \$0.01 – \$0.99 | \$0.001   |
-|                                | \$0.99 – \$1.00 | \$0.0001  |
+| Structure | Ranges | Tick Size |
+| - | - | - |
+| `linear_cent` | \$0.00 – \$1.00 | \$0.01 |
+| `deci_cent` | \$0.00 – \$1.00 | \$0.001 |
+| `tapered_deci_cent` | \$0.00 – \$0.10 | \$0.001 |
+| | \$0.10 – \$0.90 | \$0.01 |
+| | \$0.90 – \$1.00 | \$0.001 |
+| `center_whole_edge_half_cent` | \$0.00 – \$0.10 | \$0.005 |
+| | \$0.10 – \$0.90 | \$0.01 |
+| | \$0.90 – \$1.00 | \$0.005 |
+| `center_whole_edge_quint_cent` | \$0.00 – \$0.10 | \$0.002 |
+| | \$0.10 – \$0.90 | \$0.01 |
+| | \$0.90 – \$1.00 | \$0.002 |
+| `center_half_edge_half_cent` | \$0.00 – \$1.00 | \$0.005 |
+| `center_half_edge_quint_cent` | \$0.00 – \$0.10 | \$0.002 |
+| | \$0.10 – \$0.90 | \$0.005 |
+| | \$0.90 – \$1.00 | \$0.002 |
+| `center_half_edge_deci_cent` | \$0.00 – \$0.10 | \$0.001 |
+| | \$0.10 – \$0.90 | \$0.005 |
+| | \$0.90 – \$1.00 | \$0.001 |
+| `center_quint_edge_quint_cent` | \$0.00 – \$1.00 | \$0.002 |
+| `center_quint_edge_deci_cent` | \$0.00 – \$0.10 | \$0.001 |
+| | \$0.10 – \$0.90 | \$0.002 |
+| | \$0.90 – \$1.00 | \$0.001 |
+| `center_centi_edge_centi_cent` | \$0.00 – \$1.00 | \$0.0001 |
+| `center_deci_edge_centi_cent` | \$0.00 – \$0.01 | \$0.0001 |
+| | \$0.01 – \$0.99 | \$0.001 |
+| | \$0.99 – \$1.00 | \$0.0001 |
 
 Newer structures follow the naming convention `center_{center}_edge_{edge}_cent`, where the shorthands are `whole` = \$0.01, `half` = \$0.005, `quint` = \$0.002, `deci` = \$0.001, and `centi` = \$0.0001. Tapered structures apply the finer edge tick near the boundaries of the price range — where small absolute price differences represent large relative changes in implied probability — and the center tick in between; most taper below \$0.10 and above \$0.90, while `center_deci_edge_centi_cent` tapers below \$0.01 and above \$0.99. When the center and edge ticks are equal, the grid is uniform. The older names (`linear_cent`, `tapered_deci_cent`, `deci_cent`) predate this convention.
 

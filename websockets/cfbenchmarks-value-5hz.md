@@ -129,13 +129,13 @@ address: cfbenchmarks_value_5hz
 parameters: []
 bindings: []
 operations:
-  - &ref_3
+  - &ref_4
     id: receiveCFBenchmarksValue5Hz
     title: CF Benchmarks 5Hz Value Update
     description: Receive real-time CF Benchmarks index values at up to 5 updates per second
     type: send
     messages:
-      - &ref_5
+      - &ref_6
         id: cfbenchmarksValue5Hz
         contentType: application/json
         payload:
@@ -186,6 +186,12 @@ operations:
                     type: string
                     description: The raw CF Benchmarks JSON frame, as a string
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -244,12 +250,20 @@ operations:
                   description: The raw CF Benchmarks JSON frame, as a string
                   x-parser-schema-id: <anonymous-schema-319>
               x-parser-schema-id: <anonymous-schema-314>
+            sending_ts_ms: &ref_2
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: cfbenchmarksValue5HzPayload
         title: CF Benchmarks 5Hz Value Update
         description: Real-time CF Benchmarks index value at up to 5 updates per second
         example: |-
           {
             "type": "cfbenchmarks_value_5hz",
+            "sending_ts_ms": 1669149841234,
             "sid": 1,
             "seq": 42,
             "msg": {
@@ -265,10 +279,10 @@ operations:
           - id: x-parser-unique-object-id
             value: cfbenchmarksValue5Hz
     bindings: []
-    extensions: &ref_2
+    extensions: &ref_3
       - id: x-parser-unique-object-id
         value: cfbenchmarks_value_5hz
-  - &ref_4
+  - &ref_5
     id: receiveCFBenchmarks5HzIndexList
     title: CF Benchmarks 5Hz Index List
     description: >-
@@ -276,7 +290,7 @@ operations:
       indexlist action
     type: send
     messages:
-      - &ref_6
+      - &ref_7
         id: cfbenchmarks5HzIndexList
         contentType: application/json
         payload:
@@ -327,6 +341,12 @@ operations:
                       - name: item
                         type: string
                         required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -368,6 +388,7 @@ operations:
                     x-parser-schema-id: <anonymous-schema-323>
                   x-parser-schema-id: <anonymous-schema-322>
               x-parser-schema-id: <anonymous-schema-321>
+            sending_ts_ms: *ref_2
           x-parser-schema-id: cfbenchmarks5HzIndexListPayload
         title: CF Benchmarks 5Hz Index List
         description: >-
@@ -376,6 +397,7 @@ operations:
         example: |-
           {
             "type": "cfbenchmarks_value_5hz_indexlist",
+            "sending_ts_ms": 1669149841234,
             "id": 2,
             "sid": 1,
             "seq": 1,
@@ -391,15 +413,15 @@ operations:
           - id: x-parser-unique-object-id
             value: cfbenchmarks5HzIndexList
     bindings: []
-    extensions: *ref_2
+    extensions: *ref_3
 sendOperations: []
 receiveOperations:
-  - *ref_3
   - *ref_4
+  - *ref_5
 sendMessages: []
 receiveMessages:
-  - *ref_5
   - *ref_6
+  - *ref_7
 extensions:
   - id: x-parser-unique-object-id
     value: cfbenchmarks_value_5hz

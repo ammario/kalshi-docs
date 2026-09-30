@@ -16,39 +16,39 @@ The **Perps API** is how you trade Kalshi's perpetual futures. **"Perps", "margi
 
 ### REST API
 
-| Environment | Base URL                                                                              |
-| ----------- | ------------------------------------------------------------------------------------- |
-| Demo        | `https://external-api.demo.kalshi.co/trade-api/v2/margin/`                            |
-| Production  | `https://external-api.kalshi.com/trade-api/v2/margin/` (rolling out member by member) |
+| Environment | Base URL |
+| - | - |
+| Demo | `https://external-api.demo.kalshi.co/trade-api/v2/margin/` |
+| Production | `https://external-api.kalshi.com/trade-api/v2/margin/` (rolling out member by member) |
 
 Use the `external-api` hosts for perps REST. WebSocket and FIX use the separate perps hosts listed below.
 
 ### WebSocket API
 
-| Environment | URL                                                                                             |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| Demo        | `wss://external-api-margin-ws.demo.kalshi.co/trade-api/ws/v2/margin`                            |
-| Production  | `wss://external-api-margin-ws.kalshi.com/trade-api/ws/v2/margin` (rolling out member by member) |
+| Environment | URL |
+| - | - |
+| Demo | `wss://external-api-margin-ws.demo.kalshi.co/trade-api/ws/v2/margin` |
+| Production | `wss://external-api-margin-ws.kalshi.com/trade-api/ws/v2/margin` (rolling out member by member) |
 
 ### FIX API
 
 The margin FIX gateway uses a **separate host** from event contract FIX.
 
-| Environment | Type                      | Host                                         |
-| ----------- | ------------------------- | -------------------------------------------- |
-| Demo        | Order entry and drop copy | `margin-fix.demo.kalshi.co`                  |
-| Demo        | Market data               | `margin-marketdata.fix.demo.kalshi.co`       |
-| Production  | Order entry and drop copy | `margin-mm.fix.elections.kalshi.com`         |
-| Production  | Market data               | `margin-marketdata.fix.elections.kalshi.com` |
+| Environment | Type | Host |
+| - | - | - |
+| Demo | Order entry and drop copy | `margin-fix.demo.kalshi.co` |
+| Demo | Market data | `margin-marketdata.fix.demo.kalshi.co` |
+| Production | Order entry and drop copy | `margin-mm.fix.elections.kalshi.com` |
+| Production | Market data | `margin-marketdata.fix.elections.kalshi.com` |
 
 Available session types:
 
-| Purpose                              | Port | TargetCompID |
-| ------------------------------------ | ---- | ------------ |
-| Order Entry (without retransmission) | 8228 | KalshiNR     |
-| Drop Copy                            | 8229 | KalshiDC     |
-| Order Entry (with retransmission)    | 8230 | KalshiRT     |
-| Market Data                          | 8233 | KalshiMD     |
+| Purpose | Port | TargetCompID |
+| - | - | - |
+| Order Entry (without retransmission) | 8228 | KalshiNR |
+| Drop Copy | 8229 | KalshiDC |
+| Order Entry (with retransmission) | 8230 | KalshiRT |
+| Market Data | 8233 | KalshiMD |
 
 ## API Reference
 
@@ -89,13 +89,13 @@ The Perps API mirrors the event contract API (same auth, pagination, error forma
 
 **Timestamp convention:** all timestamp fields in margin WebSocket payloads use Unix epoch milliseconds and an `_ms` suffix.
 
-| Channel           | Event contract                                                             | Margin                                                                                                                                                                           |
-| ----------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `orderbook_delta` | `ts` as RFC3339 datetime                                                   | `ts_ms` as Unix milliseconds                                                                                                                                                     |
-| `ticker`          | `ts` in Unix seconds and `time` as RFC3339 datetime                        | `ts_ms` (top level); nested `reference_price`/`settlement_mark_price`/`liquidation_mark_price` each carry `ts_ms`, and `funding_rate` carries `next_funding_time_ms` and `ts_ms` |
-| `trade`           | `ts` in Unix seconds                                                       | `ts_ms` in Unix milliseconds                                                                                                                                                     |
-| `fill`            | `ts` in Unix seconds                                                       | `ts_ms` in Unix milliseconds                                                                                                                                                     |
-| `user_orders`     | `created_time`, `last_update_time`, `expiration_time` as RFC3339 datetimes | `created_ts_ms`, `last_updated_ts_ms`, `expiration_ts_ms` as Unix milliseconds                                                                                                   |
+| Channel | Event contract | Margin |
+| - | - | - |
+| `orderbook_delta` | `ts` as RFC3339 datetime | `ts_ms` as Unix milliseconds |
+| `ticker` | `ts` in Unix seconds and `time` as RFC3339 datetime | `ts_ms` (top level); nested `reference_price`/`settlement_mark_price`/`liquidation_mark_price` each carry `ts_ms`, and `funding_rate` carries `next_funding_time_ms` and `ts_ms` |
+| `trade` | `ts` in Unix seconds | `ts_ms` in Unix milliseconds |
+| `fill` | `ts` in Unix seconds | `ts_ms` in Unix milliseconds |
+| `user_orders` | `created_time`, `last_update_time`, `expiration_time` as RFC3339 datetimes | `created_ts_ms`, `last_updated_ts_ms`, `expiration_ts_ms` as Unix milliseconds |
 
 <Note>
   Margin WebSocket payloads no longer use RFC3339 timestamp strings. The `order_group_updates` channel already follows the same convention: its only timestamp field, `ts_ms`, is Unix epoch milliseconds.
@@ -111,10 +111,10 @@ The Perps API mirrors the event contract API (same auth, pagination, error forma
 
 **Key differences:**
 
-|                               | Event Contract FIX          | Margin FIX                                                         |
-| ----------------------------- | --------------------------- | ------------------------------------------------------------------ |
-| **Pricing**                   | Integer cents (1–99)        | Decimal dollars up to 4 decimal places                             |
-| **Session types**             | 6 (NR, RT, DC, PT, RFQ, MD) | 4 (NR, RT, DC, MD)                                                 |
-| **RFQ / Quotes**              | Supported                   | Not available                                                      |
-| **Market settlement reports** | Supported (on KalshiRT)     | Not available                                                      |
-| **UseDollars (21005)**        | Optional logon flag         | Always enabled (margin uses fixed-point dollar pricing by default) |
+| | Event Contract FIX | Margin FIX |
+| - | - | - |
+| **Pricing** | Integer cents (1–99) | Decimal dollars up to 4 decimal places |
+| **Session types** | 6 (NR, RT, DC, PT, RFQ, MD) | 4 (NR, RT, DC, MD) |
+| **RFQ / Quotes** | Supported | Not available |
+| **Market settlement reports** | Supported (on KalshiRT) | Not available |
+| **UseDollars (21005)** | Optional logon flag | Always enabled (margin uses fixed-point dollar pricing by default) |

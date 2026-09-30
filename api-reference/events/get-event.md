@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2026-09-25T20:13:08.918Z
+lastmod: 2026-09-30T04:02:54.652Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,7 +21,7 @@ All events are accessible through this endpoint, even if their associated market
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -286,6 +286,7 @@ components:
         - rules_secondary
         - price_level_structure
         - price_ranges
+        - settlement_bounds_type
       properties:
         ticker:
           type: string
@@ -432,6 +433,21 @@ components:
           description: >-
             Timestamp when the market was settled. Only filled for settled
             markets
+        settlement_bounds_type:
+          type: string
+          enum:
+            - default
+            - floor
+          description: >-
+            Which settlement bounds apply to this market. default means the
+            market has no settlement bounds
+        settlement_floor_dollars:
+          $ref: '#/components/schemas/FixedPointDollars'
+          nullable: true
+          x-omitempty: true
+          description: >-
+            The lowest value the YES/LONG side of the contract can settle at in
+            dollars. Only filled when settlement_bounds_type is floor
         expiration_value:
           type: string
           description: The value that was considered for the settlement

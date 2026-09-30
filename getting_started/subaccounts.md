@@ -22,10 +22,10 @@ primary subaccount (number `0`) and may use numbered subaccounts `1`–`63`.
 
 ## Numbering
 
-| Number   | Meaning                                  |
-| -------- | ---------------------------------------- |
-| `0`      | Primary subaccount (the default account) |
-| `1`–`63` | User-managed numbered subaccounts        |
+| Number | Meaning |
+| - | - |
+| `0` | Primary subaccount (the default account) |
+| `1`–`63` | User-managed numbered subaccounts |
 
 ## Transfers
 

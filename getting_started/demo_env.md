@@ -20,9 +20,9 @@ To set up a Kalshi Demo account, [follow this step-by-step tutorial](https://hel
 
 Demo's recommended Trade API root is `https://external-api.demo.kalshi.co/trade-api/v2`.
 
-| Surface        | Recommended demo endpoint                              | Also supported                             |
-| -------------- | ------------------------------------------------------ | ------------------------------------------ |
-| REST Trade API | `https://external-api.demo.kalshi.co/trade-api/v2`     | `https://demo-api.kalshi.co/trade-api/v2`  |
-| WebSocket API  | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://demo-api.kalshi.co/trade-api/ws/v2` |
+| Surface | Recommended demo endpoint | Also supported |
+| - | - | - |
+| REST Trade API | `https://external-api.demo.kalshi.co/trade-api/v2` | `https://demo-api.kalshi.co/trade-api/v2` |
+| WebSocket API | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://demo-api.kalshi.co/trade-api/ws/v2` |
 
 For the full production and demo endpoint list, see [API Environments and Endpoints](/getting_started/api_environments).

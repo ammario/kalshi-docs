@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market-orderbook
-lastmod: 2026-09-25T20:13:08.806Z
+lastmod: 2026-09-30T04:02:54.525Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-09-25T20:13:08.806Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -99,10 +99,6 @@ paths:
           $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
-      security:
-        - kalshiAccessKey: []
-          kalshiAccessSignature: []
-          kalshiAccessTimestamp: []
 components:
   parameters:
     TickerPath:
@@ -183,24 +179,5 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-  securitySchemes:
-    kalshiAccessKey:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-KEY
-      description: Your API key ID
-    kalshiAccessSignature:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-SIGNATURE
-      description: >-
-        Base64 signature of the pre-sign text (timestamp + method + path) made
-        with the API key's algorithm - RSA-PSS with SHA-256 for RSA keys,
-        Ed25519 for Ed25519 keys
-    kalshiAccessTimestamp:
-      type: apiKey
-      in: header
-      name: KALSHI-ACCESS-TIMESTAMP
-      description: Request timestamp in milliseconds
 
 ````

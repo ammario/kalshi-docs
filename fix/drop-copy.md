@@ -30,10 +30,10 @@ Request execution reports within a specified ExecID range.
 
 ExecID format is `clock;event` for exchange index `0` and `clock;event;exchange_index` for other indexes. Resend ranges are scoped to one exchange index; `EndExecID`, if provided, must use the same exchange index as `BeginExecID`.
 
-| Tag   | Name        | Description                                                                                 | Required |
-| ----- | ----------- | ------------------------------------------------------------------------------------------- | -------- |
-| 21001 | BeginExecID | Starting ExecID (inclusive)                                                                 | Yes      |
-| 21002 | EndExecID   | Ending ExecID (inclusive). Defaults to latest ExecID on the same exchange index if omitted. | No       |
+| Tag | Name | Description | Required |
+| - | - | - | - |
+| 21001 | BeginExecID | Starting ExecID (inclusive) | Yes |
+| 21002 | EndExecID | Ending ExecID (inclusive). Defaults to latest ExecID on the same exchange index if omitted. | No |
 
 **Example:**
 
@@ -45,16 +45,16 @@ ExecID format is `clock;event` for exchange index `0` and `clock;event;exchange_
 
 Sent after all requested events have been resent.
 
-| Tag   | Name             | Description                         | Required |
-| ----- | ---------------- | ----------------------------------- | -------- |
-| 45    | RefSeqNum        | MsgSeqNum of the EventResendRequest | Yes      |
-| 21003 | ResendEventCount | Total number of events resent       | Yes      |
+| Tag | Name | Description | Required |
+| - | - | - | - |
+| 45 | RefSeqNum | MsgSeqNum of the EventResendRequest | Yes |
+| 21003 | ResendEventCount | Total number of events resent | Yes |
 
 ## EventResendReject (35=U3)
 
 Sent when a resend request cannot be fulfilled.
 
-| Tag   | Name                    | Description                                                                                                                                                                         | Required |
-| ----- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| 45    | RefSeqNum               | MsgSeqNum of the EventResendRequest                                                                                                                                                 | Yes      |
-| 21004 | EventResendRejectReason | Rejection code: `1`=Too many resend requests, `2`=Server error, `3`=BeginExecID too small (outside window), `4`=EndExecID too large, `5`=User not allowlisted for historical replay | Yes      |
+| Tag | Name | Description | Required |
+| - | - | - | - |
+| 45 | RefSeqNum | MsgSeqNum of the EventResendRequest | Yes |
+| 21004 | EventResendRejectReason | Rejection code: `1`=Too many resend requests, `2`=Server error, `3`=BeginExecID too small (outside window), `4`=EndExecID too large, `5`=User not allowlisted for historical replay | Yes |

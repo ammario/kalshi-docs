@@ -31,11 +31,11 @@ sequenceDiagram
 
 ## Market Data Request (35=V)
 
-| Tag | Name                    | Type    | Required | Description                                                                                                                                                                                               |
-| --- | ----------------------- | ------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 263 | SubscriptionRequestType | Char    | Y        | `0`=Snapshot, `1`=Snapshot plus updates, `2`=Disable previous snapshot plus update request                                                                                                                |
-| 146 | NoRelatedSym            | Integer | C        | Number of `55=Symbol` entries in the repeating group that follows. Required for `263=0` and `263=1`. For `263=2`, the listed symbols are unsubscribed; omit to cancel all of the session's subscriptions. |
-| 55  | Symbol                  | String  | C        | Repeating group field. The market tickers to subscribe to or cancel.                                                                                                                                      |
+| Tag | Name | Type | Required | Description |
+| - | - | - | - | - |
+| 263 | SubscriptionRequestType | Char | Y | `0`=Snapshot, `1`=Snapshot plus updates, `2`=Disable previous snapshot plus update request |
+| 146 | NoRelatedSym | Integer | C | Number of `55=Symbol` entries in the repeating group that follows. Required for `263=0` and `263=1`. For `263=2`, the listed symbols are unsubscribed; omit to cancel all of the session's subscriptions. |
+| 55 | Symbol | String | C | Repeating group field. The market tickers to subscribe to or cancel. |
 
 Snapshot and snapshot-plus-updates requests can contain up to 1,000 unique symbols. A session can hold up to 100,000 active market data subscriptions.
 
@@ -59,15 +59,15 @@ Snapshot and snapshot-plus-updates requests can contain up to 1,000 unique symbo
 
 Sent in response to a snapshot request and immediately after a snapshot-plus-updates subscription is accepted. Correlate by `Symbol<55>`.
 
-| Tag | Name        | Type     | Required | Description                                                                |
-| --- | ----------- | -------- | -------- | -------------------------------------------------------------------------- |
-| 55  | Symbol      | String   | Y        | Market ticker.                                                             |
-| 268 | NoMDEntries | Integer  | Y        | Number of book levels.                                                     |
-| 269 | MDEntryType | Char     | Y        | Repeating group field. `0`=Bid, `1`=Offer                                  |
-| 270 | MDEntryPx   | Price    | Y        | Book level price in dollars.                                               |
-| 271 | MDEntrySize | Quantity | Y        | Book level size in contracts.                                              |
-| 272 | MDEntryDate | UTC Date | Y        | Repeating group field. UTC snapshot capture date in `YYYYMMDD` format.     |
-| 273 | MDEntryTime | UTC Time | Y        | Repeating group field. UTC snapshot capture time in `HH:MM:SS.sss` format. |
+| Tag | Name | Type | Required | Description |
+| - | - | - | - | - |
+| 55 | Symbol | String | Y | Market ticker. |
+| 268 | NoMDEntries | Integer | Y | Number of book levels. |
+| 269 | MDEntryType | Char | Y | Repeating group field. `0`=Bid, `1`=Offer |
+| 270 | MDEntryPx | Price | Y | Book level price in dollars. |
+| 271 | MDEntrySize | Quantity | Y | Book level size in contracts. |
+| 272 | MDEntryDate | UTC Date | Y | Repeating group field. UTC snapshot capture date in `YYYYMMDD` format. |
+| 273 | MDEntryTime | UTC Time | Y | Repeating group field. UTC snapshot capture time in `HH:MM:SS.sss` format. |
 
 ```fix Example snapshot response theme={null}
 8=FIXT.1.1|35=W|49=KalshiMD|56=your-api-key|55=KXNBAGAME-26MAY25NYKCLE-NYK|268=2|269=0|270=0.3500|271=10.00|272=20260817|273=16:00:00.123|269=1|270=0.6500|271=5.00|272=20260817|273=16:00:00.123|
@@ -77,20 +77,20 @@ Sent in response to a snapshot request and immediately after a snapshot-plus-upd
 
 Sent after a subscribed market's aggregated book levels change or a trade occurs. Correlate by `Symbol<55>` on each entry.
 
-| Tag  | Name           | Type     | Required | Description                                                                                                 |
-| ---- | -------------- | -------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| 268  | NoMDEntries    | Integer  | Y        | Number of market data entries.                                                                              |
-| 279  | MDUpdateAction | Char     | Y        | Repeating group field. `0`=New, `1`=Change, `2`=Delete.                                                     |
-| 55   | Symbol         | String   | Y        | Repeating group field. Market ticker.                                                                       |
-| 269  | MDEntryType    | Char     | Y        | Repeating group field. `0`=Bid, `1`=Offer, `2`=Trade                                                        |
-| 270  | MDEntryPx      | Price    | Y        | Price in dollars.                                                                                           |
-| 271  | MDEntrySize    | Quantity | Y        | Size in contracts.                                                                                          |
-| 272  | MDEntryDate    | UTC Date | Y        | Repeating group field. UTC source-event date in `YYYYMMDD` format.                                          |
-| 273  | MDEntryTime    | UTC Time | Y        | Repeating group field. UTC source-event time in `HH:MM:SS.sss` format.                                      |
-| 2446 | AggressorSide  | Char     | C        | Trade entries only. `1`=Buy, `2`=Sell.                                                                      |
-| 828  | TrdType        | Int      | C        | Trade entries only. `1`=Block trade. Absent on regular order book trades.                                   |
-| 11   | ClOrdID        | String   | C        | Book entries only. Present when your order caused the level change and the order has a client-specified ID. |
-| 79   | AllocAccount   | Integer  | C        | Book entries only. Subaccount number of your order. `0` identifies a primary or non-numeric account.        |
+| Tag | Name | Type | Required | Description |
+| - | - | - | - | - |
+| 268 | NoMDEntries | Integer | Y | Number of market data entries. |
+| 279 | MDUpdateAction | Char | Y | Repeating group field. `0`=New, `1`=Change, `2`=Delete. |
+| 55 | Symbol | String | Y | Repeating group field. Market ticker. |
+| 269 | MDEntryType | Char | Y | Repeating group field. `0`=Bid, `1`=Offer, `2`=Trade |
+| 270 | MDEntryPx | Price | Y | Price in dollars. |
+| 271 | MDEntrySize | Quantity | Y | Size in contracts. |
+| 272 | MDEntryDate | UTC Date | Y | Repeating group field. UTC source-event date in `YYYYMMDD` format. |
+| 273 | MDEntryTime | UTC Time | Y | Repeating group field. UTC source-event time in `HH:MM:SS.sss` format. |
+| 2446 | AggressorSide | Char | C | Trade entries only. `1`=Buy, `2`=Sell. |
+| 828 | TrdType | Int | C | Trade entries only. `1`=Block trade. Absent on regular order book trades. |
+| 11 | ClOrdID | String | C | Book entries only. Present when your order caused the level change and the order has a client-specified ID. |
+| 79 | AllocAccount | Integer | C | Book entries only. Subaccount number of your order. `0` identifies a primary or non-numeric account. |
 
 ```fix Example incremental update theme={null}
 8=FIXT.1.1|35=X|49=KalshiMD|56=your-api-key|268=1|279=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|269=0|270=0.3500|271=15.00|272=20260817|273=16:00:00.456|11=my-order-123|79=3|
@@ -104,10 +104,10 @@ Sent after a subscribed market's aggregated book levels change or a trade occurs
 
 Sent when a market data request cannot be accepted. Unknown market tickers are not currently rejected; the server sends an empty snapshot if it has no order book for the requested symbol.
 
-| Tag | Name           | Type   | Required | Description                      |
-| --- | -------------- | ------ | -------- | -------------------------------- |
-| 281 | MDReqRejReason | Char   | N        | Reject reason.                   |
-| 58  | Text           | String | N        | Human-readable rejection detail. |
+| Tag | Name | Type | Required | Description |
+| - | - | - | - | - |
+| 281 | MDReqRejReason | Char | N | Reject reason. |
+| 58 | Text | String | N | Human-readable rejection detail. |
 
 ### Common Reject Reasons (281)
 
@@ -120,10 +120,10 @@ Sent when a market data request cannot be accepted. Unknown market tickers are n
 
 ### Security Status Request (35=e)
 
-| Tag | Name                    | Type   | Required | Description                                              |
-| --- | ----------------------- | ------ | -------- | -------------------------------------------------------- |
-| 263 | SubscriptionRequestType | Char   | Y        | `1`=Subscribe, `2`=Unsubscribe.                          |
-| 55  | Symbol                  | String | Y        | The single market ticker to subscribe to or unsubscribe. |
+| Tag | Name | Type | Required | Description |
+| - | - | - | - | - |
+| 263 | SubscriptionRequestType | Char | Y | `1`=Subscribe, `2`=Unsubscribe. |
+| 55 | Symbol | String | Y | The single market ticker to subscribe to or unsubscribe. |
 
 ```fix Example subscribe theme={null}
 8=FIXT.1.1|35=e|49=your-api-key|56=KalshiMD|263=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|
@@ -137,10 +137,10 @@ Sent when a market data request cannot be accepted. Unknown market tickers are n
 
 Streamed when a subscribed market changes trading state. Correlate by `Symbol<55>`.
 
-| Tag | Name                  | Type   | Required | Description                                                    |
-| --- | --------------------- | ------ | -------- | -------------------------------------------------------------- |
-| 55  | Symbol                | String | Y        | Market ticker.                                                 |
-| 326 | SecurityTradingStatus | Int    | Y        | See [Trading Status Lifecycle](#trading-status-lifecycle-326). |
+| Tag | Name | Type | Required | Description |
+| - | - | - | - | - |
+| 55 | Symbol | String | Y | Market ticker. |
+| 326 | SecurityTradingStatus | Int | Y | See [Trading Status Lifecycle](#trading-status-lifecycle-326). |
 
 ```fix Example trading halt theme={null}
 8=FIXT.1.1|35=f|49=KalshiMD|56=your-api-key|55=KXNBAGAME-26MAY25NYKCLE-NYK|326=2|

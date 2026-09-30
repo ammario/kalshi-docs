@@ -145,6 +145,12 @@ operations:
                     type: integer
                     description: Unix timestamp in milliseconds
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -245,12 +251,20 @@ operations:
                   format: int64
                   x-parser-schema-id: <anonymous-schema-114>
               x-parser-schema-id: <anonymous-schema-107>
+            sending_ts_ms:
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: tradePayload
         title: Trade Update
         description: Public trade information
         example: |-
           {
             "type": "trade",
+            "sending_ts_ms": 1669149841123,
             "sid": 11,
             "seq": 2,
             "msg": {

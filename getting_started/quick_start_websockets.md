@@ -258,31 +258,31 @@ The server sends error messages in this format:
 
 ### WebSocket Error Codes
 
-| Code | Error                                            | Description                                                                                                                                                            | User error? |
-| ---- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| 1    | Unable to process message                        | The incoming message was not valid JSON, or a JSON field had a type incompatible with the WebSocket command schema.                                                    | Y           |
-| 2    | Params required                                  | The command requires `params` or required subscription parameters are missing.                                                                                         | Y           |
-| 3    | Channels required                                | The `subscribe` command must include at least one channel.                                                                                                             | Y           |
-| 4    | Subscription IDs required                        | The `unsubscribe` command must include at least one subscription ID in `sids`.                                                                                         | Y           |
-| 5    | Unknown command                                  | The `cmd` value is not supported.                                                                                                                                      | Y           |
-| 6    | Retired                                          | Not emitted. The number stays reserved.                                                                                                                                | -           |
-| 7    | Unknown subscription ID                          | The command references a subscription ID that is not active in the session.                                                                                            | Y           |
-| 8    | Unknown channel name                             | The requested channel is not supported by this endpoint.                                                                                                               | Y           |
-| 9    | Authentication required                          | The requested channel or action requires authentication or channel access that was not granted.                                                                        | Y           |
-| 10   | Channel error                                    | An internal channel error occurred while starting or running the subscription. If it persists, contact [support@kalshi.com](mailto:support@kalshi.com).                | N           |
-| 11   | Invalid parameter                                | A parameter has an invalid format, such as a malformed market ID.                                                                                                      | Y           |
-| 12   | Exactly one subscription ID is required          | The `update_subscription` command must target exactly one subscription.                                                                                                | Y           |
-| 13   | Unsupported action                               | The subscription does not support the requested `action`.                                                                                                              | Y           |
-| 14   | Market Ticker required                           | The command requires a market filter such as `market_ticker` or `market_tickers`.                                                                                      | Y           |
-| 15   | Action required                                  | The `update_subscription` command must include `params.action`.                                                                                                        | Y           |
-| 16   | Retired                                          | Not emitted. The number stays reserved.                                                                                                                                | -           |
-| 17   | Retired                                          | Not emitted. The number stays reserved.                                                                                                                                | -           |
-| 18   | Command timeout                                  | The server timed out while routing a command to an existing subscription.                                                                                              | N           |
-| 19   | shard\_factor must be > 0                        | The supplied `communications` `shard_factor` value is invalid.                                                                                                         | Y           |
-| 20   | shard\_factor is required when shard\_key is set | `communications` set `shard_key` without a valid shard factor.                                                                                                         | Y           |
-| 21   | shard\_key must be >= 0 and \< shard\_factor     | The `communications` shard key is outside the valid range.                                                                                                             | Y           |
-| 22   | shard\_factor must be \<= 100                    | The `communications` shard factor exceeds the maximum.                                                                                                                 | Y           |
-| 25   | Subscription buffer overflow                     | The subscription's event buffer overflowed during a message burst. Subscribe to a smaller subset of data, or ensure that your connection read throughput is optimized. | Y           |
+| Code | Error | Description | User error? |
+| - | - | - | - |
+| 1 | Unable to process message | The incoming message was not valid JSON, or a JSON field had a type incompatible with the WebSocket command schema. | Y |
+| 2 | Params required | The command requires `params` or required subscription parameters are missing. | Y |
+| 3 | Channels required | The `subscribe` command must include at least one channel. | Y |
+| 4 | Subscription IDs required | The `unsubscribe` command must include at least one subscription ID in `sids`. | Y |
+| 5 | Unknown command | The `cmd` value is not supported. | Y |
+| 6 | Retired | Not emitted. The number stays reserved. | - |
+| 7 | Unknown subscription ID | The command references a subscription ID that is not active in the session. | Y |
+| 8 | Unknown channel name | The requested channel is not supported by this endpoint. | Y |
+| 9 | Authentication required | The requested channel or action requires authentication or channel access that was not granted. | Y |
+| 10 | Channel error | An internal channel error occurred while starting or running the subscription. If it persists, contact [support@kalshi.com](mailto:support@kalshi.com). | N |
+| 11 | Invalid parameter | A parameter has an invalid format, such as a malformed market ID. | Y |
+| 12 | Exactly one subscription ID is required | The `update_subscription` command must target exactly one subscription. | Y |
+| 13 | Unsupported action | The subscription does not support the requested `action`. | Y |
+| 14 | Market Ticker required | The command requires a market filter such as `market_ticker` or `market_tickers`. | Y |
+| 15 | Action required | The `update_subscription` command must include `params.action`. | Y |
+| 16 | Retired | Not emitted. The number stays reserved. | - |
+| 17 | Retired | Not emitted. The number stays reserved. | - |
+| 18 | Command timeout | The server timed out while routing a command to an existing subscription. | N |
+| 19 | shard\_factor must be > 0 | The supplied `communications` `shard_factor` value is invalid. | Y |
+| 20 | shard\_factor is required when shard\_key is set | `communications` set `shard_key` without a valid shard factor. | Y |
+| 21 | shard\_key must be >= 0 and \< shard\_factor | The `communications` shard key is outside the valid range. | Y |
+| 22 | shard\_factor must be \<= 100 | The `communications` shard factor exceeds the maximum. | Y |
+| 25 | Subscription buffer overflow | The subscription's event buffer overflowed during a message burst. Subscribe to a smaller subset of data, or ensure that your connection read throughput is optimized. | Y |
 
 ## Best Practices
 

@@ -23,52 +23,52 @@ Margin FIX uses standard FIX error messages with additional detail in the Text f
 
 Used for session-level protocol violations.
 
-| Tag | Name                | Description                         | Required |
-| --- | ------------------- | ----------------------------------- | -------- |
-| 45  | RefSeqNum           | Sequence number of rejected message | Yes      |
-| 58  | Text                | Human-readable error description    | No       |
-| 371 | RefTagID            | Tag that caused the rejection       | No       |
-| 372 | RefMsgType          | Message type being rejected         | No       |
-| 373 | SessionRejectReason | Rejection reason code               | No       |
+| Tag | Name | Description | Required |
+| - | - | - | - |
+| 45 | RefSeqNum | Sequence number of rejected message | Yes |
+| 58 | Text | Human-readable error description | No |
+| 371 | RefTagID | Tag that caused the rejection | No |
+| 372 | RefMsgType | Message type being rejected | No |
+| 373 | SessionRejectReason | Rejection reason code | No |
 
 #### Session Reject Reasons (373)
 
-| Code | Reason                      | Description                                          |
-| ---- | --------------------------- | ---------------------------------------------------- |
-| 0    | Invalid tag number          | Unknown tag in message                               |
-| 1    | Required tag missing        | Mandatory field not present                          |
-| 2    | Tag not defined for message | Tag not valid for this message type                  |
-| 3    | Undefined tag               | Tag number not in FIX specification                  |
-| 4    | Tag without value           | Empty tag value                                      |
-| 5    | Incorrect value             | Invalid value for tag                                |
-| 6    | Incorrect data format       | Wrong data type                                      |
-| 8    | Signature problem           | Authentication failure                               |
-| 9    | CompID problem              | SenderCompID/TargetCompID issue                      |
-| 10   | SendingTime accuracy        | SendingTime must be within 30 seconds of server time |
-| 11   | Invalid MsgType             | Unknown message type                                 |
+| Code | Reason | Description |
+| - | - | - |
+| 0 | Invalid tag number | Unknown tag in message |
+| 1 | Required tag missing | Mandatory field not present |
+| 2 | Tag not defined for message | Tag not valid for this message type |
+| 3 | Undefined tag | Tag number not in FIX specification |
+| 4 | Tag without value | Empty tag value |
+| 5 | Incorrect value | Invalid value for tag |
+| 6 | Incorrect data format | Wrong data type |
+| 8 | Signature problem | Authentication failure |
+| 9 | CompID problem | SenderCompID/TargetCompID issue |
+| 10 | SendingTime accuracy | SendingTime must be within 30 seconds of server time |
+| 11 | Invalid MsgType | Unknown message type |
 
 ### BusinessMessageReject (35=j)
 
 Used for application-level business logic errors.
 
-| Tag | Name                 | Description                         | Required |
-| --- | -------------------- | ----------------------------------- | -------- |
-| 45  | RefSeqNum            | Sequence number of rejected message | Yes      |
-| 58  | Text                 | Human-readable error description    | No       |
-| 372 | RefMsgType           | Message type being rejected         | Yes      |
-| 379 | BusinessRejectRefID  | Business ID from rejected message   | No       |
-| 380 | BusinessRejectReason | Business rejection reason code      | Yes      |
+| Tag | Name | Description | Required |
+| - | - | - | - |
+| 45 | RefSeqNum | Sequence number of rejected message | Yes |
+| 58 | Text | Human-readable error description | No |
+| 372 | RefMsgType | Message type being rejected | Yes |
+| 379 | BusinessRejectRefID | Business ID from rejected message | No |
+| 380 | BusinessRejectReason | Business rejection reason code | Yes |
 
 #### Business Reject Reasons (380)
 
-| Code | Reason                               | Description                                         |
-| ---- | ------------------------------------ | --------------------------------------------------- |
-| 0    | Other                                | See Text field                                      |
-| 1    | Unknown ID                           | Referenced ID not found                             |
-| 2    | Unknown Security                     | Invalid symbol                                      |
-| 3    | Unsupported Message Type             | Message type not implemented on this margin session |
-| 4    | Application not available            | System temporarily unavailable                      |
-| 5    | Conditionally required field missing | Context-specific field missing                      |
+| Code | Reason | Description |
+| - | - | - |
+| 0 | Other | See Text field |
+| 1 | Unknown ID | Referenced ID not found |
+| 2 | Unknown Security | Invalid symbol |
+| 3 | Unsupported Message Type | Message type not implemented on this margin session |
+| 4 | Application not available | System temporarily unavailable |
+| 5 | Conditionally required field missing | Context-specific field missing |
 
 ## Order-Specific Rejections
 
@@ -76,28 +76,28 @@ Used for application-level business logic errors.
 
 In ExecutionReport (35=8) with `ExecType=Rejected`:
 
-| Code | Reason                           | Common Causes                             |
-| ---- | -------------------------------- | ----------------------------------------- |
-| 1    | Unknown symbol                   | Invalid margin market ticker              |
-| 2    | Exchange closed                  | Trading paused or unavailable             |
-| 3    | Order exceeds limit              | Risk limit breach or insufficient margin  |
-| 4    | Too late to enter                | Market not accepting new orders           |
-| 5    | Stale order                      | Expired timestamp on request              |
-| 6    | Duplicate order                  | ClOrdID already used                      |
-| 11   | Unsupported order characteristic | Invalid order parameters                  |
-| 13   | Incorrect quantity               | Invalid order size                        |
-| 15   | Unknown account                  | Subaccount not found or permission denied |
-| 99   | Other                            | See Text field                            |
+| Code | Reason | Common Causes |
+| - | - | - |
+| 1 | Unknown symbol | Invalid margin market ticker |
+| 2 | Exchange closed | Trading paused or unavailable |
+| 3 | Order exceeds limit | Risk limit breach or insufficient margin |
+| 4 | Too late to enter | Market not accepting new orders |
+| 5 | Stale order | Expired timestamp on request |
+| 6 | Duplicate order | ClOrdID already used |
+| 11 | Unsupported order characteristic | Invalid order parameters |
+| 13 | Incorrect quantity | Invalid order size |
+| 15 | Unknown account | Subaccount not found or permission denied |
+| 99 | Other | See Text field |
 
 ### Cancel Reject Reasons (102)
 
 In OrderCancelReject (35=9):
 
-| Code | Reason             | Description                                 |
-| ---- | ------------------ | ------------------------------------------- |
-| 0    | Too late to cancel | Order already filled                        |
-| 1    | Unknown order      | Order not found or identifiers do not match |
-| 99   | Other              | See Text field                              |
+| Code | Reason | Description |
+| - | - | - |
+| 0 | Too late to cancel | Order already filled |
+| 1 | Unknown order | Order not found or identifiers do not match |
+| 99 | Other | See Text field |
 
 ## Common Error Scenarios
 

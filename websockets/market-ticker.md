@@ -152,6 +152,12 @@ operations:
                       (RFC3339). Use ts_ms instead.
                     deprecated: true
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -265,12 +271,20 @@ operations:
                   format: date-time
                   x-parser-schema-id: <anonymous-schema-105>
               x-parser-schema-id: <anonymous-schema-92>
+            sending_ts_ms:
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: tickerPayload
         title: Ticker Update
         description: Market price ticker information
         example: |-
           {
             "type": "ticker",
+            "sending_ts_ms": 1669149841123,
             "sid": 11,
             "msg": {
               "market_id": "9b0f6b43-5b68-4f9f-9f02-9a2d1b8ac1a1",

@@ -53,12 +53,12 @@ address: orderbook_delta
 parameters: []
 bindings: []
 operations:
-  - &ref_5
+  - &ref_6
     id: receiveOrderbookSnapshot
     title: Orderbook Snapshot
     type: send
     messages:
-      - &ref_7
+      - &ref_8
         id: orderbookSnapshot
         contentType: application/json
         payload:
@@ -114,6 +114,12 @@ operations:
                           - name: item
                             type: string
                             required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -168,6 +174,13 @@ operations:
                   items: *ref_0
                   x-parser-schema-id: <anonymous-schema-48>
               x-parser-schema-id: <anonymous-schema-45>
+            sending_ts_ms: &ref_4
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: marginOrderbookSnapshotPayload
         title: Orderbook Snapshot
         description: Complete view of the margin order book's aggregated price levels
@@ -177,15 +190,15 @@ operations:
           - id: x-parser-unique-object-id
             value: orderbookSnapshot
     bindings: []
-    extensions: &ref_4
+    extensions: &ref_5
       - id: x-parser-unique-object-id
         value: orderbook_delta
-  - &ref_6
+  - &ref_7
     id: receiveOrderbookDelta
     title: Orderbook Delta
     type: send
     messages:
-      - &ref_8
+      - &ref_9
         id: orderbookDelta
         contentType: application/json
         payload:
@@ -255,6 +268,12 @@ operations:
                   - name: subaccount
                     type: integer
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -322,6 +341,7 @@ operations:
                   type: integer
                   x-parser-schema-id: <anonymous-schema-55>
               x-parser-schema-id: <anonymous-schema-50>
+            sending_ts_ms: *ref_4
           x-parser-schema-id: marginOrderbookDeltaPayload
         title: Orderbook Delta
         description: Update to be applied to the current margin order book view
@@ -339,22 +359,23 @@ operations:
               "client_order_id": "<string>",
               "ts_ms": 123,
               "subaccount": 123
-            }
+            },
+            "sending_ts_ms": 123
           }
         bindings: []
         extensions:
           - id: x-parser-unique-object-id
             value: orderbookDelta
     bindings: []
-    extensions: *ref_4
+    extensions: *ref_5
 sendOperations: []
 receiveOperations:
-  - *ref_5
   - *ref_6
+  - *ref_7
 sendMessages: []
 receiveMessages:
-  - *ref_7
   - *ref_8
+  - *ref_9
 extensions:
   - id: x-parser-unique-object-id
     value: orderbook_delta

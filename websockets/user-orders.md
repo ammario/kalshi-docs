@@ -248,6 +248,12 @@ operations:
                     type: integer
                     description: Subaccount number (0 for primary, 1-63 for subaccounts)
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -454,12 +460,20 @@ operations:
                   description: Subaccount number (0 for primary, 1-63 for subaccounts)
                   x-parser-schema-id: <anonymous-schema-299>
               x-parser-schema-id: <anonymous-schema-276>
+            sending_ts_ms:
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: userOrderPayload
         title: User Order Update
         description: Real-time order updates for authenticated user
         example: |-
           {
             "type": "user_order",
+            "sending_ts_ms": 1669149841234,
             "sid": 22,
             "msg": {
               "order_id": "ee587a1c-8b87-4dcf-b721-9f6f790619fa",

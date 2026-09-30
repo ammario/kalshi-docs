@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/fcm/update-fcm-notional-risk-limit
-lastmod: 2026-09-25T20:13:10.044Z
+lastmod: 2026-09-30T04:02:55.898Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

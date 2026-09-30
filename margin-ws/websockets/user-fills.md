@@ -120,6 +120,12 @@ operations:
                       - user
                       - system
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -206,6 +212,13 @@ operations:
                     triggers. `user` for every other order.
                   x-parser-schema-id: <anonymous-schema-95>
               x-parser-schema-id: <anonymous-schema-84>
+            sending_ts_ms:
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: marginFillPayload
         title: Fill Update
         description: Private margin fill information for the authenticated user
@@ -227,7 +240,8 @@ operations:
               "post_position": "<string>",
               "subaccount": 123,
               "order_source": "<string>"
-            }
+            },
+            "sending_ts_ms": 123
           }
         bindings: []
         extensions:

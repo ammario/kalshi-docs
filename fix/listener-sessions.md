@@ -26,17 +26,17 @@ Listener sessions connect to the same KalshiNR or KalshiRT endpoints listed on t
 
 ### Required Logon Fields
 
-| Tag   | Name                   | Value | Description                     |
-| ----- | ---------------------- | ----- | ------------------------------- |
-| 20126 | ListenerSession        | Y     | Enables listen-only mode        |
-| 21011 | SkipPendingExecReports | Y     | Required when ListenerSession=Y |
+| Tag | Name | Value | Description |
+| - | - | - | - |
+| 20126 | ListenerSession | Y | Enables listen-only mode |
+| 21011 | SkipPendingExecReports | Y | Required when ListenerSession=Y |
 
 ### Restrictions
 
 The following Logon flags are **not compatible** with listener sessions:
 
-| Tag  | Name                     | Restriction            |
-| ---- | ------------------------ | ---------------------- |
+| Tag | Name | Restriction |
+| - | - | - |
 | 8013 | CancelOrdersOnDisconnect | Must be N (or omitted) |
 
 **Example Logon:**

@@ -188,6 +188,12 @@ operations:
                     type: integer
                     description: Optional subaccount number for the fill
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -326,12 +332,20 @@ operations:
                   description: Optional subaccount number for the fill
                   x-parser-schema-id: <anonymous-schema-128>
               x-parser-schema-id: <anonymous-schema-116>
+            sending_ts_ms:
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: fillPayload
         title: Fill Update
         description: Private fill information for authenticated user
         example: |-
           {
             "type": "fill",
+            "sending_ts_ms": 1671899397123,
             "sid": 13,
             "msg": {
               "trade_id": "d91bc706-ee49-470d-82d8-11418bda6fed",

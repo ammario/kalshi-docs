@@ -20,9 +20,9 @@ Most requests cost the default of **10 tokens**. For endpoints that cost more or
 
 You have two independent token budgets:
 
-| Bucket    | Covers                                                                                                |
-| --------- | ----------------------------------------------------------------------------------------------------- |
-| **Read**  | `GET` endpoints and anything not routed to Write.                                                     |
+| Bucket | Covers |
+| - | - |
+| **Read** | `GET` endpoints and anything not routed to Write. |
 | **Write** | Order placement, amends, cancels, order groups, the RFQ quote flow, and block trade proposal accepts. |
 
 The split is by operation type, not by protocol. REST and FIX requests drain the same buckets.
@@ -50,11 +50,11 @@ Predictions Read buckets above Advanced, Perps Read buckets, and Basic-tier Writ
 
 A Premier Predictions Write bucket refills at 1,200 tokens per second and holds up to 3,600. At the default cost of 10 tokens per order, it sustains 120 orders per second.
 
-| Time      | Requests              | Bucket (capacity 3,600)                |
-| --------- | --------------------- | -------------------------------------- |
-| 3 s idle  | none                  | fills to 3,600                         |
-| 0 s       | 360 orders at once    | all accepted; 3,600 drops to 0         |
-| 0 to 1 s  | none                  | refills to 1,200                       |
+| Time | Requests | Bucket (capacity 3,600) |
+| - | - | - |
+| 3 s idle | none | fills to 3,600 |
+| 0 s | 360 orders at once | all accepted; 3,600 drops to 0 |
+| 0 to 1 s | none | refills to 1,200 |
 | after 1 s | 120 orders per second | holds near 1,200; spend matches refill |
 
 ## When you hit the limit
@@ -136,13 +136,13 @@ Once a day, Kalshi reviews your trading volume and grants Expert, Premier, Parag
 
 A qualifying review grants the tier for **30 days**, and each daily review renews the window while you keep qualifying. Each tier has a higher **Earn** threshold to gain it and a lower **Keep** threshold to hold it, so a brief dip does not cost you the tier:
 
-| Tier     | Earn   | Keep  |
-| -------- | ------ | ----- |
-| Expert   | 0.075% | 0.05% |
-| Premier  | 0.125% | 0.10% |
-| Paragon  | 0.25%  | 0.20% |
-| Prime    | 0.50%  | 0.40% |
-| Prestige | 1.00%  | 0.80% |
+| Tier | Earn | Keep |
+| - | - | - |
+| Expert | 0.075% | 0.05% |
+| Premier | 0.125% | 0.10% |
+| Paragon | 0.25% | 0.20% |
+| Prime | 0.50% | 0.40% |
+| Prestige | 1.00% | 0.80% |
 
 If your volume falls below the **Keep** threshold, the tier does not drop immediately. It lapses when your current 30-day grant runs out.
 

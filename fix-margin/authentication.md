@@ -34,26 +34,26 @@ The initiator sends a Logon message. The acceptor responds with either a Logon (
 
 ### Required Fields
 
-| Tag  | Name             | Description                    | Value                    |
-| ---- | ---------------- | ------------------------------ | ------------------------ |
-| 98   | EncryptMethod    | Method of encryption           | None\<0>                 |
-| 96   | RawData          | Client logon message signature | Base64 encoded signature |
-| 1137 | DefaultApplVerID | Default application version    | FIX50SP2\<9>             |
+| Tag | Name | Description | Value |
+| - | - | - | - |
+| 98 | EncryptMethod | Method of encryption | None\<0> |
+| 96 | RawData | Client logon message signature | Base64 encoded signature |
+| 1137 | DefaultApplVerID | Default application version | FIX50SP2\<9> |
 
 ### Optional Fields
 
-| Tag   | Name                     | Description                                                                                                                          | Default   |
-| ----- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | --------- |
-| 141   | ResetSeqNumFlag          | Reset sequence numbers on logon. **Must be Y for KalshiNR and KalshiDC.**                                                            | N         |
-| 108   | HeartbeatInt             | Heartbeat interval in seconds, must be >= 3.                                                                                         | 30        |
-| 8013  | CancelOrdersOnDisconnect | Cancel orders on disconnection                                                                                                       | N         |
-| 20126 | ListenerSession          | Listen-only session. **KalshiNR/KalshiRT only, requires SkipPendingExecReports=Y.**                                                  | N         |
-| 20200 | MessageRetentionPeriod   | How long session messages are stored for retransmission, max 72 hours. **KalshiRT only.**                                            | 24        |
-| 21005 | UseDollars               | Fixed-point dollar pricing flag. Margin sessions always use fixed-point dollar pricing; clients should treat this as always enabled. | Always on |
-| 21011 | SkipPendingExecReports   | Skip `PENDING_NEW` / `PENDING_REPLACE` / `PENDING_CANCEL` execution reports                                                          | N         |
-| 21012 | UseExpiredOrdStatus      | Emit `Expired<C>` for expiry-style system cancellations instead of `Canceled<4>`                                                     | N         |
-| 21007 | EnableIocCancelReport    | Partially filled IOC orders produce a cancel report                                                                                  | N         |
-| 21008 | PreserveOriginalOrderQty | `OrderQty` tag 38 always reflects original order quantity across states                                                              | N         |
+| Tag | Name | Description | Default |
+| - | - | - | - |
+| 141 | ResetSeqNumFlag | Reset sequence numbers on logon. **Must be Y for KalshiNR and KalshiDC.** | N |
+| 108 | HeartbeatInt | Heartbeat interval in seconds, must be >= 3. | 30 |
+| 8013 | CancelOrdersOnDisconnect | Cancel orders on disconnection | N |
+| 20126 | ListenerSession | Listen-only session. **KalshiNR/KalshiRT only, requires SkipPendingExecReports=Y.** | N |
+| 20200 | MessageRetentionPeriod | How long session messages are stored for retransmission, max 72 hours. **KalshiRT only.** | 24 |
+| 21005 | UseDollars | Fixed-point dollar pricing flag. Margin sessions always use fixed-point dollar pricing; clients should treat this as always enabled. | Always on |
+| 21011 | SkipPendingExecReports | Skip `PENDING_NEW` / `PENDING_REPLACE` / `PENDING_CANCEL` execution reports | N |
+| 21012 | UseExpiredOrdStatus | Emit `Expired<C>` for expiry-style system cancellations instead of `Canceled<4>` | N |
+| 21007 | EnableIocCancelReport | Partially filled IOC orders produce a cancel report | N |
+| 21008 | PreserveOriginalOrderQty | `OrderQty` tag 38 always reflects original order quantity across states | N |
 
 ### Signature Generation
 
@@ -108,12 +108,12 @@ PreHashString = SendingTime + SOH + MsgType + SOH + MsgSeqNum + SOH + SenderComp
 
 ## Heartbeat & Sequence Numbers
 
-| Behavior                             | Detail                                                                   |
-| ------------------------------------ | ------------------------------------------------------------------------ |
-| Default heartbeat interval           | 30 seconds                                                               |
-| Missed heartbeat                     | Connection terminates if heartbeat response not received within interval |
-| Sequence number lower than expected  | Connection terminated                                                    |
-| Sequence number higher than expected | Recoverable with ResendRequest (KalshiRT only)                           |
+| Behavior | Detail |
+| - | - |
+| Default heartbeat interval | 30 seconds |
+| Missed heartbeat | Connection terminates if heartbeat response not received within interval |
+| Sequence number lower than expected | Connection terminated |
+| Sequence number higher than expected | Recoverable with ResendRequest (KalshiRT only) |
 
 ## Message Retransmission
 
@@ -125,10 +125,10 @@ The [drop copy session](/fix-margin/drop-copy) provides an alternative way to qu
 
 **KalshiRT only.** Lookback window controlled by `MessageRetentionPeriod`.
 
-| Tag | Name       | Description             |
-| --- | ---------- | ----------------------- |
-| 7   | BeginSeqNo | Lower bound (inclusive) |
-| 16  | EndSeqNo   | Upper bound (inclusive) |
+| Tag | Name | Description |
+| - | - | - |
+| 7 | BeginSeqNo | Lower bound (inclusive) |
+| 16 | EndSeqNo | Upper bound (inclusive) |
 
 ## Logout (35=5)
 

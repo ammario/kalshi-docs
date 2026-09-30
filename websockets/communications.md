@@ -62,13 +62,13 @@ address: communications
 parameters: []
 bindings: []
 operations:
-  - &ref_3
+  - &ref_4
     id: receiveRFQCreated
     title: RFQ Created
     description: Receive RFQ created notifications
     type: send
     messages:
-      - &ref_8
+      - &ref_9
         id: rfqCreated
         contentType: application/json
         payload:
@@ -103,7 +103,10 @@ operations:
                     required: true
                   - name: creator_id
                     type: string
-                    description: Public communications ID of the RFQ creator (anonymized).
+                    description: >-
+                      Public communications ID of the RFQ creator (anonymized).
+                      Set to "0" for other users when obscure_creator_id is
+                      enabled.
                     required: true
                   - name: market_ticker
                     type: string
@@ -159,6 +162,12 @@ operations:
                           Yes settlement value in dollars for the selected leg.
                           Omitted when unavailable.
                         required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -201,7 +210,10 @@ operations:
                   x-parser-schema-id: <anonymous-schema-204>
                 creator_id:
                   type: string
-                  description: Public communications ID of the RFQ creator (anonymized).
+                  description: >-
+                    Public communications ID of the RFQ creator (anonymized).
+                    Set to "0" for other users when obscure_creator_id is
+                    enabled.
                   x-parser-schema-id: <anonymous-schema-205>
                 market_ticker:
                   type: string
@@ -267,12 +279,20 @@ operations:
                     x-parser-schema-id: <anonymous-schema-213>
                   x-parser-schema-id: <anonymous-schema-212>
               x-parser-schema-id: <anonymous-schema-203>
+            sending_ts_ms: &ref_2
+              type: integer
+              format: int64
+              description: >-
+                Unix timestamp in milliseconds when Kalshi queued this message
+                at the network layer.
+              x-parser-schema-id: sendingTimestampMs
           x-parser-schema-id: rfqCreatedPayload
         title: RFQ Created
         description: Notification when an RFQ is created
         example: |-
           {
             "type": "rfq_created",
+            "sending_ts_ms": 1669149841234,
             "sid": 15,
             "seq": 11,
             "msg": {
@@ -289,16 +309,16 @@ operations:
           - id: x-parser-unique-object-id
             value: rfqCreated
     bindings: []
-    extensions: &ref_2
+    extensions: &ref_3
       - id: x-parser-unique-object-id
         value: communications
-  - &ref_4
+  - &ref_5
     id: receiveRFQDeleted
     title: RFQ Deleted
     description: Receive RFQ deleted notifications
     type: send
     messages:
-      - &ref_9
+      - &ref_10
         id: rfqDeleted
         contentType: application/json
         payload:
@@ -333,7 +353,10 @@ operations:
                     required: true
                   - name: creator_id
                     type: string
-                    description: Public communications ID of the RFQ creator (anonymized)
+                    description: >-
+                      Public communications ID of the RFQ creator (anonymized).
+                      Set to "0" for other users when obscure_creator_id is
+                      enabled.
                     required: true
                   - name: market_ticker
                     type: string
@@ -355,6 +378,12 @@ operations:
                     type: string
                     description: Timestamp when the RFQ was deleted
                     required: true
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -384,7 +413,10 @@ operations:
                   x-parser-schema-id: <anonymous-schema-220>
                 creator_id:
                   type: string
-                  description: Public communications ID of the RFQ creator (anonymized)
+                  description: >-
+                    Public communications ID of the RFQ creator (anonymized).
+                    Set to "0" for other users when obscure_creator_id is
+                    enabled.
                   x-parser-schema-id: <anonymous-schema-221>
                 market_ticker:
                   type: string
@@ -408,12 +440,14 @@ operations:
                   format: date-time
                   x-parser-schema-id: <anonymous-schema-226>
               x-parser-schema-id: <anonymous-schema-219>
+            sending_ts_ms: *ref_2
           x-parser-schema-id: rfqDeletedPayload
         title: RFQ Deleted
         description: Notification when an RFQ is deleted
         example: |-
           {
             "type": "rfq_deleted",
+            "sending_ts_ms": 1669149841234,
             "sid": 15,
             "seq": 12,
             "msg": {
@@ -431,14 +465,14 @@ operations:
           - id: x-parser-unique-object-id
             value: rfqDeleted
     bindings: []
-    extensions: *ref_2
-  - &ref_5
+    extensions: *ref_3
+  - &ref_6
     id: receiveQuoteCreated
     title: Quote Created
     description: Receive quote created notifications
     type: send
     messages:
-      - &ref_10
+      - &ref_11
         id: quoteCreated
         contentType: application/json
         payload:
@@ -481,7 +515,10 @@ operations:
                     required: true
                   - name: rfq_creator_id
                     type: string
-                    description: Public communications ID of the RFQ creator (anonymized)
+                    description: >-
+                      Public communications ID of the RFQ creator (anonymized).
+                      Set to "0" for other users when obscure_creator_id is
+                      enabled.
                     required: true
                   - name: market_ticker
                     type: string
@@ -524,6 +561,12 @@ operations:
                       Contains your own subaccount number; the counterparty's
                       subaccount is never shared.
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -565,7 +608,10 @@ operations:
                   x-parser-schema-id: <anonymous-schema-231>
                 rfq_creator_id:
                   type: string
-                  description: Public communications ID of the RFQ creator (anonymized)
+                  description: >-
+                    Public communications ID of the RFQ creator (anonymized).
+                    Set to "0" for other users when obscure_creator_id is
+                    enabled.
                   x-parser-schema-id: <anonymous-schema-232>
                 market_ticker:
                   type: string
@@ -610,12 +656,14 @@ operations:
                     subaccount is never shared.
                   x-parser-schema-id: <anonymous-schema-241>
               x-parser-schema-id: <anonymous-schema-228>
+            sending_ts_ms: *ref_2
           x-parser-schema-id: quoteCreatedPayload
         title: Quote Created
         description: Notification when a quote is created on an RFQ
         example: |-
           {
             "type": "quote_created",
+            "sending_ts_ms": 1669149841234,
             "sid": 15,
             "seq": 13,
             "msg": {
@@ -639,14 +687,14 @@ operations:
           - id: x-parser-unique-object-id
             value: quoteCreated
     bindings: []
-    extensions: *ref_2
-  - &ref_6
+    extensions: *ref_3
+  - &ref_7
     id: receiveQuoteAccepted
     title: Quote Accepted
     description: Receive quote accepted notifications
     type: send
     messages:
-      - &ref_11
+      - &ref_12
         id: quoteAccepted
         contentType: application/json
         payload:
@@ -689,7 +737,10 @@ operations:
                     required: true
                   - name: rfq_creator_id
                     type: string
-                    description: Public communications ID of the RFQ creator (anonymized)
+                    description: >-
+                      Public communications ID of the RFQ creator (anonymized).
+                      Set to "0" for other users when obscure_creator_id is
+                      enabled.
                     required: true
                   - name: market_ticker
                     type: string
@@ -739,6 +790,12 @@ operations:
                       Contains your own subaccount number; the counterparty's
                       subaccount is never shared.
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -779,7 +836,10 @@ operations:
                   x-parser-schema-id: <anonymous-schema-246>
                 rfq_creator_id:
                   type: string
-                  description: Public communications ID of the RFQ creator (anonymized)
+                  description: >-
+                    Public communications ID of the RFQ creator (anonymized).
+                    Set to "0" for other users when obscure_creator_id is
+                    enabled.
                   x-parser-schema-id: <anonymous-schema-247>
                 market_ticker:
                   type: string
@@ -830,12 +890,14 @@ operations:
                     subaccount is never shared.
                   x-parser-schema-id: <anonymous-schema-257>
               x-parser-schema-id: <anonymous-schema-243>
+            sending_ts_ms: *ref_2
           x-parser-schema-id: quoteAcceptedPayload
         title: Quote Accepted
         description: Notification when a quote is accepted
         example: |-
           {
             "type": "quote_accepted",
+            "sending_ts_ms": 1669149841234,
             "sid": 15,
             "seq": 14,
             "msg": {
@@ -860,8 +922,8 @@ operations:
           - id: x-parser-unique-object-id
             value: quoteAccepted
     bindings: []
-    extensions: *ref_2
-  - &ref_7
+    extensions: *ref_3
+  - &ref_8
     id: receiveQuoteExecuted
     title: Quote Executed
     description: >-
@@ -869,7 +931,7 @@ operations:
       correlation
     type: send
     messages:
-      - &ref_12
+      - &ref_13
         id: quoteExecuted
         contentType: application/json
         payload:
@@ -945,6 +1007,12 @@ operations:
                       Contains your own subaccount number; the counterparty's
                       subaccount is never shared.
                     required: false
+              - name: sending_ts_ms
+                type: integer
+                description: >-
+                  Unix timestamp in milliseconds when Kalshi queued this message
+                  at the network layer.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -1019,12 +1087,14 @@ operations:
                     subaccount is never shared.
                   x-parser-schema-id: <anonymous-schema-268>
               x-parser-schema-id: <anonymous-schema-259>
+            sending_ts_ms: *ref_2
           x-parser-schema-id: quoteExecutedPayload
         title: Quote Executed
         description: Notification when a quote is executed and orders are placed
         example: |-
           {
             "type": "quote_executed",
+            "sending_ts_ms": 1669149841234,
             "sid": 15,
             "seq": 15,
             "msg": {
@@ -1044,21 +1114,21 @@ operations:
           - id: x-parser-unique-object-id
             value: quoteExecuted
     bindings: []
-    extensions: *ref_2
+    extensions: *ref_3
 sendOperations: []
 receiveOperations:
-  - *ref_3
   - *ref_4
   - *ref_5
   - *ref_6
   - *ref_7
+  - *ref_8
 sendMessages: []
 receiveMessages:
-  - *ref_8
   - *ref_9
   - *ref_10
   - *ref_11
   - *ref_12
+  - *ref_13
 extensions:
   - id: x-parser-unique-object-id
     value: communications

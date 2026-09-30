@@ -16,26 +16,26 @@ Markets on Kalshi follow a lifecycle from creation through trading to determinat
 
 The REST API returns these statuses on `GET /markets` and `GET /markets/{ticker}`:
 
-| Status        | Meaning                                                                                   |
-| ------------- | ----------------------------------------------------------------------------------------- |
-| `initialized` | Created but not yet open for trading. Transitions to `active` when `open_time` passes.    |
-| `active`      | Open for trading.                                                                         |
-| `inactive`    | Temporarily deactivated by the exchange. Trading is paused but the market has not closed. |
-| `closed`      | Past `close_time`. No new orders accepted. Awaiting determination.                        |
-| `determined`  | Result is known. Settlement timer is running.                                             |
-| `disputed`    | Result has been challenged. May be re-determined.                                         |
-| `amended`     | Re-determined after a dispute. Settlement timer restarts.                                 |
-| `finalized`   | Settlement complete. Positions have been paid out. Terminal state.                        |
+| Status | Meaning |
+| - | - |
+| `initialized` | Created but not yet open for trading. Transitions to `active` when `open_time` passes. |
+| `active` | Open for trading. |
+| `inactive` | Temporarily deactivated by the exchange. Trading is paused but the market has not closed. |
+| `closed` | Past `close_time`. No new orders accepted. Awaiting determination. |
+| `determined` | Result is known. Settlement timer is running. |
+| `disputed` | Result has been challenged. May be re-determined. |
+| `amended` | Re-determined after a dispute. Settlement timer restarts. |
+| `finalized` | Settlement complete. Positions have been paid out. Terminal state. |
 
 When filtering with `GET /markets?status=`, the values map as follows:
 
-| Filter value | Matches                                                  |
-| ------------ | -------------------------------------------------------- |
-| `unopened`   | `initialized` (before `open_time`)                       |
-| `open`       | `active`                                                 |
-| `paused`     | `inactive`                                               |
-| `closed`     | Any market past `close_time` that is not yet `finalized` |
-| `settled`    | `finalized`                                              |
+| Filter value | Matches |
+| - | - |
+| `unopened` | `initialized` (before `open_time`) |
+| `open` | `active` |
+| `paused` | `inactive` |
+| `closed` | Any market past `close_time` that is not yet `finalized` |
+| `settled` | `finalized` |
 
 ## Transitions
 
@@ -59,13 +59,13 @@ Some transitions are implicit (time-based), others are explicit (event-driven).
 
 Markets have several time fields:
 
-| Field                      | Meaning                                                                                                                                                   |
-| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `open_time`                | When the market opens for trading.                                                                                                                        |
-| `close_time`               | When trading stops. May be moved earlier if `can_close_early` is true.                                                                                    |
-| `expected_expiration_time` | When the outcome is expected to be known.                                                                                                                 |
-| `latest_expiration_time`   | Latest possible expiration time.                                                                                                                          |
-| `expiration_time`          | Deprecated legacy field. Prefer `latest_expiration_time` for the legacy expiry semantics; use `expected_expiration_time` if you want the forecasted time. |
+| Field | Meaning |
+| - | - |
+| `open_time` | When the market opens for trading. |
+| `close_time` | When trading stops. May be moved earlier if `can_close_early` is true. |
+| `expected_expiration_time` | When the outcome is expected to be known. |
+| `latest_expiration_time` | Latest possible expiration time. |
+| `expiration_time` | Deprecated legacy field. Prefer `latest_expiration_time` for the legacy expiry semantics; use `expected_expiration_time` if you want the forecasted time. |
 
 ## Determination and settlement
 
@@ -83,10 +83,10 @@ Once `close_time` passes, all order operations, including cancellations, are rej
 
 Market lifecycle events are delivered on two channels:
 
-| Channel                         | Markets covered                   | Event types                                                                                              |
-| ------------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `market_lifecycle_v2`           | All markets except MVE (`KXMVE*`) | `created`, `activated`, `deactivated`, `close_date_updated`, `determined`, `settled`, `metadata_updated` |
-| `multivariate_market_lifecycle` | MVE markets only (`KXMVE*`)       | `created`, `activated`, `deactivated`, `close_date_updated`, `determined`, `settled`                     |
+| Channel | Markets covered | Event types |
+| - | - | - |
+| `market_lifecycle_v2` | All markets except MVE (`KXMVE*`) | `created`, `activated`, `deactivated`, `close_date_updated`, `determined`, `settled`, `metadata_updated` |
+| `multivariate_market_lifecycle` | MVE markets only (`KXMVE*`) | `created`, `activated`, `deactivated`, `close_date_updated`, `determined`, `settled` |
 
 Both channels also emit `event_lifecycle` messages when new events are created.
 

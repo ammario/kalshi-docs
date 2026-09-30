@@ -20,10 +20,10 @@ Kalshi API keys are asymmetric key pairs: you sign each request with the
 private key, and Kalshi verifies the signature with the registered public key.
 Two key types are supported:
 
-| Key type                  | Signature                                   | Private key PEM Kalshi generates           | When to use                                                                       |
-| ------------------------- | ------------------------------------------- | ------------------------------------------ | --------------------------------------------------------------------------------- |
-| **Ed25519** (recommended) | Ed25519 (RFC 8032) over the pre-sign text   | `-----BEGIN PRIVATE KEY-----` (PKCS#8)     | Clients that support Ed25519. Lower signing cost than RSA-PSS; 64-byte signatures |
-| **RSA** (2048-bit)        | RSA-PSS with SHA-256 over the pre-sign text | `-----BEGIN RSA PRIVATE KEY-----` (PKCS#1) | Clients limited to RSA-PSS, including the current official SDKs                   |
+| Key type | Signature | Private key PEM Kalshi generates | When to use |
+| - | - | - | - |
+| **Ed25519** (recommended) | Ed25519 (RFC 8032) over the pre-sign text | `-----BEGIN PRIVATE KEY-----` (PKCS#8) | Clients that support Ed25519. Lower signing cost than RSA-PSS; 64-byte signatures |
+| **RSA** (2048-bit) | RSA-PSS with SHA-256 over the pre-sign text | `-----BEGIN RSA PRIVATE KEY-----` (PKCS#1) | Clients limited to RSA-PSS, including the current official SDKs |
 
 Headers, pre-sign text, permissions and errors are identical for both types.
 Kalshi selects the verification algorithm from the registered public key;

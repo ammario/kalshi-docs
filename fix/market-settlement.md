@@ -18,15 +18,15 @@ Provides settlement details for a specific market.
 
 ### Message Structure
 
-| Tag   | Name                          | Description                                                            | Required |
-| ----- | ----------------------------- | ---------------------------------------------------------------------- | -------- |
-| 20105 | MarketSettlementReportID      | Unique settlement identifier                                           | Yes      |
-| 55    | Symbol                        | Market ticker (e.g., NHIGH-23JAN02-66)                                 | Yes      |
-| 715   | ClearingBusinessDate          | Date settlement cleared (YYYYMMDD)                                     | Yes      |
-| 20106 | TotNumMarketSettlementReports | Total number of settlement reports in sequence                         | No       |
-| 20107 | MarketResult                  | Result of the market when determined: `yes`, `no`, or `scalar`         | Yes      |
-| 893   | LastFragment                  | Last page indicator (Y/N)                                              | No       |
-| 730   | SettlementPrice               | Pre-fee YES settlement price in cents (2 decimal places, e.g. `30.60`) | Yes      |
+| Tag | Name | Description | Required |
+| - | - | - | - |
+| 20105 | MarketSettlementReportID | Unique settlement identifier | Yes |
+| 55 | Symbol | Market ticker (e.g., NHIGH-23JAN02-66) | Yes |
+| 715 | ClearingBusinessDate | Date settlement cleared (YYYYMMDD) | Yes |
+| 20106 | TotNumMarketSettlementReports | Total number of settlement reports in sequence | No |
+| 20107 | MarketResult | Result of the market when determined: `yes`, `no`, or `scalar` | Yes |
+| 893 | LastFragment | Last page indicator (Y/N) | No |
+| 730 | SettlementPrice | Pre-fee YES settlement price in cents (2 decimal places, e.g. `30.60`) | Yes |
 
 ### Repeating Groups
 
@@ -34,31 +34,31 @@ Collateral changes and fees are nested inside each `NoMarketSettlementPartyIDs` 
 
 #### Party Information (NoMarketSettlementPartyIDs)
 
-| Tag   | Name                       | Description                           |
-| ----- | -------------------------- | ------------------------------------- |
-| 20108 | NoMarketSettlementPartyIDs | Number of parties                     |
-| 20109 | MarketSettlementPartyID    | Unique identifier for party           |
-| 20110 | MarketSettlementPartyRole  | Type of party (Customer Account\<24>) |
-| 704   | LongQty                    | Decimal quantity of YES position held |
-| 705   | ShortQty                   | Decimal quantity of NO position held  |
+| Tag | Name | Description |
+| - | - | - |
+| 20108 | NoMarketSettlementPartyIDs | Number of parties |
+| 20109 | MarketSettlementPartyID | Unique identifier for party |
+| 20110 | MarketSettlementPartyRole | Type of party (Customer Account\<24>) |
+| 704 | LongQty | Decimal quantity of YES position held |
+| 705 | ShortQty | Decimal quantity of NO position held |
 
 #### Collateral Changes (NoCollateralAmountChanges)
 
-| Tag  | Name                      | Description                                                                                  |
-| ---- | ------------------------- | -------------------------------------------------------------------------------------------- |
-| 1703 | NoCollateralAmountChanges | Number of collateral changes (should be only 1 - payout balance change)                      |
-| 1704 | CollateralAmountChange    | For `PAYOUT`, the position's settlement payout in dollars after deducting its settlement fee |
-| 1705 | CollateralAmountType      | `BALANCE` or `PAYOUT`                                                                        |
+| Tag | Name | Description |
+| - | - | - |
+| 1703 | NoCollateralAmountChanges | Number of collateral changes (should be only 1 - payout balance change) |
+| 1704 | CollateralAmountChange | For `PAYOUT`, the position's settlement payout in dollars after deducting its settlement fee |
+| 1705 | CollateralAmountType | `BALANCE` or `PAYOUT` |
 
 #### Fees (NoMiscFees)
 
-| Tag | Name         | Description                                                                                       |
-| --- | ------------ | ------------------------------------------------------------------------------------------------- |
-| 136 | NoMiscFees   | Number of fee entries (always 1)                                                                  |
-| 137 | MiscFeeAmt   | Total settlement fee for this party in dollars, already deducted from `PAYOUT` (zero when no fee) |
-| 138 | MiscFeeCurr  | Currency (USD)                                                                                    |
-| 139 | MiscFeeType  | Type of fee (Exchange fees\<4>)                                                                   |
-| 891 | MiscFeeBasis | Unit for fee (Absolute\<0>)                                                                       |
+| Tag | Name | Description |
+| - | - | - |
+| 136 | NoMiscFees | Number of fee entries (always 1) |
+| 137 | MiscFeeAmt | Total settlement fee for this party in dollars, already deducted from `PAYOUT` (zero when no fee) |
+| 138 | MiscFeeCurr | Currency (USD) |
+| 139 | MiscFeeType | Type of fee (Exchange fees\<4>) |
+| 891 | MiscFeeBasis | Unit for fee (Absolute\<0>) |
 
 ## Example Settlement Report
 
@@ -119,10 +119,10 @@ to each payout.
 
 Large settlement batches may span multiple messages:
 
-| Tag   | Use Case                                  |
-| ----- | ----------------------------------------- |
-| 20106 | Total number of reports in batch          |
-| 893   | LastFragment=N for more pages, Y for last |
+| Tag | Use Case |
+| - | - |
+| 20106 | Total number of reports in batch |
+| 893 | LastFragment=N for more pages, Y for last |
 
 <Warning>
   **Important:** The `MarketSettlementReportID` (tag 20105) will be different across paginated responses.

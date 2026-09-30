@@ -20,13 +20,13 @@ In the Kalshi web app, sub-users appear as **Team Members**.
 
 ## At a glance
 
-|                           | Sub-users (Team Members)                                                    | Subaccounts                                                                                          |
-| ------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| **What it is**            | Another login on your account, with its own email and password              | A separate balance and set of positions within your account                                          |
-| **Balance and positions** | Shares the account's                                                        | Has its own                                                                                          |
-| **Permissions**           | Read, Trade, and Transfers, set per sub-user                                | None of its own; an API key can be restricted to one subaccount                                      |
-| **Set up by**             | Kalshi enables the feature; the account owner adds sub-users in the web app | The account owner, through the API                                                                   |
-| **Availability**          | Institutions, on request                                                    | Direct accounts on the [Advanced API tier](/getting_started/rate_limits#tier-qualification) or above |
+| | Sub-users (Team Members) | Subaccounts |
+| - | - | - |
+| **What it is** | Another login on your account, with its own email and password | A separate balance and set of positions within your account |
+| **Balance and positions** | Shares the account's | Has its own |
+| **Permissions** | Read, Trade, and Transfers, set per sub-user | None of its own; an API key can be restricted to one subaccount |
+| **Set up by** | Kalshi enables the feature; the account owner adds sub-users in the web app | The account owner, through the API |
+| **Availability** | Institutions, on request | Direct accounts on the [Advanced API tier](/getting_started/rate_limits#tier-qualification) or above |
 
 ## Sub-users
 
@@ -39,10 +39,10 @@ members with different scopes. Kalshi enables them for an account on request.
 The account owner then adds, edits, and revokes them on the **Team Members**
 page of the web app, and gives each one any combination of three permissions:
 
-| Permission    | Allows                                                | Scope             |
-| ------------- | ----------------------------------------------------- | ----------------- |
-| **Read**      | View portfolio, markets, and history                  | `read`            |
-| **Trade**     | Place and cancel orders, including RFQs and quotes    | `write::trade`    |
+| Permission | Allows | Scope |
+| - | - | - |
+| **Read** | View portfolio, markets, and history | `read` |
+| **Trade** | Place and cancel orders, including RFQs and quotes | `write::trade` |
 | **Transfers** | Deposit and withdraw funds and manage payment methods | `write::transfer` |
 
 Granting Trade or Transfers also grants Read. For a trader who shouldn't move
@@ -74,10 +74,10 @@ to one subaccount. To confine trading to one subaccount, use an API key
 it can read and trade only that subaccount and can't transfer funds. Only the
 account owner can create API keys.
 
-| Goal                                                            | Use                                                                    |
-| --------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Let a colleague trade in the web app without sharing your login | A sub-user with Read and Trade                                         |
-| Stop a colleague from depositing or withdrawing                 | A sub-user without Transfers                                           |
-| Keep each strategy's balance and positions separate             | One subaccount per strategy                                            |
-| Give a bot or API trader a fixed amount of capital              | A subaccount funded with that amount, plus an API key restricted to it |
-| Remove a person's access without moving funds                   | Revoke their sub-user                                                  |
+| Goal | Use |
+| - | - |
+| Let a colleague trade in the web app without sharing your login | A sub-user with Read and Trade |
+| Stop a colleague from depositing or withdrawing | A sub-user without Transfers |
+| Keep each strategy's balance and positions separate | One subaccount per strategy |
+| Give a bot or API trader a fixed amount of capital | A subaccount funded with that amount, plus an API key restricted to it |
+| Remove a person's access without moving funds | Revoke their sub-user |

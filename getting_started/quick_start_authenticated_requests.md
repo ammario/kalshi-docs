@@ -29,11 +29,11 @@ This guide shows you how to make authenticated requests to the Kalshi API in thr
 
 Every authenticated request to Kalshi requires three headers:
 
-| Header                    | Description                   | Example                                |
-| ------------------------- | ----------------------------- | -------------------------------------- |
-| `KALSHI-ACCESS-KEY`       | Your API Key ID               | `a952bcbe-ec3b-4b5b-b8f9-11dae589608c` |
-| `KALSHI-ACCESS-TIMESTAMP` | Current time in milliseconds  | `1703123456789`                        |
-| `KALSHI-ACCESS-SIGNATURE` | Request signature (see below) | `base64_encoded_signature`             |
+| Header | Description | Example |
+| - | - | - |
+| `KALSHI-ACCESS-KEY` | Your API Key ID | `a952bcbe-ec3b-4b5b-b8f9-11dae589608c` |
+| `KALSHI-ACCESS-TIMESTAMP` | Current time in milliseconds | `1703123456789` |
+| `KALSHI-ACCESS-SIGNATURE` | Request signature (see below) | `base64_encoded_signature` |
 
 ### How to Create the Signature
 
@@ -172,12 +172,12 @@ print(f"Your balance: ${response.json()['balance'] / 100:.2f}")
 
 ## Common Issues
 
-| Problem                           | Solution                                                                                                                                                                                                     |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 401 Unauthorized                  | Check the API Key ID and private key path, and sign with the algorithm of the parsed key (the PEM header alone does not tell you which)                                                                      |
-| Signature error                   | Ensure timestamp is in milliseconds (not seconds)                                                                                                                                                            |
-| Path not found                    | If your `BASE_URL` already ends with `/trade-api/v2`, pass only the endpoint path to the helper (e.g. `/portfolio/balance`, not `/trade-api/v2/portfolio/balance`) so the request URL is not double-prefixed |
-| Signature error with query params | Sign the request path without query parameters. The examples do this with `path.split('?')[0]` after building the full URL path                                                                              |
+| Problem | Solution |
+| - | - |
+| 401 Unauthorized | Check the API Key ID and private key path, and sign with the algorithm of the parsed key (the PEM header alone does not tell you which) |
+| Signature error | Ensure timestamp is in milliseconds (not seconds) |
+| Path not found | If your `BASE_URL` already ends with `/trade-api/v2`, pass only the endpoint path to the helper (e.g. `/portfolio/balance`, not `/trade-api/v2/portfolio/balance`) so the request URL is not double-prefixed |
+| Signature error with query params | Sign the request path without query parameters. The examples do this with `path.split('?')[0]` after building the full URL path |
 
 ## Next Steps
 

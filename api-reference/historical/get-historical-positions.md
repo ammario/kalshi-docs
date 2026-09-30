@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-positions
-lastmod: 2026-09-25T20:13:09.948Z
+lastmod: 2026-09-30T04:02:55.802Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-09-25T20:13:09.948Z
 
 # Get Historical Positions
 
->  Endpoint for getting settled market positions that have been archived to the historical database. Positions whose markets were archived before `market_positions_last_updated_ts` on `GET /historical/cutoff` are available via this endpoint. Positions are archived per whole event: a settled event's positions move here together and are never split between this endpoint and `GET /portfolio/positions`. Unsettled positions are always available via `GET /portfolio/positions`.
+> Returns settled market positions after their event completes the live-to-historical handoff. Until then, settled positions remain available via `GET /portfolio/positions?settlement_status=settled`. The `market_positions_last_updated_ts` value on `GET /historical/cutoff` is the backfill horizon, not a guarantee that every older position has moved. Unsettled positions are available via `GET /portfolio/positions`.
 
 
 
@@ -18,7 +18,7 @@ lastmod: 2026-09-25T20:13:09.948Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -69,7 +69,13 @@ paths:
       tags:
         - historical
       summary: Get Historical Positions
-      description: ' Endpoint for getting settled market positions that have been archived to the historical database. Positions whose markets were archived before `market_positions_last_updated_ts` on `GET /historical/cutoff` are available via this endpoint. Positions are archived per whole event: a settled event''s positions move here together and are never split between this endpoint and `GET /portfolio/positions`. Unsettled positions are always available via `GET /portfolio/positions`.'
+      description: >-
+        Returns settled market positions after their event completes the
+        live-to-historical handoff. Until then, settled positions remain
+        available via `GET /portfolio/positions?settlement_status=settled`. The
+        `market_positions_last_updated_ts` value on `GET /historical/cutoff` is
+        the backfill horizon, not a guarantee that every older position has
+        moved. Unsettled positions are available via `GET /portfolio/positions`.
       operationId: GetHistoricalPositions
       parameters:
         - $ref: '#/components/parameters/TickerQuery'

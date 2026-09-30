@@ -21,9 +21,9 @@ Order groups provide automatic order cancellation when a contracts limit is reac
 
 ## Group States
 
-| State         | Behavior                                                                  |
-| ------------- | ------------------------------------------------------------------------- |
-| **Active**    | Orders can be placed; rolling volume is tracked against the limit         |
+| State | Behavior |
+| - | - |
+| **Active** | Orders can be placed; rolling volume is tracked against the limit |
 | **Triggered** | All resting orders canceled; new orders rejected until the group is reset |
 
 A group enters the triggered state when:

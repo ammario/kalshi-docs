@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order-v2
-lastmod: 2026-09-25T20:13:09.047Z
+lastmod: 2026-09-30T04:02:54.791Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,10 +8,10 @@ lastmod: 2026-09-25T20:13:09.047Z
 
 # Amend Order (V2)
 
-> Endpoint for amending the price and/or max fillable count of an existing event-market order using the V2 request/response shape. The request `count` is the updated total/max fillable count, equal to already filled count plus desired resting remaining count. This behavior matches the v1 amend endpoints; only the request/response shape differs.
+> Endpoint for amending the price, max fillable count, and/or expiration time of an existing event-market order. The request `count` is the updated total/max fillable count, equal to already filled count plus desired resting remaining count. This behavior matches the v1 amend endpoints; only the request/response shape differs.
 
 <Note>
-  Amending a resting order preserves queue position only when the amendment decreases size. All other amendments — like increasing size or changing price forfeit queue position and place the order at the back of the queue.
+  Amending only expiry or decreasing size preserves queue position. Increasing size or changing price forfeits queue position and places the order at the back of the queue.
 </Note>
 
 
@@ -21,7 +21,7 @@ lastmod: 2026-09-25T20:13:09.047Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.31.0
+  version: 3.32.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -73,11 +73,11 @@ paths:
         - orders
       summary: Amend Order (V2)
       description: >-
-        Endpoint for amending the price and/or max fillable count of an existing
-        event-market order using the V2 request/response shape. The request
-        `count` is the updated total/max fillable count, equal to already filled
-        count plus desired resting remaining count. This behavior matches the v1
-        amend endpoints; only the request/response shape differs.
+        Endpoint for amending the price, max fillable count, and/or expiration
+        time of an existing event-market order. The request `count` is the
+        updated total/max fillable count, equal to already filled count plus
+        desired resting remaining count. This behavior matches the v1 amend
+        endpoints; only the request/response shape differs.
       operationId: AmendOrderV2
       parameters:
         - $ref: '#/components/parameters/OrderIdPath'
@@ -172,6 +172,16 @@ components:
           type: string
           description: The new client-specified order ID after amendment
           x-go-type-skip-optional-pointer: true
+        expiration_time:
+          type: integer
+          format: int64
+          minimum: 0
+          description: >-
+            New Unix expiration timestamp in seconds. Omit to preserve the
+            current expiry, or use 0 to remove it (good-till-canceled). A
+            nonzero expiry must be in the future. Send the current price and
+            total quantity for an expiry-only amendment; this preserves queue
+            position.
         exchange_index:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'

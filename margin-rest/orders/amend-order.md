@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/amend-order
-lastmod: 2026-09-25T20:13:10.158Z
+lastmod: 2026-09-30T04:02:56.031Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,10 +8,10 @@ lastmod: 2026-09-25T20:13:10.158Z
 
 # Amend Order
 
-> Endpoint for amending the price and/or max number of fillable contracts in an existing margin order.
+> Endpoint for amending the price, max number of fillable contracts, and/or expiration time of an existing margin order.
 
 <Note>
-  Amending a resting order preserves queue position only when the amendment decreases size. All other amendments — like increasing size or changing price forfeit queue position and place the order at the back of the queue.
+  Amending only expiry or decreasing size preserves queue position. Increasing size or changing price forfeits queue position and places the order at the back of the queue.
 </Note>
 
 
@@ -61,8 +61,8 @@ paths:
         - orders
       summary: Amend Order
       description: >-
-        Endpoint for amending the price and/or max number of fillable contracts
-        in an existing margin order.
+        Endpoint for amending the price, max number of fillable contracts,
+        and/or expiration time of an existing margin order.
       operationId: AmendMarginOrder
       parameters:
         - $ref: '#/components/parameters/OrderIdPath'
@@ -145,6 +145,16 @@ components:
           type: string
           description: The new client-specified order ID after amendment
           x-go-type-skip-optional-pointer: true
+        expiration_time:
+          type: integer
+          format: int64
+          minimum: 0
+          description: >-
+            New Unix expiration timestamp in seconds. Omit to preserve the
+            current expiry, or use 0 to remove it (good-till-canceled). A
+            nonzero expiry must be in the future. Send the current price and
+            total quantity for an expiry-only amendment; this preserves queue
+            position.
     AmendMarginOrderResponse:
       type: object
       required:

@@ -18,12 +18,12 @@ lastmod: 2026-09-14T18:17:55.115Z
 
     **Market Data Host:** `margin-marketdata.fix.elections.kalshi.com`
 
-    | Purpose                              | Port | TargetCompID | Description                                                                                                                                                                                                  |
-    | ------------------------------------ | ---- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-    | Order Entry (without retransmission) | 8228 | KalshiNR     | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming                                             |
-    | Order Entry (with retransmission)    | 8230 | KalshiRT     | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
-    | Drop Copy                            | 8229 | KalshiDC     | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com)                                        |
-    | Market Data                          | 8233 | KalshiMD     | Order book snapshots and incremental updates. Available only on market data host                                                                                                                             |
+    | Purpose | Port | TargetCompID | Description |
+    | - | - | - | - |
+    | Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming |
+    | Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
+    | Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
+    | Market Data | 8233 | KalshiMD | Order book snapshots and incremental updates. Available only on market data host |
   </Tab>
 
   <Tab title="Demo">
@@ -31,12 +31,12 @@ lastmod: 2026-09-14T18:17:55.115Z
 
     **Market Data Host:** `margin-marketdata.fix.demo.kalshi.co`
 
-    | Purpose                              | Port | TargetCompID | Description                                                                                                                                                                                                  |
-    | ------------------------------------ | ---- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-    | Order Entry (without retransmission) | 8228 | KalshiNR     | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming                                             |
-    | Order Entry (with retransmission)    | 8230 | KalshiRT     | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
-    | Drop Copy                            | 8229 | KalshiDC     | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com)                                        |
-    | Market Data                          | 8233 | KalshiMD     | Order book snapshots and incremental updates. Available only on market data host                                                                                                                             |
+    | Purpose | Port | TargetCompID | Description |
+    | - | - | - | - |
+    | Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming |
+    | Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
+    | Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
+    | Market Data | 8233 | KalshiMD | Order book snapshots and incremental updates. Available only on market data host |
   </Tab>
 </Tabs>
 
@@ -46,11 +46,11 @@ Historical replay through `EventResendRequest` (`35=U1`) on both `KalshiNR` and 
 
 All connections use **FIXT.1.1** with application version **FIX50SP2**.
 
-| Parameter    | Value                                                    |
-| ------------ | -------------------------------------------------------- |
-| SenderCompID | Your FIX API key (UUID format)                           |
+| Parameter | Value |
+| - | - |
+| SenderCompID | Your FIX API key (UUID format) |
 | TargetCompID | One of `KalshiNR`, `KalshiRT`, `KalshiDC`, or `KalshiMD` |
-| Session ID   | `TargetCompID + SenderCompID`                            |
+| Session ID | `TargetCompID + SenderCompID` |
 
 Only one FIX connection is allowed per API key. Separate API keys are required for concurrent connections.
 
@@ -93,7 +93,7 @@ KalshiRT sessions retain message continuity across the maintenance window. If yo
 
 To control what happens to your resting orders during a [pause](/getting_started/maintenance_and_pauses), set tag `21006` (CancelOrderOnPause) on your **New Order Single (35=D)** messages:
 
-| Value       | Behavior                                                                 |
-| ----------- | ------------------------------------------------------------------------ |
-| Y           | Order is automatically cancelled when a trading or exchange pause begins |
-| N (default) | Order remains resting on the book and resumes when activity reopens      |
+| Value | Behavior |
+| - | - |
+| Y | Order is automatically cancelled when a trading or exchange pause begins |
+| N (default) | Order remains resting on the book and resumes when activity reopens |
