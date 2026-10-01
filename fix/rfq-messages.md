@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-09-28T20:53:41.463Z
+lastmod: 2026-09-30T16:39:31.674Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -71,7 +71,7 @@ This message is used bidirectionally:
 | - | - | - | - | - |
 | 131 | QuoteReqId | UUID | Y | Client-assigned RFQ identifier |
 | 146 | NoRelatedSym | Integer | Y | Number of entries in the repeating group below. Must be 1 |
-| 79 | AllocAccount | Integer | N | Subaccount number (0-63) for direct members. Alternative to NoPartyIDs; omit or set to 0 for the primary account |
+| 79 | AllocAccount | Integer | N | Subaccount number (0-63) for direct members. Alternative to NoPartyIDs. Omit or set to 0 for the primary account |
 | 20180 | MultivariateCollectionTicker | String | C | Collection ticker for parlay/MVE markets. Use instead of Symbol |
 | 20181 | NoMultivariateSelectedLegs | Integer | C | Number of MVE legs (repeating group). Required with 20180 |
 | 20182 | MultivariateSelectedEventTicker | String | Y | Event ticker for the leg |
@@ -85,8 +85,8 @@ This message is used bidirectionally:
 | 55 | Symbol | String | C | Market ticker. Group delimiter — send it immediately after `146`. Required unless MVE legs are specified |
 | 38 | OrderQty | Decimal | C | Number of contracts as a fixed-point decimal. Supports `0.01`-contract increments (for example `5`, `5.00`, or `5.25`). Required unless CashOrderQty is specified. Acts as the delimiter on MVE requests, which omit `55` |
 | 152 | CashOrderQty | Decimal | C | Target cost in dollars. Required unless OrderQty is specified. Acts as the delimiter on MVE requests that size by cost |
-| 21033 | TargetCostExcludesFees | Char | N | Y/N - Size quotes against CashOrderQty as principal only (contracts = cash / price), with your taker fees charged on top of the cash amount. Default (N) reserves fees inside the cash amount. Only `Y` enables the mode; `21033=Y` without CashOrderQty is rejected |
-| 21034 | ObscureCreatorId | Char | N | Y/N - Hide the RFQ creator identity from other users before successful execution. Default N. |
+| 21033 | TargetCostExcludesFees | Char | N | Y/N - Size quotes against CashOrderQty as principal only (contracts = cash / price), with your taker fees charged on top of the cash amount. Default (N) reserves fees inside the cash amount. Only `Y` enables the mode. `21033=Y` without CashOrderQty is rejected |
+| 21034 | ObscureCreatorId | Char | N | Y/N - Replace the requester public communications ID with the shared placeholder for other users. Default N. See [Creator identity and privacy](/getting_started/rfqs#creator-identity-and-privacy). |
 | 21015 | RestRemainder | Char | N | Y/N - Rest the quote remainder after execution (default: N) |
 | 21016 | ReplaceExisting | Char | N | Y/N - Close older RFQs while retaining the submitting subtrader's newest existing RFQ, keeping at most two open RFQs including this one (default: N) |
 | 453 | NoPartyIDs | Integer | N | Nested repeating group. Number of parties (only 1 supported) |
@@ -146,7 +146,14 @@ The exchange builds this message with the same structure market makers must pars
 | 152 | CashOrderQty | Decimal | N | Target cost in dollars (if specified by creator) |
 | 60 | TransactTime | UTCTimestamp | Y | Original RFQ creation time in UTC, matching WebSocket `rfq_created.msg.created_ts` at millisecond precision |
 | 453 | NoPartyIDs | Integer | N | Nested repeating group. Number of parties (always 1) |
-| 448 | PartyId | String | N | Requester public communications ID. This value is pseudonymous and is not the requester's SubtraderId. `0` for other users when ObscureCreatorId is enabled |
+| 448 | PartyId | String | N | Requester public communications ID. This value is pseudonymous and is not the requester's SubtraderId. `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` for other users when ObscureCreatorId is enabled |
+
+The obscured `PartyID` is the SHA-256 hash of empty input (`SHA256("")`).
+It is the same placeholder for every obscured requester across REST, WebSocket,
+and FIX. The requester still sees their normal public communications
+ID in their own notifications. The `NoPartyIDs` group remains present.
+See [Creator identity and privacy](/getting_started/rfqs#creator-identity-and-privacy)
+for the visibility rules before and after execution.
 
 ## QuoteRequestAck (35=b)
 
@@ -349,7 +356,7 @@ Exchange notifies that an RFQ creation request was rejected or that a quote requ
 | 658 | QuoteRequestRejectReason | Integer | Y | UNKNOWN\_SYMBOL(1), QUOTE\_REQUEST\_EXCEEDS\_LIMIT(3), INSUFFICIENT\_CREDIT(11), or OTHER(99). Invalid-combination rejects use OTHER(99) |
 | 20187 | MVEValidationReasonCode | String | C | Stable combo-validation reason code on invalid-combination rejects: `conflicting_leg_outcomes`, `duplicated_legs`, or `invalid_market_combination` (mirrors the REST error `code`) |
 | 20185 | NoMVEOffendingLegs | Integer | C | Number of offending MVE legs (repeating group). Present on invalid-combination rejects when the tickers are known |
-| 20186 | MVEOffendingMarketTicker | String | C | Market ticker of an offending leg; one entry per `NoMVEOffendingLegs` |
+| 20186 | MVEOffendingMarketTicker | String | C | Market ticker of an offending leg. One entry per `NoMVEOffendingLegs` |
 
 <Info>
   Market makers do not send QuoteRequestReject when ignoring a request.

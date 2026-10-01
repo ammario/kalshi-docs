@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-quote
-lastmod: 2026-09-30T04:02:55.246Z
+lastmod: 2026-09-30T16:39:26.707Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -149,8 +149,13 @@ components:
         rfq_creator_id:
           type: string
           description: >-
-            Public communications ID of the RFQ creator (anonymized). Set to "0"
-            for other users when obscure_creator_id is enabled.
+            Public communications ID of the RFQ creator (pseudonymous). When
+            obscure_creator_id is enabled, other users receive the shared
+            placeholder
+            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            (SHA-256 of empty input). The creator sees their normal ID. After
+            this quote executes successfully, its counterparty sees the normal
+            public communications ID.
           x-go-type-skip-optional-pointer: true
         market_ticker:
           type: string

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/order-groups/reset-order-group
-lastmod: 2026-09-30T04:02:56.294Z
+lastmod: 2026-09-30T16:39:27.799Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

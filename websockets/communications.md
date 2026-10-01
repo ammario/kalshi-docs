@@ -104,9 +104,12 @@ operations:
                   - name: creator_id
                     type: string
                     description: >-
-                      Public communications ID of the RFQ creator (anonymized).
-                      Set to "0" for other users when obscure_creator_id is
-                      enabled.
+                      Public communications ID of the RFQ creator
+                      (pseudonymous). When obscure_creator_id is enabled, other
+                      users receive the shared placeholder
+                      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                      (SHA-256 of empty input). The creator sees their normal
+                      ID.
                     required: true
                   - name: market_ticker
                     type: string
@@ -211,9 +214,11 @@ operations:
                 creator_id:
                   type: string
                   description: >-
-                    Public communications ID of the RFQ creator (anonymized).
-                    Set to "0" for other users when obscure_creator_id is
-                    enabled.
+                    Public communications ID of the RFQ creator (pseudonymous).
+                    When obscure_creator_id is enabled, other users receive the
+                    shared placeholder
+                    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    (SHA-256 of empty input). The creator sees their normal ID.
                   x-parser-schema-id: <anonymous-schema-205>
                 market_ticker:
                   type: string
@@ -354,9 +359,12 @@ operations:
                   - name: creator_id
                     type: string
                     description: >-
-                      Public communications ID of the RFQ creator (anonymized).
-                      Set to "0" for other users when obscure_creator_id is
-                      enabled.
+                      Public communications ID of the RFQ creator
+                      (pseudonymous). When obscure_creator_id is enabled, other
+                      users receive the shared placeholder
+                      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                      (SHA-256 of empty input). The creator sees their normal
+                      ID.
                     required: true
                   - name: market_ticker
                     type: string
@@ -414,9 +422,11 @@ operations:
                 creator_id:
                   type: string
                   description: >-
-                    Public communications ID of the RFQ creator (anonymized).
-                    Set to "0" for other users when obscure_creator_id is
-                    enabled.
+                    Public communications ID of the RFQ creator (pseudonymous).
+                    When obscure_creator_id is enabled, other users receive the
+                    shared placeholder
+                    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    (SHA-256 of empty input). The creator sees their normal ID.
                   x-parser-schema-id: <anonymous-schema-221>
                 market_ticker:
                   type: string
@@ -516,9 +526,12 @@ operations:
                   - name: rfq_creator_id
                     type: string
                     description: >-
-                      Public communications ID of the RFQ creator (anonymized).
-                      Set to "0" for other users when obscure_creator_id is
-                      enabled.
+                      Public communications ID of the RFQ creator
+                      (pseudonymous). When obscure_creator_id is enabled, other
+                      users receive the shared placeholder
+                      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                      (SHA-256 of empty input). The creator sees their normal
+                      ID.
                     required: true
                   - name: market_ticker
                     type: string
@@ -609,9 +622,11 @@ operations:
                 rfq_creator_id:
                   type: string
                   description: >-
-                    Public communications ID of the RFQ creator (anonymized).
-                    Set to "0" for other users when obscure_creator_id is
-                    enabled.
+                    Public communications ID of the RFQ creator (pseudonymous).
+                    When obscure_creator_id is enabled, other users receive the
+                    shared placeholder
+                    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    (SHA-256 of empty input). The creator sees their normal ID.
                   x-parser-schema-id: <anonymous-schema-232>
                 market_ticker:
                   type: string
@@ -738,9 +753,12 @@ operations:
                   - name: rfq_creator_id
                     type: string
                     description: >-
-                      Public communications ID of the RFQ creator (anonymized).
-                      Set to "0" for other users when obscure_creator_id is
-                      enabled.
+                      Public communications ID of the RFQ creator
+                      (pseudonymous). When obscure_creator_id is enabled, other
+                      users receive the shared placeholder
+                      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                      (SHA-256 of empty input). The creator sees their normal
+                      ID.
                     required: true
                   - name: market_ticker
                     type: string
@@ -837,9 +855,11 @@ operations:
                 rfq_creator_id:
                   type: string
                   description: >-
-                    Public communications ID of the RFQ creator (anonymized).
-                    Set to "0" for other users when obscure_creator_id is
-                    enabled.
+                    Public communications ID of the RFQ creator (pseudonymous).
+                    When obscure_creator_id is enabled, other users receive the
+                    shared placeholder
+                    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    (SHA-256 of empty input). The creator sees their normal ID.
                   x-parser-schema-id: <anonymous-schema-247>
                 market_ticker:
                   type: string

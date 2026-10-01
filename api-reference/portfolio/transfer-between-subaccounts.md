@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/transfer-between-subaccounts
-lastmod: 2026-09-30T04:02:54.950Z
+lastmod: 2026-09-30T16:39:26.367Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,20 +1,25 @@
 ---
-url: https://docs.kalshi.com/margin-rest/funding/get-historical-funding-rates
-lastmod: 2026-09-30T16:39:27.681Z
+url: https://docs.kalshi.com/margin-rest/funding/get-premium-index
+lastmod: 2026-09-30T16:39:27.712Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Historical Funding Rates
+# Get Premium Index
 
-> Endpoint for retrieving historical margin funding rates for a market, or across all markets when ticker is empty.
+> Returns an informational per-second premium index for a market, for a window of up to one hour. Each point is the signed fraction by which the impact-price book sat above or below the underlying index at that second, before any time weighting.
+
+**These values are for informational purposes only and may not exactly match the premium-index values used in actual funding calculations.**
+
+A second with no measurable premium reports `0` — the book was halted, the underlying was closed, or an input was unavailable. Points are only those recorded, so the response may be sparse or empty for a range that predates the retention period or was never recorded.
+
 
 
 
 ## OpenAPI
 
-````yaml /perps_openapi.yaml get /margin/funding_rates/historical
+````yaml /perps_openapi.yaml get /margin/funding_rates/premium_index
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -52,86 +57,93 @@ tags:
   - name: exit-triggers
     description: Stop-loss, take-profit, and trailing-stop triggers on margin positions
 paths:
-  /margin/funding_rates/historical:
+  /margin/funding_rates/premium_index:
     get:
       tags:
         - funding
-      summary: Get Historical Funding Rates
-      description: >-
-        Endpoint for retrieving historical margin funding rates for a market, or
-        across all markets when ticker is empty.
-      operationId: GetMarginHistoricalFundingRates
+      summary: Get Premium Index
+      description: >
+        Returns an informational per-second premium index for a market, for a
+        window of up to one hour. Each point is the signed fraction by which the
+        impact-price book sat above or below the underlying index at that
+        second, before any time weighting.
+
+
+        **These values are for informational purposes only and may not exactly
+        match the premium-index values used in actual funding calculations.**
+
+
+        A second with no measurable premium reports `0` — the book was halted,
+        the underlying was closed, or an input was unavailable. Points are only
+        those recorded, so the response may be sparse or empty for a range that
+        predates the retention period or was never recorded.
+      operationId: GetMarginPremiumIndex
       parameters:
         - name: ticker
           in: query
-          required: false
-          description: Market ticker. Leave empty to query across all markets.
+          required: true
+          description: Market ticker
           schema:
             type: string
             x-go-type-skip-optional-pointer: true
+            x-oapi-codegen-extra-tags:
+              validate: required
         - name: start_ts
           in: query
-          required: false
-          description: >-
-            Start timestamp (Unix timestamp in seconds). If omitted, defaults to
-            the earliest available data.
+          required: true
+          description: Start of the window, inclusive (Unix timestamp in seconds).
           schema:
             type: integer
             format: int64
         - name: end_ts
           in: query
-          required: false
+          required: true
           description: >-
-            End timestamp (Unix timestamp in seconds). If omitted, defaults to
-            the current time.
+            End of the window, exclusive (Unix timestamp in seconds). Must be
+            after start_ts and no more than one hour later.
           schema:
             type: integer
             format: int64
       responses:
         '200':
-          description: Historical funding rates retrieved successfully
+          description: Premium index points retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetMarginHistoricalFundingRatesResponse'
+                $ref: '#/components/schemas/GetMarginPremiumIndexResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
-    GetMarginHistoricalFundingRatesResponse:
+    GetMarginPremiumIndexResponse:
       type: object
       required:
-        - funding_rates
+        - points
       properties:
-        funding_rates:
+        points:
           type: array
           items:
-            $ref: '#/components/schemas/MarginFundingRate'
-          description: Array of historical funding rate entries
-    MarginFundingRate:
+            $ref: '#/components/schemas/MarginPremiumIndexPoint'
+          description: Per-second premium index points, ascending by second_ts
+    MarginPremiumIndexPoint:
       type: object
       required:
-        - market_ticker
-        - funding_time
-        - funding_rate
-        - mark_price
+        - second_ts
+        - premium_index
       properties:
-        market_ticker:
-          type: string
-          description: Ticker of the margin market
-        funding_time:
+        second_ts:
           type: string
           format: date-time
-          description: Timestamp when the funding rate was applied
-        funding_rate:
-          type: number
-          format: double
-          description: Funding rate for this period
-        mark_price:
-          $ref: '#/components/schemas/FixedPointDollars'
-          description: Mark price at the time of funding
+          description: The one-second bucket this point measures
+        premium_index:
+          type: string
+          description: >-
+            Signed decimal fraction of the index price, not basis points. For
+            informational purposes only; may not exactly match the premium index
+            used in actual funding calculations. "0" when no premium was
+            measurable for that second.
     ErrorResponse:
       type: object
       properties:
@@ -144,14 +156,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-    FixedPointDollars:
-      type: string
-      description: >-
-        Fixed-point US dollar string. Most request fields accept 2-4 decimal
-        places (e.g., "0.56", "0.5600"); responses emit up to 6. Valid quote
-        intervals for a given market are constrained by that market's price
-        level structure.
-      example: '0.5600'
   responses:
     BadRequestError:
       description: Bad request - invalid input

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-09-30T04:02:55.147Z
+lastmod: 2026-09-30T16:39:26.574Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -144,8 +144,13 @@ components:
         obscure_creator_id:
           type: boolean
           description: >-
-            Hide the RFQ creator ID from other users until successful execution.
-            The creator always sees their own ID.
+            Replace the RFQ creator's public communications ID with a shared
+            empty-input SHA-256 hash for other users. Applies to RFQ responses
+            and broadcasts, and to quotes before successful execution.
+            Successful execution reveals the normal ID in subsequent RFQ
+            responses and in the executed quote. Accepting or confirming a quote
+            does not reveal the ID. The creator always sees their normal ID. See
+            the RFQ guide for the placeholder and visibility rules.
           default: false
           x-go-type-skip-optional-pointer: true
         rest_remainder:

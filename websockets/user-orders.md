@@ -243,6 +243,7 @@ operations:
                       - Trade
                       - PostOnlyCrossCancel
                       - ReduceOnlyCancel
+                      - SettlementBoundsCancel
                     required: false
                   - name: subaccount_number
                     type: integer
@@ -454,6 +455,7 @@ operations:
                     - Trade
                     - PostOnlyCrossCancel
                     - ReduceOnlyCancel
+                    - SettlementBoundsCancel
                   x-parser-schema-id: lastUpdateReason
                 subaccount_number:
                   type: integer

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/api_keys
-lastmod: 2026-09-23T21:55:39.786Z
+lastmod: 2026-10-01T02:15:45.446Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -23,11 +23,11 @@ Two key types are supported:
 | Key type | Signature | Private key PEM Kalshi generates | When to use |
 | - | - | - | - |
 | **Ed25519** (recommended) | Ed25519 (RFC 8032) over the pre-sign text | `-----BEGIN PRIVATE KEY-----` (PKCS#8) | Clients that support Ed25519. Lower signing cost than RSA-PSS; 64-byte signatures |
-| **RSA** (2048-bit) | RSA-PSS with SHA-256 over the pre-sign text | `-----BEGIN RSA PRIVATE KEY-----` (PKCS#1) | Clients limited to RSA-PSS, including the current official SDKs |
+| **RSA** (2048-bit) | RSA-PSS with SHA-256 over the pre-sign text | `-----BEGIN RSA PRIVATE KEY-----` (PKCS#1) | Clients limited to RSA-PSS, including SDK versions before 3.31.0 |
 
-Headers, pre-sign text, permissions and errors are identical for both types.
-Kalshi selects the verification algorithm from the registered public key;
-sign with the algorithm that matches your key.
+Headers, pre-sign text, permissions and errors are identical for both types. Kalshi
+selects the verification algorithm from the registered public key; sign with the
+algorithm that matches your key.
 
 The PEM header does not identify the key type: PKCS#8 RSA keys, including
 `openssl genpkey` output, also begin with `-----BEGIN PRIVATE KEY-----`.
@@ -41,7 +41,7 @@ Log in to your account and navigate to the "Account Settings" page. You can typi
 
 ### Generate a New API Key
 
-In the "Profile Settings" page [https://kalshi.com/account/profile](https://kalshi.com/account/profile), locate the "API Keys" section. Click on the "Create New API Key" button to generate an RSA key pair. For an Ed25519 key, register your own public key (below) or use `POST /trade-api/v2/api_keys/generate` with `key_type: ed25519`.
+In the "Profile Settings" page [https://kalshi.com/account/profile](https://kalshi.com/account/profile), locate the "API Keys" section. Click on the "Create New API Key" button to generate a key pair. Ed25519 is selected by default; choose RSA if your client supports only RSA-PSS. You can also register your own public key (below) or use `POST /trade-api/v2/api_keys/generate` with `key_type`.
 
 To register your own public key of either type, in PEM format:
 
@@ -85,7 +85,7 @@ The signature is the base64 encoding of the signed concatenation of the timestam
   **Important**: When signing requests, use the path **without query parameters**. For example, if your request is to `/trade-api/v2/portfolio/orders?limit=5`, sign only `/trade-api/v2/portfolio/orders` (strip the `?` and everything after it).
 </Warning>
 
-The samples below detect the key type and sign accordingly. For end-to-end examples, see [Quick Start: Authenticated Requests](/getting_started/quick_start_authenticated_requests). The official SDKs currently support RSA keys only.
+The samples below detect the key type and sign accordingly. For end-to-end examples, see [Quick Start: Authenticated Requests](/getting_started/quick_start_authenticated_requests). The official Python and TypeScript SDKs accept either key type from version 3.31.0.
 
 ### Python
 

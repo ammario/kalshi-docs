@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-09-30T04:03:00.935Z
+lastmod: 2026-10-01T00:48:59.378Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,20 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="October 1, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Stop losses past liquidation are rejected",
+description: "Exit-trigger writes reject a stop loss the position's liquidation would always reach first."
+}}
+>
+  Margin exit-trigger writes reject a `stop_loss_price` at or past the position's liquidation
+  price (at or below it for a long, at or above it for a short) with `400` and error code
+  `stop_loss_past_liquidation`, because the position would be liquidated before the stop could
+  trigger. Existing triggers are unchanged.
+</Update>
 
 <Update
   label="October 1, 2026"
@@ -119,6 +133,35 @@ description: "ExecutionReports for resting orders canceled because a market's se
 
 <Update
   label="October 1, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "SettlementBoundsCancel order update reason",
+description: "user_orders messages report last_update_reason SettlementBoundsCancel when a resting order is cancelled because a settlement bounds update put it out of bounds."
+}}
+>
+  [user\_orders](/websockets/user-orders) messages report
+  `last_update_reason: "SettlementBoundsCancel"` when a resting order is
+  cancelled because a settlement bounds update put it out of bounds.
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions", "Margin"]}
+  rss={{
+title: "Web app generates Ed25519 API keys by default",
+description: "The Create New API Key dialog now generates an Ed25519 key pair by default, with RSA as an option. The official Python and TypeScript SDKs sign with either key type from version 3.31.0."
+}}
+>
+  The web app's "Create New API Key" dialog now generates an Ed25519 key pair
+  by default; choose RSA for clients that support only RSA-PSS. Existing keys
+  are unchanged, and `POST /trade-api/v2/api_keys/generate` still defaults to
+  `rsa` when `key_type` is omitted. The official Python and TypeScript SDKs
+  sign with either key type from version 3.31.0. See
+  [API Keys](/getting_started/api_keys).
+</Update>
+
+<Update
+  label="October 1, 2026"
   tags={["FIX", "Predictions", "Margin"]}
   rss={{
 title: "Reduce-only orders over FIX",
@@ -135,15 +178,52 @@ description: "NewOrderSingle accepts ExecInst (18) E for reduce-only orders."
   label="October 1, 2026"
   tags={["REST", "WebSocket", "FIX", "Predictions"]}
   rss={{
-title: "RFQ creators may obscure pre-trade id",
-description: "RFQ creators may obscure pre-trade id"
+title: "RFQ creators may obscure pre-trade identity",
+description: "RFQ creators may obscure pre-trade identity"
 }}
 >
+  Set `obscure_creator_id: true` when creating an RFQ over REST, or
+  `ObscureCreatorId` (`21034`) to `Y` over FIX, to hide the requester's public
+  communications ID from other users.
+
+  Obscured creator fields display the shared placeholder
+  `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+
+  Creators still see their own normal ID. After successful quote execution, the
+  hashed RFQ creator identity will become visible. Subsequent REST RFQ responses
+  show the normal public communications ID to all viewers. See
+  [Creator identity and privacy](/getting_started/rfqs#creator-identity-and-privacy)
+  for the field mapping and lifecycle.
+
   Affected endpoints:
 
   * REST: `POST /communications/rfqs`, `GET /communications/rfqs`, `GET /communications/rfqs/{rfq_id}`, `GET /communications/quotes`, and `GET /communications/quotes/{quote_id}`.
   * WebSocket: `rfq_created`, `rfq_deleted`, `quote_created`, and `quote_accepted`.
   * FIX: `ObscureCreatorId` (`21034`), `NoPartyIDs` (`453`), `PartyID` (`448`), and `AllocAccount` (`79`).
+</Update>
+
+<Update
+  label="October 1, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Informational premium index",
+description: "GET /margin/funding_rates/premium_index returns informational per-second values that may differ from the premium index used in actual funding calculations."
+}}
+>
+  `GET /trade-api/v2/margin/funding_rates/premium_index` returns an informational
+  per-second premium index for a perp, for a window of up to one hour. Each
+  point is the signed fraction by which the impact-price book sat above or
+  below the underlying index at that second, before any time weighting.
+  A second with no measurable premium reports `0`.
+
+  The [`funding-rate estimate`](/api-reference/perps/get-funding-rate-estimate)
+  response also includes `premium_index` and `premium_index_ts` for the final
+  second evaluated by the estimate, captured from the same calculation inputs.
+  Both fields are omitted when that second has no available premium.
+
+  **The historical premium-index series is informational and may differ from
+  actual funding calculations. Current funding estimates remain provisional
+  until funding is finalized.**
 </Update>
 
 <Update

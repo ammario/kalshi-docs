@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-09-08T18:23:50.519Z
+lastmod: 2026-09-30T16:39:31.612Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,10 +22,39 @@ RFQs are accessible over [REST](/api-reference/communications), [FIX](/fix/rfq-m
 
 1. **Requester** creates an RFQ specifying a market ticker, size, and whether to rest any remainder.
 2. The RFQ is broadcast to all makers.
-3. **Makers** respond with quotes containing a `yes_bid` and `no_bid`. Quotes are for the full RFQ size. Each quote is private between the requester and the individual maker; makers cannot see each other's quotes.
+3. **Makers** respond with quotes containing a `yes_bid` and `no_bid`. Quotes are for the full RFQ size. Each quote is private between the requester and the individual maker. Makers cannot see each other's quotes.
 4. **Requester** accepts one side of the best-priced quote.
 5. **Maker** confirms within the confirmation window. Once confirmed, neither party can withdraw.
 6. After the execution timeout, orders are placed on the public book.
+
+## Creator identity and privacy
+
+Public communications IDs are pseudonymous identifiers derived from a user ID
+with a salted hash. By default, makers see the requester's public communications
+ID and can recognize it across RFQs.
+
+Set `obscure_creator_id: true` when creating an RFQ over REST, or
+`ObscureCreatorId` (`21034`) to `Y` in the FIX `NoRelatedSym` group, to hide that
+identifier from other users.
+
+Obscured creator fields display the shared placeholder
+`e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+
+The placeholder appears in these fields for other users:
+
+| Surface | Field |
+| - | - |
+| REST RFQ responses before successful execution | `creator_id` |
+| REST quote responses before successful execution | `rfq_creator_id` |
+| WebSocket `rfq_created` and `rfq_deleted` | `creator_id` |
+| WebSocket `quote_created` and `quote_accepted` | `rfq_creator_id` |
+| FIX RFQ notifications | `PartyID` (`448`) inside `NoPartyIDs` (`453`) |
+
+Creators still see their own normal ID. After successful quote execution, the
+hashed RFQ creator identity will become visible. Subsequent REST RFQ responses
+show the normal public communications ID to all viewers. The executed quote's
+REST response and WebSocket `quote_executed` event also show that ID to its
+participants.
 
 ## Sizing
 
@@ -45,7 +74,7 @@ inside `target_cost_dollars`, so your debit can never exceed it. Set
 
 Each quote has two prices: `yes_bid` (price per YES contract) and `no_bid` (price per NO contract). These are typically different. Either can be `"0"` to decline that side, but not both. If `yes_bid + no_bid > $1` the quote is rejected.
 
-Quoters do not specify a size; each quote is implicitly for the full RFQ amount (`contracts_fp`, or whatever count `target_cost_dollars` resolves to at the quoted prices).
+Quoters do not specify a size. Each quote is implicitly for the full RFQ amount (`contracts_fp`, or whatever count `target_cost_dollars` resolves to at the quoted prices).
 
 Prices must land on the market's price grid. Check `price_ranges` on `GET /markets/{ticker}` for the valid step size.
 
@@ -60,7 +89,7 @@ The exchange designates certain markets as High Volatility Markets (HVM). All co
 | **Confirmation window** | 30 s | 3 s |
 | **Execution timer** | 15 s | 1 s |
 
-After acceptance, the maker has the confirmation window to confirm. Upon confirmation, the platform begins the execution timer. At the end of the timer, orders are entered into the book. Fills appear in `GET /portfolio/fills`; match on `creator_order_id` (maker) or `rfq_creator_order_id` (requester).
+After acceptance, the maker has the confirmation window to confirm. Upon confirmation, the platform begins the execution timer. At the end of the timer, orders are entered into the book. Fills appear in `GET /portfolio/fills`. Match on `creator_order_id` (maker) or `rfq_creator_order_id` (requester).
 
 ## WebSocket
 
@@ -73,7 +102,7 @@ Combo RFQs include `mve_collection_ticker` and `mve_selected_legs`. Use [Multiva
 ## Subaccounts
 
 Requesters can create an RFQ under a numbered subaccount by passing
-`subaccount` on `POST /communications/rfqs`; makers can likewise pass
+`subaccount` on `POST /communications/rfqs`. Makers can likewise pass
 `subaccount` on `POST /communications/quotes`. Execution, fills, and
 settlement follow the subaccount the RFQ or quote was created under.
 
