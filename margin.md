@@ -118,3 +118,6 @@ The Perps API mirrors the event contract API (same auth, pagination, error forma
 | **RFQ / Quotes** | Supported | Not available |
 | **Market settlement reports** | Supported (on KalshiRT) | Not available |
 | **UseDollars (21005)** | Optional logon flag | Always enabled (margin uses fixed-point dollar pricing by default) |
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

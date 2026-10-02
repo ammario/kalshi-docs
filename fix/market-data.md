@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-data
-lastmod: 2026-09-01T20:13:11.061Z
+lastmod: 2026-10-01T21:33:17.588Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -89,6 +89,7 @@ Sent after a subscribed market's aggregated book levels change or a trade occurs
 | 273 | MDEntryTime | UTC Time | Y | Repeating group field. UTC source-event time in `HH:MM:SS.sss` format. |
 | 2446 | AggressorSide | Char | C | Trade entries only. `1`=Buy, `2`=Sell. |
 | 828 | TrdType | Int | C | Trade entries only. `1`=Block trade. Absent on regular order book trades. |
+| 1003 | TradeID | String | C | Trade entries only. The trade UUID. |
 | 11 | ClOrdID | String | C | Book entries only. Present when your order caused the level change and the order has a client-specified ID. |
 | 79 | AllocAccount | Integer | C | Book entries only. Subaccount number of your order. `0` identifies a primary or non-numeric account. |
 
@@ -97,7 +98,7 @@ Sent after a subscribed market's aggregated book levels change or a trade occurs
 ```
 
 ```fix Example trade update theme={null}
-8=FIXT.1.1|35=X|49=KalshiMD|56=your-api-key|268=1|279=0|55=KXNBAGAME-26MAY25NYKCLE-NYK|269=2|270=0.6500|271=3.00|272=20260817|273=16:00:00.789|2446=1|
+8=FIXT.1.1|35=X|49=KalshiMD|56=your-api-key|268=1|279=0|55=KXNBAGAME-26MAY25NYKCLE-NYK|269=2|270=0.6500|271=3.00|272=20260817|273=16:00:00.789|2446=1|1003=02cfae92-12f4-4bc6-b613-4806e3604514|
 ```
 
 ## Market Data Request Reject (35=Y)
@@ -154,3 +155,6 @@ Streamed when a subscribed market changes trading state. Correlate by `Symbol<55
 * `101`=Kalshi settled: the market settled. The subscription for that symbol is then dropped.
 
 Scheduled (time-based) opens and closes are not emitted as discrete events and are not reported here.
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

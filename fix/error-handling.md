@@ -177,3 +177,6 @@ If using QuickFIX, set `ResetOnLogon=Y` in your session config for non-retransmi
 **Symptom**: Logout immediately after Logon with a signature error.
 
 **Cause**: The `SendingTime` used in the pre-hash string doesn't match the `SendingTime<52>` in the actual Logon message. If using a FIX library, the library may auto-populate `SendingTime`. Use that exact value when computing the signature, not a separately generated timestamp.
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

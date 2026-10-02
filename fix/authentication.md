@@ -155,3 +155,6 @@ The [drop copy session](/fix/drop-copy) provides an alternative way to query for
 ## Logout (35=5)
 
 Either side may initiate a Logout. The counterparty responds with a Logout, and the transport connection is terminated. If `CancelOrdersOnDisconnect=Y` was set on Logon, all open orders are canceled.
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

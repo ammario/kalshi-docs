@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-01T00:48:59.378Z
+lastmod: 2026-10-01T21:33:17.602Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,29 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="October 8, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "Trade IDs on FIX market data",
+description: "FIX market data trade entries now include TradeID (1003)."
+}}
+>
+  FIX market data trade entries now include `TradeID (1003)`.
+</Update>
+
+<Update
+  label="October 8, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Filter fills across multiple markets",
+description: "GET /portfolio/fills accepts up to 100 comma-separated market tickers."
+}}
+>
+  `GET /portfolio/fills` now accepts up to 100 comma-separated market tickers
+  in `ticker`, for example `?ticker=MARKET-A,MARKET-B`.
+</Update>
 
 <Update
   label="October 1, 2026"
@@ -5799,3 +5822,6 @@ description: "Removes the deprecated event settlement message type and adds the 
   * Removed deprecated event settlement message type
   * Added ListenerSession and SkipPendingExecReports flag to Logon message type
 </Update>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

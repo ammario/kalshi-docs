@@ -188,3 +188,6 @@ Now you can make authenticated requests! Try these endpoints (relative to `BASE_
 * `/markets` - Browse available markets
 
 For more details, see the [Complete Order Lifecycle](/getting_started/quick_start_create_order) guide or explore the [API Reference](/api-reference).
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

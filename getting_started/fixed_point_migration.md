@@ -101,3 +101,6 @@ Even if you are not placing fractional orders, you will encounter fractional val
 Both sub-cent pricing and fractional contracts can produce balance changes with more precision than a user's balance alignment. When this happens, the exchange applies a rounding fee to restore the applicable balance precision, and a fee accumulator issues rebates to prevent systematic overpayment.
 
 See [Fee Rounding](/getting_started/fee_rounding) for the mechanics and worked examples.
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

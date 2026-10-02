@@ -129,3 +129,6 @@ After an EventResendRequest, the server replays the matching historical order up
 | U8 | QuoteConfirmStatus | KalshiRFQ | Server -> Client |
 | UE | RFQCancel | KalshiRT | Client -> Server |
 | UB | RFQCancelStatus | KalshiRT | Server -> Client |
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

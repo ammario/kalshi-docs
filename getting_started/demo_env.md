@@ -26,3 +26,6 @@ Demo's recommended Trade API root is `https://external-api.demo.kalshi.co/trade-
 | WebSocket API | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://demo-api.kalshi.co/trade-api/ws/v2` |
 
 For the full production and demo endpoint list, see [API Environments and Endpoints](/getting_started/api_environments).
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

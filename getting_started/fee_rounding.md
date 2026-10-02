@@ -76,3 +76,6 @@ The fee accumulator carries rounding overpayment across an order's fills. Rebate
     This table uses a non-direct member's `$0.01` precision. Direct-member rebates follow the same mechanics in `$0.0001` increments. In either case, the rebate is capped so that the fill's net fee cannot become negative.
   </Accordion>
 </AccordionGroup>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

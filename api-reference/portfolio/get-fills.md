@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-fills
-lastmod: 2026-09-30T16:39:26.497Z
+lastmod: 2026-10-01T14:07:26.560Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -85,7 +85,14 @@ paths:
         details.
       operationId: GetFills
       parameters:
-        - $ref: '#/components/parameters/TickerQuery'
+        - name: ticker
+          in: query
+          description: >-
+            Filter by market ticker. Accepts a comma-separated list of up to 100
+            market tickers.
+          schema:
+            type: string
+            x-go-type-skip-optional-pointer: true
         - $ref: '#/components/parameters/OrderIdQuery'
         - $ref: '#/components/parameters/MinTsQuery'
         - $ref: '#/components/parameters/MaxTsQuery'
@@ -113,13 +120,6 @@ paths:
         - kalshiOauthAccessToken: []
 components:
   parameters:
-    TickerQuery:
-      name: ticker
-      in: query
-      description: Filter by market ticker
-      schema:
-        type: string
-        x-go-type-skip-optional-pointer: true
     OrderIdQuery:
       name: order_id
       in: query
@@ -385,3 +385,5 @@ components:
         partner client-credentials tokens do not grant access.
 
 ````
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

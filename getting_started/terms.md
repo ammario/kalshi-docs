@@ -72,3 +72,6 @@ Tickers often follow `Series -> Event -> Market`: for example, the `KXHIGHNY` se
 <Note>
   Please see the "Timeline and Payout" dropdown on a market's page to find the Market, Event, and Series tickers. Note that the market ticker will depend on which market you are looking at on that page. For example, Trump and Harris are each their own market.
 </Note>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

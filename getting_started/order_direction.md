@@ -99,3 +99,6 @@ no-leg pricing once the flag is removed. We will announce concrete
 dates for both steps before they happen; integrations that depend on
 the legacy no-leg pricing should plan to migrate before the default
 flip.
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

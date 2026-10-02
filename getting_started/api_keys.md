@@ -240,3 +240,6 @@ axios.get(baseUrl + path, { headers })
         console.error('Error:', error);
     });
 ```
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

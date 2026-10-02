@@ -99,3 +99,6 @@ lastmod: 2026-06-25T16:39:29.738Z
     </Card>
   </CardGroup>
 </div>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

@@ -104,3 +104,6 @@ The following assignments determine the shard where new events will be created. 
 * Subaccount balances are local to a specific exchange instance.
 * Order groups do not function across exchange instances.
 * [`KXMVECROSSCATEGORY-SHARD1-R`](https://demo-api.kalshi.co/trade-api/v2/multivariate_event_collections/KXMVECROSSCATEGORY-SHARD1-R) is live in demo for testing.
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

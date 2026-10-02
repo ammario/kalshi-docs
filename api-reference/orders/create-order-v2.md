@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order-v2
-lastmod: 2026-09-30T16:39:26.128Z
+lastmod: 2026-10-01T14:07:26.209Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -386,3 +386,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

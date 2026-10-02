@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/market_settlement
-lastmod: 2026-04-30T03:43:38.624Z
+lastmod: 2026-10-01T18:58:59.486Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,6 +17,7 @@ Settlement occurs when a market's outcome is determined. Positions are automatic
 * **Yes outcome**: Yes contract holders receive \$1 per contract
 * **No outcome**: No contract holders receive \$1 per contract
 * Only net positions are settled (after netting)
+* Markets with a settlement floor can pay YES holders part of the payout before settlement. See [Settlement Bounds](/getting_started/settlement_bounds)
 
 ## Settlement Timing
 
@@ -29,3 +30,6 @@ Settlement fees are zero for simple yes/no determinations but may apply for sub-
 ## Protocol-Specific Details
 
 * [FIX Market Settlement Messages](/fix/market-settlement)
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

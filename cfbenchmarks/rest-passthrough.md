@@ -117,3 +117,6 @@ The passthrough maps upstream conditions to standard Kalshi error responses:
 | Upstream rate limit exceeded | `429 too_many_requests` |
 | Upstream authorization failure, server error, or timeout | `503 service_unavailable` |
 | Other upstream client errors | `400 bad_request` (with upstream detail) |
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

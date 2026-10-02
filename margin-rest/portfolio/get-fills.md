@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-fills
-lastmod: 2026-09-30T16:39:27.546Z
+lastmod: 2026-10-01T14:07:27.570Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -272,3 +272,5 @@ components:
         tokens do not grant access.
 
 ````
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

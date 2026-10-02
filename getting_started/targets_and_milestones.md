@@ -88,3 +88,6 @@ Markets can reference structured targets through `custom_strike`.
 For `strike_type: "structured"`, the value inside `custom_strike` is a structured target ID. You can resolve it with the [Get Structured Target](/api-reference/structured-targets/get-structured-target) endpoint.
 
 For numeric strike types, use `floor_strike` and `cap_strike` instead of `custom_strike`.
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

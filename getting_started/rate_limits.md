@@ -168,3 +168,6 @@ Fetch your grants from [`GET /account/limits`](/api-reference/account/get-accoun
 ```
 
 A grant with no `expires_ts` is permanent. You keep your best grant at each level: a longer-lived manual grant is never shortened by a volume grant, and if you qualify by volume while holding a manual grant near expiry, the grant is extended to a fresh 30 days.
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

@@ -119,3 +119,6 @@ maker quote lifecycle only.
 | `RFQ_CLOSED` | RFQ was deleted, expired, or already executed |
 | `INSUFFICIENT_BALANCE` | Not enough funds for the trade |
 | `409 Conflict` | Open RFQ already exists on this market ticker |
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

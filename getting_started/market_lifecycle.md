@@ -109,3 +109,6 @@ The WebSocket `settled` event corresponds to settlement being processed; in REST
     `GET /events` supports a `status` filter with values `unopened`, `open`, `closed`, and `settled`. The filter matches on child market statuses, not an event-level status; an event appears in results if **any** of its child markets has a matching status. For example, an event with four open markets and one settled market matches both `status=open` and `status=settled`. Use `with_nested_markets=true` if you need individual market statuses.
   </Accordion>
 </AccordionGroup>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

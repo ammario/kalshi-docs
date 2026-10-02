@@ -108,3 +108,6 @@ To control what happens to your resting orders during a [pause](/getting_started
 | - | - |
 | Y | Order is automatically cancelled when a trading or exchange pause begins |
 | N (default) | Order remains resting on the book and resumes when activity reopens |
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

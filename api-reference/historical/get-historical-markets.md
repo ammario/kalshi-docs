@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-markets
-lastmod: 2026-09-30T16:39:27.295Z
+lastmod: 2026-10-01T14:07:27.304Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -548,3 +548,5 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
 
 ````
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

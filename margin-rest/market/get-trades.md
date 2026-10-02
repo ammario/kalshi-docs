@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-trades
-lastmod: 2026-09-30T16:39:27.566Z
+lastmod: 2026-10-01T14:07:27.591Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -196,3 +196,5 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
 
 ````
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

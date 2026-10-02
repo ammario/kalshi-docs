@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exit-triggers/set-cross-exit-trigger
-lastmod: 2026-09-30T16:39:27.860Z
+lastmod: 2026-10-01T14:07:27.865Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -396,3 +396,5 @@ components:
       description: Request timestamp in milliseconds
 
 ````
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

@@ -81,3 +81,6 @@ account owner can create API keys.
 | Keep each strategy's balance and positions separate | One subaccount per strategy |
 | Give a bot or API trader a fixed amount of capital | A subaccount funded with that amount, plus an API key restricted to it |
 | Remove a person's access without moving funds | Revoke their sub-user |
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.
