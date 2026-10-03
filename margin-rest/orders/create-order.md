@@ -161,6 +161,16 @@ components:
           type: string
           description: The order group this order is part of
           x-go-type-skip-optional-pointer: true
+        market_version:
+          type: integer
+          format: int32
+          default: 0
+          description: >-
+            The market_version you expect the market to be at. If it is set and
+            the market's current market_version differs, the order is rejected
+            with HTTP 409 and error code market_version_mismatch. 0 skips the
+            check.
+          x-go-type-skip-optional-pointer: true
     CreateMarginOrderResponse:
       type: object
       required:

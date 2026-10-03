@@ -104,11 +104,20 @@ components:
         - fractional_trading_enabled
         - schedule
         - exchange_index
+        - market_version
       properties:
         ticker:
           type: string
         title:
           type: string
+        market_version:
+          type: integer
+          format: int32
+          description: >-
+            The market's current version. It starts at 1 and can increase when
+            there is a corporate action, such as a stock split. Pass it as
+            market_version when creating an order to have the order rejected if
+            the version has changed since you read it.
         exchange_index:
           type: integer
           description: >-

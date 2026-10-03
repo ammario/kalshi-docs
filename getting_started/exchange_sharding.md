@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/exchange_sharding
-lastmod: 2026-09-03T13:47:21.157Z
+lastmod: 2026-10-02T22:15:58.891Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,29 +12,26 @@ lastmod: 2026-09-03T13:47:21.157Z
 
 ## Overview
 
-In order to scale capacity, Kalshi will be splitting trading across multiple matching engines.
-Exchange instances will correspond to a specific category (e.g. "crypto" exchange, a "combos" exchange).
+Kalshi splits trading across multiple matching engines to scale capacity.
+Exchange instances correspond to specific categories (e.g. "crypto" or "combos").
 Kalshi plans to add shards incrementally to maintain a healthy balance of traffic.
-
-## Timeline
-
-Kalshi will migrate combos from the "default" exchange instance to shard 1, followed by crypto, commodities, and selected sports series.
-
-* August 6, 2026: intra-exchange instance transfers enabled to exchange index 1.
-* August 10, 2026: `KXMVECROSSCATEGORY-SHARD1-R` multivariate event collection created with support for all combos.
-* August 17, 2026: combos created over legacy collections `KXMVESPORTSMULTIGAMEEXTENDED-R`, `KXMVECROSSCATEGORY-R` will be created on shard 1.
-* August 24, 2026 at 12:00 PM ET: new crypto events will be created on shard 2, and new tennis and baseball events will be created on shard 3.
-* September 10, 2026 at 12:00 PM ET: new commodities markets will be created on shard 2, and new basketball markets will be created on shard 3.
 
 ## Balance Management
 
-Kalshi's collateralization checks will continue to run within the matching engine. Programmatic traders must preallocate collateral on a given exchange shard before order placement.
+Kalshi's collateralization checks run within the matching engine. Programmatic traders must preallocate collateral on a given exchange shard before order placement.
 
 **Funding Overview**
 
 * Account transfers can be made through the [Intra Account Transfer API](/api-reference/portfolio/intra-account-transfer).
 * Manual transfers are also available through the [Kalshi UI](https://kalshi.com/account/exchange-indexes).
 * [Get Balance](/api-reference/portfolio/get-balance) provides a breakdown of account balances across exchange indexes.
+
+**Automatic Order Transfers on the App and Web**
+
+Since the exchange sharding rollout, orders placed through the Kalshi App and Web
+automatically transfer capital between exchange shards as needed to fund the order.
+Market makers can disable this feature on the
+[Exchange Indexes settings page](https://kalshi.com/account/exchange-indexes).
 
 **Subaccounts Overview**
 
@@ -55,7 +52,7 @@ Kalshi's collateralization checks will continue to run within the matching engin
 
 ### Market Data
 
-* A new field `exchange_index` is provided on [`GET /markets`](/api-reference/market/get-markets), [`GET /events`](/api-reference/events/get-events), and via the [market and event lifecycle WebSocket streams](/websockets/market-and-event-lifecycle) for newly created events and markets.
+* The `exchange_index` field is provided on [`GET /markets`](/api-reference/market/get-markets), [`GET /events`](/api-reference/events/get-events), and via the [market and event lifecycle WebSocket streams](/websockets/market-and-event-lifecycle) for newly created events and markets.
 * Market ticker formats are unaffected by exchange sharding. The `exchange_index` field is the authoritative source of truth.
 
 <Warning>
@@ -81,9 +78,9 @@ The `exchange_index` query parameter is available on a per-endpoint basis.
 
 Margined FIX sessions always route to exchange index `0`.
 
-## Upcoming Series Shard Assignments
+## Series Shard Assignments
 
-The following assignments determine the shard where new events will be created. Shard 0 is the catch-all for all categories and tags not listed below.
+The following assignments determine the shard where new events are created. Shard 0 is the catch-all for all categories and tags not listed below.
 
 | Shard index | Category | Tags | Series list |
 | - | - | - | - |
