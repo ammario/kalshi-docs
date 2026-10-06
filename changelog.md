@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-02T22:15:58.929Z
+lastmod: 2026-10-05T21:06:00.384Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,30 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="October 8, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Price level structures returned on multivariate event collection responses",
+description: "Price level structures returned on multivariate event collection responses"
+}}
+>
+  `GET /multivariate_event_collections` and
+  `GET /multivariate_event_collections/{collection_ticker}` now return
+  `price_level_structure` and `price_ranges` on each collection.
+</Update>
+
+<Update
+  label="October 8, 2026"
+  tags={["WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "rfq_deleted provided to all subscribers after execution",
+description: "rfq_deleted provided to all subscribers after execution"
+}}
+>
+  All RFQ subscribers notified after an RFQ closure.
+</Update>
 
 <Update
   label="October 8, 2026"

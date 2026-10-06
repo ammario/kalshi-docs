@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/create-order
-lastmod: 2026-10-01T14:07:27.460Z
+lastmod: 2026-10-05T21:05:55.998Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -91,7 +91,6 @@ components:
     CreateMarginOrderRequest:
       type: object
       required:
-        - ticker
         - client_order_id
         - side
         - count
@@ -101,8 +100,18 @@ components:
       properties:
         ticker:
           type: string
+          description: >-
+            Market ticker. Supply ticker or market_id; ticker takes precedence
+            when both are provided.
+          x-go-type-skip-optional-pointer: true
           x-oapi-codegen-extra-tags:
-            validate: required,min=1
+            validate: required_without=MarketId
+        market_id:
+          type: string
+          description: Stable exchange market UUID. May be supplied instead of ticker.
+          x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: omitempty,uuid
         client_order_id:
           type: string
           x-go-type-skip-optional-pointer: true

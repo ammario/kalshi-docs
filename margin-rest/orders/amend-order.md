@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/amend-order
-lastmod: 2026-10-01T14:07:27.515Z
+lastmod: 2026-10-05T21:05:56.072Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -114,16 +114,24 @@ components:
     AmendMarginOrderRequest:
       type: object
       required:
-        - ticker
         - side
         - price
         - count
       properties:
         ticker:
           type: string
-          description: Market ticker
+          description: >-
+            Market ticker. Supply ticker or market_id; ticker takes precedence
+            when both are provided.
+          x-go-type-skip-optional-pointer: true
           x-oapi-codegen-extra-tags:
-            validate: required,min=1
+            validate: required_without=MarketId
+        market_id:
+          type: string
+          description: Stable exchange market UUID. May be supplied instead of ticker.
+          x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: omitempty,uuid
         side:
           $ref: '#/components/schemas/BookSide'
           description: Side of the order
