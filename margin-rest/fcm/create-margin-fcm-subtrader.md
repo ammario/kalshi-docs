@@ -92,6 +92,7 @@ components:
       type: object
       required:
         - subtrader_suffix
+        - require_category_cap
       properties:
         subtrader_suffix:
           type: string
@@ -99,6 +100,15 @@ components:
           description: >-
             Suffix for the new subtrader. The full subtrader id is composed
             server-side as {user_id}_{subtrader_suffix}.
+        require_category_cap:
+          type: boolean
+          x-go-type: '*bool'
+          description: >-
+            Required. Explicitly choose true or false. When true, ordinary
+            orders require an explicit asset-class initial margin cap.
+            Subtrader-wide and market caps do not satisfy this requirement.
+            Dedicated liquidation remains allowed. Set only when explicitly
+            creating a subtrader and cannot be changed afterward.
     CreateMarginFCMSubtraderResponse:
       type: object
       required:

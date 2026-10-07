@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/delete-rfq-quote
-lastmod: 2026-10-05T21:05:55.289Z
+lastmod: 2026-10-06T20:04:15.943Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,9 +10,6 @@ lastmod: 2026-10-05T21:05:55.289Z
 
 >  Endpoint for deleting a quote scoped to its RFQ, which means it can no longer be accepted.
 
-<Note>
-  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
-</Note>
 
 
 ## OpenAPI

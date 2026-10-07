@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-05T21:06:00.384Z
+lastmod: 2026-10-06T21:42:49.984Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,18 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="October 8, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "FIX accepts trade-scoped API keys",
+description: "FIX logon accepts API keys with read and write::trade."
+}}
+>
+  FIX logon now accepts API keys with `read` and `write::trade`, not only
+  parent `write`.
+</Update>
 
 <Update
   label="October 8, 2026"
@@ -69,13 +81,13 @@ description: "Margin markets return market_version, and POST /margin/orders acce
 >
   `GET /trade-api/v2/margin/markets` and `GET /trade-api/v2/margin/markets/{ticker}`
   now return `market_version`. A market starts at version 1, and the version
-  can increase when there is a corporate action, such as a stock split.
+  increases when trading resumes after a corporate action, such as a stock split.
   `POST /trade-api/v2/margin/orders` accepts an optional `market_version`. If
   it is set and the market has moved to a different version, the order is
   rejected with HTTP 409 and error code `market_version_mismatch`; when you
   see this error, read the market again before resubmitting. If you omit it
   or send 0, the order is placed without the check. A market read can
-  briefly return the previous version right after a version bump.
+  briefly return the previous version right after trading resumes.
 </Update>
 
 <Update

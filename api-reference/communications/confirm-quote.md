@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/confirm-quote
-lastmod: 2026-10-05T21:05:55.371Z
+lastmod: 2026-10-06T20:04:16.040Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,13 +10,6 @@ lastmod: 2026-10-05T21:05:55.371Z
 
 > DEPRECATED: Use PUT /communications/rfqs/{rfq_id}/quotes/{quote_id}/confirm instead. Endpoint for confirming a quote. This will start a timer for order execution.
 
-<Warning>
-  This endpoint is deprecated. Use `PUT /communications/rfqs/{rfq_id}/quotes/{quote_id}/confirm` instead.
-</Warning>
-
-<Note>
-  Rate limits are more favorable when providing the RFQ ID.
-</Note>
 
 
 ## OpenAPI
