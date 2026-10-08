@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/order-groups/trigger-order-group
-lastmod: 2026-10-05T21:05:56.379Z
+lastmod: 2026-10-07T15:39:43.427Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -100,11 +100,13 @@ components:
       name: subaccount
       in: query
       required: false
-      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
+      description: >-
+        Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
+        Subaccount-restricted API keys default to their locked subaccount and
+        must omit this parameter or pass their locked subaccount.
       schema:
         type: integer
         minimum: 0
-        default: 0
   schemas:
     EmptyResponse:
       type: object

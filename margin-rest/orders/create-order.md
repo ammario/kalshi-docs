@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/create-order
-lastmod: 2026-10-05T21:05:55.998Z
+lastmod: 2026-10-07T15:39:43.091Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -161,11 +161,10 @@ components:
         subaccount:
           type: integer
           minimum: 0
-          default: 0
           description: >-
             The subaccount number to use for this margin order. 0 is the primary
-            subaccount.
-          x-go-type-skip-optional-pointer: true
+            subaccount. Subaccount-restricted API keys must omit this field or
+            pass their locked subaccount.
         order_group_id:
           type: string
           description: The order group this order is part of

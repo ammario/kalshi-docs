@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-orders
-lastmod: 2026-10-05T21:05:55.673Z
+lastmod: 2026-10-07T15:39:42.749Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,7 +24,7 @@ subtrader or the request is rejected.
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.32.0
+  version: 3.34.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/subaccounts
-lastmod: 2026-08-16T23:46:21.438Z
+lastmod: 2026-10-07T22:53:35.561Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -51,6 +51,21 @@ multivariate event collections, creating and cancelling RFQs, posting,
 confirming, and cancelling quotes, and accepting quotes. Requests that omit
 `subaccount` act on the key's locked subaccount, and naming any other
 subaccount is rejected.
+
+On perps, a restricted key can place, amend, decrease, and cancel orders
+(including cancel-all), manage order groups, and manage cross-margin exit
+triggers on its locked subaccount. It can also list that subaccount's orders
+(`GET /margin/orders`; naming any other subaccount is rejected) and read them
+individually (`GET /margin/orders/{order_id}` returns 404 for orders in any
+other subaccount). Other authenticated perps endpoints, including position
+and fill reads, balance, risk, and funding history, are not yet available to
+restricted keys.
+
+Self-trade prevention applies across all subaccounts of an account. When an
+order from a restricted key would trade against an order resting in another
+subaccount, its `self_trade_prevention_type` decides the outcome:
+`taker_at_cross` cancels the restricted key's order, and `maker` cancels the
+resting order in the other subaccount.
 
 A restricted key cannot transfer funds, manage subaccounts or API keys, or
 act on RFQs and quotes belonging to a different subaccount of the same

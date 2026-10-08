@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders-v2
-lastmod: 2026-10-06T20:04:15.693Z
+lastmod: 2026-10-07T15:39:41.948Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,13 @@ lastmod: 2026-10-06T20:04:15.693Z
 
 > Endpoint for cancelling a batch of event-market orders using the V2 response shape. To auto-route a cancellation, provide its `market_ticker` and omit `exchange_index` or set it to `-1`. The maximum batch size scales with your tier's write budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
 
+<Warning>
+  For auto-routing, each order must include `market_ticker`. An `order_id` alone cannot identify the exchange shard.
+</Warning>
+
+<Note>
+  **Rate limit:** 2 tokens per order in the batch — billed per item, so total cost for a batch of N cancels is N × 2. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI
@@ -18,7 +25,7 @@ lastmod: 2026-10-06T20:04:15.693Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.32.0
+  version: 3.34.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-06T21:42:49.984Z
+lastmod: 2026-10-07T22:53:35.580Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,19 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="October 15, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Subaccount-restricted API keys can trade perps",
+description: "API keys restricted to one subaccount can trade and read perps orders."
+}}
+>
+  API keys restricted to a single subaccount can now place, amend, decrease,
+  cancel, and read perps orders. Omitting `subaccount` uses the locked
+  subaccount; naming any other subaccount returns `403`.
+</Update>
 
 <Update
   label="October 8, 2026"

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order-v2
-lastmod: 2026-10-06T20:04:15.719Z
+lastmod: 2026-10-07T15:39:41.968Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,9 @@ lastmod: 2026-10-06T20:04:15.719Z
 
 > Endpoint for amending the price, max fillable count, and/or expiration time of an existing event-market order. The request `count` is the updated total/max fillable count, equal to already filled count plus desired resting remaining count. This behavior matches the v1 amend endpoints; only the request/response shape differs.
 
+<Note>
+  Amending only expiry or decreasing size preserves queue position. Increasing size or changing price forfeits queue position and places the order at the back of the queue.
+</Note>
 
 
 ## OpenAPI
@@ -18,7 +21,7 @@ lastmod: 2026-10-06T20:04:15.719Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.32.0
+  version: 3.34.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

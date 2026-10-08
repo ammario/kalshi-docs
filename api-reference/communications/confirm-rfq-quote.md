@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/confirm-rfq-quote
-lastmod: 2026-10-06T20:04:15.963Z
+lastmod: 2026-10-07T15:39:42.378Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,9 @@ lastmod: 2026-10-06T20:04:15.963Z
 
 >  Endpoint for confirming a quote scoped to its RFQ. This will start a timer for order execution.
 
+<Note>
+  Rate limits are more favorable when providing the RFQ ID.
+</Note>
 
 
 ## OpenAPI
@@ -18,7 +21,7 @@ lastmod: 2026-10-06T20:04:15.963Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.32.0
+  version: 3.34.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
