@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-positions
-lastmod: 2026-10-07T15:39:43.217Z
+lastmod: 2026-10-09T15:36:12.927Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -69,7 +69,11 @@ paths:
         - name: subaccount
           in: query
           required: false
-          description: Subaccount number (0 for primary, 1-63 for subaccounts)
+          description: >-
+            Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
+            returns positions for all subaccounts. Subaccount-restricted API
+            keys must omit this or pass their locked subaccount, and read only
+            that subaccount's positions.
           schema:
             type: integer
         - name: ticker

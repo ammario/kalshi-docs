@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-07T22:53:35.580Z
+lastmod: 2026-10-09T23:44:15.221Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,13 +24,70 @@ the `FIX` tag.
   label="October 15, 2026"
   tags={["REST", "Margin"]}
   rss={{
+title: "Funding configuration on margin markets",
+description: "Margin market responses expose funding limits configured at creation."
+}}
+>
+  `GET /trade-api/v2/margin/markets` and
+  `GET /trade-api/v2/margin/markets/{ticker}` now include `funding_deadband`,
+  `funding_cap`, and `funding_limit_unit` configured at creation. These values
+  do not reflect later clearing configuration changes.
+</Update>
+
+<Update
+  label="October 15, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "Prevent duplicate intra-account transfers with client IDs",
+description: "Use client_transfer_id to retry an intra-account transfer without creating a duplicate."
+}}
+>
+  `POST /portfolio/intra_exchange_instance_transfer` accepts an optional UUID
+  `client_transfer_id` for primary accounts. Reuse it only for identical retries
+  to prevent duplicate transfers. Client IDs are not supported for transfers
+  involving numbered subaccounts.
+</Update>
+
+<Update
+  label="October 15, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "GET /margin/trades ticker optional",
+description: "GET /margin/trades ticker optional"
+}}
+>
+  `GET /trade-api/v2/margin/trades` now accepts an optional `ticker`.
+  Omit it to retrieve trades across all margin markets. Existing cursor
+  pagination, timestamp filters, and page limits still apply.
+</Update>
+
+<Update
+  label="October 15, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Top-of-book sizes on margin market responses",
+description: "Margin market responses include bid_size_fp and ask_size_fp."
+}}
+>
+  `GET /trade-api/v2/margin/markets` and
+  `GET /trade-api/v2/margin/markets/{ticker}` now include `bid_size_fp` and
+  `ask_size_fp`: total contracts resting at the best bid and ask prices,
+  respectively, as fixed-point count strings. An empty side returns `"0.00"`;
+  both fields are omitted when market stats are unavailable.
+</Update>
+
+<Update
+  label="October 15, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
 title: "Subaccount-restricted API keys can trade perps",
-description: "API keys restricted to one subaccount can trade and read perps orders."
+description: "API keys restricted to one subaccount can trade perps and read perps orders, positions, and fills."
 }}
 >
   API keys restricted to a single subaccount can now place, amend, decrease,
-  cancel, and read perps orders. Omitting `subaccount` uses the locked
-  subaccount; naming any other subaccount returns `403`.
+  cancel, and read perps orders, and read perps positions and fills. Omitting
+  `subaccount` uses the locked subaccount; naming any other subaccount returns
+  `403`. Perps balance and risk are not yet available to restricted keys.
 </Update>
 
 <Update

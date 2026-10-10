@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-fills
-lastmod: 2026-10-07T15:39:42.738Z
+lastmod: 2026-10-09T15:36:12.452Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

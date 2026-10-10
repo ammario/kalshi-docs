@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/subaccounts
-lastmod: 2026-10-07T22:53:35.561Z
+lastmod: 2026-10-08T16:04:13.085Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -55,11 +55,13 @@ subaccount is rejected.
 On perps, a restricted key can place, amend, decrease, and cancel orders
 (including cancel-all), manage order groups, and manage cross-margin exit
 triggers on its locked subaccount. It can also list that subaccount's orders
-(`GET /margin/orders`; naming any other subaccount is rejected) and read them
+(`GET /margin/orders`; naming any other subaccount is rejected), read them
 individually (`GET /margin/orders/{order_id}` returns 404 for orders in any
-other subaccount). Other authenticated perps endpoints, including position
-and fill reads, balance, risk, and funding history, are not yet available to
-restricted keys.
+other subaccount), and read that subaccount's positions and fills
+(`GET /margin/positions` and `GET /margin/fills`, on the same terms as the
+order list). Other authenticated perps endpoints, including balance
+(`GET /margin/balance`), risk (`GET /margin/risk`), and funding history, are
+not yet available to restricted keys.
 
 Self-trade prevention applies across all subaccounts of an account. When an
 order from a restricted key would trade against an order resting in another

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market
-lastmod: 2026-10-07T15:39:43.164Z
+lastmod: 2026-10-09T15:36:12.889Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -105,6 +105,9 @@ components:
         - schedule
         - exchange_index
         - market_version
+        - funding_deadband
+        - funding_cap
+        - funding_limit_unit
       properties:
         ticker:
           type: string
@@ -197,9 +200,21 @@ components:
         bid:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Best bid price in dollars.
+        bid_size_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            Total number of contracts resting at the best bid price, as a
+            fixed-point count string. Zero when there is no bid. Omitted when
+            market stats are unavailable.
         ask:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Best ask price in dollars.
+        ask_size_fp:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: >-
+            Total number of contracts resting at the best ask price, as a
+            fixed-point count string. Zero when there is no ask. Omitted when
+            market stats are unavailable.
         settlement_mark_price:
           $ref: '#/components/schemas/TickerPrice'
           description: Mark price used for settlement and funding.
@@ -227,6 +242,27 @@ components:
                 schedule.
         schedule:
           $ref: '#/components/schemas/MarginMarketSchedule'
+        funding_deadband:
+          type: number
+          format: double
+          minimum: 0
+          description: >-
+            Funding deadband configured at market creation, expressed in
+            funding_limit_unit.
+        funding_cap:
+          type: number
+          format: double
+          minimum: 0
+          description: >-
+            Funding cap configured at market creation, expressed in
+            funding_limit_unit.
+        funding_limit_unit:
+          type: string
+          enum:
+            - percentage
+            - dollar
+          x-go-type-skip-optional-pointer: true
+          description: Unit for the funding limits configured at market creation.
     ErrorResponse:
       type: object
       properties:

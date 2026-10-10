@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-fills
-lastmod: 2026-10-07T15:39:43.195Z
+lastmod: 2026-10-09T15:36:12.918Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -69,10 +69,13 @@ paths:
         - name: subaccount
           in: query
           required: false
-          description: Subaccount number (0 for primary, 1-63 for subaccounts)
+          description: >-
+            Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
+            returns fills across all subaccounts for the authenticated user.
+            Subaccount-restricted API keys must omit this or pass their locked
+            subaccount, and read only that subaccount's fills.
           schema:
             type: integer
-            default: 0
         - name: limit
           in: query
           required: false
