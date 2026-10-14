@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-09-29T01:41:19.627Z
+lastmod: 2026-10-13T20:31:35.341Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,7 +24,7 @@ Used to submit a new order to the Exchange.
 | 50 | SenderSubID | String | N | Clearing FCM sponsored access only. Header field identifying the operator for this order; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | `1`=Buy (Yes), `2`=Sell (No) |
 | 55 | Symbol | String | Y | Market ticker (e.g. `EURUSD-23JUN2618-B1.087`) |
-| 100 | ExDestination | Integer | N | Exchange index. On event-contract sessions, omit or use `-1` to auto-route by market ticker. This field should not be included for margin. It will be ignored. `UseCapReservation` (21032) sessions must auto-route. |
+| 100 | ExDestination | Integer | N | Exchange index. Omit or use `-1` to auto-route by `Symbol<55>`. With `UseCapReservation` (21032) or [`AutoTransfer` (21035)](/fix/authentication#optional-fields) enabled, other values are rejected. Ignored for margin sessions. |
 | 59 | TimeInForce | Char | N | `0`=Day (expires 11:59:59.999pm ET), `1`=GTC, `3`=IOC, `4`=FOK, `6`=GTD. Past GTD dates are treated as IOC. |
 | 126 | ExpireTime | UTCTimestamp | C | Required when TimeInForce=GTD. |
 | 117 | QuoteId | UUID | N | Quote to accept when using NewOrderSingle for an RFQ quote acceptance. Reduce-only (`18=E`) is not supported and is rejected. |
@@ -89,7 +89,7 @@ are unchanged.
 | 50 | SenderSubID | String | N | Clearing FCM sponsored access only. Header field identifying the operator performing this modification; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | Must match original order. |
 | 55 | Symbol | String | Y | Must match original order. |
-| 100 | ExDestination | Integer | N | Exchange index. On event-contract sessions, omit or use `-1` to auto-route by `Symbol`. This field should not be included for margin. It will be ignored. `UseCapReservation` (21032) sessions must auto-route. |
+| 100 | ExDestination | Integer | N | Exchange index. Omit or use `-1` to auto-route by `Symbol<55>`. With `UseCapReservation` (21032) or [`AutoTransfer` (21035)](/fix/authentication#optional-fields) enabled, other values are rejected. Ignored for margin sessions. |
 | 59 | TimeInForce | Char | N | `0`=Day sets expiry to 11:59:59.999pm ET and forbids ExpireTime; `1`=GTC clears expiry and forbids ExpireTime; `6`=GTD requires a future ExpireTime. Omit both tags to preserve expiry (Kalshi convention). Other values are not supported on replace. |
 | 126 | ExpireTime | UTCTimestamp | C | Future expiration timestamp. Requires TimeInForce=GTD (`59=6`); cannot be sent alone or with Day/GTC. Expired timestamps, including the Unix epoch, are rejected. |
 | 448 | PartyID | String | N | FCM only. Full [customer-account identifier](#fcm-customer-account-identifiers); must match the original order. |

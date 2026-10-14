@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/authentication
-lastmod: 2026-09-23T21:55:39.781Z
+lastmod: 2026-10-13T20:31:35.338Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -58,6 +58,7 @@ The initiator sends a Logon message. The acceptor responds with either a Logon (
 | 21026 | AlwaysEmitNewBeforeTrade | Emit a standalone New\<0> execution report before any Trade\<F> report when both occur in the same matching cycle | N |
 | 21027 | SplitCollateralReturn | Include per-trade collateral return breakdown (tags 21030/21031) on Execution Reports | N |
 | 21032 | UseCapReservation | Reserve event contract daily cap headroom on order entry and replace. **FCM members only, event-contract sessions only.** Replace requires `OrderID<37>`, only after that order's `ExecType=New<0>` report, one amend per order in flight. RFQ quote acceptances are not cap-reserved. | N |
+| 21035 | AutoTransfer | Set `Y` on each Logon to automatically move shared FCM collateral between exchange shards for new orders and replacements. **FCM event-contract order-entry sessions (`KalshiNR`/`KalshiRT`) only, excluding listeners.** Omit `ExDestination<100>` or use `-1`. Disable automatic rebalancing while this option is enabled. | N |
 
 ### Signature Generation
 

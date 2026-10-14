@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-event
-lastmod: 2026-10-09T15:36:11.551Z
+lastmod: 2026-10-14T00:56:40.439Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -90,6 +90,16 @@ paths:
           description: Event ticker
           schema:
             type: string
+        - name: exclude_markets
+          in: query
+          description: >-
+            Return event metadata without loading child markets. Use GET
+            /markets with event_ticker, limit and cursor for bounded market
+            pages. Cannot be combined with with_nested_markets=true.
+          required: false
+          schema:
+            type: boolean
+            default: false
         - name: with_nested_markets
           in: query
           required: false
