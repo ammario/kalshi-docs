@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-multivariate-events
-lastmod: 2026-10-14T00:56:40.414Z
+lastmod: 2026-10-14T21:44:02.711Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-10-14T00:56:40.414Z
 
 # Get Multivariate Events
 
-> Retrieve multivariate (combo) events. These are dynamically created events from multivariate event collections. Supports filtering by series and collection ticker.
+> Retrieve multivariate (combo) events. These are dynamically created events from multivariate event collections. Supports filtering by series ticker, collection ticker, or a comma-separated list of event tickers.
 
 
 
@@ -72,7 +72,7 @@ paths:
       description: >-
         Retrieve multivariate (combo) events. These are dynamically created
         events from multivariate event collections. Supports filtering by series
-        and collection ticker.
+        ticker, collection ticker, or a comma-separated list of event tickers.
       operationId: GetMultivariateEvents
       parameters:
         - name: limit
@@ -102,6 +102,7 @@ paths:
             series_ticker.
           schema:
             type: string
+        - $ref: '#/components/parameters/EventTickersQuery'
         - name: with_nested_markets
           in: query
           required: false
@@ -134,6 +135,14 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    EventTickersQuery:
+      name: tickers
+      in: query
+      description: >-
+        Filter by specific event tickers. Comma-separated list of event tickers
+        to retrieve.
+      schema:
+        type: string
   schemas:
     GetMultivariateEventsResponse:
       type: object
