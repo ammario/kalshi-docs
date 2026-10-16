@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-10-13T20:31:35.341Z
+lastmod: 2026-10-16T00:23:40.846Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -299,12 +299,14 @@ ExecutionReports independently include the customer account when applicable and 
 
 ## Mass Cancel Request (35=q)
 
-Cancel all orders for the trading session. Only available on KalshiNR (NewOrderMode) sessions.
+Cancel resting orders in bulk. Only available on KalshiNR (NewOrderMode) sessions. `530=6` cancels every resting order placed over FIX with the session's API key, across all exchange indexes. `530=1` cancels every resting order the account has in the market named by `Symbol<55>`, YES and NO, however it was placed; it is billed like an order cancel (35=F).
 
 | Tag | Name | Description |
 | - | - | - |
 | 11 | ClOrdID | Unique request ID |
-| 530 | MassCancelRequestType | Cancel for session\<6> |
+| 530 | MassCancelRequestType | Cancel for session\<6> or Cancel orders for a security\<1> |
+| 55 | Symbol | Market ticker. Required when `530=1`. |
+| 100 | ExDestination | Exchange index for `530=1`. Omit or use `-1` to auto-route by `Symbol<55>`. Ignored for margin sessions. |
 
 ## Mass Cancel Report (35=r)
 
@@ -314,11 +316,12 @@ Response to mass cancel request.
 | - | - | - |
 | 11 | ClOrdID | Request ID |
 | 37 | OrderID | Operation ID |
-| 531 | MassCancelResponse | Success\<6> or Rejected\<0> |
-| 532 | MassCancelRejectReason | If rejected |
+| 55 | Symbol | Market ticker, echoed when `530=1` |
+| 531 | MassCancelResponse | Cancel orders for a security\<1>, Cancel for session\<6>, or Rejected\<0> |
+| 532 | MassCancelRejectReason | If rejected: Invalid or unknown security\<1> or Other\<99> |
 
 <Note>
-  Individual ExecutionReports will follow for each canceled order.
+  The report acknowledges the request. Individual ExecutionReports will follow for each canceled order.
 </Note>
 
 

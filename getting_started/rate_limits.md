@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-09-22T20:13:35.165Z
+lastmod: 2026-10-15T20:06:21.860Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -26,6 +26,10 @@ You have two independent token budgets:
 | **Write** | Order placement, amends, cancels, order groups, the RFQ quote flow, and block trade proposal accepts. |
 
 The split is by operation type, not by protocol. REST and FIX requests drain the same buckets.
+
+## Balance endpoint bucket
+
+[`GET /portfolio/balance`](/api-reference/portfolio/get-balance) is metered in its own bucket and does not draw down the Read budget. Basic and Advanced tiers can call it **once per second**; every higher tier can call it **five times per second**. The bucket holds one second of budget, so there is no burst. Balance only changes on fills, settlements and transfers, so react to those (for example the [user fills websocket channel](/websockets/user-fills)) rather than polling balance.
 
 ## Predictions per-shard Write budgets
 

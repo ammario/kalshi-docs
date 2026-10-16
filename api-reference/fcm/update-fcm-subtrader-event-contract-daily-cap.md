@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/update-fcm-subtrader-event-contract-daily-cap
-lastmod: 2026-10-14T21:44:03.896Z
+lastmod: 2026-10-15T20:06:17.370Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2026-10-14T21:44:03.019Z
+lastmod: 2026-10-15T20:06:16.741Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,9 @@ lastmod: 2026-10-14T21:44:03.019Z
 # Get Balance
 
 > Returns the balance and portfolio value for a member. Both values include all exchange indexes unless `exchange_index` is provided. Pass `subaccount` to use a subaccount instead of the primary account. This endpoint also accepts API keys with the 'read::portfolio_balance' scope.
+
+**Rate limit:** this endpoint has its own bucket, separate from the Read budget. Basic and Advanced tiers may call it **1 time per second**; all higher tiers may call it **5 times per second**. The bucket holds one second of budget, so there is no burst. Calls to this endpoint do not draw down the Read budget, and other reads do not draw down this bucket. Balance only changes on fills, settlements and transfers, so react to those (for example the user fills websocket channel) instead of polling this endpoint.
+
 
 
 
@@ -69,11 +72,21 @@ paths:
       tags:
         - portfolio
       summary: Get Balance
-      description: >-
+      description: >
         Returns the balance and portfolio value for a member. Both values
         include all exchange indexes unless `exchange_index` is provided. Pass
         `subaccount` to use a subaccount instead of the primary account. This
         endpoint also accepts API keys with the 'read::portfolio_balance' scope.
+
+
+        **Rate limit:** this endpoint has its own bucket, separate from the Read
+        budget. Basic and Advanced tiers may call it **1 time per second**; all
+        higher tiers may call it **5 times per second**. The bucket holds one
+        second of budget, so there is no burst. Calls to this endpoint do not
+        draw down the Read budget, and other reads do not draw down this bucket.
+        Balance only changes on fills, settlements and transfers, so react to
+        those (for example the user fills websocket channel) instead of polling
+        this endpoint.
       operationId: GetBalance
       parameters:
         - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/update-subtrader-group
-lastmod: 2026-10-14T21:44:02.427Z
+lastmod: 2026-10-15T20:06:16.323Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

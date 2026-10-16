@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/funding/get-funding-rate-estimate
-lastmod: 2026-10-14T21:44:04.498Z
+lastmod: 2026-10-15T20:06:17.821Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,7 @@ lastmod: 2026-10-14T21:44:04.498Z
 
 > Returns the estimated funding rate for the current, in-progress funding period. The value is a time-weighted average of the premium index computed over `[last_funding_time, now)`, so it continues to move as new data accumulates through the window and is only finalized at `next_funding_time`.
 
-The returned `premium_index` is the premium for the final second evaluated by this estimate, captured from the same calculation inputs. Its observation timestamp can lag the computation time when input feeds are delayed. It is omitted when that second has no available premium. The estimate remains provisional until funding is finalized.
+Funding measures the premium over clock-aligned bars of one second or longer, depending on the market. The returned `premium_index` is the premium of the final bar evaluated by this estimate, captured from the same calculation inputs. Its observation timestamp can lag the computation time when input feeds are delayed. It is omitted when that bar has no available premium. The estimate remains provisional until funding is finalized.
 
 
 
@@ -68,11 +68,13 @@ paths:
         `next_funding_time`.
 
 
-        The returned `premium_index` is the premium for the final second
-        evaluated by this estimate, captured from the same calculation inputs.
-        Its observation timestamp can lag the computation time when input feeds
-        are delayed. It is omitted when that second has no available premium.
-        The estimate remains provisional until funding is finalized.
+        Funding measures the premium over clock-aligned bars of one second or
+        longer, depending on the market. The returned `premium_index` is the
+        premium of the final bar evaluated by this estimate, captured from the
+        same calculation inputs. Its observation timestamp can lag the
+        computation time when input feeds are delayed. It is omitted when that
+        bar has no available premium. The estimate remains provisional until
+        funding is finalized.
       operationId: GetMarginFundingRateEstimate
       parameters:
         - name: ticker
@@ -123,16 +125,17 @@ components:
         premium_index:
           type: string
           description: >-
-            Premium index for the final second evaluated by this funding
-            estimate, as a signed decimal fraction before time weighting.
-            Captured with the estimate from the same calculation inputs. Omitted
-            when that second has no available premium.
+            Premium index of the final bar evaluated by this funding estimate,
+            as a signed decimal fraction before time weighting. Captured with
+            the estimate from the same calculation inputs. Omitted when that bar
+            has no available premium.
         premium_index_ts:
           type: string
           format: date-time
           description: >-
-            Timestamp of the final second evaluated by the funding estimate. Can
-            precede computed_time when input feeds are delayed.
+            Timestamp of the last second of the final bar evaluated by the
+            funding estimate. Can precede computed_time when input feeds are
+            delayed.
     FixedPointDollars:
       type: string
       description: >-

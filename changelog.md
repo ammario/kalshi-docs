@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-14T00:56:46.712Z
+lastmod: 2026-10-16T00:23:40.866Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,52 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="October 15, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "GET /portfolio/balance moves to its own rate-limit bucket",
+description: "GET /trade-api/v2/portfolio/balance is metered separately from the Read budget: 1 request per second on Basic and Advanced, 5 per second on higher tiers."
+}}
+>
+  `GET /trade-api/v2/portfolio/balance` is now metered in its own bucket
+  instead of the Read budget. Basic and Advanced tiers can call it once per
+  second; every higher tier can call it five times per second. The bucket
+  holds one second of budget, so there is no burst. Calls above the rate
+  return `429`. Balance calls no longer draw down the Read budget, and other
+  reads do not draw down the balance bucket. Balance only changes on fills,
+  settlements and transfers, so react to those (for example the user fills
+  websocket channel) rather than polling this endpoint.
+</Update>
+
+<Update
+  label="October 22, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Funding averages the premium over bars",
+description: "Margin funding averages the premium over clock-aligned bars of one second or longer, depending on the market."
+}}
+>
+  Funding now averages the premium over clock-aligned bars of one second or
+  longer, depending on the market. On
+  `GET /trade-api/v2/margin/funding_rates/estimate`, `premium_index` is the
+  premium of the final bar evaluated and `premium_index_ts` is that bar's last
+  second. `funding_invalid_premium_handling` now applies per bar: a bar with no
+  orderbook sample or index price, or with a trading halt in any of its seconds,
+  counts as 0 under `dampen` and is left out under `exclude`.
+</Update>
+
+<Update
+  label="October 22, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "Per-market mass cancel over FIX",
+description: "OrderMassCancelRequest (35=q) accepts 530=1 with Symbol (55) to cancel all of an account's resting orders in one market."
+}}
+>
+  `OrderMassCancelRequest` (35=q) accepts `530=1` (cancel orders for a security) with `Symbol<55>`. It cancels every resting order the account has in that market, YES and NO, however it was placed, and is billed like an order cancel (35=F). The `OrderMassCancelReport` (35=r) answers with `531=1` and echoes `55`; an unknown ticker is rejected with `532=1`. `530=6` is unchanged.
+</Update>
 
 <Update label="October 15, 2026" tags={["REST", "Predictions"]}>
   Registered MCP clients can read portfolio balances, positions, orders and fills using explicitly granted `read::mcp_portfolio` OAuth access. These grants do not allow order execution or funding changes. Already-public market, event and series reads accept a resource-bound MCP grant for per-user rate accounting; their anonymous payloads remain unchanged.
