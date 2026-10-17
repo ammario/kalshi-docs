@@ -231,10 +231,15 @@ operations:
                 contracts_fp:
                   type: string
                   description: Fixed-point contracts requested (2 decimals) (optional)
+                  x-rust-type: i64
+                  x-rust-serialize-with: >-
+                    ws::dto::serde_money::serialize_optional_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-208>
                 target_cost_dollars:
                   type: string
                   description: Target cost in dollars (optional)
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_option_value_dollars
                   x-parser-schema-id: <anonymous-schema-209>
                 created_ts:
                   type: string
@@ -280,6 +285,8 @@ operations:
                         description: >-
                           Yes settlement value in dollars for the selected leg.
                           Omitted when unavailable.
+                        x-rust-type: common::types::Price
+                        x-rust-serialize-with: ws::dto::serde_money::serialize_option_price_dollars
                         x-parser-schema-id: <anonymous-schema-217>
                     x-parser-schema-id: <anonymous-schema-213>
                   x-parser-schema-id: <anonymous-schema-212>
@@ -439,10 +446,15 @@ operations:
                 contracts_fp:
                   type: string
                   description: Fixed-point contracts requested (2 decimals) (optional)
+                  x-rust-type: i64
+                  x-rust-serialize-with: >-
+                    ws::dto::serde_money::serialize_optional_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-224>
                 target_cost_dollars:
                   type: string
                   description: Target cost in dollars (optional)
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_option_value_dollars
                   x-parser-schema-id: <anonymous-schema-225>
                 deleted_ts:
                   type: string
@@ -639,22 +651,34 @@ operations:
                 yes_bid_dollars:
                   type: string
                   description: Yes side bid price in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-235>
                 no_bid_dollars:
                   type: string
                   description: No side bid price in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-236>
                 yes_contracts_offered_fp:
                   type: string
                   description: Fixed-point yes contracts offered (2 decimals) (optional)
+                  x-rust-type: i64
+                  x-rust-serialize-with: >-
+                    ws::dto::serde_money::serialize_optional_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-237>
                 no_contracts_offered_fp:
                   type: string
                   description: Fixed-point no contracts offered (2 decimals) (optional)
+                  x-rust-type: i64
+                  x-rust-serialize-with: >-
+                    ws::dto::serde_money::serialize_optional_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-238>
                 rfq_target_cost_dollars:
                   type: string
                   description: Target cost from the RFQ in dollars (optional)
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_option_value_dollars
                   x-parser-schema-id: <anonymous-schema-239>
                 created_ts:
                   type: string
@@ -872,10 +896,14 @@ operations:
                 yes_bid_dollars:
                   type: string
                   description: Yes side bid price in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-250>
                 no_bid_dollars:
                   type: string
                   description: No side bid price in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-251>
                 accepted_side:
                   type: string
@@ -887,18 +915,29 @@ operations:
                 contracts_accepted_fp:
                   type: string
                   description: Fixed-point contracts accepted (2 decimals) (optional)
+                  x-rust-type: i64
+                  x-rust-serialize-with: >-
+                    ws::dto::serde_money::serialize_optional_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-253>
                 yes_contracts_offered_fp:
                   type: string
                   description: Fixed-point yes contracts offered (2 decimals) (optional)
+                  x-rust-type: i64
+                  x-rust-serialize-with: >-
+                    ws::dto::serde_money::serialize_optional_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-254>
                 no_contracts_offered_fp:
                   type: string
                   description: Fixed-point no contracts offered (2 decimals) (optional)
+                  x-rust-type: i64
+                  x-rust-serialize-with: >-
+                    ws::dto::serde_money::serialize_optional_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-255>
                 rfq_target_cost_dollars:
                   type: string
                   description: Target cost from the RFQ in dollars (optional)
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_option_value_dollars
                   x-parser-schema-id: <anonymous-schema-256>
                 subaccount:
                   type: integer

@@ -317,6 +317,7 @@ operations:
                 exchange_index:
                   type: integer
                   description: Identifier for the exchange shard where the order resides
+                  x-rust-type: i32
                   x-parser-schema-id: <anonymous-schema-279>
                 status:
                   type: string
@@ -356,34 +357,50 @@ operations:
                 yes_price_dollars:
                   type: string
                   description: Yes price in fixed-point dollars (4 decimals)
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-282>
                 fill_count_fp:
                   type: string
                   description: Number of contracts filled in fixed-point (2 decimals)
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-283>
                 remaining_count_fp:
                   type: string
                   description: Number of contracts remaining in fixed-point (2 decimals)
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-284>
                 initial_count_fp:
                   type: string
                   description: Initial number of contracts in fixed-point (2 decimals)
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-285>
                 taker_fill_cost_dollars:
                   type: string
                   description: Taker fill cost in fixed-point dollars (6 decimals)
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
                   x-parser-schema-id: <anonymous-schema-286>
                 maker_fill_cost_dollars:
                   type: string
                   description: Maker fill cost in fixed-point dollars (6 decimals)
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
                   x-parser-schema-id: <anonymous-schema-287>
                 taker_fees_dollars:
                   type: string
                   description: Taker fees in fixed-point dollars (6 decimals).
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
                   x-parser-schema-id: <anonymous-schema-288>
                 maker_fees_dollars:
                   type: string
                   description: Maker fees in fixed-point dollars (6 decimals).
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
                   x-parser-schema-id: <anonymous-schema-289>
                 client_order_id:
                   type: string

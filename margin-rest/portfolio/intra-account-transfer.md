@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/intra-account-transfer
-lastmod: 2026-10-15T20:06:17.848Z
+lastmod: 2026-10-16T22:31:44.403Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -82,8 +82,8 @@ paths:
           $ref: '#/components/responses/InternalServerError'
       security:
         - kalshiAccessKey: []
-        - kalshiAccessSignature: []
-        - kalshiAccessTimestamp: []
+          kalshiAccessSignature: []
+          kalshiAccessTimestamp: []
 components:
   schemas:
     IntraExchangeInstanceTransferRequest:
@@ -133,6 +133,24 @@ components:
           description: Destination exchange shard index (default 0)
           x-oapi-codegen-extra-tags:
             validate: gte=0,lte=100
+        source_subaccount:
+          type: integer
+          default: 0
+          x-go-type-skip-optional-pointer: true
+          description: >-
+            Source subaccount number (default 0 for the primary account). Only
+            supported for event contract to event contract transfers.
+          x-oapi-codegen-extra-tags:
+            validate: gte=0
+        destination_subaccount:
+          type: integer
+          default: 0
+          x-go-type-skip-optional-pointer: true
+          description: >-
+            Destination subaccount number (default 0 for the primary account).
+            Only supported for event contract to event contract transfers.
+          x-oapi-codegen-extra-tags:
+            validate: gte=0
     IntraExchangeInstanceTransferResponse:
       type: object
       required:

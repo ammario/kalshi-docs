@@ -260,6 +260,7 @@ operations:
                 exchange_index:
                   type: integer
                   description: Identifier for the exchange shard where the fill occurred
+                  x-rust-type: i32
                   x-parser-schema-id: <anonymous-schema-120>
                 is_taker:
                   type: boolean
@@ -290,14 +291,20 @@ operations:
                 yes_price_dollars:
                   type: string
                   description: Price for the yes side of the fill in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-124>
                 count_fp:
                   type: string
                   description: Fixed-point contracts filled (2 decimals)
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-125>
                 fee_cost:
                   type: string
                   description: Exchange fee paid for this fill in fixed-point dollars
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
                   x-parser-schema-id: <anonymous-schema-126>
                 action:
                   type: string
@@ -314,6 +321,8 @@ operations:
                 post_position_fp:
                   type: string
                   description: Fixed-point position after the fill (2 decimals)
+                  x-rust-type: common::types::Position
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_position_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-127>
                 purchased_side: *ref_1
                 outcome_side: *ref_1

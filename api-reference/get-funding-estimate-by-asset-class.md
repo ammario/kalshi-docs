@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-funding-estimate-by-asset-class
-lastmod: 2026-10-15T20:06:16.235Z
+lastmod: 2026-10-16T22:31:42.975Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

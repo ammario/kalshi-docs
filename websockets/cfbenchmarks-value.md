@@ -505,6 +505,7 @@ operations:
                       type: integer
                       description: Number of ticks counted in the window
                       minimum: 0
+                      x-rust-type: usize
                       x-parser-schema-id: <anonymous-schema-306>
                     window_start_ts_ms:
                       type: integer

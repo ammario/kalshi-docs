@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/amend-order-v2
-lastmod: 2026-10-15T20:06:16.646Z
+lastmod: 2026-10-16T22:31:43.309Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -123,9 +123,14 @@ components:
     SubaccountQueryDefaultPrimary:
       name: subaccount
       in: query
-      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
+      required: false
+      description: >-
+        Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
+        Subaccount-restricted API keys default to their locked subaccount and
+        must omit this parameter or pass their locked subaccount.
       schema:
         type: integer
+        minimum: 0
   schemas:
     AmendOrderV2Request:
       type: object

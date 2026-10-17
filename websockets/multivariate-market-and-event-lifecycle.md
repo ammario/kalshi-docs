@@ -300,6 +300,7 @@ operations:
                     Optional - This key will ONLY exist when the market is
                     created. Identifier for the exchange shard the market lives
                     on
+                  x-rust-type: i32
                   x-parser-schema-id: <anonymous-schema-193>
                 open_ts:
                   type: integer
@@ -346,6 +347,8 @@ operations:
                     Optional - This key will ONLY exist when the market is
                     determined. Settlement value of the market in fixed-point
                     dollars (e.g. "0.5000")
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_option_price_dollars
                   x-parser-schema-id: <anonymous-schema-199>
                 is_deactivated:
                   type: boolean
@@ -401,9 +404,11 @@ operations:
                       x-parser-schema-id: <anonymous-schema-158>
                     floor_strike:
                       type: number
+                      x-rust-type: crate::wire::JsonNumber
                       x-parser-schema-id: <anonymous-schema-159>
                     cap_strike:
                       type: number
+                      x-rust-type: crate::wire::JsonNumber
                       x-parser-schema-id: <anonymous-schema-160>
                     custom_strike:
                       type: object
@@ -614,6 +619,7 @@ operations:
                   description: >-
                     Identifier for the exchange shard the event's markets live
                     on
+                  x-rust-type: i32
                   x-parser-schema-id: <anonymous-schema-179>
                 title:
                   type: string

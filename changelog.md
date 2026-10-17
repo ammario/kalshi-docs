@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-16T00:23:40.866Z
+lastmod: 2026-10-16T22:31:48.404Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,25 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="October 22, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "REST schema corrections for shared definitions",
+description: "The Predictions and Margin OpenAPI specifications now describe shared definitions the way the API already serves them."
+}}
+>
+  Updated the [Predictions](/openapi.yaml) and [Margin](/perps_openapi.yaml) REST
+  OpenAPI specifications so that definitions used by both APIs match existing behavior:
+
+  * `GET /margin/exchange/status` documents `exchange_estimated_resume_time`, which it already returns. The schema also lists `intra_exchange_transfers_active` and `exchange_index_statuses`, which the Margin exchange status never includes.
+  * `POST /portfolio/margin/subaccounts/transfer` lists `exchange_index`, which Margin transfers ignore.
+  * In the Margin specification, `POST /portfolio/intra_exchange_instance_transfer` documents `source_subaccount` and `destination_subaccount` and requires the three API key headers together.
+  * The Predictions `subaccount` query parameters document `minimum: 0`.
+    If you generate client types from these specifications, refresh your schemas.
+    These schema corrections describe existing behavior.
+</Update>
 
 <Update
   label="October 15, 2026"

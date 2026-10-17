@@ -82,7 +82,9 @@ operations:
                 required: true
               - name: sid
                 type: integer
-                description: Server-generated subscription identifier
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
                 required: true
               - name: msg
                 type: object
@@ -225,11 +227,13 @@ operations:
             type:
               type: string
               const: ticker
-              x-parser-schema-id: <anonymous-schema-56>
+              x-parser-schema-id: <anonymous-schema-55>
             sid:
               type: integer
+              description: >-
+                Server-generated subscription identifier (sid) used to identify
+                the channel
               minimum: 1
-              description: Server-generated subscription identifier
               x-parser-schema-id: subscriptionId
             msg:
               type: object
@@ -258,50 +262,68 @@ operations:
                   description: >-
                     Last traded price in USD as a fixed-point decimal string (4
                     decimals).
-                  x-parser-schema-id: <anonymous-schema-58>
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
+                  x-parser-schema-id: <anonymous-schema-57>
                 bid:
                   type: string
                   description: USD price as a fixed-point decimal string (4 decimals).
-                  x-parser-schema-id: <anonymous-schema-59>
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
+                  x-parser-schema-id: <anonymous-schema-58>
                 ask:
                   type: string
                   description: USD price as a fixed-point decimal string (4 decimals).
-                  x-parser-schema-id: <anonymous-schema-60>
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
+                  x-parser-schema-id: <anonymous-schema-59>
                 bid_size_fp:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-61>
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-60>
                 ask_size_fp:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-62>
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-61>
                 last_trade_size_fp:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-63>
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-62>
                 volume:
                   type: string
                   description: One sided total trade volume in contracts.
-                  x-parser-schema-id: <anonymous-schema-64>
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-63>
                 volume_notional_value_dollars:
                   type: string
                   description: Total notional value of one sided trade volume in dollars.
-                  x-parser-schema-id: <anonymous-schema-65>
+                  x-parser-schema-id: <anonymous-schema-64>
                 volume_24h:
                   type: string
                   description: One sided trade volume in the last 24 hours in contracts.
-                  x-parser-schema-id: <anonymous-schema-66>
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-65>
                 volume_24h_notional_value_dollars:
                   type: string
                   description: >-
                     Total notional value of one sided trade volume in the last
                     24 hours in dollars.
-                  x-parser-schema-id: <anonymous-schema-67>
+                  x-parser-schema-id: <anonymous-schema-66>
                 open_interest:
                   type: string
                   description: One sided open interest in contracts.
-                  x-parser-schema-id: <anonymous-schema-68>
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-67>
                 open_interest_notional_value_dollars:
                   type: string
                   description: Total notional value of one sided open interest in dollars.
-                  x-parser-schema-id: <anonymous-schema-69>
+                  x-parser-schema-id: <anonymous-schema-68>
                 reference_price:
                   description: >-
                     Underlying reference index value scaled to one contract,
@@ -320,14 +342,16 @@ operations:
                           description: >-
                             USD price as a fixed-point decimal string (4
                             decimals)
-                          x-parser-schema-id: <anonymous-schema-71>
+                          x-rust-type: common::types::Price
+                          x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
+                          x-parser-schema-id: <anonymous-schema-70>
                         ts_ms:
                           type: integer
                           format: int64
                           description: Unix timestamp in milliseconds.
-                          x-parser-schema-id: <anonymous-schema-72>
+                          x-parser-schema-id: <anonymous-schema-71>
                       x-parser-schema-id: tickerPrice
-                  x-parser-schema-id: <anonymous-schema-70>
+                  x-parser-schema-id: <anonymous-schema-69>
                 settlement_mark_price: *ref_0
                 liquidation_mark_price: *ref_0
                 funding_rate:
@@ -341,26 +365,27 @@ operations:
                       type: number
                       format: double
                       description: Funding rate as a decimal value.
-                      x-parser-schema-id: <anonymous-schema-73>
+                      x-rust-type: f64
+                      x-parser-schema-id: <anonymous-schema-72>
                     next_funding_time_ms:
                       type: integer
                       format: int64
                       description: >-
                         Unix timestamp in milliseconds for the next funding
                         time.
-                      x-parser-schema-id: <anonymous-schema-74>
+                      x-parser-schema-id: <anonymous-schema-73>
                     ts_ms:
                       type: integer
                       format: int64
                       description: Unix timestamp in milliseconds for the funding snapshot.
-                      x-parser-schema-id: <anonymous-schema-75>
+                      x-parser-schema-id: <anonymous-schema-74>
                   x-parser-schema-id: fundingRate
                 ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-76>
-              x-parser-schema-id: <anonymous-schema-57>
+                  x-parser-schema-id: <anonymous-schema-75>
+              x-parser-schema-id: <anonymous-schema-56>
             sending_ts_ms:
               type: integer
               format: int64

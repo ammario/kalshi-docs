@@ -66,11 +66,16 @@ operations:
                 required: true
               - name: sid
                 type: integer
-                description: Server-generated subscription identifier
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
                 required: true
               - name: seq
                 type: integer
-                description: Sequence number used for snapshot/delta consistency
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
                 required: true
               - name: msg
                 type: object
@@ -117,16 +122,21 @@ operations:
             type:
               type: string
               const: trade
-              x-parser-schema-id: <anonymous-schema-77>
+              x-parser-schema-id: <anonymous-schema-76>
             sid:
               type: integer
+              description: >-
+                Server-generated subscription identifier (sid) used to identify
+                the channel
               minimum: 1
-              description: Server-generated subscription identifier
               x-parser-schema-id: subscriptionId
             seq:
               type: integer
+              description: >-
+                Sequential number that should be checked if you want to
+                guarantee you received all the messages. Used for snapshot/delta
+                consistency
               minimum: 1
-              description: Sequence number used for snapshot/delta consistency
               x-parser-schema-id: sequenceNumber
             msg:
               type: object
@@ -141,17 +151,21 @@ operations:
                 trade_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-79>
+                  x-parser-schema-id: <anonymous-schema-78>
                 market_ticker:
                   type: string
                   description: Unique market identifier
                   x-parser-schema-id: marketTicker
                 price:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-80>
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
+                  x-parser-schema-id: <anonymous-schema-79>
                 count:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-81>
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-80>
                 taker_side:
                   type: string
                   enum:
@@ -162,8 +176,8 @@ operations:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-82>
-              x-parser-schema-id: <anonymous-schema-78>
+                  x-parser-schema-id: <anonymous-schema-81>
+              x-parser-schema-id: <anonymous-schema-77>
             sending_ts_ms:
               type: integer
               format: int64

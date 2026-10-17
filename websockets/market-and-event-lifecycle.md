@@ -324,6 +324,7 @@ operations:
                     Optional - This key will ONLY exist when the market is
                     created. Identifier for the exchange shard the market lives
                     on
+                  x-rust-type: i32
                   x-parser-schema-id: <anonymous-schema-141>
                 open_ts:
                   type: integer
@@ -370,6 +371,8 @@ operations:
                     Optional - This key will ONLY exist when the market is
                     determined. Settlement value of the market in fixed-point
                     dollars (e.g. "0.5000")
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_option_price_dollars
                   x-parser-schema-id: <anonymous-schema-147>
                 is_deactivated:
                   type: boolean
@@ -425,9 +428,11 @@ operations:
                       x-parser-schema-id: <anonymous-schema-158>
                     floor_strike:
                       type: number
+                      x-rust-type: crate::wire::JsonNumber
                       x-parser-schema-id: <anonymous-schema-159>
                     cap_strike:
                       type: number
+                      x-rust-type: crate::wire::JsonNumber
                       x-parser-schema-id: <anonymous-schema-160>
                     custom_strike:
                       type: object
@@ -500,16 +505,22 @@ operations:
                       start:
                         type: string
                         description: Starting price for this band, in dollars
+                        x-rust-type: common::types::Price
+                        x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                         x-parser-schema-id: <anonymous-schema-165>
                       end:
                         type: string
                         description: Ending price for this band, in dollars
+                        x-rust-type: common::types::Price
+                        x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                         x-parser-schema-id: <anonymous-schema-166>
                       step:
                         type: string
                         description: >-
                           Tick size (minimum price increment) within this band,
                           in dollars
+                        x-rust-type: common::types::Price
+                        x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                         x-parser-schema-id: <anonymous-schema-167>
                     x-parser-schema-id: <anonymous-schema-164>
                   x-parser-schema-id: <anonymous-schema-163>
@@ -675,12 +686,14 @@ operations:
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The floor (lower bound) strike value for the market
+                  x-rust-type: crate::wire::JsonNumber
                   x-parser-schema-id: <anonymous-schema-172>
                 cap_strike:
                   type: number
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The cap (upper bound) strike value for the market
+                  x-rust-type: crate::wire::JsonNumber
                   x-parser-schema-id: <anonymous-schema-173>
                 custom_strike:
                   type: object
@@ -841,6 +854,7 @@ operations:
                   description: >-
                     Identifier for the exchange shard the event's markets live
                     on
+                  x-rust-type: i32
                   x-parser-schema-id: <anonymous-schema-179>
                 title:
                   type: string
@@ -1014,6 +1028,7 @@ operations:
                   description: >-
                     Event fee multiplier override. `null` when the override has
                     been cleared.
+                  x-rust-type: crate::wire::JsonNumber
                   x-parser-schema-id: <anonymous-schema-190>
               x-parser-schema-id: <anonymous-schema-187>
             sending_ts_ms: *ref_4

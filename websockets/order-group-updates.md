@@ -171,6 +171,9 @@ operations:
                   description: >-
                     Updated contracts limit in fixed-point (2 decimals). Present
                     for "created" and "limit_updated" events only.
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: >-
+                    ws::dto::serde_money::serialize_option_amount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-273>
                 ts_ms:
                   type: integer

@@ -64,7 +64,9 @@ operations:
                 required: true
               - name: sid
                 type: integer
-                description: Server-generated subscription identifier
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
                 required: true
               - name: msg
                 type: object
@@ -137,11 +139,13 @@ operations:
             type:
               type: string
               const: fill
-              x-parser-schema-id: <anonymous-schema-83>
+              x-parser-schema-id: <anonymous-schema-82>
             sid:
               type: integer
+              description: >-
+                Server-generated subscription identifier (sid) used to identify
+                the channel
               minimum: 1
-              description: Server-generated subscription identifier
               x-parser-schema-id: subscriptionId
             msg:
               type: object
@@ -161,21 +165,21 @@ operations:
                 trade_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-85>
+                  x-parser-schema-id: <anonymous-schema-84>
                 order_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-86>
+                  x-parser-schema-id: <anonymous-schema-85>
                 client_order_id:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-87>
+                  x-parser-schema-id: <anonymous-schema-86>
                 market_ticker:
                   type: string
                   description: Unique market identifier
                   x-parser-schema-id: marketTicker
                 is_taker:
                   type: boolean
-                  x-parser-schema-id: <anonymous-schema-88>
+                  x-parser-schema-id: <anonymous-schema-87>
                 side:
                   type: string
                   enum:
@@ -186,22 +190,30 @@ operations:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-89>
+                  x-parser-schema-id: <anonymous-schema-88>
                 price:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-90>
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
+                  x-parser-schema-id: <anonymous-schema-89>
                 count:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-91>
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-90>
                 fee_cost:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-92>
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_value_dollars
+                  x-parser-schema-id: <anonymous-schema-91>
                 post_position:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-93>
+                  x-rust-type: common::types::Position
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_position_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-92>
                 subaccount:
                   type: integer
-                  x-parser-schema-id: <anonymous-schema-94>
+                  x-parser-schema-id: <anonymous-schema-93>
                 order_source:
                   type: string
                   enum:
@@ -210,8 +222,8 @@ operations:
                   description: |
                     `system` for liquidations and margin exit or trailing-stop
                     triggers. `user` for every other order.
-                  x-parser-schema-id: <anonymous-schema-95>
-              x-parser-schema-id: <anonymous-schema-84>
+                  x-parser-schema-id: <anonymous-schema-94>
+              x-parser-schema-id: <anonymous-schema-83>
             sending_ts_ms:
               type: integer
               format: int64

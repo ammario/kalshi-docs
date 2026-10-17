@@ -181,28 +181,40 @@ operations:
                 position_fp:
                   type: string
                   description: Fixed-point net position (2 decimals)
+                  x-rust-type: common::types::Position
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_position_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-132>
                 position_cost_dollars:
                   type: string
                   description: >-
                     Current cost basis of the position as a fixed-point dollar
                     string
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
                   x-parser-schema-id: <anonymous-schema-133>
                 realized_pnl_dollars:
                   type: string
                   description: Realized profit/loss as a fixed-point dollar string
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
                   x-parser-schema-id: <anonymous-schema-134>
                 fees_paid_dollars:
                   type: string
                   description: Total fees paid as a fixed-point dollar string
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
                   x-parser-schema-id: <anonymous-schema-135>
                 position_fee_cost_dollars:
                   type: string
                   description: Total position fee cost as a fixed-point dollar string
+                  x-rust-type: common::types::Value
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
                   x-parser-schema-id: <anonymous-schema-136>
                 volume_fp:
                   type: string
                   description: Fixed-point total volume traded (2 decimals)
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-137>
                 subaccount:
                   type: integer

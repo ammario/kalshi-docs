@@ -437,10 +437,14 @@ operations:
                 price_dollars:
                   type: string
                   description: Price level in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-85>
                 delta_fp:
                   type: string
                   description: Fixed-point contract delta (2 decimals)
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-86>
                 side:
                   type: string

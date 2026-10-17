@@ -210,22 +210,32 @@ operations:
                 price_dollars:
                   type: string
                   description: Last traded price in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-93>
                 yes_bid_dollars:
                   type: string
                   description: Best bid price for yes side in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-94>
                 yes_ask_dollars:
                   type: string
                   description: Best ask price for yes side in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-95>
                 volume_fp:
                   type: string
                   description: Fixed-point total contracts traded (2 decimals)
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-96>
                 open_interest_fp:
                   type: string
                   description: Fixed-point open interest (2 decimals)
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-97>
                 dollar_volume:
                   type: integer
@@ -238,14 +248,20 @@ operations:
                 yes_bid_size_fp:
                   type: string
                   description: Fixed-point contracts at best bid (2 decimals)
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-100>
                 yes_ask_size_fp:
                   type: string
                   description: Fixed-point contracts at best ask (2 decimals)
+                  x-rust-type: i64
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-101>
                 last_trade_size_fp:
                   type: string
                   description: Fixed-point contracts in last trade (2 decimals)
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-102>
                 ts:
                   type: integer

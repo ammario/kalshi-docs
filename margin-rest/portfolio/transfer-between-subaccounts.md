@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/transfer-between-subaccounts
-lastmod: 2026-10-15T20:06:17.869Z
+lastmod: 2026-10-16T22:31:44.417Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -114,9 +114,22 @@ components:
           type: integer
           format: int64
           description: Amount to transfer in cents.
+        exchange_index:
+          allOf:
+            - $ref: '#/components/schemas/ExchangeIndex'
+          description: >-
+            Identifier for an exchange shard. Perps subaccount transfers ignore
+            this field.
+          x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            validate: gte=0
     ApplySubaccountTransferResponse:
       type: object
       description: Empty response indicating successful transfer.
+    ExchangeIndex:
+      type: integer
+      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      example: 0
     ErrorResponse:
       type: object
       properties:

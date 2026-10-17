@@ -75,11 +75,16 @@ operations:
                 required: true
               - name: sid
                 type: integer
-                description: Server-generated subscription identifier
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
                 required: true
               - name: seq
                 type: integer
-                description: Sequence number used for snapshot/delta consistency
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
                 required: true
               - name: msg
                 type: object
@@ -129,16 +134,21 @@ operations:
             type:
               type: string
               const: order_group_updates
-              x-parser-schema-id: <anonymous-schema-110>
+              x-parser-schema-id: <anonymous-schema-109>
             sid:
               type: integer
+              description: >-
+                Server-generated subscription identifier (sid) used to identify
+                the channel
               minimum: 1
-              description: Server-generated subscription identifier
               x-parser-schema-id: subscriptionId
             seq:
               type: integer
+              description: >-
+                Sequential number that should be checked if you want to
+                guarantee you received all the messages. Used for snapshot/delta
+                consistency
               minimum: 1
-              description: Sequence number used for snapshot/delta consistency
               x-parser-schema-id: sequenceNumber
             msg:
               type: object
@@ -156,25 +166,28 @@ operations:
                     - reset
                     - deleted
                     - limit_updated
-                  x-parser-schema-id: <anonymous-schema-112>
+                  x-parser-schema-id: <anonymous-schema-111>
                 order_group_id:
                   type: string
                   description: Order group identifier
-                  x-parser-schema-id: <anonymous-schema-113>
+                  x-parser-schema-id: <anonymous-schema-112>
                 contracts_limit_fp:
                   type: string
                   description: >-
                     Updated contracts limit in fixed-point (2 decimals). Present
                     for "created" and "limit_updated" events only.
-                  x-parser-schema-id: <anonymous-schema-114>
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: >-
+                    ws::dto::serde_money::serialize_option_amount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-113>
                 ts_ms:
                   type: integer
                   format: int64
                   description: >-
                     Matching engine timestamp at which the event was processed,
                     as Unix epoch milliseconds.
-                  x-parser-schema-id: <anonymous-schema-115>
-              x-parser-schema-id: <anonymous-schema-111>
+                  x-parser-schema-id: <anonymous-schema-114>
+              x-parser-schema-id: <anonymous-schema-110>
             sending_ts_ms:
               type: integer
               format: int64
@@ -188,14 +201,14 @@ operations:
         example: |-
           {
             "type": "order_group_updates",
-            "sending_ts_ms": 1700000000246,
+            "sending_ts_ms": 1733047200123,
             "sid": 21,
             "seq": 7,
             "msg": {
               "event_type": "limit_updated",
               "order_group_id": "og_123",
               "contracts_limit_fp": "150.00",
-              "ts_ms": 1700000000123
+              "ts_ms": 1733047200000
             }
           }
         bindings: []

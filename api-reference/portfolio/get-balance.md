@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2026-10-15T20:06:16.741Z
+lastmod: 2026-10-16T22:31:43.377Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -117,9 +117,14 @@ components:
     SubaccountQueryDefaultPrimary:
       name: subaccount
       in: query
-      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
+      required: false
+      description: >-
+        Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
+        Subaccount-restricted API keys default to their locked subaccount and
+        must omit this parameter or pass their locked subaccount.
       schema:
         type: integer
+        minimum: 0
   schemas:
     ExchangeIndex:
       type: integer

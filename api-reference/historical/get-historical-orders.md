@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-orders
-lastmod: 2026-10-15T20:06:17.472Z
+lastmod: 2026-10-16T22:31:44.109Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -150,11 +150,13 @@ components:
     SubaccountQuery:
       name: subaccount
       in: query
+      required: false
       description: >-
         Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
         defaults to all subaccounts.
       schema:
         type: integer
+        minimum: 0
   schemas:
     GetOrdersResponse:
       type: object

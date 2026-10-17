@@ -69,7 +69,9 @@ operations:
                 required: true
               - name: sid
                 type: integer
-                description: Server-generated subscription identifier
+                description: >-
+                  Server-generated subscription identifier (sid) used to
+                  identify the channel
                 required: true
               - name: msg
                 type: object
@@ -179,11 +181,13 @@ operations:
             type:
               type: string
               const: user_order
-              x-parser-schema-id: <anonymous-schema-96>
+              x-parser-schema-id: <anonymous-schema-95>
             sid:
               type: integer
+              description: >-
+                Server-generated subscription identifier (sid) used to identify
+                the channel
               minimum: 1
-              description: Server-generated subscription identifier
               x-parser-schema-id: subscriptionId
             msg:
               type: object
@@ -202,14 +206,14 @@ operations:
                 order_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-98>
+                  x-parser-schema-id: <anonymous-schema-97>
                 user_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-99>
+                  x-parser-schema-id: <anonymous-schema-98>
                 client_order_id:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-100>
+                  x-parser-schema-id: <anonymous-schema-99>
                 ticker:
                   type: string
                   description: Unique market identifier
@@ -222,13 +226,19 @@ operations:
                   x-parser-schema-id: bookSide
                 price:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-101>
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
+                  x-parser-schema-id: <anonymous-schema-100>
                 fill_count:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-102>
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-101>
                 remaining_count:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-103>
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
+                  x-parser-schema-id: <anonymous-schema-102>
                 self_trade_prevention_type:
                   type: string
                   enum:
@@ -241,22 +251,22 @@ operations:
                   description: >-
                     Order group identifier, if the order belongs to an order
                     group
-                  x-parser-schema-id: <anonymous-schema-104>
+                  x-parser-schema-id: <anonymous-schema-103>
                 expiration_ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-105>
+                  x-parser-schema-id: <anonymous-schema-104>
                 created_ts_ms:
                   type: *ref_0
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-106>
+                  x-parser-schema-id: <anonymous-schema-105>
                 last_updated_ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-107>
+                  x-parser-schema-id: <anonymous-schema-106>
                 last_update_reason:
                   type: string
                   enum:
@@ -278,7 +288,7 @@ operations:
                   x-parser-schema-id: lastUpdateReason
                 subaccount_number:
                   type: integer
-                  x-parser-schema-id: <anonymous-schema-108>
+                  x-parser-schema-id: <anonymous-schema-107>
                 order_source:
                   type: string
                   enum:
@@ -287,8 +297,8 @@ operations:
                   description: |
                     `system` for liquidations and margin exit or trailing-stop
                     triggers. `user` for every other order.
-                  x-parser-schema-id: <anonymous-schema-109>
-              x-parser-schema-id: <anonymous-schema-97>
+                  x-parser-schema-id: <anonymous-schema-108>
+              x-parser-schema-id: <anonymous-schema-96>
             sending_ts_ms:
               type: integer
               format: int64

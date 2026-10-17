@@ -208,14 +208,20 @@ operations:
                 yes_price_dollars:
                   type: string
                   description: Yes side price in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-109>
                 no_price_dollars:
                   type: string
                   description: No side price in dollars
+                  x-rust-type: common::types::Price
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
                   x-parser-schema-id: <anonymous-schema-110>
                 count_fp:
                   type: string
                   description: Fixed-point contracts traded (2 decimals)
+                  x-rust-type: common::types::Amount
+                  x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
                   x-parser-schema-id: <anonymous-schema-111>
                 taker_side: &ref_1
                   type: string
