@@ -215,7 +215,6 @@ operations:
                 market_ticker: &ref_3
                   type: string
                   description: Unique market identifier
-                  pattern: ^[A-Z0-9-]+$
                   examples: *ref_0
                   x-parser-schema-id: marketTicker
                 market_id: &ref_4

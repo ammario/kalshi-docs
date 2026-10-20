@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-margin-reports
-lastmod: 2026-10-16T22:31:42.884Z
+lastmod: 2026-10-19T20:37:47.662Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -115,10 +115,12 @@ components:
           type: string
           enum:
             - trade_audit
+            - position_transfer_audit
             - position_snapshot
             - market_price_snapshot
             - funding_periods
             - settlement_periods
+            - corporate_action_payments
             - maintenance_margin
             - maintenance_margin_aggregate
             - cash_balance_daily

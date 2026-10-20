@@ -134,7 +134,7 @@ operations:
             type:
               type: string
               const: order_group_updates
-              x-parser-schema-id: <anonymous-schema-109>
+              x-parser-schema-id: <anonymous-schema-123>
             sid:
               type: integer
               description: >-
@@ -166,11 +166,11 @@ operations:
                     - reset
                     - deleted
                     - limit_updated
-                  x-parser-schema-id: <anonymous-schema-111>
+                  x-parser-schema-id: <anonymous-schema-125>
                 order_group_id:
                   type: string
                   description: Order group identifier
-                  x-parser-schema-id: <anonymous-schema-112>
+                  x-parser-schema-id: <anonymous-schema-126>
                 contracts_limit_fp:
                   type: string
                   description: >-
@@ -179,15 +179,15 @@ operations:
                   x-rust-type: common::types::Amount
                   x-rust-serialize-with: >-
                     ws::dto::serde_money::serialize_option_amount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-113>
+                  x-parser-schema-id: <anonymous-schema-127>
                 ts_ms:
                   type: integer
                   format: int64
                   description: >-
                     Matching engine timestamp at which the event was processed,
                     as Unix epoch milliseconds.
-                  x-parser-schema-id: <anonymous-schema-114>
-              x-parser-schema-id: <anonymous-schema-110>
+                  x-parser-schema-id: <anonymous-schema-128>
+              x-parser-schema-id: <anonymous-schema-124>
             sending_ts_ms:
               type: integer
               format: int64

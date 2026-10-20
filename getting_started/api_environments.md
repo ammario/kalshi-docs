@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/api_environments
-lastmod: 2026-08-20T15:18:43.535Z
+lastmod: 2026-10-19T21:50:46.233Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -35,6 +35,33 @@ Use these WebSocket URLs for the Trade API:
 | - | - | - |
 | Production | `wss://external-api-ws.kalshi.com/trade-api/ws/v2` | `wss://api.elections.kalshi.com/trade-api/ws/v2` |
 | Demo | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://demo-api.kalshi.co/trade-api/ws/v2` |
+
+## External Feeds WebSocket
+
+<Note>
+  External feeds are moving to dedicated hostnames. Existing feed URLs remain
+  supported during the migration.
+</Note>
+
+The dedicated feed endpoints are:
+
+| Environment | External feeds URL |
+| - | - |
+| Production | `wss://external-feeds.kalshi.com/trade-api/v2/external-feeds` |
+| Demo | `wss://external-feeds.demo.kalshi.co/trade-api/v2/external-feeds` |
+
+Update your feed client's connection URL when the new endpoint is available.
+Continue signing `GET /trade-api/v2/external-feeds` with the existing API-key
+authentication. The path, channel entitlements, subscription messages, and
+payloads do not change. The Trade API REST and standard WebSocket URLs above
+are unaffected by this feed hostname change.
+
+Server-to-server clients may omit `Origin`. Both the old and new feed Origins
+are accepted during the migration window. If your client explicitly sets
+`Origin` to the old feed hostname, update it along with your connection URL to
+`https://external-feeds.kalshi.com` in production or
+`https://external-feeds.demo.kalshi.co` in demo. This change does not require
+browser clients to override their browser-managed `Origin` header.
 
 ## Private Connectivity
 

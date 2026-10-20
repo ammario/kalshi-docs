@@ -92,6 +92,7 @@ operations:
                           - fill
                           - user_orders
                           - order_group_updates
+                          - corporate_actions
                         required: false
                   - name: market_ticker
                     type: string
@@ -153,6 +154,7 @@ operations:
                       - fill
                       - user_orders
                       - order_group_updates
+                      - corporate_actions
                     x-parser-schema-id: <anonymous-schema-4>
                   x-parser-schema-id: <anonymous-schema-3>
                 market_ticker:

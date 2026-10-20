@@ -272,11 +272,9 @@ operations:
                   - name: last_update_reason
                     type: string
                     description: >-
-                      Margin order update reason when the delta corresponds to
-                      the authenticated user's order. CloseCancel and HaltCancel
-                      are reserved; the current orderbook stream filters out
-                      these operations. The field is omitted when no reason
-                      applies.
+                      Margin order update reason. The value ReduceOnlyCancel
+                      means reduce_only capped the order at placement. The field
+                      is omitted when no reason applies.
                     enumValues:
                       - Decrease
                       - Amend
@@ -359,10 +357,9 @@ operations:
                     - PostOnlyCrossCancel
                     - ReduceOnlyCancel
                   description: >-
-                    Margin order update reason when the delta corresponds to the
-                    authenticated user's order. CloseCancel and HaltCancel are
-                    reserved; the current orderbook stream filters out these
-                    operations. The field is omitted when no reason applies.
+                    Margin order update reason. The value ReduceOnlyCancel means
+                    reduce_only capped the order at placement. The field is
+                    omitted when no reason applies.
                   x-parser-schema-id: lastUpdateReason
                 client_order_id:
                   type: string

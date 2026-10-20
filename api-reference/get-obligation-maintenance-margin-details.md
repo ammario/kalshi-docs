@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-obligation-maintenance-margin-details
-lastmod: 2026-10-16T22:31:42.929Z
+lastmod: 2026-10-19T20:37:47.714Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -195,22 +195,22 @@ operations:
                       - string
                       - 'null'
                     description: >-
-                      Deprecated - Order creation time in RFC3339 format. Use
-                      created_ts_ms instead.
+                      Deprecated - Order creation time in RFC3339 format,
+                      truncated to milliseconds. Use created_ts_ms instead.
                     deprecated: true
                     required: true
                   - name: last_update_time
                     type: string
                     description: >-
-                      Deprecated - Last update time in RFC3339 format. Use
-                      last_updated_ts_ms instead.
+                      Deprecated - Last update time in RFC3339 format, truncated
+                      to milliseconds. Use last_updated_ts_ms instead.
                     deprecated: true
                     required: false
                   - name: expiration_time
                     type: string
                     description: >-
-                      Deprecated - Order expiration time in RFC3339 format. Use
-                      expiration_ts_ms instead.
+                      Deprecated - Order expiration time in RFC3339 format,
+                      truncated to milliseconds. Use expiration_ts_ms instead.
                     deprecated: true
                     required: false
                   - name: expiration_ts_ms
@@ -230,8 +230,8 @@ operations:
                   - name: last_update_reason
                     type: string
                     description: >-
-                      Order update reason. ReduceOnlyCancel means reduce_only
-                      capped the order at placement.
+                      Order update reason. The value ReduceOnlyCancel means
+                      reduce_only capped the order at placement.
                     enumValues:
                       - Decrease
                       - Amend
@@ -311,7 +311,6 @@ operations:
                 ticker:
                   type: string
                   description: Unique market identifier
-                  pattern: ^[A-Z0-9-]+$
                   examples: *ref_0
                   x-parser-schema-id: marketTicker
                 exchange_index:
@@ -421,24 +420,24 @@ operations:
                   type: *ref_2
                   deprecated: true
                   description: >-
-                    Deprecated - Order creation time in RFC3339 format. Use
-                    created_ts_ms instead.
+                    Deprecated - Order creation time in RFC3339 format,
+                    truncated to milliseconds. Use created_ts_ms instead.
                   format: date-time
                   x-parser-schema-id: <anonymous-schema-293>
                 last_update_time:
                   type: string
                   deprecated: true
                   description: >-
-                    Deprecated - Last update time in RFC3339 format. Use
-                    last_updated_ts_ms instead.
+                    Deprecated - Last update time in RFC3339 format, truncated
+                    to milliseconds. Use last_updated_ts_ms instead.
                   format: date-time
                   x-parser-schema-id: <anonymous-schema-294>
                 expiration_time:
                   type: string
                   deprecated: true
                   description: >-
-                    Deprecated - Order expiration time in RFC3339 format. Use
-                    expiration_ts_ms instead.
+                    Deprecated - Order expiration time in RFC3339 format,
+                    truncated to milliseconds. Use expiration_ts_ms instead.
                   format: date-time
                   x-parser-schema-id: <anonymous-schema-295>
                 expiration_ts_ms:
@@ -459,8 +458,8 @@ operations:
                 last_update_reason:
                   type: string
                   description: >-
-                    Order update reason. ReduceOnlyCancel means reduce_only
-                    capped the order at placement.
+                    Order update reason. The value ReduceOnlyCancel means
+                    reduce_only capped the order at placement.
                   enum:
                     - Decrease
                     - Amend

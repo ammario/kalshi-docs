@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-10-16T00:23:40.846Z
+lastmod: 2026-10-20T00:01:26.147Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -299,7 +299,7 @@ ExecutionReports independently include the customer account when applicable and 
 
 ## Mass Cancel Request (35=q)
 
-Cancel resting orders in bulk. Only available on KalshiNR (NewOrderMode) sessions. `530=6` cancels every resting order placed over FIX with the session's API key, across all exchange indexes. `530=1` cancels every resting order the account has in the market named by `Symbol<55>`, YES and NO, however it was placed; it is billed like an order cancel (35=F).
+Cancel resting orders in bulk. Only available on KalshiNR (NewOrderMode) sessions. `530=6` cancels every resting order placed over FIX with the session's API key, across all exchange indexes. `530=1` cancels every resting order the account has in the market named by `Symbol<55>`, YES and NO, however it was placed, or only one subaccount's when the request names it; it is billed like an order cancel (35=F).
 
 | Tag | Name | Description |
 | - | - | - |
@@ -307,6 +307,10 @@ Cancel resting orders in bulk. Only available on KalshiNR (NewOrderMode) session
 | 530 | MassCancelRequestType | Cancel for session\<6> or Cancel orders for a security\<1> |
 | 55 | Symbol | Market ticker. Required when `530=1`. |
 | 100 | ExDestination | Exchange index for `530=1`. Omit or use `-1` to auto-route by `Symbol<55>`. Ignored for margin sessions. |
+| 448 | PartyID | FCM only. Full [customer-account identifier](#fcm-customer-account-identifiers). With `530=1`, cancels only that customer account's orders in the market. |
+| 452 | PartyRole | FCM only. `24`=Customer Account. Required when using PartyID. |
+| 453 | NoPartyIDs | FCM only. Number of parties (only 1 supported). |
+| 79 | AllocAccount | Subaccount number (0–63). With `530=1`, cancels only that subaccount's orders in the market; omit to cancel across all subaccounts. Not used with `530=6`. |
 
 ## Mass Cancel Report (35=r)
 

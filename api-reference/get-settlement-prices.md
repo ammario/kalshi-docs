@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-settlement-prices
-lastmod: 2026-10-16T22:31:42.988Z
+lastmod: 2026-10-19T20:37:47.789Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

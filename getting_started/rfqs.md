@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-09-30T16:39:31.612Z
+lastmod: 2026-10-19T19:26:21.196Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -79,6 +79,14 @@ Quoters do not specify a size. Each quote is implicitly for the full RFQ amount 
 Prices must land on the market's price grid. Check `price_ranges` on `GET /markets/{ticker}` for the valid step size.
 
 A new quote on the same RFQ replaces the maker's previous quote.
+
+### Post-only quotes
+
+If a confirmed quote is cancelled because the maker's
+post-only order would cross the book at execution, that cancellation counts
+toward the same quoting penalties as failing to confirm an accepted quote.
+Repeated failures can temporarily rate limit the maker's ability to create new
+quotes.
 
 ## Timing
 

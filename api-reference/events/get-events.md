@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/events/get-events
-lastmod: 2026-10-16T22:31:43.199Z
+lastmod: 2026-10-19T20:37:48.034Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -381,7 +381,15 @@ components:
         details:
           type: object
           additionalProperties: true
-          description: Additional details about the milestone.
+          description: >-
+            Additional details about the milestone. `details.status`, when
+            present, is maintained by a periodic background job. It lags the
+            game's live state and may be stale or inaccurate, for example
+            remaining `live` after the game ends. For game status, prefer live
+            data, which is updated far more often: `live_data.details.status`
+            from `GET /live_data/milestone/{milestone_id}`, or each entry's
+            `details.status` from `GET /live_data/batch`. Scores are in the
+            sport-specific fields of that live data `details` object.
         primary_event_tickers:
           type: array
           items:

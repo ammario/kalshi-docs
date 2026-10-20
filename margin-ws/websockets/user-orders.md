@@ -135,11 +135,9 @@ operations:
                   - name: last_update_reason
                     type: string
                     description: >-
-                      Margin order update reason when the delta corresponds to
-                      the authenticated user's order. CloseCancel and HaltCancel
-                      are reserved; the current orderbook stream filters out
-                      these operations. The field is omitted when no reason
-                      applies.
+                      Margin order update reason. The value ReduceOnlyCancel
+                      means reduce_only capped the order at placement. The field
+                      is omitted when no reason applies.
                     enumValues:
                       - Decrease
                       - Amend
@@ -181,7 +179,7 @@ operations:
             type:
               type: string
               const: user_order
-              x-parser-schema-id: <anonymous-schema-95>
+              x-parser-schema-id: <anonymous-schema-109>
             sid:
               type: integer
               description: >-
@@ -206,14 +204,14 @@ operations:
                 order_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-97>
+                  x-parser-schema-id: <anonymous-schema-111>
                 user_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-98>
+                  x-parser-schema-id: <anonymous-schema-112>
                 client_order_id:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-99>
+                  x-parser-schema-id: <anonymous-schema-113>
                 ticker:
                   type: string
                   description: Unique market identifier
@@ -228,17 +226,17 @@ operations:
                   type: string
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-100>
+                  x-parser-schema-id: <anonymous-schema-114>
                 fill_count:
                   type: string
                   x-rust-type: common::types::Amount
                   x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-101>
+                  x-parser-schema-id: <anonymous-schema-115>
                 remaining_count:
                   type: string
                   x-rust-type: common::types::Amount
                   x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-102>
+                  x-parser-schema-id: <anonymous-schema-116>
                 self_trade_prevention_type:
                   type: string
                   enum:
@@ -251,22 +249,22 @@ operations:
                   description: >-
                     Order group identifier, if the order belongs to an order
                     group
-                  x-parser-schema-id: <anonymous-schema-103>
+                  x-parser-schema-id: <anonymous-schema-117>
                 expiration_ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-104>
+                  x-parser-schema-id: <anonymous-schema-118>
                 created_ts_ms:
                   type: *ref_0
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-105>
+                  x-parser-schema-id: <anonymous-schema-119>
                 last_updated_ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-106>
+                  x-parser-schema-id: <anonymous-schema-120>
                 last_update_reason:
                   type: string
                   enum:
@@ -281,14 +279,13 @@ operations:
                     - PostOnlyCrossCancel
                     - ReduceOnlyCancel
                   description: >-
-                    Margin order update reason when the delta corresponds to the
-                    authenticated user's order. CloseCancel and HaltCancel are
-                    reserved; the current orderbook stream filters out these
-                    operations. The field is omitted when no reason applies.
+                    Margin order update reason. The value ReduceOnlyCancel means
+                    reduce_only capped the order at placement. The field is
+                    omitted when no reason applies.
                   x-parser-schema-id: lastUpdateReason
                 subaccount_number:
                   type: integer
-                  x-parser-schema-id: <anonymous-schema-107>
+                  x-parser-schema-id: <anonymous-schema-121>
                 order_source:
                   type: string
                   enum:
@@ -297,8 +294,8 @@ operations:
                   description: |
                     `system` for liquidations and margin exit or trailing-stop
                     triggers. `user` for every other order.
-                  x-parser-schema-id: <anonymous-schema-108>
-              x-parser-schema-id: <anonymous-schema-96>
+                  x-parser-schema-id: <anonymous-schema-122>
+              x-parser-schema-id: <anonymous-schema-110>
             sending_ts_ms:
               type: integer
               format: int64

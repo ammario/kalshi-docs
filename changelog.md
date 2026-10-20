@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-16T22:31:48.404Z
+lastmod: 2026-10-19T21:50:46.241Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,97 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="October 22, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "External feeds are moving to a dedicated hostname",
+description: "External feeds are moving to dedicated production and demo hostnames. Existing feed URLs remain supported during the migration."
+}}
+>
+  External feeds are moving from
+  `wss://external-api.kalshi.com/trade-api/v2/external-feeds` to
+  `wss://external-feeds.kalshi.com/trade-api/v2/external-feeds`. The replacement
+  demo URL is `wss://external-feeds.demo.kalshi.co/trade-api/v2/external-feeds`.
+
+  Existing feed URLs remain supported during the migration. Update your
+  connection URL when the new endpoint is available. This change does not alter
+  Trade API REST or standard WebSocket URLs.
+
+  The `/trade-api/v2/external-feeds` path, API-key signing, channel entitlements,
+  subscriptions, and payloads stay the same. Both old and new feed Origins are
+  accepted during the migration window. Clients that explicitly send the old
+  feed hostname as `Origin` should update that header with the connection URL. See
+  [External Feeds WebSocket](/getting_started/api_environments#external-feeds-websocket)
+  for the endpoint and Origin details.
+</Update>
+
+<Update
+  label="October 22, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "Intra-account transfers return client_transfer_id",
+description: "Intra-account transfers return client_transfer_id."
+}}
+>
+  `GET /portfolio/intra_exchange_instance_transfers` and
+  `GET /portfolio/intra_exchange_instance_transfers/{transfer_id}` optionally return the
+  `client_transfer_id` sent with `POST /portfolio/intra_exchange_instance_transfer`.
+</Update>
+
+<Update
+  label="October 19, 2026"
+  tags={["REST", "FIX", "Predictions"]}
+  rss={{
+title: "Post-only RFQ cancellations count toward quoting penalties",
+description: "Post-only RFQ cancellations count toward quoting penalties"
+}}
+>
+  Kalshi continues to support post-only RFQ quotes. However, if the maker's
+  post-only order would cross the book at execution, the resulting cancellation
+  now counts toward the same quoting penalties as failing to confirm an
+  accepted quote. Repeated failures can temporarily rate limit new quotes.
+
+  See [Post-only quotes](/getting_started/rfqs#post-only-quotes).
+</Update>
+
+<Update
+  label="October 22, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Milestone details.status lags live data",
+description: "A milestone's details.status is updated by a periodic job and can be stale; prefer the live data endpoints for game status."
+}}
+>
+  A milestone's `details.status`, when present, is maintained by a periodic
+  background job. It lags the game's live state and may be stale or
+  inaccurate, for example remaining `live` after the game ends. For game
+  status, prefer live data, which is updated far more often:
+  `live_data.details.status` from `GET /live_data/milestone/{milestone_id}`, or
+  each entry's `details.status` from `GET /live_data/batch`. Scores are in the
+  sport-specific fields of that live data `details` object.
+  This is a documentation clarification of existing behavior.
+</Update>
+
+<Update label="October 22, 2026" tags={["WebSocket", "Predictions", "Margin"]}>
+  Added support for cache-specific Redis authentication and verified TLS for WebSocket session and request limits.
+</Update>
+
+<Update
+  label="October 22, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "User-order timestamps use millisecond precision",
+description: "The legacy time strings in prediction user-order messages are truncated to milliseconds."
+}}
+>
+  On the `user_orders` channel, `user_order` messages now truncate
+  `created_time`, `last_update_time`, and `expiration_time` to milliseconds
+  without rounding. For example, `.123456Z` becomes `.123Z`. These fields
+  remain RFC3339 strings and agree with the existing `created_ts_ms`,
+  `last_updated_ts_ms`, and `expiration_ts_ms` fields.
+</Update>
 
 <Update
   label="October 22, 2026"
@@ -89,6 +180,63 @@ description: "OrderMassCancelRequest (35=q) accepts 530=1 with Symbol (55) to ca
   Registered MCP clients can read portfolio balances, positions, orders and fills using explicitly granted `read::mcp_portfolio` OAuth access. These grants do not allow order execution or funding changes. Already-public market, event and series reads accept a resource-bound MCP grant for per-user rate accounting; their anonymous payloads remain unchanged.
 
   `GET /events/{event_ticker}` accepts `exclude_markets=true` for metadata-only reads. Retrieve bounded outcome pages with `GET /markets?event_ticker=...&limit=...&cursor=...`.
+</Update>
+
+<Update
+  label="October 22, 2026"
+  tags={["FIX", "Margin"]}
+  rss={{
+title: "Applied margin corporate action events",
+description: "Margin KalshiNR and KalshiRT sessions receive stock splits, final settlements and ticker changes as SecurityStatus messages."
+}}
+>
+  Every margin KalshiNR and KalshiRT session receives a `SecurityStatus (35=f)` when
+  the exchange applies a stock split, final settlement or ticker change, after that
+  market's earlier execution reports. Every event carries
+  `SecurityTradingEvent (1174)=9` and the notice ID from
+  `GET /trade-api/v2/margin/corporate_actions` in tag `20190`, with standard action
+  codes and final settlement prices in dollars. `Symbol (55)` is the market's
+  current ticker. KalshiRT retains these messages for retransmission. Cash corporate
+  actions are not sent, and KalshiMD sessions do not receive these messages. See
+  [Order Entry](/fix-margin/order-entry).
+</Update>
+
+<Update
+  label="October 22, 2026"
+  tags={["WebSocket", "Margin"]}
+  rss={{
+title: "Applied margin corporate actions channel",
+description: "Subscribe to corporate_actions for stock splits, final settlements and ticker changes as the exchange applies them."
+}}
+>
+  The public margin `corporate_actions` channel sends a `corporate_actions_delta`
+  when the exchange applies a stock split, final settlement or ticker change, with no
+  initial snapshot. Each message carries the notice `id` from
+  `GET /trade-api/v2/margin/corporate_actions`, `type`, `ts_ms` and exactly one matching
+  terms object: `split`, `final_settlement` or `ticker_change`. Prices are dollar strings.
+  Cash corporate actions are not streamed. Positions are not streamed over WebSocket,
+  and an applied corporate action can change positions and balances without a fill:
+  re-fetch them from `GET /trade-api/v2/margin/positions` and
+  `GET /trade-api/v2/margin/balance` after each event.
+</Update>
+
+<Update
+  label="October 22, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin corporate action notices",
+description: "GET /trade-api/v2/margin/corporate_actions publishes typed notices with nested terms."
+}}
+>
+  `GET /trade-api/v2/margin/corporate_actions` returns scheduled notices and
+  notices updated in the last seven days, with optional `ticker` and `market_id` filters.
+  Notices are sorted by ex-date ascending (earliest first), with undated notices last.
+  Ties are ordered by `updated_ts` ascending, then `id` ascending.
+  Each notice carries a stable id, market identity, `type`, `updated_ts` and a
+  `scheduled`, `cancelled`, `applied` or `lapsed` status. Scheduled, applied and
+  lapsed notices include `execution_time` and exactly one matching terms object:
+  `cash` for dividends and spin-offs, `split`, `final_settlement` or `ticker_change`.
+  Amounts are dollar strings. Cancelled notices omit all terms and `execution_time`.
 </Update>
 
 <Update

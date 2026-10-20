@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-settlement-balance-withdrawal
-lastmod: 2026-10-16T22:31:43.026Z
+lastmod: 2026-10-19T20:37:47.834Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -103,6 +103,7 @@ components:
             - processing
             - processed
             - failed
+            - cancelled
         created_ts:
           type: string
           format: date-time

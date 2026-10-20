@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-intra-account-transfer
-lastmod: 2026-10-16T22:31:43.400Z
+lastmod: 2026-10-19T20:37:48.262Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -119,6 +119,12 @@ components:
         transfer_id:
           type: string
           description: Unique transfer id
+        client_transfer_id:
+          type: string
+          x-go-type-skip-optional-pointer: true
+          description: >-
+            The client_transfer_id provided when the transfer was created.
+            Omitted if none was provided.
         source:
           $ref: '#/components/schemas/ExchangeInstance'
           description: Source exchange instance

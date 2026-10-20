@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-live-data
-lastmod: 2026-10-16T22:31:43.741Z
+lastmod: 2026-10-19T20:37:48.605Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-10-16T22:31:43.741Z
 
 # Get Live Data
 
-> Get live data for a specific milestone.
+> Get live data for a specific milestone. The response's `live_data.details.status` is updated far more often than the milestone's own `details.status` and is the preferred source for game status. It is not guaranteed to be current: if the provider feed falls behind, a cached board may still be served, with `live_data.details.live_data_delayed` set to `true` only once it is significantly stale (some feeds never set it), so a missing flag does not by itself mean the data is current.
 
 
 
@@ -69,7 +69,15 @@ paths:
       tags:
         - live-data
       summary: Get Live Data
-      description: Get live data for a specific milestone.
+      description: >-
+        Get live data for a specific milestone. The response's
+        `live_data.details.status` is updated far more often than the
+        milestone's own `details.status` and is the preferred source for game
+        status. It is not guaranteed to be current: if the provider feed falls
+        behind, a cached board may still be served, with
+        `live_data.details.live_data_delayed` set to `true` only once it is
+        significantly stale (some feeds never set it), so a missing flag does
+        not by itself mean the data is current.
       operationId: GetLiveDataByMilestone
       parameters:
         - name: milestone_id

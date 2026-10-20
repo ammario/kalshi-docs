@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-funding-schedule
-lastmod: 2026-10-16T22:31:42.981Z
+lastmod: 2026-10-19T20:37:47.781Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

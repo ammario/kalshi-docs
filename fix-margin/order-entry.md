@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-10-16T00:23:40.847Z
+lastmod: 2026-10-20T00:01:26.148Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -253,13 +253,17 @@ Execution reports independently include the customer account when applicable and
 
 ## Mass Cancel Request (35=q)
 
-Cancel resting orders in bulk. Only available on KalshiNR (NewOrderMode) sessions. `530=6` cancels every resting order placed over FIX with the session's API key. `530=1` cancels every resting order the account has in the market named by `Symbol<55>`, both sides, however it was placed; it is billed like an order cancel (35=F).
+Cancel resting orders in bulk. Only available on KalshiNR (NewOrderMode) sessions. `530=6` cancels every resting order placed over FIX with the session's API key. `530=1` cancels every resting order the account has in the market named by `Symbol<55>`, both sides, however it was placed, or only one subaccount's when the request names it; it is billed like an order cancel (35=F).
 
 | Tag | Name | Description |
 | - | - | - |
 | 11 | ClOrderID | Unique request ID |
 | 530 | MassCancelRequestType | Cancel for session\<6> or Cancel orders for a security\<1> |
 | 55 | Symbol | Market ticker. Required when `530=1`. |
+| 448 | PartyID | Only applicable for FCM entities. Customer-account identifier. With `530=1`, cancels only that customer account's orders in the market. |
+| 452 | PartyRole | Only applicable for FCM entities. Supported value: `24 = Customer Account` |
+| 453 | NoPartyIDs | Only applicable for FCM entities. Currently only `1` is supported. |
+| 79 | AllocAccount | Subaccount number (0-63). With `530=1`, cancels only that subaccount's orders in the market; omit to cancel across all subaccounts. Not used with `530=6`. |
 
 ## Mass Cancel Report (35=r)
 
@@ -276,6 +280,38 @@ Response to mass cancel request.
 <Note>
   The report acknowledges the request. Individual ExecutionReports follow for each cancelled order.
 </Note>
+
+## Corporate actions: SecurityStatus (35=f)
+
+Every **KalshiNR** and **KalshiRT** session, including listener sessions, receives a `SecurityStatus (35=f)` when the exchange applies a stock split, final settlement or ticker change to any margin market. No request is needed, and cash corporate actions are not sent. Each message follows that market's earlier execution reports. KalshiRT retains these messages for retransmission like its other messages; KalshiNR sends nothing missed while disconnected, and KalshiMD sessions do not receive them. An applied corporate action can change positions and balances without a fill. Use `GET /trade-api/v2/margin/corporate_actions` for upcoming and recent notices, including cash actions.
+
+Every event carries `CorporateActionNoticeID<20190>`, the `id` of the matching notice in `GET /trade-api/v2/margin/corporate_actions`. `TransactTime<60>` is when the exchange applied the action. Money fields are in dollars.
+
+| Tag | Name | Type | Presence | Description |
+| - | - | - | - | - |
+| 55 | Symbol | String | Always | Margin market ticker; the new ticker for a ticker change. |
+| 325 | UnsolicitedIndicator | Boolean | Always | `Y`. |
+| 20190 | CorporateActionNoticeID | String | Always | Notice ID. |
+| 60 | TransactTime | UTCTimestamp | Always | Exchange timestamp, in UTC with microsecond precision. |
+| 58 | Text | String | Always | Human-readable action; the split ratio or old and new tickers where applicable. |
+| 292 | CorporateAction | MultipleCharValue | Splits and ticker changes | Action code in the table below. |
+| 1174 | SecurityTradingEvent | Int | Always | `9`=CorporateAction, indicating that the action occurred. |
+| 730 | SettlementPrice | Price | Final settlement | Settlement price per contract. |
+| 731 | SettlementPriceType | Int | With 730 | `1`=Final. |
+
+| Action | CorporateAction (292) |
+| - | - |
+| Forward split with integer new/old ratio | `J`=StandardIntegerStockSplit |
+| Forward split with non-integer new/old ratio | `H`=NonIntegerStockSplit |
+| Reverse split (new ratio less than old ratio) | `I`=ReverseStockSplit |
+| Ticker change | `T`=SymbolConversion |
+| Final settlement | Omitted; the reason is on the REST notice |
+
+```fix Example applied split theme={null}
+8=FIXT.1.1|35=f|49=KalshiNR|56=your-api-key|55=KXMUPERP1|58=Corporate action review-uuid: split 1 to 4|60=20261013-20:00:01.123456|292=J|325=Y|1174=9|20190=review-uuid|
+```
+
+The message model follows [FIX Latest Pre-Trade EP284 sections 8.1.13 and 19.1.10](https://fixtrading.org/packages/fix-latest-specification-pre-trade/). The action codes follow the [FIX Latest CorporateAction code set](https://orchimate.org/fixtrading/fix-latest/codeSets/CorporateActionCodeSet). Security master messages `35=c`, `35=d`, and `35=BP` are not used; splits do not change contract terms.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

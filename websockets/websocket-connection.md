@@ -310,7 +310,6 @@ operations:
                   items: &ref_4
                     type: string
                     description: Unique market identifier
-                    pattern: ^[A-Z0-9-]+$
                     examples: *ref_0
                     x-parser-schema-id: marketTicker
                   minItems: 1
