@@ -46,17 +46,15 @@ For example: `550e8400-e29b-41d4-a716-446655440000_customer1`.
 
 Order Cancel and Order Cancel/Replace requests must use the same full identifier as the original order. Execution Reports return the full customer-account identifier unchanged in the `PartyRole=24` entry, including the UUID prefix, underscore, and suffix. A `PartyRole=12` entry instead contains the operator identifier captured from `SenderSubID<50>`.
 
-<Note>
-  `SenderSubID<50>` is captured on an ordinary NewOrderSingle and, per action, on OrderCancelRequest and OrderCancelReplaceRequest; it is ignored on RFQ quote acceptance. The operator on a NewOrderSingle sticks to the order: fills and other lifecycle reports emit it as the PartyRole=12 party. Cancel and Cancel/Replace acknowledgements instead emit the operator sent on that request — the operator who performed the action — falling back to the order's creating operator when the request carried none. Do not send tag 50 on Logon: Kalshi rejects that Logon.
-</Note>
+> [!NOTE]
+>
+> `SenderSubID<50>` is captured on an ordinary NewOrderSingle and, per action, on OrderCancelRequest and OrderCancelReplaceRequest; it is ignored on RFQ quote acceptance. The operator on a NewOrderSingle sticks to the order: fills and other lifecycle reports emit it as the PartyRole=12 party. Cancel and Cancel/Replace acknowledgements instead emit the operator sent on that request — the operator who performed the action — falling back to the order's creating operator when the request carried none. Do not send tag 50 on Logon: Kalshi rejects that Logon.
 
-<CodeGroup>
-  ```fix Example New Order theme={null}
-  8=FIXT.1.1|9=200|35=D|34=5|52=20230809-12:34:56.789|49=your-api-key|56=KalshiNR|
-  11=550e8400-e29b-41d4-a716-446655440000|38=10|40=2|54=1|55=HIGHNY-23DEC31|44=75|
-  59=1|10=123|
-  ```
-</CodeGroup>
+```fix Example New Order theme={null}
+8=FIXT.1.1|9=200|35=D|34=5|52=20230809-12:34:56.789|49=your-api-key|56=KalshiNR|
+11=550e8400-e29b-41d4-a716-446655440000|38=10|40=2|54=1|55=HIGHNY-23DEC31|44=75|
+59=1|10=123|
+```
 
 ## Order Cancel/Replace Request (35=G)
 
@@ -167,10 +165,10 @@ the original Day value.
 * **Expired\<C>**: Time in force expired
 * **Pending Replace\<E>**: Modification pending
 
-<Note>
-  By default, expiry-style system cancellations are reported as **Canceled\<4>**.\
-  If Logon tag **21012 (UseExpiredOrdStatus)=Y**, expiry-style system cancellations (CloseCancel and OrderExpiryCancel) are reported as **Expired\<C>**.
-</Note>
+> [!NOTE]
+>
+> By default, expiry-style system cancellations are reported as **Canceled\<4>**.\
+> If Logon tag **21012 (UseExpiredOrdStatus)=Y**, expiry-style system cancellations (CloseCancel and OrderExpiryCancel) are reported as **Expired\<C>**.
 
 ### Order Rejection Reasons (103)
 
@@ -324,9 +322,9 @@ Response to mass cancel request.
 | 531 | MassCancelResponse | Cancel orders for a security\<1>, Cancel for session\<6>, or Rejected\<0> |
 | 532 | MassCancelRejectReason | If rejected: Invalid or unknown security\<1> or Other\<99> |
 
-<Note>
-  The report acknowledges the request. Individual ExecutionReports will follow for each canceled order.
-</Note>
+> [!NOTE]
+>
+> The report acknowledges the request. Individual ExecutionReports will follow for each canceled order.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

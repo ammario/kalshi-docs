@@ -149,7 +149,7 @@ operations:
                     type: string
                     description: >-
                       Deprecated - Timestamp for when the update happened
-                      (RFC3339). Use ts_ms instead.
+                      (RFC3339, truncated to milliseconds). Use ts_ms instead.
                     deprecated: true
                     required: true
               - name: sending_ts_ms
@@ -169,7 +169,7 @@ operations:
             type:
               type: string
               const: ticker
-              x-parser-schema-id: <anonymous-schema-91>
+              x-parser-schema-id: <anonymous-schema-93>
             sid:
               type: integer
               description: >-
@@ -211,57 +211,57 @@ operations:
                   description: Last traded price in dollars
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-93>
+                  x-parser-schema-id: <anonymous-schema-95>
                 yes_bid_dollars:
                   type: string
                   description: Best bid price for yes side in dollars
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-94>
+                  x-parser-schema-id: <anonymous-schema-96>
                 yes_ask_dollars:
                   type: string
                   description: Best ask price for yes side in dollars
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-95>
+                  x-parser-schema-id: <anonymous-schema-97>
                 volume_fp:
                   type: string
                   description: Fixed-point total contracts traded (2 decimals)
                   x-rust-type: i64
                   x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-96>
+                  x-parser-schema-id: <anonymous-schema-98>
                 open_interest_fp:
                   type: string
                   description: Fixed-point open interest (2 decimals)
                   x-rust-type: i64
                   x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-97>
+                  x-parser-schema-id: <anonymous-schema-99>
                 dollar_volume:
                   type: integer
                   description: Signed whole-dollar cumulative traded notional
-                  x-parser-schema-id: <anonymous-schema-98>
+                  x-parser-schema-id: <anonymous-schema-100>
                 dollar_open_interest:
                   type: integer
                   description: Signed whole-dollar open-interest notional
-                  x-parser-schema-id: <anonymous-schema-99>
+                  x-parser-schema-id: <anonymous-schema-101>
                 yes_bid_size_fp:
                   type: string
                   description: Fixed-point contracts at best bid (2 decimals)
                   x-rust-type: i64
                   x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-100>
+                  x-parser-schema-id: <anonymous-schema-102>
                 yes_ask_size_fp:
                   type: string
                   description: Fixed-point contracts at best ask (2 decimals)
                   x-rust-type: i64
                   x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-101>
+                  x-parser-schema-id: <anonymous-schema-103>
                 last_trade_size_fp:
                   type: string
                   description: Fixed-point contracts in last trade (2 decimals)
                   x-rust-type: common::types::Amount
                   x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-102>
+                  x-parser-schema-id: <anonymous-schema-104>
                 ts:
                   type: integer
                   deprecated: true
@@ -269,23 +269,23 @@ operations:
                     Deprecated - Unix timestamp for when the update happened (in
                     seconds). Use ts_ms instead.
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-103>
+                  x-parser-schema-id: <anonymous-schema-105>
                 ts_ms:
                   type: integer
                   description: >-
                     Unix timestamp for when the update happened (in
                     milliseconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-104>
+                  x-parser-schema-id: <anonymous-schema-106>
                 time:
                   type: string
                   deprecated: true
                   description: >-
                     Deprecated - Timestamp for when the update happened
-                    (RFC3339). Use ts_ms instead.
+                    (RFC3339, truncated to milliseconds). Use ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-105>
-              x-parser-schema-id: <anonymous-schema-92>
+                  x-parser-schema-id: <anonymous-schema-107>
+              x-parser-schema-id: <anonymous-schema-94>
             sending_ts_ms:
               type: integer
               format: int64

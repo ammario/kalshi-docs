@@ -10,9 +10,9 @@ lastmod: 2026-10-01T02:15:45.446Z
 
 > API Key usage
 
-<Info>
-  This process is the same for the demo or production environment.
-</Info>
+> [!NOTE]
+>
+> This process is the same for the demo or production environment.
 
 ## Key types
 
@@ -81,9 +81,9 @@ The following header values will need to be provided with each request:
 
 The signature is the base64 encoding of the signed concatenation of the timestamp, the HTTP method and the path. Ed25519 keys sign the string directly; RSA keys use RSA-PSS with SHA-256 (MGF1 with SHA-256, salt length equal to the digest length).
 
-<Warning>
-  **Important**: When signing requests, use the path **without query parameters**. For example, if your request is to `/trade-api/v2/portfolio/orders?limit=5`, sign only `/trade-api/v2/portfolio/orders` (strip the `?` and everything after it).
-</Warning>
+> [!WARNING]
+>
+> **Important**: When signing requests, use the path **without query parameters**. For example, if your request is to `/trade-api/v2/portfolio/orders?limit=5`, sign only `/trade-api/v2/portfolio/orders` (strip the `?` and everything after it).
 
 The samples below detect the key type and sign accordingly. For end-to-end examples, see [Quick Start: Authenticated Requests](/getting_started/quick_start_authenticated_requests). The official Python and TypeScript SDKs accept either key type from version 3.31.0.
 

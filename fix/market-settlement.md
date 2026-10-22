@@ -124,10 +124,10 @@ Large settlement batches may span multiple messages:
 | 20106 | Total number of reports in batch |
 | 893 | LastFragment=N for more pages, Y for last |
 
-<Warning>
-  **Important:** The `MarketSettlementReportID` (tag 20105) will be different across paginated responses.
-  Each page of results generates a new unique settlement ID. Use the `Symbol` (tag 55) ticker to identify fragments belonging to the same paginated settlement.
-</Warning>
+> [!WARNING]
+>
+> **Important:** The `MarketSettlementReportID` (tag 20105) will be different across paginated responses.
+> Each page of results generates a new unique settlement ID. Use the `Symbol` (tag 55) ticker to identify fragments belonging to the same paginated settlement.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

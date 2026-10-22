@@ -34,9 +34,9 @@ The cutoff timestamps will be regularly updated, advancing forward over time. Ea
 | `orders_updated_ts` | Order cancellation or execution time | Orders canceled or fully executed before this timestamp are only available via `GET /historical/orders` |
 | `market_positions_last_updated_ts` | Position last-update time | Backfill horizon for settled positions. A position becomes visible in `GET /historical/positions` only after its event completes the live-to-historical handoff. Until then, read it with `GET /portfolio/positions?settlement_status=settled`, even if its last update predates this timestamp. |
 
-<Note>
-  Resting (active) orders are unaffected and always appear in `GET /portfolio/orders`, regardless of the cutoff. Unsettled positions always appear in `GET /portfolio/positions`. That endpoint defaults to unsettled positions; set `settlement_status=settled` for settled positions still live, or `settlement_status=all` for both live states.
-</Note>
+> [!NOTE]
+>
+> Resting (active) orders are unaffected and always appear in `GET /portfolio/orders`, regardless of the cutoff. Unsettled positions always appear in `GET /portfolio/positions`. That endpoint defaults to unsettled positions; set `settlement_status=settled` for settled positions still live, or `settlement_status=all` for both live states.
 
 ## Historical Endpoints
 
@@ -72,9 +72,9 @@ The following live endpoints stop returning records after those records move to 
 
 `GET /portfolio/settlements` reads only settled positions still in the live data set. After archival, `GET /historical/positions` provides position, realized P\&L, and fee data, but there is currently no historical endpoint with the same settlement-record fields.
 
-<Info>
-  The historical endpoints support the same [cursor-based pagination](/getting_started/pagination) as their live counterparts.
-</Info>
+> [!NOTE]
+>
+> The historical endpoints support the same [cursor-based pagination](/getting_started/pagination) as their live counterparts.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

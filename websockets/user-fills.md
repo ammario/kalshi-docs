@@ -205,7 +205,7 @@ operations:
             type:
               type: string
               const: fill
-              x-parser-schema-id: <anonymous-schema-115>
+              x-parser-schema-id: <anonymous-schema-117>
             sid:
               type: integer
               description: >-
@@ -239,18 +239,18 @@ operations:
                     Unique identifier for fills. This is what you use to
                     differentiate fills
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-117>
+                  x-parser-schema-id: <anonymous-schema-119>
                 order_id:
                   type: string
                   description: >-
                     Unique identifier for orders. This is what you use to
                     differentiate fills for different orders
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-118>
+                  x-parser-schema-id: <anonymous-schema-120>
                 client_order_id:
                   type: string
                   description: Optional client-provided order ID
-                  x-parser-schema-id: <anonymous-schema-119>
+                  x-parser-schema-id: <anonymous-schema-121>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -260,11 +260,11 @@ operations:
                   type: integer
                   description: Identifier for the exchange shard where the fill occurred
                   x-rust-type: i32
-                  x-parser-schema-id: <anonymous-schema-120>
+                  x-parser-schema-id: <anonymous-schema-122>
                 is_taker:
                   type: boolean
                   description: If you were a taker on this fill
-                  x-parser-schema-id: <anonymous-schema-121>
+                  x-parser-schema-id: <anonymous-schema-123>
                 side: &ref_1
                   type: string
                   description: Market side
@@ -279,32 +279,32 @@ operations:
                     Deprecated - Unix timestamp for when the update happened (in
                     seconds). Use ts_ms instead.
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-122>
+                  x-parser-schema-id: <anonymous-schema-124>
                 ts_ms:
                   type: integer
                   description: >-
                     Unix timestamp for when the update happened (in
                     milliseconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-123>
+                  x-parser-schema-id: <anonymous-schema-125>
                 yes_price_dollars:
                   type: string
                   description: Price for the yes side of the fill in dollars
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-124>
+                  x-parser-schema-id: <anonymous-schema-126>
                 count_fp:
                   type: string
                   description: Fixed-point contracts filled (2 decimals)
                   x-rust-type: common::types::Amount
                   x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-125>
+                  x-parser-schema-id: <anonymous-schema-127>
                 fee_cost:
                   type: string
                   description: Exchange fee paid for this fill in fixed-point dollars
                   x-rust-type: common::types::Value
                   x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
-                  x-parser-schema-id: <anonymous-schema-126>
+                  x-parser-schema-id: <anonymous-schema-128>
                 action:
                   type: string
                   description: >-
@@ -322,7 +322,7 @@ operations:
                   description: Fixed-point position after the fill (2 decimals)
                   x-rust-type: common::types::Position
                   x-rust-serialize-with: ws::dto::serde_money::serialize_position_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-127>
+                  x-parser-schema-id: <anonymous-schema-129>
                 purchased_side: *ref_1
                 outcome_side: *ref_1
                 book_side:
@@ -338,8 +338,8 @@ operations:
                 subaccount:
                   type: integer
                   description: Optional subaccount number for the fill
-                  x-parser-schema-id: <anonymous-schema-128>
-              x-parser-schema-id: <anonymous-schema-116>
+                  x-parser-schema-id: <anonymous-schema-130>
+              x-parser-schema-id: <anonymous-schema-118>
             sending_ts_ms:
               type: integer
               format: int64

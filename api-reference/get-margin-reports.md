@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-margin-reports
-lastmod: 2026-10-19T20:37:47.662Z
+lastmod: 2026-10-21T16:37:38.989Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

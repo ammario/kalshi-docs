@@ -55,9 +55,9 @@ Market makers can disable this feature on the
 * The `exchange_index` field is provided on [`GET /markets`](/api-reference/market/get-markets), [`GET /events`](/api-reference/events/get-events), and via the [market and event lifecycle WebSocket streams](/websockets/market-and-event-lifecycle) for newly created events and markets.
 * Market ticker formats are unaffected by exchange sharding. The `exchange_index` field is the authoritative source of truth.
 
-<Warning>
-  Auto-routing requires the market ticker: provide `market_ticker` for API2 or `Symbol<55>` for FIX. An order ID alone cannot identify the exchange shard.
-</Warning>
+> [!WARNING]
+>
+> Auto-routing requires the market ticker: provide `market_ticker` for API2 or `Symbol<55>` for FIX. An order ID alone cannot identify the exchange shard.
 
 ### API2
 

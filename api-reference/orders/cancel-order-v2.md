@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order-v2
-lastmod: 2026-10-19T20:37:48.153Z
+lastmod: 2026-10-21T16:37:39.484Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,13 +10,13 @@ lastmod: 2026-10-19T20:37:48.153Z
 
 > Endpoint for cancelling event-market orders using the V2 response shape. To auto-route the cancellation, provide `market_ticker` and omit `exchange_index` or set it to `-1`. Returns `{order_id, client_order_id, reduced_by}` rather than a full order object.
 
-<Warning>
-  Auto-routing requires `market_ticker`. An `order_id` alone cannot identify the exchange shard.
-</Warning>
+> [!WARNING]
+>
+> Auto-routing requires `market_ticker`. An `order_id` alone cannot identify the exchange shard.
 
-<Note>
-  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
-</Note>
+> [!NOTE]
+>
+> **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
 
 
 ## OpenAPI

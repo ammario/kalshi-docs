@@ -45,37 +45,35 @@ Before any rebate, the user's balance changes by `aligned_change`, which is alwa
 
 The fee accumulator carries rounding overpayment across an order's fills. Rebates use the user's target balance precision: `$0.0001` for direct members and `$0.01` for non-direct members.
 
-<Note>
-  The fee accumulator is maintained per order across all fills regardless of whether the fills are taker or maker. If an order initially takes (matching resting orders) and then becomes a resting maker order, the accumulated rounding carries over to subsequent maker fills.
-</Note>
+> [!NOTE]
+>
+> The fee accumulator is maintained per order across all fills regardless of whether the fills are taker or maker. If an order initially takes (matching resting orders) and then becomes a resting maker order, the accumulated rounding carries over to subsequent maker fills.
 
 ## Worked Examples
 
-<AccordionGroup>
-  <Accordion title="FCM-cleared fill">
-    For a non-direct member with `$0.01` balance precision, suppose a buy has `-$0.055000` of signed revenue and a model fee of `$0.00363825`:
+> **FCM-cleared fill**
+>
+> For a non-direct member with `$0.01` balance precision, suppose a buy has `-$0.055000` of signed revenue and a model fee of `$0.00363825`:
+>
+> ```text theme={null}
+> trade fee      = ceil_6dp($0.00363825)           =  $0.003639
+> aligned change = floor_cent(-$0.055 - $0.003639) = -$0.060000
+> rounding fee   = (-$0.055 - $0.003639) - -$0.06  =  $0.001361
+> ```
+>
+> The balance changes by `-$0.06`; the trade fee plus rounding fee is exactly `$0.005`.
 
-    ```text theme={null}
-    trade fee      = ceil_6dp($0.00363825)           =  $0.003639
-    aligned change = floor_cent(-$0.055 - $0.003639) = -$0.060000
-    rounding fee   = (-$0.055 - $0.003639) - -$0.06  =  $0.001361
-    ```
-
-    The balance changes by `-$0.06`; the trade fee plus rounding fee is exactly `$0.005`.
-  </Accordion>
-
-  <Accordion title="Accumulator across fills">
-    If three fills each add `$0.004` of rounding overpayment, the accumulator carries it forward. Assuming the third fill has enough total fee to cover a `$0.01` rebate:
-
-    | Fill | Added | Before Rebate | Rebate | Carried Forward |
-    | -: | -: | -: | -: | -: |
-    | 1 | `$0.004` | `$0.004` | — | `$0.004` |
-    | 2 | `$0.004` | `$0.008` | — | `$0.008` |
-    | 3 | `$0.004` | `$0.012` | `$0.010` | `$0.002` |
-
-    This table uses a non-direct member's `$0.01` precision. Direct-member rebates follow the same mechanics in `$0.0001` increments. In either case, the rebate is capped so that the fill's net fee cannot become negative.
-  </Accordion>
-</AccordionGroup>
+> **Accumulator across fills**
+>
+> If three fills each add `$0.004` of rounding overpayment, the accumulator carries it forward. Assuming the third fill has enough total fee to cover a `$0.01` rebate:
+>
+> | Fill | Added | Before Rebate | Rebate | Carried Forward |
+> | -: | -: | -: | -: | -: |
+> | 1 | `$0.004` | `$0.004` | — | `$0.004` |
+> | 2 | `$0.004` | `$0.008` | — | `$0.008` |
+> | 3 | `$0.004` | `$0.012` | `$0.010` | `$0.002` |
+>
+> This table uses a non-direct member's `$0.01` precision. Direct-member rebates follow the same mechanics in `$0.0001` increments. In either case, the rebate is capped so that the fill's net fee cannot become negative.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

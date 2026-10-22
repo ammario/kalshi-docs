@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/update-fcm-subtrader-blocked-categories
-lastmod: 2026-10-19T20:37:48.819Z
+lastmod: 2026-10-21T16:37:40.133Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

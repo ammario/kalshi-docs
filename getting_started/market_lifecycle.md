@@ -96,19 +96,17 @@ The WebSocket `settled` event corresponds to settlement being processed; in REST
 
 ## FAQ
 
-<AccordionGroup>
-  <Accordion title="Why can `expected_expiration_time` be before `close_time`?">
-    `expected_expiration_time` is the time the event is likely to resolve (for a sports game, typically a few hours after the scheduled start). `close_time` is when the market automatically closes for trading, and may be set well into the future to allow for rescheduling. That means `expected_expiration_time` can be earlier than `close_time`.
-  </Accordion>
+> **Why can `expected_expiration_time` be before `close_time`?**
+>
+> `expected_expiration_time` is the time the event is likely to resolve (for a sports game, typically a few hours after the scheduled start). `close_time` is when the market automatically closes for trading, and may be set well into the future to allow for rescheduling. That means `expected_expiration_time` can be earlier than `close_time`.
 
-  <Accordion title="Why might `GET /markets/{ticker}` return `404` right after a `created` event?">
-    The market may not be queryable immediately after a `created` event. Retry with backoff.
-  </Accordion>
+> **Why might `GET /markets/\{ticker\}` return `404` right after a `created` event?**
+>
+> The market may not be queryable immediately after a `created` event. Retry with backoff.
 
-  <Accordion title="Do event responses include a top-level `status` field?">
-    `GET /events` supports a `status` filter with values `unopened`, `open`, `closed`, and `settled`. The filter matches on child market statuses, not an event-level status; an event appears in results if **any** of its child markets has a matching status. For example, an event with four open markets and one settled market matches both `status=open` and `status=settled`. Use `with_nested_markets=true` if you need individual market statuses.
-  </Accordion>
-</AccordionGroup>
+> **Do event responses include a top-level `status` field?**
+>
+> `GET /events` supports a `status` filter with values `unopened`, `open`, `closed`, and `settled`. The filter matches on child market statuses, not an event-level status; an event appears in results if **any** of its child markets has a matching status. For example, an event with four open markets and one settled market matches both `status=open` and `status=settled`. Use `with_nested_markets=true` if you need individual market statuses.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

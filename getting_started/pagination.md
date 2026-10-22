@@ -31,79 +31,77 @@ To paginate through results:
 
 ## Example: Paginating Through Markets
 
-<CodeGroup>
-  ```python Python theme={null}
-  import requests
+```python Python theme={null}
+import requests
 
-  def get_all_markets(series_ticker):
-      """Fetch all markets for a series, handling pagination"""
-      all_markets = []
-      cursor = None
-      base_url = "https://external-api.kalshi.com/trade-api/v2/markets"
+def get_all_markets(series_ticker):
+    """Fetch all markets for a series, handling pagination"""
+    all_markets = []
+    cursor = None
+    base_url = "https://external-api.kalshi.com/trade-api/v2/markets"
 
-      while True:
-          # Build URL with cursor if we have one
-          url = f"{base_url}?series_ticker={series_ticker}&limit=100"
-          if cursor:
-              url += f"&cursor={cursor}"
+    while True:
+        # Build URL with cursor if we have one
+        url = f"{base_url}?series_ticker={series_ticker}&limit=100"
+        if cursor:
+            url += f"&cursor={cursor}"
 
-          response = requests.get(url)
-          data = response.json()
+        response = requests.get(url)
+        data = response.json()
 
-          # Add markets from this page
-          all_markets.extend(data['markets'])
+        # Add markets from this page
+        all_markets.extend(data['markets'])
 
-          # Check if there are more pages
-          cursor = data.get('cursor')
-          if not cursor:
-              break
+        # Check if there are more pages
+        cursor = data.get('cursor')
+        if not cursor:
+            break
 
-          print(f"Fetched {len(data['markets'])} markets, total: {len(all_markets)}")
+        print(f"Fetched {len(data['markets'])} markets, total: {len(all_markets)}")
 
-      return all_markets
+    return all_markets
 
-  # Example usage
-  markets = get_all_markets("KXHIGHNY")
-  print(f"Total markets found: {len(markets)}")
-  ```
+# Example usage
+markets = get_all_markets("KXHIGHNY")
+print(f"Total markets found: {len(markets)}")
+```
 
-  ```javascript JavaScript theme={null}
-  async function getAllMarkets(seriesTicker) {
-    const allMarkets = [];
-    let cursor = null;
-    const baseUrl = 'https://external-api.kalshi.com/trade-api/v2/markets';
+```javascript JavaScript theme={null}
+async function getAllMarkets(seriesTicker) {
+  const allMarkets = [];
+  let cursor = null;
+  const baseUrl = 'https://external-api.kalshi.com/trade-api/v2/markets';
 
-    while (true) {
-      // Build URL with cursor if we have one
-      let url = `${baseUrl}?series_ticker=${seriesTicker}&limit=100`;
-      if (cursor) {
-        url += `&cursor=${cursor}`;
-      }
-
-      const response = await fetch(url);
-      const data = await response.json();
-
-      // Add markets from this page
-      allMarkets.push(...data.markets);
-
-      // Check if there are more pages
-      cursor = data.cursor;
-      if (!cursor) {
-        break;
-      }
-
-      console.log(`Fetched ${data.markets.length} markets, total: ${allMarkets.length}`);
+  while (true) {
+    // Build URL with cursor if we have one
+    let url = `${baseUrl}?series_ticker=${seriesTicker}&limit=100`;
+    if (cursor) {
+      url += `&cursor=${cursor}`;
     }
 
-    return allMarkets;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    // Add markets from this page
+    allMarkets.push(...data.markets);
+
+    // Check if there are more pages
+    cursor = data.cursor;
+    if (!cursor) {
+      break;
+    }
+
+    console.log(`Fetched ${data.markets.length} markets, total: ${allMarkets.length}`);
   }
 
-  // Example usage
-  getAllMarkets('KXHIGHNY').then(markets => {
-    console.log(`Total markets found: ${markets.length}`);
-  });
-  ```
-</CodeGroup>
+  return allMarkets;
+}
+
+// Example usage
+getAllMarkets('KXHIGHNY').then(markets => {
+  console.log(`Total markets found: ${markets.length}`);
+});
+```
 
 ## Pagination Parameters
 

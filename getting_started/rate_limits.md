@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-10-15T20:06:21.860Z
+lastmod: 2026-10-20T18:50:46.788Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -82,7 +82,7 @@ The whole batch must fit in the bucket at once. A 25-order create batch needs 25
 
 ## Perps limits use separate buckets
 
-Perps traffic is metered in its own Read and Write buckets. Above Basic, Perps Write buckets hold three seconds of budget across REST and FIX. Perps calls do not draw down your event-contract budgets, and event-contract calls do not draw down your perps budgets. Each exchange has its own Read budget and Write budgets.
+Perps traffic is metered in its own Read and Write buckets. Above Basic, Perps Write buckets hold three seconds of budget across REST and FIX. Perps calls do not draw down your event-contract budgets, and event-contract calls do not draw down your perps budgets. Each exchange has its own Read budget and Write budgets. See [Perps budgets](#perps-budgets) for per-tier perps budgets.
 
 Single-order Perps creates and amends use a Write budget per margin shard, with your full perps tier budget on each shard. The API and FIX share these budgets.
 
@@ -100,31 +100,57 @@ See the [Perps API](/margin) overview for the full perps surface.
 
 ## Tiers and budgets
 
+### Predictions budgets
+
 Per-second token budgets in each event-contract bucket:
 
-<div style={{width: '100%', overflowX: 'auto'}}>
-  <table style={{width: '100%', borderCollapse: 'collapse', fontSize: '1rem'}}>
-    <thead>
-      <tr style={{backgroundColor: 'rgba(255, 255, 255, 0.05)', borderBottom: '2px solid rgba(255, 255, 255, 0.1)'}}>
-        <th style={{padding: '1rem 1.5rem', textAlign: 'left', fontWeight: '600'}}>Tier</th>
-        <th style={{padding: '1rem 1.5rem', textAlign: 'right', fontWeight: '600'}}>Read budget</th>
-        <th style={{padding: '1rem 1.5rem', textAlign: 'right', fontWeight: '600'}}>Write budget</th>
-      </tr>
-    </thead>
+<table>
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>Read budget</th>
+      <th>Write budget</th>
+    </tr>
+  </thead>
 
-    <tbody>
-      <tr><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Basic</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>200</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>100</td></tr>
-      <tr style={{backgroundColor: 'rgba(255, 255, 255, 0.02)'}}><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Advanced</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>300</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>300</td></tr>
-      <tr><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Expert</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>600</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>600</td></tr>
-      <tr style={{backgroundColor: 'rgba(255, 255, 255, 0.02)'}}><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Premier</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>1,200</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>1,200</td></tr>
-      <tr><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Paragon</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>2,400</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>2,400</td></tr>
-      <tr style={{backgroundColor: 'rgba(255, 255, 255, 0.02)'}}><td style={{padding: '0.9rem 1.5rem', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>Prime</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>4,800</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right', borderBottom: '1px solid rgba(255, 255, 255, 0.1)'}}>4,800</td></tr>
-      <tr><td style={{padding: '0.9rem 1.5rem'}}>Prestige</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right'}}>12,000</td><td style={{padding: '0.9rem 1.5rem', textAlign: 'right'}}>9,600</td></tr>
-    </tbody>
-  </table>
-</div>
+  <tbody>
+    <tr><td>Basic</td><td>200</td><td>100</td></tr>
+    <tr><td>Advanced</td><td>300</td><td>300</td></tr>
+    <tr><td>Expert</td><td>600</td><td>600</td></tr>
+    <tr><td>Premier</td><td>1,200</td><td>1,200</td></tr>
+    <tr><td>Paragon</td><td>2,400</td><td>2,400</td></tr>
+    <tr><td>Prime</td><td>4,800</td><td>4,800</td></tr>
+    <tr><td>Prestige</td><td>12,000</td><td>9,600</td></tr>
+  </tbody>
+</table>
 
 Write bucket capacity is three times the per-second budget above the Basic tier.
+
+### Perps budgets
+
+Per-second token budgets in each perps bucket:
+
+<table>
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>Read budget</th>
+      <th>Write budget</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr><td>Basic</td><td>400</td><td>100</td></tr>
+    <tr><td>Advanced</td><td>600</td><td>300</td></tr>
+    <tr><td>Expert</td><td>600</td><td>600</td></tr>
+    <tr><td>Premier</td><td>1,000</td><td>1,000</td></tr>
+    <tr><td>Paragon</td><td>2,000</td><td>2,000</td></tr>
+    <tr><td>Prime</td><td>4,000</td><td>4,000</td></tr>
+    <tr><td>Prestige</td><td>6,000</td><td>8,000</td></tr>
+  </tbody>
+</table>
+
+Perps Write bucket capacity is three times the per-second budget above the Basic tier. Perps Read buckets hold one second of budget.
 
 ## Tier qualification
 

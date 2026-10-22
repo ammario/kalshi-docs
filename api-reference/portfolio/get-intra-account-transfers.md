@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-intra-account-transfers
-lastmod: 2026-10-19T20:37:48.255Z
+lastmod: 2026-10-21T16:37:39.618Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

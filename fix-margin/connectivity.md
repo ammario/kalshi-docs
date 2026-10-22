@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/connectivity
-lastmod: 2026-09-14T18:17:55.115Z
+lastmod: 2026-10-20T18:50:46.788Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,33 +12,31 @@ lastmod: 2026-09-14T18:17:55.115Z
 
 ## Endpoints
 
-<Tabs>
-  <Tab title="Production">
-    **Order Entry Host:** `margin-mm.fix.elections.kalshi.com`
+**Production**
 
-    **Market Data Host:** `margin-marketdata.fix.elections.kalshi.com`
+**Order Entry Host:** `margin-mm.fix.elections.kalshi.com`
 
-    | Purpose | Port | TargetCompID | Description |
-    | - | - | - | - |
-    | Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming |
-    | Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
-    | Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
-    | Market Data | 8233 | KalshiMD | Order book snapshots and incremental updates. Available only on market data host |
-  </Tab>
+**Market Data Host:** `margin-marketdata.fix.elections.kalshi.com`
 
-  <Tab title="Demo">
-    **Order Entry Host:** `margin-fix.demo.kalshi.co`
+| Purpose | Port | TargetCompID | Description |
+| - | - | - | - |
+| Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming |
+| Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
+| Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
+| Market Data | 8233 | KalshiMD | Order book snapshots and incremental updates. Available only on market data host |
 
-    **Market Data Host:** `margin-marketdata.fix.demo.kalshi.co`
+**Demo**
 
-    | Purpose | Port | TargetCompID | Description |
-    | - | - | - | - |
-    | Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming |
-    | Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
-    | Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
-    | Market Data | 8233 | KalshiMD | Order book snapshots and incremental updates. Available only on market data host |
-  </Tab>
-</Tabs>
+**Order Entry Host:** `margin-fix.demo.kalshi.co`
+
+**Market Data Host:** `margin-marketdata.fix.demo.kalshi.co`
+
+| Purpose | Port | TargetCompID | Description |
+| - | - | - | - |
+| Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming |
+| Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
+| Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
+| Market Data | 8233 | KalshiMD | Order book snapshots and incremental updates. Available only on market data host |
 
 Historical replay through `EventResendRequest` (`35=U1`) on both `KalshiNR` and `KalshiDC` requires [account allowlisting](/fix-margin/drop-copy). NR users can log in and trade without replay access.
 
@@ -78,7 +76,7 @@ Members on the Prime tier or above can also contact [institutional@kalshi.com](m
 * **Scope**: Application messages only (from client to server)
 * **Excluded**: Logout (35=5), Heartbeat (35=0), TestRequest (35=1)
 * Logon (35=A) **is** rate-limited.
-* Order-entry messages use the margin Write bucket. See [Rate Limits and Tiers](/getting_started/rate_limits) for tier budgets and token-cost behavior.
+* Order-entry messages use the margin Write bucket. See [Perps budgets](/getting_started/rate_limits#perps-budgets) for tier budgets and [Rate Limits and Tiers](/getting_started/rate_limits) for token-cost behavior.
 * Mass Cancel Request (35=q) is limited to 1 request/second.
 
 ## Maintenance Window

@@ -10,95 +10,71 @@ lastmod: 2026-06-25T16:39:29.738Z
 
 > Welcome to the Kalshi API documentation
 
-<div className="docs-home-hero">
-  <div className="docs-home-hero-bg docs-home-hero-bg-light" />
+# Welcome to Kalshi's API Documentation
 
-  <div className="docs-home-hero-bg docs-home-hero-bg-dark" />
+This documentation covers the Kalshi Exchange API for real-time market data and trade execution
 
-  <div className="docs-home-hero-content">
-    <h1 className="docs-home-hero-title">
-      Welcome to Kalshi's API Documentation
-    </h1>
+By continuing to use or access Kalshi's API, you are agreeing to be bound to our [Developer Agreement](https://kalshi.com/developer-agreement)
 
-    <p className="docs-home-hero-subtitle">
-      This documentation covers the Kalshi Exchange API for real-time market data and trade execution
-    </p>
+## The APIs
 
-    <p className="docs-home-hero-agreement">
-      <span>By continuing to use or access Kalshi's API, you are agreeing to be bound to our </span><a className="docs-home-hero-link" href="https://kalshi.com/developer-agreement" target="_blank" rel="noopener noreferrer">Developer Agreement</a>
-    </p>
-  </div>
-</div>
+> **[Predictions APIs](/api-reference)**
+>
+> Event-contract markets: REST, WebSocket, and FIX.
 
-<div className="docs-home-content">
-  <h2 className="docs-home-section-title">The APIs</h2>
+> **[Perps APIs](/margin)**
+>
+> Perpetual futures (margin): REST, WebSocket, and FIX.
 
-  <CardGroup cols={2}>
-    <Card title="Predictions APIs" icon="chart-line" href="/api-reference">
-      Event-contract markets: REST, WebSocket, and FIX.
-    </Card>
+## Get started
 
-    <Card title="Perps APIs" icon="chart-candlestick" href="/margin">
-      Perpetual futures (margin): REST, WebSocket, and FIX.
-    </Card>
-  </CardGroup>
+> **[Making Your First Request](/getting_started/making_your_first_request)**
+>
+> Make your first API call and start trading on Kalshi.
 
-  <h2 className="docs-home-section-title">Get started</h2>
+> **[Demo Environment](/getting_started/demo_env)**
+>
+> Build and test safely against the demo environment.
 
-  <CardGroup cols={4}>
-    <Card title="Making Your First Request" icon="rocket" href="/getting_started/making_your_first_request">
-      Make your first API call and start trading on Kalshi.
-    </Card>
+> **[API Keys](/getting_started/api_keys)**
+>
+> Generate and manage your API credentials.
 
-    <Card title="Demo Environment" icon="atom" href="/getting_started/demo_env">
-      Build and test safely against the demo environment.
-    </Card>
+> **[Kalshi Academy](https://help.kalshi.com/)**
+>
+> New to prediction markets? Explore educational resources and tutorials.
 
-    <Card title="API Keys" icon="key" href="/getting_started/api_keys">
-      Generate and manage your API credentials.
-    </Card>
+## Reference
 
-    <Card title="Kalshi Academy" icon="graduation-cap" href="https://help.kalshi.com/">
-      New to prediction markets? Explore educational resources and tutorials.
-    </Card>
-  </CardGroup>
+> **[Rate Limits](/getting_started/rate_limits)**
+>
+> Token budgets, tiers, and bursting.
 
-  <h2 className="docs-home-section-title">Reference</h2>
+> **[Changelog](/changelog)**
+>
+> Stay updated with the latest API changes.
 
-  <CardGroup cols={3}>
-    <Card title="Rate Limits" icon="gauge" href="/getting_started/rate_limits">
-      Token budgets, tiers, and bursting.
-    </Card>
+> **[Glossary](/getting_started/terms)**
+>
+> Key terms and concepts used across the exchange.
 
-    <Card title="Changelog" icon="list-tree" href="/changelog">
-      Stay updated with the latest API changes.
-    </Card>
+## Specifications
 
-    <Card title="Glossary" icon="book-open" href="/getting_started/terms">
-      Key terms and concepts used across the exchange.
-    </Card>
-  </CardGroup>
+> **[Predictions REST](/openapi.yaml)**
+>
+> Download `openapi.yaml` for event-contract REST API integration.
 
-  <h2 className="docs-home-section-title">Specifications</h2>
+> **[Predictions WebSocket](/asyncapi.yaml)**
+>
+> Download `asyncapi.yaml` for event-contract WebSocket integration.
 
-  <CardGroup cols={4}>
-    <Card title="Predictions REST" icon="file-code" href="/openapi.yaml">
-      Download `openapi.yaml` for event-contract REST API integration.
-    </Card>
+> **[Perps REST](/perps_openapi.yaml)**
+>
+> Download `perps_openapi.yaml` for perpetual futures REST API integration.
 
-    <Card title="Predictions WebSocket" icon="file-code" href="/asyncapi.yaml">
-      Download `asyncapi.yaml` for event-contract WebSocket integration.
-    </Card>
-
-    <Card title="Perps REST" icon="file-code" href="/perps_openapi.yaml">
-      Download `perps_openapi.yaml` for perpetual futures REST API integration.
-    </Card>
-
-    <Card title="Perps WebSocket" icon="file-code" href="/perps_asyncapi.yaml">
-      Download `perps_asyncapi.yaml` for perpetual futures WebSocket integration.
-    </Card>
-  </CardGroup>
-</div>
+> **[Perps WebSocket](/perps_asyncapi.yaml)**
+>
+> Download `perps_asyncapi.yaml` for perpetual futures WebSocket integration.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

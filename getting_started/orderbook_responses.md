@@ -24,32 +24,30 @@ No authentication is required for this endpoint.
 
 ### Example Request
 
-<CodeGroup>
-  ```python Python theme={null}
-  import requests
+```python Python theme={null}
+import requests
 
-  # Get orderbook for a specific market
-  market_ticker = "KXHIGHNY-24JAN01-T60"
-  url = f"https://external-api.kalshi.com/trade-api/v2/markets/{market_ticker}/orderbook"
+# Get orderbook for a specific market
+market_ticker = "KXHIGHNY-24JAN01-T60"
+url = f"https://external-api.kalshi.com/trade-api/v2/markets/{market_ticker}/orderbook"
 
-  response = requests.get(url)
-  orderbook_data = response.json()
-  ```
+response = requests.get(url)
+orderbook_data = response.json()
+```
 
-  ```javascript JavaScript theme={null}
-  // Get orderbook for a specific market
-  const marketTicker = "KXHIGHNY-24JAN01-T60";
-  const url = `https://external-api.kalshi.com/trade-api/v2/markets/${marketTicker}/orderbook`;
+```javascript JavaScript theme={null}
+// Get orderbook for a specific market
+const marketTicker = "KXHIGHNY-24JAN01-T60";
+const url = `https://external-api.kalshi.com/trade-api/v2/markets/${marketTicker}/orderbook`;
 
-  fetch(url)
-    .then(response => response.json())
-    .then(data => console.log(data));
-  ```
+fetch(url)
+  .then(response => response.json())
+  .then(data => console.log(data));
+```
 
-  ```curl cURL theme={null}
-  curl -X GET "https://external-api.kalshi.com/trade-api/v2/markets/KXHIGHNY-24JAN01-T60/orderbook"
-  ```
-</CodeGroup>
+```curl cURL theme={null}
+curl -X GET "https://external-api.kalshi.com/trade-api/v2/markets/KXHIGHNY-24JAN01-T60/orderbook"
+```
 
 ## Response Structure
 
@@ -104,9 +102,9 @@ Both values are strings to support subpenny pricing and fractional contract size
 
 ## Why Only Bids?
 
-<Info>
-  **Important**: Kalshi's orderbook only returns bids, not asks. This is because in binary prediction markets, there's a reciprocal relationship between YES and NO positions.
-</Info>
+> [!NOTE]
+>
+> **Important**: Kalshi's orderbook only returns bids, not asks. This is because in binary prediction markets, there's a reciprocal relationship between YES and NO positions.
 
 In binary prediction markets, every position has a complementary opposite:
 
@@ -157,67 +155,65 @@ spread = best_yes_ask - best_yes_bid  # $0.44 - $0.42 = $0.02
 
 ### Display Best Prices
 
-<CodeGroup>
-  ```python Python theme={null}
-  from decimal import Decimal
+```python Python theme={null}
+from decimal import Decimal
 
-  def display_best_prices(orderbook_data):
-      """Display the best bid prices and implied asks"""
-      ob = orderbook_data['orderbook_fp']
+def display_best_prices(orderbook_data):
+    """Display the best bid prices and implied asks"""
+    ob = orderbook_data['orderbook_fp']
 
-      # Best bids (if any exist)
-      if ob.get('yes_dollars'):
-          best_yes_bid = ob['yes_dollars'][-1][0]  # Last element is highest
-          print(f"Best YES Bid: ${best_yes_bid}")
+    # Best bids (if any exist)
+    if ob.get('yes_dollars'):
+        best_yes_bid = ob['yes_dollars'][-1][0]  # Last element is highest
+        print(f"Best YES Bid: ${best_yes_bid}")
 
-      if ob.get('no_dollars'):
-          best_no_bid = ob['no_dollars'][-1][0]  # Last element is highest
-          best_yes_ask = Decimal("1.00") - Decimal(best_no_bid)
-          print(f"Best YES Ask: ${best_yes_ask} (implied from NO bid)")
+    if ob.get('no_dollars'):
+        best_no_bid = ob['no_dollars'][-1][0]  # Last element is highest
+        best_yes_ask = Decimal("1.00") - Decimal(best_no_bid)
+        print(f"Best YES Ask: ${best_yes_ask} (implied from NO bid)")
 
-      print()
+    print()
 
-      if ob.get('no_dollars'):
-          best_no_bid = ob['no_dollars'][-1][0]  # Last element is highest
-          print(f"Best NO Bid: ${best_no_bid}")
+    if ob.get('no_dollars'):
+        best_no_bid = ob['no_dollars'][-1][0]  # Last element is highest
+        print(f"Best NO Bid: ${best_no_bid}")
 
-      if ob.get('yes_dollars'):
-          best_yes_bid = ob['yes_dollars'][-1][0]  # Last element is highest
-          best_no_ask = Decimal("1.00") - Decimal(best_yes_bid)
-          print(f"Best NO Ask: ${best_no_ask} (implied from YES bid)")
-  ```
+    if ob.get('yes_dollars'):
+        best_yes_bid = ob['yes_dollars'][-1][0]  # Last element is highest
+        best_no_ask = Decimal("1.00") - Decimal(best_yes_bid)
+        print(f"Best NO Ask: ${best_no_ask} (implied from YES bid)")
+```
 
-  ```javascript JavaScript theme={null}
-  function displayBestPrices(orderbookData) {
-    const ob = orderbookData.orderbook_fp;
+```javascript JavaScript theme={null}
+function displayBestPrices(orderbookData) {
+  const ob = orderbookData.orderbook_fp;
 
-    // Best bids (if any exist)
-    if (ob.yes_dollars && ob.yes_dollars.length > 0) {
-      const bestYesBid = ob.yes_dollars[ob.yes_dollars.length - 1][0];
-      console.log(`Best YES Bid: $${bestYesBid}`);
-    }
-
-    if (ob.no_dollars && ob.no_dollars.length > 0) {
-      const bestNoBid = ob.no_dollars[ob.no_dollars.length - 1][0];
-      const bestYesAsk = (1 - parseFloat(bestNoBid)).toFixed(4);
-      console.log(`Best YES Ask: $${bestYesAsk} (implied from NO bid)`);
-    }
-
-    console.log();
-
-    if (ob.no_dollars && ob.no_dollars.length > 0) {
-      const bestNoBid = ob.no_dollars[ob.no_dollars.length - 1][0];
-      console.log(`Best NO Bid: $${bestNoBid}`);
-    }
-
-    if (ob.yes_dollars && ob.yes_dollars.length > 0) {
-      const bestYesBid = ob.yes_dollars[ob.yes_dollars.length - 1][0];
-      const bestNoAsk = (1 - parseFloat(bestYesBid)).toFixed(4);
-      console.log(`Best NO Ask: $${bestNoAsk} (implied from YES bid)`);
-    }
+  // Best bids (if any exist)
+  if (ob.yes_dollars && ob.yes_dollars.length > 0) {
+    const bestYesBid = ob.yes_dollars[ob.yes_dollars.length - 1][0];
+    console.log(`Best YES Bid: $${bestYesBid}`);
   }
-  ```
-</CodeGroup>
+
+  if (ob.no_dollars && ob.no_dollars.length > 0) {
+    const bestNoBid = ob.no_dollars[ob.no_dollars.length - 1][0];
+    const bestYesAsk = (1 - parseFloat(bestNoBid)).toFixed(4);
+    console.log(`Best YES Ask: $${bestYesAsk} (implied from NO bid)`);
+  }
+
+  console.log();
+
+  if (ob.no_dollars && ob.no_dollars.length > 0) {
+    const bestNoBid = ob.no_dollars[ob.no_dollars.length - 1][0];
+    console.log(`Best NO Bid: $${bestNoBid}`);
+  }
+
+  if (ob.yes_dollars && ob.yes_dollars.length > 0) {
+    const bestYesBid = ob.yes_dollars[ob.yes_dollars.length - 1][0];
+    const bestNoAsk = (1 - parseFloat(bestYesBid)).toFixed(4);
+    console.log(`Best NO Ask: $${bestNoAsk} (implied from YES bid)`);
+  }
+}
+```
 
 ### Calculate Market Depth
 

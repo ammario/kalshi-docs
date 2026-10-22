@@ -16,160 +16,154 @@ This guide will walk you through accessing Kalshi's public market data endpoints
 
 Kalshi provides several public endpoints that don't require API keys. These endpoints allow you to access market data directly from our production servers at `https://external-api.kalshi.com/trade-api/v2`.
 
-<Info>
-  **Note about the API URL**: Despite the "elections" subdomain, the production Trade API provides access to ALL Kalshi markets - not just election-related ones. This includes markets on economics, climate, technology, entertainment, and more.
-</Info>
+> [!NOTE]
+>
+> **Note about the API URL**: Despite the "elections" subdomain, the production Trade API provides access to ALL Kalshi markets - not just election-related ones. This includes markets on economics, climate, technology, entertainment, and more.
 
-<Info>
-  No authentication headers are required for the endpoints in this guide. You can start making requests immediately!
-</Info>
+> [!NOTE]
+>
+> No authentication headers are required for the endpoints in this guide. You can start making requests immediately!
 
 ## Step 1: Get Series Information
 
 Let's start by fetching information about the KXHIGHNY series ([Highest temperature in NYC today?](https://kalshi.com/markets/kxhighny/highest-temperature-in-nyc)). This series tracks the highest temperature recorded in Central Park, New York on a given day. We'll use the [Get Series](/api-reference/market/get-series) endpoint.
 
-<CodeGroup>
-  ```python Python theme={null}
-  import requests
+```python Python theme={null}
+import requests
 
-  # Get series information for KXHIGHNY
-  url = "https://external-api.kalshi.com/trade-api/v2/series/KXHIGHNY"
-  response = requests.get(url)
-  series_data = response.json()
+# Get series information for KXHIGHNY
+url = "https://external-api.kalshi.com/trade-api/v2/series/KXHIGHNY"
+response = requests.get(url)
+series_data = response.json()
 
-  print(f"Series Title: {series_data['series']['title']}")
-  print(f"Frequency: {series_data['series']['frequency']}")
-  print(f"Category: {series_data['series']['category']}")
-  ```
+print(f"Series Title: {series_data['series']['title']}")
+print(f"Frequency: {series_data['series']['frequency']}")
+print(f"Category: {series_data['series']['category']}")
+```
 
-  ```javascript JavaScript theme={null}
-  // Get series information for KXHIGHNY
-  fetch('https://external-api.kalshi.com/trade-api/v2/series/KXHIGHNY')
-    .then(response => response.json())
-    .then(data => {
-      console.log(`Series Title: ${data.series.title}`);
-      console.log(`Frequency: ${data.series.frequency}`);
-      console.log(`Category: ${data.series.category}`);
-    });
-  ```
+```javascript JavaScript theme={null}
+// Get series information for KXHIGHNY
+fetch('https://external-api.kalshi.com/trade-api/v2/series/KXHIGHNY')
+  .then(response => response.json())
+  .then(data => {
+    console.log(`Series Title: ${data.series.title}`);
+    console.log(`Frequency: ${data.series.frequency}`);
+    console.log(`Category: ${data.series.category}`);
+  });
+```
 
-  ```curl cURL theme={null}
-  curl -X GET "https://external-api.kalshi.com/trade-api/v2/series/KXHIGHNY"
-  ```
-</CodeGroup>
+```curl cURL theme={null}
+curl -X GET "https://external-api.kalshi.com/trade-api/v2/series/KXHIGHNY"
+```
 
 ## Step 2: Get Today's Events and Markets
 
 Now that we have the series information, let's get the markets for this series. We'll use the [Get Markets](/api-reference/market/get-markets) endpoint with the series ticker filter to find all active markets. If there are no open markets today, remove `status=open` or use `status=all` to see the full series history.
 
-<CodeGroup>
-  ```python Python theme={null}
-  # Get all open markets for the KXHIGHNY series
-  markets_url = f"https://external-api.kalshi.com/trade-api/v2/markets?series_ticker=KXHIGHNY&status=open"
-  markets_response = requests.get(markets_url)
-  markets_data = markets_response.json()
+```python Python theme={null}
+# Get all open markets for the KXHIGHNY series
+markets_url = f"https://external-api.kalshi.com/trade-api/v2/markets?series_ticker=KXHIGHNY&status=open"
+markets_response = requests.get(markets_url)
+markets_data = markets_response.json()
 
-  print(f"\nActive markets in KXHIGHNY series:")
-  for market in markets_data['markets']:
-      print(f"- {market['ticker']}: {market['title']}")
-      print(f"  Event: {market['event_ticker']}")
-      print(f"  Yes Price: ${market['yes_bid_dollars']} | Volume: {market['volume_fp']}")
-      print()
+print(f"\nActive markets in KXHIGHNY series:")
+for market in markets_data['markets']:
+    print(f"- {market['ticker']}: {market['title']}")
+    print(f"  Event: {market['event_ticker']}")
+    print(f"  Yes Price: ${market['yes_bid_dollars']} | Volume: {market['volume_fp']}")
+    print()
 
-  # Get details for a specific event if you have its ticker
-  if markets_data['markets']:
-      # Let's get details for the first market's event
-      event_ticker = markets_data['markets'][0]['event_ticker']
-      event_url = f"https://external-api.kalshi.com/trade-api/v2/events/{event_ticker}"
-      event_response = requests.get(event_url)
-      event_data = event_response.json()
+# Get details for a specific event if you have its ticker
+if markets_data['markets']:
+    # Let's get details for the first market's event
+    event_ticker = markets_data['markets'][0]['event_ticker']
+    event_url = f"https://external-api.kalshi.com/trade-api/v2/events/{event_ticker}"
+    event_response = requests.get(event_url)
+    event_data = event_response.json()
 
-      print(f"Event Details:")
-      print(f"Title: {event_data['event']['title']}")
-      print(f"Category: {event_data['event']['category']}")
-  ```
+    print(f"Event Details:")
+    print(f"Title: {event_data['event']['title']}")
+    print(f"Category: {event_data['event']['category']}")
+```
 
-  ```javascript JavaScript theme={null}
-  // Get markets for the KXHIGHNY series
-  async function getSeriesMarkets() {
-    // Get all open markets for this series
-    const marketsResponse = await fetch('https://external-api.kalshi.com/trade-api/v2/markets?series_ticker=KXHIGHNY&status=open');
-    const marketsData = await marketsResponse.json();
+```javascript JavaScript theme={null}
+// Get markets for the KXHIGHNY series
+async function getSeriesMarkets() {
+  // Get all open markets for this series
+  const marketsResponse = await fetch('https://external-api.kalshi.com/trade-api/v2/markets?series_ticker=KXHIGHNY&status=open');
+  const marketsData = await marketsResponse.json();
 
-    console.log('\nActive markets in KXHIGHNY series:');
-    marketsData.markets.forEach(market => {
-      console.log(`- ${market.ticker}: ${market.title}`);
-      console.log(`  Event: ${market.event_ticker}`);
-      console.log(`  Yes Price: $${market.yes_bid_dollars} | Volume: ${market.volume_fp}`);
-      console.log();
-    });
+  console.log('\nActive markets in KXHIGHNY series:');
+  marketsData.markets.forEach(market => {
+    console.log(`- ${market.ticker}: ${market.title}`);
+    console.log(`  Event: ${market.event_ticker}`);
+    console.log(`  Yes Price: $${market.yes_bid_dollars} | Volume: ${market.volume_fp}`);
+    console.log();
+  });
 
-    // Get details for a specific event if markets exist
-    if (marketsData.markets.length > 0) {
-      const eventTicker = marketsData.markets[0].event_ticker;
-      const eventResponse = await fetch(`https://external-api.kalshi.com/trade-api/v2/events/${eventTicker}`);
-      const eventData = await eventResponse.json();
+  // Get details for a specific event if markets exist
+  if (marketsData.markets.length > 0) {
+    const eventTicker = marketsData.markets[0].event_ticker;
+    const eventResponse = await fetch(`https://external-api.kalshi.com/trade-api/v2/events/${eventTicker}`);
+    const eventData = await eventResponse.json();
 
-      console.log('Event Details:');
-      console.log(`Title: ${eventData.event.title}`);
-      console.log(`Category: ${eventData.event.category}`);
-    }
+    console.log('Event Details:');
+    console.log(`Title: ${eventData.event.title}`);
+    console.log(`Category: ${eventData.event.category}`);
   }
+}
 
-  getSeriesMarkets();
-  ```
-</CodeGroup>
+getSeriesMarkets();
+```
 
-<Info>
-  You can view these markets in the Kalshi UI at: [https://kalshi.com/markets/kxhighny](https://kalshi.com/markets/kxhighny)
-</Info>
+> [!NOTE]
+>
+> You can view these markets in the Kalshi UI at: [https://kalshi.com/markets/kxhighny](https://kalshi.com/markets/kxhighny)
 
 ## Step 3: Get Orderbook Data
 
 Now let's fetch the orderbook for a specific market to see the current bids and asks using the [Get Market Orderbook](/api-reference/market/get-market-order-book) endpoint. This snippet assumes you still have the `markets_data` from the previous step. If `markets_data['markets']` is empty, pick a market from a different series or remove the `status=open` filter.
 
-<CodeGroup>
-  ```python Python theme={null}
-  # Get orderbook for a specific market
-  # Replace with an actual market ticker from the markets list
-  if not markets_data['markets']:
-      raise ValueError("No open markets found. Try removing status=open or choose another series.")
+```python Python theme={null}
+# Get orderbook for a specific market
+# Replace with an actual market ticker from the markets list
+if not markets_data['markets']:
+    raise ValueError("No open markets found. Try removing status=open or choose another series.")
 
-  market_ticker = markets_data['markets'][0]['ticker']
-  orderbook_url = f"https://external-api.kalshi.com/trade-api/v2/markets/{market_ticker}/orderbook"
+market_ticker = markets_data['markets'][0]['ticker']
+orderbook_url = f"https://external-api.kalshi.com/trade-api/v2/markets/{market_ticker}/orderbook"
 
-  orderbook_response = requests.get(orderbook_url)
-  orderbook_data = orderbook_response.json()
+orderbook_response = requests.get(orderbook_url)
+orderbook_data = orderbook_response.json()
 
-  print(f"\nOrderbook for {market_ticker}:")
-  print("YES BIDS:")
-  for price_dollars, count_fp in orderbook_data['orderbook_fp']['yes_dollars'][:5]:  # Show top 5
-      print(f"  Price: ${price_dollars}, Quantity: {count_fp}")
+print(f"\nOrderbook for {market_ticker}:")
+print("YES BIDS:")
+for price_dollars, count_fp in orderbook_data['orderbook_fp']['yes_dollars'][:5]:  # Show top 5
+    print(f"  Price: ${price_dollars}, Quantity: {count_fp}")
 
-  print("\nNO BIDS:")
-  for price_dollars, count_fp in orderbook_data['orderbook_fp']['no_dollars'][:5]:  # Show top 5
-      print(f"  Price: ${price_dollars}, Quantity: {count_fp}")
-  ```
+print("\nNO BIDS:")
+for price_dollars, count_fp in orderbook_data['orderbook_fp']['no_dollars'][:5]:  # Show top 5
+    print(f"  Price: ${price_dollars}, Quantity: {count_fp}")
+```
 
-  ```javascript JavaScript theme={null}
-  // Get orderbook data
-  async function getOrderbook(marketTicker) {
-    const response = await fetch(`https://external-api.kalshi.com/trade-api/v2/markets/${marketTicker}/orderbook`);
-    const data = await response.json();
+```javascript JavaScript theme={null}
+// Get orderbook data
+async function getOrderbook(marketTicker) {
+  const response = await fetch(`https://external-api.kalshi.com/trade-api/v2/markets/${marketTicker}/orderbook`);
+  const data = await response.json();
 
-    console.log(`\nOrderbook for ${marketTicker}:`);
-    console.log('YES BIDS:');
-    data.orderbook_fp.yes_dollars.slice(0, 5).forEach(([priceDollars, countFp]) => {
-      console.log(`  Price: $${priceDollars}, Quantity: ${countFp}`);
-    });
+  console.log(`\nOrderbook for ${marketTicker}:`);
+  console.log('YES BIDS:');
+  data.orderbook_fp.yes_dollars.slice(0, 5).forEach(([priceDollars, countFp]) => {
+    console.log(`  Price: $${priceDollars}, Quantity: ${countFp}`);
+  });
 
-    console.log('\nNO BIDS:');
-    data.orderbook_fp.no_dollars.slice(0, 5).forEach(([priceDollars, countFp]) => {
-      console.log(`  Price: $${priceDollars}, Quantity: ${countFp}`);
-    });
-  }
-  ```
-</CodeGroup>
+  console.log('\nNO BIDS:');
+  data.orderbook_fp.no_dollars.slice(0, 5).forEach(([priceDollars, countFp]) => {
+    console.log(`  Price: $${priceDollars}, Quantity: ${countFp}`);
+  });
+}
+```
 
 ## Working with Large Datasets
 

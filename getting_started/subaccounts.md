@@ -14,11 +14,11 @@ Subaccounts let a **Direct** account partition its balance and positions into
 independent buckets under one set of API credentials. Every account has a
 primary subaccount (number `0`) and may use numbered subaccounts `1`–`63`.
 
-<Note>
-  Subaccounts are currently an **API-only** feature — they are not yet supported in the
-  Kalshi web or mobile app. Numbered-subaccount balances and positions are managed through
-  the trade API.
-</Note>
+> [!NOTE]
+>
+> Subaccounts are currently an **API-only** feature — they are not yet supported in the
+> Kalshi web or mobile app. Numbered-subaccount balances and positions are managed through
+> the trade API.
 
 ## Numbering
 

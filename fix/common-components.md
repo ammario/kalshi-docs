@@ -18,9 +18,9 @@ Download the Kalshi-specific FIX dictionary for import into your FIX engine:
 
 * [Kalshi FIX Dictionary (XML)](https://assets.kalshi.com/fix/kalshi-fix-dictionary.xml)
 
-<Note>
-  If you are using a FIX engine such as [QuickFIX/J](https://www.quickfixj.org/), [QuickFIX/N](https://quickfixn.readthedocs.io/), or [quickfix-go](https://github.com/quickfixgo/quickfix), the standard header and trailer fields below are managed automatically by the library. This section is primarily a reference for custom implementations or debugging.
-</Note>
+> [!NOTE]
+>
+> If you are using a FIX engine such as [QuickFIX/J](https://www.quickfixj.org/), [QuickFIX/N](https://quickfixn.readthedocs.io/), or [quickfix-go](https://github.com/quickfixgo/quickfix), the standard header and trailer fields below are managed automatically by the library. This section is primarily a reference for custom implementations or debugging.
 
 ## Standard Header
 

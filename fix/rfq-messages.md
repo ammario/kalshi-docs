@@ -28,9 +28,9 @@ RFQ functionality involves two types of participants connecting via different FI
 3. Receive acceptance notification
 4. Confirm execution via QuoteConfirm (35=U7)
 
-<Info>
-  RFQ Creators use the KalshiRT endpoint (same as order entry), which provides message persistence and retransmission support. Market Makers use the KalshiRFQ endpoint to receive RFQ broadcasts and submit quotes.
-</Info>
+> [!NOTE]
+>
+> RFQ Creators use the KalshiRT endpoint (same as order entry), which provides message persistence and retransmission support. Market Makers use the KalshiRFQ endpoint to receive RFQ broadcasts and submit quotes.
 
 ## Message Flow
 
@@ -93,31 +93,31 @@ This message is used bidirectionally:
 | 448 | PartyId | String | N | FCM SubtraderId for the customer on whose behalf the RFQ is submitted |
 | 452 | PartyRole | Integer | N | 24 (CustomerAccount) - required when using PartyId |
 
-<Note>
-  The delimiter is the first tag of a group entry: send `146`, then `55` for a symbol RFQ
-  or `38`/`152` for an MVE RFQ (which omits `55`). Note that `21015`, `21016`, and `21033`
-  are dropped without a reject if they land outside the group — a misplaced `21016` surfaces
-  later as `RFQ already exists` on the next request rather than as an error on this one, and
-  a misplaced `21033` silently produces default fee-inclusive sizing.
+> [!NOTE]
+>
+> The delimiter is the first tag of a group entry: send `146`, then `55` for a symbol RFQ
+> or `38`/`152` for an MVE RFQ (which omits `55`). Note that `21015`, `21016`, and `21033`
+> are dropped without a reject if they land outside the group — a misplaced `21016` surfaces
+> later as `RFQ already exists` on the next request rather than as an error on this one, and
+> a misplaced `21033` silently produces default fee-inclusive sizing.
+>
+> The published [FIX dictionary](https://assets.kalshi.com/fix/kalshi-fix-dictionary.xml)
+> lists `55` first, since a dictionary can only declare one delimiter per group. MVE
+> requests legitimately omit `55`, so a strict dictionary-driven validator may flag them —
+> relax the delimiter for the MVE case rather than adding an empty `55`.
 
-  The published [FIX dictionary](https://assets.kalshi.com/fix/kalshi-fix-dictionary.xml)
-  lists `55` first, since a dictionary can only declare one delimiter per group. MVE
-  requests legitimately omit `55`, so a strict dictionary-driven validator may flag them —
-  relax the delimiter for the MVE case rather than adding an empty `55`.
-</Note>
+> [!NOTE]
+>
+> **MVE/Parlay Support**: Instead of specifying a Symbol, you can submit MVE legs directly. The server will automatically resolve or create the parlay market and return the resolved market ticker in the QuoteRequestAck.
 
-<Info>
-  **MVE/Parlay Support**: Instead of specifying a Symbol, you can submit MVE legs directly. The server will automatically resolve or create the parlay market and return the resolved market ticker in the QuoteRequestAck.
-</Info>
-
-<Info>
-  **CashOrderQty sizing**: By default the cash amount caps principal *plus* Kalshi
-  fees — quote sizes (BidSize/OfferSize) are the maximum contracts whose total
-  cost including your taker fee fits inside the cash amount, so your debit can
-  never exceed it. With `21033=Y` the cash amount is principal only: sizes are
-  `cash / price` and your taker fee is charged on top of the cash amount.
-  OrderQty-sized RFQs are never reduced for fees under either mode.
-</Info>
+> [!NOTE]
+>
+> **CashOrderQty sizing**: By default the cash amount caps principal *plus* Kalshi
+> fees — quote sizes (BidSize/OfferSize) are the maximum contracts whose total
+> cost including your taker fee fits inside the cash amount, so your debit can
+> never exceed it. With `21033=Y` the cash amount is principal only: sizes are
+> `cash / price` and your taker fee is charged on top of the cash amount.
+> OrderQty-sized RFQs are never reduced for fees under either mode.
 
 ### Exchange → Market Maker (RFQ Notification)
 
@@ -167,13 +167,13 @@ Exchange response to an inbound QuoteRequest from an RFQ creator.
 | 55 | Symbol | String | C | Resolved market ticker. Present when MVE legs were submitted |
 | 100 | ExDestination | Integer | Y | Exchange index for the RFQ market |
 
-<Note>
-  The server-assigned RFQ ID is returned in tag 21023. Store it if you want to reconcile later Quote or QuoteStatusReport messages to the created RFQ. RFQCancel accepts either your original client-assigned QuoteReqId (tag 131) or the server-assigned RfqId (tag 21023).
-</Note>
+> [!NOTE]
+>
+> The server-assigned RFQ ID is returned in tag 21023. Store it if you want to reconcile later Quote or QuoteStatusReport messages to the created RFQ. RFQCancel accepts either your original client-assigned QuoteReqId (tag 131) or the server-assigned RfqId (tag 21023).
 
-<Info>
-  When creating an RFQ with MVE legs instead of a Symbol, the resolved market ticker is returned in tag 55. This is the market that was created or looked up based on your leg selection.
-</Info>
+> [!NOTE]
+>
+> When creating an RFQ with MVE legs instead of a Symbol, the resolved market ticker is returned in tag 55. This is the market that was created or looked up based on your leg selection.
 
 ## Quote (35=S)
 
@@ -214,9 +214,9 @@ If a new Quote is created when an existing quote for the same market already exi
 | 448 | PartyId | String | N | Quoter public communications ID. This value is pseudonymous and is not the quoter's SubtraderId |
 | 452 | PartyRole | Integer | N | 35 (Liquidity Provider) |
 
-<Warning>
-  Either BidPx or OfferPx can be zero, but not both. Zero indicates no quote for that side.
-</Warning>
+> [!WARNING]
+>
+> Either BidPx or OfferPx can be zero, but not both. Zero indicates no quote for that side.
 
 ## QuoteStatusReport (35=AI)
 
@@ -257,9 +257,9 @@ Market maker cancels an active quote.
 | 117 | QuoteId | String | Y | Quote to cancel |
 | 21023 | RfqId | UUID | N | Server-assigned RFQ ID. If provided, the quote must belong to this RFQ. If omitted, the RFQ is resolved from QuoteId. |
 
-<Note>
-  Exchange responds with QuoteStatusReport (Status=CANCELLED).
-</Note>
+> [!NOTE]
+>
+> Exchange responds with QuoteStatusReport (Status=CANCELLED).
 
 ## QuoteCancelStatus (35=U9)
 
@@ -280,9 +280,9 @@ Market maker confirms willingness to execute after quote acceptance.
 | 117 | QuoteId | String | Y | Accepted quote ID |
 | 21023 | RfqId | UUID | N | Server-assigned RFQ ID. If provided, the quote must belong to this RFQ. If omitted, the RFQ is resolved from QuoteId. |
 
-<Warning>
-  Quote must be confirmed within 30 seconds of acceptance or it will be voided.
-</Warning>
+> [!WARNING]
+>
+> Quote must be confirmed within 30 seconds of acceptance or it will be voided.
 
 ## QuoteConfirmStatus (35=U8)
 
@@ -358,87 +358,83 @@ Exchange notifies that an RFQ creation request was rejected or that a quote requ
 | 20185 | NoMVEOffendingLegs | Integer | C | Number of offending MVE legs (repeating group). Present on invalid-combination rejects when the tickers are known |
 | 20186 | MVEOffendingMarketTicker | String | C | Market ticker of an offending leg. One entry per `NoMVEOffendingLegs` |
 
-<Info>
-  Market makers do not send QuoteRequestReject when ignoring a request.
-</Info>
+> [!NOTE]
+>
+> Market makers do not send QuoteRequestReject when ignoring a request.
 
 ## Example Workflow
 
 ### RFQ Creator Flow
 
-<CodeGroup>
-  ```fix Create RFQ (Creator → Exchange) theme={null}
-  8=FIXT.1.1|35=R|131=client-req-123|146=1|55=HIGHNY-23DEC31|38=100|
-  ```
+```fix Create RFQ (Creator → Exchange) theme={null}
+8=FIXT.1.1|35=R|131=client-req-123|146=1|55=HIGHNY-23DEC31|38=100|
+```
 
-  ```fix Create RFQ with MVE Legs (Creator → Exchange) theme={null}
-  8=FIXT.1.1|35=R|131=client-req-456|146=1|38=100|20180=PARLAY-COLLECTION|20181=2|20182=EVENT1|20183=MKT1|20184=yes|20182=EVENT2|20183=MKT2|20184=no|
-  ```
+```fix Create RFQ with MVE Legs (Creator → Exchange) theme={null}
+8=FIXT.1.1|35=R|131=client-req-456|146=1|38=100|20180=PARLAY-COLLECTION|20181=2|20182=EVENT1|20183=MKT1|20184=yes|20182=EVENT2|20183=MKT2|20184=no|
+```
 
-  ```fix Replace an Existing RFQ (Creator → Exchange) theme={null}
-  8=FIXT.1.1|35=R|131=client-req-124|146=1|55=HIGHNY-23DEC31|38=100|21016=Y|
-  ```
+```fix Replace an Existing RFQ (Creator → Exchange) theme={null}
+8=FIXT.1.1|35=R|131=client-req-124|146=1|55=HIGHNY-23DEC31|38=100|21016=Y|
+```
 
-  ```fix Replace on Behalf of an FCM Subtrader (Creator → Exchange) theme={null}
-  8=FIXT.1.1|35=R|131=client-req-457|146=1|38=100|21016=Y|453=1|448=subtrader-uuid|452=24|20180=PARLAY-COLLECTION|20181=2|20182=EVENT1|20183=MKT1|20184=yes|20182=EVENT2|20183=MKT2|20184=no|
-  ```
+```fix Replace on Behalf of an FCM Subtrader (Creator → Exchange) theme={null}
+8=FIXT.1.1|35=R|131=client-req-457|146=1|38=100|21016=Y|453=1|448=subtrader-uuid|452=24|20180=PARLAY-COLLECTION|20181=2|20182=EVENT1|20183=MKT1|20184=yes|20182=EVENT2|20183=MKT2|20184=no|
+```
 
-  ```fix QuoteRequestAck (Exchange → Creator) theme={null}
-  8=FIXT.1.1|35=b|131=client-req-123|303=1|21023=server-rfq-456|100=0|
-  ```
+```fix QuoteRequestAck (Exchange → Creator) theme={null}
+8=FIXT.1.1|35=b|131=client-req-123|303=1|21023=server-rfq-456|100=0|
+```
 
-  ```fix QuoteRequestAck with Resolved Ticker (Exchange → Creator) theme={null}
-  8=FIXT.1.1|35=b|131=client-req-456|303=1|21023=server-rfq-789|55=PARLAY-MKT-ABC|100=1|
-  ```
+```fix QuoteRequestAck with Resolved Ticker (Exchange → Creator) theme={null}
+8=FIXT.1.1|35=b|131=client-req-456|303=1|21023=server-rfq-789|55=PARLAY-MKT-ABC|100=1|
+```
 
-  ```fix Quote Notification (Exchange → Creator) theme={null}
-  8=FIXT.1.1|35=S|117=quote-789|131=server-rfq-456|55=HIGHNY-23DEC31|132=0.7500|133=0.2500|38=100|60=20260924-14:30:05.123|453=1|448=quoter-public-id|452=35|
-  ```
+```fix Quote Notification (Exchange → Creator) theme={null}
+8=FIXT.1.1|35=S|117=quote-789|131=server-rfq-456|55=HIGHNY-23DEC31|132=0.7500|133=0.2500|38=100|60=20260924-14:30:05.123|453=1|448=quoter-public-id|452=35|
+```
 
-  ```fix Accept Quote (Creator → Exchange) theme={null}
-  8=FIXT.1.1|35=UA|117=quote-789|21023=server-rfq-456|54=1|38=100|11=client-accept-123|
-  ```
+```fix Accept Quote (Creator → Exchange) theme={null}
+8=FIXT.1.1|35=UA|117=quote-789|21023=server-rfq-456|54=1|38=100|11=client-accept-123|
+```
 
-  ```fix AcceptQuoteStatus (Exchange → Creator) theme={null}
-  8=FIXT.1.1|35=UC|117=quote-789|21025=0|21024=quote-789|11=client-accept-123|
-  ```
+```fix AcceptQuoteStatus (Exchange → Creator) theme={null}
+8=FIXT.1.1|35=UC|117=quote-789|21025=0|21024=quote-789|11=client-accept-123|
+```
 
-  ```fix Cancel RFQ (Creator → Exchange) theme={null}
-  8=FIXT.1.1|35=UE|131=client-req-123|
-  ```
+```fix Cancel RFQ (Creator → Exchange) theme={null}
+8=FIXT.1.1|35=UE|131=client-req-123|
+```
 
-  ```fix RFQCancelStatus (Exchange → Creator) theme={null}
-  8=FIXT.1.1|35=UB|131=client-req-123|21013=0|
-  ```
-</CodeGroup>
+```fix RFQCancelStatus (Exchange → Creator) theme={null}
+8=FIXT.1.1|35=UB|131=client-req-123|21013=0|
+```
 
 ### Market Maker Flow
 
-<CodeGroup>
-  ```fix QuoteRequest (Exchange → MM) theme={null}
-  8=FIXT.1.1|35=R|131=server-rfq-456|146=1|55=HIGHNY-23DEC31|38=100|453=1|448=anon-456|
-  ```
+```fix QuoteRequest (Exchange → MM) theme={null}
+8=FIXT.1.1|35=R|131=server-rfq-456|146=1|55=HIGHNY-23DEC31|38=100|453=1|448=anon-456|
+```
 
-  ```fix Quote Response (MM → Exchange) theme={null}
-  8=FIXT.1.1|35=S|117=quote-789|131=server-rfq-456|55=HIGHNY-23DEC31|132=75|133=25|
-  ```
+```fix Quote Response (MM → Exchange) theme={null}
+8=FIXT.1.1|35=S|117=quote-789|131=server-rfq-456|55=HIGHNY-23DEC31|132=75|133=25|
+```
 
-  ```fix Quote Status Pending (Exchange → MM) theme={null}
-  8=FIXT.1.1|35=AI|117=quote-789|131=server-rfq-456|297=10|38=100|132=75|133=25|60=20260924-14:30:05.123|
-  ```
+```fix Quote Status Pending (Exchange → MM) theme={null}
+8=FIXT.1.1|35=AI|117=quote-789|131=server-rfq-456|297=10|38=100|132=75|133=25|60=20260924-14:30:05.123|
+```
 
-  ```fix Quote Accepted (Exchange → MM) theme={null}
-  8=FIXT.1.1|35=AI|117=quote-789|131=server-rfq-456|297=0|54=1|38=100|
-  ```
+```fix Quote Accepted (Exchange → MM) theme={null}
+8=FIXT.1.1|35=AI|117=quote-789|131=server-rfq-456|297=0|54=1|38=100|
+```
 
-  ```fix Quote Confirmation (MM → Exchange) theme={null}
-  8=FIXT.1.1|35=U7|117=quote-789|21023=server-rfq-456|
-  ```
+```fix Quote Confirmation (MM → Exchange) theme={null}
+8=FIXT.1.1|35=U7|117=quote-789|21023=server-rfq-456|
+```
 
-  ```fix QuoteConfirmStatus (Exchange → MM) theme={null}
-  8=FIXT.1.1|35=U8|117=quote-789|21010=0|
-  ```
-</CodeGroup>
+```fix QuoteConfirmStatus (Exchange → MM) theme={null}
+8=FIXT.1.1|35=U8|117=quote-789|21010=0|
+```
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

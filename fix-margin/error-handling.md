@@ -121,9 +121,9 @@ In OrderCancelReject (35=9):
 8=FIXT.1.1|35=8|11=456|150=8|39=8|58=EXCHANGE_PAUSED|103=2|...
 ```
 
-<Note>
-  Order-entry failures returned by the exchange are sent as ExecutionReport (35=8) with ExecType=Rejected, not as BusinessMessageReject. BusinessMessageReject (35=j) is used for application-layer failures before normal exchange rejection handling, such as rate limiting or listener-session restrictions.
-</Note>
+> [!NOTE]
+>
+> Order-entry failures returned by the exchange are sent as ExecutionReport (35=8) with ExecType=Rejected, not as BusinessMessageReject. BusinessMessageReject (35=j) is used for application-layer failures before normal exchange rejection handling, such as rate limiting or listener-session restrictions.
 
 **Example: Insufficient Balance**
 

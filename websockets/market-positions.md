@@ -148,7 +148,7 @@ operations:
             type:
               type: string
               const: market_position
-              x-parser-schema-id: <anonymous-schema-129>
+              x-parser-schema-id: <anonymous-schema-131>
             sid:
               type: integer
               description: >-
@@ -171,7 +171,7 @@ operations:
                 user_id:
                   type: string
                   description: User ID for the position
-                  x-parser-schema-id: <anonymous-schema-131>
+                  x-parser-schema-id: <anonymous-schema-133>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -182,7 +182,7 @@ operations:
                   description: Fixed-point net position (2 decimals)
                   x-rust-type: common::types::Position
                   x-rust-serialize-with: ws::dto::serde_money::serialize_position_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-132>
+                  x-parser-schema-id: <anonymous-schema-134>
                 position_cost_dollars:
                   type: string
                   description: >-
@@ -190,36 +190,36 @@ operations:
                     string
                   x-rust-type: common::types::Value
                   x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
-                  x-parser-schema-id: <anonymous-schema-133>
+                  x-parser-schema-id: <anonymous-schema-135>
                 realized_pnl_dollars:
                   type: string
                   description: Realized profit/loss as a fixed-point dollar string
                   x-rust-type: common::types::Value
                   x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
-                  x-parser-schema-id: <anonymous-schema-134>
+                  x-parser-schema-id: <anonymous-schema-136>
                 fees_paid_dollars:
                   type: string
                   description: Total fees paid as a fixed-point dollar string
                   x-rust-type: common::types::Value
                   x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
-                  x-parser-schema-id: <anonymous-schema-135>
+                  x-parser-schema-id: <anonymous-schema-137>
                 position_fee_cost_dollars:
                   type: string
                   description: Total position fee cost as a fixed-point dollar string
                   x-rust-type: common::types::Value
                   x-rust-serialize-with: ws::dto::serde_money::serialize_value_microcent_dollars
-                  x-parser-schema-id: <anonymous-schema-136>
+                  x-parser-schema-id: <anonymous-schema-138>
                 volume_fp:
                   type: string
                   description: Fixed-point total volume traded (2 decimals)
                   x-rust-type: i64
                   x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-137>
+                  x-parser-schema-id: <anonymous-schema-139>
                 subaccount:
                   type: integer
                   description: Optional subaccount number for the position
-                  x-parser-schema-id: <anonymous-schema-138>
-              x-parser-schema-id: <anonymous-schema-130>
+                  x-parser-schema-id: <anonymous-schema-140>
+              x-parser-schema-id: <anonymous-schema-132>
             sending_ts_ms:
               type: integer
               format: int64

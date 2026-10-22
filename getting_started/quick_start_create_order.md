@@ -20,9 +20,9 @@ Before you begin, you'll need:
 * Python with the `requests` and `cryptography` libraries installed
 * Your authentication functions set up (see our [authentication guide](/getting_started/quick_start_authenticated_requests))
 
-<Info>
-  This guide assumes you have the authentication code from our authentication guide, including the `get()` function for making authenticated requests.
-</Info>
+> [!NOTE]
+>
+> This guide assumes you have the authentication code from our authentication guide, including the `get()` function for making authenticated requests.
 
 ## Step 1: Find an Open Market
 

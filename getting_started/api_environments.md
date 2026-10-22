@@ -23,9 +23,9 @@ Use these base URLs for the Trade API:
 
 The `external-api` hosts are dedicated to the external Trade API and are the recommended hosts for API traders. The existing shared hosts remain supported for compatibility with existing clients.
 
-<Note>
-  Despite the `elections` subdomain, the production Trade API provides access to all Kalshi markets, not only election-related markets.
-</Note>
+> [!NOTE]
+>
+> Despite the `elections` subdomain, the production Trade API provides access to all Kalshi markets, not only election-related markets.
 
 ## WebSocket API
 
@@ -38,10 +38,10 @@ Use these WebSocket URLs for the Trade API:
 
 ## External Feeds WebSocket
 
-<Note>
-  External feeds are moving to dedicated hostnames. Existing feed URLs remain
-  supported during the migration.
-</Note>
+> [!NOTE]
+>
+> External feeds are moving to dedicated hostnames. Existing feed URLs remain
+> supported during the migration.
 
 The dedicated feed endpoints are:
 

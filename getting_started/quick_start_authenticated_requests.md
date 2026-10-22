@@ -21,9 +21,9 @@ This guide shows you how to make authenticated requests to the Kalshi API in thr
    * **Private Key**: Downloaded as a PEM text file
    * **API Key ID**: Displayed on screen (looks like `a952bcbe-ec3b-4b5b-b8f9-11dae589608c`)
 
-<Warning>
-  Your private key cannot be retrieved after this page is closed. Store it securely!
-</Warning>
+> [!WARNING]
+>
+> Your private key cannot be retrieved after this page is closed. Store it securely!
 
 ## Step 2: Set Up Your Request
 

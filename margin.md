@@ -97,15 +97,15 @@ The Perps API mirrors the event contract API (same auth, pagination, error forma
 | `fill` | `ts` in Unix seconds | `ts_ms` in Unix milliseconds |
 | `user_orders` | `created_time`, `last_update_time`, `expiration_time` as RFC3339 datetimes | `created_ts_ms`, `last_updated_ts_ms`, `expiration_ts_ms` as Unix milliseconds |
 
-<Note>
-  Margin WebSocket payloads no longer use RFC3339 timestamp strings. The `order_group_updates` channel already follows the same convention: its only timestamp field, `ts_ms`, is Unix epoch milliseconds.
-</Note>
+> [!NOTE]
+>
+> Margin WebSocket payloads no longer use RFC3339 timestamp strings. The `order_group_updates` channel already follows the same convention: its only timestamp field, `ts_ms`, is Unix epoch milliseconds.
 
 ### FIX API
 
-<Warning>
-  API keys **should not be shared** between the event contract and margin FIX gateways.
-</Warning>
+> [!WARNING]
+>
+> API keys **should not be shared** between the event contract and margin FIX gateways.
 
 **What's the same:** FIXT.1.1 / FIX50SP2 protocol, API key authentication (RSA or Ed25519), order lifecycle messages (NewOrderSingle, OrderCancelRequest, etc.), order groups, drop copy, and listener sessions all work the same way.
 

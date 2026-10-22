@@ -28,9 +28,9 @@ openssl rsa -in kalshi-fix.key -pubout -out kalshi-fix.pub
 
 The initiator sends a Logon message. The acceptor responds with either a Logon (success) or Logout (failure).
 
-<Warning>
-  Do not send `SenderSubID<50>` on Logon. Kalshi rejects it with a Logout; send operator identity per message instead — on NewOrderSingle, OrderCancelRequest, or OrderCancelReplaceRequest.
-</Warning>
+> [!WARNING]
+>
+> Do not send `SenderSubID<50>` on Logon. Kalshi rejects it with a Logout; send operator identity per message instead — on NewOrderSingle, OrderCancelRequest, or OrderCancelReplaceRequest.
 
 ### Required Fields
 
@@ -68,52 +68,50 @@ The RawData field must contain a base64-encoded signature of the pre-hash string
 PreHashString = SendingTime + SOH + MsgType + SOH + MsgSeqNum + SOH + SenderCompID + SOH + TargetCompID
 ```
 
-<Warning>
-  **SendingTime in Signature**
+> [!WARNING]
+>
+> **SendingTime in Signature**
+>
+> The SendingTime in the PreHashString must match **exactly** the value in field 52 of the Logon message. Format: `YYYYMMDD-HH:MM:SS.mmm`.
+>
+> SendingTime must be within 30 seconds of the server's current time, or the message will be rejected with `SessionRejectReason<373>=10`.
 
-  The SendingTime in the PreHashString must match **exactly** the value in field 52 of the Logon message. Format: `YYYYMMDD-HH:MM:SS.mmm`.
+```python Python (Ed25519) theme={null}
+from base64 import b64encode
+from cryptography.hazmat.primitives import serialization
 
-  SendingTime must be within 30 seconds of the server's current time, or the message will be rejected with `SessionRejectReason<373>=10`.
-</Warning>
+private_key = serialization.load_pem_private_key(open('kalshi-fix.key', 'rb').read(), password=None)
+sending_time, msg_type, msg_seq_num = "20230809-05:28:18.035", "A", "1"
+sender_comp_id = "your-fix-api-key-uuid"
+target_comp_id = "KalshiNR"  # Must match TargetCompID in tag 56
 
-<CodeGroup>
-  ```python Python (Ed25519) theme={null}
-  from base64 import b64encode
-  from cryptography.hazmat.primitives import serialization
+msg_string = chr(1).join([sending_time, msg_type, msg_seq_num, sender_comp_id, target_comp_id])
+raw_data_value = b64encode(private_key.sign(msg_string.encode('utf-8'))).decode('utf-8')
+```
 
-  private_key = serialization.load_pem_private_key(open('kalshi-fix.key', 'rb').read(), password=None)
-  sending_time, msg_type, msg_seq_num = "20230809-05:28:18.035", "A", "1"
-  sender_comp_id = "your-fix-api-key-uuid"
-  target_comp_id = "KalshiNR"  # Must match TargetCompID in tag 56
+```python Python (RSA) theme={null}
+from base64 import b64encode
+from Cryptodome.Signature import pss
+from Cryptodome.Hash import SHA256
+from Cryptodome.PublicKey import RSA
 
-  msg_string = chr(1).join([sending_time, msg_type, msg_seq_num, sender_comp_id, target_comp_id])
-  raw_data_value = b64encode(private_key.sign(msg_string.encode('utf-8'))).decode('utf-8')
-  ```
+private_key = RSA.import_key(open('kalshi-fix.key').read().encode('utf-8'))
 
-  ```python Python (RSA) theme={null}
-  from base64 import b64encode
-  from Cryptodome.Signature import pss
-  from Cryptodome.Hash import SHA256
-  from Cryptodome.PublicKey import RSA
+sending_time = "20230809-05:28:18.035"
+msg_type = "A"
+msg_seq_num = "1"
+sender_comp_id = "your-fix-api-key-uuid"
+target_comp_id = "KalshiNR"  # Must match TargetCompID in tag 56
 
-  private_key = RSA.import_key(open('kalshi-fix.key').read().encode('utf-8'))
+msg_string = chr(1).join([
+    sending_time, msg_type, msg_seq_num,
+    sender_comp_id, target_comp_id
+])
 
-  sending_time = "20230809-05:28:18.035"
-  msg_type = "A"
-  msg_seq_num = "1"
-  sender_comp_id = "your-fix-api-key-uuid"
-  target_comp_id = "KalshiNR"  # Must match TargetCompID in tag 56
-
-  msg_string = chr(1).join([
-      sending_time, msg_type, msg_seq_num,
-      sender_comp_id, target_comp_id
-  ])
-
-  msg_hash = SHA256.new(msg_string.encode('utf-8'))
-  signature = pss.new(private_key).sign(msg_hash)
-  raw_data_value = b64encode(signature).decode('utf-8')
-  ```
-</CodeGroup>
+msg_hash = SHA256.new(msg_string.encode('utf-8'))
+signature = pss.new(private_key).sign(msg_hash)
+raw_data_value = b64encode(signature).decode('utf-8')
+```
 
 ## Reconnecting
 
@@ -138,9 +136,9 @@ Avoid overlapping reconnect attempts. Generate a fresh SendingTime and signature
 
 Message retransmission (ResendRequest, SequenceReset) is only supported on **KalshiRT** and **KalshiPT**.
 
-<Warning>
-  For all other sessions, `ResetSeqNumFlag<141>` in the Logon message must always be `Y` or the Logon will be rejected.
-</Warning>
+> [!WARNING]
+>
+> For all other sessions, `ResetSeqNumFlag<141>` in the Logon message must always be `Y` or the Logon will be rejected.
 
 The [drop copy session](/fix/drop-copy) provides an alternative way to query for missed execution reports. For a real-time streaming feed, see [Listener Sessions](/fix/listener-sessions).
 

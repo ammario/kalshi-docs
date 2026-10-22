@@ -12,29 +12,27 @@ lastmod: 2026-10-01T02:15:45.447Z
 
 Kalshi publishes Python and TypeScript SDKs to help you get started quickly.
 
-<Warning>
-  SDKs are updated periodically and may lag the API. Active traders should treat the REST [OpenAPI specification](https://docs.kalshi.com/openapi.yaml) and WebSocket [AsyncAPI specification](https://docs.kalshi.com/asyncapi.yaml) as the source of truth. For production, we recommend generating your own client from those specs — or integrating directly — for full control over your implementation.
-</Warning>
+> [!WARNING]
+>
+> SDKs are updated periodically and may lag the API. Active traders should treat the REST [OpenAPI specification](https://docs.kalshi.com/openapi.yaml) and WebSocket [AsyncAPI specification](https://docs.kalshi.com/asyncapi.yaml) as the source of truth. For production, we recommend generating your own client from those specs — or integrating directly — for full control over your implementation.
 
 ## Packages
 
-<CardGroup cols={2}>
-  <Card title="Python (sync)" icon="python" href="https://pypi.org/project/kalshi_python_sync/">
-    `pip install kalshi_python_sync`
-  </Card>
+> **[Python (sync)](https://pypi.org/project/kalshi_python_sync/)**
+>
+> `pip install kalshi_python_sync`
 
-  <Card title="Python (async)" icon="python" href="https://pypi.org/project/kalshi_python_async/">
-    `pip install kalshi_python_async`
-  </Card>
+> **[Python (async)](https://pypi.org/project/kalshi_python_async/)**
+>
+> `pip install kalshi_python_async`
 
-  <Card title="TypeScript" icon="js" href="https://www.npmjs.com/package/kalshi-typescript">
-    `npm install kalshi-typescript`
-  </Card>
-</CardGroup>
+> **[TypeScript](https://www.npmjs.com/package/kalshi-typescript)**
+>
+> `npm install kalshi-typescript`
 
-<Note>
-  The old `kalshi-python` package is deprecated — use `kalshi_python_sync` or `kalshi_python_async`.
-</Note>
+> [!NOTE]
+>
+> The old `kalshi-python` package is deprecated — use `kalshi_python_sync` or `kalshi_python_async`.
 
 SDK releases track the [OpenAPI specification](https://docs.kalshi.com/openapi.yaml) and are generally published Tuesday–Wednesday each week, ahead of the corresponding API changes; check the package pages and the [API Changelog](/changelog) for updates. All SDKs authenticate with an API key and signed requests: RSA keys work with every SDK version,
 Ed25519 keys need SDK 3.31.0 or later — see [API Keys](/getting_started/api_keys) for setup.

@@ -46,9 +46,9 @@ Once connected, channels fall into two groups:
 
 In other words, even channels that carry public market data still use the authenticated WebSocket session, but they do not impose additional per-channel authorization checks.
 
-<Note>
-  For detailed information about API key generation and request signing, see our [API Keys documentation](/getting_started/api_keys).
-</Note>
+> [!NOTE]
+>
+> For detailed information about API key generation and request signing, see our [API Keys documentation](/getting_started/api_keys).
 
 ### Required Headers
 
@@ -180,11 +180,11 @@ async def process_message(message):
 
 ## Connection Keep-Alive
 
-<Note>
-  The Python `websockets` library automatically handles WebSocket ping/pong frames to keep connections alive. No manual heartbeat handling is required. Learn more about [automatic keepalive in the websockets documentation](https://websockets.readthedocs.io/en/stable/topics/design.html#keepalive).
-
-  Other WebSocket libraries may require manual ping/pong implementation.
-</Note>
+> [!NOTE]
+>
+> The Python `websockets` library automatically handles WebSocket ping/pong frames to keep connections alive. No manual heartbeat handling is required. Learn more about [automatic keepalive in the websockets documentation](https://websockets.readthedocs.io/en/stable/topics/design.html#keepalive).
+>
+> Other WebSocket libraries may require manual ping/pong implementation.
 
 ## Subscribing to Channels
 
@@ -286,31 +286,29 @@ The server sends error messages in this format:
 
 ## Best Practices
 
-<CardGroup cols={2}>
-  <Card title="Connection Management" icon="link">
-    * Implement automatic reconnection with exponential backoff
-    * Handle network interruptions gracefully
-    * Use the websockets library's built-in keepalive
-  </Card>
+> **Connection Management**
+>
+> * Implement automatic reconnection with exponential backoff
+> * Handle network interruptions gracefully
+> * Use the websockets library's built-in keepalive
 
-  <Card title="Data Handling" icon="database">
-    * Process messages asynchronously to avoid blocking
-    * Implement proper error handling for malformed messages
-    * Cache initial orderbook state before applying updates
-  </Card>
+> **Data Handling**
+>
+> * Process messages asynchronously to avoid blocking
+> * Implement proper error handling for malformed messages
+> * Cache initial orderbook state before applying updates
 
-  <Card title="Security" icon="shield">
-    * Never expose your private key in client-side code
-    * Rotate API keys regularly
-    * Use secure key storage practices
-  </Card>
+> **Security**
+>
+> * Never expose your private key in client-side code
+> * Rotate API keys regularly
+> * Use secure key storage practices
 
-  <Card title="Performance" icon="gauge">
-    * Subscribe only to markets you need
-    * Implement message buffering for high-frequency updates
-    * Consider using connection pooling for multiple subscriptions
-  </Card>
-</CardGroup>
+> **Performance**
+>
+> * Subscribe only to markets you need
+> * Implement message buffering for high-frequency updates
+> * Consider using connection pooling for multiple subscriptions
 
 ## Complete Example
 

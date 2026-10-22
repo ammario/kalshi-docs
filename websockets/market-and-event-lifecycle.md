@@ -290,7 +290,7 @@ operations:
             type:
               type: string
               const: market_lifecycle_v2
-              x-parser-schema-id: <anonymous-schema-139>
+              x-parser-schema-id: <anonymous-schema-141>
             sid: &ref_1
               type: integer
               description: >-
@@ -324,7 +324,7 @@ operations:
                     created. Identifier for the exchange shard the market lives
                     on
                   x-rust-type: i32
-                  x-parser-schema-id: <anonymous-schema-141>
+                  x-parser-schema-id: <anonymous-schema-143>
                 open_ts:
                   type: integer
                   description: >-
@@ -332,7 +332,7 @@ operations:
                     created. Unix timestamp for when the market opened (in
                     seconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-142>
+                  x-parser-schema-id: <anonymous-schema-144>
                 close_ts:
                   type: integer
                   description: >-
@@ -341,7 +341,7 @@ operations:
                     for when the market is scheduled to close (in seconds). Will
                     be updated in case of early determination markets
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-143>
+                  x-parser-schema-id: <anonymous-schema-145>
                 determination_ts:
                   type: integer
                   description: >-
@@ -349,7 +349,7 @@ operations:
                     determined. Unix timestamp for when the market is determined
                     (in seconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-144>
+                  x-parser-schema-id: <anonymous-schema-146>
                 settled_ts:
                   type: integer
                   description: >-
@@ -357,13 +357,13 @@ operations:
                     settled. Unix timestamp for when the market is settled (in
                     seconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-145>
+                  x-parser-schema-id: <anonymous-schema-147>
                 result:
                   type: string
                   description: >-
                     Optional - This key will ONLY exist when the market is
                     determined. Result of the market
-                  x-parser-schema-id: <anonymous-schema-146>
+                  x-parser-schema-id: <anonymous-schema-148>
                 settlement_value:
                   type: string
                   description: >-
@@ -372,7 +372,7 @@ operations:
                     dollars (e.g. "0.5000")
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_option_price_dollars
-                  x-parser-schema-id: <anonymous-schema-147>
+                  x-parser-schema-id: <anonymous-schema-149>
                 is_deactivated:
                   type: boolean
                   description: >-
@@ -380,7 +380,7 @@ operations:
                     paused/unpaused. Boolean flag to indicate if trading is
                     paused on an open market. This should only be interpreted
                     for an open market
-                  x-parser-schema-id: <anonymous-schema-148>
+                  x-parser-schema-id: <anonymous-schema-150>
                 additional_metadata:
                   type: object
                   required:
@@ -396,46 +396,46 @@ operations:
                   properties:
                     name:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-149>
+                      x-parser-schema-id: <anonymous-schema-151>
                     title:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-150>
+                      x-parser-schema-id: <anonymous-schema-152>
                     yes_sub_title:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-151>
+                      x-parser-schema-id: <anonymous-schema-153>
                     no_sub_title:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-152>
+                      x-parser-schema-id: <anonymous-schema-154>
                     rules_primary:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-153>
+                      x-parser-schema-id: <anonymous-schema-155>
                     rules_secondary:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-154>
+                      x-parser-schema-id: <anonymous-schema-156>
                     can_close_early:
                       type: boolean
-                      x-parser-schema-id: <anonymous-schema-155>
+                      x-parser-schema-id: <anonymous-schema-157>
                     event_ticker:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-156>
+                      x-parser-schema-id: <anonymous-schema-158>
                     expected_expiration_ts:
                       type: integer
                       format: int64
-                      x-parser-schema-id: <anonymous-schema-157>
+                      x-parser-schema-id: <anonymous-schema-159>
                     strike_type:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-158>
+                      x-parser-schema-id: <anonymous-schema-160>
                     floor_strike:
                       type: number
                       x-rust-type: crate::wire::JsonNumber
-                      x-parser-schema-id: <anonymous-schema-159>
+                      x-parser-schema-id: <anonymous-schema-161>
                     cap_strike:
                       type: number
                       x-rust-type: crate::wire::JsonNumber
-                      x-parser-schema-id: <anonymous-schema-160>
+                      x-parser-schema-id: <anonymous-schema-162>
                     custom_strike:
                       type: object
-                      x-parser-schema-id: <anonymous-schema-161>
+                      x-parser-schema-id: <anonymous-schema-163>
                   x-parser-schema-id: lifecycleAdditionalMetadata
                 event_type:
                   type: string
@@ -464,7 +464,7 @@ operations:
                     - determined
                     - settled
                     - price_level_structure_updated
-                  x-parser-schema-id: <anonymous-schema-162>
+                  x-parser-schema-id: <anonymous-schema-164>
                 price_level_structure:
                   type: string
                   description: >-
@@ -506,13 +506,13 @@ operations:
                         description: Starting price for this band, in dollars
                         x-rust-type: common::types::Price
                         x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                        x-parser-schema-id: <anonymous-schema-165>
+                        x-parser-schema-id: <anonymous-schema-167>
                       end:
                         type: string
                         description: Ending price for this band, in dollars
                         x-rust-type: common::types::Price
                         x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                        x-parser-schema-id: <anonymous-schema-166>
+                        x-parser-schema-id: <anonymous-schema-168>
                       step:
                         type: string
                         description: >-
@@ -520,10 +520,10 @@ operations:
                           in dollars
                         x-rust-type: common::types::Price
                         x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                        x-parser-schema-id: <anonymous-schema-167>
-                    x-parser-schema-id: <anonymous-schema-164>
-                  x-parser-schema-id: <anonymous-schema-163>
-              x-parser-schema-id: <anonymous-schema-140>
+                        x-parser-schema-id: <anonymous-schema-169>
+                    x-parser-schema-id: <anonymous-schema-166>
+                  x-parser-schema-id: <anonymous-schema-165>
+              x-parser-schema-id: <anonymous-schema-142>
             sending_ts_ms: &ref_4
               type: integer
               format: int64
@@ -658,7 +658,7 @@ operations:
             type:
               type: string
               const: market_lifecycle_v2
-              x-parser-schema-id: <anonymous-schema-168>
+              x-parser-schema-id: <anonymous-schema-170>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -670,7 +670,7 @@ operations:
                 event_type:
                   type: string
                   const: metadata_updated
-                  x-parser-schema-id: <anonymous-schema-170>
+                  x-parser-schema-id: <anonymous-schema-172>
                 market_ticker: *ref_3
                 strike_type:
                   type: string
@@ -679,34 +679,34 @@ operations:
                     events. Determines how floor_strike / cap_strike are
                     interpreted (e.g. "between" uses both, "greater" uses
                     floor_strike only, "less" uses cap_strike only)
-                  x-parser-schema-id: <anonymous-schema-171>
+                  x-parser-schema-id: <anonymous-schema-173>
                 floor_strike:
                   type: number
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The floor (lower bound) strike value for the market
                   x-rust-type: crate::wire::JsonNumber
-                  x-parser-schema-id: <anonymous-schema-172>
+                  x-parser-schema-id: <anonymous-schema-174>
                 cap_strike:
                   type: number
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The cap (upper bound) strike value for the market
                   x-rust-type: crate::wire::JsonNumber
-                  x-parser-schema-id: <anonymous-schema-173>
+                  x-parser-schema-id: <anonymous-schema-175>
                 custom_strike:
                   type: object
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events with a custom or structured strike type
-                  x-parser-schema-id: <anonymous-schema-174>
+                  x-parser-schema-id: <anonymous-schema-176>
                 yes_sub_title:
                   type: string
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The updated yes subtitle for the market
-                  x-parser-schema-id: <anonymous-schema-175>
-              x-parser-schema-id: <anonymous-schema-169>
+                  x-parser-schema-id: <anonymous-schema-177>
+              x-parser-schema-id: <anonymous-schema-171>
             sending_ts_ms: *ref_4
           x-parser-schema-id: marketMetadataUpdatedPayload
         title: Market Metadata Updated
@@ -831,7 +831,7 @@ operations:
             type:
               type: string
               const: event_lifecycle
-              x-parser-schema-id: <anonymous-schema-176>
+              x-parser-schema-id: <anonymous-schema-178>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -847,22 +847,22 @@ operations:
                 event_ticker:
                   type: string
                   description: Unique identifier for the event being created
-                  x-parser-schema-id: <anonymous-schema-178>
+                  x-parser-schema-id: <anonymous-schema-180>
                 exchange_index:
                   type: integer
                   description: >-
                     Identifier for the exchange shard the event's markets live
                     on
                   x-rust-type: i32
-                  x-parser-schema-id: <anonymous-schema-179>
+                  x-parser-schema-id: <anonymous-schema-181>
                 title:
                   type: string
                   description: Title of event
-                  x-parser-schema-id: <anonymous-schema-180>
+                  x-parser-schema-id: <anonymous-schema-182>
                 subtitle:
                   type: string
                   description: Subtitle of event
-                  x-parser-schema-id: <anonymous-schema-181>
+                  x-parser-schema-id: <anonymous-schema-183>
                 collateral_return_type:
                   type: string
                   description: >-
@@ -872,25 +872,25 @@ operations:
                     - MECNET
                     - DIRECNET
                     - ''
-                  x-parser-schema-id: <anonymous-schema-182>
+                  x-parser-schema-id: <anonymous-schema-184>
                 series_ticker:
                   type: string
                   description: Series ticker for the event
-                  x-parser-schema-id: <anonymous-schema-183>
+                  x-parser-schema-id: <anonymous-schema-185>
                 strike_date:
                   type: integer
                   description: >-
                     Optional - Unix timestamp to indicate the strike date of the
                     event if there is one
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-184>
+                  x-parser-schema-id: <anonymous-schema-186>
                 strike_period:
                   type: string
                   description: >-
                     Optional - String to indicate the strike period of the event
                     if there is one
-                  x-parser-schema-id: <anonymous-schema-185>
-              x-parser-schema-id: <anonymous-schema-177>
+                  x-parser-schema-id: <anonymous-schema-187>
+              x-parser-schema-id: <anonymous-schema-179>
             sending_ts_ms: *ref_4
           x-parser-schema-id: eventLifecyclePayload
         title: Event Lifecycle
@@ -995,7 +995,7 @@ operations:
             type:
               type: string
               const: event_fee_update
-              x-parser-schema-id: <anonymous-schema-186>
+              x-parser-schema-id: <anonymous-schema-188>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -1008,7 +1008,7 @@ operations:
                 event_ticker:
                   type: string
                   description: Unique identifier for the event
-                  x-parser-schema-id: <anonymous-schema-188>
+                  x-parser-schema-id: <anonymous-schema-190>
                 fee_type_override:
                   type: *ref_6
                   enum:
@@ -1021,15 +1021,15 @@ operations:
                   description: >-
                     Event fee type override. `null` when the override has been
                     cleared.
-                  x-parser-schema-id: <anonymous-schema-189>
+                  x-parser-schema-id: <anonymous-schema-191>
                 fee_multiplier_override:
                   type: *ref_7
                   description: >-
                     Event fee multiplier override. `null` when the override has
                     been cleared.
                   x-rust-type: crate::wire::JsonNumber
-                  x-parser-schema-id: <anonymous-schema-190>
-              x-parser-schema-id: <anonymous-schema-187>
+                  x-parser-schema-id: <anonymous-schema-192>
+              x-parser-schema-id: <anonymous-schema-189>
             sending_ts_ms: *ref_4
           x-parser-schema-id: eventFeeUpdatePayload
         title: Event Fee Override Update

@@ -10,19 +10,19 @@ lastmod: 2026-09-14T18:17:55.108Z
 
 > Recover missed execution reports and query historical order events
 
-<Warning>
-  **This is not a traditional drop copy session.** Kalshi's Drop Copy uses a request-response pattern for querying historical execution reports. For a real-time streaming feed, use a [Listener Session](/fix/listener-sessions) on KalshiRT instead.
-</Warning>
+> [!WARNING]
+>
+> **This is not a traditional drop copy session.** Kalshi's Drop Copy uses a request-response pattern for querying historical execution reports. For a real-time streaming feed, use a [Listener Session](/fix/listener-sessions) on KalshiRT instead.
 
-<Note>
-  Historical execution-report replay through EventResendRequest (35=U1) requires allowlisting for your user account on both `KalshiNR` and `KalshiDC` sessions. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to request access. Requests from accounts that are not allowlisted are rejected with EventResendReject (35=U3), reason `5` (NOT\_ENABLED). Allowlisting does not backfill earlier events.
-</Note>
+> [!NOTE]
+>
+> Historical execution-report replay through EventResendRequest (35=U1) requires allowlisting for your user account on both `KalshiNR` and `KalshiDC` sessions. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to request access. Requests from accounts that are not allowlisted are rejected with EventResendReject (35=U3), reason `5` (NOT\_ENABLED). Allowlisting does not backfill earlier events.
 
 Lookback window is limited to the last 3 hours. Only ExecutionReport (35=8) messages are returned. Rejects and pending orders (ExecID `"-1;-1"`) are excluded.
 
-<Note>
-  Resent messages have new FIX sequence numbers, different from their original numbers on the order entry session. Use ExecID to reconcile.
-</Note>
+> [!NOTE]
+>
+> Resent messages have new FIX sequence numbers, different from their original numbers on the order entry session. Use ExecID to reconcile.
 
 ## EventResendRequest (35=U1)
 

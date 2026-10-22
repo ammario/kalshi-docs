@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/orderbook-updates
-lastmod: 2026-05-06T00:22:32.387Z
+lastmod: 2026-10-21T15:53:53.304Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,13 @@ lastmod: 2026-05-06T00:22:32.387Z
 - Sends `orderbook_snapshot` first, then incremental `orderbook_delta` updates
 - Supports `update_subscription` with `add_markets` / `delete_markets` / `get_snapshot` actions
 - `get_snapshot` returns an `orderbook_snapshot` for the requested `market_tickers` without modifying the subscription
+
+**Matching updates across connections:**
+- `clock` is the exchange clock. It is the same on every connection, so it can match a market's updates across redundant connections; `seq` counts messages on one subscription only
+- One exchange action can make several deltas, so several deltas can share a `clock`. Every connection sends them in the same order, before any delta for that market with a higher `clock`
+- A snapshot includes every change with a `clock` at or below its own; the deltas that follow it on that connection have higher clocks
+- While you are subscribed to a market, its clocks never go down outside exchange maintenance, but they skip values. They are not comparable across markets. Keep checking `seq` on each connection for missed messages
+- A market's clock may decrease during exchange maintenance, so don't compare clocks from before a maintenance period with clocks after it
 
 **Use case:** Building and maintaining a real-time orderbook
 
@@ -50,6 +57,27 @@ description: >
 
   - `get_snapshot` returns an `orderbook_snapshot` for the requested
   `market_tickers` without modifying the subscription
+
+
+  **Matching updates across connections:**
+
+  - `clock` is the exchange clock. It is the same on every connection, so it can
+  match a market's updates across redundant connections; `seq` counts messages
+  on one subscription only
+
+  - One exchange action can make several deltas, so several deltas can share a
+  `clock`. Every connection sends them in the same order, before any delta for
+  that market with a higher `clock`
+
+  - A snapshot includes every change with a `clock` at or below its own; the
+  deltas that follow it on that connection have higher clocks
+
+  - While you are subscribed to a market, its clocks never go down outside
+  exchange maintenance, but they skip values. They are not comparable across
+  markets. Keep checking `seq` on each connection for missed messages
+
+  - A market's clock may decrease during exchange maintenance, so don't compare
+  clocks from before a maintenance period with clocks after it
 
 
   **Use case:** Building and maintaining a real-time orderbook
@@ -120,6 +148,15 @@ operations:
                   - name: market_id
                     type: string
                     description: Unique market UUID
+                    required: true
+                  - name: clock
+                    type: integer
+                    description: >
+                      Exchange clock of the newest change this snapshot
+                      includes, or 0 if the market has no recorded change.
+
+                      The snapshot includes every change to this market with a
+                      clock at or below this one, and none above it.
                     required: true
                   - name: yes_dollars_fp
                     type: array
@@ -211,6 +248,7 @@ operations:
               required:
                 - market_ticker
                 - market_id
+                - clock
               properties:
                 market_ticker: &ref_3
                   type: string
@@ -222,6 +260,17 @@ operations:
                   description: Unique market UUID
                   format: uuid
                   x-parser-schema-id: marketId
+                clock:
+                  type: integer
+                  format: int64
+                  minimum: 0
+                  description: >
+                    Exchange clock of the newest change this snapshot includes,
+                    or 0 if the market has no recorded change.
+
+                    The snapshot includes every change to this market with a
+                    clock at or below this one, and none above it.
+                  x-parser-schema-id: <anonymous-schema-77>
                 yes_dollars_fp:
                   type: array
                   description: >
@@ -236,11 +285,11 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-79>
+                      x-parser-schema-id: <anonymous-schema-80>
                     minItems: 2
                     maxItems: 2
-                    x-parser-schema-id: <anonymous-schema-78>
-                  x-parser-schema-id: <anonymous-schema-77>
+                    x-parser-schema-id: <anonymous-schema-79>
+                  x-parser-schema-id: <anonymous-schema-78>
                 no_dollars_fp:
                   type: array
                   description: >
@@ -255,11 +304,11 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-82>
+                      x-parser-schema-id: <anonymous-schema-83>
                     minItems: 2
                     maxItems: 2
-                    x-parser-schema-id: <anonymous-schema-81>
-                  x-parser-schema-id: <anonymous-schema-80>
+                    x-parser-schema-id: <anonymous-schema-82>
+                  x-parser-schema-id: <anonymous-schema-81>
               x-parser-schema-id: <anonymous-schema-76>
             sending_ts_ms: &ref_5
               type: integer
@@ -280,6 +329,7 @@ operations:
             "msg": {
               "market_ticker": "FED-23DEC-T3.00",
               "market_id": "9b0f6b43-5b68-4f9f-9f02-9a2d1b8ac1a1",
+              "clock": 4182057,
               "yes_dollars_fp": [
                 [
                   "0.0800",
@@ -354,6 +404,16 @@ operations:
                     type: string
                     description: Unique market UUID
                     required: true
+                  - name: clock
+                    type: integer
+                    description: >
+                      Exchange clock of the exchange action that made this
+                      change. Every connection sends the same clock for the same
+                      change.
+
+                      Several deltas can share a clock when one action makes
+                      several changes.
+                    required: true
                   - name: price_dollars
                     type: string
                     description: Price level in dollars
@@ -419,7 +479,7 @@ operations:
             type:
               type: string
               const: orderbook_delta
-              x-parser-schema-id: <anonymous-schema-83>
+              x-parser-schema-id: <anonymous-schema-84>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -427,24 +487,36 @@ operations:
               required:
                 - market_ticker
                 - market_id
+                - clock
                 - price_dollars
                 - delta_fp
                 - side
               properties:
                 market_ticker: *ref_3
                 market_id: *ref_4
+                clock:
+                  type: integer
+                  format: int64
+                  minimum: 1
+                  description: >
+                    Exchange clock of the exchange action that made this change.
+                    Every connection sends the same clock for the same change.
+
+                    Several deltas can share a clock when one action makes
+                    several changes.
+                  x-parser-schema-id: <anonymous-schema-86>
                 price_dollars:
                   type: string
                   description: Price level in dollars
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-85>
+                  x-parser-schema-id: <anonymous-schema-87>
                 delta_fp:
                   type: string
                   description: Fixed-point contract delta (2 decimals)
                   x-rust-type: i64
                   x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-86>
+                  x-parser-schema-id: <anonymous-schema-88>
                 side:
                   type: string
                   description: Market side
@@ -460,7 +532,7 @@ operations:
 
                     Contains the client_order_id of your order that triggered
                     this delta.
-                  x-parser-schema-id: <anonymous-schema-87>
+                  x-parser-schema-id: <anonymous-schema-89>
                 ts:
                   type: string
                   deprecated: true
@@ -469,14 +541,14 @@ operations:
                     change was recorded (RFC3339, truncated to milliseconds).
                     Use ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-88>
+                  x-parser-schema-id: <anonymous-schema-90>
                 ts_ms:
                   type: integer
                   description: >-
                     Optional - Unix timestamp for when the orderbook change was
                     recorded (in milliseconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-89>
+                  x-parser-schema-id: <anonymous-schema-91>
                 subaccount:
                   type: integer
                   description: >
@@ -485,8 +557,8 @@ operations:
 
                     Contains the subaccount number of your order that triggered
                     this delta.
-                  x-parser-schema-id: <anonymous-schema-90>
-              x-parser-schema-id: <anonymous-schema-84>
+                  x-parser-schema-id: <anonymous-schema-92>
+              x-parser-schema-id: <anonymous-schema-85>
             sending_ts_ms: *ref_5
           x-parser-schema-id: orderbookDeltaPayload
         title: Orderbook Delta
@@ -500,6 +572,7 @@ operations:
             "msg": {
               "market_ticker": "FED-23DEC-T3.00",
               "market_id": "9b0f6b43-5b68-4f9f-9f02-9a2d1b8ac1a1",
+              "clock": 4182061,
               "price_dollars": "0.9600",
               "delta_fp": "-54.00",
               "side": "yes",

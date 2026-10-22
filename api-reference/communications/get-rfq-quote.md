@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfq-quote
-lastmod: 2026-10-19T20:37:48.438Z
+lastmod: 2026-10-21T16:37:39.785Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,9 +10,9 @@ lastmod: 2026-10-19T20:37:48.438Z
 
 >  Endpoint for getting a particular quote scoped to its RFQ.
 
-<Note>
-  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
-</Note>
+> [!NOTE]
+>
+> **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
 
 
 ## OpenAPI
