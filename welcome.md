@@ -22,21 +22,21 @@ By continuing to use or access Kalshi's API, you are agreeing to be bound to our
 >
 > Event-contract markets: REST, WebSocket, and FIX.
 
-> **[Perps APIs](/margin)**
+> **[Perps APIs](/margin.md)**
 >
 > Perpetual futures (margin): REST, WebSocket, and FIX.
 
 ## Get started
 
-> **[Making Your First Request](/getting_started/making_your_first_request)**
+> **[Making Your First Request](/getting_started/making_your_first_request.md)**
 >
 > Make your first API call and start trading on Kalshi.
 
-> **[Demo Environment](/getting_started/demo_env)**
+> **[Demo Environment](/getting_started/demo_env.md)**
 >
 > Build and test safely against the demo environment.
 
-> **[API Keys](/getting_started/api_keys)**
+> **[API Keys](/getting_started/api_keys.md)**
 >
 > Generate and manage your API credentials.
 
@@ -46,15 +46,15 @@ By continuing to use or access Kalshi's API, you are agreeing to be bound to our
 
 ## Reference
 
-> **[Rate Limits](/getting_started/rate_limits)**
+> **[Rate Limits](/getting_started/rate_limits.md)**
 >
 > Token budgets, tiers, and bursting.
 
-> **[Changelog](/changelog)**
+> **[Changelog](/changelog.md)**
 >
 > Stay updated with the latest API changes.
 
-> **[Glossary](/getting_started/terms)**
+> **[Glossary](/getting_started/terms.md)**
 >
 > Key terms and concepts used across the exchange.
 

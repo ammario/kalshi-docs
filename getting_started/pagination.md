@@ -112,7 +112,7 @@ Most list endpoints support these pagination parameters:
 
 ## Best Practices
 
-1. **Handle rate limits**: When paginating through large datasets, be mindful of [rate limits](/getting_started/rate_limits)
+1. **Handle rate limits**: When paginating through large datasets, be mindful of [rate limits](/getting_started/rate_limits.md)
 2. **Set appropriate limits**: Use smaller page sizes if you only need a few items
 3. **Cache results**: Store paginated data locally to avoid repeated API calls
 4. **Check for changes**: Data can change between requests, so consider implementing refresh logic
@@ -121,12 +121,12 @@ Most list endpoints support these pagination parameters:
 
 The following endpoints support cursor-based pagination:
 
-* [Get Markets](/api-reference/market/get-markets) - `/markets`
+* [Get Markets](/api-reference/market/get-markets.md) - `/markets`
 * [Get Events](/api-reference/market/get-events) - `/events`
-* [Get Series](/api-reference/market/get-series) - `/series`
-* [Get Trades](/api-reference/market/get-trades) - `/markets/trades`
+* [Get Series](/api-reference/market/get-series.md) - `/series`
+* [Get Trades](/api-reference/market/get-trades.md) - `/markets/trades`
 * [Get Portfolio History](/api-reference/portfolio/get-portfolio-history) - `/portfolio/history`
-* [Get Fills](/api-reference/portfolio/get-fills) - `/portfolio/fills`
+* [Get Fills](/api-reference/portfolio/get-fills.md) - `/portfolio/fills`
 * [Get Orders](/api-reference/portfolio/get-orders) - `/portfolio/orders`
 
 ## Common Patterns

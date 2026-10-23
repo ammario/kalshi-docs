@@ -12,7 +12,7 @@ lastmod: 2026-10-13T20:31:35.338Z
 
 ## API Key Setup
 
-FIX API keys use the same key pair as the [REST API](/getting_started/api_keys): Ed25519 (recommended) or 2048-bit RSA. Generate a key pair and register the public key in your [account profile](https://kalshi.com/account/profile), or generate one there. The API Key ID (UUID) is your `SenderCompID`.
+FIX API keys use the same key pair as the [REST API](/getting_started/api_keys.md): Ed25519 (recommended) or 2048-bit RSA. Generate a key pair and register the public key in your [account profile](https://kalshi.com/account/profile), or generate one there. The API Key ID (UUID) is your `SenderCompID`.
 
 ```bash theme={null}
 # Ed25519
@@ -140,7 +140,7 @@ Message retransmission (ResendRequest, SequenceReset) is only supported on **Kal
 >
 > For all other sessions, `ResetSeqNumFlag<141>` in the Logon message must always be `Y` or the Logon will be rejected.
 
-The [drop copy session](/fix/drop-copy) provides an alternative way to query for missed execution reports. For a real-time streaming feed, see [Listener Sessions](/fix/listener-sessions).
+The [drop copy session](/fix/drop-copy.md) provides an alternative way to query for missed execution reports. For a real-time streaming feed, see [Listener Sessions](/fix/listener-sessions.md).
 
 ### ResendRequest (35=2)
 

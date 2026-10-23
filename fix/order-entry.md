@@ -20,7 +20,7 @@ Used to submit a new order to the Exchange.
 | 18 | ExecInst | Char | N | `6`=Post Only, `E`=Reduce Only (IOC only; not supported with QuoteId) |
 | 38 | OrderQty | Decimal | Y | Quantity of contracts. Fractional quantities supported. |
 | 40 | OrdType | Char | Y | `2`=Limit |
-| 44 | Price | Decimal | Y | Limit price per contract. Whole cents (1–99) by default, or dollars with up to four decimal places when `UseDollars=Y`. See [Subpenny Pricing](/fix/subpenny-pricing). |
+| 44 | Price | Decimal | Y | Limit price per contract. Whole cents (1–99) by default, or dollars with up to four decimal places when `UseDollars=Y`. See [Subpenny Pricing](/fix/subpenny-pricing.md). |
 | 50 | SenderSubID | String | N | Clearing FCM sponsored access only. Header field identifying the operator for this order; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | `1`=Buy (Yes), `2`=Sell (No) |
 | 55 | Symbol | String | Y | Market ticker (e.g. `EURUSD-23JUN2618-B1.087`) |
@@ -32,7 +32,7 @@ Used to submit a new order to the Exchange.
 | 452 | PartyRole | Integer | N | FCM only. `24`=Customer Account. Required when using PartyID. |
 | 453 | NoPartyIDs | Integer | N | FCM only. Number of parties (only 1 supported). |
 | 79 | AllocAccount | Integer | N | Subaccount number (0–63). Alternative to NoPartyIDs. |
-| 526 | SecondaryClOrdID | UUID | N | [Order group](/fix/order-groups) identifier. |
+| 526 | SecondaryClOrdID | UUID | N | [Order group](/fix/order-groups.md) identifier. |
 | 2964 | SelfTradePreventionType | Integer | N | `1`=Taker At Cross (default), `2`=Maker |
 | 21006 | CancelOrderOnPause | Boolean | N | Cancel order if trading is paused. |
 | 21009 | MaxExecutionCost | Decimal | N | Max execution cost in dollars. Order canceled if unable to fill within cost. |
@@ -83,7 +83,7 @@ are unchanged.
 | 38 | OrderQty | Decimal | Y | New total quantity. If equal to filled qty, order is canceled. If less, rejected. |
 | 40 | OrdType | Char | Y | `2`=Limit |
 | 41 | OrigClOrdID | String | Y | ClOrdID of the order to modify. |
-| 44 | Price | Decimal | N | New limit price. Required if changing price. Whole cents (1–99) by default, or dollars with up to four decimal places when `UseDollars=Y`. See [Subpenny Pricing](/fix/subpenny-pricing). |
+| 44 | Price | Decimal | N | New limit price. Required if changing price. Whole cents (1–99) by default, or dollars with up to four decimal places when `UseDollars=Y`. See [Subpenny Pricing](/fix/subpenny-pricing.md). |
 | 50 | SenderSubID | String | N | Clearing FCM sponsored access only. Header field identifying the operator performing this modification; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | Must match original order. |
 | 55 | Symbol | String | Y | Must match original order. |
@@ -125,18 +125,18 @@ the original Day value.
 
 | Tag | Name | Type | Required | Description |
 | - | - | - | - | - |
-| 6 | AvgPx | Decimal | Y | Average price of all fills on this order. Cents by default, or dollars when `UseDollars=Y`. See [Subpenny Pricing](/fix/subpenny-pricing). |
+| 6 | AvgPx | Decimal | Y | Average price of all fills on this order. Cents by default, or dollars when `UseDollars=Y`. See [Subpenny Pricing](/fix/subpenny-pricing.md). |
 | 11 | ClOrdID | String | Y | ClOrdID from the last message that changed the order. |
 | 14 | CumQty | Decimal | Y | Total quantity filled so far. |
 | 17 | ExecID | String | Y | Unique report ID, sequenced within an exchange index. Format: `clock;event` for exchange index `0` (e.g. `4;7`) and `clock;event;exchange_index` for other indexes (e.g. `4;7;1`). `"-1;-1"` for PENDING reports. |
 | 30 | LastMkt | String | C | Exchange index that produced the report. |
-| 31 | LastPx | Decimal | C | YES fill price, regardless of Side(54). To display the NO fill price, subtract LastPx from 1 in dollar mode (`UseDollars=Y`), or from 100 in cents mode. Whole cents by default, or dollars with four decimal places when `UseDollars=Y`. Present only for ExecType=Trade. See [Subpenny Pricing](/fix/subpenny-pricing). |
+| 31 | LastPx | Decimal | C | YES fill price, regardless of Side(54). To display the NO fill price, subtract LastPx from 1 in dollar mode (`UseDollars=Y`), or from 100 in cents mode. Whole cents by default, or dollars with four decimal places when `UseDollars=Y`. Present only for ExecType=Trade. See [Subpenny Pricing](/fix/subpenny-pricing.md). |
 | 32 | LastQty | Decimal | C | Fill quantity. Present only for ExecType=Trade. |
 | 37 | OrderID | String | Y | Exchange-assigned order identifier. |
 | 38 | OrderQty | Decimal | Y | Total order quantity. OrderQty = CumQty + LeavesQty. |
 | 39 | OrdStatus | Char | Y | Current order status. See Order Status below. |
 | 41 | OrigClOrdID | String | C | Previous ClOrdID. Present for Replaced/Canceled orders. |
-| 44 | Price | Decimal | C | Order limit price per contract. Whole cents by default, or dollars with four decimal places when `UseDollars=Y`. See [Subpenny Pricing](/fix/subpenny-pricing). |
+| 44 | Price | Decimal | C | Order limit price per contract. Whole cents by default, or dollars with four decimal places when `UseDollars=Y`. See [Subpenny Pricing](/fix/subpenny-pricing.md). |
 | 54 | Side | Char | Y | `1`=Buy (Yes), `2`=Sell (No) |
 | 55 | Symbol | String | Y | Market ticker. |
 | 58 | Text | String | N | Human-readable result description. See Text Field Values below. |

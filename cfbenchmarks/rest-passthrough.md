@@ -24,7 +24,7 @@ The passthrough requires an authenticated Kalshi Trade API request, and it is av
 
 ## Coins and Index IDs
 
-Use CF Benchmarks index IDs in the `id` query parameter. The [coin and index ID table](/websockets/cfbenchmarks-value#coins-and-index-ids) includes BNB, HYPE, NEAR, ZEC, SUI, BCH, LTC, LINK, SHIB/kSHIB, ADA, WLD, AAVE, and VVV, as well as BTC, ETH, and other coins.
+Use CF Benchmarks index IDs in the `id` query parameter. The [coin and index ID table](/websockets/cfbenchmarks-value.md#coins-and-index-ids) includes BNB, HYPE, NEAR, ZEC, SUI, BCH, LTC, LINK, SHIB/kSHIB, ADA, WLD, AAVE, and VVV, as well as BTC, ETH, and other coins.
 
 For example, request BNB's latest value with:
 
@@ -38,11 +38,11 @@ The REST passthrough forwards index IDs to CF Benchmarks without a Kalshi coin a
 
 ## Rate limit
 
-Each passthrough request costs **50 tokens** from your Read bucket; the default request costs 10. At the Basic tier's 200 tokens-per-second read budget, that sustains 4 requests per second. See [Rate Limits and Tiers](/getting_started/rate_limits) for budgets and bucket behavior.
+Each passthrough request costs **50 tokens** from your Read bucket; the default request costs 10. At the Basic tier's 200 tokens-per-second read budget, that sustains 4 requests per second. See [Rate Limits and Tiers](/getting_started/rate_limits.md) for budgets and bucket behavior.
 
 ## Base URL and Path Mapping
 
-Use the production Trade API base URL (see [API Environments](/getting_started/api_environments) for all hosts and the demo environment):
+Use the production Trade API base URL (see [API Environments](/getting_started/api_environments.md) for all hosts and the demo environment):
 
 ```text theme={null}
 https://external-api.kalshi.com/trade-api/v2
@@ -56,7 +56,7 @@ Everything after `/cfbenchmarks/`, including query parameters other than `includ
 
 ## Authentication
 
-Authenticate with standard Kalshi API key request signing. See [API Keys](/getting_started/api_keys) and [Quick Start: Authenticated Requests](/getting_started/quick_start_authenticated_requests) for the full signing flow.
+Authenticate with standard Kalshi API key request signing. See [API Keys](/getting_started/api_keys.md) and [Quick Start: Authenticated Requests](/getting_started/quick_start_authenticated_requests.md) for the full signing flow.
 
 As with all Trade API endpoints, sign the request path from the API root **without** the query string:
 

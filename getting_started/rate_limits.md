@@ -29,11 +29,11 @@ The split is by operation type, not by protocol. REST and FIX requests drain the
 
 ## Balance endpoint bucket
 
-[`GET /portfolio/balance`](/api-reference/portfolio/get-balance) is metered in its own bucket and does not draw down the Read budget. Basic and Advanced tiers can call it **once per second**; every higher tier can call it **five times per second**. The bucket holds one second of budget, so there is no burst. Balance only changes on fills, settlements and transfers, so react to those (for example the [user fills websocket channel](/websockets/user-fills)) rather than polling balance.
+[`GET /portfolio/balance`](/api-reference/portfolio/get-balance) is metered in its own bucket and does not draw down the Read budget. Basic and Advanced tiers can call it **once per second**; every higher tier can call it **five times per second**. The bucket holds one second of budget, so there is no burst. Balance only changes on fills, settlements and transfers, so react to those (for example the [user fills websocket channel](/websockets/user-fills.md)) rather than polling balance.
 
 ## Predictions per-shard Write budgets
 
-A single order write that explicitly targets an [exchange shard](/getting_started/exchange_sharding) draws from a Write bucket scoped to that shard, and each shard's bucket carries your full tier budget:
+A single order write that explicitly targets an [exchange shard](/getting_started/exchange_sharding.md) draws from a Write bucket scoped to that shard, and each shard's bucket carries your full tier budget:
 
 * **Single REST** order creates, cancels, decreases, and amends: `exchange_index >= 1` is billed to that shard's Write bucket. Shard 0 traffic (`exchange_index: 0`) bills your unscoped Write bucket. Auto-routed traffic (`exchange_index: -1`, or omitted when `market_ticker` is provided) is billed to every shard's Write bucket.
 * **FIX** New Order Single (35=D), Order Cancel Request (35=F), and Order Cancel/Replace Request (35=G): `ExDestination` (tag 100) with a value `>= 1` is billed to that shard's Write bucket. Messages without tag 100, or with `0` or `-1`, are billed to your unscoped Write bucket.
@@ -75,8 +75,8 @@ A rate-limited request returns `429 Too Many Requests` with the body:
 
 A batch request costs the same as making each call individually. Every item in the batch is billed separately:
 
-* [Batch Create Orders](/api-reference/orders/batch-create-orders-v2): submitting 25 orders costs `25 × 10 = 250` tokens.
-* [Batch Cancel Orders](/api-reference/orders/batch-cancel-orders-v2): cancelling 25 orders costs `25 × 2 = 50` tokens.
+* [Batch Create Orders](/api-reference/orders/batch-create-orders-v2.md): submitting 25 orders costs `25 × 10 = 250` tokens.
+* [Batch Cancel Orders](/api-reference/orders/batch-cancel-orders-v2.md): cancelling 25 orders costs `25 × 2 = 50` tokens.
 
 The whole batch must fit in the bucket at once. A 25-order create batch needs 250 tokens available when it arrives, or the entire batch is rejected.
 
@@ -96,7 +96,7 @@ Shard 0 uses the unscoped margin Write budget. API v1 and other operations, incl
 
 Check your perps tier and limits with [`GET /account/limits/perps`](/margin-rest/account/get-perps-account-api-limits), the perps counterpart of [`GET /account/limits`](/api-reference/account/get-account-api-limits).
 
-See the [Perps API](/margin) overview for the full perps surface.
+See the [Perps API](/margin.md) overview for the full perps surface.
 
 ## Tiers and budgets
 
@@ -155,7 +155,7 @@ Perps Write bucket capacity is three times the per-second budget above the Basic
 ## Tier qualification
 
 * **Basic**: complete account signup.
-* **Advanced**: call the [Upgrade Account API Usage Level endpoint](/api-reference/account/upgrade-account-api-usage-level).
+* **Advanced**: call the [Upgrade Account API Usage Level endpoint](/api-reference/account/upgrade-account-api-usage-level.md).
 * **Expert, Premier, Paragon, Prime, and Prestige**: earned automatically from your trading volume (see [Earning higher tiers](#earning-higher-tiers-by-volume) below), or assigned by Kalshi.
 
 ## Earning higher tiers by volume

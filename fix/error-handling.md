@@ -17,7 +17,7 @@ Kalshi FIX API uses standard FIX error messages with additional detail in the Te
 * **Session-level errors**: Protocol violations, handled with Reject (35=3)
 * **Business-level errors**: Application logic issues, handled with BusinessMessageReject (35=j) or specific rejection messages
 
-A rejected Logon is returned as Logout (`35=5`). See [Reconnecting](/fix/authentication#reconnecting) for retry guidance.
+A rejected Logon is returned as Logout (`35=5`). See [Reconnecting](/fix/authentication.md#reconnecting) for retry guidance.
 
 ## Error Message Types
 

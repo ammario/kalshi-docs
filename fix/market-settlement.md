@@ -10,7 +10,7 @@ lastmod: 2026-09-22T20:23:31.037Z
 
 > Settlement reports for market outcomes and position resolution
 
-See [Market Settlement](/getting_started/market_settlement) for an overview. Settlement reports are available on **KalshiPT** sessions by default, unless `ReceiveSettlementReports=N` (tag 20127) is set during Logon, and on **KalshiNR** and **KalshiRT** sessions with `ReceiveSettlementReports=Y`.
+See [Market Settlement](/getting_started/market_settlement.md) for an overview. Settlement reports are available on **KalshiPT** sessions by default, unless `ReceiveSettlementReports=N` (tag 20127) is set during Logon, and on **KalshiNR** and **KalshiRT** sessions with `ReceiveSettlementReports=Y`.
 
 ## Market Settlement Report (35=UMS)
 

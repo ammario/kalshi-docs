@@ -10,7 +10,7 @@ lastmod: 2026-09-13T00:51:17.166Z
 
 > Dollar-based pricing format for subpenny precision
 
-For the general overview of fixed-point pricing and contract quantities across REST and WebSocket APIs, see [Fixed-Point Representation](/getting_started/fixed_point_migration).
+For the general overview of fixed-point pricing and contract quantities across REST and WebSocket APIs, see [Fixed-Point Representation](/getting_started/fixed_point_migration.md).
 
 ## Technical Specification
 

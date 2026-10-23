@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-21T15:53:53.394Z
+lastmod: 2026-10-22T22:54:51.689Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,29 +22,21 @@ the `FIX` tag.
 
 **October 29, 2026**
 
+Added optional `NoMDEntryTypes<267>` and `MDEntryType<269>` fields to [FIX market data requests](/fix/market-data.md). Select bids (`0`), offers (`1`), or trades (`2`), in any combination. Omit these fields to receive all three.
+
+**October 29, 2026**
+
+`GET /portfolio/orders` now accepts up to 100 comma-separated tickers in
+`event_ticker`, up from 10. A filter on events that have no markets now
+returns no orders. Previously it returned every order.
+
+**October 29, 2026**
+
 The Predictions `orderbook_delta` WebSocket channel now includes `clock` on
 `orderbook_snapshot` and `orderbook_delta` messages. Unlike `seq`, `clock` is
 the same on every connection, so you can use it to match a market's updates
 across redundant connections. See
-[Orderbook Updates](/websockets/orderbook-updates) for ordering details.
-
-**October 22, 2026**
-
-External feeds are moving from
-`wss://external-api.kalshi.com/trade-api/v2/external-feeds` to
-`wss://external-feeds.kalshi.com/trade-api/v2/external-feeds`. The replacement
-demo URL is `wss://external-feeds.demo.kalshi.co/trade-api/v2/external-feeds`.
-
-Existing feed URLs remain supported during the migration. Update your
-connection URL when the new endpoint is available. This change does not alter
-Trade API REST or standard WebSocket URLs.
-
-The `/trade-api/v2/external-feeds` path, API-key signing, channel entitlements,
-subscriptions, and payloads stay the same. Both old and new feed Origins are
-accepted during the migration window. Clients that explicitly send the old
-feed hostname as `Origin` should update that header with the connection URL. See
-[External Feeds WebSocket](/getting_started/api_environments#external-feeds-websocket)
-for the endpoint and Origin details.
+[Orderbook Updates](/websockets/orderbook-updates.md) for ordering details.
 
 **October 22, 2026**
 
@@ -59,7 +51,7 @@ post-only order would cross the book at execution, the resulting cancellation
 now counts toward the same quoting penalties as failing to confirm an
 accepted quote. Repeated failures can temporarily rate limit new quotes.
 
-See [Post-only quotes](/getting_started/rfqs#post-only-quotes).
+See [Post-only quotes](/getting_started/rfqs.md#post-only-quotes).
 
 **October 22, 2026**
 
@@ -137,7 +129,7 @@ market's earlier execution reports. Every event carries
 codes and final settlement prices in dollars. `Symbol (55)` is the market's
 current ticker. KalshiRT retains these messages for retransmission. Cash corporate
 actions are not sent, and KalshiMD sessions do not receive these messages. See
-[Order Entry](/fix-margin/order-entry).
+[Order Entry](/fix-margin/order-entry.md).
 
 **October 22, 2026**
 
@@ -285,11 +277,11 @@ The default remains `unsettled`. Use `settled` for positions that have settled
 but have not yet moved to `GET /historical/positions`; use `all` for both live
 states. For complete position history, page through live positions first,
 then `GET /historical/positions`, using the same `subaccount` and deduplicating
-by ticker. See [Historical Data](/getting_started/historical_data).
+by ticker. See [Historical Data](/getting_started/historical_data.md).
 
 **October 1, 2026**
 
-WebSocket messages now include `sending_ts_ms`. See the [WebSocket docs](/websockets/websocket-connection) for more info.
+WebSocket messages now include `sending_ts_ms`. See the [WebSocket docs](/websockets/websocket-connection.md) for more info.
 
 **October 1, 2026**
 
@@ -335,7 +327,7 @@ value the YES side can settle at.
 
 **October 1, 2026**
 
-[user\_orders](/websockets/user-orders) messages report
+[user\_orders](/websockets/user-orders.md) messages report
 `last_update_reason: "SettlementBoundsCancel"` when a resting order is
 cancelled because a settlement bounds update put it out of bounds.
 
@@ -346,7 +338,7 @@ by default; choose RSA for clients that support only RSA-PSS. Existing keys
 are unchanged, and `POST /trade-api/v2/api_keys/generate` still defaults to
 `rsa` when `key_type` is omitted. The official Python and TypeScript SDKs
 sign with either key type from version 3.31.0. See
-[API Keys](/getting_started/api_keys).
+[API Keys](/getting_started/api_keys.md).
 
 **October 1, 2026**
 
@@ -367,7 +359,7 @@ Obscured creator fields display the shared placeholder
 Creators still see their own normal ID. After successful quote execution, the
 hashed RFQ creator identity will become visible. Subsequent REST RFQ responses
 show the normal public communications ID to all viewers. See
-[Creator identity and privacy](/getting_started/rfqs#creator-identity-and-privacy)
+[Creator identity and privacy](/getting_started/rfqs.md#creator-identity-and-privacy)
 for the field mapping and lifecycle.
 
 Affected endpoints:
@@ -398,7 +390,7 @@ until funding is finalized.**
 Margin FIX Execution Reports with `ExecType=Trade` now include
 `ClearingBusinessDate` (tag `715`) in `YYYYMMDD` form. Trades at or after
 4:00 p.m. ET carry the next calendar day's date, including on weekends and
-holidays. See [Order Entry](/fix-margin/order-entry).
+holidays. See [Order Entry](/fix-margin/order-entry.md).
 
 **October 1, 2026**
 
@@ -407,7 +399,7 @@ no position to reduce report `ReduceOnlyCancel` (previously `Decrease` on Margin
 
 **October 1, 2026**
 
-Subscribe to [communications](/websockets/communications) with
+Subscribe to [communications](/websockets/communications.md) with
 `user_filter: "self"` to receive `rfq_created` and `rfq_deleted` only for
 RFQs you created. Omit `user_filter` or set it to `""` to continue receiving
 RFQs from all users. Quote notifications are unchanged.
@@ -432,7 +424,7 @@ and `yes_ask_size_fp` on the market object.
 
 **October 1, 2026**
 
-FIX [RFQ and quote messages](/fix/rfq-messages) now include the creation time in `TransactTime` (tag `60`), matching WebSocket `created_ts`.
+FIX [RFQ and quote messages](/fix/rfq-messages.md) now include the creation time in `TransactTime` (tag `60`), matching WebSocket `created_ts`.
 
 **October 1, 2026**
 
@@ -453,13 +445,13 @@ same `KALSHI-ACCESS-*` headers and pre-sign text as RSA, with an Ed25519
 signature in place of RSA-PSS, on REST, WebSocket and FIX (`RawData`).
 `key_type` defaults to `rsa`; existing RSA keys are unchanged. In the web app,
 register an Ed25519 key by pasting its public key; web-generated keys remain
-RSA for now. See [API Keys](/getting_started/api_keys).
+RSA for now. See [API Keys](/getting_started/api_keys.md).
 
 **September 24, 2026**
 
 Predictions read and write rate limits are increasing 20% for Premier,
 Paragon, Prime, and Prestige.
-See [Rate Limits and Tiers](/getting_started/rate_limits#tiers-and-budgets)
+See [Rate Limits and Tiers](/getting_started/rate_limits.md#tiers-and-budgets)
 for the latest values.
 
 **September 24, 2026**
@@ -630,7 +622,7 @@ class. New asset classes may be added over time.
 
 Starting at 12:00 PM ET on September 10, 2026, new commodities markets will
 be created on shard 2 and new basketball markets will be created on shard 3.
-See [Exchange Sharding](/getting_started/exchange_sharding) for changes to
+See [Exchange Sharding](/getting_started/exchange_sharding.md) for changes to
 trading.
 
 **September 10, 2026**
@@ -675,8 +667,8 @@ rolling averages are unchanged.
 **September 3, 2026**
 
 FIX market data sessions now support up to 100,000 active subscriptions. See
-[Predictions FIX Market Data](/fix/market-data) and [Margin FIX Market
-Data](/fix-margin/market-data).
+[Predictions FIX Market Data](/fix/market-data.md) and [Margin FIX Market
+Data](/fix-margin/market-data.md).
 
 **September 3, 2026**
 
@@ -684,8 +676,8 @@ Book entries on `MarketDataIncrementalRefresh<35=X>` now include
 `ClOrdID<11>` and `AllocAccount<79>` when your order caused the level change.
 These private annotations are omitted for other users' orders and sibling
 accounts hidden by a restricted API key. See
-[Predictions FIX Market Data](/fix/market-data) and
-[Margin FIX Market Data](/fix-margin/market-data).
+[Predictions FIX Market Data](/fix/market-data.md) and
+[Margin FIX Market Data](/fix-margin/market-data.md).
 
 **September 3, 2026**
 
@@ -734,7 +726,7 @@ commitment. `sum` is the default and reserves all resting-order margin.
 
 Predictions FIX Execution Reports with `ExecType=Trade` now include
 `ClearingBusinessDate` (tag `715`) in `YYYYMMDD` form, using the Eastern
-calendar date of the report's `TransactTime`. See [Order Entry](/fix/order-entry).
+calendar date of the report's `TransactTime`. See [Order Entry](/fix/order-entry.md).
 
 **August 31, 2026**
 
@@ -779,10 +771,10 @@ cancelled during the minute after the request.
 
 **August 27, 2026**
 
-The [CF Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough) page
+The [CF Benchmarks REST Passthrough](/cfbenchmarks/rest-passthrough.md) page
 now documents retrieving historical index values through the existing
 `GET /trade-api/v2/cfbenchmarks/*` endpoint, and the
-[CF Benchmarks Value Feed](/websockets/cfbenchmarks-value) websocket page
+[CF Benchmarks Value Feed](/websockets/cfbenchmarks-value.md) websocket page
 links to it. Some indices publish at intra-second granularity on the
 history endpoint; refer to the official CF Benchmarks API documentation
 for supported indices and granularities.
@@ -805,9 +797,9 @@ peering for production WebSocket and FIX connectivity from their AWS VPC.
 Existing AWS PrivateLink connectivity remains available to members on the
 Premier tier or above.
 
-See [API Environments and Endpoints](/getting_started/api_environments#private-connectivity),
-[FIX Connectivity](/fix/connectivity#private-connectivity), and
-[Margin FIX Connectivity](/fix-margin/connectivity#private-connectivity).
+See [API Environments and Endpoints](/getting_started/api_environments.md#private-connectivity),
+[FIX Connectivity](/fix/connectivity.md#private-connectivity), and
+[Margin FIX Connectivity](/fix-margin/connectivity.md#private-connectivity).
 
 **August 27, 2026**
 
@@ -847,14 +839,14 @@ off the structure name.
 
 Existing combo markets migrate in place with resting orders preserved. After
 this release every combo market is on `center_deci_edge_centi_cent`. See
-[Fixed-Point Representation](/getting_started/fixed_point_migration) for the
+[Fixed-Point Representation](/getting_started/fixed_point_migration.md) for the
 full structure reference.
 
 **August 24, 2026**
 
 Upcoming exchange sharding: Crypto, Tennis, and Baseball will be provisioned
 on dedicated exchange instances. Please see
-[Exchange Sharding](/getting_started/exchange_sharding) for changes to trading.
+[Exchange Sharding](/getting_started/exchange_sharding.md) for changes to trading.
 
 **August 22, 2026**
 
@@ -1003,7 +995,7 @@ ticks in between. No API fields or message formats change. As with other
 structures, snap order and RFQ quote prices to the `step` of the band
 containing the price in the market's `price_ranges` array rather than
 keying off the structure name. See
-[Fixed-Point Representation](/getting_started/fixed_point_migration) for the
+[Fixed-Point Representation](/getting_started/fixed_point_migration.md) for the
 full structure reference.
 
 **August 13, 2026**
@@ -1250,7 +1242,7 @@ belongs to a hidden event, matching the visibility of the events themselves.
 
 Added `GET /historical/positions` — an authenticated endpoint for querying settled positions archived to the historical database. Supports `ticker` and `event_ticker` filtering with cursor pagination.
 
-Positions are archived per whole event: a settled event's positions move to the historical database together and are never split between this endpoint and `GET /portfolio/positions`. Use this endpoint for positions older than the new `market_positions_last_updated_ts` cutoff returned by `GET /historical/cutoff`. See [Historical Data](/getting_started/historical_data) for details.
+Positions are archived per whole event: a settled event's positions move to the historical database together and are never split between this endpoint and `GET /portfolio/positions`. Use this endpoint for positions older than the new `market_positions_last_updated_ts` cutoff returned by `GET /historical/cutoff`. See [Historical Data](/getting_started/historical_data.md) for details.
 
 **July 23, 2026**
 
@@ -1661,12 +1653,12 @@ reference.
 
 Use the V2 event-order endpoints:
 
-* [Create Order (V2)](/api-reference/orders/create-order-v2)
-* [Cancel Order (V2)](/api-reference/orders/cancel-order-v2)
-* [Decrease Order (V2)](/api-reference/orders/decrease-order-v2)
-* [Batch Create Orders (V2)](/api-reference/orders/batch-create-orders-v2)
-* [Batch Cancel Orders (V2)](/api-reference/orders/batch-cancel-orders-v2)
-* [Amend Order (V2)](/api-reference/orders/amend-order-v2)
+* [Create Order (V2)](/api-reference/orders/create-order-v2.md)
+* [Cancel Order (V2)](/api-reference/orders/cancel-order-v2.md)
+* [Decrease Order (V2)](/api-reference/orders/decrease-order-v2.md)
+* [Batch Create Orders (V2)](/api-reference/orders/batch-create-orders-v2.md)
+* [Batch Cancel Orders (V2)](/api-reference/orders/batch-cancel-orders-v2.md)
+* [Amend Order (V2)](/api-reference/orders/amend-order-v2.md)
 
 **Affected endpoints:**
 
@@ -1811,7 +1803,7 @@ automatically from your trailing trading volume (and can still be granted manual
 backed by a **grant**, which you can view in the new `grants` array of
 `GET /trade-api/v2/account/limits`.
 
-See [Rate Limits and Tiers](/getting_started/rate_limits) for the thresholds and how grants work.
+See [Rate Limits and Tiers](/getting_started/rate_limits.md) for the thresholds and how grants work.
 
 **Live Thursday, June 11, 2026.**
 
@@ -1829,12 +1821,12 @@ The V2 endpoint costs are unchanged.
 Switch to the V2 event-order endpoints to keep full write rate-limit access
 for these workflows:
 
-* [Create Order (V2)](/api-reference/orders/create-order-v2)
-* [Cancel Order (V2)](/api-reference/orders/cancel-order-v2)
-* [Amend Order (V2)](/api-reference/orders/amend-order-v2)
-* [Decrease Order (V2)](/api-reference/orders/decrease-order-v2)
-* [Batch Create Orders (V2)](/api-reference/orders/batch-create-orders-v2)
-* [Batch Cancel Orders (V2)](/api-reference/orders/batch-cancel-orders-v2)
+* [Create Order (V2)](/api-reference/orders/create-order-v2.md)
+* [Cancel Order (V2)](/api-reference/orders/cancel-order-v2.md)
+* [Amend Order (V2)](/api-reference/orders/amend-order-v2.md)
+* [Decrease Order (V2)](/api-reference/orders/decrease-order-v2.md)
+* [Batch Create Orders (V2)](/api-reference/orders/batch-create-orders-v2.md)
+* [Batch Cancel Orders (V2)](/api-reference/orders/batch-cancel-orders-v2.md)
 
 **Affected endpoints:**
 
@@ -1914,13 +1906,13 @@ trades.
   * `SecurityStatusRequest` (35=e) subscribes (`263=1`) or unsubscribes (`263=2`) a single `Symbol<55>`
   * `SecurityStatus` (35=f) streams `SecurityTradingStatus<326>` changes: `3`=resume (activated), `2`=trading halt, `100`=Kalshi determined, `101`=Kalshi settled
   * Changes-only: no initial snapshot is sent on subscribe
-  * For more info see [Market Data](/fix/market-data)
+  * For more info see [Market Data](/fix/market-data.md)
 
 **May 28, 2026**
 
 Starting Thursday, May 28, 2026, `GET /portfolio/balance` returns `balance_dollars`, the member's available balance as a fixed-point dollar string, alongside the existing integer-cent `balance` field. This precision change applies only to direct members of the exchange: direct member balances are aligned to centi-cent (`$0.0001`, or `0.01c`) precision. The legacy `balance` field truncates any sub-cent amount, so use `balance_dollars` for exact values.
 
-See [Fee Rounding](/getting_started/fee_rounding) for balance alignment and rounding mechanics.
+See [Fee Rounding](/getting_started/fee_rounding.md) for balance alignment and rounding mechanics.
 
 **May 28, 2026**
 
@@ -1931,7 +1923,7 @@ See [Fee Rounding](/getting_started/fee_rounding) for balance alignment and roun
   * `MarketDataRequest` (35=V) requests order book snapshots (`263=0`) or snapshot-plus-updates subscriptions (`263=1`); cancel with `263=2` (symbols in `55`, or none to cancel all)
   * `MarketDataSnapshotFullRefresh` (35=W) returns the full aggregated book; `MarketDataIncrementalRefresh` (35=X) streams subsequent level changes
   * `MarketDataRequestReject` (35=Y) is sent when a request cannot be accepted
-  * For more info see [Market Data](/fix/market-data)
+  * For more info see [Market Data](/fix/market-data.md)
 
 **May 28, 2026**
 
@@ -1997,7 +1989,7 @@ when a subscription's event buffer overflows during a message burst. When this
 happens, subscribe to a smaller subset of data, or ensure that your connection
 read throughput is optimized.
 
-See the [WebSocket error messages](/websockets/websocket-connection#error-messages)
+See the [WebSocket error messages](/websockets/websocket-connection.md#error-messages)
 section for the full list.
 
 **May 11, 2026**
@@ -2089,7 +2081,7 @@ the canonical way to determine order/trade direction going forward.
 The legacy fields **will not be removed before May 28, 2026** — please
 migrate to the new fields when integrating against these endpoints.
 
-See the [Order direction](/getting_started/order_direction) reference
+See the [Order direction](/getting_started/order_direction.md) reference
 page for the full migration table and equivalence rules.
 
 **May 7, 2026**
@@ -2190,7 +2182,7 @@ one second of budget.
 }
 ```
 
-See [Rate Limits and Tiers](/getting_started/rate_limits) for budget
+See [Rate Limits and Tiers](/getting_started/rate_limits.md) for budget
 semantics.
 
 **Affected endpoints:**
@@ -2223,7 +2215,7 @@ endpoints that do not use that default cost.
 Write endpoints now allow brief bursts above your per-second budget — when
 your client is running below its steady rate, the unused capacity
 accumulates and can be spent in a single pulse. See
-[Rate Limits and Tiers](/getting_started/rate_limits) for details.
+[Rate Limits and Tiers](/getting_started/rate_limits.md) for details.
 
 **Apr 22, 2026**
 
@@ -2243,7 +2235,7 @@ accumulates and can be spent in a single pulse. See
 Rolling out a new token-cost rate-limit system with separate read and write
 budgets and a new **Paragon** tier. All existing tiers get at least as much
 headroom as before and no client changes are required. See
-[Rate Limits and Tiers](/getting_started/rate_limits) for full details.
+[Rate Limits and Tiers](/getting_started/rate_limits.md) for full details.
 
 In the coming weeks, single-query read endpoints will be priced below
 the default cost.
@@ -2447,7 +2439,7 @@ When pulling quotes, two new fields return the computed quote size (measured in 
 * `GET /portfolio/settlements` now exposes `yes_total_cost_dollars` and `no_total_cost_dollars` in fixed-point dollars.
 * Legacy settlement cent fields `yes_total_cost` and `no_total_cost` remain available for now because these `_dollars` fields were added late in the fixed-point migration, but clients are recommended to migrate now.
 
-See [Fixed-Point Migration](/getting_started/fixed_point_migration) for the recommended field mappings.
+See [Fixed-Point Migration](/getting_started/fixed_point_migration.md) for the recommended field mappings.
 
 **Mar 8, 2026**
 
@@ -2455,7 +2447,7 @@ See [Fixed-Point Migration](/getting_started/fixed_point_migration) for the reco
 * Fractional trading will be enabled on 10 additional markets on **March 12**
 * Subpenny pricing goes live on 2 markets on **March 9**: `KXGREENLAND-29` (deci\_cent) and `KXGDPNOM-RUS26` (tapered\_deci\_cent)
 
-See [Fixed-Point Migration](/getting_started/fixed_point_migration) for details.
+See [Fixed-Point Migration](/getting_started/fixed_point_migration.md) for details.
 
 **Mar 7, 2026**
 
@@ -2472,7 +2464,7 @@ Selected portfolio response `_dollars` fields now emit up to `6` decimal places,
 
 Added `GET /historical/trades` — a public endpoint for querying all trades archived to the historical database. Supports the same filters as `GET /markets/trades`.
 
-Use this endpoint for trades that occurred before the `trades_created_ts` cutoff returned by `GET /historical/cutoff`. See [Historical Data](/getting_started/historical_data) for details.
+Use this endpoint for trades that occurred before the `trades_created_ts` cutoff returned by `GET /historical/cutoff`. See [Historical Data](/getting_started/historical_data.md) for details.
 
 **Mar 5, 2026**
 
@@ -2485,7 +2477,7 @@ Use this endpoint for trades that occurred before the `trades_created_ts` cutoff
 * Fractional trading will roll out per-market starting the week of **March 9, 2026**; check `fractional_trading_enabled` on Market responses
 * On fractional-enabled markets, legacy integer fields may be truncated; migrate to `_fp` and `_dollars` to avoid data loss
 
-Docs: [Fixed-Point Migration](/getting_started/fixed_point_migration) and [Fee Rounding](/getting_started/fee_rounding).
+Docs: [Fixed-Point Migration](/getting_started/fixed_point_migration.md) and [Fee Rounding](/getting_started/fee_rounding.md).
 
 **Mar 1, 2026**
 
@@ -2535,8 +2527,8 @@ Fractional share trading is now available for testing in the demo environment on
 
 Legacy fields will be deprecated on `March 5, 2026`:
 
-* Integer count fields with an `_fp` equivalent will no longer be returned. See [Fixed-Point Contracts](/getting_started/fixed_point_contracts) for migration details.
-* Integer cents price fields (e.g., `yes_bid`, `no_ask`, `last_price`) will no longer be returned. Their `_dollars` equivalents are already available. See [Subpenny Pricing](/getting_started/subpenny_pricing) for details.
+* Integer count fields with an `_fp` equivalent will no longer be returned. See [Fixed-Point Contracts](/getting_started/fixed_point_contracts.md) for migration details.
+* Integer cents price fields (e.g., `yes_bid`, `no_ask`, `last_price`) will no longer be returned. Their `_dollars` equivalents are already available. See [Subpenny Pricing](/getting_started/subpenny_pricing.md) for details.
 
 More information will be forthcoming on how fee rounding works with fractional contracts.
 
@@ -2570,7 +2562,7 @@ Affected endpoints:
 The deprecation timeline for non fixed-point count fields has been pushed back.
 Fields that have a `_fp` equivalent will continue to be returned via API until at least `February 26, 2026`.
 
-See [Fixed-Point Contracts](/getting_started/fixed_point_contracts) for updated migration details.
+See [Fixed-Point Contracts](/getting_started/fixed_point_contracts.md) for updated migration details.
 
 **Feb 19, 2026**
 
@@ -2737,7 +2729,7 @@ When `subaccount` is provided (including `0` for primary), results are filtered 
 
 **Jan 29, 2026**
 
-See [Fixed-Point Contracts](/getting_started/fixed_point_contracts) for updated migration details.
+See [Fixed-Point Contracts](/getting_started/fixed_point_contracts.md) for updated migration details.
 
 **Jan 29, 2026**
 
@@ -2908,7 +2900,7 @@ Release date: `January 29, 2026`
 **Jan 22, 2026**
 
 Added `*_fp` fixed-point contract count fields in the WebSocket AsyncAPI spec and examples
-(orderbook, ticker, trades, fills, positions, communications). See the [WebSocket reference](/websockets).
+(orderbook, ticker, trades, fills, positions, communications). See the [WebSocket reference](/websockets.md).
 
 Release date: `January 22, 2026`
 
@@ -2980,7 +2972,7 @@ Added `*_fp` string fields for contract counts across REST API requests and resp
 }
 ```
 
-See [Fixed-Point Contracts](/getting_started/fixed_point_contracts) for migration details.
+See [Fixed-Point Contracts](/getting_started/fixed_point_contracts.md) for migration details.
 
 Release date: `Jan 22, 2026`
 
@@ -3409,8 +3401,8 @@ Endpoints affected:
 Fields have been added to all RFQ and quote messages to support subpenny pricing via the dollar normalized price fields.
 For more info reference:
 
-* [Subpenny Pricing](/getting_started/subpenny_pricing)
-* [WebSocket Documentation](/websockets)
+* [Subpenny Pricing](/getting_started/subpenny_pricing.md)
+* [WebSocket Documentation](/websockets.md)
 
 **Oct 7, 2025**
 
@@ -3427,7 +3419,7 @@ Expected release: `October 1, 2025`
 **FIX API v1.0.14**
 
 * Added support for subpenny pricing across multiple FIX messages
-* For more info see [Subpenny Pricing](/fix/subpenny-pricing)
+* For more info see [Subpenny Pricing](/fix/subpenny-pricing.md)
 
 **Sep 25, 2025**
 
@@ -3516,7 +3508,7 @@ Added new public API endpoint for incentive programs (not yet live):
 Subpenny pricing fields have been added to WebSocket messages. Any message bearing price in cents will now also bear
 an equivalent fixed-point dollars field.
 
-For more info, see [Subpenny Pricing](/getting_started/subpenny_pricing).
+For more info, see [Subpenny Pricing](/getting_started/subpenny_pricing.md).
 
 **Sep 9, 2025**
 
@@ -3537,7 +3529,7 @@ For now, this change is read-only, meaning that the minimum allowable tick size 
 we will introduce sub-penny pricing on orders. For now, please prepare for an eventual migration to the higher granularity
 price representation.
 
-For more info, see [Subpenny Pricing](/getting_started/subpenny_pricing).
+For more info, see [Subpenny Pricing](/getting_started/subpenny_pricing.md).
 
 **Sep 2, 2025**
 

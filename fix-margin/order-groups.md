@@ -10,7 +10,7 @@ lastmod: 2026-04-30T03:43:38.546Z
 
 > Manage order groups for automatic position management
 
-For an overview of order groups and how they work, see [Order Groups](/getting_started/order_groups).
+For an overview of order groups and how they work, see [Order Groups](/getting_started/order_groups.md).
 
 ## Order Group Request (35=UOG)
 

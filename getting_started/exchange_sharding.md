@@ -18,13 +18,13 @@ Kalshi plans to add shards incrementally to maintain a healthy balance of traffi
 
 ## Balance Management
 
-Kalshi's collateralization checks run within the matching engine. Programmatic traders normally need to fund the relevant exchange shard before placing an order. FCM members can instead enable [automatic collateral transfers on eligible FIX sessions](/fix/authentication#optional-fields).
+Kalshi's collateralization checks run within the matching engine. Programmatic traders normally need to fund the relevant exchange shard before placing an order. FCM members can instead enable [automatic collateral transfers on eligible FIX sessions](/fix/authentication.md#optional-fields).
 
 **Funding Overview**
 
-* Account transfers can be made through the [Intra Account Transfer API](/api-reference/portfolio/intra-account-transfer).
+* Account transfers can be made through the [Intra Account Transfer API](/api-reference/portfolio/intra-account-transfer.md).
 * Manual transfers are also available through the [Kalshi UI](https://kalshi.com/account/exchange-indexes).
-* [Get Balance](/api-reference/portfolio/get-balance) provides a breakdown of account balances across exchange indexes.
+* [Get Balance](/api-reference/portfolio/get-balance.md) provides a breakdown of account balances across exchange indexes.
 
 **Automatic Order Transfers on the App and Web**
 
@@ -36,9 +36,9 @@ Market makers can disable this feature on the
 **Subaccounts Overview**
 
 * To fund a subaccount on a new exchange instance, first transfer user-level funds to the desired exchange instance.
-* Next, use [Create Subaccount](/api-reference/portfolio/create-subaccount) with the `exchange_index` parameter to provision the subaccount on the new instance.
-* Then, use [Transfer Between Subaccounts](/api-reference/portfolio/transfer-between-subaccounts) with the `exchange_index` parameter to transfer funds from the primary account to the subaccount on that instance.
-* [Get All Subaccount Balances](/api-reference/portfolio/get-all-subaccount-balances) provides a breakdown of subaccount balances for each `(exchange_index, subaccount)` pair.
+* Next, use [Create Subaccount](/api-reference/portfolio/create-subaccount.md) with the `exchange_index` parameter to provision the subaccount on the new instance.
+* Then, use [Transfer Between Subaccounts](/api-reference/portfolio/transfer-between-subaccounts.md) with the `exchange_index` parameter to transfer funds from the primary account to the subaccount on that instance.
+* [Get All Subaccount Balances](/api-reference/portfolio/get-all-subaccount-balances.md) provides a breakdown of subaccount balances for each `(exchange_index, subaccount)` pair.
 
 **Auto-Rebalancing**
 
@@ -46,13 +46,13 @@ Market makers can disable this feature on the
 * The customer supplies a target balance allocation as a percentage of their balance across exchange shards. For example, `{Default: 80, Combos: 20}`.
 * Every 10 seconds, Kalshi computes the customer's balance on each exchange shard as its account balance minus the value of its resting orders.
 * If the balance has drifted from the target allocation, Kalshi executes an intra-exchange account transfer on the customer's behalf to restore the target allocation.
-* Target balance allocations can be configured through the [REST API](/api-reference/portfolio/set-target-balance-allocation) and the clearing portal.
+* Target balance allocations can be configured through the [REST API](/api-reference/portfolio/set-target-balance-allocation.md) and the clearing portal.
 
 ## Order routing
 
 ### Market Data
 
-* The `exchange_index` field is provided on [`GET /markets`](/api-reference/market/get-markets), [`GET /events`](/api-reference/events/get-events), and via the [market and event lifecycle WebSocket streams](/websockets/market-and-event-lifecycle) for newly created events and markets.
+* The `exchange_index` field is provided on [`GET /markets`](/api-reference/market/get-markets), [`GET /events`](/api-reference/events/get-events), and via the [market and event lifecycle WebSocket streams](/websockets/market-and-event-lifecycle.md) for newly created events and markets.
 * Market ticker formats are unaffected by exchange sharding. The `exchange_index` field is the authoritative source of truth.
 
 > [!WARNING]
@@ -96,7 +96,7 @@ The following assignments determine the shard where new events are created. Shar
 
 * All child markets of an event will live on the same exchange instance.
 * There is currently no plan to migrate any live market to a new exchange instance.
-* Single REST order writes that explicitly target a nonzero shard are rate-limited against that shard's Write budget. Auto-routed single REST order writes are billed to the unscoped Write bucket and every nonzero shard's Write bucket. REST batch writes and explicit shard 0 writes use only the unscoped Write budget. See [Rate Limits and Tiers](/getting_started/rate_limits#sharded-exchanges-have-per-shard-write-budgets).
+* Single REST order writes that explicitly target a nonzero shard are rate-limited against that shard's Write budget. Auto-routed single REST order writes are billed to the unscoped Write bucket and every nonzero shard's Write bucket. REST batch writes and explicit shard 0 writes use only the unscoped Write budget. See [Rate Limits and Tiers](/getting_started/rate_limits.md#sharded-exchanges-have-per-shard-write-budgets).
 * Providing `ExDestination` / `exchange_index` is unnecessary for all RFQ operations, including FIX [`QuoteRequest` (`35=R`), `Quote` (`35=S`), and `AcceptQuote` (`35=UA`)](/fix/rfq-messages), which are routed internally by Kalshi.
 * When trading via FIX, both `MassCancelRequest` and `CancelOrdersOnDisconnect` will target all exchange shards for the FIX session.
 * Automatic routing will incur an additional latency cost.

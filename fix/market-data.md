@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-data
-lastmod: 2026-10-01T21:33:17.588Z
+lastmod: 2026-10-22T22:49:29.277Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,7 +24,7 @@ sequenceDiagram
     Client->>KalshiMD: Logon (35=A, 141=Y)
     KalshiMD->>Client: Logon (35=A)
     Client->>KalshiMD: Snapshot + updates request (35=V, 263=1)
-    KalshiMD->>Client: Snapshot (35=W) or Reject (35=Y)
+    KalshiMD->>Client: Snapshot (35=W, if book requested) or Reject (35=Y)
     KalshiMD->>Client: Incremental updates (35=X)
     Client->>KalshiMD: Cancel by Symbol (35=V, 263=2)
 ```
@@ -34,10 +34,14 @@ sequenceDiagram
 | Tag | Name | Type | Required | Description |
 | - | - | - | - | - |
 | 263 | SubscriptionRequestType | Char | Y | `0`=Snapshot, `1`=Snapshot plus updates, `2`=Disable previous snapshot plus update request |
+| 267 | NoMDEntryTypes | NumInGroup | N | Number of `269=MDEntryType` entries in the repeating group that follows. Omit the group for both book and trades. Ignored for `263=2`. |
+| 269 | MDEntryType | Char | C | Repeating group field. `0`=Bid, `1`=Offer, `2`=Trade. |
 | 146 | NoRelatedSym | Integer | C | Number of `55=Symbol` entries in the repeating group that follows. Required for `263=0` and `263=1`. For `263=2`, the listed symbols are unsubscribed; omit to cancel all of the session's subscriptions. |
 | 55 | Symbol | String | C | Repeating group field. The market tickers to subscribe to or cancel. |
 
 Snapshot and snapshot-plus-updates requests can contain up to 1,000 unique symbols. A session can hold up to 100,000 active market data subscriptions.
+
+Trades-only subscriptions send no book snapshots. Trades-only snapshot requests (`263=0` with only `269=2`) are rejected.
 
 ```fix Example snapshot request theme={null}
 8=FIXT.1.1|35=V|49=your-api-key|56=KalshiMD|263=0|146=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|
@@ -51,13 +55,19 @@ Snapshot and snapshot-plus-updates requests can contain up to 1,000 unique symbo
 8=FIXT.1.1|35=V|49=your-api-key|56=KalshiMD|263=2|146=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|
 ```
 
+```fix Example trades-only subscription theme={null}
+8=FIXT.1.1|35=V|49=your-api-key|56=KalshiMD|263=1|267=1|269=2|146=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|
+```
+
+Use `267=1|269=0` for bids only, `267=1|269=1` for offers only, or `267=2|269=0|269=1` for both book sides without trades.
+
 ```fix Example cancel all subscriptions theme={null}
 8=FIXT.1.1|35=V|49=your-api-key|56=KalshiMD|263=2|
 ```
 
 ## Market Data Snapshot Full Refresh (35=W)
 
-Sent in response to a snapshot request and immediately after a snapshot-plus-updates subscription is accepted. Correlate by `Symbol<55>`.
+Sent in response to a snapshot request and immediately after a subscription that includes either book side is accepted. Only requested book sides are included. Trades-only subscriptions do not receive this message. Correlate by `Symbol<55>`.
 
 | Tag | Name | Type | Required | Description |
 | - | - | - | - | - |
@@ -75,7 +85,7 @@ Sent in response to a snapshot request and immediately after a snapshot-plus-upd
 
 ## Market Data Incremental Refresh (35=X)
 
-Sent after a subscribed market's aggregated book levels change or a trade occurs. Correlate by `Symbol<55>` on each entry.
+Sent after a subscribed market's aggregated book levels change or a trade occurs, filtered by the requested `MDEntryType<269>` values. Correlate by `Symbol<55>` on each entry.
 
 | Tag | Name | Type | Required | Description |
 | - | - | - | - | - |

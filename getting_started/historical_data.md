@@ -74,7 +74,7 @@ The following live endpoints stop returning records after those records move to 
 
 > [!NOTE]
 >
-> The historical endpoints support the same [cursor-based pagination](/getting_started/pagination) as their live counterparts.
+> The historical endpoints support the same [cursor-based pagination](/getting_started/pagination.md) as their live counterparts.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

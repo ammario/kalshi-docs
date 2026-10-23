@@ -19,11 +19,11 @@ Use the dedicated Trade API WebSocket hosts for new integrations:
 
 WebSocket connections use the same API key authentication and signing path as before. Only the hostname changes for the dedicated Trade API path.
 
-* For connection and subscription examples, see [Quick Start: WebSockets](/getting_started/quick_start_websockets).
-* For all REST and WebSocket base URLs, see [API Environments and Endpoints](/getting_started/api_environments).
+* For connection and subscription examples, see [Quick Start: WebSockets](/getting_started/quick_start_websockets.md).
+* For all REST and WebSocket base URLs, see [API Environments and Endpoints](/getting_started/api_environments.md).
 * To generate clients or inspect channel payloads directly, download the [AsyncAPI specification](/asyncapi.yaml).
-* For detailed CF Benchmarks channel usage (`cfbenchmarks_value`), see [CF Benchmarks Value Feed](/websockets/cfbenchmarks-value).
-* For real-time Pyth prices (`pyth_value`), see [Pyth Value Feed](/websockets/pyth-value).
+* For detailed CF Benchmarks channel usage (`cfbenchmarks_value`), see [CF Benchmarks Value Feed](/websockets/cfbenchmarks-value.md).
+* For real-time Pyth prices (`pyth_value`), see [Pyth Value Feed](/websockets/pyth-value.md).
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

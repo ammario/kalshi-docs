@@ -18,7 +18,7 @@ Before you begin, you'll need:
 
 * A Kalshi account with API access configured
 * Python with the `requests` and `cryptography` libraries installed
-* Your authentication functions set up (see our [authentication guide](/getting_started/quick_start_authenticated_requests))
+* Your authentication functions set up (see our [authentication guide](/getting_started/quick_start_authenticated_requests.md))
 
 > [!NOTE]
 >

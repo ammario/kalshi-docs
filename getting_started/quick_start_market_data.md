@@ -26,7 +26,7 @@ Kalshi provides several public endpoints that don't require API keys. These endp
 
 ## Step 1: Get Series Information
 
-Let's start by fetching information about the KXHIGHNY series ([Highest temperature in NYC today?](https://kalshi.com/markets/kxhighny/highest-temperature-in-nyc)). This series tracks the highest temperature recorded in Central Park, New York on a given day. We'll use the [Get Series](/api-reference/market/get-series) endpoint.
+Let's start by fetching information about the KXHIGHNY series ([Highest temperature in NYC today?](https://kalshi.com/markets/kxhighny/highest-temperature-in-nyc)). This series tracks the highest temperature recorded in Central Park, New York on a given day. We'll use the [Get Series](/api-reference/market/get-series.md) endpoint.
 
 ```python Python theme={null}
 import requests
@@ -58,7 +58,7 @@ curl -X GET "https://external-api.kalshi.com/trade-api/v2/series/KXHIGHNY"
 
 ## Step 2: Get Today's Events and Markets
 
-Now that we have the series information, let's get the markets for this series. We'll use the [Get Markets](/api-reference/market/get-markets) endpoint with the series ticker filter to find all active markets. If there are no open markets today, remove `status=open` or use `status=all` to see the full series history.
+Now that we have the series information, let's get the markets for this series. We'll use the [Get Markets](/api-reference/market/get-markets.md) endpoint with the series ticker filter to find all active markets. If there are no open markets today, remove `status=open` or use `status=all` to see the full series history.
 
 ```python Python theme={null}
 # Get all open markets for the KXHIGHNY series
@@ -167,11 +167,11 @@ async function getOrderbook(marketTicker) {
 
 ## Working with Large Datasets
 
-The Kalshi API uses cursor-based pagination to handle large datasets efficiently. To learn more about navigating through paginated responses, see our [Understanding Pagination](/getting_started/pagination) guide.
+The Kalshi API uses cursor-based pagination to handle large datasets efficiently. To learn more about navigating through paginated responses, see our [Understanding Pagination](/getting_started/pagination.md) guide.
 
 ## Understanding Orderbook Responses
 
-Kalshi's orderbook structure is unique due to the nature of binary prediction markets. The API only returns bids (not asks) because of the reciprocal relationship between YES and NO positions. To learn more about orderbook responses and why they work this way, see our [Orderbook Responses](/getting_started/orderbook_responses) guide.
+Kalshi's orderbook structure is unique due to the nature of binary prediction markets. The API only returns bids (not asks) because of the reciprocal relationship between YES and NO positions. To learn more about orderbook responses and why they work this way, see our [Orderbook Responses](/getting_started/orderbook_responses.md) guide.
 
 ## Next Steps
 
@@ -182,7 +182,7 @@ Now that you understand how to access market data without authentication, you ca
 3. Create market analysis dashboards
 4. Set up a WebSocket connection for live updates (requires authentication)
 
-For authenticated endpoints that allow trading and portfolio management, check out our [API Keys guide](/getting_started/api_keys).
+For authenticated endpoints that allow trading and portfolio management, check out our [API Keys guide](/getting_started/api_keys.md).
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

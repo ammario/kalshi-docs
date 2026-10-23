@@ -12,7 +12,7 @@ lastmod: 2026-09-14T18:17:55.114Z
 
 ## Overview
 
-A listener session provides a **real-time, read-only stream** of execution reports from your margin trading session. This is what most exchanges refer to as a "drop copy": a live shadow feed of all fills and order state changes. Kalshi's [Drop Copy session](/fix-margin/drop-copy) (KalshiDC) is a separate, gated request-response tool for querying historical execution reports, not a live feed.
+A listener session provides a **real-time, read-only stream** of execution reports from your margin trading session. This is what most exchanges refer to as a "drop copy": a live shadow feed of all fills and order state changes. Kalshi's [Drop Copy session](/fix-margin/drop-copy.md) (KalshiDC) is a separate, gated request-response tool for querying historical execution reports, not a live feed.
 
 ## How It Works
 
@@ -20,7 +20,7 @@ A listener session is not a separate endpoint. It is a **mode** enabled on a sta
 
 Once connected, the listener session receives the same execution reports as your active trading session in real time, but **cannot send any orders or modifications**.
 
-Listener sessions connect to the same KalshiNR or KalshiRT endpoints listed on the [Connectivity](/fix-margin/connectivity) page. A **separate API key** is required (read-only scope is sufficient).
+Listener sessions connect to the same KalshiNR or KalshiRT endpoints listed on the [Connectivity](/fix-margin/connectivity.md) page. A **separate API key** is required (read-only scope is sufficient).
 
 ## Logon Configuration
 

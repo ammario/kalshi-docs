@@ -34,8 +34,8 @@ Kalshi publishes Python and TypeScript SDKs to help you get started quickly.
 >
 > The old `kalshi-python` package is deprecated — use `kalshi_python_sync` or `kalshi_python_async`.
 
-SDK releases track the [OpenAPI specification](https://docs.kalshi.com/openapi.yaml) and are generally published Tuesday–Wednesday each week, ahead of the corresponding API changes; check the package pages and the [API Changelog](/changelog) for updates. All SDKs authenticate with an API key and signed requests: RSA keys work with every SDK version,
-Ed25519 keys need SDK 3.31.0 or later — see [API Keys](/getting_started/api_keys) for setup.
+SDK releases track the [OpenAPI specification](https://docs.kalshi.com/openapi.yaml) and are generally published Tuesday–Wednesday each week, ahead of the corresponding API changes; check the package pages and the [API Changelog](/changelog.md) for updates. All SDKs authenticate with an API key and signed requests: RSA keys work with every SDK version,
+Ed25519 keys need SDK 3.31.0 or later — see [API Keys](/getting_started/api_keys.md) for setup.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

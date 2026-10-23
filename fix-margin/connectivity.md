@@ -20,9 +20,9 @@ lastmod: 2026-10-20T18:50:46.788Z
 
 | Purpose | Port | TargetCompID | Description |
 | - | - | - | - |
-| Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming |
-| Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
-| Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
+| Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions.md) for read-only streaming |
+| Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions.md) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
+| Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy.md), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
 | Market Data | 8233 | KalshiMD | Order book snapshots and incremental updates. Available only on market data host |
 
 **Demo**
@@ -33,12 +33,12 @@ lastmod: 2026-10-20T18:50:46.788Z
 
 | Purpose | Port | TargetCompID | Description |
 | - | - | - | - |
-| Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming |
-| Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
-| Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
+| Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions.md) for read-only streaming |
+| Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission. Supports [Listener Sessions](/fix-margin/listener-sessions.md) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
+| Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix-margin/drop-copy.md), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
 | Market Data | 8233 | KalshiMD | Order book snapshots and incremental updates. Available only on market data host |
 
-Historical replay through `EventResendRequest` (`35=U1`) on both `KalshiNR` and `KalshiDC` requires [account allowlisting](/fix-margin/drop-copy). NR users can log in and trade without replay access.
+Historical replay through `EventResendRequest` (`35=U1`) on both `KalshiNR` and `KalshiDC` requires [account allowlisting](/fix-margin/drop-copy.md). NR users can log in and trade without replay access.
 
 ## Session Configuration
 
@@ -76,12 +76,12 @@ Members on the Prime tier or above can also contact [institutional@kalshi.com](m
 * **Scope**: Application messages only (from client to server)
 * **Excluded**: Logout (35=5), Heartbeat (35=0), TestRequest (35=1)
 * Logon (35=A) **is** rate-limited.
-* Order-entry messages use the margin Write bucket. See [Perps budgets](/getting_started/rate_limits#perps-budgets) for tier budgets and [Rate Limits and Tiers](/getting_started/rate_limits) for token-cost behavior.
+* Order-entry messages use the margin Write bucket. See [Perps budgets](/getting_started/rate_limits.md#perps-budgets) for tier budgets and [Rate Limits and Tiers](/getting_started/rate_limits.md) for token-cost behavior.
 * Mass Cancel Request (35=q) is limited to 1 request/second.
 
 ## Maintenance Window
 
-See [Maintenance and Pauses](/getting_started/maintenance_and_pauses) for scheduled maintenance times and the difference between trading pauses and exchange pauses.
+See [Maintenance and Pauses](/getting_started/maintenance_and_pauses.md) for scheduled maintenance times and the difference between trading pauses and exchange pauses.
 
 Sessions may be disconnected during the maintenance window. Kalshi does not initiate sequence number resets during maintenance; clients should reset sequence numbers on their side when reconnecting.
 
@@ -89,7 +89,7 @@ KalshiRT sessions retain message continuity across the maintenance window. If yo
 
 ### CancelOrderOnPause
 
-To control what happens to your resting orders during a [pause](/getting_started/maintenance_and_pauses), set tag `21006` (CancelOrderOnPause) on your **New Order Single (35=D)** messages:
+To control what happens to your resting orders during a [pause](/getting_started/maintenance_and_pauses.md), set tag `21006` (CancelOrderOnPause) on your **New Order Single (35=D)** messages:
 
 | Value | Behavior |
 | - | - |

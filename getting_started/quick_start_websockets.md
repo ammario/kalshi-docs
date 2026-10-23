@@ -33,7 +33,7 @@ For the demo environment, use:
 wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2
 ```
 
-The existing shared WebSocket hosts, `wss://api.elections.kalshi.com/trade-api/ws/v2` for production and `wss://demo-api.kalshi.co/trade-api/ws/v2` for demo, remain supported. For the full endpoint list, see [API Environments and Endpoints](/getting_started/api_environments).
+The existing shared WebSocket hosts, `wss://api.elections.kalshi.com/trade-api/ws/v2` for production and `wss://demo-api.kalshi.co/trade-api/ws/v2` for demo, remain supported. For the full endpoint list, see [API Environments and Endpoints](/getting_started/api_environments.md).
 
 ## Authentication
 
@@ -48,7 +48,7 @@ In other words, even channels that carry public market data still use the authen
 
 > [!NOTE]
 >
-> For detailed information about API key generation and request signing, see our [API Keys documentation](/getting_started/api_keys).
+> For detailed information about API key generation and request signing, see our [API Keys documentation](/getting_started/api_keys.md).
 
 ### Required Headers
 
@@ -69,7 +69,7 @@ The signature for WebSocket connections follows the same pattern as REST API req
    timestamp + "GET" + "/trade-api/ws/v2"
    ```
 
-2. **Generate the signature** using your private key (see [API Keys documentation](/getting_started/api_keys))
+2. **Generate the signature** using your private key (see [API Keys documentation](/getting_started/api_keys.md))
 
 3. **Include the headers** when opening the WebSocket connection
 
@@ -427,9 +427,9 @@ To run this example:
 
 ## Next Steps
 
-* Review the [WebSocket API Reference](/websockets) for detailed message specifications
-* Explore [Market Data Quick Start](/getting_started/quick_start_market_data) for REST API integration
-* Check out our [Demo Environment](/getting_started/demo_env) for testing
+* Review the [WebSocket API Reference](/websockets.md) for detailed message specifications
+* Explore [Market Data Quick Start](/getting_started/quick_start_market_data.md) for REST API integration
+* Check out our [Demo Environment](/getting_started/demo_env.md) for testing
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

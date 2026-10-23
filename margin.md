@@ -52,19 +52,19 @@ Available session types:
 
 ## API Reference
 
-The Perps API mirrors the event contract API (same auth, pagination, error format, and order lifecycle), so the conventions in [Making Your First Request](/getting_started/making_your_first_request) and [API Environments](/getting_started/api_environments) apply directly.
+The Perps API mirrors the event contract API (same auth, pagination, error format, and order lifecycle), so the conventions in [Making Your First Request](/getting_started/making_your_first_request.md) and [API Environments](/getting_started/api_environments.md) apply directly.
 
 * **REST**: see the **REST** reference in this section.
 * **WebSocket**: see the margin channels under **WebSockets** in this section.
 * **FIX**:
-  * [Connectivity](/fix-margin/connectivity)
-  * [Authentication & Sessions](/fix-margin/authentication)
-  * [Order Entry](/fix-margin/order-entry)
-  * [Order Groups](/fix-margin/order-groups)
-  * [Market Data](/fix-margin/market-data)
-  * [Drop Copy](/fix-margin/drop-copy)
-  * [Listener Sessions](/fix-margin/listener-sessions)
-  * [Error Handling](/fix-margin/error-handling)
+  * [Connectivity](/fix-margin/connectivity.md)
+  * [Authentication & Sessions](/fix-margin/authentication.md)
+  * [Order Entry](/fix-margin/order-entry.md)
+  * [Order Groups](/fix-margin/order-groups.md)
+  * [Market Data](/fix-margin/market-data.md)
+  * [Drop Copy](/fix-margin/drop-copy.md)
+  * [Listener Sessions](/fix-margin/listener-sessions.md)
+  * [Error Handling](/fix-margin/error-handling.md)
 
 ### REST API
 
