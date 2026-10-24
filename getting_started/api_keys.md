@@ -85,7 +85,7 @@ The signature is the base64 encoding of the signed concatenation of the timestam
 >
 > **Important**: When signing requests, use the path **without query parameters**. For example, if your request is to `/trade-api/v2/portfolio/orders?limit=5`, sign only `/trade-api/v2/portfolio/orders` (strip the `?` and everything after it).
 
-The samples below detect the key type and sign accordingly. For end-to-end examples, see [Quick Start: Authenticated Requests](/getting_started/quick_start_authenticated_requests.md). The official Python and TypeScript SDKs accept either key type from version 3.31.0.
+The samples below detect the key type and sign accordingly. For end-to-end examples, see [Quick Start: Authenticated Requests](https://docs.kalshi.com/getting_started/quick_start_authenticated_requests.md). The official Python and TypeScript SDKs accept either key type from version 3.31.0.
 
 ### Python
 

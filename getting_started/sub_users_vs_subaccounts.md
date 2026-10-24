@@ -26,7 +26,7 @@ In the Kalshi web app, sub-users appear as **Team Members**.
 | **Balance and positions** | Shares the account's | Has its own |
 | **Permissions** | Read, Trade, and Transfers, set per sub-user | None of its own; an API key can be restricted to one subaccount |
 | **Set up by** | Kalshi enables the feature; the account owner adds sub-users in the web app | The account owner, through the API |
-| **Availability** | Institutions, on request | Direct accounts on the [Advanced API tier](/getting_started/rate_limits.md#tier-qualification) or above |
+| **Availability** | Institutions, on request | Direct accounts on the [Advanced API tier](https://docs.kalshi.com/getting_started/rate_limits.md#tier-qualification) or above |
 
 ## Sub-users
 
@@ -57,10 +57,10 @@ don't record which sub-user placed them.
 
 Every account has a primary subaccount (`0`). Eligible accounts can add
 numbered subaccounts `1`–`63` with
-[Create Subaccount](/api-reference/portfolio/create-subaccount.md). Cash moves
+[Create Subaccount](https://docs.kalshi.com/api-reference/portfolio/create-subaccount.md). Cash moves
 between them with
-[Transfer Between Subaccounts](/api-reference/portfolio/transfer-between-subaccounts.md)
-and never leaves the account. See [Subaccounts](/getting_started/subaccounts.md)
+[Transfer Between Subaccounts](https://docs.kalshi.com/api-reference/portfolio/transfer-between-subaccounts.md)
+and never leaves the account. See [Subaccounts](https://docs.kalshi.com/getting_started/subaccounts.md)
 for numbering, transfers, and restricted API keys.
 
 A subaccount has no login or permissions of its own. The account owner and
@@ -70,7 +70,7 @@ every sub-user can act on all subaccounts, within their permissions.
 
 Sub-user permissions apply to the whole account, so you can't limit a sub-user
 to one subaccount. To confine trading to one subaccount, use an API key
-[restricted to that subaccount](/getting_started/subaccounts.md#restricted-api-keys):
+[restricted to that subaccount](https://docs.kalshi.com/getting_started/subaccounts.md#restricted-api-keys):
 it can read and trade only that subaccount and can't transfer funds. Only the
 account owner can create API keys.
 

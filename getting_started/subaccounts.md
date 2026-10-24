@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/subaccounts
-lastmod: 2026-10-08T16:04:13.085Z
+lastmod: 2026-10-23T13:24:20.186Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -51,6 +51,9 @@ multivariate event collections, creating and cancelling RFQs, posting,
 confirming, and cancelling quotes, and accepting quotes. Requests that omit
 `subaccount` act on the key's locked subaccount, and naming any other
 subaccount is rejected.
+
+`GET /portfolio/subaccounts/balances` also accepts restricted keys. It returns
+only the key's locked subaccount, with separate balances per exchange index.
 
 On perps, a restricted key can place, amend, decrease, and cancel orders
 (including cancel-all), manage order groups, and manage cross-margin exit

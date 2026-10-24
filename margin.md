@@ -52,19 +52,19 @@ Available session types:
 
 ## API Reference
 
-The Perps API mirrors the event contract API (same auth, pagination, error format, and order lifecycle), so the conventions in [Making Your First Request](/getting_started/making_your_first_request.md) and [API Environments](/getting_started/api_environments.md) apply directly.
+The Perps API mirrors the event contract API (same auth, pagination, error format, and order lifecycle), so the conventions in [Making Your First Request](https://docs.kalshi.com/getting_started/making_your_first_request.md) and [API Environments](https://docs.kalshi.com/getting_started/api_environments.md) apply directly.
 
 * **REST**: see the **REST** reference in this section.
 * **WebSocket**: see the margin channels under **WebSockets** in this section.
 * **FIX**:
-  * [Connectivity](/fix-margin/connectivity.md)
-  * [Authentication & Sessions](/fix-margin/authentication.md)
-  * [Order Entry](/fix-margin/order-entry.md)
-  * [Order Groups](/fix-margin/order-groups.md)
-  * [Market Data](/fix-margin/market-data.md)
-  * [Drop Copy](/fix-margin/drop-copy.md)
-  * [Listener Sessions](/fix-margin/listener-sessions.md)
-  * [Error Handling](/fix-margin/error-handling.md)
+  * [Connectivity](https://docs.kalshi.com/fix-margin/connectivity.md)
+  * [Authentication & Sessions](https://docs.kalshi.com/fix-margin/authentication.md)
+  * [Order Entry](https://docs.kalshi.com/fix-margin/order-entry.md)
+  * [Order Groups](https://docs.kalshi.com/fix-margin/order-groups.md)
+  * [Market Data](https://docs.kalshi.com/fix-margin/market-data.md)
+  * [Drop Copy](https://docs.kalshi.com/fix-margin/drop-copy.md)
+  * [Listener Sessions](https://docs.kalshi.com/fix-margin/listener-sessions.md)
+  * [Error Handling](https://docs.kalshi.com/fix-margin/error-handling.md)
 
 ### REST API
 

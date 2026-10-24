@@ -17,7 +17,7 @@ Settlement occurs when a market's outcome is determined. Positions are automatic
 * **Yes outcome**: Yes contract holders receive \$1 per contract
 * **No outcome**: No contract holders receive \$1 per contract
 * Only net positions are settled (after netting)
-* Markets with a settlement floor can pay YES holders part of the payout before settlement. See [Settlement Bounds](/getting_started/settlement_bounds.md)
+* Markets with a settlement floor can pay YES holders part of the payout before settlement. See [Settlement Bounds](https://docs.kalshi.com/getting_started/settlement_bounds.md)
 
 ## Settlement Timing
 
@@ -29,7 +29,7 @@ Settlement fees are zero for simple yes/no determinations but may apply for sub-
 
 ## Protocol-Specific Details
 
-* [FIX Market Settlement Messages](/fix/market-settlement.md)
+* [FIX Market Settlement Messages](https://docs.kalshi.com/fix/market-settlement.md)
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

@@ -14,8 +14,8 @@ To make your request we recommend testing a public endpoint like [GetMarkets](ht
 
 The following resources might help you on your journey to exploring Kalshi's markets:
 
-* [**Quick Start: Market Data**](/getting_started/quick_start_market_data.md)
-* [**Quick Start: Authenticated Requests**](/getting_started/quick_start_authenticated_requests.md)
+* [**Quick Start: Market Data**](https://docs.kalshi.com/getting_started/quick_start_market_data.md)
+* [**Quick Start: Authenticated Requests**](https://docs.kalshi.com/getting_started/quick_start_authenticated_requests.md)
 * [**Discord**](https://discord.gg/kalshi) and check out #dev and #support
 
 

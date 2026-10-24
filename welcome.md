@@ -18,25 +18,25 @@ By continuing to use or access Kalshi's API, you are agreeing to be bound to our
 
 ## The APIs
 
-> **[Predictions APIs](/api-reference)**
+> **[Predictions APIs](https://docs.kalshi.com/api-reference)**
 >
 > Event-contract markets: REST, WebSocket, and FIX.
 
-> **[Perps APIs](/margin.md)**
+> **[Perps APIs](https://docs.kalshi.com/margin.md)**
 >
 > Perpetual futures (margin): REST, WebSocket, and FIX.
 
 ## Get started
 
-> **[Making Your First Request](/getting_started/making_your_first_request.md)**
+> **[Making Your First Request](https://docs.kalshi.com/getting_started/making_your_first_request.md)**
 >
 > Make your first API call and start trading on Kalshi.
 
-> **[Demo Environment](/getting_started/demo_env.md)**
+> **[Demo Environment](https://docs.kalshi.com/getting_started/demo_env.md)**
 >
 > Build and test safely against the demo environment.
 
-> **[API Keys](/getting_started/api_keys.md)**
+> **[API Keys](https://docs.kalshi.com/getting_started/api_keys.md)**
 >
 > Generate and manage your API credentials.
 
@@ -46,33 +46,33 @@ By continuing to use or access Kalshi's API, you are agreeing to be bound to our
 
 ## Reference
 
-> **[Rate Limits](/getting_started/rate_limits.md)**
+> **[Rate Limits](https://docs.kalshi.com/getting_started/rate_limits.md)**
 >
 > Token budgets, tiers, and bursting.
 
-> **[Changelog](/changelog.md)**
+> **[Changelog](https://docs.kalshi.com/changelog.md)**
 >
 > Stay updated with the latest API changes.
 
-> **[Glossary](/getting_started/terms.md)**
+> **[Glossary](https://docs.kalshi.com/getting_started/terms.md)**
 >
 > Key terms and concepts used across the exchange.
 
 ## Specifications
 
-> **[Predictions REST](/openapi.yaml)**
+> **[Predictions REST](https://docs.kalshi.com/openapi.yaml)**
 >
 > Download `openapi.yaml` for event-contract REST API integration.
 
-> **[Predictions WebSocket](/asyncapi.yaml)**
+> **[Predictions WebSocket](https://docs.kalshi.com/asyncapi.yaml)**
 >
 > Download `asyncapi.yaml` for event-contract WebSocket integration.
 
-> **[Perps REST](/perps_openapi.yaml)**
+> **[Perps REST](https://docs.kalshi.com/perps_openapi.yaml)**
 >
 > Download `perps_openapi.yaml` for perpetual futures REST API integration.
 
-> **[Perps WebSocket](/perps_asyncapi.yaml)**
+> **[Perps WebSocket](https://docs.kalshi.com/perps_asyncapi.yaml)**
 >
 > Download `perps_asyncapi.yaml` for perpetual futures WebSocket integration.
 

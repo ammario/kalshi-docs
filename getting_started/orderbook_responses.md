@@ -12,7 +12,7 @@ lastmod: 2026-08-04T00:52:32.775Z
 
 ## Getting Orderbook Data
 
-The [Get Market Orderbook](/api-reference/market/get-market-order-book) endpoint returns the current state of bids for a specific market.
+The [Get Market Orderbook](https://docs.kalshi.com/api-reference/market/get-market-order-book) endpoint returns the current state of bids for a specific market.
 
 ### Request Format
 
@@ -56,7 +56,7 @@ The orderbook response is wrapped in an `orderbook_fp` object containing two arr
 * **`price_dollars`**: Price as a dollar string (e.g., `"0.4200"` = \$0.42)
 * **`count_fp`**: Number of contracts as a fixed-point string (e.g., `"13.00"` = 13 contracts)
 
-Both values are strings to support subpenny pricing and fractional contract sizes. See [Fixed-Point Representation](/getting_started/fixed_point_migration.md) for details.
+Both values are strings to support subpenny pricing and fractional contract sizes. See [Fixed-Point Representation](https://docs.kalshi.com/getting_started/fixed_point_migration.md) for details.
 
 ### Example Response
 
@@ -251,8 +251,8 @@ def calculate_depth(orderbook_data, depth_dollars="0.05"):
 
 ## Next Steps
 
-* Learn about [making authenticated requests](/getting_started/api_keys.md) to place orders
-* Explore [WebSocket connections](/websockets.md) for real-time orderbook updates
+* Learn about [making authenticated requests](https://docs.kalshi.com/getting_started/api_keys.md) to place orders
+* Explore [WebSocket connections](https://docs.kalshi.com/websockets.md) for real-time orderbook updates
 * Read about [market mechanics](https://kalshi.com/learn) on the Kalshi website
 
 

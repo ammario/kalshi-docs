@@ -42,8 +42,8 @@ Business-logic errors (e.g. order group not found) are returned as rejects. Refe
 
 ## Protocol-Specific Details
 
-* [FIX Order Group Messages](/fix/order-groups.md)
-* [REST Order Group Endpoints](/api-reference/order-groups/get-order-groups.md)
+* [FIX Order Group Messages](https://docs.kalshi.com/fix/order-groups.md)
+* [REST Order Group Endpoints](https://docs.kalshi.com/api-reference/order-groups/get-order-groups.md)
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

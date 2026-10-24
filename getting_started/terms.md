@@ -12,9 +12,9 @@ lastmod: 2026-09-24T16:03:53.096Z
 
 Here are some core terminologies used in Kalshi exchange:
 
-**Category:** A high-level discovery grouping for related series, such as sports, crypto, or weather. Each series has a primary `category` and a list of discovery categories, `categories`. Use [Get Series List](/api-reference/market/get-series-list.md) with the `category` filter to browse series in a category; the filter matches any of a series' categories.
+**Category:** A high-level discovery grouping for related series, such as sports, crypto, or weather. Each series has a primary `category` and a list of discovery categories, `categories`. Use [Get Series List](https://docs.kalshi.com/api-reference/market/get-series-list.md) with the `category` filter to browse series in a category; the filter matches any of a series' categories.
 
-**Subcategory:** A narrower discovery grouping within a category. A series can belong to multiple subcategories. In API filters, subcategories are often represented as tags; use [Get Tags for Series Categories](/api-reference/search/get-tags-for-series-categories.md) to discover tags grouped by category.
+**Subcategory:** A narrower discovery grouping within a category. A series can belong to multiple subcategories. In API filters, subcategories are often represented as tags; use [Get Tags for Series Categories](https://docs.kalshi.com/api-reference/search/get-tags-for-series-categories.md) to discover tags grouped by category.
 
 **Market:** A single binary market. This is a low level object which rarely will need to be exposed on its own to members. The usage of the term "market" here is consistent with how it's used in the backend and API.
 
@@ -33,10 +33,10 @@ The series is the top-level object. Each event belongs to exactly one series (`s
 Categories and subcategories are not levels above the series. They are fields on the series, used for discovery:
 
 * `category` is the series' **primary** category. Each series has exactly one.
-* `categories` lists every category the series appears under. The `category` filter on [Get Series List](/api-reference/market/get-series-list.md) matches against this list.
+* `categories` lists every category the series appears under. The `category` filter on [Get Series List](https://docs.kalshi.com/api-reference/market/get-series-list.md) matches against this list.
 * `tags` lists the series' subcategories. The `tags` filter on Get Series List matches against this list. A series' tags can come from more than one of its categories.
 
-[Get Tags for Series Categories](/api-reference/search/get-tags-for-series-categories.md) returns the category-to-tag map, built from series that currently have open markets.
+[Get Tags for Series Categories](https://docs.kalshi.com/api-reference/search/get-tags-for-series-categories.md) returns the category-to-tag map, built from series that currently have open markets.
 
 For example, the monthly US gas price series has `Economics` as its primary category and also appears under `Commodities`. Its `Oil and energy` tag is an Economics subcategory and its `Oil & Gas` tag is a Commodities subcategory. The series has one event per month, and each event has one market per price strike:
 
@@ -59,9 +59,9 @@ flowchart TD
 
 | Object | Example | Parent field | How to list it |
 | - | - | - | - |
-| Series | `KXAAAGASM` | None (top level) | [Get Series List](/api-reference/market/get-series-list.md) with `category=Economics` or `category=Commodities` |
-| Event | `KXAAAGASM-26SEP30` | `series_ticker` | [Get Events](/api-reference/events/get-events.md) with `series_ticker=KXAAAGASM` |
-| Market | `KXAAAGASM-26SEP30-3.00` | `event_ticker` | [Get Markets](/api-reference/market/get-markets.md) with `event_ticker=KXAAAGASM-26SEP30` |
+| Series | `KXAAAGASM` | None (top level) | [Get Series List](https://docs.kalshi.com/api-reference/market/get-series-list.md) with `category=Economics` or `category=Commodities` |
+| Event | `KXAAAGASM-26SEP30` | `series_ticker` | [Get Events](https://docs.kalshi.com/api-reference/events/get-events.md) with `series_ticker=KXAAAGASM` |
+| Market | `KXAAAGASM-26SEP30-3.00` | `event_ticker` | [Get Markets](https://docs.kalshi.com/api-reference/market/get-markets.md) with `event_ticker=KXAAAGASM-26SEP30` |
 
 ## Ticker Conventions
 

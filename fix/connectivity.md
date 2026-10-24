@@ -20,9 +20,9 @@ lastmod: 2026-10-16T00:23:40.843Z
 
 | Purpose | Port | TargetCompID | Description |
 | - | - | - | - |
-| Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix/listener-sessions.md) for read-only streaming |
-| Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission, RFQ creation, and optional settlement reports. Supports [Listener Sessions](/fix/listener-sessions.md) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
-| Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix/drop-copy.md), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
+| Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](https://docs.kalshi.com/fix/listener-sessions.md) for read-only streaming |
+| Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission, RFQ creation, and optional settlement reports. Supports [Listener Sessions](https://docs.kalshi.com/fix/listener-sessions.md) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
+| Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](https://docs.kalshi.com/fix/drop-copy.md), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
 | Post Trade | 8231 | KalshiPT | Read-only stream for market settlement reports and position resolution. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
 | RFQ | 8232 | KalshiRFQ | Market maker session for receiving RFQ broadcasts, submitting quotes, and managing quote lifecycle |
 | Market Data | 8233 | KalshiMD | Order book snapshots and incremental updates. Available only on market data host |
@@ -35,14 +35,14 @@ lastmod: 2026-10-16T00:23:40.843Z
 
 | Purpose | Port | TargetCompID | Description |
 | - | - | - | - |
-| Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](/fix/listener-sessions.md) for read-only streaming |
-| Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission, RFQ creation, and optional settlement reports. Supports [Listener Sessions](/fix/listener-sessions.md) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
-| Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](/fix/drop-copy.md), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
+| Order Entry (without retransmission) | 8228 | KalshiNR | Submit, modify, and cancel orders; no message persistence or retransmission. Supports [Listener Sessions](https://docs.kalshi.com/fix/listener-sessions.md) for read-only streaming |
+| Order Entry (with retransmission) | 8230 | KalshiRT | Order entry with message retransmission, RFQ creation, and optional settlement reports. Supports [Listener Sessions](https://docs.kalshi.com/fix/listener-sessions.md) for read-only streaming. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
+| Drop Copy | 8229 | KalshiDC | Request-response queries for historical execution reports; [gated access](https://docs.kalshi.com/fix/drop-copy.md), contact [institutional@kalshi.com](mailto:institutional@kalshi.com) |
 | Post Trade | 8231 | KalshiPT | Read-only stream for market settlement reports and position resolution. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) for access |
 | RFQ | 8232 | KalshiRFQ | Market maker session for receiving RFQ broadcasts, submitting quotes, and managing quote lifecycle |
 | Market Data | 8233 | KalshiMD | Order book snapshots and incremental updates. Available only on market data host |
 
-Historical replay through `EventResendRequest` (`35=U1`) on both `KalshiNR` and `KalshiDC` requires [account allowlisting](/fix/drop-copy.md). NR users can log in and trade without replay access.
+Historical replay through `EventResendRequest` (`35=U1`) on both `KalshiNR` and `KalshiDC` requires [account allowlisting](https://docs.kalshi.com/fix/drop-copy.md). NR users can log in and trade without replay access.
 
 ## Session Configuration
 
@@ -85,14 +85,14 @@ Members on the Prime tier or above can also contact [institutional@kalshi.com](m
 * **Limit**: FIX application messages use the same token model, token costs, and Read/Write buckets as the equivalent REST API operations.
 * **Scope**: Application messages only (from client to server)
 * **Excluded**: Logout (35=5), Heartbeat (35=0), TestRequest (35=1)
-* Logon (35=A) is rate-limited separately from application messages. See [Reconnecting](/fix/authentication.md#reconnecting) for retry guidance.
-* Order-entry and RFQ messages use the Write bucket. See [Rate Limits and Tiers](/getting_started/rate_limits.md) for tier budgets and token-cost behavior.
-* Order-entry messages (35=D, 35=F, 35=G) carrying `ExDestination` (tag 100) with a value `>= 1` are billed to a [per-shard Write budget](/getting_started/rate_limits.md#sharded-exchanges-have-per-shard-write-budgets). RFQ quote accepts (35=D carrying `QuoteID`) always bill the unscoped Write budget.
+* Logon (35=A) is rate-limited separately from application messages. See [Reconnecting](https://docs.kalshi.com/fix/authentication.md#reconnecting) for retry guidance.
+* Order-entry and RFQ messages use the Write bucket. See [Rate Limits and Tiers](https://docs.kalshi.com/getting_started/rate_limits.md) for tier budgets and token-cost behavior.
+* Order-entry messages (35=D, 35=F, 35=G) carrying `ExDestination` (tag 100) with a value `>= 1` are billed to a [per-shard Write budget](https://docs.kalshi.com/getting_started/rate_limits.md#sharded-exchanges-have-per-shard-write-budgets). RFQ quote accepts (35=D carrying `QuoteID`) always bill the unscoped Write budget.
 * Mass Cancel Request (35=q) with `530=6` is limited to 1 request/second. With `530=1` (one market) it uses the Write bucket at the same cost as an order cancel (35=F).
 
 ## Maintenance Window
 
-See [Maintenance and Pauses](/getting_started/maintenance_and_pauses.md) for scheduled maintenance times and the difference between trading pauses and exchange pauses.
+See [Maintenance and Pauses](https://docs.kalshi.com/getting_started/maintenance_and_pauses.md) for scheduled maintenance times and the difference between trading pauses and exchange pauses.
 
 Sessions may be disconnected during the maintenance window. Kalshi does not initiate sequence number resets during maintenance; clients should reset sequence numbers on their side when reconnecting.
 
@@ -100,7 +100,7 @@ KalshiRT sessions retain message continuity across the maintenance window. If yo
 
 ### CancelOrderOnPause
 
-To control what happens to your resting orders during a [pause](/getting_started/maintenance_and_pauses.md), set tag `21006` (CancelOrderOnPause) on your **New Order Single (35=D)** messages:
+To control what happens to your resting orders during a [pause](https://docs.kalshi.com/getting_started/maintenance_and_pauses.md), set tag `21006` (CancelOrderOnPause) on your **New Order Single (35=D)** messages:
 
 | Value | Behavior |
 | - | - |

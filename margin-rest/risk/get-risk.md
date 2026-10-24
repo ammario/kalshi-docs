@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/risk/get-risk
-lastmod: 2026-10-22T21:54:53.677Z
+lastmod: 2026-10-23T16:35:23.207Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

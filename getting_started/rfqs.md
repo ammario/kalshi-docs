@@ -16,7 +16,7 @@ RFQs are available on any market, including combo (multivariate event) markets. 
 
 ## Interfaces
 
-RFQs are accessible over [REST](/api-reference/communications), [FIX](/fix/rfq-messages.md), and [WebSocket](/websockets.md). Quote notifications arrive on the `communications` WebSocket channel, not the orderbook channel.
+RFQs are accessible over [REST](https://docs.kalshi.com/api-reference/communications), [FIX](https://docs.kalshi.com/fix/rfq-messages.md), and [WebSocket](https://docs.kalshi.com/websockets.md). Quote notifications arrive on the `communications` WebSocket channel, not the orderbook channel.
 
 ## Flow
 
@@ -105,7 +105,7 @@ Subscribe to the `communications` channel (requires auth). `rfq_created` and `rf
 
 ## Combos (MVE)
 
-Combo RFQs include `mve_collection_ticker` and `mve_selected_legs`. Use [Multivariate Event Collections](/api-reference/multivariate/get-multivariate-event-collections.md) to discover eligible combinations.
+Combo RFQs include `mve_collection_ticker` and `mve_selected_legs`. Use [Multivariate Event Collections](https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collections.md) to discover eligible combinations.
 
 ## Subaccounts
 
@@ -115,7 +115,7 @@ Requesters can create an RFQ under a numbered subaccount by passing
 settlement follow the subaccount the RFQ or quote was created under.
 
 The full REST RFQ lifecycle — including combo-market creation — is also
-available to [subaccount-restricted API keys](/getting_started/subaccounts.md#restricted-api-keys),
+available to [subaccount-restricted API keys](https://docs.kalshi.com/getting_started/subaccounts.md#restricted-api-keys),
 scoped to the key's locked subaccount. On FIX, restricted keys support the
 maker quote lifecycle only.
 

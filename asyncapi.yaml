@@ -326,7 +326,7 @@ channels:
         - Every event is partitioned by `rfq_batch_id`
       - RFQ batch events (RFQBatchCreated, RFQBatchDeleted) are sent for all users by default. Set `user_filter: "self"` to receive only RFQ batches you created. Omitted or empty `user_filter` keeps the default.
       - A batch's child RFQs are announced only inside RFQBatchCreated. Each child trade still sends QuoteExecuted, with `rfq_batch_id` set, on the `communications` channel. The two channels are separate subscriptions, so a child's QuoteExecuted is not ordered with this channel's messages.
-      - An RFQ batch is filled child by child at the best quote across makers. Every maker's batch quote prices every child, and each child goes to the maker bidding best on the accepted side, so one batch can have several winning makers. A batch quote counts only for 30 seconds after it was last submitted; resending an unchanged bid within that time keeps its time priority.
+      - Each child of an RFQ batch fills at its best quote across makers, and the children execute together: every child trades, or none does. Every maker's batch quote prices every child, and each child goes to the maker bidding best on the accepted side, so one batch can have several winning makers. A batch quote counts only for 30 seconds after it was last submitted; resending an unchanged bid within that time keeps its time priority.
       - RFQBatchBestQuotes and RFQBatchExecuted are only sent to the RFQ batch creator. RFQBatchBestQuotes carries the best bids across makers without identifying them; the batch creator never receives a maker's individual batch quote.
       - Batch quote events (BatchQuoteCreated, BatchQuoteAccepted, BatchQuoteExecuted) are only sent to the maker that created the batch quote. Each winning maker confirms the children it won, and nothing executes until every winning maker has confirmed.
 
@@ -2651,10 +2651,10 @@ components:
     rfqBatchExecuted:
       name: rfq_batch_executed
       title: RFQ Batch Executed
-      summary: Notification when every child of your accepted RFQ batch has executed or failed
+      summary: Notification when your accepted RFQ batch has executed or failed
       description: |
-        Sent only to the RFQ batch creator, once per batch, when every child has executed or failed. Each child trade also sends `quote_executed` on the `communications` channel, a separate subscription, so it is not ordered with this message.
-        Children that failed to execute are listed in `failed_rfq_ids`. Each winning maker receives `batch_quote_executed` for its own children instead.
+        Sent only to the RFQ batch creator, once per batch, when the batch has executed or failed. Each child trade also sends `quote_executed` on the `communications` channel, a separate subscription, so it is not ordered with this message.
+        The children execute together, so either every child is in `executed_rfq_ids` or every child is in `failed_rfq_ids`, except in the rare case that filling one child cancelled a maker order another child needed. Each winning maker receives `batch_quote_executed` for its own children instead.
       contentType: application/json
       payload:
         $ref: '#/components/schemas/rfqBatchExecutedPayload'
@@ -2678,9 +2678,9 @@ components:
     batchQuoteExecuted:
       name: batch_quote_executed
       title: Batch Quote Executed
-      summary: Notification when every child your batch quote won has executed or failed
+      summary: Notification when the RFQ batch your batch quote won children of has executed or failed
       description: |
-        Sent to each winning maker once every child it won has executed or failed. It covers only your children. Each child trade also sends `quote_executed` on the `communications` channel, a separate subscription, so it is not ordered with this message.
+        Sent to each winning maker once the batch has executed or failed. It covers only your children. Each child trade also sends `quote_executed` on the `communications` channel, a separate subscription, so it is not ordered with this message.
         When the RFQ batch creator obscured their ID, `rfq_creator_id` is revealed only if at least one of your children executed.
       contentType: application/json
       payload:
@@ -5048,7 +5048,7 @@ components:
               format: date-time
             close_reason:
               type: string
-              description: How the batch ended. `executed` when every child executed, `partially executed` when some failed, `execution failed` when none executed.
+              description: How the batch ended. `executed` when every child executed, `execution failed` when none did, and `partially executed` in the rare case that filling one child cancelled a maker order another child needed.
             subaccount:
               type: integer
               description: |
@@ -5097,7 +5097,7 @@ components:
               format: date-time
             close_reason:
               type: string
-              description: How your children ended. `executed` when every one executed, `partially executed` when some failed, `execution failed` when none executed.
+              description: How your children ended. `executed` when every one executed, `execution failed` when none did, and `partially executed` in the rare case that filling one child of the batch cancelled a maker order another child needed.
             subaccount:
               type: integer
               description: |

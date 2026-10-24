@@ -31,7 +31,7 @@ Useful fields on a milestone include:
 
 `details` is flexible JSON and varies by milestone type. For sports milestones, it commonly contains structured target IDs such as `home_team_id` or `away_team_id`.
 
-A milestone's `details.status`, when present, is maintained by a periodic background job. It lags the game's live state and may be stale or inaccurate, for example remaining `live` after the game ends. For game status, prefer live data, which is updated far more often: `live_data.details.status` from [Get Live Data](/api-reference/live-data/get-live-data.md), or each entry's `details.status` from [Get Multiple Live Data](/api-reference/live-data/get-multiple-live-data.md). Scores are in the sport-specific fields of that live data `details` object. Live data is not guaranteed to be current either: if the provider feed falls behind, a cached board may still be served, and the live data `details.live_data_delayed` is set to `true` only once it is significantly stale, so a missing flag does not by itself mean the feed is healthy.
+A milestone's `details.status`, when present, is maintained by a periodic background job. It lags the game's live state and may be stale or inaccurate, for example remaining `live` after the game ends. For game status, prefer live data, which is updated far more often: `live_data.details.status` from [Get Live Data](https://docs.kalshi.com/api-reference/live-data/get-live-data.md), or each entry's `details.status` from [Get Multiple Live Data](https://docs.kalshi.com/api-reference/live-data/get-multiple-live-data.md). Scores are in the sport-specific fields of that live data `details` object. Live data is not guaranteed to be current either: if the provider feed falls behind, a cached board may still be served, and the live data `details.live_data_delayed` is set to `true` only once it is significantly stale, so a missing flag does not by itself mean the feed is healthy.
 
 In practice, `related_event_tickers` is often a superset of `primary_event_tickers`.
 
@@ -46,15 +46,15 @@ That broader grouping is useful when you want all of the markets tied to one rea
 
 ### Fetch milestones
 
-Use the [Get Milestone](/api-reference/milestone/get-milestone.md) and [Get Milestones](/api-reference/milestone/get-milestones.md) endpoint docs for the supported parameters and response shape.
+Use the [Get Milestone](https://docs.kalshi.com/api-reference/milestone/get-milestone.md) and [Get Milestones](https://docs.kalshi.com/api-reference/milestone/get-milestones.md) endpoint docs for the supported parameters and response shape.
 
-If you want milestones returned alongside events, use [Get Events](/api-reference/events/get-events.md) with `with_milestones=true`. The events response includes a top-level `milestones` array alongside `events`.
+If you want milestones returned alongside events, use [Get Events](https://docs.kalshi.com/api-reference/events/get-events.md) with `with_milestones=true`. The events response includes a top-level `milestones` array alongside `events`.
 
 ### Use milestones to group events
 
 A milestone is often the easiest way to find other events tied to the same occurrence. Query by `related_event_ticker`, then read `related_event_tickers` or `primary_event_tickers` from the returned milestone.
 
-Once you have the right milestone, use [Get Live Data](/api-reference/live-data/get-live-data.md) when that milestone type supports live updates.
+Once you have the right milestone, use [Get Live Data](https://docs.kalshi.com/api-reference/live-data/get-live-data.md) when that milestone type supports live updates.
 
 ## Structured Targets
 
@@ -70,7 +70,7 @@ Like milestone `details`, structured target `details` is flexible JSON and depen
 
 ### Fetch structured targets
 
-Use the [Get Structured Target](/api-reference/structured-targets/get-structured-target.md) and [Get Structured Targets](/api-reference/structured-targets/get-structured-targets.md) endpoint docs for the supported parameters and response shape.
+Use the [Get Structured Target](https://docs.kalshi.com/api-reference/structured-targets/get-structured-target.md) and [Get Structured Targets](https://docs.kalshi.com/api-reference/structured-targets/get-structured-targets.md) endpoint docs for the supported parameters and response shape.
 
 `type` values are not a short fixed list. Integrations should filter by the values they need rather than hardcoding a small allowlist.
 
@@ -87,7 +87,7 @@ Markets can reference structured targets through `custom_strike`.
 }
 ```
 
-For `strike_type: "structured"`, the value inside `custom_strike` is a structured target ID. You can resolve it with the [Get Structured Target](/api-reference/structured-targets/get-structured-target.md) endpoint.
+For `strike_type: "structured"`, the value inside `custom_strike` is a structured target ID. You can resolve it with the [Get Structured Target](https://docs.kalshi.com/api-reference/structured-targets/get-structured-target.md) endpoint.
 
 For numeric strike types, use `floor_strike` and `cap_strike` instead of `custom_strike`.
 

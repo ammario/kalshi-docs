@@ -112,7 +112,7 @@ Most list endpoints support these pagination parameters:
 
 ## Best Practices
 
-1. **Handle rate limits**: When paginating through large datasets, be mindful of [rate limits](/getting_started/rate_limits.md)
+1. **Handle rate limits**: When paginating through large datasets, be mindful of [rate limits](https://docs.kalshi.com/getting_started/rate_limits.md)
 2. **Set appropriate limits**: Use smaller page sizes if you only need a few items
 3. **Cache results**: Store paginated data locally to avoid repeated API calls
 4. **Check for changes**: Data can change between requests, so consider implementing refresh logic
@@ -121,13 +121,13 @@ Most list endpoints support these pagination parameters:
 
 The following endpoints support cursor-based pagination:
 
-* [Get Markets](/api-reference/market/get-markets.md) - `/markets`
-* [Get Events](/api-reference/market/get-events) - `/events`
-* [Get Series](/api-reference/market/get-series.md) - `/series`
-* [Get Trades](/api-reference/market/get-trades.md) - `/markets/trades`
-* [Get Portfolio History](/api-reference/portfolio/get-portfolio-history) - `/portfolio/history`
-* [Get Fills](/api-reference/portfolio/get-fills.md) - `/portfolio/fills`
-* [Get Orders](/api-reference/portfolio/get-orders) - `/portfolio/orders`
+* [Get Markets](https://docs.kalshi.com/api-reference/market/get-markets.md) - `/markets`
+* [Get Events](https://docs.kalshi.com/api-reference/market/get-events) - `/events`
+* [Get Series](https://docs.kalshi.com/api-reference/market/get-series.md) - `/series`
+* [Get Trades](https://docs.kalshi.com/api-reference/market/get-trades.md) - `/markets/trades`
+* [Get Portfolio History](https://docs.kalshi.com/api-reference/portfolio/get-portfolio-history) - `/portfolio/history`
+* [Get Fills](https://docs.kalshi.com/api-reference/portfolio/get-fills.md) - `/portfolio/fills`
+* [Get Orders](https://docs.kalshi.com/api-reference/portfolio/get-orders) - `/portfolio/orders`
 
 ## Common Patterns
 
@@ -159,7 +159,7 @@ To check for new items since your last fetch:
 
 ## Next Steps
 
-Now that you understand pagination, you can efficiently work with large datasets in the Kalshi API. For more details on specific endpoints, check the [API Reference](/api-reference).
+Now that you understand pagination, you can efficiently work with large datasets in the Kalshi API. For more details on specific endpoints, check the [API Reference](https://docs.kalshi.com/api-reference).
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

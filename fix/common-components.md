@@ -91,7 +91,7 @@ Every FIX message ends with:
 | U2 | EventResendComplete | KalshiNR, KalshiDC | Server -> Client |
 | U3 | EventResendReject | KalshiNR, KalshiDC | Server -> Client |
 
-Historical replay on both `KalshiNR` and `KalshiDC` requires [allowlisting](/fix/drop-copy.md) for your user account. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to request access.
+Historical replay on both `KalshiNR` and `KalshiDC` requires [allowlisting](https://docs.kalshi.com/fix/drop-copy.md) for your user account. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to request access.
 
 After an EventResendRequest, the server replays the matching historical order updates as ExecutionReport (35=8) messages and then sends EventResendComplete (35=U2) or EventResendReject (35=U3).
 

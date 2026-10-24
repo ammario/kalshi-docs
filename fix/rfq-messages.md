@@ -86,7 +86,7 @@ This message is used bidirectionally:
 | 38 | OrderQty | Decimal | C | Number of contracts as a fixed-point decimal. Supports `0.01`-contract increments (for example `5`, `5.00`, or `5.25`). Required unless CashOrderQty is specified. Acts as the delimiter on MVE requests, which omit `55` |
 | 152 | CashOrderQty | Decimal | C | Target cost in dollars. Required unless OrderQty is specified. Acts as the delimiter on MVE requests that size by cost |
 | 21033 | TargetCostExcludesFees | Char | N | Y/N - Size quotes against CashOrderQty as principal only (contracts = cash / price), with your taker fees charged on top of the cash amount. Default (N) reserves fees inside the cash amount. Only `Y` enables the mode. `21033=Y` without CashOrderQty is rejected |
-| 21034 | ObscureCreatorId | Char | N | Y/N - Replace the requester public communications ID with the shared placeholder for other users. Default N. See [Creator identity and privacy](/getting_started/rfqs.md#creator-identity-and-privacy). |
+| 21034 | ObscureCreatorId | Char | N | Y/N - Replace the requester public communications ID with the shared placeholder for other users. Default N. See [Creator identity and privacy](https://docs.kalshi.com/getting_started/rfqs.md#creator-identity-and-privacy). |
 | 21015 | RestRemainder | Char | N | Y/N - Rest the quote remainder after execution (default: N) |
 | 21016 | ReplaceExisting | Char | N | Y/N - Close older RFQs while retaining the submitting subtrader's newest existing RFQ, keeping at most two open RFQs including this one (default: N) |
 | 453 | NoPartyIDs | Integer | N | Nested repeating group. Number of parties (only 1 supported) |
@@ -152,7 +152,7 @@ The obscured `PartyID` is the SHA-256 hash of empty input (`SHA256("")`).
 It is the same placeholder for every obscured requester across REST, WebSocket,
 and FIX. The requester still sees their normal public communications
 ID in their own notifications. The `NoPartyIDs` group remains present.
-See [Creator identity and privacy](/getting_started/rfqs.md#creator-identity-and-privacy)
+See [Creator identity and privacy](https://docs.kalshi.com/getting_started/rfqs.md#creator-identity-and-privacy)
 for the visibility rules before and after execution.
 
 ## QuoteRequestAck (35=b)

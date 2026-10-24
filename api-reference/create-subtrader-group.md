@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/create-subtrader-group
-lastmod: 2026-10-22T21:54:52.065Z
+lastmod: 2026-10-23T16:35:21.661Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

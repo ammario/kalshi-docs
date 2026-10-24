@@ -44,7 +44,7 @@ In rare cases, Kalshi may lower the settlement floor due to a settlement source 
 
 * YES holders' available balance goes down by the floor decrease times their contracts.
 * NO holders' available balance does not change.
-* Resting orders a [subaccount](/getting_started/subaccounts.md) can no longer pay for are canceled. This can include orders in other markets.
+* Resting orders a [subaccount](https://docs.kalshi.com/getting_started/subaccounts.md) can no longer pay for are canceled. This can include orders in other markets.
 
 If a subaccount's available balance goes negative, Kalshi first covers it from the member's other subaccounts. Any amount left stays as a negative balance on the primary subaccount. A subaccount with a negative balance cannot place any orders, including orders that close a position. It can trade again once its balance is back to zero.
 

@@ -10,7 +10,7 @@ lastmod: 2026-09-23T21:55:39.789Z
 
 > Three simple steps to make your first authenticated API request to Kalshi
 
-This guide shows you how to make authenticated requests to the Kalshi API in three simple steps. For the full production and demo endpoint list, see [API Environments and Endpoints](/getting_started/api_environments.md).
+This guide shows you how to make authenticated requests to the Kalshi API in three simple steps. For the full production and demo endpoint list, see [API Environments and Endpoints](https://docs.kalshi.com/getting_started/api_environments.md).
 
 ## Step 1: Get Your API Keys
 
@@ -187,7 +187,7 @@ Now you can make authenticated requests! Try these endpoints (relative to `BASE_
 * `/portfolio/orders` - View your orders
 * `/markets` - Browse available markets
 
-For more details, see the [Complete Order Lifecycle](/getting_started/quick_start_create_order.md) guide or explore the [API Reference](/api-reference).
+For more details, see the [Complete Order Lifecycle](https://docs.kalshi.com/getting_started/quick_start_create_order.md) guide or explore the [API Reference](https://docs.kalshi.com/api-reference).
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.
