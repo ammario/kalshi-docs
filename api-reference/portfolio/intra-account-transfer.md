@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer
-lastmod: 2026-10-23T16:35:22.177Z
+lastmod: 2026-10-25T20:54:46.619Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,8 @@ lastmod: 2026-10-23T16:35:22.177Z
 # Intra Account Transfer
 
 > Transfers funds within the same account.
+
+Subaccount-restricted API keys can only transfer between `event_contract` exchange indices, with `source_subaccount` and `destination_subaccount` both set to the key's subaccount.
 
 When `source_exchange_shard` and `destination_exchange_shard` are the same, Kalshi treats the request as a subaccount transfer. The returned transfer ID appears in the subaccount transfer history.
 
@@ -76,6 +78,11 @@ paths:
       summary: Intra Account Transfer
       description: >
         Transfers funds within the same account.
+
+
+        Subaccount-restricted API keys can only transfer between
+        `event_contract` exchange indices, with `source_subaccount` and
+        `destination_subaccount` both set to the key's subaccount.
 
 
         When `source_exchange_shard` and `destination_exchange_shard` are the

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/corporate-actions/get-margin-corporate-actions
-lastmod: 2026-10-23T16:35:22.944Z
+lastmod: 2026-10-25T20:54:47.345Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

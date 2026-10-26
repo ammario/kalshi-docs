@@ -197,9 +197,9 @@ operations:
                     type: string
                     description: >-
                       Communications channel only. Set to "self" to receive RFQ
-                      created/deleted events only for RFQs you created. Omitted
-                      or empty receives RFQs from all users. Quote notifications
-                      are unchanged.
+                      and RFQ batch created/deleted events only for those you
+                      created. Omitted or empty receives them from all users.
+                      Quote and batch quote notifications are unchanged.
                     enumValues:
                       - ''
                       - self
@@ -387,9 +387,9 @@ operations:
                   default: ''
                   description: >-
                     Communications channel only. Set to "self" to receive RFQ
-                    created/deleted events only for RFQs you created. Omitted or
-                    empty receives RFQs from all users. Quote notifications are
-                    unchanged.
+                    and RFQ batch created/deleted events only for those you
+                    created. Omitted or empty receives them from all users.
+                    Quote and batch quote notifications are unchanged.
                   x-parser-schema-id: <anonymous-schema-12>
                 shard_factor:
                   type: integer

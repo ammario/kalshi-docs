@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/subaccounts
-lastmod: 2026-10-23T13:24:20.186Z
+lastmod: 2026-10-25T15:17:23.479Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -44,7 +44,7 @@ paginated.
 ## Restricted API keys
 
 When generating an API key you can restrict it to a single subaccount. A
-restricted key can only read and trade on that subaccount: order placement and
+restricted key can read and trade on that subaccount: order placement and
 management, portfolio reads (balance, positions, fills, settlements), order
 groups, and the full REST RFQ lifecycle — creating combo markets in
 multivariate event collections, creating and cancelling RFQs, posting,
@@ -54,6 +54,10 @@ subaccount is rejected.
 
 `GET /portfolio/subaccounts/balances` also accepts restricted keys. It returns
 only the key's locked subaccount, with separate balances per exchange index.
+To move funds between exchange indices, call
+`POST /portfolio/intra_exchange_instance_transfer` with `source_subaccount` and
+`destination_subaccount` both set to the key's subaccount. Transfers to or from
+margin are not allowed.
 
 On perps, a restricted key can place, amend, decrease, and cancel orders
 (including cancel-all), manage order groups, and manage cross-margin exit
@@ -72,7 +76,7 @@ subaccount, its `self_trade_prevention_type` decides the outcome:
 `taker_at_cross` cancels the restricted key's order, and `maker` cancels the
 resting order in the other subaccount.
 
-A restricted key cannot transfer funds, manage subaccounts or API keys, or
+A restricted key cannot transfer funds between subaccounts, manage subaccounts or API keys, or
 act on RFQs and quotes belonging to a different subaccount of the same
 account. Subaccount-scoped requests match rows created through the API with
 an explicit subaccount identity; RFQs created in the web app are not

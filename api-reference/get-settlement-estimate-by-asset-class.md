@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-settlement-estimate-by-asset-class
-lastmod: 2026-10-23T16:35:21.570Z
+lastmod: 2026-10-25T20:54:46.104Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/sub_users_vs_subaccounts
-lastmod: 2026-09-23T18:40:46.346Z
+lastmod: 2026-10-25T15:17:23.478Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -71,7 +71,7 @@ every sub-user can act on all subaccounts, within their permissions.
 Sub-user permissions apply to the whole account, so you can't limit a sub-user
 to one subaccount. To confine trading to one subaccount, use an API key
 [restricted to that subaccount](https://docs.kalshi.com/getting_started/subaccounts.md#restricted-api-keys):
-it can read and trade only that subaccount and can't transfer funds. Only the
+it can read and trade only that subaccount and can't transfer funds between subaccounts. Only the
 account owner can create API keys.
 
 | Goal | Use |
