@@ -298,7 +298,8 @@ channels:
         - `shard_factor` (1-100) and `shard_key` (`0 <= key < shard_factor`)
       - RFQ events (RFQCreated, RFQDeleted) are sent for all users by default. Set `user_filter: "self"` to receive only RFQs you created. Omitted or empty `user_filter` keeps the default.
       - Quote events (QuoteCreated, QuoteAccepted, QuoteExecuted) are only sent if you created the quote OR you created the RFQ
-      - RFQ batch events (RFQBatchCreated, RFQBatchDeleted) follow the RFQ event rules: sent for all users by default, or with `user_filter: "self"` only for RFQ batches you created. A batch's child RFQs are announced only inside RFQBatchCreated; each child trade still sends QuoteExecuted, with `rfq_batch_id` set. With sharding, every batch event is partitioned by `rfq_batch_id` instead of the market ticker, so a child's QuoteExecuted can arrive on another shard than its batch's events.
+      - RFQ batch events (RFQBatchCreated, RFQBatchDeleted) follow the RFQ event rules: sent for all users by default, or with `user_filter: "self"` only for RFQ batches you created. Each child RFQ of a batch also arrives as an RFQCreated with `rfq_batch_id` set, right after its batch's RFQBatchCreated, and an RFQDeleted with `rfq_batch_id` set when it closes; filter on `rfq_batch_id` to skip them. Each child trade sends QuoteExecuted, with `rfq_batch_id` set. With sharding, every batch event is partitioned by `rfq_batch_id` instead of the market ticker, while a child's RFQ and quote events are partitioned by its market ticker, so they can arrive on another shard than its batch's events.
+      - A child RFQ of a batch can be quoted like a single RFQ. Such a quote competes with batch quotes for that child, with the differences listed on `rfq_batch_id` in RFQCreated. Its QuoteCreated and QuoteAccepted go only to the maker, never to the batch creator, with `rfq_creator_id` set to the shared placeholder.
       - Each child of an RFQ batch fills at its best quote across makers, and the children execute together as one fill-or-kill: nothing trades unless every child can fill in full. In the rare case that filling one child cancels a maker order another child needed, the batch closes partially executed. Every maker's batch quote prices every child, and each child goes to the maker bidding best on the accepted side, so one batch can have several winning makers. A batch quote counts only for 30 seconds after it was last submitted; resending an unchanged bid within that time keeps its time priority.
       - RFQBatchBestQuotes and RFQBatchExecuted are only sent to the RFQ batch creator. RFQBatchBestQuotes carries the best bids across makers without identifying them; the batch creator never receives a maker's individual batch quote.
       - Batch quote events (BatchQuoteCreated, BatchQuoteAccepted, BatchQuoteExecuted) are only sent to the maker that created the batch quote. Each winning maker confirms the children it won, and nothing executes until every winning maker has confirmed.
@@ -2446,7 +2447,7 @@ components:
       description: |
         An RFQ batch requests quotes on several combos together, for example every parlay of a round robin.
         Distinct legs are listed once in `legs`; each child RFQ lists the indexes of its legs in `leg_indices`.
-        Quote it with `POST /communications/rfq_batches/{rfq_batch_id}/quotes`, pricing every child. Each child is filled at the best bid across makers. Its child RFQs are not announced separately.
+        Quote it with `POST /communications/rfq_batches/{rfq_batch_id}/quotes`, pricing every child. Each child is filled at the best bid across makers. Each child RFQ is also announced as an `rfq_created` with `rfq_batch_id` set, and can be quoted like a single RFQ.
       contentType: application/json
       payload:
         $ref: '#/components/schemas/rfqBatchCreatedPayload'
@@ -4368,6 +4369,18 @@ components:
                     description: Yes settlement value in dollars for the selected leg. Omitted when unavailable.
                     x-rust-type: common::types::Price
                     x-rust-serialize-with: ws::dto::serde_money::serialize_option_price_dollars
+            rfq_batch_id:
+              type: string
+              description: >-
+                Identifier of the RFQ batch this RFQ is a child of. Omitted for an
+                RFQ outside a batch. A child can be quoted like a single RFQ, with
+                these differences: a quote counts only for 30 seconds after it was
+                sent, and resending an unchanged bid keeps its time priority;
+                nothing executes until every winning maker of the batch has
+                confirmed, so a confirmed quote can still close without a fill;
+                an accepted quote can't be cancelled, and not confirming it lapses
+                with the same penalty as cancelling; and `rfq_creator_id` on its
+                quote messages is the shared placeholder.
         sending_ts_ms:
           $ref: '#/components/schemas/sendingTimestampMs'
 
@@ -4412,6 +4425,9 @@ components:
               type: string
               description: Timestamp when the RFQ was deleted
               format: date-time
+            rfq_batch_id:
+              type: string
+              description: Identifier of the RFQ batch this RFQ is a child of, which closed with it. Omitted for an RFQ outside a batch.
         sending_ts_ms:
           $ref: '#/components/schemas/sendingTimestampMs'
 
@@ -4441,7 +4457,7 @@ components:
               description: Public communications ID of the quote creator (anonymized)
             rfq_creator_id:
               type: string
-              description: Public communications ID of the RFQ creator (pseudonymous). When obscure_creator_id is enabled, other users receive the shared placeholder "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" (SHA-256 of empty input). The creator sees their normal ID.
+              description: Public communications ID of the RFQ creator (pseudonymous). When obscure_creator_id is enabled, other users receive the shared placeholder "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" (SHA-256 of empty input). The creator sees their normal ID. On a quote on a child RFQ of an RFQ batch, always the placeholder.
             market_ticker:
               type: string
               description: Market ticker for the quote
@@ -4511,7 +4527,7 @@ components:
               description: Public communications ID of the quote creator (anonymized)
             rfq_creator_id:
               type: string
-              description: Public communications ID of the RFQ creator (pseudonymous). When obscure_creator_id is enabled, other users receive the shared placeholder "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" (SHA-256 of empty input). The creator sees their normal ID.
+              description: Public communications ID of the RFQ creator (pseudonymous). When obscure_creator_id is enabled, other users receive the shared placeholder "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" (SHA-256 of empty input). The creator sees their normal ID. On a quote on a child RFQ of an RFQ batch, always the placeholder.
             market_ticker:
               type: string
               description: Market ticker for the quote
@@ -4607,7 +4623,7 @@ components:
                 Contains your own subaccount number; the counterparty's subaccount is never shared.
             rfq_batch_id:
               type: string
-              description: Identifier of the RFQ batch, when the quote was accepted as part of a batch quote. Omitted otherwise.
+              description: Identifier of the RFQ batch, when the quote is on a child RFQ of an RFQ batch. Omitted otherwise.
 
         sending_ts_ms:
           $ref: '#/components/schemas/sendingTimestampMs'

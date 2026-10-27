@@ -139,7 +139,7 @@ operations:
             type:
               type: string
               const: fill
-              x-parser-schema-id: <anonymous-schema-96>
+              x-parser-schema-id: <anonymous-schema-100>
             sid:
               type: integer
               description: >-
@@ -165,21 +165,21 @@ operations:
                 trade_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-98>
+                  x-parser-schema-id: <anonymous-schema-102>
                 order_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-99>
+                  x-parser-schema-id: <anonymous-schema-103>
                 client_order_id:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-100>
+                  x-parser-schema-id: <anonymous-schema-104>
                 market_ticker:
                   type: string
                   description: Unique market identifier
                   x-parser-schema-id: marketTicker
                 is_taker:
                   type: boolean
-                  x-parser-schema-id: <anonymous-schema-101>
+                  x-parser-schema-id: <anonymous-schema-105>
                 side:
                   type: string
                   enum:
@@ -190,30 +190,30 @@ operations:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-102>
+                  x-parser-schema-id: <anonymous-schema-106>
                 price:
                   type: string
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-103>
+                  x-parser-schema-id: <anonymous-schema-107>
                 count:
                   type: string
                   x-rust-type: common::types::Amount
                   x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-104>
+                  x-parser-schema-id: <anonymous-schema-108>
                 fee_cost:
                   type: string
                   x-rust-type: common::types::Value
                   x-rust-serialize-with: ws::dto::serde_money::serialize_value_dollars
-                  x-parser-schema-id: <anonymous-schema-105>
+                  x-parser-schema-id: <anonymous-schema-109>
                 post_position:
                   type: string
                   x-rust-type: common::types::Position
                   x-rust-serialize-with: ws::dto::serde_money::serialize_position_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-106>
+                  x-parser-schema-id: <anonymous-schema-110>
                 subaccount:
                   type: integer
-                  x-parser-schema-id: <anonymous-schema-107>
+                  x-parser-schema-id: <anonymous-schema-111>
                 order_source:
                   type: string
                   enum:
@@ -222,8 +222,8 @@ operations:
                   description: |
                     `system` for liquidations and margin exit or trailing-stop
                     triggers. `user` for every other order.
-                  x-parser-schema-id: <anonymous-schema-108>
-              x-parser-schema-id: <anonymous-schema-97>
+                  x-parser-schema-id: <anonymous-schema-112>
+              x-parser-schema-id: <anonymous-schema-101>
             sending_ts_ms:
               type: integer
               format: int64

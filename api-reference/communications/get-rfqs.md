@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-rfqs
-lastmod: 2026-10-25T20:54:46.795Z
+lastmod: 2026-10-26T23:17:13.153Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,7 @@ lastmod: 2026-10-25T20:54:46.795Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.34.0
+  version: 3.35.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -273,6 +273,14 @@ components:
           type: string
           format: date-time
           description: Timestamp when the RFQ was last updated
+        rfq_batch_id:
+          type: string
+          description: >-
+            Identifier of the RFQ batch this RFQ is a child of. Omitted for an
+            RFQ outside a batch. A child can be quoted like a single RFQ, with
+            the differences described in [Request for
+            Quote](/getting_started/rfqs#rfq-batch-children).
+          x-go-type-skip-optional-pointer: true
     ErrorResponse:
       type: object
       properties:

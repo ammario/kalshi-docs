@@ -93,6 +93,7 @@ operations:
                           - user_orders
                           - order_group_updates
                           - corporate_actions
+                          - market_lifecycle_v2
                         required: false
                   - name: market_ticker
                     type: string
@@ -155,6 +156,7 @@ operations:
                       - user_orders
                       - order_group_updates
                       - corporate_actions
+                      - market_lifecycle_v2
                     x-parser-schema-id: <anonymous-schema-4>
                   x-parser-schema-id: <anonymous-schema-3>
                 market_ticker:

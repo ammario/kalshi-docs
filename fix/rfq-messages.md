@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-09-30T16:39:31.674Z
+lastmod: 2026-10-26T17:27:52.971Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -154,6 +154,11 @@ and FIX. The requester still sees their normal public communications
 ID in their own notifications. The `NoPartyIDs` group remains present.
 See [Creator identity and privacy](https://docs.kalshi.com/getting_started/rfqs.md#creator-identity-and-privacy)
 for the visibility rules before and after execution.
+
+A child RFQ of an RFQ batch arrives as an ordinary QuoteRequest, with no tag
+naming its batch, and can be quoted like any RFQ. See
+[RFQ batch children](https://docs.kalshi.com/getting_started/rfqs.md#rfq-batch-children) for how such a
+quote differs.
 
 ## QuoteRequestAck (35=b)
 

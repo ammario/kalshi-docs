@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-26T00:12:47.411Z
+lastmod: 2026-10-26T17:27:53.007Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,6 +22,10 @@ the `FIX` tag.
 
 **October 29, 2026**
 
+The Margin Web Sockets API now supports `market_lifecycle_v2` for market deactivation and activation.
+
+**October 29, 2026**
+
 Direct members can now use subaccount-restricted API keys to move funds within
 that subaccount between exchange indices with `POST /portfolio/intra_exchange_instance_transfer`.
 
@@ -35,6 +39,13 @@ own with `user_filter: "self"`), `rfq_batch_best_quotes` and
 `quote_executed` carries `rfq_batch_id` for a batch child's trade. If your
 client doesn't handle these messages, ignore them; see
 [Forward compatibility](https://docs.kalshi.com/websockets.md#forward-compatibility).
+
+Each child RFQ of a batch is also announced and closed as an ordinary RFQ:
+`rfq_created` and `rfq_deleted` carry `rfq_batch_id`, REST RFQs carry
+`rfq_batch_id` and `GET /communications/rfqs` lists children, and FIX sends
+them as QuoteRequests (`35=R`). Makers can quote a child like a single RFQ;
+see [RFQ batch children](https://docs.kalshi.com/getting_started/rfqs.md#rfq-batch-children) for the
+differences.
 
 **October 29, 2026**
 

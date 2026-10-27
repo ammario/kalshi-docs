@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/confirm-rfq-quote
-lastmod: 2026-10-25T20:54:46.865Z
+lastmod: 2026-10-26T23:17:13.228Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,7 +21,7 @@ lastmod: 2026-10-25T20:54:46.865Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.34.0
+  version: 3.35.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

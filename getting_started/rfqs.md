@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-10-19T19:26:21.196Z
+lastmod: 2026-10-26T17:27:52.945Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -106,6 +106,31 @@ Subscribe to the `communications` channel (requires auth). `rfq_created` and `rf
 ## Combos (MVE)
 
 Combo RFQs include `mve_collection_ticker` and `mve_selected_legs`. Use [Multivariate Event Collections](https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collections.md) to discover eligible combinations.
+
+## RFQ batch children
+
+An RFQ batch requests quotes on several combos at once, for example every
+parlay of a round robin. Each child of a batch is also an ordinary RFQ, with
+`rfq_batch_id` set: it arrives as `rfq_created` on WebSocket and as a
+`QuoteRequest` (`35=R`) on FIX, is listed by `GET /communications/rfqs`, and
+closes with `rfq_deleted` (`35=AG`) unless you traded it. You can quote it
+like any RFQ. Your quote competes with other makers' quotes on the batch, and
+the requester accepts every child at once, each at its best quote.
+
+A quote on a batch child differs from a quote on a single RFQ:
+
+* It counts for 30 seconds after you send it. Resending an unchanged price
+  keeps its time priority.
+* Nothing executes until every child's winning maker confirms. A confirmed
+  quote can still close without a fill, as `batch closed`, if another winner
+  doesn't confirm in time.
+* Once accepted, it can't be cancelled. Not confirming it lapses with the same
+  penalty as cancelling.
+* `rfq_creator_id` on its messages and in its REST responses is the shared
+  placeholder, and the requester never sees your quote before accepting.
+* Your balance must cover every child you quote on one batch at once, on
+  either side.
+* Its `quote_id` comes back in lowercase, as the exchange stores it.
 
 ## Subaccounts
 

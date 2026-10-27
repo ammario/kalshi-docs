@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-10-20T18:50:46.788Z
+lastmod: 2026-10-26T14:23:40.984Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-10-20T18:50:46.788Z
 
 # Rate Limits and Tiers
 
-> Token costs, tier budgets, and burst capacity for the Kalshi API
+> Token costs, tier budgets, burst capacity, and WebSocket connection limits for the Kalshi API
 
 ## Token-based limits
 
@@ -97,6 +97,22 @@ Shard 0 uses the unscoped margin Write budget. API v1 and other operations, incl
 Check your perps tier and limits with [`GET /account/limits/perps`](https://docs.kalshi.com/margin-rest/account/get-perps-account-api-limits), the perps counterpart of [`GET /account/limits`](https://docs.kalshi.com/api-reference/account/get-account-api-limits).
 
 See the [Perps API](https://docs.kalshi.com/margin.md) overview for the full perps surface.
+
+## WebSocket connection limits
+
+Predictions and Perps (Margin) WebSocket connections share a **per-user limit on concurrent open connections**.
+
+| Tier | Maximum concurrent connections |
+| - | - |
+| Basic | 200 |
+| Advanced | 200 |
+| Expert | 200 |
+| Premier | 500 |
+| Paragon | 750 |
+| Prime | 1,000 |
+| Prestige | 1,000 |
+
+When you reach the connection limit, new WebSocket handshakes return `429 Too Many Requests`.
 
 ## Tiers and budgets
 
