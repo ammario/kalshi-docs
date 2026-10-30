@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-10-20T00:01:26.147Z
+lastmod: 2026-10-28T18:22:21.885Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,7 +21,7 @@ Used to submit a new order to the Exchange.
 | 38 | OrderQty | Decimal | Y | Quantity of contracts. Fractional quantities supported. |
 | 40 | OrdType | Char | Y | `2`=Limit |
 | 44 | Price | Decimal | Y | Limit price per contract. Whole cents (1–99) by default, or dollars with up to four decimal places when `UseDollars=Y`. See [Subpenny Pricing](https://docs.kalshi.com/fix/subpenny-pricing.md). |
-| 50 | SenderSubID | String | N | Clearing FCM sponsored access only. Header field identifying the operator for this order; printable ASCII, max 16 characters. |
+| 50 | SenderSubID | String | N | Header field identifying the operator for this order; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | `1`=Buy (Yes), `2`=Sell (No) |
 | 55 | Symbol | String | Y | Market ticker (e.g. `EURUSD-23JUN2618-B1.087`) |
 | 100 | ExDestination | Integer | N | Exchange index. Omit or use `-1` to auto-route by `Symbol<55>`. With `UseCapReservation` (21032) or [`AutoTransfer` (21035)](https://docs.kalshi.com/fix/authentication#optional-fields) enabled, other values are rejected. Ignored for margin sessions. |
@@ -84,7 +84,7 @@ are unchanged.
 | 40 | OrdType | Char | Y | `2`=Limit |
 | 41 | OrigClOrdID | String | Y | ClOrdID of the order to modify. |
 | 44 | Price | Decimal | N | New limit price. Required if changing price. Whole cents (1–99) by default, or dollars with up to four decimal places when `UseDollars=Y`. See [Subpenny Pricing](https://docs.kalshi.com/fix/subpenny-pricing.md). |
-| 50 | SenderSubID | String | N | Clearing FCM sponsored access only. Header field identifying the operator performing this modification; printable ASCII, max 16 characters. |
+| 50 | SenderSubID | String | N | Header field identifying the operator performing this modification; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | Must match original order. |
 | 55 | Symbol | String | Y | Must match original order. |
 | 100 | ExDestination | Integer | N | Exchange index. Omit or use `-1` to auto-route by `Symbol<55>`. With `UseCapReservation` (21032) or [`AutoTransfer` (21035)](https://docs.kalshi.com/fix/authentication#optional-fields) enabled, other values are rejected. Ignored for margin sessions. |
@@ -104,7 +104,7 @@ Cancel all remaining quantity of an existing order.
 | 11 | ClOrdID | String | Y | Unique cancel request ID. UUID preferred, max 64 chars. |
 | 37 | OrderID | String | N | Exchange-assigned order identifier. |
 | 41 | OrigClOrdID | String | Y | ClOrdID of the order to cancel. |
-| 50 | SenderSubID | String | N | Clearing FCM sponsored access only. Header field identifying the operator performing this cancel; printable ASCII, max 16 characters. |
+| 50 | SenderSubID | String | N | Header field identifying the operator performing this cancel; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | Must match original order. |
 | 55 | Symbol | String | Y | Must match the original order. Required for auto-routing. |
 | 100 | ExDestination | Integer | N | Exchange index. On event-contract sessions, omit or use `-1` to auto-route by `Symbol<55>`, which is required for auto-routing. This field should not be included for margin. It will be ignored. |
@@ -146,9 +146,9 @@ the original Day value.
 | 126 | ExpireTime | UTCTimestamp | C | Expiration timestamp. 11:59pm ET for Day orders. |
 | 150 | ExecType | Char | Y | Report reason. See Execution Types below. |
 | 151 | LeavesQty | Decimal | Y | Remaining quantity open for execution. |
-| 448 | PartyID | String | N | FCM only. For `PartyRole=24`, the full customer-account identifier is returned unchanged, including the UUID prefix, underscore, and suffix. For `PartyRole=12`, the operator identifier captured from SenderSubID (50). |
-| 452 | PartyRole | Integer | N | FCM only. `24`=Customer Account, `12`=Executing Trader. Present when PartyID is present. |
-| 453 | NoPartyIDs | Integer | N | FCM only. Number of parties. Up to 2 when both customer account and operator are present. |
+| 448 | PartyID | String | N | For `PartyRole=24`, the full customer-account identifier is returned unchanged, including the UUID prefix, underscore, and suffix. For `PartyRole=12`, the operator identifier captured from SenderSubID (50). |
+| 452 | PartyRole | Integer | N | `24`=Customer Account, `12`=Executing Trader. Present when PartyID is present. |
+| 453 | NoPartyIDs | Integer | N | Number of parties. Up to 2 when both customer account and operator are present. |
 | 79 | AllocAccount | Integer | C | Subaccount number (0–63). Present if order was placed for a subaccount. |
 | 715 | ClearingBusinessDate | LocalMktDate | C | Clearing date (`YYYYMMDD`), using the Eastern calendar date of TransactTime. Present only for ExecType=Trade. |
 
@@ -298,6 +298,8 @@ ExecutionReports independently include the customer account when applicable and 
 ## Mass Cancel Request (35=q)
 
 Cancel resting orders in bulk. Only available on KalshiNR (NewOrderMode) sessions. `530=6` cancels every resting order placed over FIX with the session's API key, across all exchange indexes. `530=1` cancels every resting order the account has in the market named by `Symbol<55>`, YES and NO, however it was placed, or only one subaccount's when the request names it; it is billed like an order cancel (35=F).
+
+With an API key restricted to one subaccount, `530=1` cancels only that subaccount's orders. `AllocAccount<79>` is optional; if sent, it must be that subaccount, otherwise the request is rejected.
 
 | Tag | Name | Description |
 | - | - | - |

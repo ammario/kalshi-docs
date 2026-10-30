@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/corporate-actions/get-margin-corporate-actions
-lastmod: 2026-10-26T23:17:13.844Z
+lastmod: 2026-10-29T03:14:19.162Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -155,7 +155,7 @@ components:
       properties:
         id:
           type: string
-          description: Stable notice id, equal to the Klear review id.
+          description: Stable corporate action id.
         market_id:
           type: string
           description: Stable market UUID.
@@ -195,7 +195,7 @@ components:
           type: string
           format: date-time
           nullable: true
-          description: Review execution time. Omitted for cancelled notices.
+          description: Execution time. Omitted for cancelled notices.
         cash:
           $ref: '#/components/schemas/MarginCorporateActionCashTerms'
         split:

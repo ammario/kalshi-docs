@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-ws/websockets/orderbook-updates
-lastmod: 2026-09-14T21:53:17.020Z
+lastmod: 2026-10-28T22:41:38.639Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,7 +14,22 @@ Requirements:
 - authenticated connection
 - market specification required via `market_ticker` or `market_tickers`
 - sends `orderbook_snapshot` first, then incremental `orderbook_delta` updates
-- supports `get_snapshot` on `update_subscription` to request a fresh snapshot without changing the subscription
+- supports `get_snapshot` on `update_subscription` to request a fresh snapshot without changing the subscribed markets. Apply every returned snapshot as a replacement for that market's local book
+- each connection has one `orderbook_delta` subscription. A repeated `subscribe` adds new markets to its existing `sid` and sends no snapshot for markets already subscribed
+- a repeated `subscribe` must use the existing `update_interval_ms` (omitting it means `0`); a different valid interval returns error code 11 without adding markets. Use `update_subscription` with `add_markets` to add markets without respecifying the interval. To change it, `unsubscribe`, wait for `unsubscribed`, then `subscribe` again
+- optional conflated updates: set `update_interval_ms` to `100` or `1000` on the initial `subscribe` to receive one net
+  `orderbook_delta` per changed price level per window. A window starts with its first held change; processing and transport can delay delivery. Updates to your own orders
+  within any subaccount restriction and snapshots bypass the interval. A snapshot replaces any unsent held changes for its market, and `seq` stays contiguous.
+  Omit it or set it to `0` for real-time updates, the default
+- levels whose held changes cancel out are skipped. `ts_ms` is the timestamp of the latest change included in each delta;
+  it can decrease between deltas and is not a completeness watermark. Follow the subscription's `seq` for delivery order
+- changes to other participants' orders, including liquidity your trades consume, remain held. Between flushes,
+  public levels can lag your own orders and the book can appear locked or crossed. A flush has separate delta messages and no end-of-flush message
+- apply every delta in `seq` order within its subscription. Recover a gap with `get_snapshot` for all subscribed markets,
+  or `unsubscribe`, wait for `unsubscribed`, then `subscribe` again. Replace each book with its new snapshot before applying later deltas;
+  a repeated `subscribe` alone does not resynchronize existing markets
+- conflation windows are independent across subscriptions. When switching connections, rebuild from that
+  connection's snapshot and follow its own `seq`; do not combine deltas from different connections
 
 
 
@@ -37,7 +52,37 @@ description: >
   - sends `orderbook_snapshot` first, then incremental `orderbook_delta` updates
 
   - supports `get_snapshot` on `update_subscription` to request a fresh snapshot
-  without changing the subscription
+  without changing the subscribed markets. Apply every returned snapshot as a
+  replacement for that market's local book
+
+  - each connection has one `orderbook_delta` subscription. A repeated
+  `subscribe` adds new markets to its existing `sid` and sends no snapshot for
+  markets already subscribed
+
+  - a repeated `subscribe` must use the existing `update_interval_ms` (omitting
+  it means `0`); a different valid interval returns error code 11 without adding
+  markets. Use `update_subscription` with `add_markets` to add markets without
+  respecifying the interval. To change it, `unsubscribe`, wait for
+  `unsubscribed`, then `subscribe` again
+
+  - optional conflated updates: set `update_interval_ms` to `100` or `1000` on
+  the initial `subscribe` to receive one net
+    `orderbook_delta` per changed price level per window. A window starts with its first held change; processing and transport can delay delivery. Updates to your own orders
+    within any subaccount restriction and snapshots bypass the interval. A snapshot replaces any unsent held changes for its market, and `seq` stays contiguous.
+    Omit it or set it to `0` for real-time updates, the default
+  - levels whose held changes cancel out are skipped. `ts_ms` is the timestamp
+  of the latest change included in each delta;
+    it can decrease between deltas and is not a completeness watermark. Follow the subscription's `seq` for delivery order
+  - changes to other participants' orders, including liquidity your trades
+  consume, remain held. Between flushes,
+    public levels can lag your own orders and the book can appear locked or crossed. A flush has separate delta messages and no end-of-flush message
+  - apply every delta in `seq` order within its subscription. Recover a gap with
+  `get_snapshot` for all subscribed markets,
+    or `unsubscribe`, wait for `unsubscribed`, then `subscribe` again. Replace each book with its new snapshot before applying later deltas;
+    a repeated `subscribe` alone does not resynchronize existing markets
+  - conflation windows are independent across subscriptions. When switching
+  connections, rebuild from that
+    connection's snapshot and follow its own `seq`; do not combine deltas from different connections
 servers:
   - id: production
     protocol: wss
@@ -145,7 +190,7 @@ operations:
             type:
               type: string
               const: orderbook_snapshot
-              x-parser-schema-id: <anonymous-schema-43>
+              x-parser-schema-id: <anonymous-schema-44>
             id:
               type: integer
               description: >
@@ -189,17 +234,17 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-46>
+                      x-parser-schema-id: <anonymous-schema-47>
                     minItems: 2
                     maxItems: 2
                     description: '[price_in_dollars, contract_count_fp]'
                     x-parser-schema-id: priceLevelDollarsCountFp
-                  x-parser-schema-id: <anonymous-schema-45>
+                  x-parser-schema-id: <anonymous-schema-46>
                 ask:
                   type: array
                   items: *ref_0
-                  x-parser-schema-id: <anonymous-schema-47>
-              x-parser-schema-id: <anonymous-schema-44>
+                  x-parser-schema-id: <anonymous-schema-48>
+              x-parser-schema-id: <anonymous-schema-45>
             sending_ts_ms: &ref_4
               type: integer
               format: int64
@@ -292,7 +337,14 @@ operations:
                     required: false
                   - name: ts_ms
                     type: integer
-                    description: Unix timestamp in milliseconds.
+                    description: >
+                      Unix timestamp in milliseconds.
+
+                      In conflated mode, this is the timestamp of the latest
+                      change included at this price level.
+
+                      It can decrease between deltas; follow the subscription's
+                      seq for delivery order.
                     required: false
                   - name: subaccount
                     type: integer
@@ -315,7 +367,7 @@ operations:
             type:
               type: string
               const: orderbook_delta
-              x-parser-schema-id: <anonymous-schema-48>
+              x-parser-schema-id: <anonymous-schema-49>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -331,12 +383,12 @@ operations:
                   type: string
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-50>
+                  x-parser-schema-id: <anonymous-schema-51>
                 delta:
                   type: string
                   x-rust-type: i64
                   x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-51>
+                  x-parser-schema-id: <anonymous-schema-52>
                 side:
                   type: string
                   enum:
@@ -363,16 +415,23 @@ operations:
                   x-parser-schema-id: lastUpdateReason
                 client_order_id:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-52>
+                  x-parser-schema-id: <anonymous-schema-53>
                 ts_ms:
                   type: integer
                   format: int64
-                  description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-53>
+                  description: >
+                    Unix timestamp in milliseconds.
+
+                    In conflated mode, this is the timestamp of the latest
+                    change included at this price level.
+
+                    It can decrease between deltas; follow the subscription's
+                    seq for delivery order.
+                  x-parser-schema-id: <anonymous-schema-54>
                 subaccount:
                   type: integer
-                  x-parser-schema-id: <anonymous-schema-54>
-              x-parser-schema-id: <anonymous-schema-49>
+                  x-parser-schema-id: <anonymous-schema-55>
+              x-parser-schema-id: <anonymous-schema-50>
             sending_ts_ms: *ref_4
           x-parser-schema-id: marginOrderbookDeltaPayload
         title: Orderbook Delta

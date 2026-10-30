@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/drop-copy
-lastmod: 2026-09-14T18:17:55.114Z
+lastmod: 2026-10-29T16:34:00.149Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -28,15 +28,17 @@ Lookback window is limited to the last 3 hours. Only ExecutionReport (35=8) mess
 
 Request execution reports within a specified ExecID range.
 
+Specify `BeginExecID` and `EndExecID` as `clock;event;exchange_index`, including `;0` for exchange index `0`. Each resend request covers one exchange index. If you provide `EndExecID`, use the same exchange index as `BeginExecID`.
+
 | Tag | Name | Description | Required |
 | - | - | - | - |
 | 21001 | BeginExecID | Starting ExecID (inclusive) | Yes |
-| 21002 | EndExecID | Ending ExecID (inclusive). Defaults to latest ExecID if omitted. | No |
+| 21002 | EndExecID | Ending ExecID (inclusive). Defaults to latest ExecID on the same exchange index if omitted. | No |
 
 **Example:**
 
 ```fix theme={null}
-8=FIXT.1.1|35=U1|21001=12345;67890|21002=12350;67895|
+8=FIXT.1.1|35=U1|21001=12345;67890;0|21002=12350;67895;0|
 ```
 
 ## EventResendComplete (35=U2)

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-10-20T00:01:26.148Z
+lastmod: 2026-10-28T18:22:21.884Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,7 +19,7 @@ lastmod: 2026-10-20T00:01:26.148Z
 | 38 | OrderQty | Decimal | Y | Quantity of contracts to trade. Only whole-number quantities are supported. |
 | 40 | OrdType | Char | Y | Supported values: `2 = Limit` |
 | 44 | Price | Decimal | Y | Price per contract in fixed-point dollars, up to 4 decimal places. |
-| 50 | SenderSubID | String | N | Clearing FCM sponsored access only. Header field identifying the operator for this order; printable ASCII, max 16 characters. |
+| 50 | SenderSubID | String | N | Header field identifying the operator for this order; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | Supported values: `1 = Buy (bid)`, `2 = Sell (ask)` |
 | 55 | Symbol | String | Y | Market ticker |
 | 59 | TimeInForce | Char | N | Supported values: `0 = Day`, `1 = Good Till Cancel`, `3 = Immediate Or Cancel`, `4 = Fill Or Kill`, `6 = Good Till Date` |
@@ -70,7 +70,7 @@ are unchanged.
 | 40 | OrdType | Char | Y | Supported value: `2 = Limit` |
 | 41 | OrigClOrdID | String | Y | ClOrderID of the order to modify |
 | 44 | Price | Decimal | N | New fixed-point dollar price |
-| 50 | SenderSubID | String | N | Clearing FCM sponsored access only. Header field identifying the operator performing this modification; printable ASCII, max 16 characters. |
+| 50 | SenderSubID | String | N | Header field identifying the operator performing this modification; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | Must match the original order side |
 | 55 | Symbol | String | Y | Must match the original margin market ticker |
 | 59 | TimeInForce | Char | N | `0`=Day sets expiry to 11:59:59.999pm ET and forbids ExpireTime; `1`=GTC clears expiry and forbids ExpireTime; `6`=GTD requires a future ExpireTime. Omit both tags to preserve expiry (Kalshi convention). Other values are not supported on replace. |
@@ -89,7 +89,7 @@ Cancel all remaining quantity of an existing order.
 | 11 | ClOrderID | String | Y | Unique cancel request identifier |
 | 37 | OrderID | String | N | Kalshi exchange order identifier |
 | 41 | OrigClOrdID | String | Y | ClOrderID of the order to cancel |
-| 50 | SenderSubID | String | N | Clearing FCM sponsored access only. Header field identifying the operator performing this cancel; printable ASCII, max 16 characters. |
+| 50 | SenderSubID | String | N | Header field identifying the operator performing this cancel; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | Must match the original order side |
 | 55 | Symbol | String | Y | Must match the original margin market ticker |
 | 448 | PartyID | String | N | FCM customer-account or subaccount identifier |
@@ -131,8 +131,8 @@ the original Day value.
 | 150 | ExecType | Char | Y | Why this execution report was sent |
 | 151 | LeavesQty | Decimal | Y | Remaining quantity open for execution |
 | 448 | PartyID | String | N | FCM customer-account identifier or the operator captured from SenderSubID |
-| 452 | PartyRole | Integer | N | FCM party role: `24 = Customer Account`, `12 = Executing Trader` |
-| 453 | NoPartyIDs | Integer | N | FCM party count. Up to 2 when both customer account and operator are present. |
+| 452 | PartyRole | Integer | N | `24 = Customer Account`, `12 = Executing Trader` |
+| 453 | NoPartyIDs | Integer | N | Up to 2 when both customer account and operator are present. |
 | 79 | AllocAccount | Integer | C | Subaccount number |
 | 715 | ClearingBusinessDate | LocalMktDate | C | Clearing date (`YYYYMMDD`). Each date covers the interval from 4:00 p.m. ET on the prior calendar day (inclusive) to 4:00 p.m. ET on that date (exclusive), including weekends and holidays. Present only for `ExecType = Trade` |
 
@@ -255,6 +255,8 @@ Execution reports independently include the customer account when applicable and
 
 Cancel resting orders in bulk. Only available on KalshiNR (NewOrderMode) sessions. `530=6` cancels every resting order placed over FIX with the session's API key. `530=1` cancels every resting order the account has in the market named by `Symbol<55>`, both sides, however it was placed, or only one subaccount's when the request names it; it is billed like an order cancel (35=F).
 
+With an API key restricted to one subaccount, `530=1` cancels only that subaccount's orders. `AllocAccount<79>` is optional; if sent, it must be that subaccount, otherwise the request is rejected.
+
 | Tag | Name | Description |
 | - | - | - |
 | 11 | ClOrderID | Unique request ID |
@@ -308,7 +310,7 @@ Every event carries `CorporateActionNoticeID<20190>`, the `id` of the matching n
 | Final settlement | Omitted; the reason is on the REST notice |
 
 ```fix Example applied split theme={null}
-8=FIXT.1.1|35=f|49=KalshiNR|56=your-api-key|55=KXMUPERP1|58=Corporate action review-uuid: split 1 to 4|60=20261013-20:00:01.123456|292=J|325=Y|1174=9|20190=review-uuid|
+8=FIXT.1.1|35=f|49=KalshiNR|56=your-api-key|55=KXMUPERP1|58=Corporate action 55555555-5555-5555-5555-555555555555: split 1 to 4|60=20261013-20:00:01.123456|292=J|325=Y|1174=9|20190=55555555-5555-5555-5555-555555555555|
 ```
 
 The message model follows [FIX Latest Pre-Trade EP284 sections 8.1.13 and 19.1.10](https://fixtrading.org/packages/fix-latest-specification-pre-trade/). The action codes follow the [FIX Latest CorporateAction code set](https://orchimate.org/fixtrading/fix-latest/codeSets/CorporateActionCodeSet). Security master messages `35=c`, `35=d`, and `35=BP` are not used; splits do not change contract terms.

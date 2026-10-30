@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exit-triggers/cancel-cross-exit-triggers
-lastmod: 2026-10-26T23:17:14.400Z
+lastmod: 2026-10-29T03:14:19.735Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -153,6 +153,9 @@ components:
       enum:
         - bracket
         - trailing
+      x-enum-varnames:
+        - Bracket
+        - Trailing
     ErrorResponse:
       type: object
       properties:

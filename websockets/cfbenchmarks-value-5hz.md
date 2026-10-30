@@ -204,7 +204,7 @@ operations:
             type:
               type: string
               const: cfbenchmarks_value_5hz
-              x-parser-schema-id: <anonymous-schema-429>
+              x-parser-schema-id: <anonymous-schema-430>
             sid: &ref_0
               type: integer
               description: >-
@@ -232,24 +232,24 @@ operations:
                 index_id:
                   type: string
                   description: CF Benchmarks index ID (for example "BRTI")
-                  x-parser-schema-id: <anonymous-schema-431>
+                  x-parser-schema-id: <anonymous-schema-432>
                 value_usd:
                   type: string
                   description: Index value in USD, formatted with exactly 8 decimal places
-                  x-parser-schema-id: <anonymous-schema-432>
+                  x-parser-schema-id: <anonymous-schema-433>
                 source_ts_ms:
                   type: integer
                   description: Upstream publication timestamp of the tick (unix ms)
-                  x-parser-schema-id: <anonymous-schema-433>
+                  x-parser-schema-id: <anonymous-schema-434>
                 received_at:
                   type: integer
                   description: When Kalshi received the upstream frame (unix ms)
-                  x-parser-schema-id: <anonymous-schema-434>
+                  x-parser-schema-id: <anonymous-schema-435>
                 data:
                   type: string
                   description: The raw CF Benchmarks JSON frame, as a string
-                  x-parser-schema-id: <anonymous-schema-435>
-              x-parser-schema-id: <anonymous-schema-430>
+                  x-parser-schema-id: <anonymous-schema-436>
+              x-parser-schema-id: <anonymous-schema-431>
             sending_ts_ms: &ref_2
               type: integer
               format: int64
@@ -359,7 +359,7 @@ operations:
             type:
               type: string
               const: cfbenchmarks_value_5hz_indexlist
-              x-parser-schema-id: <anonymous-schema-436>
+              x-parser-schema-id: <anonymous-schema-437>
             id:
               type: integer
               description: >
@@ -385,9 +385,9 @@ operations:
                   description: Index IDs recently observed on the 5Hz stream
                   items:
                     type: string
-                    x-parser-schema-id: <anonymous-schema-439>
-                  x-parser-schema-id: <anonymous-schema-438>
-              x-parser-schema-id: <anonymous-schema-437>
+                    x-parser-schema-id: <anonymous-schema-440>
+                  x-parser-schema-id: <anonymous-schema-439>
+              x-parser-schema-id: <anonymous-schema-438>
             sending_ts_ms: *ref_2
           x-parser-schema-id: cfbenchmarks5HzIndexListPayload
         title: CF Benchmarks 5Hz Index List

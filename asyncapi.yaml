@@ -26,7 +26,7 @@ info:
     | 8 | Unknown channel name | Invalid channel in subscribe |
     | 9 | Authentication required | Channel requires authenticated connection |
     | 10 | Channel error | Channel-specific error |
-    | 11 | Invalid parameter | Malformed parameter value |
+    | 11 | Invalid parameter | Malformed parameter value, or update_interval_ms differs from the existing orderbook subscription |
     | 12 | Exactly one subscription ID is required | For update_subscription |
     | 13 | Unsupported action | Invalid action for update_subscription |
     | 14 | Market Ticker required | Missing market specification (market_ticker or market_id) |
@@ -41,6 +41,7 @@ info:
     | 26 | Subscription market limit exceeded | Adding markets would exceed the per-subscription market limit |
     | 27 | Too many requests | The subscription exceeded its command rate limit |
     | 28 | Underlying tickers required | Missing underlying_tickers for subscribe_underlyings/unsubscribe_underlyings on pyth_value |
+    | 29 | update_interval_ms must be 0, 100 or 1000 | Invalid update_interval_ms on orderbook_delta |
 
     ## Terminal Errors
 
@@ -158,14 +159,30 @@ channels:
         - `market_id`/`market_ids` are not supported for this channel
       - Sends `orderbook_snapshot` first, then incremental `orderbook_delta` updates
       - Supports `update_subscription` with `add_markets` / `delete_markets` / `get_snapshot` actions
-      - `get_snapshot` returns an `orderbook_snapshot` for the requested `market_tickers` without modifying the subscription
+      - `get_snapshot` returns an `orderbook_snapshot` for the requested `market_tickers` without changing the subscribed markets. Apply every returned snapshot as a replacement for that market's local book
+      - Each connection has one `orderbook_delta` subscription. A repeated `subscribe` adds new markets to its existing `sid`; it does not resend snapshots for markets already subscribed
+      - A repeated `subscribe` must use the existing `update_interval_ms` (omitting it means `0`). A different valid interval returns error code 11 without adding markets. Use `update_subscription` with `add_markets` to add markets without respecifying the interval. To change the interval, `unsubscribe`, wait for `unsubscribed`, then `subscribe` again
 
-      **Matching updates across connections:**
+      **Matching real-time updates across connections:**
+      These guarantees apply to subscriptions created in real-time mode (the initial `update_interval_ms` is omitted or `0`). Conflated subscriptions have the separate clock and recovery rules below.
+
       - `clock` is the exchange clock. It is the same on every connection, so it can match a market's updates across redundant connections; `seq` counts messages on one subscription only
       - One exchange action can make several deltas, so several deltas can share a `clock`. Every connection sends them in the same order, before any delta for that market with a higher `clock`
       - A snapshot includes every change with a `clock` at or below its own; the deltas that follow it on that connection have higher clocks
       - While you are subscribed to a market, its clocks never go down outside exchange maintenance, but they skip values. They are not comparable across markets. Keep checking `seq` on each connection for missed messages
       - A market's clock may decrease during exchange maintenance, so don't compare clocks from before a maintenance period with clocks after it
+
+      **Conflated updates (opt-in):**
+      - Set `update_interval_ms` to `100` or `1000` on the initial `subscribe` to receive conflated updates instead of one `orderbook_delta` per change. Omit it or set it to `0` for real-time updates, the default
+      - Each window produces one `orderbook_delta` per changed price level, carrying the net held change at that level. Levels whose held changes cancel out are skipped. Apply every delta in sequence to account for those changes exactly
+      - Each window's flush is scheduled one interval after that window's first held change; processing and transport latency are additional. `clock`, `ts` and `ts_ms` are those of the latest change included in each delta
+      - A conflated delta's `clock` describes that price level's latest included change, not the completeness of the whole book. Clocks can decrease between messages, including when an immediate own-order update overtakes a held public update. Do not discard a delta because its clock is lower than a previously received clock
+      - Updates to your own orders bypass the interval, with the usual `client_order_id` and `subaccount` annotations when available. For a subaccount-restricted key, this applies only to orders within that restriction. Changes to other participants' orders, including liquidity your trades consume, are held like other public changes
+      - Snapshots bypass the interval and replace any unsent held changes for their market. Always replace your local book with a received snapshot before applying subsequent deltas for that market
+      - Between flushes, public levels can lag your own orders, and the book can appear locked or crossed. A flush contains separate delta messages, not an atomic full-book snapshot; there is no end-of-flush message
+      - `seq` stays contiguous; the interval is fixed for the life of the subscription
+      - Apply every delta in `seq` order within its subscription. If you detect a gap, request `get_snapshot` for all subscribed markets, or `unsubscribe`, wait for `unsubscribed`, then `subscribe` again. A repeated `subscribe` alone does not resynchronize existing markets
+      - Conflation windows are independent across subscriptions, so the same clock can accompany different net deltas on different connections. Do not merge or deduplicate conflated streams by clock. When switching connections, rebuild from that connection's snapshot and follow its own `seq`
 
       **Use case:** Building and maintaining a real-time orderbook
     messages:
@@ -1257,6 +1274,15 @@ components:
             params:
               channels: ["orderbook_delta"]
               market_ticker: "CPI-22DEC-TN0.1"
+        - name: subscribeToConflatedOrderbook
+          summary: Subscribe to orderbook_delta with 100 ms conflated updates
+          payload:
+            id: 16
+            cmd: subscribe
+            params:
+              channels: ["orderbook_delta"]
+              market_tickers: ["FED-23DEC-T3.00", "CORIVER-2024-T1030"]
+              update_interval_ms: 100
         - name: subscribeMultipleChannels
           summary: Subscribe to multiple channels for multiple markets
           payload:
@@ -1647,7 +1673,7 @@ components:
         | 8 | Unknown channel name | Invalid channel in subscribe |
         | 9 | Authentication required | Channel requires authenticated connection |
         | 10 | Channel error | Channel-specific error |
-        | 11 | Invalid parameter | Malformed parameter value |
+        | 11 | Invalid parameter | Malformed parameter value, or update_interval_ms differs from the existing orderbook subscription |
         | 12 | Exactly one subscription ID is required | For update_subscription |
         | 13 | Unsupported action | Invalid action for update_subscription |
         | 14 | Market Ticker required | Missing market specification (market_ticker or market_id) |
@@ -1665,6 +1691,7 @@ components:
         | 26 | Subscription market limit exceeded | Adding markets would exceed the per-subscription market limit |
         | 27 | Too many requests | The subscription exceeded its command rate limit |
         | 28 | Underlying tickers required | Missing underlying_tickers for subscribe_underlyings/unsubscribe_underlyings on pyth_value |
+        | 29 | update_interval_ms must be 0, 100 or 1000 | Invalid update_interval_ms on orderbook_delta |
       contentType: application/json
       payload:
         $ref: '#/components/schemas/errorResponsePayload'
@@ -2806,6 +2833,23 @@ components:
                 the legacy no-leg pricing. Integrations relying on the legacy behavior should migrate before
                 the default flip; concrete dates will be announced before each step.
               default: false
+            update_interval_ms:
+              type: integer
+              enum: [0, 100, 1000]
+              default: 0
+              description: |
+                Orderbook channel only. Opts in to conflated `orderbook_delta` updates: one net delta per
+                changed price level in each 100 or 1000 millisecond window. A window starts with its first
+                held change; processing and transport can delay delivery. Your own orders within any subaccount restriction and snapshots bypass the interval;
+                changes to other participants' orders, including liquidity you consume, remain held.
+                Omit or set to 0 for real-time updates, the default. Use JSON integer literals: other signed
+                64-bit integer literals return error code 29. Values that fail integer decoding, including
+                floating-point notation and strings, return code 1 for the whole command.
+                A repeated subscribe adds markets to the existing sid and must specify the same interval
+                (omission means 0); a mismatch returns error code 11. Change intervals by unsubscribing first.
+                Follow seq within this subscription; conflated clocks can decrease and cannot match or
+                deduplicate updates across connections. Recover gaps with fresh snapshots for all subscribed
+                markets or unsubscribe then subscribe again; a repeated subscribe alone does not resynchronize.
             user_filter:
               type: string
               enum: ["", "self"]
@@ -3122,7 +3166,7 @@ components:
                 - 8: Unknown channel name - Invalid channel in subscribe
                 - 9: Authentication required - Channel requires authenticated connection
                 - 10: Channel error - Channel-specific error
-                - 11: Invalid parameter - Malformed parameter value
+                - 11: Invalid parameter - Malformed parameter value, or update_interval_ms differs from the existing orderbook subscription
                 - 12: Exactly one subscription ID is required - For update_subscription
                 - 13: Unsupported action - Invalid action for update_subscription
                 - 14: Market Ticker required - Missing market specification (market_ticker or market_id)
@@ -3138,10 +3182,11 @@ components:
                 - 26: Subscription market limit exceeded - Adding markets would exceed the per-subscription market limit
                 - 27: Too many requests - The subscription exceeded its command rate limit
                 - 28: Underlying tickers required - Missing underlying_tickers for subscribe_underlyings/unsubscribe_underlyings on pyth_value
+                - 29: update_interval_ms must be 0, 100 or 1000 - Invalid update_interval_ms on orderbook_delta
 
                 Codes 6, 16, and 17 are retired. The service no longer emits
                 them and their numbers stay reserved.
-              enum: [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]
+              enum: [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
             msg:
               type: string
               description: Human-readable error message
@@ -3469,8 +3514,12 @@ components:
               format: int64
               minimum: 1
               description: |
-                Exchange clock of the exchange action that made this change. Every connection sends the same clock for the same change.
-                Several deltas can share a clock when one action makes several changes.
+                Exchange clock of the latest change included in this delta.
+                In real-time mode, every connection sends the same clock for the same change;
+                several deltas can share a clock.
+                In conflated mode, the latest exchange clock included in this price level's net delta.
+                It can decrease between messages and is not a whole-book watermark or a cross-connection
+                deduplication key. Apply deltas using this subscription's seq order.
             price_dollars:
               type: string
               description: Price level in dollars
@@ -5147,7 +5196,7 @@ x-error-codes:
       description: Channel-specific error
     - code: 11
       name: Invalid parameter
-      description: Malformed parameter value
+      description: Malformed parameter value, or update_interval_ms differs from the existing orderbook subscription
     - code: 12
       name: Exactly one subscription ID is required
       description: For update_subscription command
@@ -5193,3 +5242,6 @@ x-error-codes:
     - code: 28
       name: Underlying tickers required
       description: Missing underlying_tickers for subscribe_underlyings/unsubscribe_underlyings on pyth_value
+    - code: 29
+      name: update_interval_ms must be 0, 100 or 1000
+      description: Invalid update_interval_ms on orderbook_delta

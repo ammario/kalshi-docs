@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/orderbook-updates
-lastmod: 2026-10-21T15:53:53.304Z
+lastmod: 2026-10-28T22:41:38.636Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,14 +18,30 @@ lastmod: 2026-10-21T15:53:53.304Z
   - `market_id`/`market_ids` are not supported for this channel
 - Sends `orderbook_snapshot` first, then incremental `orderbook_delta` updates
 - Supports `update_subscription` with `add_markets` / `delete_markets` / `get_snapshot` actions
-- `get_snapshot` returns an `orderbook_snapshot` for the requested `market_tickers` without modifying the subscription
+- `get_snapshot` returns an `orderbook_snapshot` for the requested `market_tickers` without changing the subscribed markets. Apply every returned snapshot as a replacement for that market's local book
+- Each connection has one `orderbook_delta` subscription. A repeated `subscribe` adds new markets to its existing `sid`; it does not resend snapshots for markets already subscribed
+- A repeated `subscribe` must use the existing `update_interval_ms` (omitting it means `0`). A different valid interval returns error code 11 without adding markets. Use `update_subscription` with `add_markets` to add markets without respecifying the interval. To change the interval, `unsubscribe`, wait for `unsubscribed`, then `subscribe` again
 
-**Matching updates across connections:**
+**Matching real-time updates across connections:**
+These guarantees apply to subscriptions created in real-time mode (the initial `update_interval_ms` is omitted or `0`). Conflated subscriptions have the separate clock and recovery rules below.
+
 - `clock` is the exchange clock. It is the same on every connection, so it can match a market's updates across redundant connections; `seq` counts messages on one subscription only
 - One exchange action can make several deltas, so several deltas can share a `clock`. Every connection sends them in the same order, before any delta for that market with a higher `clock`
 - A snapshot includes every change with a `clock` at or below its own; the deltas that follow it on that connection have higher clocks
 - While you are subscribed to a market, its clocks never go down outside exchange maintenance, but they skip values. They are not comparable across markets. Keep checking `seq` on each connection for missed messages
 - A market's clock may decrease during exchange maintenance, so don't compare clocks from before a maintenance period with clocks after it
+
+**Conflated updates (opt-in):**
+- Set `update_interval_ms` to `100` or `1000` on the initial `subscribe` to receive conflated updates instead of one `orderbook_delta` per change. Omit it or set it to `0` for real-time updates, the default
+- Each window produces one `orderbook_delta` per changed price level, carrying the net held change at that level. Levels whose held changes cancel out are skipped. Apply every delta in sequence to account for those changes exactly
+- Each window's flush is scheduled one interval after that window's first held change; processing and transport latency are additional. `clock`, `ts` and `ts_ms` are those of the latest change included in each delta
+- A conflated delta's `clock` describes that price level's latest included change, not the completeness of the whole book. Clocks can decrease between messages, including when an immediate own-order update overtakes a held public update. Do not discard a delta because its clock is lower than a previously received clock
+- Updates to your own orders bypass the interval, with the usual `client_order_id` and `subaccount` annotations when available. For a subaccount-restricted key, this applies only to orders within that restriction. Changes to other participants' orders, including liquidity your trades consume, are held like other public changes
+- Snapshots bypass the interval and replace any unsent held changes for their market. Always replace your local book with a received snapshot before applying subsequent deltas for that market
+- Between flushes, public levels can lag your own orders, and the book can appear locked or crossed. A flush contains separate delta messages, not an atomic full-book snapshot; there is no end-of-flush message
+- `seq` stays contiguous; the interval is fixed for the life of the subscription
+- Apply every delta in `seq` order within its subscription. If you detect a gap, request `get_snapshot` for all subscribed markets, or `unsubscribe`, wait for `unsubscribed`, then `subscribe` again. A repeated `subscribe` alone does not resynchronize existing markets
+- Conflation windows are independent across subscriptions, so the same clock can accompany different net deltas on different connections. Do not merge or deduplicate conflated streams by clock. When switching connections, rebuild from that connection's snapshot and follow its own `seq`
 
 **Use case:** Building and maintaining a real-time orderbook
 
@@ -56,10 +72,26 @@ description: >
   `get_snapshot` actions
 
   - `get_snapshot` returns an `orderbook_snapshot` for the requested
-  `market_tickers` without modifying the subscription
+  `market_tickers` without changing the subscribed markets. Apply every returned
+  snapshot as a replacement for that market's local book
+
+  - Each connection has one `orderbook_delta` subscription. A repeated
+  `subscribe` adds new markets to its existing `sid`; it does not resend
+  snapshots for markets already subscribed
+
+  - A repeated `subscribe` must use the existing `update_interval_ms` (omitting
+  it means `0`). A different valid interval returns error code 11 without adding
+  markets. Use `update_subscription` with `add_markets` to add markets without
+  respecifying the interval. To change the interval, `unsubscribe`, wait for
+  `unsubscribed`, then `subscribe` again
 
 
-  **Matching updates across connections:**
+  **Matching real-time updates across connections:**
+
+  These guarantees apply to subscriptions created in real-time mode (the initial
+  `update_interval_ms` is omitted or `0`). Conflated subscriptions have the
+  separate clock and recovery rules below.
+
 
   - `clock` is the exchange clock. It is the same on every connection, so it can
   match a market's updates across redundant connections; `seq` counts messages
@@ -78,6 +110,54 @@ description: >
 
   - A market's clock may decrease during exchange maintenance, so don't compare
   clocks from before a maintenance period with clocks after it
+
+
+  **Conflated updates (opt-in):**
+
+  - Set `update_interval_ms` to `100` or `1000` on the initial `subscribe` to
+  receive conflated updates instead of one `orderbook_delta` per change. Omit it
+  or set it to `0` for real-time updates, the default
+
+  - Each window produces one `orderbook_delta` per changed price level, carrying
+  the net held change at that level. Levels whose held changes cancel out are
+  skipped. Apply every delta in sequence to account for those changes exactly
+
+  - Each window's flush is scheduled one interval after that window's first held
+  change; processing and transport latency are additional. `clock`, `ts` and
+  `ts_ms` are those of the latest change included in each delta
+
+  - A conflated delta's `clock` describes that price level's latest included
+  change, not the completeness of the whole book. Clocks can decrease between
+  messages, including when an immediate own-order update overtakes a held public
+  update. Do not discard a delta because its clock is lower than a previously
+  received clock
+
+  - Updates to your own orders bypass the interval, with the usual
+  `client_order_id` and `subaccount` annotations when available. For a
+  subaccount-restricted key, this applies only to orders within that
+  restriction. Changes to other participants' orders, including liquidity your
+  trades consume, are held like other public changes
+
+  - Snapshots bypass the interval and replace any unsent held changes for their
+  market. Always replace your local book with a received snapshot before
+  applying subsequent deltas for that market
+
+  - Between flushes, public levels can lag your own orders, and the book can
+  appear locked or crossed. A flush contains separate delta messages, not an
+  atomic full-book snapshot; there is no end-of-flush message
+
+  - `seq` stays contiguous; the interval is fixed for the life of the
+  subscription
+
+  - Apply every delta in `seq` order within its subscription. If you detect a
+  gap, request `get_snapshot` for all subscribed markets, or `unsubscribe`, wait
+  for `unsubscribed`, then `subscribe` again. A repeated `subscribe` alone does
+  not resynchronize existing markets
+
+  - Conflation windows are independent across subscriptions, so the same clock
+  can accompany different net deltas on different connections. Do not merge or
+  deduplicate conflated streams by clock. When switching connections, rebuild
+  from that connection's snapshot and follow its own `seq`
 
 
   **Use case:** Building and maintaining a real-time orderbook
@@ -214,7 +294,7 @@ operations:
             type:
               type: string
               const: orderbook_snapshot
-              x-parser-schema-id: <anonymous-schema-75>
+              x-parser-schema-id: <anonymous-schema-76>
             id:
               type: integer
               description: >
@@ -270,7 +350,7 @@ operations:
 
                     The snapshot includes every change to this market with a
                     clock at or below this one, and none above it.
-                  x-parser-schema-id: <anonymous-schema-77>
+                  x-parser-schema-id: <anonymous-schema-78>
                 yes_dollars_fp:
                   type: array
                   description: >
@@ -285,11 +365,11 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-80>
+                      x-parser-schema-id: <anonymous-schema-81>
                     minItems: 2
                     maxItems: 2
-                    x-parser-schema-id: <anonymous-schema-79>
-                  x-parser-schema-id: <anonymous-schema-78>
+                    x-parser-schema-id: <anonymous-schema-80>
+                  x-parser-schema-id: <anonymous-schema-79>
                 no_dollars_fp:
                   type: array
                   description: >
@@ -304,12 +384,12 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-83>
+                      x-parser-schema-id: <anonymous-schema-84>
                     minItems: 2
                     maxItems: 2
-                    x-parser-schema-id: <anonymous-schema-82>
-                  x-parser-schema-id: <anonymous-schema-81>
-              x-parser-schema-id: <anonymous-schema-76>
+                    x-parser-schema-id: <anonymous-schema-83>
+                  x-parser-schema-id: <anonymous-schema-82>
+              x-parser-schema-id: <anonymous-schema-77>
             sending_ts_ms: &ref_5
               type: integer
               format: int64
@@ -407,12 +487,22 @@ operations:
                   - name: clock
                     type: integer
                     description: >
-                      Exchange clock of the exchange action that made this
-                      change. Every connection sends the same clock for the same
-                      change.
+                      Exchange clock of the latest change included in this
+                      delta.
 
-                      Several deltas can share a clock when one action makes
-                      several changes.
+                      In real-time mode, every connection sends the same clock
+                      for the same change;
+
+                      several deltas can share a clock.
+
+                      In conflated mode, the latest exchange clock included in
+                      this price level's net delta.
+
+                      It can decrease between messages and is not a whole-book
+                      watermark or a cross-connection
+
+                      deduplication key. Apply deltas using this subscription's
+                      seq order.
                     required: true
                   - name: price_dollars
                     type: string
@@ -479,7 +569,7 @@ operations:
             type:
               type: string
               const: orderbook_delta
-              x-parser-schema-id: <anonymous-schema-84>
+              x-parser-schema-id: <anonymous-schema-85>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -499,24 +589,34 @@ operations:
                   format: int64
                   minimum: 1
                   description: >
-                    Exchange clock of the exchange action that made this change.
-                    Every connection sends the same clock for the same change.
+                    Exchange clock of the latest change included in this delta.
 
-                    Several deltas can share a clock when one action makes
-                    several changes.
-                  x-parser-schema-id: <anonymous-schema-86>
+                    In real-time mode, every connection sends the same clock for
+                    the same change;
+
+                    several deltas can share a clock.
+
+                    In conflated mode, the latest exchange clock included in
+                    this price level's net delta.
+
+                    It can decrease between messages and is not a whole-book
+                    watermark or a cross-connection
+
+                    deduplication key. Apply deltas using this subscription's
+                    seq order.
+                  x-parser-schema-id: <anonymous-schema-87>
                 price_dollars:
                   type: string
                   description: Price level in dollars
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-87>
+                  x-parser-schema-id: <anonymous-schema-88>
                 delta_fp:
                   type: string
                   description: Fixed-point contract delta (2 decimals)
                   x-rust-type: i64
                   x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-88>
+                  x-parser-schema-id: <anonymous-schema-89>
                 side:
                   type: string
                   description: Market side
@@ -532,7 +632,7 @@ operations:
 
                     Contains the client_order_id of your order that triggered
                     this delta.
-                  x-parser-schema-id: <anonymous-schema-89>
+                  x-parser-schema-id: <anonymous-schema-90>
                 ts:
                   type: string
                   deprecated: true
@@ -541,14 +641,14 @@ operations:
                     change was recorded (RFC3339, truncated to milliseconds).
                     Use ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-90>
+                  x-parser-schema-id: <anonymous-schema-91>
                 ts_ms:
                   type: integer
                   description: >-
                     Optional - Unix timestamp for when the orderbook change was
                     recorded (in milliseconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-91>
+                  x-parser-schema-id: <anonymous-schema-92>
                 subaccount:
                   type: integer
                   description: >
@@ -557,8 +657,8 @@ operations:
 
                     Contains the subaccount number of your order that triggered
                     this delta.
-                  x-parser-schema-id: <anonymous-schema-92>
-              x-parser-schema-id: <anonymous-schema-85>
+                  x-parser-schema-id: <anonymous-schema-93>
+              x-parser-schema-id: <anonymous-schema-86>
             sending_ts_ms: *ref_5
           x-parser-schema-id: orderbookDeltaPayload
         title: Orderbook Delta

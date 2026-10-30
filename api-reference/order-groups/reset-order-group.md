@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/order-groups/reset-order-group
-lastmod: 2026-10-26T23:17:12.906Z
+lastmod: 2026-10-29T03:14:18.174Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

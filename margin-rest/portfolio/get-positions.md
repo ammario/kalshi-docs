@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-positions
-lastmod: 2026-10-26T23:17:14.101Z
+lastmod: 2026-10-29T03:14:19.439Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -116,6 +116,7 @@ components:
       type: object
       required:
         - subaccount
+        - subaccount_type
         - market_ticker
         - position
         - entry_price
@@ -128,6 +129,8 @@ components:
           description: >-
             The subaccount number that holds this position (0 for primary, 1-63
             for subaccounts)
+        subaccount_type:
+          $ref: '#/components/schemas/SubaccountType'
         market_ticker:
           type: string
           description: Market ticker symbol
@@ -181,6 +184,21 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    SubaccountType:
+      type: string
+      enum:
+        - cross
+        - isolated
+        - auto_rebalance
+      x-enum-varnames:
+        - SubaccountTypeCross
+        - SubaccountTypeIsolated
+        - SubaccountTypeAutoRebalance
+      description: >-
+        How the subaccount is margined. `cross` for the primary account and
+        numbered subaccounts, `isolated` for a market's isolated subaccount, and
+        `auto_rebalance` for an auto-rebalanced isolated position, which shares
+        its market's isolated subaccount number.
     FixedPointCount:
       type: string
       description: >-

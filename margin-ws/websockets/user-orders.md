@@ -155,9 +155,13 @@ operations:
                     required: false
                   - name: order_source
                     type: string
-                    description: |
-                      `system` for liquidations and margin exit or trailing-stop
-                      triggers. `user` for every other order.
+                    description: >
+                      `system` for liquidations, margin exit or trailing-stop
+
+                      triggers, and auto-rebalance orders. `user` for every
+                      other
+
+                      order.
                     enumValues:
                       - user
                       - system
@@ -179,7 +183,7 @@ operations:
             type:
               type: string
               const: user_order
-              x-parser-schema-id: <anonymous-schema-113>
+              x-parser-schema-id: <anonymous-schema-114>
             sid:
               type: integer
               description: >-
@@ -204,14 +208,14 @@ operations:
                 order_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-115>
+                  x-parser-schema-id: <anonymous-schema-116>
                 user_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-116>
+                  x-parser-schema-id: <anonymous-schema-117>
                 client_order_id:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-117>
+                  x-parser-schema-id: <anonymous-schema-118>
                 ticker:
                   type: string
                   description: Unique market identifier
@@ -226,17 +230,17 @@ operations:
                   type: string
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-118>
+                  x-parser-schema-id: <anonymous-schema-119>
                 fill_count:
                   type: string
                   x-rust-type: common::types::Amount
                   x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-119>
+                  x-parser-schema-id: <anonymous-schema-120>
                 remaining_count:
                   type: string
                   x-rust-type: common::types::Amount
                   x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-120>
+                  x-parser-schema-id: <anonymous-schema-121>
                 self_trade_prevention_type:
                   type: string
                   enum:
@@ -249,22 +253,22 @@ operations:
                   description: >-
                     Order group identifier, if the order belongs to an order
                     group
-                  x-parser-schema-id: <anonymous-schema-121>
+                  x-parser-schema-id: <anonymous-schema-122>
                 expiration_ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-122>
+                  x-parser-schema-id: <anonymous-schema-123>
                 created_ts_ms:
                   type: *ref_0
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-123>
+                  x-parser-schema-id: <anonymous-schema-124>
                 last_updated_ts_ms:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-124>
+                  x-parser-schema-id: <anonymous-schema-125>
                 last_update_reason:
                   type: string
                   enum:
@@ -285,17 +289,18 @@ operations:
                   x-parser-schema-id: lastUpdateReason
                 subaccount_number:
                   type: integer
-                  x-parser-schema-id: <anonymous-schema-125>
+                  x-parser-schema-id: <anonymous-schema-126>
                 order_source:
                   type: string
                   enum:
                     - user
                     - system
                   description: |
-                    `system` for liquidations and margin exit or trailing-stop
-                    triggers. `user` for every other order.
-                  x-parser-schema-id: <anonymous-schema-126>
-              x-parser-schema-id: <anonymous-schema-114>
+                    `system` for liquidations, margin exit or trailing-stop
+                    triggers, and auto-rebalance orders. `user` for every other
+                    order.
+                  x-parser-schema-id: <anonymous-schema-127>
+              x-parser-schema-id: <anonymous-schema-115>
             sending_ts_ms:
               type: integer
               format: int64

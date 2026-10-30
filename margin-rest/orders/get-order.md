@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/get-order
-lastmod: 2026-10-26T23:17:13.986Z
+lastmod: 2026-10-29T03:14:19.314Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -237,9 +237,10 @@ components:
       enum:
         - liquidation
         - take_profit_stop_loss
+        - auto_rebalance
       description: >-
-        The reason for a system-generated order. Present for liquidation and
-        TP/SL orders.
+        The reason for a system-generated order. Present for liquidation, TP/SL,
+        and auto-rebalance orders.
   responses:
     UnauthorizedError:
       description: Unauthorized - authentication required

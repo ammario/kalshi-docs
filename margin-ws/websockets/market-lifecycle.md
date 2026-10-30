@@ -114,7 +114,7 @@ operations:
             type:
               type: string
               const: market_lifecycle_v2
-              x-parser-schema-id: <anonymous-schema-69>
+              x-parser-schema-id: <anonymous-schema-70>
             sid:
               type: integer
               description: >-
@@ -146,12 +146,12 @@ operations:
                   enum:
                     - activated
                     - deactivated
-                  x-parser-schema-id: <anonymous-schema-71>
+                  x-parser-schema-id: <anonymous-schema-72>
                 is_deactivated:
                   type: boolean
                   description: Whether trading on the market is paused.
-                  x-parser-schema-id: <anonymous-schema-72>
-              x-parser-schema-id: <anonymous-schema-70>
+                  x-parser-schema-id: <anonymous-schema-73>
+              x-parser-schema-id: <anonymous-schema-71>
             sending_ts_ms:
               type: integer
               format: int64

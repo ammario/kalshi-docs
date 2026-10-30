@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exit-triggers/get-isolated-exit-triggers
-lastmod: 2026-10-26T23:17:14.328Z
+lastmod: 2026-10-29T03:14:19.677Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -120,6 +120,9 @@ components:
       enum:
         - bracket
         - trailing
+      x-enum-varnames:
+        - Bracket
+        - Trailing
     ExitTrigger:
       type: object
       required:
@@ -237,12 +240,16 @@ components:
         - entry_not_filled
         - order_rejected
         - position_flipped
+        - market_deactivated
     ExitTriggerLeg:
       type: string
       description: Which leg of a bracket fired. Present only once a leg has fired.
       enum:
         - stop_loss
         - take_profit
+      x-enum-varnames:
+        - StopLoss
+        - TakeProfit
     FixedPointDollars:
       type: string
       description: >-
