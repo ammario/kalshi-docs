@@ -137,6 +137,7 @@ components:
         - position_quantity_fp
         - post_position_quantity_fp
         - payment_amount_centicents
+        - payment_amount_fp
         - payment_time
         - settlement_execution_time
         - created_ts
@@ -172,6 +173,11 @@ components:
           description: >-
             Signed cash amount; positive when received and negative when paid.
             For splits this is cash in lieu and excludes position revaluation.
+        payment_amount_fp:
+          type: string
+          description: >-
+            payment_amount_centicents as a fixed-point dollar string with 6
+            decimal places.
         payment_time:
           type: string
           format: date-time

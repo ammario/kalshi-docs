@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-29T21:32:30.531Z
+lastmod: 2026-10-30T15:59:17.281Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -25,6 +25,36 @@ the `FIX` tag.
 Exit triggers canceled because their market was deactivated now return
 `status_reason: market_deactivated`. Previously they returned no
 `status_reason`.
+
+**November 5, 2026**
+
+Fractional quantities and sub-cent prices can produce dollar amounts with
+up to 6 decimal places.
+
+The Clearing Member API adds `_fp` dollar fields with 6 decimal places
+alongside selected `_centicents` response fields. For example,
+`balance_available_fp: "12.345600"` represents a balance in dollars.
+
+Preserve all 6 decimal places in calculations and reconciliation.
+Migrate to the Clearing Member `_fp` fields; their integer counterparts
+will be deprecated soon.
+
+**Affected Clearing Member endpoints:**
+
+* `GET /klear-api/v1/margin/settlement_balance`
+* `GET /klear-api/v1/margin/settlement_balance_history`
+* `GET /klear-api/v1/margin/active_obligations`
+* `GET /klear-api/v1/margin/obligation_history`
+* `GET /klear-api/v1/margin/obligations/{obligation_id}/settlement_details`
+* `GET /klear-api/v1/margin/obligations/{obligation_id}/funding_payments`
+* `GET /klear-api/v1/margin/obligations/{obligation_id}/corporate_action_payments`
+* `GET /klear-api/v1/margin/funding_payments`
+* `GET /klear-api/v1/margin/settlement_estimate_by_asset_class`
+* `GET /klear-api/v1/margin/funding_estimate_by_asset_class`
+
+See
+[Fixed-Point Representation](https://docs.kalshi.com/getting_started/fixed_point_migration.md#margin-markets)
+for details.
 
 **November 5, 2026**
 

@@ -51,7 +51,7 @@ The fee accumulator carries rounding overpayment across an order's fills. Rebate
 
 ## Worked Examples
 
-> **FCM-cleared fill**
+> [accordion] FCM-cleared fill
 >
 > For a non-direct member with `$0.01` balance precision, suppose a buy has `-$0.055000` of signed revenue and a model fee of `$0.00363825`:
 >
@@ -63,7 +63,7 @@ The fee accumulator carries rounding overpayment across an order's fills. Rebate
 >
 > The balance changes by `-$0.06`; the trade fee plus rounding fee is exactly `$0.005`.
 
-> **Accumulator across fills**
+> [accordion] Accumulator across fills
 >
 > If three fills each add `$0.004` of rounding overpayment, the accumulator carries it forward. Assuming the third fill has enough total fee to cover a `$0.01` rebate:
 >

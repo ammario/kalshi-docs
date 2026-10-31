@@ -14,7 +14,7 @@ lastmod: 2026-10-29T03:14:17.669Z
 
 ## OpenAPI
 
-````yaml /perps_scm_openapi.yaml post /margin/withdraw_settlement_balance
+````yaml /perps_scm_openapi.yaml post /margin/settlement_balance_withdrawal
 openapi: 3.0.0
 info:
   title: Kalshi Clearing Member API
@@ -55,7 +55,7 @@ servers:
 security:
   - kalshiBearer: []
 paths:
-  /margin/withdraw_settlement_balance:
+  /margin/settlement_balance_withdrawal:
     post:
       summary: Withdraw Settlement Balance
       description: >-
@@ -89,12 +89,16 @@ components:
       type: object
       required:
         - amount
+        - mfa_code
       properties:
         amount:
           type: string
           description: >-
             Amount to withdraw in USD as a fixed-point string (e.g. "500.00").
-            Must be positive.
+            Must be positive and in whole cents.
+        mfa_code:
+          type: string
+          description: Code from the requesting user's multi-factor authentication method.
     WithdrawSettlementBalanceResponse:
       type: object
       required:

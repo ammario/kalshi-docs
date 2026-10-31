@@ -126,7 +126,9 @@ components:
         - funding_time
         - position_quantity_fp
         - notional_value_centicents
+        - notional_value_fp
         - funding_amount_centicents
+        - funding_amount_fp
       properties:
         id:
           type: string
@@ -149,10 +151,20 @@ components:
           description: >-
             Signed notional value (position times mark price) the funding
             payment was computed from.
+        notional_value_fp:
+          type: string
+          description: >-
+            notional_value_centicents as a fixed-point dollar string with 6
+            decimal places.
         funding_amount_centicents:
           type: integer
           format: int64
           description: Signed funding amount; positive when received, negative when paid.
+        funding_amount_fp:
+          type: string
+          description: >-
+            funding_amount_centicents as a fixed-point dollar string with 6
+            decimal places.
     Error:
       type: object
       required:

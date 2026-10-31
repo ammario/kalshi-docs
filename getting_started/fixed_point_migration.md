@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fixed_point_migration
-lastmod: 2026-08-17T16:30:23.404Z
+lastmod: 2026-10-30T15:59:17.237Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,16 +8,19 @@ lastmod: 2026-08-17T16:30:23.404Z
 
 # Fixed-Point Representation
 
-> Fixed-point prices, price level structures, and fractional contract quantities.
+> Fixed-point prices, contract quantities, and margin monetary amounts.
 
-Last Updated: August 20, 2026
+Last Updated: November 5, 2026
 
 ## Overview
 
-Kalshi APIs represent prices and contract quantities as fixed-point strings:
+Kalshi APIs use fixed-point strings for prices, contract quantities, and selected monetary amounts:
 
 1. **Prices**: fixed-point dollar strings (`_dollars` suffix), up to 4 decimal places
 2. **Contract quantities**: fixed-point strings (`_fp` suffix), up to 2 decimal places
+3. **Margin monetary amounts**: [response fields](#margin-markets) use dollar strings with up to 6 decimal places (existing fields in the Perps REST API; `_fp` counterparts in the Clearing Member API)
+
+Use each field's documented unit and precision: the `_fp` suffix alone does not distinguish contract quantities from dollar amounts.
 
 ***
 
@@ -31,7 +34,7 @@ Prices are represented as fixed-point dollar strings.
 }
 ```
 
-* `*_dollars` fields are fixed-point dollar strings with up to 4 decimal places (e.g., `"0.1200"`)
+* `*_dollars` price fields are fixed-point dollar strings with up to 4 decimal places (e.g., `"0.1200"`)
 * Integer-cent fields cannot represent sub-cent prices; on markets with sub-cent ticks, read prices from the `*_dollars` fields
 * When combined with fractional contract sizes, intermediate calculations can reach up to 6 decimal places (for example, in fee rounding math)
 
@@ -79,7 +82,7 @@ Whole-cent prices are valid in every structure. Structures are assigned per mark
 
 ## Fractional Contracts
 
-Contract count fields use fixed-point strings and support fractional contract sizes.
+Contract count fields use fixed-point strings. Fractional order sizes are supported only on markets that allow them; margin markets currently trade whole contracts.
 
 ```json theme={null}
 {
@@ -87,12 +90,47 @@ Contract count fields use fixed-point strings and support fractional contract si
 }
 ```
 
-* `*_fp` fields are strings
+* Contract quantity `*_fp` fields are strings
 * Accept 0-2 decimal places on input (responses always emit 2 decimals)
 * Minimum granularity is 0.01 contracts
 * In requests where both integer and `_fp` fields are provided, they must match
 
-Even if you are not placing fractional orders, you will encounter fractional values elsewhere in the API (for example, fills). If your system uses integer arithmetic, one approach is to internally multiply the `_fp` value by 100 and cast to an integer — treating `"1.55"` as 155 units of 1c contracts.
+On markets that support fractional contracts, fills may be fractional even when you submit whole-contract orders. For integer arithmetic, represent quantities in hundredths of a contract: `"1.55"` is 155 units.
+
+***
+
+## Margin Markets
+
+Kalshi is building support for fractional trading with up to 2 decimal places on enabled perpetual markets. The launch date is to be announced.
+
+Fractional quantities can produce dollar amounts that require more than 4 decimal places. For example, 0.01 contracts at \$0.1234 per contract produces \$0.001234 before fees. Affected balances and cash-flow amounts will support up to 6 decimal places in USD. Preserve this precision in calculations and reconciliation.
+
+### Trading, Settlement, and Funding
+
+* **Trading**: Once fractional trading is enabled, fills may have fractional quantities, even for whole-contract orders.
+* **Settlement**: Combined with sub-cent pricing, fractional quantities can produce settlement amounts with 6 decimal places.
+* **Funding**: Funding amounts will also support 6 decimal places.
+
+### API Changes
+
+The Perps REST API already uses fixed-point strings for contract quantities and retains its existing dollar field names. Support up to 6 decimal places for margin balances, PnL, funding, notional, and settlement amounts.
+
+The Clearing Member API adds `_fp` dollar strings alongside selected integer `_centicents` fields.
+
+For example, a Clearing Member response can include both representations of the same amount:
+
+```json theme={null}
+{
+  "balance_available_centicents": 123456,
+  "balance_available_fp": "12.345600"
+}
+```
+
+The Clearing Member API's legacy integer-centicent fields with `_fp` counterparts will be deprecated soon. Migrate to the `_fp` fields to preserve full precision.
+
+FIX trade quantities are already represented as decimals. Once fractional trading is enabled, the existing quantity fields will accept fractional order quantities and report fractional values.
+
+Margin requirements, fees, and notional risk limits are unchanged.
 
 ***
 

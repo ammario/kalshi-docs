@@ -286,25 +286,25 @@ The server sends error messages in this format:
 
 ## Best Practices
 
-> **Connection Management**
+> [card] Connection Management
 >
 > * Implement automatic reconnection with exponential backoff
 > * Handle network interruptions gracefully
 > * Use the websockets library's built-in keepalive
 
-> **Data Handling**
+> [card] Data Handling
 >
 > * Process messages asynchronously to avoid blocking
 > * Implement proper error handling for malformed messages
 > * Cache initial orderbook state before applying updates
 
-> **Security**
+> [card] Security
 >
 > * Never expose your private key in client-side code
 > * Rotate API keys regularly
 > * Use secure key storage practices
 
-> **Performance**
+> [card] Performance
 >
 > * Subscribe only to markets you need
 > * Implement message buffering for high-frequency updates

@@ -18,15 +18,15 @@ Kalshi publishes Python and TypeScript SDKs to help you get started quickly.
 
 ## Packages
 
-> **[Python (sync)](https://pypi.org/project/kalshi_python_sync/)**
+> [card] [Python (sync)](https://pypi.org/project/kalshi_python_sync/)
 >
 > `pip install kalshi_python_sync`
 
-> **[Python (async)](https://pypi.org/project/kalshi_python_async/)**
+> [card] [Python (async)](https://pypi.org/project/kalshi_python_async/)
 >
 > `pip install kalshi_python_async`
 
-> **[TypeScript](https://www.npmjs.com/package/kalshi-typescript)**
+> [card] [TypeScript](https://www.npmjs.com/package/kalshi-typescript)
 >
 > `npm install kalshi-typescript`
 

@@ -88,6 +88,7 @@ components:
       required:
         - estimates
         - settlement_balance_centicents
+        - settlement_balance_fp
       properties:
         estimates:
           type: object
@@ -100,6 +101,11 @@ components:
           type: integer
           format: int64
           description: Current settlement buffer balance.
+        settlement_balance_fp:
+          type: string
+          description: >-
+            settlement_balance_centicents as a fixed-point dollar string with 6
+            decimal places.
     AssetClassSettlementEstimate:
       type: object
       required:
@@ -158,15 +164,22 @@ components:
       type: object
       required:
         - variation_margin_centicents
+        - variation_margin_fp
         - total_fees_centicents
         - maintenance_margin_delta_centicents
         - maintenance_margin_required_centicents
         - total_amount_centicents
+        - total_amount_fp
       properties:
         variation_margin_centicents:
           type: integer
           format: int64
           description: Variation margin.
+        variation_margin_fp:
+          type: string
+          description: >-
+            variation_margin_centicents as a fixed-point dollar string with 6
+            decimal places.
         total_fees_centicents:
           type: integer
           format: int64
@@ -183,6 +196,11 @@ components:
           type: integer
           format: int64
           description: Estimated total settlement amount.
+        total_amount_fp:
+          type: string
+          description: >-
+            total_amount_centicents as a fixed-point dollar string with 6
+            decimal places.
         positions:
           type: object
           description: Map of market ticker to that market's settlement estimate.
@@ -193,7 +211,9 @@ components:
       required:
         - quantity_centicount
         - variation_margin_centicents
+        - variation_margin_fp
         - notional_value_centicents
+        - notional_value_fp
       properties:
         quantity_centicount:
           type: integer
@@ -203,10 +223,20 @@ components:
           type: integer
           format: int64
           description: Variation margin for this market.
+        variation_margin_fp:
+          type: string
+          description: >-
+            variation_margin_centicents as a fixed-point dollar string with 6
+            decimal places.
         notional_value_centicents:
           type: integer
           format: int64
           description: Notional value for this market.
+        notional_value_fp:
+          type: string
+          description: >-
+            notional_value_centicents as a fixed-point dollar string with 6
+            decimal places.
         session_avg_price_fp:
           type: string
           description: >-

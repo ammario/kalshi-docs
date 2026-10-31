@@ -112,7 +112,9 @@ components:
       type: object
       required:
         - balance_delta_centicents
+        - balance_delta_fp
         - locked_balance_delta_centicents
+        - locked_balance_delta_fp
         - reason
         - business_transaction_id
         - created_ts
@@ -121,12 +123,22 @@ components:
           type: integer
           format: int64
           description: Change to the settlement buffer balance.
+        balance_delta_fp:
+          type: string
+          description: >-
+            balance_delta_centicents as a fixed-point dollar string with 6
+            decimal places.
         locked_balance_delta_centicents:
           type: integer
           format: int64
           description: >-
             Change to the locked settlement balance. Funds are locked during
             pending withdrawals.
+        locked_balance_delta_fp:
+          type: string
+          description: >-
+            locked_balance_delta_centicents as a fixed-point dollar string with
+            6 decimal places.
         reason:
           type: string
           description: Reason for the balance change.

@@ -80,6 +80,7 @@ components:
       required:
         - user_id
         - balance_available_centicents
+        - balance_available_fp
       properties:
         user_id:
           type: string
@@ -87,10 +88,20 @@ components:
           type: integer
           format: int64
           description: Settlement buffer balance.
+        balance_available_fp:
+          type: string
+          description: >-
+            balance_available_centicents as a fixed-point dollar string with 6
+            decimal places.
         locked_balance_centicents:
           type: integer
           format: int64
           description: Locked settlement balance (e.g. pending withdrawals).
+        locked_balance_fp:
+          type: string
+          description: >-
+            locked_balance_centicents as a fixed-point dollar string with 6
+            decimal places.
     Error:
       type: object
       required:
