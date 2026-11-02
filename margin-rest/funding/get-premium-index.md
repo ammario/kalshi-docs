@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/funding/get-premium-index
-lastmod: 2026-10-29T03:14:19.567Z
+lastmod: 2026-11-01T21:50:15.151Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

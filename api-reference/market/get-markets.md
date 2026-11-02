@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2026-10-29T03:14:17.898Z
+lastmod: 2026-11-01T21:50:13.814Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -528,6 +528,8 @@ components:
           type: object
           nullable: true
           x-omitempty: true
+          x-go-type: json.RawMessage
+          x-go-type-skip-optional-pointer: true
           description: Expiration value for each target that leads to a YES settlement
         rules_primary:
           type: string

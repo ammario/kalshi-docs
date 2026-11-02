@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/live-data/get-event-live-data
-lastmod: 2026-10-29T03:14:18.797Z
+lastmod: 2026-11-01T21:50:14.527Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -123,6 +123,7 @@ components:
         details:
           type: object
           additionalProperties: true
+          x-go-type: json.RawMessage
           description: >-
             Live data details as a flexible object whose shape depends on the
             type.

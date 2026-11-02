@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/intra-account-transfer
-lastmod: 2026-10-29T03:14:19.577Z
+lastmod: 2026-11-01T21:50:15.160Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -124,7 +124,9 @@ components:
           maximum: 100
           default: 0
           x-go-type-skip-optional-pointer: true
-          description: Source exchange shard index (default 0)
+          description: >-
+            Predictions exchange shard of the source when source is
+            event_contract. Leave unset (0) for Perps.
           x-oapi-codegen-extra-tags:
             validate: gte=0,lte=100
         destination_exchange_shard:
@@ -133,7 +135,9 @@ components:
           maximum: 100
           default: 0
           x-go-type-skip-optional-pointer: true
-          description: Destination exchange shard index (default 0)
+          description: >-
+            Predictions exchange shard of the destination when destination is
+            event_contract. Leave unset (0) for Perps.
           x-oapi-codegen-extra-tags:
             validate: gte=0,lte=100
         source_subaccount:

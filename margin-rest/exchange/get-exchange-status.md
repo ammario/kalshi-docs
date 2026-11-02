@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exchange/get-exchange-status
-lastmod: 2026-10-29T03:14:19.258Z
+lastmod: 2026-11-01T21:50:14.902Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -154,7 +154,9 @@ components:
             exchange index. False when transfers are temporarily blocked.
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: >-
+        Identifier for a Predictions exchange shard. Deprecated on Perps, which
+        runs on one matching engine. Defaults to 0 if unspecified.
       example: 0
 
 ````

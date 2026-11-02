@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-10-26T14:23:40.984Z
+lastmod: 2026-11-02T00:07:13.150Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -84,15 +84,9 @@ The whole batch must fit in the bucket at once. A 25-order create batch needs 25
 
 Perps traffic is metered in its own Read and Write buckets. Above Basic, Perps Write buckets hold three seconds of budget across REST and FIX. Perps calls do not draw down your event-contract budgets, and event-contract calls do not draw down your perps budgets. Each exchange has its own Read budget and Write budgets. See [Perps budgets](#perps-budgets) for per-tier perps budgets.
 
-Single-order Perps creates and amends use a Write budget per margin shard, with your full perps tier budget on each shard. The API and FIX share these budgets.
+Perps order creates, amends, cancels, and decreases share one Write budget across every Perps market, and the API and FIX share it.
 
-* The API selects the shard automatically from the required `ticker`.
-* FIX selects the shard from `Symbol` (tag 55) for New Order Single and Order Cancel/Replace Request.
-* If ticker is empty, omitted, or its shard cannot be resolved, the request consumes its full token cost from the default margin Write budget.
-
-Single-order Perps API cancels and decreases, and FIX Order Cancel Requests, cost **1 token** each from the default margin Write budget, regardless of the market's shard.
-
-Shard 0 uses the unscoped margin Write budget. API v1 and other operations, including order groups and scheduled orders, continue to use that unscoped budget. Read budgets are not shard-scoped.
+Single-order Perps API cancels and decreases, and FIX Order Cancel Requests, cost **1 token** each.
 
 Check your perps tier and limits with [`GET /account/limits/perps`](https://docs.kalshi.com/margin-rest/account/get-perps-account-api-limits), the perps counterpart of [`GET /account/limits`](https://docs.kalshi.com/api-reference/account/get-account-api-limits).
 
@@ -156,13 +150,13 @@ Per-second token budgets in each perps bucket:
   </thead>
 
   <tbody>
-    <tr><td>Basic</td><td>400</td><td>100</td></tr>
-    <tr><td>Advanced</td><td>600</td><td>300</td></tr>
-    <tr><td>Expert</td><td>600</td><td>600</td></tr>
-    <tr><td>Premier</td><td>1,000</td><td>1,000</td></tr>
-    <tr><td>Paragon</td><td>2,000</td><td>2,000</td></tr>
-    <tr><td>Prime</td><td>4,000</td><td>4,000</td></tr>
-    <tr><td>Prestige</td><td>6,000</td><td>8,000</td></tr>
+    <tr><td>Basic</td><td>400</td><td>200</td></tr>
+    <tr><td>Advanced</td><td>600</td><td>600</td></tr>
+    <tr><td>Expert</td><td>600</td><td>1,200</td></tr>
+    <tr><td>Premier</td><td>1,000</td><td>3,000</td></tr>
+    <tr><td>Paragon</td><td>2,000</td><td>6,000</td></tr>
+    <tr><td>Prime</td><td>4,000</td><td>12,000</td></tr>
+    <tr><td>Prestige</td><td>6,000</td><td>24,000</td></tr>
   </tbody>
 </table>
 

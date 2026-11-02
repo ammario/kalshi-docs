@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-10-28T18:22:21.884Z
+lastmod: 2026-11-02T00:07:13.192Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -113,7 +113,7 @@ the original Day value.
 | 11 | ClOrderID | String | Y | ClOrderID from the last change-making request |
 | 14 | CumQty | Decimal | Y | Total quantity filled so far |
 | 17 | ExecID | String | Y | Unique sequenced identifier for this report message |
-| 30 | LastMkt | String | C | Exchange index that produced the report. |
+| 30 | LastMkt | String | C | ExecID sequence that produced the report. See [Drop Copy](https://docs.kalshi.com/fix-margin/drop-copy.md). |
 | 31 | LastPx | Decimal | C | Price of the last fill in fixed-point dollars |
 | 32 | LastQty | Decimal | C | Quantity of the last fill |
 | 37 | OrderID | String | Y | Exchange order identifier |

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/exchange_sharding
-lastmod: 2026-10-13T20:31:35.342Z
+lastmod: 2026-11-02T00:07:13.185Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -77,8 +77,6 @@ The `exchange_index` query parameter is available on a per-endpoint basis.
 * If `ExDestination<100>` is omitted and `Symbol<55>` is provided, auto-routes using `Symbol<55>`.
 
 Sessions with `UseCapReservation<21032>` or [automatic collateral transfers (`AutoTransfer<21035>`)](https://docs.kalshi.com/fix/authentication#optional-fields) enabled must omit `ExDestination<100>` or use `-1` for new orders and replacements.
-
-Margined FIX sessions always route to exchange index `0`.
 
 ## Series Shard Assignments
 

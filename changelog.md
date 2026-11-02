@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-10-30T15:59:17.281Z
+lastmod: 2026-11-02T00:07:13.209Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,15 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+**November 5, 2026**
+
+Perps Write budgets double for Basic through Expert and triple for Premier
+through Prestige, as one budget across all Perps markets. See
+[Perps budgets](https://docs.kalshi.com/getting_started/rate_limits.md#perps-budgets).
+
+Perps order groups can now hold orders on any Perps market, and
+`exchange_index` on Perps is deprecated.
 
 **TBD**
 
