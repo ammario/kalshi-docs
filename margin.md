@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin
-lastmod: 2026-10-30T15:59:17.235Z
+lastmod: 2026-11-02T18:50:49.288Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -29,6 +29,8 @@ Use the `external-api` hosts for perps REST. WebSocket and FIX use the separate 
 | - | - |
 | Demo | `wss://external-api-margin-ws.demo.kalshi.co/trade-api/ws/v2/margin` |
 | Production | `wss://external-api-margin-ws.kalshi.com/trade-api/ws/v2/margin` (rolling out member by member) |
+
+For lower-latency `fill` and `user_orders` updates, connect to `wss://margin-warp-ws.kalshi.com/trade-api/ws/v2/margin` in production or `wss://margin-warp-ws.demo.kalshi.co/trade-api/ws/v2/margin` in demo. These hosts serve only those two channels. See [Fill and order updates](https://docs.kalshi.com/getting_started/api_environments.md#fill-and-order-updates).
 
 ### FIX API
 

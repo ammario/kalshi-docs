@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-11-02T00:07:13.209Z
+lastmod: 2026-11-02T19:25:26.829Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,13 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+**November 5, 2026**
+
+`no_sub_title` on markets (REST) and in `market_lifecycle_v2` and
+`multivariate_market_lifecycle` metadata (WebSocket) is deprecated. It has
+equaled `yes_sub_title` on every market created since September 2024. Use
+`yes_sub_title` instead. The field is still returned.
 
 **November 5, 2026**
 
@@ -81,6 +88,17 @@ FIX sessions on API keys restricted to one subaccount can now send `OrderMassCan
 
 `market_closed` is now `market_inactive`, and orders on a halted market
 return it too.
+
+**October 29, 2026**
+
+New WebSocket hosts deliver `fill` and `user_orders` updates with lower latency:
+
+* Production Predictions: `wss://warp-ws.kalshi.com/trade-api/ws/v2`
+* Production Margin: `wss://margin-warp-ws.kalshi.com/trade-api/ws/v2/margin`
+* Demo Predictions: `wss://warp-ws.demo.kalshi.co/trade-api/ws/v2`
+* Demo Margin: `wss://margin-warp-ws.demo.kalshi.co/trade-api/ws/v2/margin`
+
+These hosts serve only the `fill` and `user_orders` channels. Subscribing to any other channel returns error code 8 (`Unknown channel name`), so keep your other subscriptions on your current host. API key authentication, the signed path, and message formats are unchanged. See [API Environments and Endpoints](https://docs.kalshi.com/getting_started/api_environments.md#fill-and-order-updates).
 
 **October 29, 2026**
 

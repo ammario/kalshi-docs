@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection
-lastmod: 2026-11-01T21:50:14.599Z
+lastmod: 2026-11-02T19:25:23.138Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -224,7 +224,10 @@ components:
           description: Shortened title for the yes side of this market
         no_sub_title:
           type: string
-          description: Shortened title for the no side of this market
+          deprecated: true
+          description: >
+            Deprecated. Use `yes_sub_title` instead. Equal to `yes_sub_title` on
+            every market created since September 2024.
         created_time:
           type: string
           format: date-time

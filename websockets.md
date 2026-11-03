@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets
-lastmod: 2026-10-25T21:23:08.630Z
+lastmod: 2026-11-02T18:50:49.288Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,7 @@ WebSocket connections use the same API key authentication and signing path as be
 
 * For connection and subscription examples, see [Quick Start: WebSockets](https://docs.kalshi.com/getting_started/quick_start_websockets.md).
 * For all REST and WebSocket base URLs, see [API Environments and Endpoints](https://docs.kalshi.com/getting_started/api_environments.md).
+* For lower-latency `fill` and `user_orders` updates, see [Fill and order updates](https://docs.kalshi.com/getting_started/api_environments.md#fill-and-order-updates).
 * To generate clients or inspect channel payloads directly, download the [AsyncAPI specification](https://docs.kalshi.com/asyncapi.yaml).
 * For detailed CF Benchmarks channel usage (`cfbenchmarks_value`), see [CF Benchmarks Value Feed](https://docs.kalshi.com/websockets/cfbenchmarks-value.md).
 * For real-time Pyth prices (`pyth_value`), see [Pyth Value Feed](https://docs.kalshi.com/websockets/pyth-value.md).

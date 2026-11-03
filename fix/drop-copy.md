@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/drop-copy
-lastmod: 2026-10-29T16:34:00.150Z
+lastmod: 2026-11-02T17:29:23.625Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -18,7 +18,9 @@ lastmod: 2026-10-29T16:34:00.150Z
 >
 > Historical execution-report replay through EventResendRequest (35=U1) requires allowlisting for your user account on both `KalshiNR` and `KalshiDC` sessions. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to request access. Requests from accounts that are not allowlisted are rejected with EventResendReject (35=U3), reason `5` (NOT\_ENABLED). Allowlisting does not backfill earlier events.
 
-Lookback window is limited to the last 3 hours. Only ExecutionReport (35=8) messages are returned. Rejects and pending orders (ExecID `"-1;-1"`) are excluded.
+Execution reports are retained for 24 hours. Requests for execution reports 24 hours old or older are best effort and may be rejected. Only ExecutionReport (35=8) messages are returned. Rejects and pending orders (ExecID `"-1;-1"`) are excluded.
+
+The 24-hour period includes maintenance periods. Requests for unavailable history are rejected with `EventResendReject` (35=U3), reason `3`.
 
 > [!NOTE]
 >
@@ -45,6 +47,8 @@ Specify `BeginExecID` and `EndExecID` as `clock;event;exchange_index`, including
 
 Sent after all requested events have been resent.
 
+A valid range with no matching execution reports for your account completes with `ResendEventCount=0`.
+
 | Tag | Name | Description | Required |
 | - | - | - | - |
 | 45 | RefSeqNum | MsgSeqNum of the EventResendRequest | Yes |
@@ -57,7 +61,7 @@ Sent when a resend request cannot be fulfilled.
 | Tag | Name | Description | Required |
 | - | - | - | - |
 | 45 | RefSeqNum | MsgSeqNum of the EventResendRequest | Yes |
-| 21004 | EventResendRejectReason | Rejection code: `1`=Too many resend requests, `2`=Server error, `3`=BeginExecID too small (outside window), `4`=EndExecID too large, `5`=User not allowlisted for historical replay | Yes |
+| 21004 | EventResendRejectReason | Rejection code: `1`=Too many resend requests, `2`=Server error, `3`=BeginExecID too small (requested history unavailable), `4`=EndExecID too large, `5`=User not allowlisted for historical replay | Yes |
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

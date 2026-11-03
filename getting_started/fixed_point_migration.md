@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fixed_point_migration
-lastmod: 2026-10-30T15:59:17.237Z
+lastmod: 2026-11-02T17:11:51.058Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -101,7 +101,12 @@ On markets that support fractional contracts, fills may be fractional even when 
 
 ## Margin Markets
 
-Kalshi is building support for fractional trading with up to 2 decimal places on enabled perpetual markets. The launch date is to be announced.
+Kalshi is building support for fractional trading with up to 2 decimal places on enabled perpetual markets.
+
+**Timeline**
+
+* Single Stock Perpetuals: **November 27, 2026**.
+* Remaining markets: **December 17, 2026**.
 
 Fractional quantities can produce dollar amounts that require more than 4 decimal places. For example, 0.01 contracts at \$0.1234 per contract produces \$0.001234 before fees. Affected balances and cash-flow amounts will support up to 6 decimal places in USD. Preserve this precision in calculations and reconciliation.
 

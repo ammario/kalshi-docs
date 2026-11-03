@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market
-lastmod: 2026-11-01T21:50:15.011Z
+lastmod: 2026-11-02T19:25:23.584Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -147,6 +147,7 @@ components:
           $ref: '#/components/schemas/MarginMarketStatus'
         fractional_trading_enabled:
           type: boolean
+          description: Whether fractional trading is enabled for this market.
         leverage_estimate:
           type: number
           format: double

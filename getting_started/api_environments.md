@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/api_environments
-lastmod: 2026-10-19T21:50:46.233Z
+lastmod: 2026-11-02T18:50:49.287Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -35,6 +35,17 @@ Use these WebSocket URLs for the Trade API:
 | - | - | - |
 | Production | `wss://external-api-ws.kalshi.com/trade-api/ws/v2` | `wss://api.elections.kalshi.com/trade-api/ws/v2` |
 | Demo | `wss://external-api-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://demo-api.kalshi.co/trade-api/ws/v2` |
+
+### Fill and order updates
+
+Dedicated hosts deliver `fill` and `user_orders` updates with lower latency than the hosts above:
+
+| Environment | Predictions | Margin |
+| - | - | - |
+| Production | `wss://warp-ws.kalshi.com/trade-api/ws/v2` | `wss://margin-warp-ws.kalshi.com/trade-api/ws/v2/margin` |
+| Demo | `wss://warp-ws.demo.kalshi.co/trade-api/ws/v2` | `wss://margin-warp-ws.demo.kalshi.co/trade-api/ws/v2/margin` |
+
+These hosts serve only the `fill` and `user_orders` channels. Subscribing to any other channel returns error code 8 (`Unknown channel name`), so keep your other subscriptions on the hosts above. API key authentication, the signed path, and message formats are the same.
 
 ## External Feeds WebSocket
 
