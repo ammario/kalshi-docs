@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-active-margin-obligations
-lastmod: 2026-11-02T19:25:21.888Z
+lastmod: 2026-11-04T02:55:23.000Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

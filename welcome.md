@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/welcome
-lastmod: 2026-06-25T16:39:29.738Z
+lastmod: 2026-11-03T14:29:04.859Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -39,6 +39,10 @@ By continuing to use or access Kalshi's API, you are agreeing to be bound to our
 > [card] [API Keys](https://docs.kalshi.com/getting_started/api_keys.md)
 >
 > Generate and manage your API credentials.
+
+> [card] [MCP connector](https://docs.kalshi.com/getting_started/mcp.md)
+>
+> Connect your AI assistant to explore markets, read your portfolio, and manage price alerts.
 
 > [card] [Kalshi Academy](https://help.kalshi.com/)
 >

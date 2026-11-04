@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/accept-quote
-lastmod: 2026-11-02T19:25:22.890Z
+lastmod: 2026-11-04T02:55:24.143Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-11-02T19:25:22.890Z
 
 # Accept Quote
 
-> DEPRECATED: Use PUT /communications/rfqs/{rfq_id}/quotes/{quote_id}/accept instead. Endpoint for accepting a quote. This will require the quoter to confirm.
+> DEPRECATED: Use PUT /communications/rfqs/{rfq_id}/quotes/{quote_id}/accept instead.
 
 > [!WARNING]
 >
@@ -21,7 +21,7 @@ lastmod: 2026-11-02T19:25:22.890Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.35.0
+  version: 3.36.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -74,8 +74,7 @@ paths:
       summary: Accept Quote
       description: >-
         DEPRECATED: Use PUT
-        /communications/rfqs/{rfq_id}/quotes/{quote_id}/accept instead. Endpoint
-        for accepting a quote. This will require the quoter to confirm.
+        /communications/rfqs/{rfq_id}/quotes/{quote_id}/accept instead.
       operationId: AcceptQuote
       parameters:
         - $ref: '#/components/parameters/QuoteIdPath'

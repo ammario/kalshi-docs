@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-obligation-history
-lastmod: 2026-11-02T19:25:21.899Z
+lastmod: 2026-11-04T02:55:23.011Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -77,6 +77,20 @@ paths:
           schema:
             type: string
           description: Opaque cursor from a previous response to fetch the next page.
+        - name: settlement_start_ts
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+          description: Inclusive lower bound on settlement time.
+        - name: settlement_end_ts
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+          description: Inclusive upper bound on settlement time.
       responses:
         '200':
           description: Successful response

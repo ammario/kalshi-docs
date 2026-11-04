@@ -213,13 +213,13 @@ operations:
                       Omitted for an RFQ outside a batch. A child can be quoted
                       like a single RFQ, with these differences: a quote counts
                       only for 30 seconds after it was sent, and resending an
-                      unchanged bid keeps its time priority; nothing executes
-                      until every winning maker of the batch has confirmed, so a
-                      confirmed quote can still close without a fill; an
-                      accepted quote can't be cancelled, and not confirming it
-                      lapses with the same penalty as cancelling; and
-                      `rfq_creator_id` on its quote messages is the shared
-                      placeholder.
+                      unchanged bid keeps its time priority only within those 30
+                      seconds; nothing executes until every winning maker of the
+                      batch has confirmed, so a confirmed quote can still close
+                      without a fill; an accepted quote can't be cancelled, and
+                      not confirming it lapses with the same penalty as
+                      cancelling; and `rfq_creator_id` on its quote messages is
+                      the shared placeholder.
                     required: false
               - name: sending_ts_ms
                 type: integer
@@ -353,12 +353,13 @@ operations:
                     for an RFQ outside a batch. A child can be quoted like a
                     single RFQ, with these differences: a quote counts only for
                     30 seconds after it was sent, and resending an unchanged bid
-                    keeps its time priority; nothing executes until every
-                    winning maker of the batch has confirmed, so a confirmed
-                    quote can still close without a fill; an accepted quote
-                    can't be cancelled, and not confirming it lapses with the
-                    same penalty as cancelling; and `rfq_creator_id` on its
-                    quote messages is the shared placeholder.
+                    keeps its time priority only within those 30 seconds;
+                    nothing executes until every winning maker of the batch has
+                    confirmed, so a confirmed quote can still close without a
+                    fill; an accepted quote can't be cancelled, and not
+                    confirming it lapses with the same penalty as cancelling;
+                    and `rfq_creator_id` on its quote messages is the shared
+                    placeholder.
                   x-parser-schema-id: <anonymous-schema-221>
               x-parser-schema-id: <anonymous-schema-206>
             sending_ts_ms: &ref_2
@@ -849,7 +850,9 @@ operations:
                 properties:
                   - name: quote_id
                     type: string
-                    description: Unique identifier for the quote
+                    description: >-
+                      Unique identifier of the quote that executes. It can
+                      differ from the quote the RFQ creator named
                     required: true
                   - name: rfq_id
                     type: string
@@ -952,7 +955,9 @@ operations:
               properties:
                 quote_id:
                   type: string
-                  description: Unique identifier for the quote
+                  description: >-
+                    Unique identifier of the quote that executes. It can differ
+                    from the quote the RFQ creator named
                   x-parser-schema-id: <anonymous-schema-249>
                 rfq_id:
                   type: string

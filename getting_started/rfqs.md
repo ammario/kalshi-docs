@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-10-26T17:27:52.945Z
+lastmod: 2026-11-03T23:49:51.825Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -23,8 +23,8 @@ RFQs are accessible over [REST](https://docs.kalshi.com/api-reference/communicat
 1. **Requester** creates an RFQ specifying a market ticker, size, and whether to rest any remainder.
 2. The RFQ is broadcast to all makers.
 3. **Makers** respond with quotes containing a `yes_bid` and `no_bid`. Quotes are for the full RFQ size. Each quote is private between the requester and the individual maker. Makers cannot see each other's quotes.
-4. **Requester** accepts one side of the best-priced quote.
-5. **Maker** confirms within the confirmation window. Once confirmed, neither party can withdraw.
+4. **Requester** accepts one side of a quote. The exchange fills the earliest open quote at that quote's price on that side, so the requester gets the price and size it accepted. A maker that re-sends an unchanged price keeps its place in line on that side. The quote that fills can belong to a different maker than the one named, and its id arrives on `quote_accepted` and `quote_executed`. The named quote must still be open. On FIX, `PreferBetterQuote` (21022) fills the best-priced open quote instead, at its own price and size.
+5. **Maker** whose quote is accepted confirms within the confirmation window. Once confirmed, neither party can withdraw.
 6. After the execution timeout, orders are placed on the public book.
 
 ## Creator identity and privacy
@@ -101,7 +101,7 @@ After acceptance, the maker has the confirmation window to confirm. Upon confirm
 
 ## WebSocket
 
-Subscribe to the `communications` channel (requires auth). `rfq_created` and `rfq_deleted` go to all subscribers. `quote_created`, `quote_accepted`, and `quote_executed` go only to the involved requester and maker.
+Subscribe to the `communications` channel (requires auth). `rfq_created` and `rfq_deleted` go to all subscribers. `quote_created`, `quote_accepted`, and `quote_executed` go only to the involved requester and maker. `quote_accepted` and `quote_executed` carry the id of the quote that executes, which can differ from the quote the requester named.
 
 ## Combos (MVE)
 
@@ -120,7 +120,7 @@ the requester accepts every child at once, each at its best quote.
 A quote on a batch child differs from a quote on a single RFQ:
 
 * It counts for 30 seconds after you send it. Resending an unchanged price
-  keeps its time priority.
+  keeps its time priority only within those 30 seconds.
 * Nothing executes until every child's winning maker confirms. A confirmed
   quote can still close without a fill, as `batch closed`, if another winner
   doesn't confirm in time.

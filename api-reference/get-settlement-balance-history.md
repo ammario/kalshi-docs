@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-settlement-balance-history
-lastmod: 2026-11-02T19:25:22.051Z
+lastmod: 2026-11-04T02:55:23.174Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -77,6 +77,20 @@ paths:
           schema:
             type: string
           description: Cursor from a previous response to fetch the next page.
+        - name: start_ts
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+          description: Inclusive lower bound on entry creation time.
+        - name: end_ts
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+          description: Inclusive upper bound on entry creation time.
       responses:
         '200':
           description: Successful response

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-maintenance-margin-metadata
-lastmod: 2026-11-02T19:25:21.981Z
+lastmod: 2026-11-04T02:55:23.097Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

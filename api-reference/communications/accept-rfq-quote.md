@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/accept-rfq-quote
-lastmod: 2026-11-02T19:25:22.831Z
+lastmod: 2026-11-04T02:55:24.075Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-11-02T19:25:22.831Z
 
 # Accept RFQ Quote
 
->  Endpoint for accepting a quote scoped to its RFQ. This will require the quoter to confirm.
+> Endpoint for accepting a quote scoped to its RFQ. This will require the quoter to confirm. The quote that fills can be another maker's quote at the same price; see [RFQs](/getting_started/rfqs#flow).
 
 
 
@@ -18,7 +18,7 @@ lastmod: 2026-11-02T19:25:22.831Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.35.0
+  version: 3.36.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -69,7 +69,10 @@ paths:
       tags:
         - communications
       summary: Accept RFQ Quote
-      description: ' Endpoint for accepting a quote scoped to its RFQ. This will require the quoter to confirm.'
+      description: >-
+        Endpoint for accepting a quote scoped to its RFQ. This will require the
+        quoter to confirm. The quote that fills can be another maker's quote at
+        the same price; see [RFQs](/getting_started/rfqs#flow).
       operationId: AcceptRFQQuote
       parameters:
         - $ref: '#/components/parameters/RfqIdPath'

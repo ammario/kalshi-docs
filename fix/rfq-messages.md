@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-10-26T17:27:52.971Z
+lastmod: 2026-11-03T23:49:51.914Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -228,7 +228,7 @@ If a new Quote is created when an existing quote for the same market already exi
 A QuoteStatusReport is sent by the exchange:
 
 1. In response to a Quote. Status will be PENDING if processed, or REJECTED if rejected
-2. When the requester accepts the quote. Status will be ACCEPTED
+2. When an accept fills your quote. Status will be ACCEPTED. Your quote can fill when the requester named another maker's quote: one at the same price, if yours was there first, or, with PreferBetterQuote, one at a worse price than yours
 3. In response to a QuoteCancel. Status will be CANCELLED
 
 | Tag | Name | Type | Required | Description |
@@ -303,17 +303,19 @@ Exchange response to quote confirmation.
 
 RFQ creator accepts a quote from a market maker.
 
+The exchange fills the earliest open quote at the named quote's price on the accepted side, which can be another maker's quote. AcceptedQuoteId (21024) on the AcceptQuoteStatus identifies it. See [RFQs](https://docs.kalshi.com/getting_started/rfqs.md#flow) for how that quote is chosen.
+
 | Tag | Name | Type | Required | Description |
 | - | - | - | - | - |
 | 117 | QuoteId | UUID | Y | Quote to accept |
 | 21023 | RfqId | UUID | N | Server-assigned RFQ ID. If provided, the quote must belong to this RFQ. If omitted, the RFQ is resolved from QuoteId. |
 | 54 | Side | Char | Y | FIX side (1=BUY, 2=SELL). For AcceptQuote, BUY accepts the maker's NO quote and SELL accepts the maker's YES quote. |
 | 38 | OrderQty | Decimal | N | Contracts to accept as a fixed-point decimal. Supports `0.01`-contract increments |
-| 11 | ClOrdID | String | N | Client order ID |
+| 11 | ClOrdID | String | N | Client order ID. Send it with RfqId (21023) to make a resend safe: a resend with the same ClOrdID and RfqId returns the original AcceptedQuoteId. Without RfqId, a resend whose named quote did not execute is rejected as expired |
 | 453 | NoPartyIDs | Integer | N | Number of parties (only 1 supported) |
 | 448 | PartyId | String | N | FCM SubtraderId for the customer on whose behalf the accept is submitted |
 | 452 | PartyRole | Integer | N | 24 (CustomerAccount). Required when using PartyId |
-| 21022 | PreferBetterQuote | Char | N | Y/N - When set to Y, the exchange will select the best available quote for the RFQ rather than the specified quote. The best quote must be at least as good as the requested quote. Default: N |
+| 21022 | PreferBetterQuote | Char | N | Y/N. N: the earliest open quote at the named quote's price fills, so you get the price and size you accepted. Y: the best-priced open quote fills instead, at its own price and size. Default: N |
 
 ## AcceptQuoteStatus (35=UC)
 
@@ -323,7 +325,7 @@ Exchange response to AcceptQuote.
 | - | - | - | - | - |
 | 117 | QuoteId | String | Y | Quote identifier |
 | 21025 | AcceptQuoteStatus | Integer | Y | ACCEPTED(0) or REJECTED(1) |
-| 21024 | AcceptedQuoteId | UUID | C | Present when the accept succeeds. The quote that was actually accepted. When PreferBetterQuote is used, this may differ from the requested QuoteId |
+| 21024 | AcceptedQuoteId | UUID | C | Present when the accept succeeds. The quote that executes, which can differ from the requested QuoteId whether or not PreferBetterQuote is set, so reconcile fills to this id |
 | 11 | ClOrdID | String | C | Echoed back when provided on the AcceptQuote request |
 | 58 | Text | String | C | Rejection reason if REJECTED |
 

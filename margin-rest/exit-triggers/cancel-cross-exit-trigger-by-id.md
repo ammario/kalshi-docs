@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exit-triggers/cancel-cross-exit-trigger-by-id
-lastmod: 2026-11-02T19:25:23.931Z
+lastmod: 2026-11-04T02:55:25.279Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
