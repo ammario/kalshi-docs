@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-11-04T02:37:14.960Z
+lastmod: 2026-11-04T23:28:24.960Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,10 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+**November 11, 2026**
+
+Margin market responses now include `minimum_quantity`, the minimum order quantity in contracts.
 
 **November 5, 2026**
 
@@ -44,6 +48,14 @@ listings:
 Fetching one of these markets, events or series by ticker is unchanged.
 
 **TBD**
+
+Kalshi-cleared users need an approved stocks application to trade Equities
+markets. Without one, an order or amend on an Equities market is rejected
+with `stock_perps_application_required`, unless the order is reduce-only.
+Reduce-only orders still go through, so existing positions can be closed.
+Self-clearing accounts are not affected.
+
+**November 5, 2026**
 
 The Perps price band changes sides. It no longer limits how far an order
 may rest from its own side of the book. Instead it limits how far an order

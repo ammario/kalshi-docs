@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin/price-banding
-lastmod: 2026-11-03T18:29:35.969Z
+lastmod: 2026-11-04T14:56:02.373Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -14,8 +14,8 @@ For perpetual markets, prices move in `0.0001` dollar ticks. The price band limi
 
 **Notes**
 
-* Orders resting away from the market are not limited. A bid below the best bid or an ask above the best ask is always accepted.
-* If there are no resting orders on the other side, there is no band limit.
+* When the opposite side has resting orders, orders resting away from the market are not limited. If the opposite side is empty, the reference-price fallback may still impose a limit.
+* If there are no resting orders on the other side, the band uses the external reference price, scaled by contract size and underlying multiplier, when it is at most 30 seconds old and the underlying market is open. Otherwise, there is no band limit.
 * Resting orders will not be canceled due to the price band movement.
 * Order amends outside the price band are not allowed.
 * Orders and amends outside the band are rejected with `invalid price`.

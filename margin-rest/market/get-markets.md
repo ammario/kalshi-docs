@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-markets
-lastmod: 2026-11-04T02:55:24.880Z
+lastmod: 2026-11-05T05:23:49.820Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -108,6 +108,7 @@ components:
         - underlying_multiplier
         - tick_size
         - fractional_trading_enabled
+        - minimum_quantity
         - schedule
         - exchange_index
         - market_version
@@ -154,6 +155,10 @@ components:
         fractional_trading_enabled:
           type: boolean
           description: Whether fractional trading is enabled for this market.
+        minimum_quantity:
+          $ref: '#/components/schemas/FixedPointCount'
+          description: Minimum order quantity in contracts.
+          example: '1.00'
         leverage_estimate:
           type: number
           format: double

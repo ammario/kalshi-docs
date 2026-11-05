@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2026-11-04T02:55:23.424Z
+lastmod: 2026-11-05T05:23:48.292Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -320,6 +320,9 @@ components:
           enum:
             - binary
             - scalar
+          x-enumNames:
+            - MarketMarketTypeBinary
+            - MarketMarketTypeScalar
           description: Identifies the type of market
         title:
           type: string

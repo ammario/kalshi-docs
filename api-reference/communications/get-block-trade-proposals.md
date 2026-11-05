@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/get-block-trade-proposals
-lastmod: 2026-11-04T02:55:23.973Z
+lastmod: 2026-11-05T05:23:48.835Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -210,7 +210,9 @@ components:
           description: Expiration time of the proposal
         status:
           type: string
-          description: Current status of the proposal
+          description: >-
+            Current status of the proposal: pending, executed, cancelled (by the
+            proposer, or on expiry) or rejected (by a counterparty)
         created_ts:
           type: string
           format: date-time

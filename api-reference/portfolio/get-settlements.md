@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-11-04T02:55:23.892Z
+lastmod: 2026-11-05T05:23:48.752Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -203,6 +203,7 @@ components:
             - 'yes'
             - 'no'
             - scalar
+            - ''
           description: >-
             The outcome of the market settlement. 'yes' = market resolved to
             YES, 'no' = market resolved to NO, 'scalar' = scalar market settled
