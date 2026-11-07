@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-settlements
-lastmod: 2026-11-05T05:23:48.752Z
+lastmod: 2026-11-06T18:46:16.348Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,8 @@ lastmod: 2026-11-05T05:23:48.752Z
 # Get Settlements
 
 > Returns settlement records still in the live data set. Archived positions are available via `GET /historical/positions`, which has different fields; this endpoint does not return archived settlement records.
+Resource-bound MCP OAuth tokens may read the owner's settlements with read::mcp_portfolio.
+
 
 
 
@@ -69,11 +71,14 @@ paths:
       tags:
         - portfolio
       summary: Get Settlements
-      description: >-
+      description: >
         Returns settlement records still in the live data set. Archived
         positions are available via `GET /historical/positions`, which has
         different fields; this endpoint does not return archived settlement
         records.
+
+        Resource-bound MCP OAuth tokens may read the owner's settlements with
+        read::mcp_portfolio.
       operationId: GetSettlements
       parameters:
         - $ref: '#/components/parameters/LimitQuery'
@@ -100,6 +105,7 @@ paths:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
+        - kalshiOauthAccessToken: []
 components:
   parameters:
     LimitQuery:
@@ -312,6 +318,14 @@ components:
       in: header
       name: KALSHI-ACCESS-TIMESTAMP
       description: Request timestamp in milliseconds
+    kalshiOauthAccessToken:
+      type: http
+      scheme: bearer
+      description: >-
+        User OAuth access token with read::compliance_partner, issued to an
+        explicitly authorized partner. Accepted only on current and historical
+        fills and current portfolio positions endpoints; generic read and
+        partner client-credentials tokens do not grant access.
 
 ````
 

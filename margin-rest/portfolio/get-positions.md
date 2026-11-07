@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-positions
-lastmod: 2026-11-05T05:23:49.904Z
+lastmod: 2026-11-06T18:46:17.251Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,7 @@ lastmod: 2026-11-05T05:23:49.904Z
 # Get Positions
 
 > Endpoint for retrieving the authenticated user's margin positions.
+Resource-bound MCP OAuth tokens may read the owner's data with read::mcp_portfolio.
 Registered partners may also use a user OAuth access token with the explicitly granted read::compliance_partner scope.
 
 
@@ -61,6 +62,9 @@ paths:
       summary: Get Positions
       description: >
         Endpoint for retrieving the authenticated user's margin positions.
+
+        Resource-bound MCP OAuth tokens may read the owner's data with
+        read::mcp_portfolio.
 
         Registered partners may also use a user OAuth access token with the
         explicitly granted read::compliance_partner scope.
@@ -190,15 +194,19 @@ components:
         - cross
         - isolated
         - auto_rebalance
+        - managed_isolated
       x-enum-varnames:
         - SubaccountTypeCross
         - SubaccountTypeIsolated
         - SubaccountTypeAutoRebalance
+        - SubaccountTypeManagedIsolated
       description: >-
         How the subaccount is margined. `cross` for the primary account and
-        numbered subaccounts, `isolated` for a market's isolated subaccount, and
+        numbered subaccounts, `isolated` for a market's isolated subaccount,
         `auto_rebalance` for an auto-rebalanced isolated position, which shares
-        its market's isolated subaccount number.
+        its market's isolated subaccount number, and `managed_isolated` for a
+        managed isolated position, whose subaccount number is its slot number
+        rather than the market's isolated subaccount number.
     FixedPointCount:
       type: string
       description: >-

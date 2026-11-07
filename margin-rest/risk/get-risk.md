@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/risk/get-risk
-lastmod: 2026-11-05T05:23:49.961Z
+lastmod: 2026-11-06T18:46:17.294Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,8 @@ lastmod: 2026-11-05T05:23:49.961Z
 # Get Risk
 
 > Endpoint for retrieving leverage and liquidation price data for the authenticated direct margin user. Returns account-level leverage plus per-position leverage and liquidation prices, grouped by subaccount and market.
+Resource-bound MCP OAuth tokens may read the owner's risk data with read::mcp_portfolio.
+
 
 
 
@@ -57,11 +59,14 @@ paths:
       tags:
         - risk
       summary: Get Risk
-      description: >-
+      description: >
         Endpoint for retrieving leverage and liquidation price data for the
         authenticated direct margin user. Returns account-level leverage plus
         per-position leverage and liquidation prices, grouped by subaccount and
         market.
+
+        Resource-bound MCP OAuth tokens may read the owner's risk data with
+        read::mcp_portfolio.
       operationId: GetMarginRisk
       responses:
         '200':
@@ -80,6 +85,7 @@ paths:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
+        - kalshiOauthAccessToken: []
 components:
   schemas:
     GetMarginRiskResponse:
@@ -195,15 +201,19 @@ components:
         - cross
         - isolated
         - auto_rebalance
+        - managed_isolated
       x-enum-varnames:
         - SubaccountTypeCross
         - SubaccountTypeIsolated
         - SubaccountTypeAutoRebalance
+        - SubaccountTypeManagedIsolated
       description: >-
         How the subaccount is margined. `cross` for the primary account and
-        numbered subaccounts, `isolated` for a market's isolated subaccount, and
+        numbered subaccounts, `isolated` for a market's isolated subaccount,
         `auto_rebalance` for an auto-rebalanced isolated position, which shares
-        its market's isolated subaccount number.
+        its market's isolated subaccount number, and `managed_isolated` for a
+        managed isolated position, whose subaccount number is its slot number
+        rather than the market's isolated subaccount number.
     FixedPointCount:
       type: string
       description: >-
@@ -251,6 +261,14 @@ components:
       in: header
       name: KALSHI-ACCESS-TIMESTAMP
       description: Request timestamp in milliseconds
+    kalshiOauthAccessToken:
+      type: http
+      scheme: bearer
+      description: >-
+        User OAuth access token with read::compliance_partner, issued to an
+        explicitly authorized partner. Accepted only on margin fills and margin
+        positions in this lane; generic read and partner client-credentials
+        tokens do not grant access.
 
 ````
 

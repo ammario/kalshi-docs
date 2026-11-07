@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/mcp
-lastmod: 2026-11-03T14:29:04.863Z
+lastmod: 2026-11-06T01:31:33.328Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,9 +8,9 @@ lastmod: 2026-11-03T14:29:04.863Z
 
 # Connect to Kalshi with MCP
 
-> Connect your AI assistant to Kalshi to explore prediction markets, read your portfolio, and manage price alerts.
+> Connect your AI assistant to Kalshi to explore prediction markets and perps, read your portfolio, and manage price alerts.
 
-Kalshi's hosted connector lets your AI assistant find prediction markets, read prices and market rules, and open markets on Kalshi. Connect your account to read your portfolio and manage price alerts.
+Kalshi's hosted connector lets your AI assistant find prediction markets and perps, read prices, market rules and orderbooks, and open markets on Kalshi. Connect your account to read your portfolio and manage price alerts.
 
 The connector uses the **Model Context Protocol (MCP)** over **Streamable HTTP**. You can use it with apps that support custom remote MCP servers, without installing a local Kalshi server.
 
@@ -40,6 +40,7 @@ Ask your assistant to use Kalshi, for example:
 
 * "Find markets about the next Fed meeting and show me the outcomes."
 * "Show the rules and current bid and ask for this market."
+* "Show the BTC perp's mark price and orderbook."
 * "Show my current Kalshi balance and unsettled positions."
 
 The last example requires portfolio permission. Your app may ask you to enable the connector for the conversation.
@@ -48,7 +49,9 @@ Account connection requires an app that supports Kalshi's OAuth flow. If setup f
 
 ## Available tools
 
-### Public market tools
+Tools without `perps` in their name are for prediction markets (YES/NO event contracts). Perps tools are listed separately.
+
+### Public prediction-market tools
 
 These tools do not require a connected account.
 
@@ -60,7 +63,7 @@ These tools do not require a connected account.
 | `get_market_orderbook` | Reads up to 10 YES and NO bid levels per side, including contract quantities. |
 | `get_market_links` | Returns verified market links or buy links with YES or NO selected. You review and submit any order on Kalshi. |
 
-### Portfolio tools
+### Prediction-market portfolio tools
 
 These tools require portfolio read permission for your connected account.
 
@@ -70,13 +73,32 @@ These tools require portfolio read permission for your connected account.
 | `get_positions` | Lists positions, with an optional market filter and a choice of unsettled, settled, or all positions. Defaults to unsettled; archived positions are excluded. |
 | `get_orders` | Lists recent orders, optionally filtered to one market. |
 | `get_fills` | Lists recent trade fills, optionally filtered to one market. |
+| `get_settlements` | Lists recent settlement payouts, optionally filtered by market, event, time range, or subaccount. Archived settlements are excluded, and results are not lifetime profit and loss. |
+
+### Perps tools
+
+Perps tools mirror the prediction-market tools above, plus a risk tool with no prediction-market equivalent. Perps prices are dollar prices per contract, not outcome probabilities, and perps orderbooks have separate bids and asks rather than YES and NO bids.
+
+| Tool | What it does | Permission |
+| - | - | - |
+| `search_perps_markets` | Finds perps by ticker or title, or browses available perps. | None |
+| `get_perps_market` | Reads prices, contract size, trading status, and funding and margin details for a perp. Last-trade, bid/ask, and mark prices are distinct. | None |
+| `get_perps_market_orderbook` | Reads up to 10 bid and ask levels, including contract quantities. | None |
+| `get_perps_market_links` | Returns verified links to a perp with long or short selected. You choose quantity, price, and leverage and submit any order on Kalshi. | None |
+| `get_perps_balance` | Reads your perps settled funds and subaccount balances. | Read portfolio |
+| `get_perps_positions` | Lists open perps positions, optionally filtered by market or subaccount. Positive size is long; negative is short. | Read portfolio |
+| `get_perps_orders` | Lists recent perps orders, optionally filtered by market, status, or subaccount. | Read portfolio |
+| `get_perps_fills` | Lists recent perps fills, optionally filtered by subaccount. | Read portfolio |
+| `get_perps_risk` | Reads account leverage and, for each open position, leverage, maintenance margin, and estimated liquidation price. Liquidation prices are estimates at the time of the read, not guarantees. | Read portfolio |
+
+Perps portfolio tools require an eligible perps account.
 
 ### Price-alert tools
 
 | Tool | What it does | Permission |
 | - | - | - |
 | `get_price_alerts` | Lists up to 100 existing price targets on your account. | Read or manage price alerts |
-| `create_price_alert` | Creates or replaces a target for an open binary market with a \$1 payout. Specify YES or NO, at-or-above or at-or-below, and a whole-percent threshold from 1 to 99. | Manage price alerts |
+| `create_price_alert` | Creates or replaces a target for an open binary prediction market with a \$1 payout. Specify YES or NO, at-or-above or at-or-below, and a whole-percent threshold from 1 to 99. | Manage price alerts |
 | `delete_price_alert` | Deletes an existing target identified by `get_price_alerts`. | Manage price alerts |
 
 Confirm the market, side, and threshold before your assistant creates an alert, and the exact target before it deletes one. Creating a target can replace an existing target for the same market and direction. Alerts use your existing Kalshi notification settings.
@@ -87,7 +109,7 @@ Review the permissions on Kalshi's authorization screen before connecting:
 
 | Permission | OAuth scope | Access |
 | - | - | - |
-| Read portfolio | `read::mcp_portfolio` | Read balances, positions, orders, and fills. |
+| Read portfolio | `read::mcp_portfolio` | Read prediction-market and perps balances, positions, orders, and fills; prediction-market settlements; and perps leverage and estimated liquidation prices. |
 | Read price alerts | `read::mcp_alerts` | Read existing price alerts. |
 | Manage price alerts | `write::mcp_alerts` | Read, create, replace, and delete price alerts. |
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/get-orders
-lastmod: 2026-11-05T05:23:49.738Z
+lastmod: 2026-11-06T18:46:17.130Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,8 @@ lastmod: 2026-11-05T05:23:49.738Z
 # Get Orders
 
 > Endpoint for listing margin orders with optional filtering.
+Resource-bound MCP OAuth tokens may read the owner's orders with read::mcp_portfolio.
+
 
 
 
@@ -57,7 +59,11 @@ paths:
       tags:
         - orders
       summary: Get Orders
-      description: Endpoint for listing margin orders with optional filtering.
+      description: >
+        Endpoint for listing margin orders with optional filtering.
+
+        Resource-bound MCP OAuth tokens may read the owner's orders with
+        read::mcp_portfolio.
       operationId: GetMarginOrders
       parameters:
         - $ref: '#/components/parameters/TickerQuery'
@@ -84,6 +90,7 @@ paths:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
+        - kalshiOauthAccessToken: []
 components:
   parameters:
     TickerQuery:
@@ -342,6 +349,14 @@ components:
       in: header
       name: KALSHI-ACCESS-TIMESTAMP
       description: Request timestamp in milliseconds
+    kalshiOauthAccessToken:
+      type: http
+      scheme: bearer
+      description: >-
+        User OAuth access token with read::compliance_partner, issued to an
+        explicitly authorized partner. Accepted only on margin fills and margin
+        positions in this lane; generic read and partner client-credentials
+        tokens do not grant access.
 
 ````
 

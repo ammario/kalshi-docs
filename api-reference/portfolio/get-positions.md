@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-positions
-lastmod: 2026-11-05T05:23:48.740Z
+lastmod: 2026-11-06T18:46:16.339Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,9 +8,12 @@ lastmod: 2026-11-05T05:23:48.740Z
 
 # Get Positions
 
-> Returns unsettled positions by default. Set `settlement_status=settled` to page through settled positions that are still in the live data set, or `settlement_status=all` for both live states. Positions already archived are available via `GET /historical/positions`.
-Settled and all-state positions are paginated by event ticker to keep large histories bounded. Cursors are specific to the selected settlement status.
-`count_filter` restricts positions to those with a non-zero position or total traded count.
+> Returns unsettled positions by default, including closed markets awaiting determination or settlement. These may retain non-zero quantities and cost basis. Check the market's `status` via `GET /markets/{ticker}` for trading status.
+
+Set `settlement_status=settled` for unarchived settled positions or `all` for both states. These results paginate by event ticker; cursors are specific to settlement status. Archived positions are available via `GET /historical/positions`.
+
+Use `count_filter=position` for non-zero net holdings, including closed, unsettled markets. Without a count filter, results may include fully exited positions with trading history, realized P&L or fees.
+
 Registered partners may also use a user OAuth access token with the explicitly granted read::compliance_partner scope.
 
 
@@ -74,17 +77,22 @@ paths:
         - portfolio
       summary: Get Positions
       description: >
-        Returns unsettled positions by default. Set `settlement_status=settled`
-        to page through settled positions that are still in the live data set,
-        or `settlement_status=all` for both live states. Positions already
-        archived are available via `GET /historical/positions`.
+        Returns unsettled positions by default, including closed markets
+        awaiting determination or settlement. These may retain non-zero
+        quantities and cost basis. Check the market's `status` via `GET
+        /markets/{ticker}` for trading status.
 
-        Settled and all-state positions are paginated by event ticker to keep
-        large histories bounded. Cursors are specific to the selected settlement
-        status.
 
-        `count_filter` restricts positions to those with a non-zero position or
-        total traded count.
+        Set `settlement_status=settled` for unarchived settled positions or
+        `all` for both states. These results paginate by event ticker; cursors
+        are specific to settlement status. Archived positions are available via
+        `GET /historical/positions`.
+
+
+        Use `count_filter=position` for non-zero net holdings, including closed,
+        unsettled markets. Without a count filter, results may include fully
+        exited positions with trading history, realized P&L or fees.
+
 
         Registered partners may also use a user OAuth access token with the
         explicitly granted read::compliance_partner scope.
@@ -140,18 +148,18 @@ components:
     CountFilterQuery:
       name: count_filter
       in: query
-      description: >-
-        Restricts the positions to those with any of following fields with
-        non-zero values, as a comma separated list. The following values are
-        accepted - position, total_traded
+      description: >
+        Comma-separated filters combined with OR: `position` (non-zero net
+        contracts), `total_traded` (any contracts traded, including fully exited
+        positions). Omit for no count filter.
       schema:
         type: string
     PositionSettlementStatusQuery:
       name: settlement_status
       in: query
       description: >-
-        Return unsettled positions by default, settled positions that have not
-        yet been archived, or all positions in the live data set.
+        Filters settlement state, not trading status: `unsettled` (default),
+        `settled` (not yet archived), or `all` (both live states).
       schema:
         type: string
         enum:
@@ -242,15 +250,19 @@ components:
           $ref: '#/components/schemas/ExchangeIndex'
         total_traded_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Total spent on this market in dollars
+          description: >-
+            Total spent trading this market in dollars, including past trades;
+            not the remaining position's cost or value.
         position_fp:
           $ref: '#/components/schemas/FixedPointCount'
           description: >-
-            String representation of the number of contracts bought in this
-            market. Negative means NO contracts and positive means YES contracts
+            Signed net contracts as a fixed-point string: positive for YES,
+            negative for NO, zero for no net position.
         market_exposure_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Cost of the aggregate market position in dollars
+          description: >-
+            Cost basis of the remaining position in dollars, excluding fees; not
+            current market value or realized loss.
         realized_pnl_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Locked in profit and loss, in dollars

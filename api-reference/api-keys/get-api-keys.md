@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/api-keys/get-api-keys
-lastmod: 2026-11-05T05:23:49.064Z
+lastmod: 2026-11-06T18:46:16.580Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -129,6 +129,13 @@ components:
         name:
           type: string
           description: User-provided name for the API key
+        key_type:
+          allOf:
+            - $ref: '#/components/schemas/ApiKeyType'
+          description: >-
+            Signing algorithm of this key, derived from its stored public key.
+            Present for RSA and Ed25519 keys, including existing keys. Omitted
+            when the algorithm is unknown.
         scopes:
           type: array
           description: List of scopes granted to this API key.
@@ -152,6 +159,20 @@ components:
             trading credential - FIX sessions and subtrader-scoped margin
             WebSocket sessions; every REST endpoint is denied. Absent/null means
             the key carries no subtrader binding.
+    ApiKeyType:
+      type: string
+      enum:
+        - rsa
+        - ed25519
+      x-enum-varnames:
+        - ApiKeyTypeRsa
+        - ApiKeyTypeEd25519
+      description: >-
+        Signature algorithm of an API key pair. `rsa` - 2048-bit RSA; requests
+        are signed with RSA-PSS SHA-256. `ed25519` - Ed25519 (RFC 8032)
+        signatures over the same pre-sign text, with lower client-side signing
+        cost. Defaults to `rsa` when omitted from a generate request, for
+        compatibility with existing clients.
     ApiKeyScope:
       type: string
       enum:

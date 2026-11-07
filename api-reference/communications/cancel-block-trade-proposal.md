@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/cancel-block-trade-proposal
-lastmod: 2026-11-05T05:23:48.860Z
+lastmod: 2026-11-06T18:46:16.427Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

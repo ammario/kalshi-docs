@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/accept-block-trade-proposal
-lastmod: 2026-11-05T05:23:48.871Z
+lastmod: 2026-11-06T18:46:16.436Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-11-05T05:23:48.871Z
 
 # Accept Block Trade Proposal
 
->  Endpoint for accepting a block trade proposal.
+>  Endpoint for accepting a block trade proposal. The caller accepts as whichever side it is named on, and may book that side onto any of its own subaccounts, including one the proposal did not name. Without a subaccount, the side keeps the one the proposal named. A side that has already accepted may accept again to move to another subaccount until the trade executes.
 
 
 
@@ -69,7 +69,7 @@ paths:
       tags:
         - communications
       summary: Accept Block Trade Proposal
-      description: ' Endpoint for accepting a block trade proposal.'
+      description: ' Endpoint for accepting a block trade proposal. The caller accepts as whichever side it is named on, and may book that side onto any of its own subaccounts, including one the proposal did not name. Without a subaccount, the side keeps the one the proposal named. A side that has already accepted may accept again to move to another subaccount until the trade executes.'
       operationId: AcceptBlockTradeProposal
       parameters:
         - name: block_trade_proposal_id
@@ -107,17 +107,19 @@ components:
         subtrader_id:
           type: string
           description: >-
-            Subtrader ID to accept as. Provide either this or subaccount, not
-            both.
+            Subtrader ID to book your side onto. It may differ from the one the
+            proposal named. Omit both this and subaccount to keep the
+            proposal's. Provide either this or subaccount, not both.
           x-go-type-skip-optional-pointer: true
         subaccount:
           type: integer
           minimum: 0
           maximum: 63
           description: >-
-            User-managed subaccount number to accept as (0 for primary, 1-63 for
-            numbered subaccounts). Provide either this or subtrader_id, not
-            both.
+            User-managed subaccount number to book your side onto (0 for
+            primary, 1-63 for numbered subaccounts). It may differ from the one
+            the proposal named. Omit both this and subtrader_id to keep the
+            proposal's. Provide either this or subtrader_id, not both.
     ErrorResponse:
       type: object
       properties:

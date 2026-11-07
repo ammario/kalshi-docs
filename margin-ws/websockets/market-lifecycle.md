@@ -94,7 +94,9 @@ operations:
                     required: true
                   - name: is_deactivated
                     type: boolean
-                    description: Whether trading on the market is paused.
+                    description: >-
+                      Whether trading on the market is paused, because it is
+                      halted or outside its trading hours.
                     required: true
               - name: sending_ts_ms
                 type: integer
@@ -149,7 +151,9 @@ operations:
                   x-parser-schema-id: <anonymous-schema-72>
                 is_deactivated:
                   type: boolean
-                  description: Whether trading on the market is paused.
+                  description: >-
+                    Whether trading on the market is paused, because it is
+                    halted or outside its trading hours.
                   x-parser-schema-id: <anonymous-schema-73>
               x-parser-schema-id: <anonymous-schema-71>
             sending_ts_ms:
