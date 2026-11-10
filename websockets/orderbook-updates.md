@@ -294,7 +294,7 @@ operations:
             type:
               type: string
               const: orderbook_snapshot
-              x-parser-schema-id: <anonymous-schema-76>
+              x-parser-schema-id: <anonymous-schema-85>
             id:
               type: integer
               description: >
@@ -350,7 +350,7 @@ operations:
 
                     The snapshot includes every change to this market with a
                     clock at or below this one, and none above it.
-                  x-parser-schema-id: <anonymous-schema-78>
+                  x-parser-schema-id: <anonymous-schema-87>
                 yes_dollars_fp:
                   type: array
                   description: >
@@ -365,11 +365,11 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-81>
+                      x-parser-schema-id: <anonymous-schema-90>
                     minItems: 2
                     maxItems: 2
-                    x-parser-schema-id: <anonymous-schema-80>
-                  x-parser-schema-id: <anonymous-schema-79>
+                    x-parser-schema-id: <anonymous-schema-89>
+                  x-parser-schema-id: <anonymous-schema-88>
                 no_dollars_fp:
                   type: array
                   description: >
@@ -384,12 +384,12 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-84>
+                      x-parser-schema-id: <anonymous-schema-93>
                     minItems: 2
                     maxItems: 2
-                    x-parser-schema-id: <anonymous-schema-83>
-                  x-parser-schema-id: <anonymous-schema-82>
-              x-parser-schema-id: <anonymous-schema-77>
+                    x-parser-schema-id: <anonymous-schema-92>
+                  x-parser-schema-id: <anonymous-schema-91>
+              x-parser-schema-id: <anonymous-schema-86>
             sending_ts_ms: &ref_5
               type: integer
               format: int64
@@ -569,7 +569,7 @@ operations:
             type:
               type: string
               const: orderbook_delta
-              x-parser-schema-id: <anonymous-schema-85>
+              x-parser-schema-id: <anonymous-schema-94>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -604,19 +604,19 @@ operations:
 
                     deduplication key. Apply deltas using this subscription's
                     seq order.
-                  x-parser-schema-id: <anonymous-schema-87>
+                  x-parser-schema-id: <anonymous-schema-96>
                 price_dollars:
                   type: string
                   description: Price level in dollars
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-88>
+                  x-parser-schema-id: <anonymous-schema-97>
                 delta_fp:
                   type: string
                   description: Fixed-point contract delta (2 decimals)
                   x-rust-type: i64
                   x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-89>
+                  x-parser-schema-id: <anonymous-schema-98>
                 side:
                   type: string
                   description: Market side
@@ -632,7 +632,7 @@ operations:
 
                     Contains the client_order_id of your order that triggered
                     this delta.
-                  x-parser-schema-id: <anonymous-schema-90>
+                  x-parser-schema-id: <anonymous-schema-99>
                 ts:
                   type: string
                   deprecated: true
@@ -641,14 +641,14 @@ operations:
                     change was recorded (RFC3339, truncated to milliseconds).
                     Use ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-91>
+                  x-parser-schema-id: <anonymous-schema-100>
                 ts_ms:
                   type: integer
                   description: >-
                     Optional - Unix timestamp for when the orderbook change was
                     recorded (in milliseconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-92>
+                  x-parser-schema-id: <anonymous-schema-101>
                 subaccount:
                   type: integer
                   description: >
@@ -657,8 +657,8 @@ operations:
 
                     Contains the subaccount number of your order that triggered
                     this delta.
-                  x-parser-schema-id: <anonymous-schema-93>
-              x-parser-schema-id: <anonymous-schema-86>
+                  x-parser-schema-id: <anonymous-schema-102>
+              x-parser-schema-id: <anonymous-schema-95>
             sending_ts_ms: *ref_5
           x-parser-schema-id: orderbookDeltaPayload
         title: Orderbook Delta

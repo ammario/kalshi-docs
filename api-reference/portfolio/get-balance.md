@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2026-11-06T18:46:16.249Z
+lastmod: 2026-11-09T19:00:55.455Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,8 @@ lastmod: 2026-11-06T18:46:16.249Z
 # Get Balance
 
 > Returns the balance and portfolio value for a member. Both values include all exchange indexes unless `exchange_index` is provided. Pass `subaccount` to use a subaccount instead of the primary account. This endpoint also accepts API keys with the 'read::portfolio_balance' scope.
+
+For per-subaccount balances, use `GET /portfolio/subaccounts/balances`. It returns existing subaccount and exchange index pairs, so its entry count can differ from `balance_breakdown`. The breakdown uses portfolio valuation snapshots; separate requests may reflect different stages of transfer processing.
 
 **Rate limit:** this endpoint has its own bucket, separate from the Read budget. Basic and Advanced tiers may call it **1 time per second**; all higher tiers may call it **5 times per second**. The bucket holds one second of budget, so there is no burst. Calls to this endpoint do not draw down the Read budget, and other reads do not draw down this bucket. Balance only changes on fills, settlements and transfers, so react to those (for example the user fills websocket channel) instead of polling this endpoint.
 
@@ -77,6 +79,13 @@ paths:
         include all exchange indexes unless `exchange_index` is provided. Pass
         `subaccount` to use a subaccount instead of the primary account. This
         endpoint also accepts API keys with the 'read::portfolio_balance' scope.
+
+
+        For per-subaccount balances, use `GET /portfolio/subaccounts/balances`.
+        It returns existing subaccount and exchange index pairs, so its entry
+        count can differ from `balance_breakdown`. The breakdown uses portfolio
+        valuation snapshots; separate requests may reflect different stages of
+        transfer processing.
 
 
         **Rate limit:** this endpoint has its own bucket, separate from the Read
@@ -167,8 +176,10 @@ components:
           items:
             $ref: '#/components/schemas/IndexedBalance'
           description: >-
-            User balance breakdown per exchange instance, omitted only when
-            using a subaccount-restricted API key.
+            Balance for every exchange index, summed across all subaccounts,
+            including zero balances. Unaffected by the `subaccount` and
+            `exchange_index` parameters. Omitted when access is restricted to a
+            subaccount.
     FixedPointDollars:
       type: string
       description: >-

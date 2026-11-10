@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-credit-history
-lastmod: 2026-11-06T18:46:16.356Z
+lastmod: 2026-11-09T19:00:55.665Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

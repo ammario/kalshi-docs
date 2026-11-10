@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-11-06T18:46:20.111Z
+lastmod: 2026-11-10T00:21:42.848Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,7 +22,32 @@ the `FIX` tag.
 
 **November 12, 2026**
 
+Clarified how `GET /portfolio/balance` and `GET /portfolio/subaccounts/balances` list exchange indexes and aggregate subaccount balances. Documentation only; API behavior is unchanged.
+
+**November 12, 2026**
+
+`POST /communications/rfqs` returns specific error codes for two refusals that previously used generic ones. HTTP statuses are unchanged.
+
+| Refusal | Before | After |
+| - | - | - |
+| You already have 100 open RFQs | `429` `too_many_requests` | `429` `open_rfq_limit_exceeded` |
+| The RFQ's market is not open | `400` `invalid_parameters` | `400` `rfq_market_not_open` |
+
+`open_rfq_limit_exceeded` is not request-rate limiting: retrying does not help until some of your RFQs close or expire. If you branch on `too_many_requests` or `invalid_parameters` for these cases, handle the new codes as well.
+
+On FIX, the `QuoteRequestReject` (AG) `Text<58>` for the same two refusals changes to `OPEN_RFQ_LIMIT_EXCEEDED` and `RFQ_MARKET_NOT_OPEN`. `QuoteRequestRejectReason<658>` stays `99` (Other).
+
+**November 12, 2026**
+
+When an order is rejected because the account has never been funded on the market's exchange index, the `insufficient_shard_balance` error's `details` now explain that API orders are not funded automatically. They also name the fix: fund the exchange index with [Intra Account Transfer](https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer.md). To trade from a subaccount, fund the exchange index first, then use [Transfer Between Subaccounts](https://docs.kalshi.com/api-reference/portfolio/transfer-between-subaccounts.md) with `exchange_index`. The error `code` and HTTP status are unchanged. See [Exchange Sharding](https://docs.kalshi.com/getting_started/exchange_sharding.md#balance-management).
+
+**November 12, 2026**
+
 `GET /api_keys` now includes `key_type` (`rsa` or `ed25519`) on each supported key, including keys created before this change. The field is omitted when the algorithm is unknown.
+
+**November 12, 2026**
+
+The new `ebattle_scores` channel provides live eSoccer/eFootball and eBasketball scores. Subscribe to the channel, then use `subscribe_matches` with milestone IDs or `["all"]`. Public access is available to authenticated API users for a limited period. When the feed returns to restricted access, subscriptions without individual approval end. Other feeds retain their own access policies.
 
 **November 12, 2026**
 
@@ -45,8 +70,8 @@ Margin market responses now include `minimum_quantity`, the minimum order quanti
 **November 5, 2026**
 
 Markets created on demand for a request for quote, in series starting with
-`KXRFQ` (such as `KXRFQW` weather point markets), are left out of
-subscriptions that don't name markets. `trade` and `ticker` still deliver
+`KXRFQ` (such as `KXRFQRAINHOURS` on-request weather markets), are left out
+of subscriptions that don't name markets. `trade` and `ticker` still deliver
 them to subscriptions that list the market in `market_tickers` (or
 `market_ids` for `ticker`). `market_lifecycle_v2` takes no market list, so it
 leaves them out entirely.
@@ -54,8 +79,8 @@ leaves them out entirely.
 **November 5, 2026**
 
 Markets that users create on demand for RFQs (series starting with `KXRFQ`,
-such as `KXRFQW` on-request weather markets) are left out of unscoped
-listings:
+such as `KXRFQRAINHOURS` on-request weather markets) are left out of
+unscoped listings:
 
 * `GET /markets` and `GET /historical/markets` skip them unless the request
   sets `series_ticker`, `event_ticker` or `tickers` to one of them.
