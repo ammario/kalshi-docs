@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-11-03T23:49:51.914Z
+lastmod: 2026-11-10T20:54:01.612Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -222,6 +222,18 @@ If a new Quote is created when an existing quote for the same market already exi
 > [!WARNING]
 >
 > Either BidPx or OfferPx can be zero, but not both. Zero indicates no quote for that side.
+
+### Best Quote Only
+
+A session that logs on with `BestQuoteOnly<21036>=Y` receives only the best quote of each RFQ it creates while the flag is set. The RFQ keeps this mode until it closes. The best quote arrives as the same Quote (35=S) described above, with no new fields.
+
+* **Ranking:** quotes are ranked on the RFQ's natural side: `OfferPx<133>` (No) for an RFQ sized by `CashOrderQty<152>`, `BidPx<132>` (Yes) for one sized by `OrderQty<38>`. The highest price is best, then the earliest quote at that price, which is the quote an AcceptQuote on that side fills. A quote with no price on the natural side is never best, so an RFQ whose quotes all lack it sends no Quote.
+* **When a Quote is sent:** each time a different quote becomes best: a better quote arrives, the best is cancelled or stops quoting the natural side (the next best is sent, even at a worse price), or the best maker replaces its quote (a new `QuoteId<117>`, even at the same price). Changes below the best send nothing.
+* **Superseding:** the latest Quote for a `QuoteReqId<131>` replaces all earlier ones. Order them by MsgSeqNum: `TransactTime<60>` is the quote's own creation time and can go backwards.
+* **Nothing left:** once no open quote has a price on the natural side, the last best is sent again with `BidSize<134>=0` and `OfferSize<135>=0`: there is nothing to accept.
+* **Accept and close:** nothing extra is sent; AcceptQuoteStatus (35=UC) and the usual close messages end the RFQ. A Quote can arrive just after the close; ignore it.
+* **The other side:** the Quote's other price is that quote's own. An accept on the other side follows that side's ranking, so it can fill another quote at the same price.
+* **Missed updates:** Quotes sent while the session is disconnected are kept for ResendRequest, like other KalshiRT messages. The current best is not re-sent at Logon: if an update is lost another way, for example during a Kalshi restart or when sequence numbers are reset, the next one arrives with the RFQ's next best change.
 
 ## QuoteStatusReport (35=AI)
 

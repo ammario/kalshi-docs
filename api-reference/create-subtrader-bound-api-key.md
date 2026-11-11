@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/create-subtrader-bound-api-key
-lastmod: 2026-11-09T19:00:54.774Z
+lastmod: 2026-11-10T17:30:38.202Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

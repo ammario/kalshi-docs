@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/delete-subtrader-bound-api-key
-lastmod: 2026-11-09T19:00:54.822Z
+lastmod: 2026-11-10T17:30:38.245Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

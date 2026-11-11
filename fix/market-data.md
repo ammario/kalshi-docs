@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-data
-lastmod: 2026-10-22T22:49:29.277Z
+lastmod: 2026-11-11T01:00:00.337Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -78,6 +78,7 @@ Sent in response to a snapshot request and immediately after a subscription that
 | 271 | MDEntrySize | Quantity | Y | Book level size in contracts. |
 | 272 | MDEntryDate | UTC Date | Y | Repeating group field. UTC snapshot capture date in `YYYYMMDD` format. |
 | 273 | MDEntryTime | UTC Time | Y | Repeating group field. UTC snapshot capture time in `HH:MM:SS.sss` format. |
+| 21046 | MDExecID | String | N | ID of the newest book change this snapshot includes, in the `ExecID<17>` format. Can be omitted. See [MDExecID](#mdexecid). |
 
 ```fix Example snapshot response theme={null}
 8=FIXT.1.1|35=W|49=KalshiMD|56=your-api-key|55=KXNBAGAME-26MAY25NYKCLE-NYK|268=2|269=0|270=0.3500|271=10.00|272=20260817|273=16:00:00.123|269=1|270=0.6500|271=5.00|272=20260817|273=16:00:00.123|
@@ -102,6 +103,7 @@ Sent after a subscribed market's aggregated book levels change or a trade occurs
 | 1003 | TradeID | String | C | Trade entries only. The trade UUID. |
 | 11 | ClOrdID | String | C | Book entries only. Present when your order caused the level change and the order has a client-specified ID. |
 | 79 | AllocAccount | Integer | C | Book entries only. Subaccount number of your order. `0` identifies a primary or non-numeric account. |
+| 21046 | MDExecID | String | N | ID of the update, in the `ExecID<17>` format. Every entry in the message shares it. See [MDExecID](#mdexecid). |
 
 ```fix Example incremental update theme={null}
 8=FIXT.1.1|35=X|49=KalshiMD|56=your-api-key|268=1|279=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|269=0|270=0.3500|271=15.00|272=20260817|273=16:00:00.456|11=my-order-123|79=3|
@@ -109,6 +111,20 @@ Sent after a subscribed market's aggregated book levels change or a trade occurs
 
 ```fix Example trade update theme={null}
 8=FIXT.1.1|35=X|49=KalshiMD|56=your-api-key|268=1|279=0|55=KXNBAGAME-26MAY25NYKCLE-NYK|269=2|270=0.6500|271=3.00|272=20260817|273=16:00:00.789|2446=1|1003=02cfae92-12f4-4bc6-b613-4806e3604514|
+```
+
+## MDExecID
+
+Snapshots (35=W) and incremental updates (35=X) include `MDExecID<21046>`, a custom tag. If your FIX engine validates incoming messages against a data dictionary, load the updated [FIX dictionary](https://assets.kalshi.com/fix/kalshi-fix-dictionary.xml), or the engine may reject these messages.
+
+* `MDExecID` has the same format as `ExecID<17>` on execution reports: `clock;event` on exchange index `0` and `clock;event;exchange_index` on other indexes. `clock` is the exchange clock that the WebSocket sends as `clock` on `orderbook_delta`
+* Every session sends the same `MDExecID` for the same update, so it can match a market's updates across redundant sessions
+* A 35=W includes every book change up to and including its `MDExecID`
+* While you are subscribed to a market, the `MDExecID` on its 35=X messages never goes down outside exchange maintenance, comparing `clock` and then `event`, but it skips values. IDs are not comparable across markets, or from before a maintenance period to after it
+* `clock` can exceed 32 bits. The FIX dictionary types `MDExecID` as a String
+
+```fix Example incremental update with MDExecID theme={null}
+8=FIXT.1.1|35=X|49=KalshiMD|56=your-api-key|268=1|279=1|55=KXNBAGAME-26MAY25NYKCLE-NYK|269=0|270=0.3500|271=15.00|272=20260817|273=16:00:00.456|21046=41865230117;3;2|
 ```
 
 ## Market Data Request Reject (35=Y)

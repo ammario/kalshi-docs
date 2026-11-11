@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-11-10T00:21:42.848Z
+lastmod: 2026-11-11T01:00:00.366Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,38 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+**November 12, 2026**
+
+KalshiMD snapshots (35=W) and incremental updates (35=X) now carry
+`MDExecID<21046>`, in the same format as `ExecID<17>`. See
+[MDExecID](https://docs.kalshi.com/fix/market-data.md#mdexecid). If your FIX engine validates custom
+tags, load the updated
+[FIX dictionary](https://assets.kalshi.com/fix/kalshi-fix-dictionary.xml).
+
+**November 12, 2026**
+
+[Security Status](https://docs.kalshi.com/fix/market-data.md#security-status) subscribe and unsubscribe requests (`35=e`) will cost **1 token** from the shared Read bucket per request, reduced from **10 tokens**.
+
+**November 12, 2026**
+
+`GET /markets/{ticker}` and `GET /events/{event_ticker}` now send a `Cache-Control: public, max-age=5` header, so a response may be served from a shared cache for up to 5 seconds. `GET /markets` already sends this header. Response bodies are unchanged. For real-time prices, subscribe to the WebSocket `ticker` channel.
+
+**November 12, 2026**
+
+Two endpoints for on-request weather markets (series starting with `KXRFQ`,
+such as `KXRFQRAINHOURS`):
+
+* `POST /weather_point_markets` returns the market for a location, time
+  window and threshold, creating it if it doesn't exist yet. `created` says
+  whether it is new. Send an RFQ for the returned `market_ticker` with
+  `POST /communications/rfqs` to trade it. A valid request that can't be
+  offered (for example a location over open water) returns 409
+  `weather_point_market_unavailable`, and reaching a creation limit returns
+  429 `weather_point_market_limit_exceeded`, which is not request-rate
+  limiting.
+* `GET /weather_point_markets/availability` returns the variables that can
+  be created and the regions each is offered in. It needs no authentication.
 
 **November 12, 2026**
 
