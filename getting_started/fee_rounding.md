@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/fee_rounding
-lastmod: 2026-08-26T20:03:44.723Z
+lastmod: 2026-11-12T04:15:11.871Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

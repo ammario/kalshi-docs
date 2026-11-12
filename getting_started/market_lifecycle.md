@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/market_lifecycle
-lastmod: 2026-06-01T19:43:33.334Z
+lastmod: 2026-11-12T04:15:11.784Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

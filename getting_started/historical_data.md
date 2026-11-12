@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/historical_data
-lastmod: 2026-09-30T04:03:00.858Z
+lastmod: 2026-11-12T04:15:11.872Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

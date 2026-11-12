@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-data
-lastmod: 2026-11-11T01:00:00.337Z
+lastmod: 2026-11-12T04:15:11.874Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/common-components
-lastmod: 2026-09-14T18:17:55.109Z
+lastmod: 2026-11-12T04:15:11.885Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

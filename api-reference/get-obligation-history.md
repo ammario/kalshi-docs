@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-obligation-history
-lastmod: 2026-11-10T17:30:37.896Z
+lastmod: 2026-11-11T15:56:07.821Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

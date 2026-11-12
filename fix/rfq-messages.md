@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-11-10T20:54:01.612Z
+lastmod: 2026-11-12T04:15:11.889Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

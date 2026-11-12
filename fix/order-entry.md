@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-10-28T18:22:21.885Z
+lastmod: 2026-11-12T04:15:11.889Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

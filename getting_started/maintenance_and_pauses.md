@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/maintenance_and_pauses
-lastmod: 2026-04-30T03:43:38.626Z
+lastmod: 2026-11-12T04:15:11.875Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/terms
-lastmod: 2026-09-24T16:03:53.096Z
+lastmod: 2026-11-12T04:15:11.781Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

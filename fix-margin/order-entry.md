@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-11-02T00:07:13.192Z
+lastmod: 2026-11-12T04:15:11.890Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

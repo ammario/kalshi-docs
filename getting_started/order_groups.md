@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/order_groups
-lastmod: 2026-04-30T03:43:38.625Z
+lastmod: 2026-11-12T04:15:11.777Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

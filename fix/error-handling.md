@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/error-handling
-lastmod: 2026-09-11T14:25:28.103Z
+lastmod: 2026-11-12T04:15:11.877Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

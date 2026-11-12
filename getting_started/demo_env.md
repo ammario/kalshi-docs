@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/demo_env
-lastmod: 2026-08-05T16:32:15.609Z
+lastmod: 2026-11-12T04:15:11.869Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

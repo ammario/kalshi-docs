@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/authentication
-lastmod: 2026-09-23T21:55:39.782Z
+lastmod: 2026-11-12T04:15:11.882Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/get-balance
-lastmod: 2026-11-10T17:30:38.758Z
+lastmod: 2026-11-11T15:56:08.743Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

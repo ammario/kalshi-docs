@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_authenticated_requests
-lastmod: 2026-09-23T21:55:39.789Z
+lastmod: 2026-11-12T04:15:11.781Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-11-02T00:07:13.150Z
+lastmod: 2026-11-12T04:15:11.787Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

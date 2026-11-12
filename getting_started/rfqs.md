@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-11-03T23:49:51.825Z
+lastmod: 2026-11-12T04:15:11.780Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

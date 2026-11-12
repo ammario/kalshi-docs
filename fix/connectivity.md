@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2026-10-16T00:23:40.843Z
+lastmod: 2026-11-12T04:15:11.880Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

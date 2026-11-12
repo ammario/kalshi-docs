@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collections
-lastmod: 2026-11-10T17:30:39.572Z
+lastmod: 2026-11-11T15:56:10.036Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

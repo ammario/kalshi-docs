@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/api_environments
-lastmod: 2026-11-02T18:50:49.287Z
+lastmod: 2026-11-12T04:15:11.880Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/mcp
-lastmod: 2026-11-06T01:31:33.328Z
+lastmod: 2026-11-12T04:15:11.786Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

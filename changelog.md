@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-11-11T01:00:00.366Z
+lastmod: 2026-11-12T06:22:15.783Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,29 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+**November 19, 2026**
+
+During the overnight session (8 PM to 4 AM ET), every equities perps order must be priced within 20% of the market's 4 PM ET settlement price from the day the session opened. Orders outside the band are rejected with `invalid price`. When the band takes effect or moves, resting orders outside it are canceled: margin [user\_orders](https://docs.kalshi.com/websockets/user-orders.md) and orderbook delta messages report `last_update_reason: "SettlementBoundsCancel"`, and FIX ExecutionReports (35=8) carry a Text (58) of `SETTLEMENT_BOUNDS_CANCEL`. See [Price Banding](https://docs.kalshi.com/margin/price-banding.md).
+
+**November 19, 2026**
+
+* `GET /incentive_schedules` lists the recurring incentive schedules that
+  have not ended: what each market of a series (or of one event) earns per
+  window, how long a window is, and when the schedule ends. `all_markets`
+  says whether the terms are promised to every market the schedule covers,
+  including markets listed later, or only anticipated. It needs no
+  authentication.
+* `GET /incentive_programs` takes `series_ticker` and `event_ticker` filters,
+  and each program now carries its `series_ticker` and `event_ticker`.
+
+**November 12, 2026**
+
+API keys restricted to a single subaccount can now call
+`GET /margin/funding_history` and `GET /margin/balance`, scoped to their
+locked subaccount. For these keys, balance omits the account-wide
+`settled_funds` total, so `settled_funds` is now optional in the response
+schema. See [Subaccounts](https://docs.kalshi.com/getting_started/subaccounts.md).
 
 **November 12, 2026**
 

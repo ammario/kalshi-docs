@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/search/get-tags-for-series-categories
-lastmod: 2026-11-10T17:30:39.323Z
+lastmod: 2026-11-11T15:56:09.815Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

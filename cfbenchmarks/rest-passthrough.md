@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/cfbenchmarks/rest-passthrough
-lastmod: 2026-09-09T16:10:57.365Z
+lastmod: 2026-11-12T04:15:11.879Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

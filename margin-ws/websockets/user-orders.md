@@ -136,8 +136,10 @@ operations:
                     type: string
                     description: >-
                       Margin order update reason. The value ReduceOnlyCancel
-                      means reduce_only capped the order at placement. The field
-                      is omitted when no reason applies.
+                      means reduce_only capped the order at placement, and
+                      SettlementBoundsCancel means the overnight settlement band
+                      canceled a resting order priced outside it. The field is
+                      omitted when no reason applies.
                     enumValues:
                       - Decrease
                       - Amend
@@ -149,6 +151,7 @@ operations:
                       - Trade
                       - PostOnlyCrossCancel
                       - ReduceOnlyCancel
+                      - SettlementBoundsCancel
                     required: false
                   - name: subaccount_number
                     type: integer
@@ -282,9 +285,12 @@ operations:
                     - Trade
                     - PostOnlyCrossCancel
                     - ReduceOnlyCancel
+                    - SettlementBoundsCancel
                   description: >-
                     Margin order update reason. The value ReduceOnlyCancel means
-                    reduce_only capped the order at placement. The field is
+                    reduce_only capped the order at placement, and
+                    SettlementBoundsCancel means the overnight settlement band
+                    canceled a resting order priced outside it. The field is
                     omitted when no reason applies.
                   x-parser-schema-id: lastUpdateReason
                 subaccount_number:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/incentive-programs/get-incentives
-lastmod: 2026-11-10T17:30:39.613Z
+lastmod: 2026-11-11T15:56:10.048Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -106,6 +106,20 @@ paths:
           description: Filter by exact incentive description.
           schema:
             type: string
+        - name: series_ticker
+          in: query
+          required: false
+          description: Filter to one series' incentives.
+          schema:
+            type: string
+        - name: event_ticker
+          in: query
+          required: false
+          description: >-
+            Filter to one event's incentives. A perpetual's incentives belong to
+            no event.
+          schema:
+            type: string
         - name: limit
           in: query
           required: false
@@ -191,6 +205,14 @@ components:
           description: >-
             The ticker symbol of the market associated with this incentive
             program
+        series_ticker:
+          type: string
+          description: The series of the market associated with this incentive program
+        event_ticker:
+          type: string
+          description: >-
+            The event of the market associated with this incentive program;
+            empty for a perpetual
         incentive_type:
           type: string
           enum:

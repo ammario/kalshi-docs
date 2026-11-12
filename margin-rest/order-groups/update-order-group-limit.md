@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/order-groups/update-order-group-limit
-lastmod: 2026-11-10T17:30:40.611Z
+lastmod: 2026-11-11T15:56:11.064Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

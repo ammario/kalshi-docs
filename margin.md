@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin
-lastmod: 2026-11-02T18:50:49.288Z
+lastmod: 2026-11-12T04:15:11.775Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

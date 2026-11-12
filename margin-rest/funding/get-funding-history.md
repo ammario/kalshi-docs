@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/funding/get-funding-history
-lastmod: 2026-11-10T17:30:40.335Z
+lastmod: 2026-11-11T15:56:10.785Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -95,7 +95,16 @@ paths:
             x-go-type-skip-optional-pointer: true
             x-oapi-codegen-extra-tags:
               validate: required
-        - $ref: '#/components/parameters/SubaccountQuery'
+        - name: subaccount
+          in: query
+          required: false
+          description: >-
+            Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
+            defaults to all subaccounts. Subaccount-restricted API keys must
+            omit this or pass their locked subaccount, and read only that
+            subaccount's funding payments.
+          schema:
+            type: integer
       responses:
         '200':
           description: Funding history retrieved successfully
@@ -116,17 +125,6 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    SubaccountQuery:
-      name: subaccount
-      in: query
-      required: false
-      description: >-
-        Subaccount number (0 for primary, 1-63 for subaccounts). If omitted,
-        defaults to all subaccounts.
-      schema:
-        type: integer
-        minimum: 0
   schemas:
     GetMarginFundingHistoryResponse:
       type: object

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/sub_users_vs_subaccounts
-lastmod: 2026-10-25T15:17:23.478Z
+lastmod: 2026-11-12T04:15:11.779Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

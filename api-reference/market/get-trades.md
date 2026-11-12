@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-trades
-lastmod: 2026-11-10T17:30:38.326Z
+lastmod: 2026-11-11T15:56:08.286Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

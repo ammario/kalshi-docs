@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/market-settlement
-lastmod: 2026-09-22T20:23:31.037Z
+lastmod: 2026-11-12T04:15:11.873Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

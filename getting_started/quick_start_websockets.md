@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_websockets
-lastmod: 2026-09-23T16:58:22.250Z
+lastmod: 2026-11-12T04:15:11.785Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

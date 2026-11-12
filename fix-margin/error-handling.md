@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/error-handling
-lastmod: 2026-06-03T22:14:14.114Z
+lastmod: 2026-11-12T04:15:11.882Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

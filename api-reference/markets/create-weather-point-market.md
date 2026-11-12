@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/markets/create-weather-point-market
-lastmod: 2026-11-10T17:30:39.501Z
+lastmod: 2026-11-11T20:14:19.225Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,11 +12,10 @@ lastmod: 2026-11-10T17:30:39.501Z
 threshold, creating it if it doesn't exist yet. The same request always
 returns the same market, so call this before sending an RFQ for a
 market you haven't seen. `created` tells you whether the market is new.
-An existing market is returned until its window ends, even where new
-markets like it are no longer offered. The exception is when weather
-markets are switched off (`enabled` is false in the availability
-response) or the variable has been withdrawn entirely: the request is
-then refused whether or not the market exists.
+An existing market is normally returned until its window ends, even
+where new markets like it are no longer offered. If weather markets
+are switched off entirely, the request can be refused whether or not
+the market exists.
 
 The location snaps to the center of the NOAA MRMS grid cell containing
 it; the response carries the snapped coordinates. Markets are only
@@ -113,15 +112,13 @@ paths:
 
         market you haven't seen. `created` tells you whether the market is new.
 
-        An existing market is returned until its window ends, even where new
+        An existing market is normally returned until its window ends, even
 
-        markets like it are no longer offered. The exception is when weather
+        where new markets like it are no longer offered. If weather markets
 
-        markets are switched off (`enabled` is false in the availability
+        are switched off entirely, the request can be refused whether or not
 
-        response) or the variable has been withdrawn entirely: the request is
-
-        then refused whether or not the market exists.
+        the market exists.
 
 
         The location snaps to the center of the NOAA MRMS grid cell containing

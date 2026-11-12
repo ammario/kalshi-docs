@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/market-data
-lastmod: 2026-10-01T21:33:17.589Z
+lastmod: 2026-11-12T04:15:11.883Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

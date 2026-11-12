@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/create-fcm-subtrader
-lastmod: 2026-11-10T17:30:39.665Z
+lastmod: 2026-11-11T15:56:10.123Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

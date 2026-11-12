@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-balance
-lastmod: 2026-11-10T17:30:40.284Z
+lastmod: 2026-11-12T04:15:09.263Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -9,6 +9,7 @@ lastmod: 2026-11-10T17:30:40.284Z
 # Get Balance
 
 > Endpoint for retrieving the balance breakdown for the authenticated direct margin user. Returns cash balance (aggregate and per-subaccount), position value, total balance, and maintenance margin requirement.
+Subaccount-restricted API keys read only their locked subaccount's balance, and the response omits the account-wide `settled_funds` total.
 Resource-bound MCP OAuth tokens may read the owner's balance with read::mcp_portfolio.
 
 
@@ -67,6 +68,9 @@ paths:
         direct margin user. Returns cash balance (aggregate and per-subaccount),
         position value, total balance, and maintenance margin requirement.
 
+        Subaccount-restricted API keys read only their locked subaccount's
+        balance, and the response omits the account-wide `settled_funds` total.
+
         Resource-bound MCP OAuth tokens may read the owner's balance with
         read::mcp_portfolio.
       operationId: GetMarginBalance
@@ -108,16 +112,19 @@ components:
       type: object
       required:
         - subaccount_balances
-        - settled_funds
       properties:
         subaccount_balances:
           type: array
           items:
             $ref: '#/components/schemas/MarginSubaccountBalance'
-          description: Per-subaccount balance breakdown
+          description: >-
+            Per-subaccount balance breakdown. Subaccount-restricted API keys
+            receive only their locked subaccount.
         settled_funds:
           $ref: '#/components/schemas/FixedPointDollars'
-          description: Total settled funds across all subaccounts in fixed-point dollars
+          description: >-
+            Total settled funds across all subaccounts in fixed-point dollars.
+            Omitted when access is restricted to a subaccount.
     MarginSubaccountBalance:
       type: object
       required:
