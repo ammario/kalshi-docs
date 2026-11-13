@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/orderbook_responses
-lastmod: 2026-11-12T04:15:11.778Z
+lastmod: 2026-11-13T01:29:02.721Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -99,6 +99,14 @@ Both values are strings to support subpenny pricing and fractional contract size
 * **Second element**: Number of contracts as a fixed-point string (e.g., `"13.00"`)
 * Arrays are sorted by price in **ascending order**
 * The **highest** bid (best bid) is the **last** element in each array
+* With the `depth` query parameter, the best `depth` levels of each side are returned, still in ascending order
+* Order counts per level are not returned
+
+### Empty and Unknown Markets
+
+A market with no resting orders returns empty `yes_dollars` and `no_dollars` arrays. So does a ticker that does not match any market: the endpoint returns `200` with empty arrays rather than `404`, and [Get Multiple Market Orderbooks](https://docs.kalshi.com/api-reference/market/get-multiple-market-orderbooks.md) returns an empty entry for it. If you need to tell a mistyped or archived ticker from an empty book, check the market with [Get Market](https://docs.kalshi.com/api-reference/market/get-market.md).
+
+The REST orderbook is a point-in-time read. To track a book as it changes, subscribe to the [orderbook updates](https://docs.kalshi.com/websockets/orderbook-updates.md) WebSocket channel.
 
 ## Why Only Bids?
 

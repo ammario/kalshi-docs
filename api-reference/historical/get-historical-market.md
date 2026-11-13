@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/historical/get-historical-market
-lastmod: 2026-11-11T15:56:10.337Z
+lastmod: 2026-11-13T04:52:12.585Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -187,12 +187,9 @@ components:
           format: date-time
           nullable: true
           x-omitempty: true
-          description: Time when this market is expected to expire
-        expiration_time:
-          type: string
-          format: date-time
-          deprecated: true
-          x-go-type-skip-optional-pointer: true
+          description: >-
+            Time when this market is expected to expire. Never later than
+            `latest_expiration_time`.
         latest_expiration_time:
           type: string
           format: date-time

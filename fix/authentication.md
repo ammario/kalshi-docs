@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/authentication
-lastmod: 2026-11-12T04:15:11.879Z
+lastmod: 2026-11-13T01:29:35.616Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -38,7 +38,7 @@ The initiator sends a Logon message. The acceptor responds with either a Logon (
 | - | - | - | - |
 | 98 | EncryptMethod | Method of encryption | None\<0> |
 | 96 | RawData | Client logon message signature | Base64 encoded signature |
-| 108 | HeartbeatInt | Heartbeat interval (seconds) | N > 3 |
+| 108 | HeartbeatInt | Heartbeat interval (seconds). Values below 3 are rejected with `Invalid HeartBtInt`. | N >= 3 |
 | 1137 | DefaultApplVerID | Default application version | FIX50SP2\<9> |
 
 ### Optional Fields
@@ -46,7 +46,7 @@ The initiator sends a Logon message. The acceptor responds with either a Logon (
 | Tag | Name | Description | Default |
 | - | - | - | - |
 | 141 | ResetSeqNumFlag | Reset sequence numbers on logon. **Must be Y for non-retransmission sessions.** | N |
-| 8013 | CancelOrdersOnDisconnect | Cancel orders on any disconnection (including graceful logout) | N |
+| 8013 | CancelOrdersOnDisconnect | On any disconnection (including graceful logout), cancel the resting orders placed over FIX with this API key. Orders placed through REST or with another API key are not canceled. See the warning under Logout below. | N |
 | 20126 | ListenerSession | Listen-only session. **KalshiNR/RT only, requires SkipPendingExecReports=Y.** | N |
 | 20127 | ReceiveSettlementReports | Receive settlement reports. **KalshiNR, KalshiRT, and KalshiPT only. Defaults to Y on KalshiPT.** | N (Y on KalshiPT) |
 | 20200 | MessageRetentionPeriod | How long session messages will be stored for retransmission, max of 72 hours. **KalshiRT and KalshiPT only.** | 24 |
@@ -120,7 +120,17 @@ Use one active FIX connection per API key. If Logon is rejected, inspect Text (`
 
 * `already exists`: check for another connection using the same key before retrying.
 * `rate limit exceeded` or `FIX logon service busy; retry with backoff`: retry with exponential backoff and jitter.
-* Authentication, permission, or invalid-field errors: correct the issue before retrying.
+* `Service shutting down`: the gateway is restarting. Reconnect with backoff.
+* Authentication, permission, or invalid-field errors: correct the issue before retrying. Permission errors include:
+
+| Text (58) | Meaning |
+| - | - |
+| `API key does not have read scope` | Every FIX session needs an API key with the read scope. |
+| `API key does not have write scope` | Order entry, RFQ, drop copy and post-trade sessions also need a key that can trade. Listener sessions and `KalshiMD` need only the read scope. |
+| `API usage level is not allowed for FIX` | The account is below the Premier tier on this exchange. Event-contract and Perps FIX each check their own tier. |
+| `FIX retransmission mode not allowed.` | The account is not enabled for `KalshiRT` or `KalshiPT`. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com). |
+| `User is not allowed to use FIX` | The account cannot use FIX. Contact support. |
+| `Invalid HeartBtInt` | `HeartbeatInt<108>` is below 3. |
 
 Avoid overlapping reconnect attempts. Generate a fresh SendingTime and signature for each attempt, and follow the sequence-number and retransmission rules below.
 
@@ -128,8 +138,8 @@ Avoid overlapping reconnect attempts. Generate a fresh SendingTime and signature
 
 | Behavior | Detail |
 | - | - |
-| Default heartbeat interval | 30 seconds |
-| Missed heartbeat | Connection terminates if heartbeat response not received within interval |
+| Heartbeat interval | Set by `HeartbeatInt<108>` on Logon. Always send it; 30 seconds is a typical value. |
+| Idle timeout | The server ends the session and disconnects when it has received no inbound FIX message of any kind (Heartbeat, TestRequest, other session messages, or application messages) for twice the `HeartbeatInt` |
 | Sequence number lower than expected | Connection terminated |
 | Sequence number higher than expected | Recoverable with ResendRequest (KalshiRT, KalshiPT only) |
 
@@ -154,7 +164,13 @@ The [drop copy session](https://docs.kalshi.com/fix/drop-copy.md) provides an al
 
 ## Logout (35=5)
 
-Either side may initiate a Logout. The counterparty responds with a Logout, and the transport connection is terminated. If `CancelOrdersOnDisconnect=Y` was set on Logon, all open orders are canceled.
+Either side may initiate a Logout. The counterparty responds with a Logout, and the transport connection is terminated. If `CancelOrdersOnDisconnect=Y` was set on Logon, the resting orders placed over FIX with this session's API key are canceled.
+
+> [!WARNING]
+>
+> **CancelOrdersOnDisconnect is not an account-wide kill switch.** It cancels only the resting orders that were placed over FIX with this session's API key. Orders placed through the REST API, or over FIX with a different API key, keep resting. Cancel those separately.
+>
+> A connection that goes silent without closing is only detected by the idle timeout, after twice your `HeartbeatInt` with no inbound message. Cancellation starts after that detection and takes further time to complete; there is no guaranteed upper bound on when the orders are canceled. A shorter `HeartbeatInt` (minimum 3 seconds) shortens detection only. Confirm cancellation from the execution reports or by querying your orders, and do not rely on cancel-on-disconnect as your only protection.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

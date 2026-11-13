@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/estimate-portfolio-maintenance-margin
-lastmod: 2026-11-11T15:56:07.921Z
+lastmod: 2026-11-13T04:52:10.231Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -175,7 +175,6 @@ components:
       type: object
       required:
         - market_ticker
-        - quantity
       properties:
         market_ticker:
           type: string
@@ -187,7 +186,14 @@ components:
           format: int64
           description: >-
             Signed whole contract count; positive long, negative short. Must be
-            non-zero.
+            non-zero. Provide `quantity` or `quantity_fp`.
+        quantity_fp:
+          type: string
+          description: >-
+            Signed contract count as a fixed-point string with at most two
+            decimal places (e.g. "0.25", "-1.50"); positive long, negative
+            short. Must be non-zero and at most 1000000 in magnitude, and must
+            equal `quantity` when both are given.
         price:
           type: string
           description: >-

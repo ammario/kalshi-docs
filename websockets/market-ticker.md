@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-ticker
-lastmod: 2026-05-06T00:22:32.640Z
+lastmod: 2026-11-13T01:27:13.565Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,9 +12,10 @@ lastmod: 2026-05-06T00:22:32.640Z
 
 **Requirements:**
 - No additional channel-level authentication beyond the authenticated WebSocket connection
-- Market specification optional (omit to receive all markets)
+- Market specification optional (omit to receive all markets except those whose ticker starts with `KXRFQ`, which are sent only to subscriptions that name them)
 - Supports `market_ticker`/`market_tickers` and `market_id`/`market_ids`
-- Updates sent whenever any ticker field changes
+- Changes are combined and sent on a flush scheduled every second: each flush sends one message per changed market, carrying its current values, so intermediate values are not sent. This is a schedule, not a guaranteed minimum gap; two updates for one market can arrive less than a second apart. For every trade or book change, use the `trade` or `orderbook_delta` channel
+- A subscription created without a market filter cannot be changed: `update_subscription` and a repeated `subscribe` return error code 13. To filter, or to receive `KXRFQ` markets, `unsubscribe` and `subscribe` again with a market filter
 
 **Use case:** Displaying current market prices and statistics
 
@@ -35,11 +36,22 @@ description: >
   - No additional channel-level authentication beyond the authenticated
   WebSocket connection
 
-  - Market specification optional (omit to receive all markets)
+  - Market specification optional (omit to receive all markets except those
+  whose ticker starts with `KXRFQ`, which are sent only to subscriptions that
+  name them)
 
   - Supports `market_ticker`/`market_tickers` and `market_id`/`market_ids`
 
-  - Updates sent whenever any ticker field changes
+  - Changes are combined and sent on a flush scheduled every second: each flush
+  sends one message per changed market, carrying its current values, so
+  intermediate values are not sent. This is a schedule, not a guaranteed minimum
+  gap; two updates for one market can arrive less than a second apart. For every
+  trade or book change, use the `trade` or `orderbook_delta` channel
+
+  - A subscription created without a market filter cannot be changed:
+  `update_subscription` and a repeated `subscribe` return error code 13. To
+  filter, or to receive `KXRFQ` markets, `unsubscribe` and `subscribe` again
+  with a market filter
 
 
   **Use case:** Displaying current market prices and statistics

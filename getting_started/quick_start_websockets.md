@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_websockets
-lastmod: 2026-11-12T04:15:11.785Z
+lastmod: 2026-11-13T04:06:56.730Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -42,9 +42,11 @@ WebSocket connections require authentication during the connection handshake.
 Once connected, channels fall into two groups:
 
 * **Private channels (user-specific data):** `orderbook_delta`, `fill`, `market_positions`, `communications`, `order_group_updates`
-* **Public market-data channels (no additional channel-level auth):** `ticker`, `trade`, `market_lifecycle_v2`, `multivariate_market_lifecycle`, `multivariate`
+* **Public market-data channels (no additional channel-level auth):** `ticker`, `trade`, `market_lifecycle_v2`, `multivariate_market_lifecycle`
 
 In other words, even channels that carry public market data still use the authenticated WebSocket session, but they do not impose additional per-channel authorization checks.
+
+`user_orders` is also a private channel. An API key limited to market data gets error code 9 on the channels that carry only your own activity: `fill`, `market_positions`, `order_group_updates` and `user_orders`. It can still subscribe to `orderbook_delta` and `communications`, which also carry public data.
 
 > [!NOTE]
 >
@@ -72,6 +74,15 @@ The signature for WebSocket connections follows the same pattern as REST API req
 2. **Generate the signature** using your private key (see [API Keys documentation](https://docs.kalshi.com/getting_started/api_keys.md))
 
 3. **Include the headers** when opening the WebSocket connection
+
+### Handshake Errors
+
+A rejected handshake returns an HTTP error instead of upgrading the connection. `429 Too Many Requests` with code `too_many_requests` has two causes:
+
+* You have reached your tier's [concurrent connection limit](https://docs.kalshi.com/getting_started/rate_limits.md#websocket-connection-limits).
+* You are opening connections too quickly.
+
+The HTTP status and error code are the same for both. Reconnect with exponential backoff instead of retrying in a tight loop, and close connections you no longer use.
 
 ## Establishing a Connection
 
@@ -186,6 +197,8 @@ async def process_message(message):
 >
 > Other WebSocket libraries may require manual ping/pong implementation.
 
+Kalshi sends a Ping frame only after 10 seconds without sending a data message on the connection, and every data message it sends restarts that 10 seconds. Pong frames sent in reply to your own Pings do not. A connection that is receiving data can go a long time without a Ping, so do not treat a missing Ping as a dead connection.
+
 ## Subscribing to Channels
 
 Once connected, subscribe to specific data channels:
@@ -241,6 +254,20 @@ await subscribe_to_markets(["trade"], ["KXFUT24-LSV"])
 3. **Receive Updates**: Process incoming messages based on their type
 4. **Handle Disconnects**: Implement reconnection logic with exponential backoff
 
+### Disconnects
+
+The server can close the connection at any time. Subscriptions and `sid` values do not carry over, so subscribe again after reconnecting.
+
+| What you see | Cause | What to do |
+| - | - | - |
+| Close code `1008`, reason `WebSocket server delivery exceeded 15 seconds` | A message was still waiting to be written to your socket 15 seconds after the server received it. | Read from the socket continuously, move slow processing off the reading path, or subscribe to fewer markets. |
+| Close code `1000` | Normal closure. It does not identify a cause; a graceful server shutdown, such as during a release, is one. | Reconnect with backoff. |
+| `error` with code 10 or 25 and a `sid`, then `unsubscribed` for the same `sid` | A running subscription ended. The connection and your other subscriptions stay open. | Subscribe to that channel again. |
+
+### One Subscription per Channel
+
+A connection holds at most one subscription to each channel. A `subscribe` naming a channel you are already subscribed to does not create a second subscription or return `subscribed`. It is applied to the existing `sid`: on channels with a market filter it adds the listed markets and returns `ok`, or returns an `error`. For example, a `ticker` subscription created without a market filter returns error code 13, and a repeated `trade` subscribe without markets returns error code 14. To change a subscription's other parameters, `unsubscribe`, wait for `unsubscribed`, then `subscribe` again.
+
 ## Error Handling
 
 The server sends error messages in this format:
@@ -266,11 +293,11 @@ The server sends error messages in this format:
 | 4 | Subscription IDs required | The `unsubscribe` command must include at least one subscription ID in `sids`. | Y |
 | 5 | Unknown command | The `cmd` value is not supported. | Y |
 | 6 | Retired | Not emitted. The number stays reserved. | - |
-| 7 | Unknown subscription ID | The command references a subscription ID that is not active in the session. | Y |
+| 7 | Unknown subscription ID | The command references a subscription ID that is not active in the session. An `unsubscribe` listing several `sids` still unsubscribes the ones that exist, then returns this error for the rest. | Y |
 | 8 | Unknown channel name | The requested channel is not supported by this endpoint. | Y |
 | 9 | Authentication required | The requested channel or action requires authentication or channel access that was not granted. | Y |
 | 10 | Channel error | An internal channel error occurred while starting or running the subscription. If it persists, contact [support@kalshi.com](mailto:support@kalshi.com). | N |
-| 11 | Invalid parameter | A parameter has an invalid format, such as a malformed market ID. | Y |
+| 11 | Invalid parameter | A parameter has an invalid format, such as a malformed market ID. Also returned, with the message `update_interval_ms cannot change on an existing subscription`, when a repeated `orderbook_delta` subscribe uses a different `update_interval_ms`. | Y |
 | 12 | Exactly one subscription ID is required | The `update_subscription` command must target exactly one subscription. | Y |
 | 13 | Unsupported action | The subscription does not support the requested `action`. | Y |
 | 14 | Market Ticker required | The command requires a market filter such as `market_ticker` or `market_tickers`. | Y |
@@ -283,6 +310,11 @@ The server sends error messages in this format:
 | 21 | shard\_key must be >= 0 and \< shard\_factor | The `communications` shard key is outside the valid range. | Y |
 | 22 | shard\_factor must be \<= 100 | The `communications` shard factor exceeds the maximum. | Y |
 | 25 | Subscription buffer overflow | The subscription's event buffer overflowed during a message burst. Subscribe to a smaller subset of data, or ensure that your connection read throughput is optimized. | Y |
+| 26 | Subscription market limit exceeded | Adding markets would take an `orderbook_delta` subscription over 500,000 markets. No markets from the command are added. | Y |
+| 27 | Too many requests | `subscribe` / `add_markets` commands for an `orderbook_delta` subscription were sent too fast. The command is not applied; wait briefly and send it again. | Y |
+| 29 | update\_interval\_ms must be 0, 100 or 1000 | The `orderbook_delta` `update_interval_ms` value is not supported. | Y |
+
+Codes 23, 24 and 28 apply only to the reference-data channels and are listed in the [AsyncAPI specification](https://docs.kalshi.com/asyncapi.yaml). An error that ends a running subscription (codes 10 and 25) carries the subscription's `sid` and no `id`, and is followed by `unsubscribed`. Code 10 in reply to a `subscribe` that could not be opened carries the command's `id` instead; no subscription was created and no `unsubscribed` follows.
 
 ## Best Practices
 

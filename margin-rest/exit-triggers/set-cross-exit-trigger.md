@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/exit-triggers/set-cross-exit-trigger
-lastmod: 2026-11-11T15:56:11.011Z
+lastmod: 2026-11-13T04:52:13.377Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-11-11T15:56:11.011Z
 
 # Set Cross Exit Trigger
 
-> Endpoint for setting a stop-loss / take-profit bracket or a trailing stop on a non-isolated margin position. A position holds one trailing stop and up to 20 brackets, so long as their counts fit the position. Requires an open position unless `anchor_order_id` is supplied, and fires reduce-only orders.
+> Endpoint for setting a stop-loss / take-profit bracket or a trailing stop on a non-isolated margin position. A position holds one trailing stop and up to 20 brackets, so long as their counts fit the position. Requires an open position unless `anchor_order_id` is supplied, and fires reduce-only orders. A fired trigger places an immediate-or-cancel limit order near the stop price, not a market order, so it can fill partially or not at all. See Exit triggers in the Perps API overview (https://docs.kalshi.com/margin#exit-triggers) for validation errors and retry behavior.
 
 
 
@@ -62,7 +62,11 @@ paths:
         stop on a non-isolated margin position. A position holds one trailing
         stop and up to 20 brackets, so long as their counts fit the position.
         Requires an open position unless `anchor_order_id` is supplied, and
-        fires reduce-only orders.
+        fires reduce-only orders. A fired trigger places an immediate-or-cancel
+        limit order near the stop price, not a market order, so it can fill
+        partially or not at all. See Exit triggers in the Perps API overview
+        (https://docs.kalshi.com/margin#exit-triggers) for validation errors and
+        retry behavior.
       operationId: SetCrossMarginExitTrigger
       parameters:
         - $ref: '#/components/parameters/ExitTriggerTickerPath'
@@ -269,9 +273,12 @@ components:
       description: >-
         Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
         to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported; the minimum granularity is
-        0.01 contracts.
+        "10", "10.0", "10.00"); responses always emit 2 decimals. A market whose
+        `fractional_trading_enabled` is false trades whole contracts only.
+        There, an order for a fractional count (e.g., "2.50") is rejected with
+        HTTP 400 and error code `invalid_order_size`, and an amend or decrease
+        that would leave a fractional count is rejected with HTTP 400 and error
+        code `invalid_amend_quantity_for_order`.
       example: '10.00'
     ExitTriggerKind:
       type: string

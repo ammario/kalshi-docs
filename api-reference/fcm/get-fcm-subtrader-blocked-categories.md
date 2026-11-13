@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/get-fcm-subtrader-blocked-categories
-lastmod: 2026-11-11T15:56:10.172Z
+lastmod: 2026-11-13T04:52:12.387Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/market-positions
-lastmod: 2026-05-06T00:22:33.079Z
+lastmod: 2026-11-13T01:27:13.565Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,7 @@ lastmod: 2026-05-06T00:22:33.079Z
 - Market specification optional (omit to receive all positions)
 - Filters are by `market_ticker`/`market_tickers` only; `market_id`/`market_ids` are not supported
 - Updates sent when your position changes due to trades, settlements, etc.
+- Messages carry no `seq` and are not ordered against the `fill` channel: the position update for a trade can arrive after its `fill` message. Do not assume your position is current when a fill arrives
 
 **Monetary Values:**
 All monetary values are returned as fixed-point dollar strings (`_dollars` suffix).
@@ -43,6 +44,10 @@ description: >
   `market_id`/`market_ids` are not supported
 
   - Updates sent when your position changes due to trades, settlements, etc.
+
+  - Messages carry no `seq` and are not ordered against the `fill` channel: the
+  position update for a trade can arrive after its `fill` message. Do not assume
+  your position is current when a fill arrives
 
 
   **Monetary Values:**

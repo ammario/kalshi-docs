@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collections
-lastmod: 2026-11-11T15:56:10.036Z
+lastmod: 2026-11-13T04:52:12.226Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -206,19 +206,18 @@ components:
           description: >-
             [DEPRECATED - Use associated_events instead] A list of events
             associated with the collection. Markets in these events can be
-            passed as inputs to the Lookup and Create endpoints.
+            passed as inputs to the Create endpoint.
         is_ordered:
           type: boolean
           description: >-
             Whether the collection is ordered. If true, the order of markets
-            passed into Lookup/Create affects the output. If false, the order
-            does not matter.
+            passed into Create affects the output. If false, the order does not
+            matter.
         is_single_market_per_event:
           type: boolean
           description: >-
             [DEPRECATED - Use associated_events instead] Whether the collection
-            accepts multiple markets from the same event passed into
-            Lookup/Create.
+            accepts multiple markets from the same event passed into Create.
         is_all_yes:
           type: boolean
           description: >-
@@ -228,13 +227,13 @@ components:
           type: integer
           format: int32
           description: >-
-            The minimum number of markets that must be passed into Lookup/Create
+            The minimum number of markets that must be passed into Create
             (inclusive).
         size_max:
           type: integer
           format: int32
           description: >-
-            The maximum number of markets that must be passed into Lookup/Create
+            The maximum number of markets that must be passed into Create
             (inclusive).
         functional_description:
           type: string

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-exchange-status
-lastmod: 2026-11-11T15:56:08.210Z
+lastmod: 2026-11-13T04:52:10.538Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,12 @@ lastmod: 2026-11-11T15:56:08.210Z
 
 # Get Exchange Status
 
->  Endpoint for getting the exchange status.
+> Endpoint for getting the exchange status.
+
+The top-level fields describe the default exchange index (0). Read the flags only from a 200 response. When the status of the default index cannot be read, the response is a 500, 503 or 504; its body can be an `ExchangeStatus` with `exchange_active` and `trading_active` set to `false`, or an error object, and in neither case does it mean the exchange is paused.
+
+In `exchange_index_statuses` on a 200 response, an index other than 0 whose status request failed or timed out is reported with all of its flags `false`. Read the status again before treating a single `false` reading for one index as a pause.
+
 
 
 
@@ -69,7 +74,22 @@ paths:
       tags:
         - exchange
       summary: Get Exchange Status
-      description: ' Endpoint for getting the exchange status.'
+      description: >
+        Endpoint for getting the exchange status.
+
+
+        The top-level fields describe the default exchange index (0). Read the
+        flags only from a 200 response. When the status of the default index
+        cannot be read, the response is a 500, 503 or 504; its body can be an
+        `ExchangeStatus` with `exchange_active` and `trading_active` set to
+        `false`, or an error object, and in neither case does it mean the
+        exchange is paused.
+
+
+        In `exchange_index_statuses` on a 200 response, an index other than 0
+        whose status request failed or timed out is reported with all of its
+        flags `false`. Read the status again before treating a single `false`
+        reading for one index as a pause.
       operationId: GetExchangeStatus
       responses:
         '200':

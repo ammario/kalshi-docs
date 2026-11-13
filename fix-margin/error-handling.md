@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/error-handling
-lastmod: 2026-11-12T04:15:11.882Z
+lastmod: 2026-11-13T01:29:35.616Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -67,8 +67,10 @@ Used for application-level business logic errors.
 | 1 | Unknown ID | Referenced ID not found |
 | 2 | Unknown Security | Invalid symbol |
 | 3 | Unsupported Message Type | Message type not implemented on this margin session |
-| 4 | Application not available | System temporarily unavailable |
+| 4 | Application not available | System temporarily unavailable. `Text<58>` is `Service busy, please retry` while a gateway is shutting down: the message was not applied, so reconnect if disconnected and resend. |
 | 5 | Conditionally required field missing | Context-specific field missing |
+| 6 | Not authorized | User or API key is not authorized for the requested action |
+| 8 | Rate limit exceeded | Request was rejected by FIX rate limits (`Text<58>` = `rate limit exceeded`) |
 
 ## Order-Specific Rejections
 
@@ -81,10 +83,10 @@ In ExecutionReport (35=8) with `ExecType=Rejected`:
 | 1 | Unknown symbol | Invalid margin market ticker |
 | 2 | Exchange closed | Trading paused or unavailable |
 | 3 | Order exceeds limit | Risk limit breach or insufficient margin |
-| 4 | Too late to enter | Market not accepting new orders |
-| 5 | Stale order | Expired timestamp on request |
+| 4 | Too late to enter | Market is closed, inactive, or settled |
 | 6 | Duplicate order | ClOrdID already used |
-| 11 | Unsupported order characteristic | Invalid order parameters |
+| 8 | Stale order | Expired timestamp on request |
+| 11 | Unsupported order characteristic | Invalid order parameters, including [field validation rejects](https://docs.kalshi.com/fix-margin/order-entry.md#field-validation-rejects) (`Text<58>` = `TAG <n>`) |
 | 13 | Incorrect quantity | Invalid order size |
 | 15 | Unknown account | Subaccount not found or permission denied |
 | 99 | Other | See Text field |
@@ -95,8 +97,11 @@ In OrderCancelReject (35=9):
 
 | Code | Reason | Description |
 | - | - | - |
-| 0 | Too late to cancel | Order already filled |
+| 0 | Too late to cancel | Market is closed, inactive, or settled |
 | 1 | Unknown order | Order not found or identifiers do not match |
+| 2 | Broker | Invalid amend quantity, or order already fully filled |
+| 6 | Duplicate ClOrdID | The request's ClOrdID is already in use |
+| 18 | Invalid price increment | Replace would self-cross with another order belonging to the same trader |
 | 99 | Other | See Text field |
 
 ## Common Error Scenarios

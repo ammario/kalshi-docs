@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/websockets/orderbook-updates
-lastmod: 2026-10-28T22:41:38.636Z
+lastmod: 2026-11-13T01:27:13.565Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,11 +15,13 @@ lastmod: 2026-10-28T22:41:38.636Z
 - Market specification required:
   - Use `market_ticker` (string) for a single market
   - Use `market_tickers` (array of strings) for multiple markets
-  - `market_id`/`market_ids` are not supported for this channel
+  - `market_id`/`market_ids` are not supported for this channel and never select a market. A first `subscribe` that gives only `market_id`/`market_ids` is acknowledged with `subscribed` but receives no snapshots or deltas. On an existing subscription, a `subscribe`, `add_markets` or `delete_markets` that gives only IDs returns `ok` and changes nothing, so the markets already subscribed keep streaming; `get_snapshot` with only IDs returns error code 14
 - Sends `orderbook_snapshot` first, then incremental `orderbook_delta` updates
 - Supports `update_subscription` with `add_markets` / `delete_markets` / `get_snapshot` actions
 - `get_snapshot` returns an `orderbook_snapshot` for the requested `market_tickers` without changing the subscribed markets. Apply every returned snapshot as a replacement for that market's local book
 - Each connection has one `orderbook_delta` subscription. A repeated `subscribe` adds new markets to its existing `sid`; it does not resend snapshots for markets already subscribed
+- A subscription holds at most 500,000 markets. A `subscribe` or `add_markets` that would exceed this returns error code 26 and adds none of its markets
+- When a market is determined, the server sends an empty `orderbook_snapshot` for it and removes it from the subscription. No further messages follow for that market and there is no separate notification; replace your local book with the empty snapshot
 - A repeated `subscribe` must use the existing `update_interval_ms` (omitting it means `0`). A different valid interval returns error code 11 without adding markets. Use `update_subscription` with `add_markets` to add markets without respecifying the interval. To change the interval, `unsubscribe`, wait for `unsubscribed`, then `subscribe` again
 
 **Matching real-time updates across connections:**
@@ -65,7 +67,7 @@ description: >
   - Market specification required:
     - Use `market_ticker` (string) for a single market
     - Use `market_tickers` (array of strings) for multiple markets
-    - `market_id`/`market_ids` are not supported for this channel
+    - `market_id`/`market_ids` are not supported for this channel and never select a market. A first `subscribe` that gives only `market_id`/`market_ids` is acknowledged with `subscribed` but receives no snapshots or deltas. On an existing subscription, a `subscribe`, `add_markets` or `delete_markets` that gives only IDs returns `ok` and changes nothing, so the markets already subscribed keep streaming; `get_snapshot` with only IDs returns error code 14
   - Sends `orderbook_snapshot` first, then incremental `orderbook_delta` updates
 
   - Supports `update_subscription` with `add_markets` / `delete_markets` /
@@ -78,6 +80,14 @@ description: >
   - Each connection has one `orderbook_delta` subscription. A repeated
   `subscribe` adds new markets to its existing `sid`; it does not resend
   snapshots for markets already subscribed
+
+  - A subscription holds at most 500,000 markets. A `subscribe` or `add_markets`
+  that would exceed this returns error code 26 and adds none of its markets
+
+  - When a market is determined, the server sends an empty `orderbook_snapshot`
+  for it and removes it from the subscription. No further messages follow for
+  that market and there is no separate notification; replace your local book
+  with the empty snapshot
 
   - A repeated `subscribe` must use the existing `update_interval_ms` (omitting
   it means `0`). A different valid interval returns error code 11 without adding

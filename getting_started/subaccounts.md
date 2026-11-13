@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/subaccounts
-lastmod: 2026-11-12T04:15:11.778Z
+lastmod: 2026-11-13T01:31:27.786Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,22 @@ primary subaccount (number `0`) and may use numbered subaccounts `1`–`63`.
 > Subaccounts are currently an **API-only** feature — they are not yet supported in the
 > Kalshi web or mobile app. Numbered-subaccount balances and positions are managed through
 > the trade API.
+
+## Requirements
+
+Creating a numbered subaccount with
+[Create Subaccount](https://docs.kalshi.com/api-reference/portfolio/create-subaccount.md) requires the
+[Advanced API tier](https://docs.kalshi.com/getting_started/rate_limits.md#tier-qualification) or above.
+On the Basic tier the request returns `403` with code
+`subaccount_creation_requires_advanced_api_usage_level`.
+[Intra Account Transfer](https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer.md)
+returns the same error when a Basic-tier account names a numbered subaccount.
+The demo environment does not enforce the tier requirement, so a client that
+works in demo can still receive this `403` in production.
+
+Creating a subaccount needs an API key with the `write` scope, and
+transferring between subaccounts needs `write::transfer`. See
+[Scopes](https://docs.kalshi.com/getting_started/api_keys.md#scopes).
 
 ## Numbering
 

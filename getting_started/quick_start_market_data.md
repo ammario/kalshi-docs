@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_market_data
-lastmod: 2026-05-05T21:10:39.096Z
+lastmod: 2026-11-13T01:29:02.721Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -138,11 +138,11 @@ orderbook_data = orderbook_response.json()
 
 print(f"\nOrderbook for {market_ticker}:")
 print("YES BIDS:")
-for price_dollars, count_fp in orderbook_data['orderbook_fp']['yes_dollars'][:5]:  # Show top 5
+for price_dollars, count_fp in orderbook_data['orderbook_fp']['yes_dollars'][-5:]:  # Best 5 bids: arrays are sorted ascending, best bid last
     print(f"  Price: ${price_dollars}, Quantity: {count_fp}")
 
 print("\nNO BIDS:")
-for price_dollars, count_fp in orderbook_data['orderbook_fp']['no_dollars'][:5]:  # Show top 5
+for price_dollars, count_fp in orderbook_data['orderbook_fp']['no_dollars'][-5:]:  # Best 5 bids: arrays are sorted ascending, best bid last
     print(f"  Price: ${price_dollars}, Quantity: {count_fp}")
 ```
 
@@ -154,12 +154,12 @@ async function getOrderbook(marketTicker) {
 
   console.log(`\nOrderbook for ${marketTicker}:`);
   console.log('YES BIDS:');
-  data.orderbook_fp.yes_dollars.slice(0, 5).forEach(([priceDollars, countFp]) => {
+  data.orderbook_fp.yes_dollars.slice(-5).forEach(([priceDollars, countFp]) => {
     console.log(`  Price: $${priceDollars}, Quantity: ${countFp}`);
   });
 
   console.log('\nNO BIDS:');
-  data.orderbook_fp.no_dollars.slice(0, 5).forEach(([priceDollars, countFp]) => {
+  data.orderbook_fp.no_dollars.slice(-5).forEach(([priceDollars, countFp]) => {
     console.log(`  Price: $${priceDollars}, Quantity: ${countFp}`);
   });
 }
@@ -168,6 +168,10 @@ async function getOrderbook(marketTicker) {
 ## Working with Large Datasets
 
 The Kalshi API uses cursor-based pagination to handle large datasets efficiently. To learn more about navigating through paginated responses, see our [Understanding Pagination](https://docs.kalshi.com/getting_started/pagination.md) guide.
+
+## Data Freshness
+
+Market data responses such as `GET /markets` and `GET /markets/{ticker}` are cached for a short time, so prices, sizes and status can lag the exchange by several seconds, and filtered listings can lag longer than a read of a single market. Poll REST for discovery and reference data; when you need current prices or state, use [WebSockets](https://docs.kalshi.com/getting_started/quick_start_websockets.md).
 
 ## Understanding Orderbook Responses
 

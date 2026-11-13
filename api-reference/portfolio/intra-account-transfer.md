@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer
-lastmod: 2026-11-11T15:56:08.757Z
+lastmod: 2026-11-13T04:52:11.156Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,10 @@ Subaccount-restricted API keys can only transfer between `event_contract` exchan
 When `source_exchange_shard` and `destination_exchange_shard` are the same, Kalshi treats the request as a subaccount transfer. The returned transfer ID appears in the subaccount transfer history.
 
 Cross-exchange-index subaccount transfers run in up to three non-atomic steps. If a later step fails, completed steps are not undone, so funds may remain in the primary account on the source or destination exchange index.
+
+Naming a numbered subaccount requires the Advanced API tier or above; on the Basic tier the request returns 403 with code `subaccount_creation_requires_advanced_api_usage_level`.
+
+**Rate limit:** this endpoint has its own bucket, separate from the Read and Write budgets and the same on every tier. It refills at 600 tokens per minute and holds 600 tokens; at the default cost of 10 tokens that is 60 transfers per minute. A request over the limit returns 429.
 
 
 
@@ -94,6 +98,17 @@ paths:
         steps. If a later step fails, completed steps are not undone, so funds
         may remain in the primary account on the source or destination exchange
         index.
+
+
+        Naming a numbered subaccount requires the Advanced API tier or above; on
+        the Basic tier the request returns 403 with code
+        `subaccount_creation_requires_advanced_api_usage_level`.
+
+
+        **Rate limit:** this endpoint has its own bucket, separate from the Read
+        and Write budgets and the same on every tier. It refills at 600 tokens
+        per minute and holds 600 tokens; at the default cost of 10 tokens that
+        is 60 transfers per minute. A request over the limit returns 429.
       operationId: IntraExchangeInstanceTransfer
       requestBody:
         required: true

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/market_lifecycle
-lastmod: 2026-11-12T04:15:11.784Z
+lastmod: 2026-11-12T17:58:53.976Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -65,7 +65,6 @@ Markets have several time fields:
 | `close_time` | When trading stops. May be moved earlier if `can_close_early` is true. |
 | `expected_expiration_time` | When the outcome is expected to be known. |
 | `latest_expiration_time` | Latest possible expiration time. |
-| `expiration_time` | Deprecated legacy field. Prefer `latest_expiration_time` for the legacy expiry semantics; use `expected_expiration_time` if you want the forecasted time. |
 
 ## Determination and settlement
 

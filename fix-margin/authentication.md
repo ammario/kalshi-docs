@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/authentication
-lastmod: 2026-11-12T04:15:11.882Z
+lastmod: 2026-11-13T01:29:35.616Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -38,6 +38,7 @@ The initiator sends a Logon message. The acceptor responds with either a Logon (
 | - | - | - | - |
 | 98 | EncryptMethod | Method of encryption | None\<0> |
 | 96 | RawData | Client logon message signature | Base64 encoded signature |
+| 108 | HeartbeatInt | Heartbeat interval (seconds). Values below 3 are rejected with `Invalid HeartBtInt`. | N >= 3 |
 | 1137 | DefaultApplVerID | Default application version | FIX50SP2\<9> |
 
 ### Optional Fields
@@ -45,8 +46,7 @@ The initiator sends a Logon message. The acceptor responds with either a Logon (
 | Tag | Name | Description | Default |
 | - | - | - | - |
 | 141 | ResetSeqNumFlag | Reset sequence numbers on logon. **Must be Y for KalshiNR and KalshiDC.** | N |
-| 108 | HeartbeatInt | Heartbeat interval in seconds, must be >= 3. | 30 |
-| 8013 | CancelOrdersOnDisconnect | Cancel orders on disconnection | N |
+| 8013 | CancelOrdersOnDisconnect | On any disconnection (including graceful logout), cancel the resting orders placed over FIX with this API key. Orders placed through REST or with another API key are not canceled. See the warning under Logout below. | N |
 | 20126 | ListenerSession | Listen-only session. **KalshiNR/KalshiRT only, requires SkipPendingExecReports=Y.** | N |
 | 20200 | MessageRetentionPeriod | How long session messages are stored for retransmission, max 72 hours. **KalshiRT only.** | 24 |
 | 21005 | UseDollars | Fixed-point dollar pricing flag. Margin sessions always use fixed-point dollar pricing; clients should treat this as always enabled. | Always on |
@@ -108,8 +108,8 @@ raw_data_value = b64encode(signature).decode('utf-8')
 
 | Behavior | Detail |
 | - | - |
-| Default heartbeat interval | 30 seconds |
-| Missed heartbeat | Connection terminates if heartbeat response not received within interval |
+| Heartbeat interval | Set by `HeartbeatInt<108>` on Logon. Always send it; 30 seconds is a typical value. |
+| Idle timeout | The server ends the session and disconnects when it has received no inbound FIX message of any kind (Heartbeat, TestRequest, other session messages, or application messages) for twice the `HeartbeatInt` |
 | Sequence number lower than expected | Connection terminated |
 | Sequence number higher than expected | Recoverable with ResendRequest (KalshiRT only) |
 
@@ -130,7 +130,13 @@ The [drop copy session](https://docs.kalshi.com/fix-margin/drop-copy.md) provide
 
 ## Logout (35=5)
 
-Either side may initiate a Logout. The counterparty responds with a Logout, and the transport connection is terminated. If `CancelOrdersOnDisconnect=Y` was set on Logon, all open orders are canceled.
+Either side may initiate a Logout. The counterparty responds with a Logout, and the transport connection is terminated. If `CancelOrdersOnDisconnect=Y` was set on Logon, the resting orders placed over FIX with this session's API key are canceled.
+
+> [!WARNING]
+>
+> **CancelOrdersOnDisconnect is not an account-wide kill switch.** It cancels only the resting orders that were placed over FIX with this session's API key. Orders placed through the REST API, or over FIX with a different API key, keep resting. Cancel those separately.
+>
+> A connection that goes silent without closing is only detected by the idle timeout, after twice your `HeartbeatInt` with no inbound message. Cancellation starts after that detection and takes further time to complete; there is no guaranteed upper bound on when the orders are canceled. A shorter `HeartbeatInt` (minimum 3 seconds) shortens detection only. Confirm cancellation from the execution reports or by querying your orders, and do not rely on cancel-on-disconnect as your only protection.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-markets
-lastmod: 2026-11-11T15:56:08.357Z
+lastmod: 2026-11-13T04:52:10.693Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -20,6 +20,14 @@ lastmod: 2026-11-11T15:56:08.357Z
  | min_updated_ts, max_updated_ts | *empty* | Incompatible with all filters besides `mve_filter=exclude`. May be combined with `series_ticker`, which requires `mve_filter=exclude` |
 
  Markets that settled before the historical cutoff are only available via `GET /historical/markets`. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
+
+ Paging and ordering:
+ - When `event_ticker` or `tickers` is the only filter (no `status`, `series_ticker`, timestamp filter, `mve_filter` or `cursor`), every matching market is returned in one response, in no guaranteed order. `limit` is not applied and the returned `cursor` is empty.
+ - Otherwise results are sorted by creation time, newest first, with these exceptions. With `min_updated_ts` or `max_updated_ts` they are sorted by last update time, oldest first. When neither `event_ticker` nor `tickers` is supplied, `status=closed`, `min_close_ts` or `max_close_ts` sorts by close time, latest first, and `min_settled_ts` or `max_settled_ts` sorts by settlement time, latest first. A request that supplies `event_ticker` or `tickers` together with another filter is sorted by creation time, even when that filter is `status=closed` or a close-time or settlement-time filter. The unpaged case above, where `event_ticker` or `tickers` is the only filter, has no guaranteed order.
+ - A market whose close time changes while you page through a listing sorted by close time can be skipped or returned twice. Deduplicate by `ticker`.
+ - A `cursor` that cannot be decoded is ignored and the first page is returned, with no error. Pass the cursor exactly as it was returned, and stop when the returned `cursor` is empty.
+
+ Responses are cached for a short time, so prices, sizes and `status` can lag the exchange by several seconds, and filtered listings can lag longer than a read of a single market. Use the [WebSocket API](https://docs.kalshi.com/websockets/websocket-connection) when you need current state.
 
 
 
@@ -95,6 +103,14 @@ paths:
          | min_updated_ts, max_updated_ts | *empty* | Incompatible with all filters besides `mve_filter=exclude`. May be combined with `series_ticker`, which requires `mve_filter=exclude` |
 
          Markets that settled before the historical cutoff are only available via `GET /historical/markets`. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
+
+         Paging and ordering:
+         - When `event_ticker` or `tickers` is the only filter (no `status`, `series_ticker`, timestamp filter, `mve_filter` or `cursor`), every matching market is returned in one response, in no guaranteed order. `limit` is not applied and the returned `cursor` is empty.
+         - Otherwise results are sorted by creation time, newest first, with these exceptions. With `min_updated_ts` or `max_updated_ts` they are sorted by last update time, oldest first. When neither `event_ticker` nor `tickers` is supplied, `status=closed`, `min_close_ts` or `max_close_ts` sorts by close time, latest first, and `min_settled_ts` or `max_settled_ts` sorts by settlement time, latest first. A request that supplies `event_ticker` or `tickers` together with another filter is sorted by creation time, even when that filter is `status=closed` or a close-time or settlement-time filter. The unpaged case above, where `event_ticker` or `tickers` is the only filter, has no guaranteed order.
+         - A market whose close time changes while you page through a listing sorted by close time can be skipped or returned twice. Deduplicate by `ticker`.
+         - A `cursor` that cannot be decoded is ignored and the first page is returned, with no error. Pass the cursor exactly as it was returned, and stop when the returned `cursor` is empty.
+
+         Responses are cached for a short time, so prices, sizes and `status` can lag the exchange by several seconds, and filtered listings can lag longer than a read of a single market. Use the [WebSocket API](https://docs.kalshi.com/websockets/websocket-connection) when you need current state.
       operationId: GetMarkets
       parameters:
         - $ref: '#/components/parameters/MarketLimitQuery'
@@ -359,12 +375,9 @@ components:
           format: date-time
           nullable: true
           x-omitempty: true
-          description: Time when this market is expected to expire
-        expiration_time:
-          type: string
-          format: date-time
-          deprecated: true
-          x-go-type-skip-optional-pointer: true
+          description: >-
+            Time when this market is expected to expire. Never later than
+            `latest_expiration_time`.
         latest_expiration_time:
           type: string
           format: date-time

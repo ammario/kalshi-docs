@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/cancel-order-v2
-lastmod: 2026-11-11T15:56:08.608Z
+lastmod: 2026-11-13T04:52:10.973Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-11-11T15:56:08.608Z
 
 # Cancel Order (V2)
 
-> Endpoint for cancelling event-market orders using the V2 response shape. To auto-route the cancellation, provide `market_ticker` and omit `exchange_index` or set it to `-1`. Returns `{order_id, client_order_id, reduced_by}` rather than a full order object.
+> Endpoint for cancelling event-market orders using the V2 response shape. To auto-route the cancellation, provide `market_ticker` and omit `exchange_index` or set it to `-1`. Returns `{order_id, client_order_id, reduced_by}` rather than a full order object. A cancellation sent to an exchange shard other than the one the order rests on returns `404`, even though the order is still resting; see [Order Errors](/getting_started/order_errors#requests-sent-to-the-wrong-exchange-shard).
 
 > [!WARNING]
 >
@@ -80,7 +80,10 @@ paths:
         Endpoint for cancelling event-market orders using the V2 response shape.
         To auto-route the cancellation, provide `market_ticker` and omit
         `exchange_index` or set it to `-1`. Returns `{order_id, client_order_id,
-        reduced_by}` rather than a full order object.
+        reduced_by}` rather than a full order object. A cancellation sent to an
+        exchange shard other than the one the order rests on returns `404`, even
+        though the order is still resting; see [Order
+        Errors](/getting_started/order_errors#requests-sent-to-the-wrong-exchange-shard).
       operationId: CancelOrderV2
       parameters:
         - $ref: '#/components/parameters/OrderIdPath'

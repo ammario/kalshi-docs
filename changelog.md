@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-11-12T06:22:15.783Z
+lastmod: 2026-11-13T04:52:16.751Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,6 +22,55 @@ the `FIX` tag.
 
 **November 19, 2026**
 
+Four endpoints for on-request concert markets (series starting with
+`KXRFQCONCERT`), which pay when a show is postponed, canceled or either:
+
+* `POST /concert_cancellation_markets` returns the market for a show, its
+  scheduled date and a cover (`postponed`, `cancelled` or `either`),
+  creating it if it doesn't exist yet. `created` says whether it is new.
+  Send an RFQ for the returned `market_ticker` with
+  `POST /communications/rfqs` to trade it. A valid request that can't be
+  offered (for example a show that has moved to another date) returns 409
+  `concert_cancellation_market_unavailable`, and reaching the creation
+  limit returns 429 `concert_cancellation_market_limit_exceeded`, which is
+  not request-rate limiting.
+* `GET /concert_cancellation_markets/availability` returns the covers that
+  can be created and the metros whose concerts are listed. It needs no
+  authentication.
+* `GET /concert_cancellation_markets/concerts` lists a metro's upcoming
+  concerts, and `GET /concert_cancellation_markets/concerts/search` finds
+  them by name. Both return the show id and date the create request takes.
+
+See [On-Request Concert Markets](https://docs.kalshi.com/getting_started/concert_rfqs.md). These
+markets are not live yet.
+
+**November 19, 2026**
+
+REST responses now describe the rate limit bucket each request was charged
+to: `X-RateLimit-Limit` (its capacity in tokens), `X-RateLimit-Remaining`,
+`X-RateLimit-Reset` (seconds until it is full) and `X-RateLimit-Cost`.
+429 responses carry them too, but not `Retry-After`. Publicly cacheable
+responses, which include most market data, carry none of them. See
+[Rate limit headers](https://docs.kalshi.com/getting_started/rate_limits.md#rate-limit-headers).
+
+**November 19, 2026**
+
+`expected_expiration_time` on market objects, including markets nested in
+events, is now capped at the market's `latest_expiration_time`. Some
+markets in events with several date strikes reported the last strike's
+date, which could fall after their own latest expiration. Markets whose
+expected expiration was already at or before the latest expiration are
+unchanged.
+
+**November 19, 2026**
+
+The deprecated `expiration_time` field is removed from market objects,
+including markets nested in events. Read `latest_expiration_time` instead:
+it has always carried the same value. Order `expiration_time` is unrelated
+and unchanged.
+
+**November 19, 2026**
+
 During the overnight session (8 PM to 4 AM ET), every equities perps order must be priced within 20% of the market's 4 PM ET settlement price from the day the session opened. Orders outside the band are rejected with `invalid price`. When the band takes effect or moves, resting orders outside it are canceled: margin [user\_orders](https://docs.kalshi.com/websockets/user-orders.md) and orderbook delta messages report `last_update_reason: "SettlementBoundsCancel"`, and FIX ExecutionReports (35=8) carry a Text (58) of `SETTLEMENT_BOUNDS_CANCEL`. See [Price Banding](https://docs.kalshi.com/margin/price-banding.md).
 
 **November 19, 2026**
@@ -34,6 +83,19 @@ During the overnight session (8 PM to 4 AM ET), every equities perps order must 
   authentication.
 * `GET /incentive_programs` takes `series_ticker` and `event_ticker` filters,
   and each program now carries its `series_ticker` and `event_ticker`.
+
+**November 12, 2026**
+
+The lower-latency hosts for `fill` and `user_orders` updates are now:
+
+* Production Predictions: `wss://user-ws.kalshi.com/trade-api/ws/v2`
+* Production Margin: `wss://margin-user-ws.kalshi.com/trade-api/ws/v2/margin`
+* Demo Predictions: `wss://user-ws.demo.kalshi.co/trade-api/ws/v2`
+* Demo Margin: `wss://margin-user-ws.demo.kalshi.co/trade-api/ws/v2/margin`
+
+The user hosts serve `fill` and `user_orders` today, and more per-user channels will be added over time. See [API Environments and Endpoints](https://docs.kalshi.com/getting_started/api_environments.md#fill-and-order-updates).
+
+The `warp-ws` and `margin-warp-ws` hosts are deprecated. They keep working and serve the same channels for now. Move to the user hosts above.
 
 **November 12, 2026**
 

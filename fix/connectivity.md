@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/connectivity
-lastmod: 2026-11-12T04:15:11.880Z
+lastmod: 2026-11-13T01:29:35.616Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -87,7 +87,7 @@ Members on the Prime tier or above can also contact [institutional@kalshi.com](m
 * **Excluded**: Logout (35=5), Heartbeat (35=0), TestRequest (35=1)
 * Logon (35=A) is rate-limited separately from application messages. See [Reconnecting](https://docs.kalshi.com/fix/authentication.md#reconnecting) for retry guidance.
 * Order-entry and RFQ messages use the Write bucket. See [Rate Limits and Tiers](https://docs.kalshi.com/getting_started/rate_limits.md) for tier budgets and token-cost behavior.
-* Order-entry messages (35=D, 35=F, 35=G) carrying `ExDestination` (tag 100) with a value `>= 1` are billed to a [per-shard Write budget](https://docs.kalshi.com/getting_started/rate_limits.md#sharded-exchanges-have-per-shard-write-budgets). RFQ quote accepts (35=D carrying `QuoteID`) always bill the unscoped Write budget.
+* Order-entry messages (35=D, 35=F, 35=G) carrying `ExDestination` (tag 100) with a value `>= 1` are billed to a [per-shard Write budget](https://docs.kalshi.com/getting_started/rate_limits.md#sharded-exchanges-have-per-shard-write-budgets). RFQ quote accepts (35=D carrying `QuoteID`) always bill the shard 1 Write budget, whatever `ExDestination` says.
 * Mass Cancel Request (35=q) with `530=6` is limited to 1 request/second. With `530=1` (one market) it uses the Write bucket at the same cost as an order cancel (35=F).
 
 ## Maintenance Window

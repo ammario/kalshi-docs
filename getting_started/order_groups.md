@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/order_groups
-lastmod: 2026-11-12T04:15:11.777Z
+lastmod: 2026-11-13T01:30:44.913Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -39,6 +39,16 @@ A **Reset** clears the triggered state and the rolling volume counter, returning
 ## Error Handling
 
 Business-logic errors (e.g. order group not found) are returned as rejects. Refer to the protocol-specific pages for error message formats.
+
+A group belongs to the subaccount and exchange index it was created with, and only orders from that subaccount on markets of that exchange index can join it. Over REST, a Create Order request that names a group ID returns:
+
+| Situation | Response |
+| - | - |
+| The group is triggered | `400` with code `exceeded_order_group_contracts_limit` |
+| The group does not exist on the market's exchange index | `404` with code `order_group_not_found` |
+| The group belongs to a different subaccount | `404` with code `not_found` |
+
+See [Order Errors](https://docs.kalshi.com/getting_started/order_errors.md) for the other codes the order endpoints return.
 
 ## Protocol-Specific Details
 

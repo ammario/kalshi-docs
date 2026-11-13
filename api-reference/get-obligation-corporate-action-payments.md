@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-obligation-corporate-action-payments
-lastmod: 2026-11-11T15:56:07.865Z
+lastmod: 2026-11-13T04:52:10.166Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/market/get-market-candlesticks
-lastmod: 2026-11-11T15:56:08.273Z
+lastmod: 2026-11-13T04:52:10.603Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,6 +10,10 @@ lastmod: 2026-11-11T15:56:08.273Z
 
 > Time period length of each candlestick in minutes. Valid values: 1 (1 minute), 60 (1 hour), 1440 (1 day).
 Candlesticks for markets that settled before the historical cutoff are only available via `GET /historical/markets/{ticker}/candlesticks`. See [Historical Data](https://docs.kalshi.com/getting_started/historical_data) for details.
+
+One request can span at most 5,000 periods. If the minutes between `start_ts` and `end_ts` divided by `period_interval` exceed 5,000, the request is rejected with 400 `bad_request` and the `details` field gives the requested and maximum counts. For example, 1-minute candlesticks are limited to about 3.5 days per request; split a longer range into several requests. `start_ts` and `end_ts` must be in seconds; millisecond values are rejected with 400 `bad_request`.
+
+The most recent candlesticks can be a few seconds behind the latest trades and quotes.
 
 
 
@@ -80,6 +84,19 @@ paths:
         [Historical
         Data](https://docs.kalshi.com/getting_started/historical_data) for
         details.
+
+
+        One request can span at most 5,000 periods. If the minutes between
+        `start_ts` and `end_ts` divided by `period_interval` exceed 5,000, the
+        request is rejected with 400 `bad_request` and the `details` field gives
+        the requested and maximum counts. For example, 1-minute candlesticks are
+        limited to about 3.5 days per request; split a longer range into several
+        requests. `start_ts` and `end_ts` must be in seconds; millisecond values
+        are rejected with 400 `bad_request`.
+
+
+        The most recent candlesticks can be a few seconds behind the latest
+        trades and quotes.
       operationId: GetMarketCandlesticks
       parameters:
         - name: series_ticker

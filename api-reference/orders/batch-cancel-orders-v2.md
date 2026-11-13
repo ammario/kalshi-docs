@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders-v2
-lastmod: 2026-11-11T15:56:08.595Z
+lastmod: 2026-11-13T04:52:10.958Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-11-11T15:56:08.595Z
 
 # Batch Cancel Orders (V2)
 
-> Endpoint for cancelling a batch of event-market orders using the V2 response shape. To auto-route a cancellation, provide its `market_ticker` and omit `exchange_index` or set it to `-1`. The maximum batch size scales with your tier's write budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
+> Endpoint for cancelling a batch of event-market orders using the V2 response shape. To auto-route a cancellation, provide its `market_ticker` and omit `exchange_index` or set it to `-1`. The maximum batch size scales with your tier's write budget — see [Rate Limits and Tiers](/getting_started/rate_limits). The batch is not atomic: the `200` response carries one entry per order, and a cancellation that failed has an `error` object and `reduced_by` of `0.00`. An entry error with a timeout or unavailable code does not prove the order was not cancelled. Some checks reject the whole batch before any cancellation is sent. See [Order Errors](/getting_started/order_errors#batch-requests).
 
 > [!WARNING]
 >
@@ -81,7 +81,12 @@ paths:
         response shape. To auto-route a cancellation, provide its
         `market_ticker` and omit `exchange_index` or set it to `-1`. The maximum
         batch size scales with your tier's write budget — see [Rate Limits and
-        Tiers](/getting_started/rate_limits).
+        Tiers](/getting_started/rate_limits). The batch is not atomic: the `200`
+        response carries one entry per order, and a cancellation that failed has
+        an `error` object and `reduced_by` of `0.00`. An entry error with a
+        timeout or unavailable code does not prove the order was not cancelled.
+        Some checks reject the whole batch before any cancellation is sent. See
+        [Order Errors](/getting_started/order_errors#batch-requests).
       operationId: BatchCancelOrdersV2
       requestBody:
         required: true

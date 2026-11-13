@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin/price-banding
-lastmod: 2026-11-12T06:22:15.670Z
+lastmod: 2026-11-13T04:06:56.730Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -10,7 +10,9 @@ lastmod: 2026-11-12T06:22:15.670Z
 
 > How price banding works for Kalshi margin markets
 
-For perpetual markets, prices move in `0.0001` dollar ticks. Price banding limits how far from the market an order may be priced, and an order must satisfy every band in force.
+For perpetual markets, prices move in ticks of the market's `tick_size`, `0.0001` dollars unless the market says otherwise. Price banding limits how far from the market an order may be priced, and an order must satisfy every band in force.
+
+Band widths are set per market and per asset class. The widths on this page are the defaults; the exchange can widen or narrow them for a market without notice.
 
 **Book band**
 
@@ -29,7 +31,8 @@ For US equities during the overnight session (8 PM to 4 AM ET, on nights before 
 * Unless the opposite side is empty, the book band limits only orders that cross the market. The fair-value band limits how high a bid and how low an ask may be; it never rejects a bid below it or an ask above it.
 * Resting orders are not canceled when the book or fair-value bands move. The overnight settlement band cancels resting orders outside it when it takes effect or moves.
 * Order amends outside any band are not allowed.
-* Orders and amends outside any band are rejected with `invalid price`.
+* Orders and amends outside any band are rejected with HTTP `400` and error code `invalid_price` (message `invalid price`). A price that is zero or not on the market's tick returns the same code, so check the price against `tick_size` before assuming a band rejected it.
+* An amend is checked at the resting-order width; the wider immediate-or-cancel and fill-or-kill allowance applies to new orders only. An amend that only raises the quantity is checked too, at the order's current price.
 * Liquidations and fired exit triggers are placed by the exchange and must be able to cross a thin book, so they are not subject to the book band. They remain subject to the fair-value and overnight settlement bands.
 
 

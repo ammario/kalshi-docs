@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/transfer-between-subaccounts
-lastmod: 2026-11-11T15:56:10.860Z
+lastmod: 2026-11-13T04:52:13.206Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-11-11T15:56:10.860Z
 
 # Transfer Between Subaccounts
 
-> Transfers funds between the authenticated user's margin subaccounts. Use 0 for the primary account, or 1-63 for numbered subaccounts.
+> Transfers funds between the authenticated user's margin subaccounts. Use 0 for the primary account, or 1-63 for numbered subaccounts. Transfers are refused with HTTP 403 and error code `permission_denied` (details: `margin withdrawals are temporarily disabled during settlement and funding`) from shortly before each scheduled settlement or funding run until that run has been processed, and while a cash corporate action is being processed. The details text is the same in each case. Retry with a backoff until the transfer is accepted.
 
 
 
@@ -59,7 +59,13 @@ paths:
       summary: Transfer Between Subaccounts
       description: >-
         Transfers funds between the authenticated user's margin subaccounts. Use
-        0 for the primary account, or 1-63 for numbered subaccounts.
+        0 for the primary account, or 1-63 for numbered subaccounts. Transfers
+        are refused with HTTP 403 and error code `permission_denied` (details:
+        `margin withdrawals are temporarily disabled during settlement and
+        funding`) from shortly before each scheduled settlement or funding run
+        until that run has been processed, and while a cash corporate action is
+        being processed. The details text is the same in each case. Retry with a
+        backoff until the transfer is accepted.
       operationId: ApplyMarginSubaccountTransfer
       requestBody:
         required: true

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/making_your_first_request
-lastmod: 2026-04-26T15:27:38.165Z
+lastmod: 2026-11-13T04:06:56.730Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

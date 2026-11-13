@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/order-entry
-lastmod: 2026-11-12T04:15:11.889Z
+lastmod: 2026-11-13T04:06:56.730Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -25,7 +25,7 @@ Used to submit a new order to the Exchange.
 | 54 | Side | Char | Y | `1`=Buy (Yes), `2`=Sell (No) |
 | 55 | Symbol | String | Y | Market ticker (e.g. `EURUSD-23JUN2618-B1.087`) |
 | 100 | ExDestination | Integer | N | Exchange index. Omit or use `-1` to auto-route by `Symbol<55>`. With `UseCapReservation` (21032) or [`AutoTransfer` (21035)](https://docs.kalshi.com/fix/authentication#optional-fields) enabled, other values are rejected. Ignored for margin sessions. |
-| 59 | TimeInForce | Char | N | `0`=Day (expires 11:59:59.999pm ET), `1`=GTC, `3`=IOC, `4`=FOK, `6`=GTD. Past GTD dates are treated as IOC. |
+| 59 | TimeInForce | Char | N | `0`=Day (expires 11:59:59.999pm ET), `1`=GTC, `3`=IOC, `4`=FOK, `6`=GTD. Past GTD dates are treated as IOC. **If omitted, the order is good-till-canceled:** it rests until it fills or you cancel it. This differs from FIX's Day default; send `59=0` if you want the order to expire at the end of the day. |
 | 126 | ExpireTime | UTCTimestamp | C | Required when TimeInForce=GTD. |
 | 117 | QuoteId | UUID | N | Quote to accept when using NewOrderSingle for an RFQ quote acceptance. Reduce-only (`18=E`) is not supported and is rejected. |
 | 448 | PartyID | String | N | FCM only. Full customer-account identifier in `<fcm_user_id>_<suffix>` format. See [FCM customer-account identifiers](#fcm-customer-account-identifiers). |
@@ -201,8 +201,9 @@ Common values for the Text field in Execution Reports:
 
 * **EXCHANGE\_UNAVAILABLE** - the gateway could not confirm whether the order was applied (exchange unreachable, request timed out, or interrupted after the order may have been accepted). Reconcile the order's state, or retry with the same ClOrdID. Maps to OrdRejReason "Other"
 * **INTERNAL\_ERROR** - a reject from a healthy exchange that could not be mapped to a specific reason. The order was not applied, so it is safe to fix and resubmit. Maps to OrdRejReason "Other"
-* **MARKET\_ALREADY\_CLOSED** - maps to OrdRejReason "Exchange closed"
-* **MARKET\_INACTIVE** - maps to OrdRejReason "Exchange closed"
+* **MARKET\_ALREADY\_CLOSED** - maps to OrdRejReason "Too late to enter"
+* **MARKET\_ALREADY\_SETTLED** - maps to OrdRejReason "Too late to enter"
+* **MARKET\_INACTIVE** - maps to OrdRejReason "Too late to enter"
 * **MARKET\_NOT\_FOUND** - maps to OrdRejReason "Unknown symbol"
 * **SELF\_CROSS\_ATTEMPT** - maps to ExecutionType "Canceled"
 * **SELF\_CROSS\_ATTEMPT\_PARTIALLY\_FILLED** - maps to ExecutionType "Canceled"
@@ -229,6 +230,35 @@ Common values for the Text field in Execution Reports:
 * **IMMEDIATE\_OR\_CANCELLED** - maps to ExecutionType "Canceled"
 * **REDUCE\_ONLY** - reduce-only order canceled because there was no position to reduce. Maps to ExecutionType "Canceled"
 * **EXPIRED** - maps to OrdRejReason "Stale order" (RFQ quote had expired when the order arrived)
+* **EXPIRED\_TIMESTAMP** - maps to OrdRejReason "Stale order"
+* **TOO\_MANY\_OPEN\_ORDERS** - maps to OrdRejReason "Order exceeds limit"
+* **AVAILABLE\_BALANCE\_TOO\_LOW** - maps to OrdRejReason "Order exceeds limit"
+* **EXCEEDED\_CANCEL\_GROUP\_LIMIT** - maps to OrdRejReason "Order exceeds limit"
+* **INVALID\_PRICE** - the price is off the market's tick grid or outside its valid range. Maps to OrdRejReason "Unsupported order characteristic"
+* **INVALID\_ORDER\_SIZE** - maps to OrdRejReason "Incorrect quantity"
+* **INVALID\_NOTIONAL\_VALUE** - maps to OrdRejReason "Incorrect quantity"
+* **INVALID\_CUSTOMER\_ACCOUNT\_ID** - maps to OrdRejReason "Unsupported order characteristic"
+* **CUSTOMER\_ACCOUNT\_ID\_TOO\_LONG** - the suffix of a new FCM customer-account identifier is longer than 16 characters. Maps to OrdRejReason "Unsupported order characteristic"
+* **INSUFFICIENT\_SHARD\_BALANCE** - the account has never been funded on the market's [exchange index](https://docs.kalshi.com/getting_started/exchange_sharding.md). Fund that index, then resubmit. Maps to OrdRejReason "Unknown account"
+* **TRADING\_BLOCKED** - the account is not permitted to place this order. Maps to OrdRejReason "Other"
+* **LOCATION\_BLOCKED** - the account is not permitted to place this order. Maps to OrdRejReason "Other"
+* **CATEGORY\_BLOCKED** - the account is not permitted to place this order. Maps to OrdRejReason "Other"
+* **exchange index out of range** - the order could not be routed to the exchange index in `ExDestination<100>`. Maps to OrdRejReason "Other"
+* **Service busy, please retry** - the gateway could not queue the request, so it was not applied. Resend it. Maps to OrdRejReason "Other" (CxlRejReason "Other" on cancel and replace)
+* **TAG \<n>** - a field failed one of the gateway's order-level checks before the order reached the exchange. See [Field validation rejects](#field-validation-rejects)
+
+### Field validation rejects
+
+Some field checks on NewOrderSingle, OrderCancelRequest, and OrderCancelReplaceRequest are answered with the normal order response instead of a session-level Reject (35=3). `Text<58>` is then `TAG <n>`, where `<n>` is the number of the offending tag:
+
+| Request | Response |
+| - | - |
+| NewOrderSingle (35=D) | ExecutionReport (35=8), `ExecType=Rejected`, `OrdRejReason<103>=11` |
+| OrderCancelRequest (35=F), OrderCancelReplaceRequest (35=G) | OrderCancelReject (35=9), `CxlRejReason<102>=99` |
+
+For example, on NewOrderSingle `58=TAG 44` means `Price<44>` is outside the valid range or has more precision than the session's price format allows, `58=TAG 59` means an unsupported `TimeInForce` and `58=TAG 18` an unsupported `ExecInst` combination. Correct the field and resubmit.
+
+This covers only some checks. Other unacceptable values are still answered with a session-level Reject (35=3) naming the tag in `RefTagID<371>`, and no order response follows: for example a malformed `ClOrdID<11>` or `OrigClOrdID<41>`, an `AllocAccount<79>` outside 0-63, or a `Price<44>` on OrderCancelReplaceRequest that does not fit the price format. Handle both responses for every order message.
 
 ### OrderCancelReject (35=9)
 
@@ -242,6 +272,19 @@ Exchange-side amend and cancel failures are returned as OrderCancelReject (35=9)
 | `ORDER_AMEND_IN_PROGRESS` | Broker |
 | `ORDER_ATTRIBUTES_MISMATCH` | Unknown order |
 | `EVENT_CONTRACT_DAILY_CAP_EXCEEDED` | Broker |
+| `MARKET_ALREADY_CLOSED`, `MARKET_ALREADY_SETTLED`, `MARKET_INACTIVE` | Too late to cancel |
+| `NOT_FOUND` | Unknown order |
+| `ORDER_ID_CLIENT_ORDER_ID_MISMATCH`, `ORDER_SIDE_MISMATCH`, `ORDER_TICKER_MISMATCH` | Unknown order |
+| `ORDER_ALREADY_EXISTS` (the request's `ClOrdID` is already in use) | Duplicate ClOrdID |
+| `AMEND_ORDER_NO_OP` (the replace changes nothing) | Other |
+| `MARKET_NOT_FOUND` | Other |
+| `EXCHANGE_PAUSED`, `TRADING_PAUSED` | Other |
+| `INVALID_PRICE`, `INVALID_ORDER_SIZE`, `INVALID_NOTIONAL_VALUE` | Other |
+| `AVAILABLE_BALANCE_TOO_LOW` | Other |
+| `POST_ONLY_CROSS` | Other |
+| `TRADING_BLOCKED`, `CATEGORY_BLOCKED` | Other |
+| `TAG <n>` ([field validation](#field-validation-rejects)) | Other |
+| `Service busy, please retry` (not applied; resend) | Other |
 
 ### Position and Fee Information
 
@@ -291,8 +334,11 @@ ExecutionReports independently include the customer account when applicable and 
 
 ### Rejection Reasons (102)
 
-* **Too late to cancel\<0>**: Order already filled
-* **Unknown order\<1>**: Order not found
+* **Too late to cancel\<0>**: Market is closed, inactive, or settled
+* **Unknown order\<1>**: Order not found, or order ID/side/ticker mismatch
+* **Broker\<2>**: Invalid amend quantity, or order already fully filled
+* **Duplicate ClOrdID\<6>**: The request's ClOrdID is already in use
+* **Invalid price increment\<18>**: Replace would self-cross
 * **Other\<99>**: See Text field
 
 ## Mass Cancel Request (35=q)

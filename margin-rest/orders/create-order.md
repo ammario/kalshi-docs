@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/orders/create-order
-lastmod: 2026-11-11T15:56:10.502Z
+lastmod: 2026-11-13T04:52:12.782Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-11-11T15:56:10.502Z
 
 # Create Order
 
-> Endpoint for submitting orders in a market.
+> Endpoint for submitting orders in a market. Rejections return an error `code` that names the cause; see Order rejections in the Perps API overview (https://docs.kalshi.com/margin#order-rejections) for the codes and HTTP statuses.
 
 
 
@@ -57,7 +57,11 @@ paths:
       tags:
         - orders
       summary: Create Order
-      description: Endpoint for submitting orders in a market.
+      description: >-
+        Endpoint for submitting orders in a market. Rejections return an error
+        `code` that names the cause; see Order rejections in the Perps API
+        overview (https://docs.kalshi.com/margin#order-rejections) for the codes
+        and HTTP statuses.
       operationId: CreateMarginOrder
       requestBody:
         required: true
@@ -219,9 +223,12 @@ components:
       description: >-
         Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
         to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported; the minimum granularity is
-        0.01 contracts.
+        "10", "10.0", "10.00"); responses always emit 2 decimals. A market whose
+        `fractional_trading_enabled` is false trades whole contracts only.
+        There, an order for a fractional count (e.g., "2.50") is rejected with
+        HTTP 400 and error code `invalid_order_size`, and an amend or decrease
+        that would leave a fractional count is rejected with HTTP 400 and error
+        code `invalid_amend_quantity_for_order`.
       example: '10.00'
     FixedPointDollars:
       type: string

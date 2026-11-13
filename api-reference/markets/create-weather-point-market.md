@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/markets/create-weather-point-market
-lastmod: 2026-11-11T20:14:19.225Z
+lastmod: 2026-11-13T04:52:12.050Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

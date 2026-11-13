@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/quick_start_create_order
-lastmod: 2026-06-02T19:56:58.429Z
+lastmod: 2026-11-13T01:30:44.913Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -149,8 +149,10 @@ else:
 The `client_order_id` field is optional, but strongly recommended for order deduplication:
 
 * Generate a unique ID (like UUID4) for each order before submission when you want idempotent retries
-* If network issues occur, you can resubmit with the same `client_order_id`
-* The API will reject duplicate submissions with the same `client_order_id`, preventing accidental double orders
+* If network issues occur, check whether the order was placed before resubmitting. Resubmitting with the same `client_order_id` is rejected while the first order is still open, but not reliably after it has filled, canceled or expired
+* The API will reject duplicate submissions with the same `client_order_id`, preventing accidental double orders. The rejection is `409 order_already_exists` and does not return the original order
+* Use up to 64 characters from letters, digits and `_ - : + = /`. Anything else is rejected with `400 invalid_parameters`
+* IDs are unique per subaccount on the market's exchange shard. Generate a new one for every order rather than reusing an old one
 * Store this ID locally to track orders before receiving the server's `order_id`
 
 ### Error Handling
@@ -158,9 +160,12 @@ The `client_order_id` field is optional, but strongly recommended for order dedu
 Common errors and how to handle them:
 
 * `401 Unauthorized`: Check your API keys and signature generation
-* `400 Bad Request`: Verify your order parameters (price must be 1-99 cents)
-* `409 Conflict`: Order with this `client_order_id` already exists
+* `400 Bad Request`: The order was rejected. The `code` says why, for example `invalid_price` (the price is not on the market's price grid), `insufficient_balance` or `invalid_order`
+* `404 Not Found`: The market or order was not found on the exchange shard the request reached, or the account has no balance there (`insufficient_shard_balance`)
+* `409 Conflict`: Order with this `client_order_id` already exists (`order_already_exists`), the market is not open (`market_inactive`), or trading is paused
 * `429 Too Many Requests`: You've hit the rate limit - slow down your requests
+
+A `201` means the order was accepted, not that it is resting: check `remaining_count`. See [Order Errors](https://docs.kalshi.com/getting_started/order_errors.md) for every code and what to do about it.
 
 ## Next Steps
 

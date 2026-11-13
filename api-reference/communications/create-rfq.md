@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/create-rfq
-lastmod: 2026-11-11T15:56:09.068Z
+lastmod: 2026-11-13T04:52:11.516Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -160,7 +160,15 @@ components:
           description: Whether to rest the remainder of the RFQ after execution
         replace_existing:
           type: boolean
-          description: Whether to delete existing RFQs as part of this RFQ's creation
+          description: >-
+            Whether to close your older open RFQs to make room for this one.
+            When true, the oldest open RFQs on the subaccount are closed, on any
+            market, until at most two remain open including this one. An RFQ
+            with a confirmed quote, or with an accepted quote still inside its
+            confirmation window, is never closed, so the RFQ that stays open is
+            not always the newest. If too few RFQs can be closed, the request
+            fails with `expired`. It also skips the one-open-RFQ-per-market
+            check.
           default: false
           x-go-type-skip-optional-pointer: true
         subtrader_id:

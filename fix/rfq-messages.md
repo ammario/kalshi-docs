@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-11-12T04:15:11.889Z
+lastmod: 2026-11-13T04:06:56.730Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -299,7 +299,7 @@ Market maker confirms willingness to execute after quote acceptance.
 
 > [!WARNING]
 >
-> Quote must be confirmed within 30 seconds of acceptance or it will be voided.
+> Quote must be confirmed within the confirmation window or it will be voided: 30 seconds, or 3 seconds on High Volatility Markets. See [Timing](https://docs.kalshi.com/getting_started/rfqs.md#timing).
 
 ## QuoteConfirmStatus (35=U8)
 

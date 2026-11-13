@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/order-entry
-lastmod: 2026-11-12T04:15:11.890Z
+lastmod: 2026-11-13T01:29:35.616Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,7 +22,7 @@ lastmod: 2026-11-12T04:15:11.890Z
 | 50 | SenderSubID | String | N | Header field identifying the operator for this order; printable ASCII, max 16 characters. |
 | 54 | Side | Char | Y | Supported values: `1 = Buy (bid)`, `2 = Sell (ask)` |
 | 55 | Symbol | String | Y | Market ticker |
-| 59 | TimeInForce | Char | N | Supported values: `0 = Day`, `1 = Good Till Cancel`, `3 = Immediate Or Cancel`, `4 = Fill Or Kill`, `6 = Good Till Date` |
+| 59 | TimeInForce | Char | N | Supported values: `0 = Day`, `1 = Good Till Cancel`, `3 = Immediate Or Cancel`, `4 = Fill Or Kill`, `6 = Good Till Date`. **If omitted, the order is good-till-canceled:** it rests until it fills or you cancel it. This differs from FIX's Day default; send `59=0` if you want the order to expire at the end of the day. |
 | 126 | ExpireTime | UTCTimestamp | C | Required when `TimeInForce = GTD` |
 | 448 | PartyID | String | N | Only applicable for FCM entities. Customer-account or subaccount identifier. |
 | 452 | PartyRole | Integer | N | Only applicable for FCM entities. Supported value: `24 = Customer Account` |
@@ -159,8 +159,8 @@ the original Day value.
 * **Exchange closed\<2>**
 * **Order exceeds limit\<3>**
 * **Too late to enter\<4>**
-* **Stale order\<5>**
 * **Duplicate order\<6>**
+* **Stale order\<8>**
 * **Unsupported order characteristic\<11>**
 * **Incorrect quantity\<13>**
 * **Unknown account\<15>**
@@ -184,8 +184,7 @@ Common values include:
 
 * `EXCHANGE_UNAVAILABLE`
 * `INTERNAL_ERROR`
-* `MARKET_ALREADY_CLOSED`
-* `MARKET_INACTIVE`
+* `MARKET_ALREADY_CLOSED`, `MARKET_ALREADY_SETTLED`, `MARKET_INACTIVE` - OrdRejReason "Too late to enter" (CxlRejReason "Too late to cancel" on cancel and replace)
 * `MARKET_NOT_FOUND`
 * `SELF_CROSS_ATTEMPT`
 * `ORDER_ALREADY_EXISTS`
@@ -199,6 +198,25 @@ Common values include:
 * `MAKER_CANCEL_FOR_SELF_TRADE_PREVENTION`
 * `IMMEDIATE_OR_CANCELLED`
 * `REDUCE_ONLY`
+* `NOTIONAL_RISK_LIMIT_EXCEEDED` - OrdRejReason "Order exceeds limit"
+* `FCM_CUSTOMER_ACCOUNT_IM_CAP_EXCEEDED` - the order would exceed the initial-margin cap set for the FCM customer account. OrdRejReason "Order exceeds limit"
+* `STOCK_PERPS_APPLICATION_REQUIRED` - the account needs an approved stocks application for this market. OrdRejReason "Other"
+* `TRADING_BLOCKED` - the account is not permitted to place this order. OrdRejReason "Other"
+* `Service busy, please retry` - the gateway could not queue the request, so it was not applied. Resend it. OrdRejReason "Other" (CxlRejReason "Other" on cancel and replace)
+* `TAG <n>` - a field failed one of the gateway's order-level checks before the order reached the exchange. See [Field validation rejects](#field-validation-rejects)
+
+### Field validation rejects
+
+Some field checks on NewOrderSingle, OrderCancelRequest, and OrderCancelReplaceRequest are answered with the normal order response instead of a session-level Reject (35=3). `Text<58>` is then `TAG <n>`, where `<n>` is the number of the offending tag:
+
+| Request | Response |
+| - | - |
+| NewOrderSingle (35=D) | ExecutionReport (35=8), `ExecType=Rejected`, `OrdRejReason<103>=11` |
+| OrderCancelRequest (35=F), OrderCancelReplaceRequest (35=G) | OrderCancelReject (35=9), `CxlRejReason<102>=99` |
+
+For example, on NewOrderSingle `58=TAG 44` means `Price<44>` could not be accepted, `58=TAG 59` means an unsupported `TimeInForce` and `58=TAG 18` an unsupported `ExecInst` combination. Correct the field and resubmit.
+
+This covers only some checks. Other unacceptable values are still answered with a session-level Reject (35=3) naming the tag in `RefTagID<371>`, and no order response follows: for example a malformed `ClOrdID<11>` or `OrigClOrdID<41>`, an `AllocAccount<79>` outside 0-63, or a `Price<44>` on OrderCancelReplaceRequest that does not fit the price format. Handle both responses for every order message.
 
 ### OrderCancelReject (35=9)
 
@@ -209,6 +227,13 @@ Exchange-returned amend and cancel failures are returned as OrderCancelReject (3
 | `INVALID_AMEND_QTY_FOR_ORDER` | Broker |
 | `CANNOT_UPDATE_FILLED_ORDER` | Broker |
 | `SELF_CROSS_ATTEMPT` | Invalid price increment |
+| `NOT_FOUND` | Unknown order |
+| `ORDER_ID_CLIENT_ORDER_ID_MISMATCH`, `ORDER_SIDE_MISMATCH`, `ORDER_TICKER_MISMATCH` | Unknown order |
+| `ORDER_ALREADY_EXISTS` (the request's `ClOrderID` is already in use) | Duplicate ClOrdID |
+| `AMEND_ORDER_NO_OP` (the replace changes nothing) | Other |
+| `EXCHANGE_PAUSED`, `TRADING_PAUSED` | Other |
+| `TAG <n>` ([field validation](#field-validation-rejects)) | Other |
+| `Service busy, please retry` (not applied; resend) | Other |
 
 ### Position and Fee Information
 
@@ -249,6 +274,9 @@ Execution reports independently include the customer account when applicable and
 
 * **Too late to cancel\<0>**
 * **Unknown order\<1>**
+* **Broker\<2>**
+* **Duplicate ClOrdID\<6>**
+* **Invalid price increment\<18>**
 * **Other\<99>**
 
 ## Mass Cancel Request (35=q)

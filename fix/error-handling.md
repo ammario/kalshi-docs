@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/error-handling
-lastmod: 2026-11-12T04:15:11.877Z
+lastmod: 2026-11-13T01:29:35.616Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -70,7 +70,7 @@ Used for application-level business logic errors.
 | 1 | Unknown ID | Referenced ID not found |
 | 2 | Unknown Security | Invalid symbol |
 | 3 | Unsupported Message Type | Message type not implemented |
-| 4 | Application not available | System temporarily unavailable |
+| 4 | Application not available | System temporarily unavailable. `Text<58>` is `Service busy, please retry` while a gateway is shutting down: the message was not applied, so reconnect if disconnected and resend. |
 | 5 | Conditionally required field missing | Context-specific field missing |
 | 6 | Not authorized | User or API key is not authorized for the requested action |
 | 8 | Rate limit exceeded | Request was rejected by FIX rate limits |
@@ -84,14 +84,14 @@ In ExecutionReport (35=8) with ExecType=Rejected:
 | Code | Reason | Common Causes |
 | - | - | - |
 | 1 | Unknown symbol | Invalid market ticker |
-| 2 | Exchange closed | Outside trading hours |
+| 2 | Exchange closed | Trading pause or exchange pause |
 | 3 | Order exceeds limit | Position or order size limit, insufficient balance |
-| 4 | Too late to enter | Market expired/closed |
+| 4 | Too late to enter | Market is closed, inactive, or settled |
 | 6 | Duplicate order | ClOrdID already used |
 | 8 | Stale order | Timestamp or RFQ quote was expired |
-| 11 | Unsupported order characteristic | Invalid order parameters, order ID/side/ticker mismatch on amend |
+| 11 | Unsupported order characteristic | Invalid order parameters, order ID/side/ticker mismatch on amend, [field validation rejects](https://docs.kalshi.com/fix/order-entry.md#field-validation-rejects) (`Text<58>` = `TAG <n>`) |
 | 13 | Incorrect quantity | Invalid order size |
-| 15 | Unknown account | Subaccount or sub-trader does not exist |
+| 15 | Unknown account | Subaccount or sub-trader does not exist, or the account is not funded on the market's exchange index (`INSUFFICIENT_SHARD_BALANCE`) |
 | 99 | Other | See Text field |
 
 ### Cancel Reject Reasons (102)
@@ -100,11 +100,14 @@ In OrderCancelReject (35=9):
 
 | Code | Reason | Description |
 | - | - | - |
-| 0 | Too late to cancel | Order already filled |
+| 0 | Too late to cancel | Market is closed, inactive, or settled |
 | 1 | Unknown order | Order ID not found, order ID/side/ticker mismatch |
 | 2 | Broker | Invalid amend quantity, or order already fully filled |
+| 6 | Duplicate ClOrdID | The request's ClOrdID is already in use |
 | 18 | Invalid price increment | Replace would self-cross with another order belonging to the same trader |
 | 99 | Other | See Text field |
+
+The full list of `Text<58>` values and the reason code each one maps to is under Text Field Values in [Order Entry](https://docs.kalshi.com/fix/order-entry.md).
 
 ## Common Error Scenarios
 

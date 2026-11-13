@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix-margin/drop-copy
-lastmod: 2026-11-12T04:15:11.877Z
+lastmod: 2026-11-13T04:06:56.730Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

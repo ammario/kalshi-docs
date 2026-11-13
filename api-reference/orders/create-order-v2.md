@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/orders/create-order-v2
-lastmod: 2026-11-11T15:56:08.545Z
+lastmod: 2026-11-13T04:52:10.909Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-11-11T15:56:08.545Z
 
 # Create Order (V2)
 
-> Endpoint for submitting event-market orders using the V2 request/response shape (single-book `bid`/`ask` side and fixed-point dollar prices). The legacy `/portfolio/orders` endpoint will be deprecated no earlier than May 6, 2026 — clients should migrate to this path.
+> Endpoint for submitting event-market orders using the V2 request/response shape (single-book `bid`/`ask` side and fixed-point dollar prices). The legacy `/portfolio/orders` write endpoints (create, cancel, amend, decrease and their batch forms) have been removed and now return `410 Gone` with code `deprecated_v1_order_endpoint`; use this path instead. A `201` means the order was accepted, not that it is resting: check `remaining_count`. See [Order Errors](/getting_started/order_errors) for the error codes this endpoint returns.
 
 
 
@@ -72,9 +72,13 @@ paths:
       description: >-
         Endpoint for submitting event-market orders using the V2
         request/response shape (single-book `bid`/`ask` side and fixed-point
-        dollar prices). The legacy `/portfolio/orders` endpoint will be
-        deprecated no earlier than May 6, 2026 — clients should migrate to this
-        path.
+        dollar prices). The legacy `/portfolio/orders` write endpoints (create,
+        cancel, amend, decrease and their batch forms) have been removed and now
+        return `410 Gone` with code `deprecated_v1_order_endpoint`; use this
+        path instead. A `201` means the order was accepted, not that it is
+        resting: check `remaining_count`. See [Order
+        Errors](/getting_started/order_errors) for the error codes this endpoint
+        returns.
       operationId: CreateOrderV2
       requestBody:
         required: true
@@ -138,6 +142,11 @@ components:
             validate: required,min=1
         client_order_id:
           type: string
+          description: >-
+            Optional client-assigned ID, up to 64 characters from letters,
+            digits and `_ - : + = /`. It must be unique per subaccount on the
+            market's exchange shard while the order is open. See [Order
+            Errors](/getting_started/order_errors#client-order-ids).
           x-go-type-skip-optional-pointer: true
         side:
           $ref: '#/components/schemas/BookSide'

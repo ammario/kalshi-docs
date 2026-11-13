@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/get-fills
-lastmod: 2026-11-11T15:56:10.660Z
+lastmod: 2026-11-13T04:52:12.964Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -196,6 +196,11 @@ components:
             dollars
         order_source:
           $ref: '#/components/schemas/OrderSource'
+          description: >-
+            Whether the order behind this fill was placed by the user or by the
+            system. `system` covers liquidation, TP/SL and auto-rebalance orders
+            alike; to tell them apart, fetch the order by `order_id` and read
+            its `order_reason`.
     ErrorResponse:
       type: object
       properties:
@@ -219,9 +224,12 @@ components:
       description: >-
         Fixed-point contract count string (2 decimals, e.g., "10.00"; referred
         to as "fp" in field names). Requests accept 0-2 decimal places (e.g.,
-        "10", "10.0", "10.00"); responses always emit 2 decimals. Fractional
-        contract values (e.g., "2.50") are supported; the minimum granularity is
-        0.01 contracts.
+        "10", "10.0", "10.00"); responses always emit 2 decimals. A market whose
+        `fractional_trading_enabled` is false trades whole contracts only.
+        There, an order for a fractional count (e.g., "2.50") is rejected with
+        HTTP 400 and error code `invalid_order_size`, and an amend or decrease
+        that would leave a fractional count is rejected with HTTP 400 and error
+        code `invalid_amend_quantity_for_order`.
       example: '10.00'
     OrderSource:
       type: string

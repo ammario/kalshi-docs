@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/portfolio/intra-account-transfer
-lastmod: 2026-11-11T15:56:10.835Z
+lastmod: 2026-11-13T04:52:13.176Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -8,7 +8,7 @@ lastmod: 2026-11-11T15:56:10.835Z
 
 # Intra Account Transfer
 
-> Endpoint for transferring funds within the same account.
+> Endpoint for transferring funds within the same account. Transfers out of the margin balance are refused with HTTP 403 and error code `permission_denied` (details: `margin withdrawals are temporarily disabled during settlement and funding`) from shortly before each scheduled settlement or funding run until that run has been processed, and while a cash corporate action is being processed. The details text is the same in each case. Retry with a backoff until the transfer is accepted.
 
 
 
@@ -57,7 +57,15 @@ paths:
       tags:
         - portfolio
       summary: Intra Account Transfer
-      description: Endpoint for transferring funds within the same account.
+      description: >-
+        Endpoint for transferring funds within the same account. Transfers out
+        of the margin balance are refused with HTTP 403 and error code
+        `permission_denied` (details: `margin withdrawals are temporarily
+        disabled during settlement and funding`) from shortly before each
+        scheduled settlement or funding run until that run has been processed,
+        and while a cash corporate action is being processed. The details text
+        is the same in each case. Retry with a backoff until the transfer is
+        accepted.
       operationId: IntraExchangeInstanceTransfer
       requestBody:
         required: true

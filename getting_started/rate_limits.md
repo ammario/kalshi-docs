@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rate_limits
-lastmod: 2026-11-12T04:15:11.787Z
+lastmod: 2026-11-13T01:31:27.786Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -16,16 +16,28 @@ Every authenticated request costs **tokens**. Your tier sets your **budget**: th
 
 Most requests cost the default of **10 tokens**. For endpoints that cost more or less, [`GET /account/endpoint_costs`](https://docs.kalshi.com/api-reference/account/list-non-default-endpoint-costs) is the authoritative list of non-default costs currently in effect.
 
+One cost depends on your own activity: creating an RFQ can cost more for accounts that create a large number of RFQs and rarely accept a quote. See [Unaccepted RFQs](https://docs.kalshi.com/getting_started/rfqs.md#unaccepted-rfqs).
+
 ## Read and Write buckets
 
 You have two independent token budgets:
 
 | Bucket | Covers |
 | - | - |
-| **Read** | `GET` endpoints and anything not routed to Write. |
-| **Write** | Order placement, amends, cancels, order groups, the RFQ quote flow, and block trade proposal accepts. |
+| **Read** | Any operation without an explicit bucket assignment. This covers most `GET` endpoints. |
+| **Write** | Order placement, amends, decreases and cancels, order groups, position exit triggers, the RFQ and quote flow, block trade proposal accepts, weather point market creation, [Set Target Balance Allocation](https://docs.kalshi.com/api-reference/portfolio/set-target-balance-allocation.md), and [Upgrade Account API Usage Level](https://docs.kalshi.com/api-reference/account/upgrade-account-api-usage-level.md). |
 
 The split is by operation type, not by protocol. REST and FIX requests drain the same buckets.
+
+Each operation is assigned to a bucket individually, and the HTTP method does not decide it. Operations without an explicit bucket assignment use Read. Some operations are assigned to a dedicated bucket instead of Read or Write, including [intra-account transfers](#intra-account-transfer-bucket), [balance](#balance-endpoint-bucket) and FCM position transfers (`POST /fcm/positions/transfers`), and [perps operations](#perps-limits-use-separate-buckets) use the perps buckets. This list is not exhaustive. These `POST`, `PUT` and `DELETE` operations draw on the Read bucket: creating and deleting API keys, creating subaccounts, transfers between subaccounts, subaccount netting settings, and proposing or rejecting a block trade. For any other operation, the `X-RateLimit-*` [response headers](#rate-limit-headers) always describe the bucket a request was charged to.
+
+## Intra-account transfer bucket
+
+[`POST /portfolio/intra_exchange_instance_transfer`](https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer) is metered in its own bucket, which is the same size on every tier: it refills at **600 tokens per minute** and holds 600 tokens. At the default cost of 10 tokens that is 60 transfers per minute, with at most 60 in one burst. These calls do not draw down your Read or Write budget, and a higher tier does not raise this limit.
+
+## Unauthenticated requests
+
+Unauthenticated public requests are subject to separate limits. Authenticate requests where supported and back off on `429`.
 
 ## Balance endpoint bucket
 
@@ -66,10 +78,32 @@ A Premier Predictions Write bucket refills at 1,200 tokens per second and holds 
 A rate-limited request returns `429 Too Many Requests` with the body:
 
 ```json theme={null}
-{"error": "too many requests"}
+{"error": {"code": "too_many_requests", "message": "too many requests"}}
 ```
 
-429 responses do not currently include `Retry-After` or `X-RateLimit-*` headers. There is no penalty or cooldown. The bucket keeps refilling, and your next request succeeds once the balance covers its cost. At a 1,200 tokens-per-second refill, an empty bucket replenishes the 10 tokens for an order in about 8.3 ms. Apply exponential backoff on 429.
+429 responses carry the [rate limit headers](#rate-limit-headers) below, but not `Retry-After`. There is no penalty or cooldown. The bucket keeps refilling, and your next request succeeds once the balance covers its cost. At a 1,200 tokens-per-second refill, an empty bucket replenishes the 10 tokens for an order in about 8.3 ms. Apply exponential backoff on 429.
+
+## Rate limit headers
+
+API responses describe the bucket the request was charged to:
+
+| Header | Value |
+| - | - |
+| `X-RateLimit-Limit` | The bucket's capacity, in tokens. |
+| `X-RateLimit-Remaining` | Tokens left after this request. |
+| `X-RateLimit-Reset` | Seconds, to the millisecond, until the bucket is full again. |
+| `X-RateLimit-Cost` | Tokens this request cost. |
+
+* Reads, writes, perps, balance and each shard's Write budget are separate buckets, as described above, so responses from different endpoints can describe different buckets.
+* REST and FIX draw on the same buckets, so `X-RateLimit-Remaining` includes your FIX usage, which can show up to about a quarter of a second late.
+* Most `GET` requests are counted in batches, so only some `GET` responses include `X-RateLimit-Remaining` and `X-RateLimit-Reset`. When they do, the count can miss a few reads that other servers have not counted yet.
+* Public endpoints charge your IP address's budget first, even on signed requests, and the headers describe that budget. A signed request that the IP budget rejects falls through to your account's Read bucket, and the headers describe that bucket instead.
+* Publicly cacheable responses (`Cache-Control: public`), which include most market data, carry none of these headers, because a shared cache could serve them to other callers.
+* An auto-routed order write, charged to every shard's Write bucket, reports the shard with the fewest tokens left, or the one that rejected it.
+* `X-RateLimit-Remaining` and `X-RateLimit-Reset` are omitted when the server has no current reading for the bucket.
+* A malformed order write is still charged, and its 400 carries these headers.
+* If `X-RateLimit-Cost` is greater than `X-RateLimit-Limit`, the request can never fit in the bucket. Split it into smaller requests, such as a smaller batch.
+* A 429 can also come from a limit other than these buckets, such as the open RFQ limit. Its headers then describe the bucket that admitted the request.
 
 ## Batch endpoints don't save tokens
 
@@ -165,7 +199,7 @@ Perps Write bucket capacity is three times the per-second budget above the Basic
 ## Tier qualification
 
 * **Basic**: complete account signup.
-* **Advanced**: call the [Upgrade Account API Usage Level endpoint](https://docs.kalshi.com/api-reference/account/upgrade-account-api-usage-level.md).
+* **Advanced**: call the [Upgrade Account API Usage Level endpoint](https://docs.kalshi.com/api-reference/account/upgrade-account-api-usage-level.md). At least one of your latest 100 Predictions orders must have been created through the API; otherwise the call returns `403` with an empty body. Place an order through the API, then call it again. The call costs 30 tokens from your Write bucket.
 * **Expert, Premier, Paragon, Prime, and Prestige**: earned automatically from your trading volume (see [Earning higher tiers](#earning-higher-tiers-by-volume) below), or assigned by Kalshi.
 
 ## Earning higher tiers by volume

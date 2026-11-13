@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-11-12T04:15:11.780Z
+lastmod: 2026-11-13T00:53:49.915Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -70,13 +70,22 @@ inside `target_cost_dollars`, so your debit can never exceed it. Set
 `target_cost / price` and your taker fee is charged on top of the target cost.
 `contracts_fp`-sized RFQs are never reduced for fees under either mode.
 
+## Unaccepted RFQs
+
+Makers price every RFQ they receive. If you create a large number of RFQs and
+few of them end with an accepted quote, creating an RFQ can cost more tokens
+than usual from your Write budget, so you reach `429` `too_many_requests`
+sooner. The cost returns to normal as more of your RFQs end with an accepted
+quote. See [Rate Limits and Tiers](https://docs.kalshi.com/getting_started/rate_limits.md) for how token
+costs and budgets work.
+
 ## Quotes
 
-Each quote has two prices: `yes_bid` (price per YES contract) and `no_bid` (price per NO contract). These are typically different. Either can be `"0"` to decline that side, but not both. If `yes_bid + no_bid > $1` the quote is rejected.
+Each quote has two prices: `yes_bid` (price per YES contract) and `no_bid` (price per NO contract). These are typically different. Either can be `"0"` to decline that side, but not both. Each bid must be below `$1`, and a quote with both bids above `$0.75` is rejected as a likely pricing mistake. These rejections return `invalid_parameters`.
 
 Quoters do not specify a size. Each quote is implicitly for the full RFQ amount (`contracts_fp`, or whatever count `target_cost_dollars` resolves to at the quoted prices).
 
-Prices must land on the market's price grid. Check `price_ranges` on `GET /markets/{ticker}` for the valid step size.
+Quote prices use their own grid, not the market's `price_ranges`. Quotes on a single market must be in whole cents. Combo quotes use a finer grid: `$0.001` steps between `$0.01` and `$0.99`, and `$0.0001` steps below `$0.01` and above `$0.99`. A price off the grid returns `invalid_parameters`.
 
 A new quote on the same RFQ replaces the maker's previous quote.
 
@@ -86,11 +95,14 @@ If a confirmed quote is cancelled because the maker's
 post-only order would cross the book at execution, that cancellation counts
 toward the same quoting penalties as failing to confirm an accepted quote.
 Repeated failures can temporarily rate limit the maker's ability to create new
-quotes.
+quotes. While quoting is restricted, Create Quote returns `409`
+`quote_timed_out`. The code does not mean a quote expired, and retrying right
+away does not help. A temporary restriction clears by itself as the recent
+failures age out. If the refusals persist, contact support.
 
 ## Timing
 
-The exchange designates certain markets as High Volatility Markets (HVM). All combo markets are HVMs. HVMs use shorter confirmation and execution windows.
+The exchange designates certain markets as High Volatility Markets (HVM). All combo markets are HVMs, and so are markets whose event ticker begins with `KXMLB`, `KXNBA` or `KXNFL`. HVMs use shorter confirmation and execution windows.
 
 | | Standard | HVM |
 | - | - | - |
@@ -99,6 +111,8 @@ The exchange designates certain markets as High Volatility Markets (HVM). All co
 
 After acceptance, the maker has the confirmation window to confirm. Upon confirmation, the platform begins the execution timer. At the end of the timer, orders are entered into the book. Fills appear in `GET /portfolio/fills`. Match on `creator_order_id` (maker) or `rfq_creator_order_id` (requester).
 
+An open RFQ is closed automatically about 3 hours after it was last updated, and its open quotes are cancelled. An RFQ with a confirmed quote is left to execute. The close arrives as `rfq_deleted` on the WebSocket channel.
+
 ## WebSocket
 
 Subscribe to the `communications` channel (requires auth). `rfq_created` and `rfq_deleted` go to all subscribers. `quote_created`, `quote_accepted`, and `quote_executed` go only to the involved requester and maker. `quote_accepted` and `quote_executed` carry the id of the quote that executes, which can differ from the quote the requester named.
@@ -106,6 +120,19 @@ Subscribe to the `communications` channel (requires auth). `rfq_created` and `rf
 ## Combos (MVE)
 
 Combo RFQs include `mve_collection_ticker` and `mve_selected_legs`. Use [Multivariate Event Collections](https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collections.md) to discover eligible combinations.
+
+A combo market must exist before it can be quoted or traded. [Create Market In Multivariate Event Collection](https://docs.kalshi.com/api-reference/multivariate/create-market-in-multivariate-event-collection.md) creates it. When the same legs were created before, it returns the existing market instead, and that does not count toward your creation limit. The legs are checked again each time, so a selection that worked before can later return one of the `400` codes below, for example once a leg is no longer open for trading.
+
+On the production API, the standard limit is 5,000 new combo markets per user per rolling 7 days, counted both across all collections and within each collection. The demo environment uses different limits. Over either limit, the endpoint returns `429` `too_many_requests`. Ordinary request-rate limiting returns the same status and code, so the response alone does not tell you which one you hit. Back off and retry as usual. A `429` that persists can still be either one, so compare your own count of new combos over the last 7 days against the limit. At the limit, creations free up as earlier ones pass the 7-day mark.
+
+A leg selection the exchange will not combine returns `400` with one of these `code` values. Branch on `code`; `message` explains the specific conflict in words and can change, and `details` lists the legs involved when they are known.
+
+| Code | What's going on |
+| - | - |
+| `conflicting_leg_outcomes` | Two legs cannot both resolve the way you selected |
+| `duplicated_legs` | A leg is redundant: it repeats another leg or is already guaranteed by one |
+| `invalid_market_combination` | The legs are not eligible to be combined |
+| `invalid_parameters` | The request does not meet the collection's rules, such as the number of legs, or a leg is not open for trading |
 
 ## RFQ batch children
 
@@ -146,12 +173,17 @@ maker quote lifecycle only.
 
 ## Common errors
 
+These are the REST `code` values. FIX reports the same conditions in uppercase, for example `RFQ_CLOSED`.
+
 | Error | What's going on |
 | - | - |
-| `invalid_parameters` | Price not on a valid step, or RFQ already closed |
-| `RFQ_CLOSED` | RFQ was deleted, expired, or already executed |
-| `INSUFFICIENT_BALANCE` | Not enough funds for the trade |
+| `400` `invalid_parameters` | Price not on a valid step, or a quote with both bids above `$0.75` |
+| `409` `rfq_closed` | RFQ was deleted, expired, or already executed |
+| `400` `expired` | The quote or RFQ is no longer in a state that allows this action |
+| `400` `insufficient_balance` | Not enough funds for the trade |
+| `409` `quote_timed_out` | Create Quote is refused because quoting is restricted for your account, usually temporarily after repeated unconfirmed quotes; see [Post-only quotes](#post-only-quotes) |
 | `409 Conflict` | Open RFQ already exists on this market ticker |
+| `429` `too_many_requests` | Usually your Write budget is exhausted. RFQ creation can cost more when few of your RFQs are accepted; see [Unaccepted RFQs](#unaccepted-rfqs). Creating an RFQ batch also returns this when you are at your open-batch limit and did not set `replace_existing`; retrying does not help until a batch closes |
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

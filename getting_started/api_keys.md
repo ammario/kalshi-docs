@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/api_keys
-lastmod: 2026-11-12T04:15:11.884Z
+lastmod: 2026-11-13T01:31:27.786Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -65,7 +65,9 @@ After generating the key, you will be presented with:
 
 **Important**: For security reasons, the private key will not be stored by our service, and you will not be able to retrieve it again once this page is closed. Please make sure to securely copy and save the private key immediately. The key will also be downloaded as txt file with the name provided.
 
-Keys can also be created through the API: `POST /trade-api/v2/api_keys` registers your public key; `POST /trade-api/v2/api_keys/generate` returns a new key pair of the requested `key_type` (`rsa` when omitted).
+Keys can also be created through the API: `POST /trade-api/v2/api_keys` registers your public key; `POST /trade-api/v2/api_keys/generate` returns a new key pair of the requested `key_type` (`rsa` when omitted). Both are available on every API tier.
+
+In production, an account can hold up to **100** keys that it manages directly, meaning keys created on the account settings page or with these two endpoints. Creating another returns `409` with code `MAXIMUM_NUMBER_OF_API_KEYS_REACHED`; delete one of those keys with `DELETE /trade-api/v2/api_keys/{api_key}` first. Keys issued to the account in other ways, such as through a partner integration, are counted separately. The limit can differ in the demo environment.
 
 ## Using a API Key
 
@@ -84,6 +86,10 @@ The signature is the base64 encoding of the signed concatenation of the timestam
 > [!WARNING]
 >
 > **Important**: When signing requests, use the path **without query parameters**. For example, if your request is to `/trade-api/v2/portfolio/orders?limit=5`, sign only `/trade-api/v2/portfolio/orders` (strip the `?` and everything after it).
+
+> [!WARNING]
+>
+> **Timestamp tolerance**: `KALSHI-ACCESS-TIMESTAMP` must be within **30 seconds** of Kalshi's clock, in either direction. Outside that window the request returns `401` with code `header_timestamp_expired`, even when the signature is correct. Generate the timestamp immediately before sending, and keep your system clock synchronized (for example with NTP).
 
 The samples below detect the key type and sign accordingly. For end-to-end examples, see [Quick Start: Authenticated Requests](https://docs.kalshi.com/getting_started/quick_start_authenticated_requests.md). The official Python and TypeScript SDKs accept either key type from version 3.31.0.
 
@@ -240,6 +246,70 @@ axios.get(baseUrl + path, { headers })
         console.error('Error:', error);
     });
 ```
+
+## Scopes
+
+Each key carries a list of scopes, set when the key is created (`scopes` on [Create API Key](https://docs.kalshi.com/api-reference/api-keys/create-api-key.md) and [Generate API Key](https://docs.kalshi.com/api-reference/api-keys/generate-api-key.md)). A key created without `scopes` gets `read` and `write`, which is full access. Accounts with data-only access are the exception: their keys are always read-only, whatever `scopes` the request names. Scopes never widen what the account itself is allowed to do.
+
+A parent scope grants its child scopes: `write` covers `write::trade`, `write::transfer`, `write::fcm_risk` and `write::block_trade_accept`, and `read` covers `read::portfolio_balance` and `read::block_trade_accept`. A child scope never grants its parent, and no `write` scope grants `read`.
+
+| REST endpoints | Scope required |
+| - | - |
+| Every authenticated `GET`, except the two below | `read` |
+| `GET /portfolio/balance` | `read::portfolio_balance` |
+| `GET /communications/block-trade-proposals` | `read::block_trade_accept` |
+| Order create, amend, decrease and cancel, single and batched (`/portfolio/events/orders...`) | `write::trade` |
+| Order group create, delete, reset, trigger and limit (`/portfolio/order_groups/...`) | `write::trade` |
+| Position exit trigger set and delete (`/portfolio/positions/{ticker}/exit_trigger`) | `write::trade` |
+| RFQ, quote and RFQ batch writes (`/communications/rfqs...`, `/communications/quotes...`, `/communications/rfq_batches...`) | `write::trade` |
+| Combo market creation (`POST /multivariate_event_collections/{collection_ticker}`) and `POST /weather_point_markets` | `write::trade` |
+| Block trade proposal create and cancel | `write::trade` |
+| Perps order, order group and exit trigger writes (`/margin/orders...`, `/margin/order_groups/...`, `/margin/.../exit_trigger`) | `write::trade` |
+| FCM position transfers (`POST /fcm/positions/transfers`, `POST /margin/fcm/positions/transfers`) | `write::trade` |
+| FCM subtrader creation and risk settings: `POST /fcm/subtraders`, `POST /margin/fcm/subtraders`, and `PUT` or `DELETE` on `/fcm/subtraders/event_contract_daily_cap`, `/fcm/subtraders/blocked_categories` (`PUT` only), `/margin/fcm/subtraders/risk_controls` and `/margin/fcm/notional_risk_limit` | `write::fcm_risk` |
+| Block trade proposal accept and reject | `write::block_trade_accept` |
+| `POST /portfolio/intra_exchange_instance_transfer`, `POST /portfolio/subaccounts/transfer`, `POST /portfolio/target_balance_allocation`, `POST /portfolio/margin/subaccounts/transfer` | `write::transfer` |
+| API key create and delete, `POST /portfolio/subaccounts`, `PUT /portfolio/subaccounts/netting`, `POST /account/api_usage_level/upgrade` | `write` |
+
+The table covers the operations listed, not every endpoint. A write that is not listed needs either `write` or one of the child scopes above. A request the key's scopes do not cover returns `403`, and the error `code` names the scope that endpoint needs, for example `insufficient_scope:_write::trade_required`, so you can read the exact requirement from the response.
+
+Because every `GET` needs `read`, a key that holds only `write::trade` can place and cancel orders but cannot list orders, fills or positions. Give a trading key `read` as well, or track state from the write responses.
+
+Public endpoints such as market data need no scope.
+
+## Authentication errors
+
+A request whose credentials are rejected returns `401` with an error object. Problems with the headers themselves have their own `code`:
+
+| `code` | Cause |
+| - | - |
+| `signature_is_missing_from_headers` | `KALSHI-ACCESS-KEY` was sent without `KALSHI-ACCESS-SIGNATURE`. |
+| `timestamp_is_missing_from_headers` | `KALSHI-ACCESS-TIMESTAMP` was not sent. |
+| `header_timestamp_is_invalid` | The timestamp is not an integer. |
+| `header_timestamp_expired` | The timestamp is more than 30 seconds from Kalshi's clock. |
+
+Every other rejection returns `401` with the code `authentication_error`, and the `details` field carries the reason:
+
+| `details` | Cause |
+| - | - |
+| `INVALID_PARAMETER` | `KALSHI-ACCESS-KEY` is not a valid key ID. |
+| `NOT_FOUND` | No key has this ID. It may have been deleted, or it belongs to the other environment (demo and production keys are separate). |
+| `INCORRECT_API_KEY_SIGNATURE` | The signature does not match. Check the signed string (timestamp, then method, then the full path from `/trade-api/v2`, without the query string), the signing algorithm for your key type, and that the private key belongs to this key ID. |
+| `PERMISSION_DENIED` | Access was refused for this client. If the key or account is restricted to an IP allowlist, requests from any other address are refused this way. |
+
+```json theme={null}
+{
+  "error": {
+    "code": "authentication_error",
+    "message": "We could not authenticate your request",
+    "details": "INCORRECT_API_KEY_SIGNATURE"
+  }
+}
+```
+
+The `message` text is generic and is the same for every `authentication_error`, so branch on `details`. Other `details` values are possible.
+
+Check the HTTP status before deciding whether to retry. A `401` means the credentials were rejected, and sending the same request again will not help. The same `authentication_error` code is also returned with a `500` or `503` status when Kalshi could not complete the check, for example during a brief outage. Those are not credential problems: keep your key and retry with backoff.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.
