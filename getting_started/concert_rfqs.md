@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/concert_rfqs
-lastmod: 2026-11-13T04:52:16.751Z
+lastmod: 2026-11-13T18:19:54.959Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -183,8 +183,8 @@ Fetching one by ticker works as for any market: `GET /markets/{ticker}`, `GET /e
 ## Settlement
 
 * The market closes when the show is scheduled to start (`close_time`), or at the start of the scheduled day at the venue when the listing gave only a date.
-* It settles on the show's JamBase listing, read once the scheduled date has ended in the venue's time zone plus 12 hours (`expected_expiration_time`). The wait lets late cancellations and corrections to the listing land first. Changes to the listing after it is read don't change the outcome.
-* Only the listing's status and date decide the outcome:
+* Kalshi determines it from the show's JamBase listing, read once the scheduled date has ended in the venue's time zone plus 12 hours (`expected_expiration_time`). The wait lets late cancellations and corrections to the listing land first. Changes to the listing after it is read don't change the outcome.
+* Kalshi uses the listing's status and date as they stand at that reading:
 
 | Listing when read | `postponed` | `cancelled` | `either` |
 | - | - | - | - |

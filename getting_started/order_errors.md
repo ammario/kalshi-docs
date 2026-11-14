@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/order_errors
-lastmod: 2026-11-13T01:30:44.913Z
+lastmod: 2026-11-13T18:12:02.618Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -61,7 +61,7 @@ Two outcomes that look similar are returned as errors (shown here for Create Ord
 
 ## Error codes
 
-The statuses below are what a single-order request returns. In a batch request the same `code` appears on the affected entry's `error` inside the `201` or `200` response, unless the failure is one of those listed under [Batch requests](#batch-requests) as rejecting the whole batch.
+The HTTP statuses below describe request-level errors. For errors reported per entry, the same `code` appears on the entry while the batch response is `201` or `200`. See [Batch requests](#batch-requests) for examples of whole-batch failures.
 
 ### 400 Bad Request
 
@@ -111,7 +111,7 @@ A request with an `exchange_index` below `-1` or above the highest exchange shar
 | - | - | - |
 | `403` | `permission_denied` | The API key is not allowed to call this endpoint. |
 | `403` | `subaccount_is_restricted_by_API_key` | The request names a subaccount other than the one the API key is restricted to. Omit `subaccount` or send the key's own. |
-| `403` (location restriction) | A sentence describing the restriction, with underscores in place of spaces | New orders on this market are not available from your location or for your account's region. Applies to Create Order and to Batch Create Orders, where one affected entry rejects the whole batch. Its wording can change, so do not match on the exact text; other `403` causes keep their own codes. Do not retry, and contact support if you believe it is wrong. If the check itself cannot be completed, the response is a `503` `service_unavailable` instead. |
+| `403` (location restriction) | A sentence describing the restriction, with underscores in place of spaces | New orders on this market can be refused because of your location or your account's region. Applies to Create Order and to Batch Create Orders, where one affected entry rejects the whole batch. `reduce_only` orders are not subject to this check. Its wording can change, so do not match on the exact text; other `403` causes keep their own codes. Do not retry, and contact support if you believe it is wrong. If the check itself cannot be completed, the response is a `503` `service_unavailable` instead. |
 | `410` | `deprecated_v1_order_endpoint` | The request used a removed legacy write endpoint under `/portfolio/orders`. Use the `/portfolio/events/orders` endpoints. |
 | `429` | `too_many_requests` | The request did not fit in your Write budget. See [Rate Limits and Tiers](https://docs.kalshi.com/getting_started/rate_limits.md). |
 | `408` | `context_canceled` or similar | The request was canceled or timed out before a result came back. The exchange may still have processed it. See [When the outcome is unknown](#when-the-outcome-is-unknown). |
@@ -168,7 +168,7 @@ To avoid this, send `market_ticker` on every cancel and decrease and leave `exch
 * `400` with a top-level `code`: the body cannot be parsed, as described at the top of this page.
 * `401` or `403 permission_denied`: the request is not authenticated, or the API key is not allowed to call the endpoint.
 * `400` or `403 subaccount_is_restricted_by_API_key`: any one entry names a subaccount that is out of range or that the API key is not allowed to use.
-* A location-restriction `403`: any one entry in a batch create is for a market the account cannot trade from its location. A `503` is returned instead if that check cannot be completed.
+* A location-restriction `403`: the batch create can be refused if any one entry is for a market the account cannot trade from its location. `reduce_only` entries are not subject to this check. A `503` is returned instead if the check cannot be completed.
 * `429 too_many_requests`: the whole batch does not fit in your Write budget.
 
 **Reported per entry.** Once those checks pass, entries are sent one by one, and a failure to convert, route or place an entry, including any rejection by the exchange, is reported inside a `201` (create) or `200` (cancel) response. Each entry of `orders` is in request order and either succeeded or carries an `error` object with the `code`, `message` and `details` described on this page. A failed create has no `order_id`; a failed cancel has `reduced_by` of `0.00`. Entries have no HTTP status of their own, so check every entry for `error`.
