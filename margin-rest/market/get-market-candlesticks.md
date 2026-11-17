@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market-candlesticks
-lastmod: 2026-11-13T04:52:12.948Z
+lastmod: 2026-11-16T17:24:10.563Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -166,7 +166,7 @@ components:
             Open, high, low, close (OHLC) data for buy offers on the market
             during the candlestick period.
         ask:
-          $ref: '#/components/schemas/BidAskDistributionHistorical'
+          $ref: '#/components/schemas/MarginAskDistributionHistorical'
           description: >-
             Open, high, low, close (OHLC) data for sell offers on the market
             during the candlestick period.
@@ -231,6 +231,46 @@ components:
         close:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Quoted price at the end of the candlestick period (in dollars).
+    MarginAskDistributionHistorical:
+      type: object
+      required:
+        - open
+        - low
+        - high
+        - close
+      description: >-
+        OHLC data for ask quotes during the candlestick period. These values
+        reflect ask quotes, not executed trade prices. A value is null when the
+        orderbook had no asks.
+      properties:
+        open:
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
+          nullable: true
+          description: >-
+            Ask at the start of the candlestick period (in dollars). Null if the
+            orderbook had no asks at that time.
+        low:
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
+          nullable: true
+          description: >-
+            Lowest ask during the candlestick period (in dollars). Null if the
+            orderbook had no asks during the period.
+        high:
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
+          nullable: true
+          description: >-
+            Highest ask during the candlestick period (in dollars). Null if the
+            orderbook had no asks during the period.
+        close:
+          allOf:
+            - $ref: '#/components/schemas/FixedPointDollars'
+          nullable: true
+          description: >-
+            Ask at the end of the candlestick period (in dollars). Null if the
+            orderbook had no asks at that time.
     PriceDistributionHistorical:
       type: object
       required:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-11-13T04:52:16.751Z
+lastmod: 2026-11-17T03:04:20.395Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,33 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+**November 19, 2026**
+
+An `orderbook_snapshot` for a market with no recorded change, such as a new
+market that hasn't had an order yet, can have an empty `market_id`, and its
+`clock` is 0. Markets created before the WebSocket server you're connected
+to started already worked this way. Markets created after it started used
+to get their UUID and creation clock instead.
+
+Identify these markets by `market_ticker`. The first `orderbook_delta` for
+the market carries its `market_id`.
+
+**November 19, 2026**
+
+A request whose path or query string contains a NUL byte (`%00`) or bytes
+that are not valid UTF-8, for example `GET /markets?tickers=KX%00TEST` or
+`GET /historical/trades?ticker=%ff%fe`, now returns 400
+`invalid_parameters`. It previously returned 500 `internal_server_error`
+on endpoints that looked the value up.
+
+A `cursor` carrying such text is now handled the way each endpoint already
+handles a cursor it cannot decode, instead of returning 500. Most endpoints
+return 400. A few, including `GET /markets`, ignore a cursor they cannot
+decode and return the first page.
+
+No valid request is affected, and cursors returned by the API are
+unchanged.
 
 **November 19, 2026**
 

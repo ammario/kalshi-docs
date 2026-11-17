@@ -168,7 +168,7 @@ operations:
             type:
               type: string
               const: trade
-              x-parser-schema-id: <anonymous-schema-118>
+              x-parser-schema-id: <anonymous-schema-119>
             sid:
               type: integer
               description: >-
@@ -203,7 +203,7 @@ operations:
                   type: string
                   description: Unique identifier for the trade
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-120>
+                  x-parser-schema-id: <anonymous-schema-121>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -214,19 +214,19 @@ operations:
                   description: Yes side price in dollars
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-121>
+                  x-parser-schema-id: <anonymous-schema-122>
                 no_price_dollars:
                   type: string
                   description: No side price in dollars
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-122>
+                  x-parser-schema-id: <anonymous-schema-123>
                 count_fp:
                   type: string
                   description: Fixed-point contracts traded (2 decimals)
                   x-rust-type: common::types::Amount
                   x-rust-serialize-with: ws::dto::serde_money::serialize_amount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-123>
+                  x-parser-schema-id: <anonymous-schema-124>
                 taker_side: &ref_1
                   type: string
                   description: Market side
@@ -248,19 +248,19 @@ operations:
                 is_block_trade:
                   type: boolean
                   description: True if the trade was matched off book as a block trade
-                  x-parser-schema-id: <anonymous-schema-124>
+                  x-parser-schema-id: <anonymous-schema-125>
                 ts:
                   type: integer
                   deprecated: true
                   description: Deprecated - Unix timestamp in seconds. Use ts_ms instead.
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-125>
+                  x-parser-schema-id: <anonymous-schema-126>
                 ts_ms:
                   type: integer
                   description: Unix timestamp in milliseconds
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-126>
-              x-parser-schema-id: <anonymous-schema-119>
+                  x-parser-schema-id: <anonymous-schema-127>
+              x-parser-schema-id: <anonymous-schema-120>
             sending_ts_ms:
               type: integer
               format: int64

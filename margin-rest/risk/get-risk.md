@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/risk/get-risk
-lastmod: 2026-11-13T04:52:13.069Z
+lastmod: 2026-11-16T17:24:10.682Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -212,8 +212,8 @@ components:
         numbered subaccounts, `isolated` for a market's isolated subaccount,
         `auto_rebalance` for an auto-rebalanced isolated position, which shares
         its market's isolated subaccount number, and `managed_isolated` for a
-        managed isolated position, whose subaccount number is its slot number
-        rather than the market's isolated subaccount number.
+        managed isolated position, whose subaccount number is the same as the
+        market's isolated subaccount number.
     FixedPointCount:
       type: string
       description: >-

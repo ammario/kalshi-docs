@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/rfq-messages
-lastmod: 2026-11-13T04:06:56.730Z
+lastmod: 2026-11-16T18:37:35.748Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -225,15 +225,27 @@ If a new Quote is created when an existing quote for the same market already exi
 
 ### Best Quote Only
 
-A session that logs on with `BestQuoteOnly<21036>=Y` receives only the best quote of each RFQ it creates while the flag is set. The RFQ keeps this mode until it closes. The best quote arrives as the same Quote (35=S) described above, with no new fields.
+A session that logs on with `BestQuoteOnly<21036>=Y` receives only the best quotes of each RFQ it creates while the flag is set: the best Yes bid and the best No bid. The RFQ keeps this mode until it closes. Each best arrives as the same Quote (35=S) described above, with no new fields.
 
-* **Ranking:** quotes are ranked on the RFQ's natural side: `OfferPx<133>` (No) for an RFQ sized by `CashOrderQty<152>`, `BidPx<132>` (Yes) for one sized by `OrderQty<38>`. The highest price is best, then the earliest quote at that price, which is the quote an AcceptQuote on that side fills. A quote with no price on the natural side is never best, so an RFQ whose quotes all lack it sends no Quote.
-* **When a Quote is sent:** each time a different quote becomes best: a better quote arrives, the best is cancelled or stops quoting the natural side (the next best is sent, even at a worse price), or the best maker replaces its quote (a new `QuoteId<117>`, even at the same price). Changes below the best send nothing.
-* **Superseding:** the latest Quote for a `QuoteReqId<131>` replaces all earlier ones. Order them by MsgSeqNum: `TransactTime<60>` is the quote's own creation time and can go backwards.
-* **Nothing left:** once no open quote has a price on the natural side, the last best is sent again with `BidSize<134>=0` and `OfferSize<135>=0`: there is nothing to accept.
+* **Ranking:** each side is ranked on its own price. The highest price is best, then the earliest quote at that price: the quote an AcceptQuote on that side fills.
+* **What a Quote carries:** only the sides its quote is best on: `BidPx<132>` and `BidSize<134>` for Yes, `OfferPx<133>` and `OfferSize<135>` for No. A quote that is best on both sides carries both. A side it does not carry is left out, not sent as 0, even when the quote has a price there.
+* **When a Quote is sent:** each time a different quote becomes best on a side: a better quote arrives, the best is cancelled or stops quoting that side (the next best is sent, even at a worse price), or the best maker replaces its quote (a new `QuoteId<117>`, even at the same price). Changes below the best send nothing.
+* **Keeping track:** for each `QuoteReqId<131>`, keep one best per side: its `QuoteId<117>`, price and size. A Quote replaces the best on each side it carries and leaves the other side alone. Apply Quotes in MsgSeqNum order: `TransactTime<60>` is the quote's creation time and can go backwards.
+* **Which quote to accept:** the Yes best with `Side<54>=2`, the No best with `Side<54>=1`. They can be different quotes.
+* **Nothing left:** once no open quote has a price on a side, its last best is sent again with size 0: nothing is left to accept there. A quote that was the last best on both sides is sent once, with both sizes 0.
 * **Accept and close:** nothing extra is sent; AcceptQuoteStatus (35=UC) and the usual close messages end the RFQ. A Quote can arrive just after the close; ignore it.
-* **The other side:** the Quote's other price is that quote's own. An accept on the other side follows that side's ranking, so it can fill another quote at the same price.
-* **Missed updates:** Quotes sent while the session is disconnected are kept for ResendRequest, like other KalshiRT messages. The current best is not re-sent at Logon: if an update is lost another way, for example during a Kalshi restart or when sequence numbers are reset, the next one arrives with the RFQ's next best change.
+* **Missed updates:** Quotes sent while the session is disconnected are kept for ResendRequest, like other KalshiRT messages. The current bests are not re-sent at Logon: if an update is lost another way, for example during a Kalshi restart or when sequence numbers are reset, that side is corrected only by its next best change.
+
+For example, two makers quote one RFQ:
+
+| What happens | Quote you receive | Your best Yes | Your best No |
+| - | - | - | - |
+| A quotes Yes 0.40, No 0.55 | A: Yes 0.40, No 0.55 | A, 0.40 | A, 0.55 |
+| B quotes Yes 0.42, No 0.50 | B: Yes 0.42 | B, 0.42 | A, 0.55 |
+| B cancels | A: Yes 0.40, No 0.55 | A, 0.40 | A, 0.55 |
+| A cancels | A: Yes 0.40, No 0.55, both with size 0 | none | none |
+
+B's No price is never sent, because A's 0.55 is better. After B's Quote, accept B with `Side<54>=2` to sell Yes, or A with `Side<54>=1` to buy Yes. When B cancels, A leads both sides again, so it is sent with both.
 
 ## QuoteStatusReport (35=AI)
 
@@ -340,6 +352,8 @@ Exchange response to AcceptQuote.
 | 21024 | AcceptedQuoteId | UUID | C | Present when the accept succeeds. The quote that executes, which can differ from the requested QuoteId whether or not PreferBetterQuote is set, so reconcile fills to this id |
 | 11 | ClOrdID | String | C | Echoed back when provided on the AcceptQuote request |
 | 58 | Text | String | C | Rejection reason if REJECTED |
+
+If an accepted quote does not execute, you receive an ExecutionReport (35=8) on the accept's ClOrdID (11) with OrdStatus Rejected (39=8), Text (58) `RFQ_EXECUTION_FAILED`, and OrderID (37) set to that ClOrdID. If your taker order had already been placed, its own reports carried the exchange's order ID in 37, so the two differ.
 
 ## RFQCancel (35=UE)
 

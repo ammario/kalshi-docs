@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/maintenance_and_pauses
-lastmod: 2026-11-13T01:30:44.913Z
+lastmod: 2026-11-17T01:43:47.652Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -15,6 +15,10 @@ lastmod: 2026-11-13T01:30:44.913Z
 Every **Thursday from 3:00 AM to 5:00 AM ET**, Kalshi runs scheduled maintenance. During this window, a **trading pause** is in effect. In rare cases, a more intensive maintenance may require a full **exchange pause** instead.
 
 Clients should be prepared for session disconnections during this window and reconnect after 5:00 AM ET.
+
+## Corporate Action Halts for Single-Stock Perps
+
+See [corporate action halt and reopening times](https://docs.kalshi.com/margin/corporate-actions.md#trading-halt-and-reopening-times) for schedules and order handling when an individual single-stock perp halts.
 
 ## Trading Pause vs Exchange Pause
 

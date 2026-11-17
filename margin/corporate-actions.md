@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin/corporate-actions
-lastmod: 2026-11-12T04:15:11.779Z
+lastmod: 2026-11-17T01:43:47.652Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,19 @@ Corporate actions are covered in Part VII of [Chapter 14 of the rulebook](https:
 ## Resting and Conditional Orders
 
 For corporate action adjustments that halt and reopen the market, all resting and conditional orders in the affected market are cancelled and are not carried over. Resubmit them after trading resumes. Cash adjustments performed without a trading halt do not automatically cancel existing orders.
+
+## Trading Halt and Reopening Times
+
+All times are **US Eastern (ET)**. Scheduled splits and cash adjustments requiring a halt normally halt at **4:00 PM on the last underlying trading day before the ex-date**. Check the notice's `execution_time` for the specific adjustment time.
+
+| Corporate Action | Scheduled Reopening |
+| - | - |
+| Forward/reverse splits, stock distributions processed as splits, and spin-offs requiring a halt | End of the overnight session before the next underlying trading day, normally **4:00 AM on the ex-date**. |
+| Cash dividends requiring a halt, including special / extraordinary dividends | Start of that overnight session, normally **8:00 PM on the evening before the ex-date**. |
+
+Reopening follows the underlying market's overnight calendar, including holidays, and requires completed processing and approvals. Other active halts can delay trading further.
+
+Cash adjustments without a halt leave trading open. Terminated contracts do not reopen.
 
 ## Adjustments by Corporate Action
 

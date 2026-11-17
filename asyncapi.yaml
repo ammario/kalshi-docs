@@ -1927,6 +1927,16 @@ components:
               clock: 4182057
               yes_dollars_fp: [["0.0800", "300.00"], ["0.2200", "333.00"]]
               no_dollars_fp: [["0.5400", "20.00"], ["0.5600", "146.00"]]
+        - name: marketWithNoRecordedChange
+          summary: Orderbook snapshot for a market with no recorded change
+          payload:
+            type: orderbook_snapshot
+            sid: 2
+            seq: 3
+            msg:
+              market_ticker: "FED-23DEC-T3.25"
+              market_id: ""
+              clock: 0
 
     orderbookDelta:
       name: orderbook_delta
@@ -3695,7 +3705,9 @@ components:
             market_ticker:
               $ref: '#/components/schemas/marketTicker'
             market_id:
-              $ref: '#/components/schemas/marketId'
+              type: string
+              description: Unique market UUID. Can be an empty string for a market with no recorded change.
+              pattern: '^$|^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
             clock:
               type: integer
               format: int64

@@ -181,13 +181,13 @@ address: orderbook_delta
 parameters: []
 bindings: []
 operations:
-  - &ref_7
+  - &ref_6
     id: receiveOrderbookSnapshot
     title: Orderbook Snapshot
     description: Receive complete orderbook state
     type: send
     messages:
-      - &ref_9
+      - &ref_8
         id: orderbookSnapshot
         contentType: application/json
         payload:
@@ -237,7 +237,9 @@ operations:
                     required: true
                   - name: market_id
                     type: string
-                    description: Unique market UUID
+                    description: >-
+                      Unique market UUID. Can be an empty string for a market
+                      with no recorded change.
                     required: true
                   - name: clock
                     type: integer
@@ -345,11 +347,14 @@ operations:
                   description: Unique market identifier
                   examples: *ref_0
                   x-parser-schema-id: marketTicker
-                market_id: &ref_4
+                market_id:
                   type: string
-                  description: Unique market UUID
-                  format: uuid
-                  x-parser-schema-id: marketId
+                  description: >-
+                    Unique market UUID. Can be an empty string for a market with
+                    no recorded change.
+                  pattern: >-
+                    ^$|^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+                  x-parser-schema-id: <anonymous-schema-87>
                 clock:
                   type: integer
                   format: int64
@@ -360,7 +365,7 @@ operations:
 
                     The snapshot includes every change to this market with a
                     clock at or below this one, and none above it.
-                  x-parser-schema-id: <anonymous-schema-87>
+                  x-parser-schema-id: <anonymous-schema-88>
                 yes_dollars_fp:
                   type: array
                   description: >
@@ -375,11 +380,11 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-90>
+                      x-parser-schema-id: <anonymous-schema-91>
                     minItems: 2
                     maxItems: 2
-                    x-parser-schema-id: <anonymous-schema-89>
-                  x-parser-schema-id: <anonymous-schema-88>
+                    x-parser-schema-id: <anonymous-schema-90>
+                  x-parser-schema-id: <anonymous-schema-89>
                 no_dollars_fp:
                   type: array
                   description: >
@@ -394,13 +399,13 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-93>
+                      x-parser-schema-id: <anonymous-schema-94>
                     minItems: 2
                     maxItems: 2
-                    x-parser-schema-id: <anonymous-schema-92>
-                  x-parser-schema-id: <anonymous-schema-91>
+                    x-parser-schema-id: <anonymous-schema-93>
+                  x-parser-schema-id: <anonymous-schema-92>
               x-parser-schema-id: <anonymous-schema-86>
-            sending_ts_ms: &ref_5
+            sending_ts_ms: &ref_4
               type: integer
               format: int64
               description: >-
@@ -447,16 +452,16 @@ operations:
           - id: x-parser-unique-object-id
             value: orderbookSnapshot
     bindings: []
-    extensions: &ref_6
+    extensions: &ref_5
       - id: x-parser-unique-object-id
         value: orderbook_delta
-  - &ref_8
+  - &ref_7
     id: receiveOrderbookDelta
     title: Orderbook Update
     description: Receive incremental orderbook changes
     type: send
     messages:
-      - &ref_10
+      - &ref_9
         id: orderbookDelta
         contentType: application/json
         payload:
@@ -579,7 +584,7 @@ operations:
             type:
               type: string
               const: orderbook_delta
-              x-parser-schema-id: <anonymous-schema-94>
+              x-parser-schema-id: <anonymous-schema-95>
             sid: *ref_1
             seq: *ref_2
             msg:
@@ -593,7 +598,11 @@ operations:
                 - side
               properties:
                 market_ticker: *ref_3
-                market_id: *ref_4
+                market_id:
+                  type: string
+                  description: Unique market UUID
+                  format: uuid
+                  x-parser-schema-id: marketId
                 clock:
                   type: integer
                   format: int64
@@ -614,19 +623,19 @@ operations:
 
                     deduplication key. Apply deltas using this subscription's
                     seq order.
-                  x-parser-schema-id: <anonymous-schema-96>
+                  x-parser-schema-id: <anonymous-schema-97>
                 price_dollars:
                   type: string
                   description: Price level in dollars
                   x-rust-type: common::types::Price
                   x-rust-serialize-with: ws::dto::serde_money::serialize_price_dollars
-                  x-parser-schema-id: <anonymous-schema-97>
+                  x-parser-schema-id: <anonymous-schema-98>
                 delta_fp:
                   type: string
                   description: Fixed-point contract delta (2 decimals)
                   x-rust-type: i64
                   x-rust-serialize-with: ws::dto::serde_money::serialize_centicount_fixed_point_count
-                  x-parser-schema-id: <anonymous-schema-98>
+                  x-parser-schema-id: <anonymous-schema-99>
                 side:
                   type: string
                   description: Market side
@@ -642,7 +651,7 @@ operations:
 
                     Contains the client_order_id of your order that triggered
                     this delta.
-                  x-parser-schema-id: <anonymous-schema-99>
+                  x-parser-schema-id: <anonymous-schema-100>
                 ts:
                   type: string
                   deprecated: true
@@ -651,14 +660,14 @@ operations:
                     change was recorded (RFC3339, truncated to milliseconds).
                     Use ts_ms instead.
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-100>
+                  x-parser-schema-id: <anonymous-schema-101>
                 ts_ms:
                   type: integer
                   description: >-
                     Optional - Unix timestamp for when the orderbook change was
                     recorded (in milliseconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-101>
+                  x-parser-schema-id: <anonymous-schema-102>
                 subaccount:
                   type: integer
                   description: >
@@ -667,9 +676,9 @@ operations:
 
                     Contains the subaccount number of your order that triggered
                     this delta.
-                  x-parser-schema-id: <anonymous-schema-102>
-              x-parser-schema-id: <anonymous-schema-95>
-            sending_ts_ms: *ref_5
+                  x-parser-schema-id: <anonymous-schema-103>
+              x-parser-schema-id: <anonymous-schema-96>
+            sending_ts_ms: *ref_4
           x-parser-schema-id: orderbookDeltaPayload
         title: Orderbook Delta
         description: Update to be applied to the current order book view
@@ -695,15 +704,15 @@ operations:
           - id: x-parser-unique-object-id
             value: orderbookDelta
     bindings: []
-    extensions: *ref_6
+    extensions: *ref_5
 sendOperations: []
 receiveOperations:
+  - *ref_6
   - *ref_7
-  - *ref_8
 sendMessages: []
 receiveMessages:
+  - *ref_8
   - *ref_9
-  - *ref_10
 extensions:
   - id: x-parser-unique-object-id
     value: orderbook_delta

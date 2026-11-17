@@ -113,6 +113,19 @@ operations:
                   - name: subaccount
                     type: integer
                     required: false
+                  - name: subaccount_type
+                    type: string
+                    description: >-
+                      How the subaccount is margined. `cross` for the primary
+                      account and numbered subaccounts, `isolated` for a
+                      market's isolated subaccount, and `managed_isolated` for a
+                      managed isolated subaccount, whose number is the same as
+                      the market's isolated subaccount number.
+                    enumValues:
+                      - cross
+                      - isolated
+                      - managed_isolated
+                    required: false
                   - name: order_source
                     type: string
                     description: >
@@ -218,6 +231,19 @@ operations:
                 subaccount:
                   type: integer
                   x-parser-schema-id: <anonymous-schema-113>
+                subaccount_type:
+                  type: string
+                  enum:
+                    - cross
+                    - isolated
+                    - managed_isolated
+                  description: >-
+                    How the subaccount is margined. `cross` for the primary
+                    account and numbered subaccounts, `isolated` for a market's
+                    isolated subaccount, and `managed_isolated` for a managed
+                    isolated subaccount, whose number is the same as the
+                    market's isolated subaccount number.
+                  x-parser-schema-id: subaccountType
                 order_source:
                   type: string
                   enum:
@@ -256,6 +282,7 @@ operations:
               "fee_cost": "<string>",
               "post_position": "<string>",
               "subaccount": 123,
+              "subaccount_type": "<string>",
               "order_source": "<string>"
             },
             "sending_ts_ms": 123

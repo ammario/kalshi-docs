@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/withdraw-settlement-balance
-lastmod: 2026-11-13T04:52:10.375Z
+lastmod: 2026-11-16T17:24:08.362Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

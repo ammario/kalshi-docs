@@ -352,6 +352,19 @@ operations:
                   - name: subaccount
                     type: integer
                     required: false
+                  - name: subaccount_type
+                    type: string
+                    description: >-
+                      How the subaccount is margined. `cross` for the primary
+                      account and numbered subaccounts, `isolated` for a
+                      market's isolated subaccount, and `managed_isolated` for a
+                      managed isolated subaccount, whose number is the same as
+                      the market's isolated subaccount number.
+                    enumValues:
+                      - cross
+                      - isolated
+                      - managed_isolated
+                    required: false
               - name: sending_ts_ms
                 type: integer
                 description: >-
@@ -437,6 +450,19 @@ operations:
                 subaccount:
                   type: integer
                   x-parser-schema-id: <anonymous-schema-55>
+                subaccount_type:
+                  type: string
+                  enum:
+                    - cross
+                    - isolated
+                    - managed_isolated
+                  description: >-
+                    How the subaccount is margined. `cross` for the primary
+                    account and numbered subaccounts, `isolated` for a market's
+                    isolated subaccount, and `managed_isolated` for a managed
+                    isolated subaccount, whose number is the same as the
+                    market's isolated subaccount number.
+                  x-parser-schema-id: subaccountType
               x-parser-schema-id: <anonymous-schema-50>
             sending_ts_ms: *ref_4
           x-parser-schema-id: marginOrderbookDeltaPayload
@@ -455,7 +481,8 @@ operations:
               "last_update_reason": "<string>",
               "client_order_id": "<string>",
               "ts_ms": 123,
-              "subaccount": 123
+              "subaccount": 123,
+              "subaccount_type": "<string>"
             },
             "sending_ts_ms": 123
           }

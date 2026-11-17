@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/weather_rfqs
-lastmod: 2026-11-12T04:15:11.788Z
+lastmod: 2026-11-16T23:10:49.863Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,7 +12,7 @@ lastmod: 2026-11-12T04:15:11.788Z
 
 > [!NOTE]
 >
-> On-request weather markets are not live yet. They will be released soon, and this page describes how they will work at launch.
+> In production, only rain hours (`precip_hours`) is offered, in the contiguous US. The other variables on this page can be tried on demo. [Get Weather Point Market Availability](https://docs.kalshi.com/api-reference/markets/get-weather-point-market-availability.md) says what each environment offers.
 
 On-request weather markets let you trade the weather at a point you choose: a latitude and longitude, a window of hours on one day, and a threshold. The market doesn't exist until someone asks for it. You create it with one request, then trade it through the [RFQ system](https://docs.kalshi.com/getting_started/rfqs.md).
 
@@ -24,7 +24,7 @@ On-request weather markets let you trade the weather at a point you choose: a la
 4. Makers quote, you accept one side, and the maker confirms. This part is the same as for any other RFQ.
 5. The market closes when its window ends. Settlement is expected about two hours later.
 
-Makers skip steps 1 to 3: the RFQ arrives as `rfq_created` on the `communications` WebSocket channel with the market's ticker, and the ticker says what the market is (see [Tickers](#tickers)). For rain markets, [weather pricing](#weather-pricing) gives a reference probability to quote around.
+Makers skip steps 1 to 3: the RFQ arrives as `rfq_created` on the `communications` WebSocket channel with the market's `market_ticker` and `event_ticker`, and the ticker says what the market is (see [Tickers](#tickers)). For rain markets, [weather pricing](#weather-pricing) gives a reference probability to quote around.
 
 ## What you can request
 
@@ -39,7 +39,7 @@ Not every variable is offered everywhere, and the set differs between production
 
 **Location.** A point inside an offered region whose grid cell touches land in a US state or territory. A cell entirely over open water is refused, and so is a cell entirely outside the US even where a region's rectangle covers it, such as Toronto inside `conus`. The point snaps to the center of the NOAA MRMS grid cell that contains it, roughly 1 km across (about half that in Hawaii and Guam), so every request for a point in the same cell, with the same variable, window, strike type and thresholds, resolves to the same market. The response returns the snapped coordinates.
 
-**Window.** Whole local hours on one calendar day: `date`, `start_hour` (0 to 23), `end_hour` (1 to 24, exclusive, and after `start_hour`) and an IANA `timezone`. `0` to `24` is the whole day. A new market's window must start at least 15 minutes from now and within 365 days. The window must start and end on whole UTC hours, so time zones offset by a fraction of an hour are refused. A window can span a clock change, but it can't start or end on an hour that the change skips or repeats.
+**Window.** Whole local hours on one calendar day: `date`, `start_hour` (0 to 23), `end_hour` (1 to 24, exclusive, and after `start_hour`) and an IANA `timezone`. `0` to `24` is the whole day, so a window is at most 24 hours long, or 25 on the day clocks fall back. A new market's window must start at least 15 minutes from now and within 365 days. The window must start and end on whole UTC hours, so time zones offset by a fraction of an hour are refused. A window can span a clock change, but it can't start or end on an hour that the change skips or repeats.
 
 **Threshold.** `strike_type` with `floor_value` and `cap_value`, in the variable's threshold unit:
 
@@ -135,7 +135,8 @@ Fetching one by ticker works as for any market: `GET /markets/{ticker}`, `GET /e
 
 * The market closes at the end of its window (`close_time`).
 * It settles on the hourly data the exchange's weather data provider reports for the market's point, as available when the market is determined. That is expected about two hours after the window ends (`expected_expiration_time`), and takes longer when the data for the window arrives late. Later revisions to the data don't change the outcome.
-* Precipitation totals are rounded to the nearest hundredth of an inch and temperatures to the nearest whole °F before they are compared to the threshold.
+* For rain hours, an hour counts when its precipitation is at least 0.01 inch (0.254 mm). The hourly amount is not rounded first, so 0.2 mm doesn't count. The number of such hours is compared to the threshold.
+* For rain totals and temperatures, the value is rounded before it is compared to the threshold: totals to the nearest hundredth of an inch, temperatures to the nearest whole °F.
 * If the provider's data for the window is missing, the exchange determines the market. `latest_expiration_time` is seven days after close.
 
 Each market's `rules_primary` and `rules_secondary` carry the full terms.
@@ -144,7 +145,7 @@ Each market's `rules_primary` and `rules_secondary` carry the full terms.
 
 > [!NOTE]
 >
-> Weather pricing is not live yet. At launch it will be released to all API users for a limited period. After that period, access may be restricted or withdrawn.
+> Weather pricing is enabled per account. Ask your Kalshi contact for access in each environment you use; an account without it gets a 403. Access may be restricted or withdrawn.
 
 `GET /weather_point_markets/{market_ticker}/pricing` returns the weather data provider's probability that a rain market settles Yes. Makers can use it as a reference when quoting an RFQ.
 
@@ -189,6 +190,7 @@ An abbreviated example (a real response has one point per threshold):
 
 | Status | What's going on |
 | - | - |
+| 403 | Weather pricing isn't enabled for your account (`permission_denied`) |
 | 404 | Not a weather market, or the market doesn't exist |
 | 409 | The market can't be priced: a temperature market, a window that has ended, or a point or window the provider can't price |
 | 500 | Internal error |

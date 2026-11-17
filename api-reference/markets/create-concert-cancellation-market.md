@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/markets/create-concert-cancellation-market
-lastmod: 2026-11-13T04:52:12.090Z
+lastmod: 2026-11-16T17:24:09.812Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

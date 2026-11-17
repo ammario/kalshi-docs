@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-obligation-funding-payments
-lastmod: 2026-11-13T04:52:10.150Z
+lastmod: 2026-11-16T17:24:08.172Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
