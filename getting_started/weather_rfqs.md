@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/weather_rfqs
-lastmod: 2026-11-16T23:10:49.863Z
+lastmod: 2026-11-18T02:41:23.724Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -37,7 +37,7 @@ Makers skip steps 1 to 3: the RFQ arrives as `rfq_created` on the `communication
 
 Not every variable is offered everywhere, and the set differs between production and demo. The availability endpoint is the source of truth: a variable missing from its `variables` list can't be created, and `enabled: false` means creation is off entirely. It needs no authentication.
 
-**Location.** A point inside an offered region whose grid cell touches land in a US state or territory. A cell entirely over open water is refused, and so is a cell entirely outside the US even where a region's rectangle covers it, such as Toronto inside `conus`. The point snaps to the center of the NOAA MRMS grid cell that contains it, roughly 1 km across (about half that in Hawaii and Guam), so every request for a point in the same cell, with the same variable, window, strike type and thresholds, resolves to the same market. The response returns the snapped coordinates.
+**Location.** A point inside an offered region whose grid cell touches land in a US state or territory. A cell entirely over open water is refused, and so is a cell entirely outside the US even where a region's rectangle covers it, such as Toronto inside `conus`. The market's point is your coordinates rounded to three decimal places (about 100 m), so requests that agree to three decimal places, with the same variable, window, strike type and thresholds, resolve to the same market; two points in the same grid cell are two markets. A rounded point that lies exactly on the boundary between two grid cells is moved 0.001° north or east, into one of them. The response returns the market's coordinates.
 
 **Window.** Whole local hours on one calendar day: `date`, `start_hour` (0 to 23), `end_hour` (1 to 24, exclusive, and after `start_hour`) and an IANA `timezone`. `0` to `24` is the whole day, so a window is at most 24 hours long, or 25 on the day clocks fall back. A new market's window must start at least 15 minutes from now and within 365 days. The window must start and end on whole UTC hours, so time zones offset by a fraction of an hour are refused. A window can span a clock change, but it can't start or end on an hour that the change skips or repeats.
 
@@ -137,9 +137,28 @@ Fetching one by ticker works as for any market: `GET /markets/{ticker}`, `GET /e
 * It settles on the hourly data the exchange's weather data provider reports for the market's point, as available when the market is determined. That is expected about two hours after the window ends (`expected_expiration_time`), and takes longer when the data for the window arrives late. Later revisions to the data don't change the outcome.
 * For rain hours, an hour counts when its precipitation is at least 0.01 inch (0.254 mm). The hourly amount is not rounded first, so 0.2 mm doesn't count. The number of such hours is compared to the threshold.
 * For rain totals and temperatures, the value is rounded before it is compared to the threshold: totals to the nearest hundredth of an inch, temperatures to the nearest whole °F.
-* If the provider's data for the window is missing, the exchange determines the market. `latest_expiration_time` is seven days after close.
+* If the data for the window is late or incomplete, see [When data is late or missing](#when-data-is-late-or-missing). `latest_expiration_time` is seven days after close.
 
 Each market's `rules_primary` and `rules_secondary` carry the full terms.
+
+### When data is late or missing
+
+Rain markets settle on NOAA's MRMS radar and gauge analysis, which measures what fell on a grid of about 1 km. Each hour of the window needs an amount.
+
+| When | What happens |
+| - | - |
+| About 2 hours after the window ends | MRMS normally has every hour, and the market settles. |
+| Up to 48 hours after | If MRMS is missing an hour, the market waits for it. Nothing is estimated or filled in. |
+| From 48 hours after | An hour MRMS still doesn't have is taken from NOAA's HRRR analysis for the market's point. Hours MRMS does have still come from MRMS. |
+| If an hour is missing from both | The exchange determines the market, by `latest_expiration_time` at the latest. |
+
+What to know about the fallback:
+
+* HRRR is a weather model's estimate on a grid of about 3 km, not a measurement, so it can differ from MRMS for light or scattered rain. It is used only for the hours MRMS never published.
+* Each dataset is read at its own grid cell containing the market's point.
+* A market that used it says so in `expiration_value`, for example `3 rainy hours (1 of 11 hours from hrrr_analysis)`.
+* Once a market is determined, data published later doesn't change the outcome.
+* Temperature markets settle on HRRR alone and have no fallback.
 
 ## Weather pricing
 

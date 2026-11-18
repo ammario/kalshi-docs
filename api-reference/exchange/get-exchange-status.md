@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/exchange/get-exchange-status
-lastmod: 2026-11-16T17:24:08.501Z
+lastmod: 2026-11-18T02:41:17.971Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -23,7 +23,7 @@ In `exchange_index_statuses` on a 200 response, an index other than 0 whose stat
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.36.0
+  version: 3.37.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

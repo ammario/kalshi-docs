@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-member-funding-payments
-lastmod: 2026-11-16T17:24:08.212Z
+lastmod: 2026-11-18T02:41:17.709Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

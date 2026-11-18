@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/market/get-market-schedules
-lastmod: 2026-11-16T23:20:26.071Z
+lastmod: 2026-11-18T02:41:19.622Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

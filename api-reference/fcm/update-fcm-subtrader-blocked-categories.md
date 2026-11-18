@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/fcm/update-fcm-subtrader-blocked-categories
-lastmod: 2026-11-16T17:24:10.030Z
+lastmod: 2026-11-18T02:41:19.273Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,7 +24,7 @@ not cancelled. Returns the subtrader's full resulting blocked set.
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.36.0
+  version: 3.37.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

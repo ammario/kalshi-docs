@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-11-17T03:04:20.395Z
+lastmod: 2026-11-18T02:54:15.706Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,23 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+**November 19, 2026**
+
+`POST /weather_point_markets` no longer snaps the location to the center of
+the NOAA MRMS grid cell containing it. The market's location is now the
+requested `latitude` and `longitude` rounded to three decimal places (about
+100 m), and the response's `latitude` and `longitude` return that point.
+
+* Requests share a market only when their coordinates agree to three
+  decimal places. Two points in the same grid cell used to resolve to one
+  market and now resolve to two.
+* A rounded location that lies exactly on the boundary between two grid
+  cells is moved 0.001° north or east, into one of them.
+* Tickers keep their format. The location segment (`40785N73965W`) is the
+  market's point, which is no longer always a cell center.
+* Markets created before this change keep their location and stay
+  reachable by requesting those coordinates.
 
 **November 19, 2026**
 

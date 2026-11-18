@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-guaranty-fund-balance
-lastmod: 2026-11-16T17:24:08.337Z
+lastmod: 2026-11-18T02:41:17.827Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/markets/create-weather-point-market
-lastmod: 2026-11-16T17:24:09.786Z
+lastmod: 2026-11-18T02:41:19.064Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -17,10 +17,13 @@ where new markets like it are no longer offered. If weather markets
 are switched off entirely, the request can be refused whether or not
 the market exists.
 
-The location snaps to the center of the NOAA MRMS grid cell containing
-it; the response carries the snapped coordinates. Markets are only
-offered where `GET /weather_point_markets/availability` says so, and
-not over open water.
+The market's location is the requested coordinates rounded to three
+decimal places; requests that agree to three decimal places share a
+market. A rounded location exactly on the boundary between two NOAA
+MRMS grid cells is moved 0.001° north or east, into one of them. The
+response carries the market's coordinates. Markets are only offered
+where `GET /weather_point_markets/availability` says so, and not over
+open water.
 
 The window is whole local hours on one calendar day. A new market's
 window must start at least 15 minutes from now and within 365 days.
@@ -52,7 +55,7 @@ Errors carry the specific reason in `details`:
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.36.0
+  version: 3.37.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -121,13 +124,19 @@ paths:
         the market exists.
 
 
-        The location snaps to the center of the NOAA MRMS grid cell containing
+        The market's location is the requested coordinates rounded to three
 
-        it; the response carries the snapped coordinates. Markets are only
+        decimal places; requests that agree to three decimal places share a
 
-        offered where `GET /weather_point_markets/availability` says so, and
+        market. A rounded location exactly on the boundary between two NOAA
 
-        not over open water.
+        MRMS grid cells is moved 0.001° north or east, into one of them. The
+
+        response carries the market's coordinates. Markets are only offered
+
+        where `GET /weather_point_markets/availability` says so, and not over
+
+        open water.
 
 
         The window is whole local hours on one calendar day. A new market's
@@ -334,14 +343,14 @@ components:
           type: number
           format: double
           description: >-
-            Latitude of the market's location, the center of the grid cell
-            containing the request, to three decimal places.
+            Latitude of the market's location, the requested latitude to three
+            decimal places.
         longitude:
           type: number
           format: double
           description: >-
-            Longitude of the market's location, the center of the grid cell
-            containing the request, to three decimal places.
+            Longitude of the market's location, the requested longitude to three
+            decimal places.
     WeatherPointVariable:
       type: string
       enum:
