@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/markets/create-concert-cancellation-market
-lastmod: 2026-11-18T02:41:19.089Z
+lastmod: 2026-11-19T07:28:08.298Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -22,8 +22,9 @@ created from the show's listing as it stands now, so the request is
 refused when the show has moved to another date or has already been
 canceled or postponed.
 
-An existing market is returned until it closes, even when new markets
-are no longer offered. A new market's show must start more than an
+An existing market is usually returned until it closes, even when new
+markets are no longer offered; where creation or its cover is switched
+off, the request returns 409. A new market's show must start more than an
 hour from now and within the `max_days_ahead` that
 `GET /concert_cancellation_markets/availability` reports.
 
@@ -133,9 +134,12 @@ paths:
         canceled or postponed.
 
 
-        An existing market is returned until it closes, even when new markets
+        An existing market is usually returned until it closes, even when new
 
-        are no longer offered. A new market's show must start more than an
+        markets are no longer offered; where creation or its cover is switched
+
+        off, the request returns 409. A new market's show must start more than
+        an
 
         hour from now and within the `max_days_ahead` that
 
@@ -213,6 +217,8 @@ paths:
           $ref: '#/components/responses/RateLimitError'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableError'
       security:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
@@ -333,6 +339,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     InternalServerError:
       description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServiceUnavailableError:
+      description: Service temporarily unavailable
       content:
         application/json:
           schema:

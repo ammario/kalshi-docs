@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/rfqs
-lastmod: 2026-11-13T00:53:49.915Z
+lastmod: 2026-11-19T03:50:28.528Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -12,7 +12,7 @@ lastmod: 2026-11-13T00:53:49.915Z
 
 Kalshi implements an RFQ (Request for Quote) system for pre-execution communication between members. RFQs allow a requester to solicit quotes from market makers on a specific market and size. Execution follows a two-step lock: accept, then confirm.
 
-RFQs are available on any market, including combo (multivariate event) markets. Combo markets are classified as High Volatility Markets (HVM), which have shorter timing windows (see [Timing](#timing)).
+RFQs are available on any market, including combo (multivariate event) markets. Combo markets, and some others, are classified as High Volatility Markets (HVM), which have shorter timing windows (see [Timing](#timing)).
 
 ## Interfaces
 
@@ -81,7 +81,7 @@ costs and budgets work.
 
 ## Quotes
 
-Each quote has two prices: `yes_bid` (price per YES contract) and `no_bid` (price per NO contract). These are typically different. Either can be `"0"` to decline that side, but not both. Each bid must be below `$1`, and a quote with both bids above `$0.75` is rejected as a likely pricing mistake. These rejections return `invalid_parameters`.
+Each quote has two prices: `yes_bid` (price per YES contract) and `no_bid` (price per NO contract). These are typically different. Either can be `"0.00"` to decline that side, but not both. Each bid must be below `$1`, and a quote with both bids above `$0.75` is rejected as a likely pricing mistake. Over REST these return `400`: `invalid_parameters` for the `$0.75` rule, `both_yes_bid_and_no_bid_must_be_less_than_100` for a bid of `$1` or more, and `both_yes_bid_and_no_bid_cannot_be_zero` for two zero bids.
 
 Quoters do not specify a size. Each quote is implicitly for the full RFQ amount (`contracts_fp`, or whatever count `target_cost_dollars` resolves to at the quoted prices).
 
@@ -102,7 +102,7 @@ failures age out. If the refusals persist, contact support.
 
 ## Timing
 
-The exchange designates certain markets as High Volatility Markets (HVM). All combo markets are HVMs, and so are markets whose event ticker begins with `KXMLB`, `KXNBA` or `KXNFL`. HVMs use shorter confirmation and execution windows.
+The exchange designates certain markets as High Volatility Markets (HVM). All combo markets are HVMs, and so are markets whose event ticker begins with `KXMLB`, `KXNBA`, `KXNFL` or `KXRFQ`. The last covers the on-request [weather](https://docs.kalshi.com/getting_started/weather_rfqs.md) and [concert](https://docs.kalshi.com/getting_started/concert_rfqs.md) markets. HVMs use shorter confirmation and execution windows.
 
 | | Standard | HVM |
 | - | - | - |
@@ -111,7 +111,7 @@ The exchange designates certain markets as High Volatility Markets (HVM). All co
 
 After acceptance, the maker has the confirmation window to confirm. Upon confirmation, the platform begins the execution timer. At the end of the timer, orders are entered into the book. Fills appear in `GET /portfolio/fills`. Match on `creator_order_id` (maker) or `rfq_creator_order_id` (requester).
 
-An open RFQ is closed automatically about 3 hours after it was last updated, and its open quotes are cancelled. An RFQ with a confirmed quote is left to execute. The close arrives as `rfq_deleted` on the WebSocket channel.
+An open RFQ is closed automatically about 3 hours after it was created, and its open quotes are cancelled. A new quote does not extend that time. An RFQ with a confirmed quote is left to execute. The close arrives as `rfq_deleted` on the WebSocket channel.
 
 ## WebSocket
 
@@ -182,7 +182,9 @@ These are the REST `code` values. FIX reports the same conditions in uppercase, 
 | `400` `expired` | The quote or RFQ is no longer in a state that allows this action |
 | `400` `insufficient_balance` | Not enough funds for the trade |
 | `409` `quote_timed_out` | Create Quote is refused because quoting is restricted for your account, usually temporarily after repeated unconfirmed quotes; see [Post-only quotes](#post-only-quotes) |
-| `409 Conflict` | Open RFQ already exists on this market ticker |
+| `409` `already_exists` | You already have an open RFQ on this market ticker and did not set `replace_existing` |
+| `429` `open_rfq_limit_exceeded` | You have too many open RFQs (the limit is about 100 per subaccount) and did not set `replace_existing`. Retrying does not help until some close |
+| `400` `rfq_market_not_open` | The market is not open for RFQs |
 | `429` `too_many_requests` | Usually your Write budget is exhausted. RFQ creation can cost more when few of your RFQs are accepted; see [Unaccepted RFQs](#unaccepted-rfqs). Creating an RFQ batch also returns this when you are at your open-batch limit and did not set `replace_existing`; retrying does not help until a batch closes |
 
 

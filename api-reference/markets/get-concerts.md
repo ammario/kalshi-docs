@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/markets/get-concerts
-lastmod: 2026-11-18T02:41:19.113Z
+lastmod: 2026-11-19T07:28:08.330Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -151,6 +151,8 @@ paths:
           $ref: '#/components/responses/RateLimitError'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailableError'
       security:
         - kalshiAccessKey: []
           kalshiAccessSignature: []
@@ -322,6 +324,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     InternalServerError:
       description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServiceUnavailableError:
+      description: Service temporarily unavailable
       content:
         application/json:
           schema:

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/communications/reject-block-trade-proposal
-lastmod: 2026-11-18T02:41:18.646Z
+lastmod: 2026-11-19T07:28:07.712Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

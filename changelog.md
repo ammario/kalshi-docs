@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-11-18T02:54:15.706Z
+lastmod: 2026-11-19T03:50:28.528Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,35 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+**November 26, 2026**
+
+A weather point market's window can now run from one local day into the
+next, for example 11pm to 3am:
+
+* `POST /weather_point_markets` takes an optional `end_date`. Left out, or
+  equal to `date`, the request means what it did before. Set to the day
+  after `date`, the window runs from `start_hour` on `date` to `end_hour`
+  on `end_date`. Such a window is at most 24 hours long, so `end_hour` must
+  not be after `start_hour`; a longer window, or any other `end_date`,
+  returns 400 `invalid_parameters`.
+* `end_hour` no longer has to be after `start_hour` when `end_date` is the
+  day after `date`. For a window on one day it still must be.
+* `GET /weather_point_markets/availability` returns `max_window_days` (2
+  where a window may cross midnight, otherwise 1) and `max_window_hours`
+  (the longest such window, 24). Where `max_window_days` is 1, a new
+  market whose window is stored across two local dates returns 409
+  `weather_point_market_unavailable`. A market stores the dates of the
+  first request for its variable, point and window, normally your own. When
+  that event already exists, its dates decide: a one-date request from
+  another time zone for an event stored across midnight returns the 409,
+  and a request with `end_date` for an event stored on one date succeeds.
+  Markets that already exist are returned either way.
+
+Tickers keep their shape: the window is still its UTC start and its length
+in hours, so 11pm November 23 to 3am November 24 in New York is
+`…-26NOV2404Z-4H-…`. Existing markets and requests without `end_date` are
+unchanged. See [On-Request Weather Markets](https://docs.kalshi.com/getting_started/weather_rfqs.md).
 
 **November 19, 2026**
 

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/concert_rfqs
-lastmod: 2026-11-13T18:19:54.959Z
+lastmod: 2026-11-19T00:02:12.636Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -37,9 +37,9 @@ A market is defined by three things: the show, the date it is scheduled for, and
 | `cancelled` | Canceled | `KXRFQCONCERTC` |
 | `either` | Either of the above | `KXRFQCONCERT` |
 
-A show can have one market per cover. Not every cover is offered everywhere, and the set can differ between production and demo. The availability endpoint is the source of truth: a cover missing from its `covers` list can't be created, and `enabled: false` means creation is off entirely. It needs no authentication.
+A show can have one market per cover. Not every cover is offered everywhere, and the set can differ between production and demo. The availability endpoint is the source of truth: a cover missing from its `covers` list can't be created, and `enabled: false` means creation is off entirely. `enabled: true` doesn't promise the reverse: where concerts are listed before markets are offered, every create request returns 409. It needs no authentication.
 
-**Show.** A concert listed by JamBase, named by its `jambase_event_id` (`jambase:<id>`). The show must still be listed as scheduled: one that has already been canceled or postponed is refused.
+**Show.** A concert listed by JamBase, named by its `jambase_event_id` (`jambase:<id>`). The show must still be listed as scheduled: one that has already been canceled or postponed is refused. Only shows at larger venues are offered. The listing and search are a way to find shows, not a requirement: a qualifying show can be created by its `jambase_event_id` even when neither returns it (a metro that isn't listed, or past their result limits).
 
 **Date.** `scheduled_date` is the date the show is scheduled for, local to the venue, as YYYY-MM-DD. It must match the show's listing at the moment the market is created. If the show has moved since you read the listing, the request returns 409 with the new date in `details`.
 
@@ -110,7 +110,7 @@ An abbreviated example:
 * `markets` has one entry per offered cover, with the tickers the show has or would get. A ticker listed here names a market that may not exist yet, so create it before sending an RFQ.
 * Read further pages with `page`, up to `total_pages`. A listing holds at most 20 pages (1,000 shows), so narrow the dates to reach later shows in a busy metro.
 
-`GET /concert_cancellation_markets/concerts/search?q=<name>` returns up to 50 concerts in the same shape, across metros. `q` is matched against the acts on the bill and may also match venues and cities. Both endpoints need authentication and return only shows a market can still be created for.
+`GET /concert_cancellation_markets/concerts/search?q=<name>` returns up to 50 concerts in the same shape, normally across the metros that availability lists. While the exchange's concert catalog is still loading, a search goes to JamBase directly and can return shows in other US metros too. `q` is matched against the acts on the bill and may also match venues and cities. Both endpoints need authentication and return only shows a market can still be created for.
 
 ## Create a market
 
@@ -138,7 +138,7 @@ curl -X POST https://external-api.demo.kalshi.co/trade-api/v2/concert_cancellati
 
 Sign the request like any other authenticated request (see [Quick Start: Authenticated Requests](https://docs.kalshi.com/getting_started/quick_start_authenticated_requests.md)), and take `jambase_event_id` and `scheduled_date` from a listing or search result.
 
-The same request returns the same market, with `created: false` once it exists, until it closes. You can call it before each RFQ. An existing market is returned even when new markets are no longer offered. A market created a moment ago may not be readable yet: if `GET /markets/{ticker}` returns 404 right after creation, retry.
+The same request returns the same market, with `created: false` once it exists, until it closes. You can call it before each RFQ. An existing market is usually returned even when new markets are no longer offered, but not where creation or its cover is switched off: that returns 409. A market created a moment ago may not be readable yet: if `GET /markets/{ticker}` returns 404 right after creation, retry.
 
 Then request quotes on it with `POST /communications/rfqs`:
 
@@ -150,7 +150,7 @@ Then request quotes on it with `POST /communications/rfqs`:
 }
 ```
 
-Sizing, quoting, acceptance and timing follow [Request for Quote (RFQ)](https://docs.kalshi.com/getting_started/rfqs.md).
+Sizing, quoting, acceptance and timing follow [Request for Quote (RFQ)](https://docs.kalshi.com/getting_started/rfqs.md). These markets use the shorter High Volatility Market windows: a maker has 3 seconds to confirm an accepted quote, and execution can start 1 second after that. Execution can still fail (for example, a post-only maker order that would cross), so take the outcome from the execution event or your fills, not from the timing.
 
 ## Tickers
 
@@ -205,14 +205,15 @@ The create endpoint is charged against your write [rate limit](https://docs.kals
 | - | - | - |
 | 400 | `bad_request` | The body isn't valid JSON, or a field has the wrong type |
 | 400 | `missing_parameters` | A required body field is missing or empty |
-| 400 | `invalid_parameters` | The request can't be served as sent: an unknown cover or metro, an id that isn't `jambase:<id>`, a date that isn't YYYY-MM-DD, a `date_to` before `date_from`, or a show scheduled further ahead than `max_days_ahead` |
+| 400 | `invalid_parameters` | The request can't be served as sent: an unknown cover or metro, an id that isn't `jambase:<id>`, a `scheduled_date` that isn't YYYY-MM-DD, a `date_to` before `date_from`, or a show scheduled further ahead than `max_days_ahead` |
 | 404 | `not_found` | JamBase has no show with that id |
-| 409 | `concert_cancellation_market_unavailable` | Valid, but not offered: concert markets or the cover are switched off, the show is now listed on another date, has already been canceled or postponed, starts in an hour or less, isn't a concert, or its market has closed |
+| 409 | `concert_cancellation_market_unavailable` | Valid, but not offered: concert markets or the cover are switched off, the show is now listed on another date, has already been canceled or postponed, starts in an hour or less, isn't a concert, is at a venue smaller than those offered, or its market has closed |
 | 429 | `concert_cancellation_market_limit_exceeded` | The limit on new concert markets across all users in a rolling 24 hours was reached. Retrying at once doesn't help |
 | 429 | `concert_search_limit_exceeded` | The limit on searches across all users was reached. Browse by metro instead, or retry later |
 | 429 | `too_many_requests` | Your API rate limit |
+| 503 | `service_unavailable` | The concert listing couldn't be read just now. Retry later |
 
-The specific reason is in the error's `details` when there is one; a rate-limit error can come without it. A missing or malformed query parameter on the listing, search or availability endpoints returns 400 before the request is looked at further.
+The specific reason is in the error's `details` when there is one; a rate-limit error can come without it. A missing or malformed query parameter on the listing, search or availability endpoints returns 400 before the request is looked at further. Such a 400 comes before authentication, with a body of the form `{"msg": "<reason>"}` and no `error` object.
 
 
 This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

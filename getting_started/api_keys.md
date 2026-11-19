@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/api_keys
-lastmod: 2026-11-13T01:31:27.786Z
+lastmod: 2026-11-19T03:50:28.528Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -262,7 +262,7 @@ A parent scope grants its child scopes: `write` covers `write::trade`, `write::t
 | Order group create, delete, reset, trigger and limit (`/portfolio/order_groups/...`) | `write::trade` |
 | Position exit trigger set and delete (`/portfolio/positions/{ticker}/exit_trigger`) | `write::trade` |
 | RFQ, quote and RFQ batch writes (`/communications/rfqs...`, `/communications/quotes...`, `/communications/rfq_batches...`) | `write::trade` |
-| Combo market creation (`POST /multivariate_event_collections/{collection_ticker}`) and `POST /weather_point_markets` | `write::trade` |
+| Combo market creation (`POST /multivariate_event_collections/{collection_ticker}`), `POST /weather_point_markets` and `POST /concert_cancellation_markets` | `write::trade` |
 | Block trade proposal create and cancel | `write::trade` |
 | Perps order, order group and exit trigger writes (`/margin/orders...`, `/margin/order_groups/...`, `/margin/.../exit_trigger`) | `write::trade` |
 | FCM position transfers (`POST /fcm/positions/transfers`, `POST /margin/fcm/positions/transfers`) | `write::trade` |
