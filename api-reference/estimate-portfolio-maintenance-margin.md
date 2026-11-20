@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/estimate-portfolio-maintenance-margin
-lastmod: 2026-11-19T07:28:06.431Z
+lastmod: 2026-11-20T01:33:56.259Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

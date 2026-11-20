@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/authentication
-lastmod: 2026-11-16T17:42:51.397Z
+lastmod: 2026-11-19T16:47:47.600Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -47,7 +47,7 @@ The initiator sends a Logon message. The acceptor responds with either a Logon (
 | - | - | - | - |
 | 141 | ResetSeqNumFlag | Reset sequence numbers on logon. **Must be Y for non-retransmission sessions.** | N |
 | 8013 | CancelOrdersOnDisconnect | On any disconnection (including graceful logout), cancel the resting orders placed over FIX with this API key. Orders placed through REST or with another API key are not canceled. See the warning under Logout below. | N |
-| 20126 | ListenerSession | Listen-only session. **KalshiNR/RT only, requires SkipPendingExecReports=Y.** | N |
+| 20126 | ListenerSession | Listen-only session; a KalshiRFQ listener keeps quoting. **KalshiNR/RT/RFQ only, requires SkipPendingExecReports=Y.** | N |
 | 20127 | ReceiveSettlementReports | Receive settlement reports. **KalshiNR, KalshiRT, and KalshiPT only. Defaults to Y on KalshiPT.** | N (Y on KalshiPT) |
 | 20200 | MessageRetentionPeriod | How long session messages will be stored for retransmission, max of 72 hours. **KalshiRT and KalshiPT only.** | 24 |
 | 21005 | UseDollars | Enable dollar-based price format for prices, including subpenny precision | N |
@@ -126,7 +126,7 @@ Use one active FIX connection per API key. If Logon is rejected, inspect Text (`
 | Text (58) | Meaning |
 | - | - |
 | `API key does not have read scope` | Every FIX session needs an API key with the read scope. |
-| `API key does not have write scope` | Order entry, RFQ, drop copy and post-trade sessions also need a key that can trade. Listener sessions and `KalshiMD` need only the read scope. |
+| `API key does not have write scope` | Order entry, RFQ, drop copy and post-trade sessions also need a key that can trade. KalshiNR/RT listener sessions and `KalshiMD` need only the read scope. |
 | `API usage level is not allowed for FIX` | The account is below the Premier tier on this exchange. Event-contract and Perps FIX each check their own tier. |
 | `FIX retransmission mode not allowed.` | The account is not enabled for `KalshiRT` or `KalshiPT`. Contact [institutional@kalshi.com](mailto:institutional@kalshi.com). |
 | `User is not allowed to use FIX` | The account cannot use FIX. Contact support. |

@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin
-lastmod: 2026-11-13T04:06:56.730Z
+lastmod: 2026-11-19T20:22:04.180Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -177,7 +177,8 @@ Transfers out of your margin balance, and transfers between margin subaccounts, 
 * If the fire order cannot be placed because the exchange is paused, the market is halted or outside its session, or a price band refuses the price, the trigger stays `active`. It is checked again against the current mark, and fires only if its condition is still met at a time when the order can be placed. A crossing that happened while the order could not be placed is not remembered, so if the mark has moved back the trigger does not fire.
 * A stop-loss that would not fire before the position's estimated liquidation price is rejected with `400` `stop_loss_past_liquidation`. The check is best effort: it runs only when a liquidation price estimate is available for the position, so an accepted stop-loss is not a guarantee that it fires before liquidation.
 * A trigger that conflicts with a resting closing order on the same position is rejected with `400` `close_order_blocks_exit_trigger`.
-* A stop-loss or take-profit price that the current mark has already passed by more than 2% is rejected with `400`, when a fresh mark price is available. If the mark is missing or stale, this check is skipped; the trigger may still be accepted if its other validations pass, so a successful create does not prove the price was checked against the mark. A stop-loss equal to the take-profit, and legs on the wrong side of each other for the position's direction, are always rejected with `400`. For these the `message` describes the problem and the `code` is not a stable identifier, so branch on the HTTP status.
+* A take-profit or stop-loss price that the current mark has already passed by more than 2% is rejected with `400` `take_profit_already_breached` or `stop_loss_already_breached`, when a fresh mark price is available. If the mark is missing or stale, this check is skipped; the trigger may still be accepted if its other validations pass, so a successful create does not prove the price was checked against the mark.
+* A stop-loss equal to the take-profit, and legs on the wrong side of each other for the position's direction, are always rejected with `400`. For these the `message` describes the problem and the `code` is not a stable identifier, so branch on the HTTP status.
 * A trigger canceled by a corporate action reports `status` `canceled` with no `status_reason`.
 
 ### Liquidation and other system fills

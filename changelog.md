@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/changelog
-lastmod: 2026-11-19T03:50:28.528Z
+lastmod: 2026-11-20T06:26:10.525Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -19,6 +19,67 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+**November 26, 2026**
+
+`GET /historical/fills` accepts up to 100 comma-separated market tickers in the
+`ticker` query parameter. A single ticker still works.
+
+**November 26, 2026**
+
+An RFQ on a market created on request (a ticker starting `KXRFQ`, such as a weather point
+market), or on a combo whose legs are all such markets, obscures its creator's public
+communications ID whether or not `obscure_creator_id` is set. So does an RFQ batch whose
+combos are all made of such markets. Other users receive
+the shared placeholder in RFQ responses, broadcasts and quotes until a successful execution,
+exactly as with `obscure_creator_id: true`; the creator always sees their own ID. RFQs on
+other markets are unchanged.
+
+**November 26, 2026**
+
+Margin exit-trigger writes reject a `take_profit_price` or `stop_loss_price` the current mark
+has already passed by more than 2% with `400` and error code `take_profit_already_breached` or
+`stop_loss_already_breached`. These were `400` responses whose `code` was not a stable
+identifier.
+
+**November 26, 2026**
+
+A new weather point market is now described in the time zone of its
+location, which Kalshi determines from the coordinates. The `timezone` in
+`POST /weather_point_markets` still decides which span of time your `date`
+and hours mean, and the request body, the response and tickers are
+unchanged. What changes, for markets created from now on:
+
+* `title` and `rules_primary`, as returned by `GET /markets` and
+  `GET /events`, give the window in the location's zone, whatever zone
+  created the market. A request for 11pm to 3am in `America/New_York` at a
+  point in Portland, Oregon used to produce a market reading in Eastern
+  time, "from 11pm EST Thu, Nov 19 to 3am EST Fri, Nov 20, 2026"; it now
+  reads "on Thu, Nov 19, 2026, 8pm–12am PST", and its rules "from 8pm to
+  12am PST (America/Los\_Angeles) starting Thu, Nov 19, 2026". A market
+  requested in its location's own zone reads as before.
+* Where `GET /weather_point_markets/availability` returns
+  `max_window_days: 1`, a new market is refused with 409
+  `weather_point_market_unavailable` when its window crosses midnight at
+  the location, and accepted when it doesn't, even if your request sets
+  `end_date`. It no longer depends on the dates of the first request for
+  the event, which replaces what the entry below says.
+* A window that crosses midnight at the location and is longer than 24
+  hours there returns 400 `invalid_parameters`, even when your request
+  names it within one date of another zone.
+* A location whose time zone can't be determined returns 409
+  `weather_point_market_unavailable`.
+
+Events that already exist keep their description, and a new threshold on
+one of them reads like the rest of that event. See
+[On-Request Weather Markets](https://docs.kalshi.com/getting_started/weather_rfqs.md#the-markets-own-time-zone).
+
+**November 26, 2026**
+
+KalshiRFQ sessions can now choose listener mode with
+`ListenerSession<20126>=Y`. The session keeps quoting and also receives your
+account's execution reports, including the fills of your accepted quotes.
+See [Listener Sessions](https://docs.kalshi.com/fix/listener-sessions.md).
 
 **November 26, 2026**
 

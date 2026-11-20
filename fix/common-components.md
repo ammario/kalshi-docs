@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/common-components
-lastmod: 2026-11-12T04:15:11.885Z
+lastmod: 2026-11-19T16:47:47.600Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -71,7 +71,7 @@ Every FIX message ends with:
 | F | OrderCancelRequest | KalshiNR, KalshiRT | Client -> Server |
 | G | OrderCancelReplaceRequest | KalshiNR, KalshiRT | Client -> Server |
 | q | OrderMassCancelRequest | KalshiNR | Client -> Server |
-| 8 | ExecutionReport | KalshiNR, KalshiRT, KalshiDC | Server -> Client |
+| 8 | ExecutionReport | KalshiNR, KalshiRT, KalshiDC, KalshiRFQ ([listener](https://docs.kalshi.com/fix/listener-sessions.md)) | Server -> Client |
 | 9 | OrderCancelReject | KalshiNR, KalshiRT | Server -> Client |
 | r | OrderMassCancelReport | KalshiNR | Server -> Client |
 | j | BusinessMessageReject | All | Server -> Client |

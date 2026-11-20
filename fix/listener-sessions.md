@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/fix/listener-sessions
-lastmod: 2026-11-12T04:15:11.871Z
+lastmod: 2026-11-19T16:47:47.600Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -21,6 +21,8 @@ A listener session is not a separate endpoint. It is a **mode** enabled on a sta
 Once connected, the listener session receives the same execution reports as your active trading session in real time, but **cannot send any orders or modifications**.
 
 Listener sessions connect to the same KalshiNR or KalshiRT endpoints listed on the [Connectivity](https://docs.kalshi.com/fix/connectivity.md) page. A **separate API key** is required (read-only scope is sufficient).
+
+A KalshiRFQ session can also choose listener mode. It receives the same execution reports and keeps quoting, so its API key needs the same scopes as any KalshiRFQ session.
 
 ## Logon Configuration
 

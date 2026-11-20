@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/get-obligation-settlement-details
-lastmod: 2026-11-19T07:28:06.338Z
+lastmod: 2026-11-20T01:33:56.166Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt

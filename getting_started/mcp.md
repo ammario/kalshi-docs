@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/mcp
-lastmod: 2026-11-12T04:15:11.786Z
+lastmod: 2026-11-19T20:01:29.843Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -116,6 +116,12 @@ Review the permissions on Kalshi's authorization screen before connecting:
 The connector does not place or cancel orders, transfer funds, or save trade drafts. Market links let you continue on Kalshi to review and submit an order yourself.
 
 To revoke an app's account access, open [Settings](https://kalshi.com/account/settings), find **Connected apps**, and select **Disconnect** for that app. Public market tools remain available without account access.
+
+## Data and privacy
+
+Your assistant sends Kalshi the arguments for each tool it calls, such as a search term, market ticker, or alert threshold. Account tools return the requested portfolio or alert data to your connected assistant. Kalshi records tool arguments, errors, and usage information, including the caller IP for anonymous requests and account and client identifiers for authenticated requests. Tool-call logs omit the Authorization header and tool results. Keep credentials and personal information out of all tool arguments, including search terms. You can revoke access in Connected apps.
+
+See the [Kalshi Privacy Policy](https://kalshi.com/docs/kalshi-privacy-policy.pdf) for Kalshi’s general data practices, the [Member Agreement](https://kalshi.com/regulatory/agreement) for terms, and [Kalshi Support](https://help.kalshi.com/en/) for help.
 
 ## Connection help
 
