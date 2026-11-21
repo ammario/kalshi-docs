@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/mcp
-lastmod: 2026-11-19T20:01:29.843Z
+lastmod: 2026-11-20T14:15:05.107Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -122,6 +122,14 @@ To revoke an app's account access, open [Settings](https://kalshi.com/account/se
 Your assistant sends Kalshi the arguments for each tool it calls, such as a search term, market ticker, or alert threshold. Account tools return the requested portfolio or alert data to your connected assistant. Kalshi records tool arguments, errors, and usage information, including the caller IP for anonymous requests and account and client identifiers for authenticated requests. Tool-call logs omit the Authorization header and tool results. Keep credentials and personal information out of all tool arguments, including search terms. You can revoke access in Connected apps.
 
 See the [Kalshi Privacy Policy](https://kalshi.com/docs/kalshi-privacy-policy.pdf) for Kalshi’s general data practices, the [Member Agreement](https://kalshi.com/regulatory/agreement) for terms, and [Kalshi Support](https://help.kalshi.com/en/) for help.
+
+### Data retention
+
+How long Kalshi retains personal information depends on the type of record, the purpose it serves, and applicable legal and regulatory requirements.
+
+For connector logs, Kalshi considers how long the information is needed to troubleshoot tool calls, investigate security incidents, and meet audit or recordkeeping obligations. An investigation or a legal obligation to preserve records may extend retention.
+
+Disconnecting the assistant revokes its access to your account. Kalshi retains certain account records after deactivation for identity verification, security, and regulatory recordkeeping. See [Deleting your account](https://help.kalshi.com/en/articles/13823774-deactivating-reactivating) for details.
 
 ## Connection help
 

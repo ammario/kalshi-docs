@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/margin-rest/risk/get-risk
-lastmod: 2026-11-20T01:33:59.074Z
+lastmod: 2026-11-20T20:43:06.206Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -202,18 +202,21 @@ components:
         - isolated
         - auto_rebalance
         - managed_isolated
+        - swaps
       x-enum-varnames:
         - SubaccountTypeCross
         - SubaccountTypeIsolated
         - SubaccountTypeAutoRebalance
         - SubaccountTypeManagedIsolated
+        - SubaccountTypeSwaps
       description: >-
         How the subaccount is margined. `cross` for the primary account and
         numbered subaccounts, `isolated` for a market's isolated subaccount,
         `auto_rebalance` for an auto-rebalanced isolated position, which shares
-        its market's isolated subaccount number, and `managed_isolated` for a
+        its market's isolated subaccount number, `managed_isolated` for a
         managed isolated position, whose subaccount number is the same as the
-        market's isolated subaccount number.
+        market's isolated subaccount number, and `swaps` for a cross-margined
+        swaps wallet, whose subaccount number is its swaps code.
     FixedPointCount:
       type: string
       description: >-

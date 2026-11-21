@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/weather_rfqs
-lastmod: 2026-11-19T23:06:57.802Z
+lastmod: 2026-11-21T03:54:34.964Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -24,7 +24,7 @@ On-request weather markets let you trade the weather at a point you choose: a la
 4. Makers quote, you accept one side, and the maker confirms. This part is the same as for any other RFQ.
 5. The market closes when its window ends. Settlement is expected about two hours later.
 
-Makers skip steps 1 to 3: the RFQ arrives as `rfq_created` on the `communications` WebSocket channel with the market's `market_ticker` and `event_ticker`, and the ticker says what the market is (see [Tickers](#tickers)). For rain markets, [weather pricing](#weather-pricing) gives a reference probability to quote around.
+Makers skip steps 1 to 3: the RFQ arrives as `rfq_created` on the `communications` WebSocket channel with the market's `market_ticker` and `event_ticker`, and the ticker says what the market is (see [Tickers](#tickers)). For rain markets, [weather pricing](#weather-pricing) gives a reference probability to quote around. Quoting needs no approval; weather pricing is enabled per account, so reach out to Kalshi if you want to use it.
 
 ## What you can request
 
@@ -199,7 +199,7 @@ What to know about the fallback:
 
 > [!NOTE]
 >
-> Weather pricing is enabled per account. Ask your Kalshi contact for access in each environment you use; an account without it gets a 403. Access may be restricted or withdrawn.
+> Weather pricing is enabled per account. If you want to use it when quoting, reach out to your Kalshi contact, or to [institutional@kalshi.com](mailto:institutional@kalshi.com), so Kalshi can allowlist your account in each environment you use; an account without access gets a 403. Access may be restricted or withdrawn.
 
 `GET /weather_point_markets/{market_ticker}/pricing` returns the weather data provider's probability that a rain market settles Yes. Makers can use it as a reference when quoting an RFQ.
 

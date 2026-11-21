@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/getting_started/concert_rfqs
-lastmod: 2026-11-19T00:02:12.636Z
+lastmod: 2026-11-21T02:02:42.009Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
@@ -43,7 +43,7 @@ A show can have one market per cover. Not every cover is offered everywhere, and
 
 **Date.** `scheduled_date` is the date the show is scheduled for, local to the venue, as YYYY-MM-DD. It must match the show's listing at the moment the market is created. If the show has moved since you read the listing, the request returns 409 with the new date in `details`.
 
-**Timing.** A new market's show must start more than an hour from now, and no more than `max_days_ahead` days out (from the availability endpoint). While the listing gives only a date and no start time, the start of that day at the venue is used.
+**Timing.** A new market's show must start more than 7 days from now, and no more than `max_days_ahead` days out (from the availability endpoint). While the listing gives only a date and no start time, the start of that day at the venue is used. The 7 days hold for a market that already exists too: see [Create a market](#create-a-market).
 
 ## Find a show
 
@@ -138,7 +138,9 @@ curl -X POST https://external-api.demo.kalshi.co/trade-api/v2/concert_cancellati
 
 Sign the request like any other authenticated request (see [Quick Start: Authenticated Requests](https://docs.kalshi.com/getting_started/quick_start_authenticated_requests.md)), and take `jambase_event_id` and `scheduled_date` from a listing or search result.
 
-The same request returns the same market, with `created: false` once it exists, until it closes. You can call it before each RFQ. An existing market is usually returned even when new markets are no longer offered, but not where creation or its cover is switched off: that returns 409. A market created a moment ago may not be readable yet: if `GET /markets/{ticker}` returns 404 right after creation, retry.
+The same request returns the same market, with `created: false` once it exists, while its show is more than 7 days away. You can call it before each RFQ. Inside those 7 days the request returns 409, as it would for a new market, because the call is how you get a market to send an RFQ on. The 7 days are counted to the market's `close_time` or to the show's start as now listed, whichever is earlier: a market created while the listing gave only a date closes at the start of that day at the venue, so its last day of requests ends 7 days before that. The market itself is unaffected: it stays open until its `close_time`, your positions in it are unchanged, `GET /markets/{ticker}` still returns it, and it settles as described below.
+
+Further out, an existing market is usually returned even when new markets are no longer offered, but not where creation or its cover is switched off: that returns 409. A market created a moment ago may not be readable yet: if `GET /markets/{ticker}` returns 404 right after creation, retry.
 
 Then request quotes on it with `POST /communications/rfqs`:
 
@@ -207,7 +209,7 @@ The create endpoint is charged against your write [rate limit](https://docs.kals
 | 400 | `missing_parameters` | A required body field is missing or empty |
 | 400 | `invalid_parameters` | The request can't be served as sent: an unknown cover or metro, an id that isn't `jambase:<id>`, a `scheduled_date` that isn't YYYY-MM-DD, a `date_to` before `date_from`, or a show scheduled further ahead than `max_days_ahead` |
 | 404 | `not_found` | JamBase has no show with that id |
-| 409 | `concert_cancellation_market_unavailable` | Valid, but not offered: concert markets or the cover are switched off, the show is now listed on another date, has already been canceled or postponed, starts in an hour or less, isn't a concert, is at a venue smaller than those offered, or its market has closed |
+| 409 | `concert_cancellation_market_unavailable` | Valid, but not offered: concert markets or the cover are switched off, the show is now listed on another date, has already been canceled or postponed, starts in 7 days or less (whether or not its market already exists), isn't a concert, is at a venue smaller than those offered, or its market has closed |
 | 429 | `concert_cancellation_market_limit_exceeded` | The limit on new concert markets across all users in a rolling 24 hours was reached. Retrying at once doesn't help |
 | 429 | `concert_search_limit_exceeded` | The limit on searches across all users was reached. Browse by metro instead, or retry later |
 | 429 | `too_many_requests` | Your API rate limit |

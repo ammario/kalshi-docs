@@ -1,6 +1,6 @@
 ---
 url: https://docs.kalshi.com/api-reference/incentive-programs/get-incentive-schedules
-lastmod: 2026-11-20T01:33:58.242Z
+lastmod: 2026-11-20T20:43:04.748Z
 ---
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
